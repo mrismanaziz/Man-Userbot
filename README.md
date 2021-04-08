@@ -7,7 +7,7 @@
    </p>
 
 
-<h3 align="center">A modular Telegram userbot running on Python 3.9.2+ with an sqlalchemy database.</h3>
+<h3 align="center">A modular Telegram userbot running on Python 3.9+ with an sqlalchemy database.</h3>
 <p align="center">&nbsp;</p>
 
 # Based on RaphielGang's [Telegram-Paperplane](https://github.com/RaphielGang/Telegram-Paperplane)
