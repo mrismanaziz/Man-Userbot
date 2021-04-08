@@ -12,7 +12,7 @@ import os
 import re
 import sys
 import urllib
-from os import execl
+from os import environ, execle
 from random import randint
 from time import sleep
 
@@ -56,7 +56,7 @@ async def randomise(items):
     )
 
 
-@register(outgoing=True, pattern="^.sleep ([0-9]+)$")
+@register(outgoing=True, pattern=r"^\.sleep ([0-9]+)$")
 async def sleepybot(time):
     """ For .sleep command, let the userbot snooze for a few second. """
     counter = int(time.pattern_match.group(1))
@@ -71,7 +71,7 @@ async def sleepybot(time):
     await time.edit("`OK, I'm awake now.`")
 
 
-@register(outgoing=True, pattern="^.shutdown$")
+@register(outgoing=True, pattern=r"^\.shutdown$")
 async def killdabot(event):
     """ For .shutdown command, shut the bot down."""
     await event.edit("`Mematikan Man-Userbot....`")
@@ -84,23 +84,18 @@ async def killdabot(event):
     await bot.disconnect()
 
 
-@register(outgoing=True, pattern="^.restart$")
+@register(outgoing=True, pattern=r"^\.restart$")
 async def killdabot(event):
     await event.edit("`Restarting Man-Userbot...`")
-    await asyncio.sleep(10)
-    await event.delete()
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID, "#RESTARTBOT \n" "`Man-Userbot Telah Di Restart`"
         )
-    await bot.disconnect()
     # Spin a new instance of bot
-    execl(sys.executable, sys.executable, *sys.argv)
-    # Shut the existing one down
-    exit()
+    args = [sys.executable, "-m", "userbot"]
+    execle(sys.executable, *args, environ)
 
-
-@register(outgoing=True, pattern="^.readme$")
+@register(outgoing=True, pattern=r"^\.readme$")
 async def reedme(e):
     await e.edit(
         "Here's something for you to read :\n"
@@ -114,7 +109,7 @@ async def reedme(e):
     )
 
 
-@register(outgoing=True, pattern="^.repeat (.*)")
+@register(outgoing=True, pattern=r"^\.repeat (.*)")
 async def repeat(rep):
     cnt, txt = rep.pattern_match.group(1).split(" ", 1)
     replyCount = int(cnt)
