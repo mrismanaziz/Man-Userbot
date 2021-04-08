@@ -40,8 +40,9 @@ from selenium.webdriver.chrome.options import Options
 from telethon.tl.types import DocumentAttributeAudio, MessageMediaPhoto
 from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError, PageError
-from youtube_dl import YoutubeDL
-from youtube_dl.utils import (
+from youtube_search import YoutubeSearch
+from yt_dlp import YoutubeDL
+from yt_dlp.utils import (
     ContentTooShortError,
     DownloadError,
     ExtractorError,
@@ -51,7 +52,6 @@ from youtube_dl.utils import (
     UnavailableVideoError,
     XAttrMetadataError,
 )
-from youtube_search import YoutubeSearch
 
 from userbot import (
     BOTLOG,
@@ -115,10 +115,10 @@ async def setlang(prog):
     await prog.edit(f"Language for carbon.now.sh set to {CARBONLANG}")
 
 
-@register(outgoing=True, pattern="^.carbon")
+@register(outgoing=True, pattern=r"^\.carbon")
 async def carbon_api(e):
     """ A Wrapper for carbon.now.sh """
-    await e.edit("`Processing..`")
+    await e.edit("`Processing...`")
     CARBON = "https://carbon.now.sh/?l={lang}&code={code}"
     global CARBONLANG
     textx = await e.get_reply_message()
@@ -128,52 +128,32 @@ async def carbon_api(e):
     elif textx:
         pcode = str(textx.message)  # Importing message to module
     code = quote_plus(pcode)  # Converting to urlencoded
-    await e.edit("`Processing..\n25%`")
-    if os.path.isfile("/root/userbot/.bin/carbon.png"):
-        os.remove("/root/userbot/.bin/carbon.png")
+    await e.edit("`Processing... 25%`")
+    file_path = TEMP_DOWNLOAD_DIRECTORY + "carbon.png"
+    if os.path.isfile(file_path):
+        os.remove(file_path)
     url = CARBON.format(code=code, lang=CARBONLANG)
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.binary_location = GOOGLE_CHROME_BIN
-    chrome_options.add_argument("--window-size=1920x1080")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-gpu")
-    prefs = {"download.default_directory": "/root/userbot/.bin"}
-    chrome_options.add_experimental_option("prefs", prefs)
-    driver = webdriver.Chrome(executable_path=CHROME_DRIVER, options=chrome_options)
+    driver = await chrome()
     driver.get(url)
-    await e.edit("`Processing..\n50%`")
-    download_path = "/root/userbot/.bin"
-    driver.command_executor._commands["send_command"] = (
-        "POST",
-        "/session/$sessionId/chromium/send_command",
-    )
-    params = {
-        "cmd": "Page.setDownloadBehavior",
-        "params": {"behavior": "allow", "downloadPath": download_path},
-    }
-    driver.execute("send_command", params)
-    driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
-    # driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
-    # driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
-    await e.edit("`Processing..\n75%`")
+    await e.edit("`Processing... 50%`")
+    driver.find_element_by_css_selector('[data-cy="quick-export-button"]').click()
+    await e.edit("`Processing... 75%`")
     # Waiting for downloading
-    while not os.path.isfile("/root/userbot/.bin/carbon.png"):
+    while not os.path.isfile(file_path):
         await sleep(0.5)
-    await e.edit("`Processing..\n100%`")
-    file = "/root/userbot/.bin/carbon.png"
-    await e.edit("`Uploading..`")
+    await e.edit("`Processing... 100%`")
+    await e.edit("`Uploading...`")
     await e.client.send_file(
         e.chat_id,
-        file,
-        caption="Made using [Carbon](https://carbon.now.sh/about/),\
-        \na project by [Dawn Labs](https://dawnlabs.io/)",
+        file_path,
+        caption=(
+            "Made using [Carbon](https://carbon.now.sh/about/),"
+        ),
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
 
-    os.remove("/root/userbot/.bin/carbon.png")
+    os.remove(file_path)
     driver.quit()
     # Removing carbon.png after uploading
     await e.delete()  # Deleting msg
@@ -481,7 +461,7 @@ async def yt_search(video_q):
 
 @register(outgoing=True, pattern=r".yt(audio|video) (.*)")
 async def download_video(v_url):
-    """ For .rip command, download media from YouTube and many other sites. """
+    """ For .yt command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
     type = v_url.pattern_match.group(1).lower()
 
@@ -506,6 +486,7 @@ async def download_video(v_url):
             "outtmpl": "%(id)s.mp3",
             "quiet": True,
             "logtostderr": False,
+            "external_downloader": "aria2c",
         }
         video = False
         song = True
@@ -524,6 +505,7 @@ async def download_video(v_url):
             "outtmpl": "%(id)s.mp4",
             "logtostderr": False,
             "quiet": True,
+            "external_downloader": "aria2c",
         }
         song = False
         video = True
@@ -555,10 +537,31 @@ async def download_video(v_url):
         return await v_url.edit(f"{str(type(e)): {str(e)}}")
     c_time = time.time()
     if song:
-        await v_url.edit(f"`Preparing to upload song:`\n**{rip_data['title']}**")
+        await v_url.edit(
+            f"`Preparing to upload song:`\n**{rip_data['title']}**"
+            f"\nby **{rip_data['uploader']}**"
+        )
+        with open(rip_data["id"] + ".mp3", "rb") as f:
+            result = await upload_file(
+                client=v_url.client,
+                file=f,
+                name=f"{rip_data['id']}.mp3",
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(
+                        d, t, v_url, c_time, "Uploading..", f"{rip_data['title']}.mp3"
+                    )
+                ),
+            )
+        img_extensions = ["jpg", "jpeg", "webp"]
+        img_filenames = [
+            fn_img
+            for fn_img in os.listdir()
+            if any(fn_img.endswith(ext_img) for ext_img in img_extensions)
+        ]
+        thumb_image = img_filenames[0]
         await v_url.client.send_file(
             v_url.chat_id,
-            f"{rip_data['id']}.mp3",
+            result,
             supports_streaming=True,
             attributes=[
                 DocumentAttributeAudio(
@@ -567,24 +570,44 @@ async def download_video(v_url):
                     performer=str(rip_data["uploader"]),
                 )
             ],
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, v_url, c_time, "Uploading..", f"{rip_data['title']}.mp3")
-            ),
+            thumb=thumb_image,
         )
+        os.remove(thumb_image)
         os.remove(f"{rip_data['id']}.mp3")
         await v_url.delete()
     elif video:
-        await v_url.edit(f"`Preparing to upload video:`\n**{rip_data['title']}**")
+        await v_url.edit(
+            f"`Preparing to upload video:`\n**{rip_data['title']}**"
+            f"\nby **{rip_data['uploader']}**"
+        )
+        thumb_image = await get_video_thumb(rip_data["id"] + ".mp4", "thumb.png")
+        with open(rip_data["id"] + ".mp4", "rb") as f:
+            result = await upload_file(
+                client=v_url.client,
+                file=f,
+                name=f"{rip_data['id']}.mp4",
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(
+                        d, t, v_url, c_time, "Uploading..", f"{rip_data['title']}.mp4"
+                    )
+                ),
+            )
         await v_url.client.send_file(
             v_url.chat_id,
-            f"{rip_data['id']}.mp4",
-            supports_streaming=True,
+            result,
+            thumb=thumb_image,
+            attributes=[
+                DocumentAttributeVideo(
+                    duration=rip_data["duration"],
+                    w=rip_data["width"],
+                    h=rip_data["height"],
+                    supports_streaming=True,
+                )
+            ],
             caption=rip_data["title"],
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, v_url, c_time, "Uploading..", f"{rip_data['title']}.mp4")
-            ),
         )
         os.remove(f"{rip_data['id']}.mp4")
+        os.remove(thumb_image)
         await v_url.delete()
 
 
