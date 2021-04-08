@@ -72,7 +72,7 @@ async def set_not_afk(event):
 
         except BaseException:
             pass
-        await asyncio.sleep(4)
+        await asyncio.sleep(6)
         await shite.delete()
         try:
             await shites.delete()
@@ -115,7 +115,7 @@ async def on_afk(event):
             )
         else:
             message_to_reply = (
-                f"**✘ {ALIVE_NAME} Sedang AFK** `{total_afk_time}` **Yang Lalu ✘**"
+                f"**✘ Maaf {ALIVE_NAME} Sedang AFK** `{total_afk_time}` **Yang Lalu ✘**"
             )
         try:
             if pic.endswith((".tgs", ".webp")):
@@ -181,35 +181,35 @@ async def _(event):
                     await bot.send_message(event.chat_id, file=pic)
                     await bot.send_message(
                         event.chat_id,
-                        f"\n**✘ {ALIVE_NAME} Sedang AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
+                        f"\n**✘ {ALIVE_NAME} Telah AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                     )
                 else:
                     await bot.send_message(
                         event.chat_id,
-                        f"\n**✘ {ALIVE_NAME} Sedang AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
+                        f"\n**✘ {ALIVE_NAME} Telah AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                         file=pic,
                     )
             except BaseException:
                 await bot.send_message(
                     event.chat_id,
-                    f"\n**✘ {ALIVE_NAME} Sedang AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
+                    f"\n**✘ {ALIVE_NAME} Telah AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                 )
         else:
             try:
                 if pic.endswith((".tgs", ".webp")):
                     await bot.send_message(event.chat_id, file=pic)
                     await bot.send_message(
-                        event.chat_id, f"**✘ {ALIVE_NAME} Sedang AFK ✘**"
+                        event.chat_id, f"**✘ {ALIVE_NAME} Telah AFK ✘**"
                     )
                 else:
                     await bot.send_message(
                         event.chat_id,
-                        f"**✘ {ALIVE_NAME} Sedang AFK ✘**",
+                        f"**✘ {ALIVE_NAME} Telah AFK ✘**",
                         file=pic,
                     )
             except BaseException:
                 await bot.send_message(
-                    event.chat_id, f"**✘ {ALIVE_NAME} Sedang AFK ✘**"
+                    event.chat_id, f"**✘ {ALIVE_NAME} Telah AFK ✘**"
                 )
         await event.delete()
         try:
