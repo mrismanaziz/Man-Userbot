@@ -95,6 +95,7 @@ async def killdabot(event):
     args = [sys.executable, "-m", "userbot"]
     execle(sys.executable, *args, environ)
 
+
 @register(outgoing=True, pattern=r"^\.readme$")
 async def reedme(e):
     await e.edit(
