@@ -1,0 +1,215 @@
+{
+  "name": "Man-Userbot",
+  "description": "[Man-Userbot] USERBOT YANG DIGUNAKAN UNTUK BERSENANG-SENANG DI TELEGRAM.",
+  "logo": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
+  "keywords": [
+    "telegram",
+    "userbot",
+    "plugin",
+    "modular",
+    "productivity"
+  ],
+  "repository": "https://github.com/mrismanaziz/Man-Userbot",
+  "telegram": "https://t.me/mrismanaziz",
+  "success_url": "https://t.me/mrismanaziz",
+  "stack": "container",
+  "env": {
+    "API_KEY": {
+      "description": "Dapatkan Api Key di web my.telegram.org.",
+      "required": true
+    },
+    "API_HASH": {
+      "description": "Dapatkan Api hash di web my.telegram.org.",
+      "required": true
+    },
+     "STRING_SESSION": {
+      "description": "Dapatkan String Session di Grup » https://t.me/sharinguserbot » Lalu ketik #string",
+      "required": true
+    },
+    "HEROKU_APP_NAME": {
+      "description": "Nama App heroku, Nama App yang paling pertama di isi (liat paling atas)",
+      "required": true
+    },
+    "HEROKU_API_KEY": {
+      "description": "Heroku API KEY mu, dapatkan dari web » 'https://dashboard.heroku.com/account'",
+      "value": "Check Di Heroku Dashboard Mu",
+      "required": true
+    },
+    "BOTLOG": {
+      "description": "Kalo Mau Off in BOTLOG Ganti False",
+      "value": "True",
+      "required": true
+    },
+    "BOTLOG_CHATID": {
+      "description": "Buatlah sebuah grup public masukan bot rose lalu ketik /id.",
+      "value": "Isi id grup mu",
+      "required": true
+    },
+    "CONSOLE_LOGGER_VERBOSE": {
+      "description": "If you need verbosity on the console logging",
+      "value": "False"
+    },
+    "QUOTES_API_TOKEN": {
+      "description": "Dapatkan Token Dari » http://antiddos.systems",
+      "required": false
+    },
+    "GENIUS_ACCESS_TOKEN": {
+      "description": "Token Aksess Klien dari » https://genius.com/api-clients.",
+      "required": false
+    },
+    "MONGO_URI": {
+      "description": "URL Atlas MongoDB Anda, Dapatkan panduan Anda dari » https://telegra.ph/Mongo-DB-12-24.",
+      "required": false
+    },
+    "GENIUS": {
+      "description": "Dapatkan nilai dari » https://genius.com/developers., pada dasarnya sama dengan GENIUS_API_TOKEN.",
+      "required": false
+    },
+    "GITHUB_ACCESS_TOKEN": {
+      "description": "GITHUB_ACCESS_TOKEN Anda, dapatkan dari » 'https://github.com/settings/tokens'",
+      "required": false
+    },
+    "GIT_REPO_NAME": {
+      "description": "Tambahkan GIT_REPO_NAME di sini. Ini membantu dengan komit di GitHub.",
+      "required": false
+    },
+    "COUNTRY": {
+      "description": "Setel Negara Anda untuk digunakan dalam perintah .time dan .date.",
+      "value": "ID",
+      "required": true
+    },
+    "TZ_NUMBER": {
+      "description": "Ubah nilai ini jika negara Anda memiliki beberapa Zona Waktu.",
+      "value": "1",
+      "required": false
+    },
+    "OPEN_WEATHER_MAP_APPID": {
+      "description": "Dapatkan APPID (kunci API) Anda sendiri dari » https://api.openweathermap.org/data/2.5/weather",
+      "required": false
+    },
+    "PM_AUTO_BAN": {
+      "description": "PM Auto-Ban Feature Switch. Also known as the 'bleep blop, this is a bot...' module.",
+      "value": "False",
+      "required": true
+    },
+    "ALIVE_NAME": {
+      "description": "Nama untuk menunjukan pesan di perintah .alive dan .afk",
+      "required": true
+    },
+    "ALIVE_LOGO": {
+      "description": "Gambar dalam pesan .alive. the value MUST A DIRECT LINK or Will Crash!",
+      "value": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
+      "required": false
+    },
+    "YOUTUBE_API_KEY": {
+      "description": "Kunci API Data YouTube untuk perintah .yt. Dapat dari » https://console.cloud.google.com",
+      "required": false
+    },
+    "OCR_SPACE_API_KEY": {
+      "description": "Kunci API OCR untuk perintah .ocr. Dapat dari » https://ocr.space/ocrapi",
+      "required": false
+    },
+    "REM_BG_API_KEY": {
+      "description": "Kunci API untuk perintah .rbg. Dapat dari » https://www.remove.bg/api",
+      "required": false
+    },
+    "ANTI_SPAMBOT": {
+      "description": "Kick spambot dari grup setelah mereka bergabung. [Membutuhkan hak admin untuk kick.]",
+      "value": "False"
+    },
+    "ANTI_SPAMBOT_SHOUT": {
+      "description": "Laporkan robot spam ke @admin dalam grup setelah mereka bergabung, untuk berjaga-jaga jika Anda tidak memiliki kekuatan admin untuk menendang sendiri.",
+      "value": "False"
+    },
+    "TMP_DOWNLOAD_DIRECTORY": {
+      "description": "Download location for many modules (GDrive, .download etc..)",
+      "value": "./downloads/"
+    },
+    "CLEAN_WELCOME": {
+      "description": "Saat orang baru bergabung, pesan selamat datang di PC yang lama akan dihapus.",
+      "value": "True"
+    },
+    "HEROKU_MEMEZ": {
+      "description": "Ini harus True jika userbot berjalan pada Heroku Dyno.",
+      "value": "True",
+      "required": true
+    },
+    "DEFAULT_BIO": {
+      "description": "Default Bio Mu.",
+      "value": "✘ i'm using userbot ✘",
+      "required": false
+    },
+    "ALIVE_TEKS_CUSTOM": {
+      "description": "Kustom Pesan Alive Mu Untuk Perintah .calive (Isi Terserah)",
+      "required": false
+    },
+    "S_PACK_NAME": {
+      "description": "Costum Nama Sticker Pack Mu",
+      "required": false
+    },
+    "G_BAN_LOGGER_GROUP": {
+      "description": "Buatlah Sebuah Grup Public Lalu Masukkan Bot Rose Lalu Ketik /id.",
+      "value": "Isi id grup mu",
+      "required": false
+    },
+    "BITLY_TOKEN": {
+      "description": "Kunci API Bit.ly Anda, dapatkan dari 'https://bitly.com/a/sign_up'",
+      "value": "",
+      "required": false
+    },
+    "UB_BLACK_LIST_CHAT": {
+      "description": "Isi Apa Aja",
+      "required": false
+    },
+    "LYDIA_API_KEY": {
+      "description": "Modul ini Membutuhkan API CoffeeHouse agar berfungsi. jadi daftar https://telegram.dog/IntellivoidDev dan kirim #activateapi dan ikuti instruksinya.",
+      "required": false
+    },
+    "WEATHER_DEFCITY": {
+      "description": "Setel kota default untuk module cuaca userbot.",
+      "value": "Jakarta",
+      "required": false
+    },
+    "LOGSPAMMER": {
+      "description": "Set this to True in case you want the error logs to be stored in the userbot log group, instead of spitting out the file in the current chat, requires a valid BOTLOG_CHATID to be set.",
+      "value": "True",
+      "required": true
+    },
+    "UPSTREAM_REPO_URL": {
+      "description": "In case you maintain a fork, add your repo URL here.",
+      "required": false
+    },
+    "BOT_TOKEN": {
+      "description": "Setel ini untuk mengaktifkan pembantu inline. dapatkan token dari @BotFather",
+      "required": false
+    },
+    "BOT_USERNAME": {
+      "description": "username bot yang Anda buat dari@BotFather",
+      "required": false
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "12"
+      }
+    }
+  ],"buildpacks": [{
+    "url": "https://github.com/heroku/heroku-buildpack-python.git"
+  }, {
+    "url": "https://github.com/heroku/heroku-buildpack-redis"
+  }, {
+    "url": "https://github.com/heroku/heroku-buildpack-google-chrome"
+  }, {
+    "url": "https://github.com/HasibulKabir/heroku-buildpack-rarlab"
+  },{
+    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+  }, {
+    "url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip"
+  }, {
+    "url": "https://github.com/amivin/aria2-heroku"
+  }, {
+    "url": "https://github.com/stevo550/buildpack-slug-cleaner"
+  }]
+}
