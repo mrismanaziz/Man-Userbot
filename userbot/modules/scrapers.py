@@ -185,32 +185,26 @@ async def img_sampler(event):
     await event.delete()
 
 
-@register(outgoing=True, pattern="^.currency (.*)")
+@register(outgoing=True, pattern=r"^\.currency ([\d\.]+) ([a-zA-Z]+) ([a-zA-Z]+)")
 async def moni(event):
-    input_str = event.pattern_match.group(1)
-    input_sgra = input_str.split(" ")
-    if len(input_sgra) == 3:
-        try:
-            number = float(input_sgra[0])
-            currency_from = input_sgra[1].upper()
-            currency_to = input_sgra[2].upper()
-            request_url = f"https://api.ratesapi.io/api/latest?base={currency_from}"
-            current_response = get(request_url).json()
-            if currency_to in current_response["rates"]:
-                current_rate = float(current_response["rates"][currency_to])
-                rebmun = round(number * current_rate, 2)
-                await event.edit(
-                    "{} {} = {} {}".format(number, currency_from, rebmun, currency_to)
-                )
-            else:
-                await event.edit(
-                    "`This seems to be some alien currency, which I can't convert right now.`"
-                )
-        except Exception as e:
-            await event.edit(str(e))
-    else:
-        await event.edit("`Invalid syntax.`")
+    c_from_val = float(event.pattern_match.group(1))
+    c_from = (event.pattern_match.group(2)).upper()
+    c_to = (event.pattern_match.group(3)).upper()
+    try:
+        response = get(
+            "https://api.ratesapi.io/api/latest",
+            params={"base": c_from, "symbols": c_to},
+        ).json()
+    except Exception:
+        await event.edit("**Error: API is down.**")
         return
+    if "error" in response:
+        await event.edit(
+            "`Sepertinya ini adalah mata uang asing, yang tidak dapat saya konversi sekarang.`"
+        )
+        return
+    c_to_val = round(c_from_val * response["rates"][c_to], 2)
+    await event.edit(f"**{c_from_val} {c_from} = {c_to_val} {c_to}**")
 
 
 @register(outgoing=True, pattern=r"^\.google (.*)")
