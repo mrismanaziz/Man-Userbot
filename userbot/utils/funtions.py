@@ -2,7 +2,7 @@ import os
 import shlex
 import asyncio
 from os.path import basename
-from typing import Optional, Tuple
+from typing import Optional
 
 # For using gif , animated stickers and videos in some parts , this
 # function takes  take a screenshot and stores ported from userge
@@ -25,7 +25,7 @@ async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Op
 # executing of terminal commands
 
 
-async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
+async def runcmd(cmd: str) -> tuple[str, str, int, int]:
     args = shlex.split(cmd)
     process = await asyncio.create_subprocess_exec(*args,
                                                    stdout=asyncio.subprocess.PIPE,

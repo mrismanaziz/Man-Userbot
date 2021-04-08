@@ -22,7 +22,7 @@ import shlex
 import os
 from os.path import basename
 import os.path
-from typing import Optional, Tuple
+from typing import Optional
 from userbot import bot, LOGS
 
 from telethon.tl.functions.channels import GetParticipantRequest
@@ -92,7 +92,7 @@ async def is_admin(chat_id, user_id):
     return False
 
 
-async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
+async def runcmd(cmd: str) -> tuple[str, str, int, int]:
     """ run command in terminal """
     args = shlex.split(cmd)
     process = await asyncio.create_subprocess_exec(*args,
