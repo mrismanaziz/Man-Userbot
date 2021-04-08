@@ -55,7 +55,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             )
             return repo.__del__()
         await event.edit(
-            "`[HEROKU]: Dyno Man-Userbot Sedang Dalam Proses, Mohon Menunggu 5-10 Menit`"
+            "`[HEROKU]: Update Deploy Man-Userbot Sedang Dalam Proses...`"
         )
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
@@ -81,8 +81,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             return await event.delete()
         else:
             await event.edit(
-                "`Man-Userbot Berhasil Di Deploy!"
-                "Sedang Merestart, Tunggu Sebentar.....`"
+                "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali."
             )
             await asyncio.sleep(15)
             await event.delete()
