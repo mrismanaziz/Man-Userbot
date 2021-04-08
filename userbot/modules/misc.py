@@ -285,6 +285,34 @@ async def scam(results, lim):
     return imglinks
 
 
+@register(outgoing=True, pattern=r"^\.send (.*)")
+async def send(event):
+    await event.edit("`Processing...`")
+
+    if not event.is_reply:
+        return await event.edit("`Mohon Balas ke pesan!`")
+
+    chat = event.pattern_match.group(1)
+    try:
+        chat = await event.client.get_entity(chat)
+    except (TypeError, ValueError):
+        return await event.edit("`Link yang diberikan tidak valid!`")
+
+    message = await event.get_reply_message()
+
+    await event.client.send_message(entity=chat, message=message)
+    await event.edit(f"`Mengirim pesan ini ke` `{chat.title}``!`")
+
+
+CMD_HELP.update(
+    {
+        "send": "**Plugin : **`send`\
+        \n\n  •  **Syntax :** `.send`\
+        \n  •  **Function : **Meneruskan pesan balasan ke obrolan tertentu tanpa tag Forwarded from. \
+    "
+    }
+)
+
 CMD_HELP.update(
     {
         "random": "**Plugin : **`random`\
