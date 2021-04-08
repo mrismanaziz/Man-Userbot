@@ -35,8 +35,6 @@ from gtts.lang import tts_langs
 from humanize import naturalsize
 from requests import exceptions, get, post
 from search_engine_parser import YahooSearch as GoogleSearch
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from telethon.tl.types import DocumentAttributeAudio, MessageMediaPhoto
 from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError, PageError
@@ -56,9 +54,7 @@ from yt_dlp.utils import (
 from userbot import (
     BOTLOG,
     BOTLOG_CHATID,
-    CHROME_DRIVER,
     CMD_HELP,
-    GOOGLE_CHROME_BIN,
     LOGS,
     OCR_SPACE_API_KEY,
     REM_BG_API_KEY,
@@ -146,9 +142,7 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file_path,
-        caption=(
-            "Made using [Carbon](https://carbon.now.sh/about/),"
-        ),
+        caption=("Made using [Carbon](https://carbon.now.sh/about/),"),
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
