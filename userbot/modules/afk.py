@@ -208,9 +208,7 @@ async def _(event):
                         file=pic,
                     )
             except BaseException:
-                await bot.send_message(
-                    event.chat_id, f"**✘ {ALIVE_NAME} Telah AFK ✘**"
-                )
+                await bot.send_message(event.chat_id, f"**✘ {ALIVE_NAME} Telah AFK ✘**")
         await event.delete()
         try:
             if reason and pic:
