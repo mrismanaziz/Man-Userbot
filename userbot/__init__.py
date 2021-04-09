@@ -397,9 +397,9 @@ with bot:
         @tgbot.on(events.NewMessage(pattern="/start"))
         async def handler(event):
             if event.message.from_id != uid:
-                await event.reply("Deploy Userbot Mu Sendiri [Tekan Disini](https://github.com/mrismanaziz/Man-Userbot.git)")
+                await event.reply(f"**Hey**, __I am using__ 🔥 **Man-Userbot** 🔥\n\n"f"      __Thanks For Using me__\n\n"f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n")
             else:
-                await event.reply(f"`Hai {ALIVE_NAME}\n\nApa Kabarmu?`")
+                await event.reply(f"**Hey**, __I am using__ 🔥 **Man-Userbot** 🔥\n\n"f"      __Thanks For Using me__\n\n"f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n")
 
         @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
         async def inline_handler(event):
@@ -419,22 +419,34 @@ with bot:
                 )
             elif query.startswith("tb_btn"):
                 result = builder.article(
-                    "✗ Helper Man-Userbot ✗",
-                    text="Daftar Module",
-                    buttons=[],
-                    link_preview=True)
-            else:
-                result = builder.article(
-                    "**✗ Man-Userbot ✗**",
-                    text="""**Buat Userbot Anda Sendiri Dengan Cara :** [Tekan Disini](https://github.com/mrismanaziz/Man-Userbot)""",
+                    title="Repository",
+                    description="Repository Man - Userbot",
+                    url="https://t.me/SharingUserbot",
+                    text="**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **Owner Repo :** [Man](https://t.me/mrismanaziz)\n✣ **Grup Support :** @SharingUserbot\n✣ **Repository :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url(
-                                "Repo Userbot-Man",
-                                "https://github.com/mrismanaziz/Man-Userbot"),
+                                "Support",
+                                "https://t.me/SharingUserbot"),
                             custom.Button.url(
-                                "Owner Repo",
-                                "t.me/mrismanaziz")],
+                                "Repo",
+                                "https://github.com/mrismanaziz/Man-Userbot")],
+                    ],
+                    link_preview=False)
+            else:
+                result = builder.article(
+                    title="✗ Man-Userbot ✗",
+                    description="Man - UserBot | Telethon",
+                    url="https://t.me/SharingUserbot",
+                    text="**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **Owner Repo :** [Man](https://t.me/mrismanaziz)\n✣ **Grup Support :** @SharingUserbot\n✣ **Repository :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
+                    buttons=[
+                        [
+                            custom.Button.url(
+                                "Support",
+                                "https://t.me/SharingUserbot"),
+                            custom.Button.url(
+                                "Repo",
+                                "https://github.com/mrismanaziz/Man-Userbot")],
                     ],
                     link_preview=False,
                 )
