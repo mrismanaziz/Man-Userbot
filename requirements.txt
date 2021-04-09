@@ -93,7 +93,7 @@ pendulum
 opencv-python
 hentai
 natsort
-yt-dlp
+https://github.com/yt-dlp/yt-dlp/archive/master.zip
 youtube-dl>=2021.1.8
 youtube-search-python>=1.3.2
 youtube-search>=1.1.1
