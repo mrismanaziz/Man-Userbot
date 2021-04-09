@@ -13,6 +13,7 @@ from speedtest import Speedtest
 
 from userbot import ALIVE_NAME, CMD_HELP, StartTime
 from userbot.events import register
+from userbot.utils import humanbytes
 
 
 async def get_readable_time(seconds: int) -> str:
@@ -163,46 +164,39 @@ async def pingme(pong):
     )
 
 
-@register(outgoing=True, pattern="^.speed$")
+@register(outgoing=True, pattern=r"^\.speedtest$")
 async def speedtst(spd):
-    """ For .speed command, use SpeedTest to check server speeds. """
-    await spd.edit("`Menjalankan Tes Kecepatan Tinggi...🚀`")
-    test = Speedtest()
+    """ For .speedtest command, use SpeedTest to check server speeds. """
+    await spd.edit("`Running speed test...`")
 
+    test = Speedtest()
     test.get_best_server()
     test.download()
     test.upload()
     test.results.share()
     result = test.results.dict()
 
-    await spd.edit(
-        "**Hasil Speedtest :\n**"
-        "✦ **Dimulai Pada:** "
-        f"`{result['timestamp']}` \n"
-        f" **━━━━━━━━━━━━━━━━━**\n\n"
-        "✦ **Download:** "
-        f"`{speed_convert(result['download'])}` \n"
-        "✦ **Upload:** "
-        f"`{speed_convert(result['upload'])}` \n"
-        "✦ **Ping:** "
-        f"`{result['ping']}` \n"
-        "✦ **ISP:** "
-        f"`{result['client']['isp']}` \n"
-        "✦ **BOT:** `Man-Userbot`"
+    msg = (
+        f"**Started at {result['timestamp']}**\n\n"
+        "**Client**\n"
+        f"**ISP :** `{result['client']['isp']}`\n"
+        f"**Country :** `{result['client']['country']}`\n\n"
+        "**Server**\n"
+        f"**Name :** `{result['server']['name']}`\n"
+        f"**Country :** `{result['server']['country']}`\n"
+        f"**Sponsor :** `{result['server']['sponsor']}`\n\n"
+        f"**Ping :** `{result['ping']}`\n"
+        f"**Upload :** `{humanbytes(result['upload'])}/s`\n"
+        f"**Download :** `{humanbytes(result['download'])}/s`"
     )
 
-
-def speed_convert(size):
-    """
-    Hi human, you can't read bytes?
-    """
-    power = 2 ** 10
-    zero = 0
-    units = {0: "", 1: "Kb/s", 2: "Mb/s", 3: "Gb/s", 4: "Tb/s"}
-    while size > power:
-        size /= power
-        zero += 1
-    return f"{round(size, 2)} {units[zero]}"
+    await spd.delete()
+    await spd.client.send_file(
+        spd.chat_id,
+        result["share"],
+        caption=msg,
+        force_document=False,
+    )
 
 
 @register(outgoing=True, pattern="^.pong$")
@@ -244,7 +238,7 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk menunjukkan ping userbot.\
         \n\n  •  **Syntax :** `.pong`\
         \n  •  **Function : **Sama seperti perintah ping\
-        \n\n  •  **Syntax :** `.speed`\
+        \n\n  •  **Syntax :** `.speedtest`\
         \n  •  **Function : **Untuk Mengetes kecepatan server userbot.\
     "
     }
