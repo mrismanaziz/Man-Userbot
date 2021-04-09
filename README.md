@@ -70,8 +70,10 @@ Pergi Ke Grup Support Man-Userbot Lalu Ketik #string [TEKAN DISINI](https://t.me
 *   [AidilAryanto](https://github.com/aidilaryanto) - ProjectDils 
 *   [Alfianandaa](https://github.com/alfianandaa/ProjectAlf) - ProjectAlf
 *   [AnggaR69s](https://github.com/GengKapak/DCLXVI) - DCLXVI
+*   [BianSepang](https://github.com/BianSepang/WeebProject) - WeebProject
 *   [TeamUserge](https://github.com/UsergeTeam/Userge) - Userge
 *   [Lord-Userbot](https://github.com/Zora24/Lord-Userbot) - Alvin
 *   [Kampang-Bot](https://github.com/ManusiaRakitan/Kampang-Bot) - Koala
 *   [X-REMIX](https://github.com/ximfine) -  X_ImFine
+*   [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) -  Risman
 *   AND OTHER

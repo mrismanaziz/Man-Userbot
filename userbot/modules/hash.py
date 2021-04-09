@@ -76,9 +76,20 @@ async def endecrypt(query):
 
 CMD_HELP.update(
     {
-        "hash": ">`.hash`"
-        "\nUsage: Find the md5, sha1, sha256, sha512 of the string when written into a txt file.",
-        "base64": ">`.base64 [en or de]`"
-        "\nUsage: Find the base64 encoding of the given string or decode it.",
+        "hash": "**Plugin : **`hash`\
+        \n\n  •  **Syntax :** `.hash`\
+        \n  •  **Function : **Untuk menemukan md5, sha1, sha256, sha512 dari string tersebut saat ditulis ke dalam file txt.\
+    "
+    }
+)
+
+
+CMD_HELP.update(
+    {
+        "base64": "**Plugin : **`base64`\
+        \n\n  •  **Syntax :** `.base64` [en atau de]\
+        \n  •  **Function : **Temukan pengkodean base64 dari string yang diberikan atau pecahkan kodenya.\
+        \n\n  •  **NOTE : en = encode , de = decode\
+    "
     }
 )

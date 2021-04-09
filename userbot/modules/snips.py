@@ -95,9 +95,9 @@ async def on_snip_list(event):
     await event.edit(message)
 
 
-@register(outgoing=True, pattern=r"^.remsnip (\w*)")
+@register(outgoing=True, pattern=r"^.rmsnip (\w*)")
 async def on_snip_delete(event):
-    """ For .remsnip command, deletes a snip. """
+    """ For .rmsnip command, deletes a snip. """
     try:
         from userbot.modules.sql_helper.snips_sql import remove_snip
     except AttributeError:
@@ -113,12 +113,12 @@ async def on_snip_delete(event):
 CMD_HELP.update(
     {
         "snips": "**Plugin : **`snips`\
-        \n\n  •  **Syntax :** `.snip` <name> <data> or reply to a message with .snip <name>\
-        \n  •  **Function : **Saves the message as a snip (global note) with the name. (Works with pics, docs, and stickers too!)\
+        \n\n  •  **Syntax :** `.snip` <nama> <data> atau membalas pesan dengan .snip <nama>\
+        \n  •  **Function : **Menyimpan pesan sebagai snip (catatan global) dengan nama. (bisa dengan gambar, docs, dan stickers!)\
         \n\n  •  **Syntax :** `.snips`\
-        \n  •  **Function : **Gets all saved snips.\
-        \n\n  •  **Syntax :** `.remsnip` <snip_name>\
-        \n  •  **Function : **Deletes the specified snip.\
+        \n  •  **Function : **Mendapat semua snips yang disimpan.\
+        \n\n  •  **Syntax :** `.rmsnip` <nama_snip>\
+        \n  •  **Function : **Menghapus snip yang ditentukan.\
     "
     }
 )

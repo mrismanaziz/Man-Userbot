@@ -1339,38 +1339,32 @@ async def gdrive_clone(event):
 
 CMD_HELP.update(
     {
-        "gdrive": ">`.gdauth`"
-        "\nUsage: Generate GDrive authentication token."
-        "\nThis needs to be done only once."
-        "\n\n>`.gdreset`"
-        "\nUsage: Resets your authentication token."
-        "\n\n>`.gd`"
-        "\nUsage: Upload file from local or uri/url/drivelink into GDrive."
-        "\nfor drivelink it's upload only if you want to."
-        "\n\n>`.gdabort`"
-        "\nUsage: Abort running GDrive processes."
-        "\n\n>`.gdlist`"
-        "\nUsage: Get list of folders and files. (default size is 50)"
-        "\nUse flags `-l range[1-1000]` for limit output."
-        "\nUse flags `-p parents-folder_id` for lists given folder in GDrive."
-        "\n\n>`.gdf mkdir`"
-        "\nUsage: Create GDrive folder."
-        "\n\n>`.gdf chck`"
-        "\nUsage: Check if file/folder exists in GDrive."
-        "\n\n>`.gdf rm`"
-        "\nUsage: Delete files/folders in GDrive."
-        "\nCannot be undone, use with caution."
-        "\n\n>`.gdfset put`"
-        "\nUsage: Change upload directory in GDrive."
-        "\n\n>`.gdfset rm`"
-        "\nUsage: Resets parent ID."
-        "\n\n>`.gdfset put`"
-        "\nUsage: Uploads files/folders to `G_DRIVE_FOLDER_ID`. If empty, uploads it to root."
-        "\n\n>`.gcl <Public GDrive Link / GDrive ID>`"
-        "\nUsage: Copy file or folder into your GDrive"
-        "\n\n**NOTE:**"
-        "\nFor >`.gdlist` you can combine -l and -p flags with or without name "
-        "at the same time, `-l` flag must be first followed by `-p`."
-        "\nBy default it lists from latest 'modifiedTime' and then folders."
+        "gdrive": "**Plugin : **`gdrive`\
+        \n\n  •  **Syntax :** `.gdauth`\
+        \n  •  **Function : **Menghasilkan token autentikasi GDrive.Ini perlu dilakukan hanya sekali.\
+        \n\n  •  **Syntax :** `.gdreset`\
+        \n  •  **Function : **Mereset token otentikasi Anda.\
+        \n\n  •  **Syntax :** `.gd`\
+        \n  •  **Function : **Unggah file dari lokal atau uri/url/drivelink ke GDrive.untuk drivelink itu upload hanya jika Anda ingin.\
+        \n\n  •  **Syntax :** `.gdabort`\
+        \n  •  **Function : **Batalkan menjalankan proses GDrive.\
+        \n\n  •  **Syntax :** `.gdlist`\
+        \n  •  **Function : **Dapatkan daftar folder dan file. (ukuran default adalah 50).\nGunakan flags -l range[1-1000] untuk limit output.\nGunakan flags `-p parents-folder_id` untuk daftar folder yang diberikan di GDrive.\
+        \n\n  •  **Syntax :** `.gdf mkdir`\
+        \n  •  **Function : **Membuat folder GDrive.\
+        \n\n  •  **Syntax :** `.gdf chck`\
+        \n  •  **Function : **Periksa apakah file/folder ada di GDrive.\
+        \n\n  •  **Syntax :** `.gdf rm`\
+        \n  •  **Function : **Hapus file/folder di GDrive.Tidak bisa dibatalkan, gunakan dengan hati-hati.\
+        \n\n  •  **Syntax :** `.gdfset put`\
+        \n  •  **Function : **Mengubah direktori unggahan di GDrive.\
+        \n\n  •  **Syntax :** `.gdfset rm`\
+        \n  •  **Function : **Mereset ID induk.\
+        \n\n  •  **Syntax :** `.gdfset put`\
+        \n  •  **Function : **Mengunggah file/folder untuk G_DRIVE_FOLDER_ID. Jika kosong, unggah ke root.\
+        \n\n  •  **Syntax :** `.gcl` <Public GDrive Link / GDrive ID>\
+        \n  •  **Function : **Menyalin file atau folder ke GDrive Anda\
+        \n\n  •  **NOTE : **Untuk >.gdlist Anda dapat menggabungkan -l dan -p flags dengan atau tanpa nama.pada saat yang sama, -l bendera harus pertama diikuti oleh -p.Oleh default itu daftar dari 'modifiedTime' terbaru dan kemudian folder.\
+    "
     }
 )

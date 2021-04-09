@@ -79,7 +79,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             return await event.delete()
         else:
             await event.edit(
-                "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali."
+                "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
             )
             await asyncio.sleep(15)
             await event.delete()
@@ -181,7 +181,7 @@ async def upstream(event):
     if conf is None and force_update is False:
         changelog_str = f"**✥ Pembaruan Untuk Man-Userbot [{ac_br}] :\n\n✥ Pembaruan:**\n`{changelog}`"
         if len(changelog_str) > 4096:
-            await event.edit("`Changelog Terlalu Besar, Lihat File Untuk Melihatnya.`")
+            await event.edit("`Changelog Terlalu Besar, Buka File Untuk Melihatnya.`")
             file = open("output.txt", "w+")
             file.write(changelog_str)
             file.close()
@@ -194,7 +194,7 @@ async def upstream(event):
         else:
             await event.edit(changelog_str)
         return await event.respond(
-            "✥ **Perintah Untuk Update Man-Userbot**\n >`.update now`\n >`.update deploy`\n\n__Untuk Meng Update Fitur Terbaru Dari Man-Userbot.__"
+            "✥ **Perintah Untuk Update Man-Userbot**\n ›`.update now`\n ›`.update deploy`\n\n__Untuk Meng Update Fitur Terbaru Dari Man-Userbot.__"
         )
 
     if force_update:
@@ -210,7 +210,7 @@ async def upstream(event):
         await event.edit("`✣ Proses Update Man-Userbot, Updating...92%`")
         await event.edit("`✣ Proses Update Man-Userbot, Tunggu Sebentar....100%`")
     if conf == "now":
-        await update(event, repo, ups_rem, ac_br)
+        await update(event, repo, ups_rem, ac_br, txt)
         await asyncio.sleep(10)
         await event.delete()
     elif conf == "deploy":

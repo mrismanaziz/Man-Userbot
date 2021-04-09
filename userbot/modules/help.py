@@ -32,7 +32,7 @@ async def help(event):
         await event.edit(
             "**✦ Daftar Perintah Untuk Userbot-Man :\n\n**"
             f"❉{string}❉"
-            "\n\n**Support @sharinguserbot**"
+            "\n\n**Support** @sharinguserbot"
         )
         await event.reply(
             f"\n**Ketik Contoh** `.help afk` **Untuk Melihat Informasi Perintah**"
