@@ -1,7 +1,7 @@
 <p align="center">
-    <a href="https://app.codacy.com/gh/mrismanaziz/Userbot-Man/dashboard"> <img src="https://img.shields.io/codacy/grade/a8f0747a964e4712818a28d2a7f4edd3?color=blue&logo=codacy&style=for-the-badge" alt="Codacy" /></a>
-    <a href="https://github.com/mrismanaziz/Userbot-Man"> <img src="https://img.shields.io/github/repo-size/mrismanaziz/Userbot-Man?logo=github&style=for-the-badge" /></a>
-    <a href="https://github.com/mrismanaziz/Userbot-Man/network/members"> <img src="https://img.shields.io/github/forks/mrismanaziz/Userbot-Man?logo=github&style=for-the-badge" /></a>
+    <a href="https://app.codacy.com/gh/mrismanaziz/Man-Userbot/dashboard"> <img src="https://img.shields.io/codacy/grade/a8f0747a964e4712818a28d2a7f4edd3?color=blue&logo=codacy&style=for-the-badge" alt="Codacy" /></a>
+    <a href="https://github.com/mrismanaziz/Man-Userbot"> <img src="https://img.shields.io/github/repo-size/mrismanaziz/Man-Userbot?logo=github&style=for-the-badge" /></a>
+    <a href="https://github.com/mrismanaziz/Man-Userbot/network/members"> <img src="https://img.shields.io/github/forks/mrismanaziz/Man-Userbot?logo=github&style=for-the-badge" /></a>
     <a href="https://pypi.org/project/Telethon/"> <img src="https://img.shields.io/pypi/v/telethon?label=telethon&logo=pypi&logoColor=white&style=for-the-badge" /></a>
     <img alt="PYTHON" src="https://img.shields.io/badge/PYTHON-v3.9.0-blue?style=for-the-badge&logo=appveyor"/>
    </p>
@@ -26,14 +26,14 @@
     I will be rolling on the floor laughing at you.
 /**
 ```
-### Repo Userbot-Man
+### Repo Man-UserBot
 Repo Yang Dibuat Berbagai Repo Userbot Github dan di Recode Oleh [Risman](https://t.me/mrismanaziz)
 
 ## Generate String Session
 
 ### Run on repl.it
 
-Pergi Ke Grup Support Man-Userbot Lalu Ketik #string [TEKAN DISINI](https://t.me/sharinguserbot) Untuk Masuk Ke Grup Support
+Gabung Ke [Grup Support](https://t.me/sharinguserbot) Man-UserBot Lalu Ketik #string [TEKAN DISINI](https://t.me/sharinguserbot) Untuk Masuk Ke [Grup Support](https://t.me/sharinguserbot)
 <br>
 
 ## Cara Deploy 👷
@@ -58,7 +58,6 @@ Pergi Ke Grup Support Man-Userbot Lalu Ketik #string [TEKAN DISINI](https://t.me
 <p align="center"><a href="https://heroku.com/deploy?template=https://github.com/mrismanaziz/Man-Userbot"> <img src="https://img.shields.io/badge/Deploy%20To%20Heroku-blue?style=flat&logo=heroku" width="210" height="34.45" /></a></p>
 
 <br>
-</p>
 
 ## Credits
 *   [RaphielGang](https://github.com/RaphielGang) - Telegram-Paperplane
