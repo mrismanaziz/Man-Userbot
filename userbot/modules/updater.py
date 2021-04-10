@@ -210,9 +210,15 @@ async def upstream(event):
         await event.edit("`✣ Proses Update Man-Userbot, Updating...92%`")
         await event.edit("`✣ Proses Update Man-Userbot, Tunggu Sebentar....100%`")
     if conf == "now":
-        await update(event, repo, ups_rem, ac_br, txt)
-        await asyncio.sleep(10)
-        await event.delete()
+        if changelog != "":
+            for commit in changelog.splitlines():
+                if commit.startswith("- [NQ]"):
+                    return await event.edit(
+                        "**Quick update has been disabled for this update; "
+                        "use** `.update deploy` **instead.**"
+                    )
+        await event.edit("**Perfoming a quick update, please wait...**")
+        await update(event, repo, ups_rem, ac_br)
     elif conf == "deploy":
         await deploy(event, repo, ups_rem, ac_br, txt)
         await asyncio.sleep(10)
