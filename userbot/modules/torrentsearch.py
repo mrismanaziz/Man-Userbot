@@ -22,7 +22,7 @@ async def gengkapak(e):
     await e.edit("`Please wait, fetching results...`")
     query = e.pattern_match.group(1)
     response = requests.get(
-        f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}"
+        f"https://api.sumanjay.cf/torrent/?query={query}"
     )
     ts = json.loads(response.text)
     if ts != response.json():
