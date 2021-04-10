@@ -21,9 +21,7 @@ from userbot.events import register
 async def gengkapak(e):
     await e.edit("`Please wait, fetching results...`")
     query = e.pattern_match.group(1)
-    response = requests.get(
-        f"https://api.sumanjay.cf/torrent/?query={query}"
-    )
+    response = requests.get(f"https://api.sumanjay.cf/torrent/?query={query}")
     ts = json.loads(response.text)
     if ts != response.json():
         await e.edit("**Some error occured**\n`Try Again Later`")
