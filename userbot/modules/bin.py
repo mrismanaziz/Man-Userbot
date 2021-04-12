@@ -8,7 +8,7 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern=r"^\.bin ?(.*)")
+@register(outgoing=True, pattern=".bin ?(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -34,7 +34,7 @@ async def _(event):
     await event.delete()
 
 
-@register(outgoing=True, pattern=r"^\.vbv ?(.*)")
+@register(outgoing=True, pattern=".vbv ?(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -61,7 +61,7 @@ async def _(event):
     await event.delete()
 
 
-@register(outgoing=True, pattern=r"^\.iban ?(.*)")
+@register(outgoing=True, pattern=".iban ?(.*)")
 async def _(event):
     if event.fwd_from:
         return

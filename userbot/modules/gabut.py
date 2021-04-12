@@ -39,7 +39,7 @@ async def get_readable_time(seconds: int) -> str:
     return up_time
 
 
-@register(outgoing=True, pattern=r"^\.keping$")
+@register(outgoing=True, pattern="^.keping$")
 async def pingme(pong):
     """ For .ping command, ping the userbot from any chat.  """
     await get_readable_time((time.time() - StartTime))
@@ -89,7 +89,7 @@ async def pingme(pong):
     )
 
 
-@register(outgoing=True, pattern=r"^\.a(?: |$)(.*)")
+@register(outgoing=True, pattern="^.a(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
@@ -101,7 +101,7 @@ async def typewriter(typew):
 # Owner @Si_Dian
 
 
-@register(outgoing=True, pattern=r"^\.j(?: |$)(.*)")
+@register(outgoing=True, pattern="^.j(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
@@ -113,7 +113,7 @@ async def typewriter(typew):
 # Owner @Si_Dian
 
 
-@register(outgoing=True, pattern=r"^\.k(?: |$)(.*)")
+@register(outgoing=True, pattern="^.k(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
@@ -125,7 +125,7 @@ async def typewriter(typew):
 # Owner @Si_Dian
 
 
-@register(outgoing=True, pattern=r"^\.ass(?: |$)(.*)")
+@register(outgoing=True, pattern="^.ass(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)

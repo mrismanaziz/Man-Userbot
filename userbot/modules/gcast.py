@@ -7,7 +7,7 @@ from userbot import CMD_HELP, bot
 from userbot.events import register
 
 
-@register(outgoing=True, pattern=r"^\.gcast (.*)")
+@register(outgoing=True, pattern="^.gcast (.*)")
 async def gcast(event):
     xx = event.pattern_match.group(1)
     if not xx:

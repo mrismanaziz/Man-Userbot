@@ -11,7 +11,7 @@ from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern=r"^\.notes$")
+@register(outgoing=True, pattern="^.notes$")
 async def notes_active(svd):
     """ For .notes command, list all of the notes saved in a chat. """
     try:
@@ -29,7 +29,7 @@ async def notes_active(svd):
     await svd.edit(message)
 
 
-@register(outgoing=True, pattern=r"^\.clear (\w*)")
+@register(outgoing=True, pattern=r"^.clear (\w*)")
 async def remove_notes(clr):
     """ For .clear command, clear note with the given name."""
     try:
@@ -43,7 +43,7 @@ async def remove_notes(clr):
         return await clr.edit("`Successfully deleted note:` **{}**".format(notename))
 
 
-@register(outgoing=True, pattern=r"^\.save (\w*)")
+@register(outgoing=True, pattern=r"^.save (\w*)")
 async def add_note(fltr):
     """ For .save command, saves notes in a chat. """
     try:

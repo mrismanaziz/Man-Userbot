@@ -12,7 +12,7 @@ usernexp = re.compile(r"@(\w{3,32})\[(.+?)\]")
 nameexp = re.compile(r"\[([\w\S]+)\]\(tg://user\?id=(\d+)\)\[(.+?)\]")
 
 
-@register(outgoing=True, pattern=r"^\.all(?: |$)(.*)", disable_errors=True)
+@register(outgoing=True, pattern="^.all(?: |$)(.*)", disable_errors=True)
 async def all(event):
     if event.fwd_from:
         return
