@@ -4,6 +4,7 @@ from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
 
 import userbot.modules.sql_helper.antiflood_sql as sql
+from userbot import CMD_HELP
 from userbot.events import register
 from userbot.utils.tools import is_admin
 
@@ -37,7 +38,7 @@ async def _(event):
         no_admin_privilege_message = await event.client.send_message(
             entity=event.chat_id,
             message="""**Automatic AntiFlooder**
-@admin [User](tg://user?id={}) is flooding this chat.
+[User](tg://user?id={}) Membanjiri obrolan.
 
 `{}`""".format(
                 event.message.from_id, str(e)
@@ -50,15 +51,15 @@ async def _(event):
         await event.client.send_message(
             entity=event.chat_id,
             message="""**Automatic AntiFlooder**
-[User](tg://user?id={}) has been automatically restricted
-because he reached the defined flood limit.""".format(
+[User](tg://user?id={}) Membanjiri obrolan.
+**Aksi:** Saya membisukan dia 🔇""".format(
                 event.message.from_id
             ),
             reply_to=event.message.id,
         )
 
 
-@register(outgoing=True, pattern="^.setflood(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.setflood(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -67,7 +68,18 @@ async def _(event):
         sql.set_flood(event.chat_id, input_str)
         sql.__load_flood_settings()
         await event.edit(
-            "Antiflood updated to {} in the current chat".format(input_str)
+            "Antiflood diperbarui menjadi `{}` dalam obrolan saat ini".format(input_str)
         )
     except Exception as e:  # pylint:disable=C0103,W0703
         await event.edit(str(e))
+
+
+CMD_HELP.update(
+    {
+        "antiflood": "**Plugin : **`antiflood`\
+        \n\n  •  **Syntax :** `.setflood` [jumlah pesan]\
+        \n  •  **Function : **memperingatkan pengguna jika dia melakukan spam pada obrolan dan jika Anda adalah admin maka itu akan membisukan dia dalam grup itu.\
+        \n\n  •  **NOTE :** Untuk mematikan setflood, atur jumlah pesan menjadi 0 » `.setflood 0`\
+    "
+    }
+)
