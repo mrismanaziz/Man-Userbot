@@ -98,3 +98,4 @@ youtube-dl>=2021.1.8
 youtube-search-python>=1.3.2
 youtube-search>=1.1.1
 youtube-dl
+js2py
