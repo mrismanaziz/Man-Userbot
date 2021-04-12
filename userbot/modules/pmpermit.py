@@ -396,7 +396,7 @@ CMD_HELP.update(
         "pmpermit": "**Plugin : **`pmpermit`\
         \n\n  •  **Syntax :** `.setuju` atau `.ok`\
         \n  •  **Function : **Menerima pesan seseorang dengan cara balas pesannya atau tag dan juga untuk dilakukan di pm.\
-        \n\n  •  **Syntax :** `.tolak` atau `.nopm\
+        \n\n  •  **Syntax :** `.tolak` atau `.nopm`\
         \n  •  **Function : **Menolak pesan seseorang dengan cara balas pesannya atau tag dan juga untuk dilakukan di pm.\
         \n\n  •  **Syntax :** `.block`\
         \n  •  **Function : **Memblokir Orang Di PM.\
