@@ -7,7 +7,7 @@ from userbot import CMD_HELP, bot
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.firmware(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.firmware(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -29,7 +29,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern="^.fastboot(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.fastboot(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -51,7 +51,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern="^.recovery(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.recovery(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -73,7 +73,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern="^.pb(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.pb(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -95,7 +95,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern="^.of(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.of(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -117,7 +117,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern="^.eu(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.eu(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -139,7 +139,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern="^.vendor(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.vendor(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -161,7 +161,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern="^.specs(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.specs(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
