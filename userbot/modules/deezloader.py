@@ -1,128 +1,123 @@
-# Copyright (C) 2020 The Authors UniBorg (telegram userbot)
-#
-# Licensed under the Raphielscape Public License, Version 1.d (the "License");
-# you may not use this file except in compliance with the License.
-#
-# requires: deezloader hachoir Pillow
+# UniBorg (telegram userbot)
+# Copyright (C) 2020 The Authors
 # Ported from UniBorg by AnggaR96s
 
 import os
-import shutil
-import time
+from shutil import rmtree
+from time import time
 
-import deezloader
+from deezloader import Login
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
+from requests import get
 from telethon.tl.types import DocumentAttributeAudio
 
-from userbot import DEEZER_ARL_TOKEN, TEMP_DOWNLOAD_DIRECTORY
+from userbot import CMD_HELP, DEEZER_ARL_TOKEN, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
 
+if not TEMP_DOWNLOAD_DIRECTORY.endswith("/"):
+    TEMP_DOWNLOAD_DIRECTORY += "/"
 
-@register(
-    outgoing=True, pattern=r"^\.deezload (.+?|) (FLAC|MP3\_320|MP3\_256|MP3\_128)"
-)
-async def _(event):
-    """DeezLoader by @An0nimia
-    Ported for UniBorg by @SpEcHlDe"""
-    if event.fwd_from:
-        return
 
-    strings = {
-        "name": "DeezLoad",
-        "arl_token_cfg_doc": "ARL Token for Deezer",
-        "invalid_arl_token": "please set the required variables for this module",
-        "wrong_cmd_syntax": "bruh, now i think how far should we go. please terminate my Session 🥺",
-        "server_error": "We're experiencing technical difficulties.",
-        "processing": "`Downloading...`",
-        "uploading": "`Uploading...`",
-    }
-
-    ARL_TOKEN = DEEZER_ARL_TOKEN
-
-    if ARL_TOKEN is None:
-        await event.edit(strings["invalid_arl_token"])
-        return
+@register(outgoing=True, pattern=r"^\.deezloader (.*) (flac|320|256|128)")
+async def deeznuts(event):
+    if DEEZER_ARL_TOKEN is None:
+        return await event.edit("**Set** `DEEZER_ARL_TOKEN` **first.**")
 
     try:
-        loader = deezloader.Login(ARL_TOKEN)
-    except Exception as er:
-        await event.edit(str(er))
-        return
+        loader = Login(DEEZER_ARL_TOKEN)
+    except Exception as e:
+        return await event.edit(f"**Error:** `{e}`")
 
-    temp_dl_path = os.path.join(TEMP_DOWNLOAD_DIRECTORY, str(time.time()))
+    try:
+        link = get(event.pattern_match.group(1)).url
+    except:
+        return await event.edit("**Error: Invalid link provided.**")
+
+    quality = {"flac": "FLAC", "320": "MP3_320", "256": "MP3_256", "128": "MP3_128"}
+    quality = quality[event.pattern_match.group(2)]
+
+    temp_dl_path = os.path.join(TEMP_DOWNLOAD_DIRECTORY, str(time()))
     if not os.path.exists(temp_dl_path):
         os.makedirs(temp_dl_path)
 
-    required_link = event.pattern_match.group(1)
-    required_qty = event.pattern_match.group(2)
+    await event.edit("`Downloading...`")
 
-    await event.edit(strings["processing"])
+    if "spotify" in link:
+        if "track" in link:
+            try:
+                track = loader.download_trackspo(
+                    link,
+                    output=temp_dl_path,
+                    quality=quality,
+                    recursive_quality=True,
+                    recursive_download=True,
+                    not_interface=True,
+                )
+            except Exception as e:
+                return await event.edit(f"**Error:** `{e}`")
+            await event.edit("`Uploading...`")
+            await upload_track(track, event)
+            rmtree(temp_dl_path)
+            return await event.delete()
 
-    if "spotify" in required_link:
-        if "track" in required_link:
-            required_track = loader.download_trackspo(
-                required_link,
-                output=temp_dl_path,
-                quality=required_qty,
-                recursive_quality=True,
-                recursive_download=True,
-                not_interface=True,
-            )
-            await event.edit(strings["uploading"])
-            await upload_track(required_track, event)
-            shutil.rmtree(temp_dl_path)
-            await event.delete()
+        if "album" in link:
+            try:
+                album = loader.download_albumspo(
+                    link,
+                    output=temp_dl_path,
+                    quality=quality,
+                    recursive_quality=True,
+                    recursive_download=True,
+                    not_interface=True,
+                    zips=False,
+                )
+            except Exception as e:
+                return await event.edit(f"**Error:** `{e}`")
+            await event.edit("`Uploading...`")
+            for track in album:
+                await upload_track(track, event)
+            rmtree(temp_dl_path)
+            return await event.delete()
 
-        elif "album" in required_link:
-            reqd_albums = loader.download_albumspo(
-                required_link,
-                output=temp_dl_path,
-                quality=required_qty,
-                recursive_quality=True,
-                recursive_download=True,
-                not_interface=True,
-                zips=False,
-            )
-            for required_track in reqd_albums:
-                await event.edit(strings["uploading"])
-                await upload_track(required_track, event)
-            shutil.rmtree(temp_dl_path)
-            await event.delete()
+    if "deezer" in link:
+        if "track" in link:
+            try:
+                track = loader.download_trackdee(
+                    link,
+                    output=temp_dl_path,
+                    quality=quality,
+                    recursive_quality=True,
+                    recursive_download=True,
+                    not_interface=True,
+                )
+            except Exception as e:
+                return await event.edit(f"**Error:** `{e}`")
+            await event.edit("`Uploading...`")
+            await upload_track(track, event)
+            rmtree(temp_dl_path)
+            return await event.delete()
 
-    elif "deezer" in required_link:
-        if "track" in required_link:
-            required_track = loader.download_trackdee(
-                required_link,
-                output=temp_dl_path,
-                quality=required_qty,
-                recursive_quality=True,
-                recursive_download=True,
-                not_interface=True,
-            )
-            await event.edit(strings["uploading"])
-            await upload_track(required_track, event)
-            shutil.rmtree(temp_dl_path)
-            await event.delete()
+        if "album" in link:
+            try:
+                album = loader.download_albumdee(
+                    link,
+                    output=temp_dl_path,
+                    quality=quality,
+                    recursive_quality=True,
+                    recursive_download=True,
+                    not_interface=True,
+                    zips=False,
+                )
+            except Exception as e:
+                return await event.edit(f"**Error:** `{e}`")
+            await event.edit("`Uploading...`")
+            for track in album:
+                await upload_track(track, event)
+            rmtree(temp_dl_path)
+            return await event.delete()
 
-        elif "album" in required_link:
-            reqd_albums = loader.download_albumdee(
-                required_link,
-                output=temp_dl_path,
-                quality=required_qty,
-                recursive_quality=True,
-                recursive_download=True,
-                not_interface=True,
-                zips=False,
-            )
-            for required_track in reqd_albums:
-                await event.edit(strings["uploading"])
-                await upload_track(required_track, event)
-            shutil.rmtree(temp_dl_path)
-            await event.delete()
-
-    else:
-        await event.edit(strings["wrong_cmd_syntax"])
+    await event.edit("**Syntax error!\nRead** `.help deezloader`**.**")
 
 
 async def upload_track(track_location, message):
@@ -136,6 +131,7 @@ async def upload_track(track_location, message):
         title = metadata.get("title")
     if metadata.has("artist"):
         performer = metadata.get("artist")
+
     document_attributes = [
         DocumentAttributeAudio(
             duration=duration,
@@ -145,16 +141,32 @@ async def upload_track(track_location, message):
             waveform=None,
         )
     ]
-    supports_streaming = True
-    force_document = False
-    caption_rts = os.path.basename(track_location)
+
+    if title and performer:
+        track = f"{performer} - {title}"
+    else:
+        track = str(os.path.basename(track_location).rsplit(".", 1)[0])
+
+    await message.edit(f"**Uploading...\nTrack:** {track}")
+
     await message.client.send_file(
         message.chat_id,
         track_location,
-        caption=caption_rts,
-        force_document=force_document,
-        supports_streaming=supports_streaming,
+        caption=os.path.basename(track_location),
+        force_document=False,
+        supports_streaming=True,
         allow_cache=False,
         attributes=document_attributes,
     )
     os.remove(track_location)
+
+
+CMD_HELP.update(
+    {
+        "deezloader": "**Plugin : **`deezloader`\
+        \n\n  •  **Syntax :** `.deezloader` <spotify/deezer link> <quality>\
+        \n  •  **Function : **Download  musik menggunakan Deezloader.\
+        \n\n  •  **Available qualities:** `flac`, `320`, `256`, `128`\
+    "
+    }
+)
