@@ -4,7 +4,6 @@
    Heroku manager for your userbot
 """
 
-import asyncio
 import codecs
 import math
 import os
