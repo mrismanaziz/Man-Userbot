@@ -3,9 +3,9 @@
 # Licensed under the Raphielscape Public License, Version 1.c (the "License");
 # you may not use this file except in compliance with the License.
 #
+""" Userbot module containing commands related to android"""
 
 import asyncio
-import json
 import math
 import os
 import re
@@ -16,20 +16,40 @@ from requests import get
 
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
-from userbot.utils.tools import human_to_bytes, humanbytes, md5, time_formatter
+from userbot.utils import chrome, human_to_bytes, humanbytes, md5, time_formatter
 
 GITHUB = "https://github.com"
+DEVICES_DATA = (
+    "https://raw.githubusercontent.com/androidtrackers/"
+    "certified-android-devices/master/by_device.json"
+)
 
 
 @register(outgoing=True, pattern=r"^\.magisk$")
 async def magisk(request):
+    """ magisk latest releases """
     magisk_dict = {
         "Stable": "https://raw.githubusercontent.com/topjohnwu/magisk_files/master/stable.json",
         "Beta": "https://raw.githubusercontent.com/topjohnwu/magisk_files/master/beta.json",
+        "Canary": "https://raw.githubusercontent.com/topjohnwu/magisk_files/canary/canary.json",
     }
     releases = "Latest Magisk Releases:\n"
     for name, release_url in magisk_dict.items():
         data = get(release_url).json()
+        if str(name) == "Canary":
+            data["magisk"]["link"] = (
+                "https://github.com/topjohnwu/magisk_files/raw/canary/"
+                + data["magisk"]["link"]
+            )
+            data["app"]["link"] = (
+                "https://github.com/topjohnwu/magisk_files/raw/canary/"
+                + data["app"]["link"]
+            )
+            data["uninstaller"]["link"] = (
+                "https://github.com/topjohnwu/magisk_files/raw/canary/"
+                + data["uninstaller"]["link"]
+            )
+
         releases += (
             f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | '
             f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | '
@@ -40,72 +60,65 @@ async def magisk(request):
 
 @register(outgoing=True, pattern=r"^\.device(?: |$)(\S*)")
 async def device_info(request):
+    """ get android device basic info from its codename """
     textx = await request.get_reply_message()
-    codename = request.pattern_match.group(1)
-    if codename:
+    device = request.pattern_match.group(1)
+    if device:
         pass
     elif textx:
-        codename = textx.text
+        device = textx.text
     else:
-        await request.edit("`Usage: .device <codename> / <model>`")
-        return
-    data = json.loads(
-        get(
-            "https://raw.githubusercontent.com/androidtrackers/"
-            "certified-android-devices/master/by_device.json"
-        ).text
-    )
-    results = data.get(codename)
-    if results:
-        reply = f"**Search results for {codename}**:\n\n"
-        for item in results:
+        return await request.edit("`Usage: .device <codename> / <model>`")
+    try:
+        found = get(DEVICES_DATA).json()[device]
+    except KeyError:
+        reply = f"`Couldn't find info about {device}!`\n"
+    else:
+        reply = f"Search results for {device}:\n\n"
+        for item in found:
+            brand = item["brand"]
+            name = item["name"]
+            codename = device
+            model = item["model"]
             reply += (
-                f"**Brand**: {item['brand']}\n"
-                f"**Name**: {item['name']}\n"
-                f"**Model**: {item['model']}\n\n"
+                f"{brand} {name}\n"
+                f"**Codename**: `{codename}`\n"
+                f"**Model**: {model}\n\n"
             )
-    else:
-        reply = f"`Couldn't find info about {codename}!`\n"
     await request.edit(reply)
 
 
 @register(outgoing=True, pattern=r"^\.codename(?: |)([\S]*)(?: |)([\s\S]*)")
 async def codename_info(request):
+    """ search for android codename """
     textx = await request.get_reply_message()
     brand = request.pattern_match.group(1).lower()
     device = request.pattern_match.group(2).lower()
-
     if brand and device:
         pass
     elif textx:
         brand = textx.text.split(" ")[0]
         device = " ".join(textx.text.split(" ")[1:])
     else:
-        await request.edit("`Usage: .codename <brand> <device>`")
-        return
-
-    data = json.loads(
-        get(
-            "https://raw.githubusercontent.com/androidtrackers/"
-            "certified-android-devices/master/by_brand.json"
-        ).text
-    )
-    devices_lower = {k.lower(): v for k, v in data.items()}  # Lower brand names in JSON
-    devices = devices_lower.get(brand)
-    results = [
+        return await request.edit("`Usage: .codename <brand> <device>`")
+    found = [
         i
-        for i in devices
-        if i["name"].lower() == device.lower() or i["model"].lower() == device.lower()
+        for i in get(DEVICES_DATA).json()
+        if i["brand"].lower() == brand and device in i["name"].lower()
     ]
-    if results:
-        reply = f"**Search results for {brand} {device}**:\n\n"
-        if len(results) > 8:
-            results = results[:8]
-        for item in results:
+    if len(found) > 8:
+        found = found[:8]
+    if found:
+        reply = f"Search results for {brand.capitalize()} {device.capitalize()}:\n\n"
+        for item in found:
+            brand = item["brand"]
+            name = item["name"]
+            codename = item["device"]
+            model = item["model"]
             reply += (
-                f"**Device**: {item['device']}\n"
-                f"**Name**: {item['name']}\n"
-                f"**Model**: {item['model']}\n\n"
+                f"{brand} {name}\n"
+                f"**Codename**: `{codename}`\n"
+                f"**Model**: {model}\n\n"
             )
     else:
         reply = f"`Couldn't find {device} codename!`\n"
@@ -131,10 +144,12 @@ async def download_api(dl):
     await dl.edit("`Getting information...`")
     driver.get(URL)
     error = driver.find_elements_by_class_name("swal2-content")
-    if len(error) > 0 and error[0].text == "File Not Found.":
-        await dl.edit(f"`FileNotFoundError`: {URL} is not found.")
-        return
+    if len(error) > 0:
+        if error[0].text == "File Not Found.":
+            await dl.edit(f"`FileNotFoundError`: {URL} is not found.")
+            return
     datas = driver.find_elements_by_class_name("download__meta")
+    """ - enumerate data to make sure we download the matched version - """
     md5_origin = None
     i = None
     for index, value in enumerate(datas):
@@ -147,16 +162,19 @@ async def download_api(dl):
             break
     if md5_origin is None and i is None:
         await dl.edit("`There is no match version available...`")
-    file_name = URL.split("/")[-2] if URL.endswith("/") else URL.split("/")[-1]
+    if URL.endswith("/"):
+        file_name = URL.split("/")[-2]
+    else:
+        file_name = URL.split("/")[-1]
     file_path = TEMP_DOWNLOAD_DIRECTORY + file_name
     download = driver.find_elements_by_class_name("download__btn")[i]
     download.click()
     await dl.edit("`Starting download...`")
-    file_size = human_to_bytes(download.text.split(None, 3)[-1].strip("()"))
+    file_size = human_to_bytes(download.text.split(None, 2)[-1].strip("()"))
     display_message = None
     complete = False
     start = time.time()
-    while not complete:
+    while complete is False:
         if os.path.isfile(file_path + ".crdownload"):
             try:
                 downloaded = os.stat(file_path + ".crdownload").st_size
@@ -175,17 +193,19 @@ async def download_api(dl):
         percentage = downloaded / file_size * 100
         speed = round(downloaded / diff, 2)
         eta = round((file_size - downloaded) / speed)
-        prog_str = "[{0}{1}] `{2}%`".format(
-            "".join("█" for i in range(math.floor(percentage / 10))),
-            "".join("░" for i in range(10 - math.floor(percentage / 10))),
+        prog_str = "`{0}` | [{1}{2}] `{3}%`".format(
+            status,
+            "".join(["●" for i in range(math.floor(percentage / 10))]),
+            "".join(["○" for i in range(10 - math.floor(percentage / 10))]),
             round(percentage, 2),
         )
         current_message = (
-            f"{file_name} - {status}\n"
-            f"{prog_str}\n"
-            f"`Size:` {humanbytes(downloaded)} of {humanbytes(file_size)}\n"
-            f"`Speed:` {humanbytes(speed)}/s\n"
-            f"`ETA:` {time_formatter(eta)}\n"
+            "`[DOWNLOAD]`\n\n"
+            f"`{file_name}`\n"
+            f"`Status`\n{prog_str}\n"
+            f"`{humanbytes(downloaded)} of {humanbytes(file_size)}"
+            f" @ {humanbytes(speed)}`\n"
+            f"`ETA` -> {time_formatter(eta)}"
         )
         if (
             round(diff % 15.00) == 0
@@ -214,6 +234,7 @@ async def download_api(dl):
 
 @register(outgoing=True, pattern=r"^\.specs(?: |)([\S]*)(?: |)([\s\S]*)")
 async def devices_specifications(request):
+    """ Mobile devices specifications """
     textx = await request.get_reply_message()
     brand = request.pattern_match.group(1).lower()
     device = request.pattern_match.group(2).lower()
@@ -223,8 +244,7 @@ async def devices_specifications(request):
         brand = textx.text.split(" ")[0]
         device = " ".join(textx.text.split(" ")[1:])
     else:
-        await request.edit("`Usage: .specs <brand> <device>`")
-        return
+        return await request.edit("`Usage: .specs <brand> <device>`")
     all_brands = (
         BeautifulSoup(
             get("https://www.devicespecifications.com/en/brand-more").content, "lxml"
@@ -256,7 +276,7 @@ async def devices_specifications(request):
     reply = ""
     for url in device_page_url:
         info = BeautifulSoup(get(url).content, "lxml")
-        reply = "\n" + info.title.text.split("-")[0].strip() + "\n"
+        reply = "\n**" + info.title.text.split("-")[0].strip() + "**\n\n"
         info = info.find("div", {"id": "model-brief-specifications"})
         specifications = re.findall(r"<b>.*?<br/>", str(info))
         for item in specifications:
@@ -273,6 +293,7 @@ async def devices_specifications(request):
 
 @register(outgoing=True, pattern=r"^\.twrp(?: |$)(\S*)")
 async def twrp(request):
+    """ get android device twrp """
     textx = await request.get_reply_message()
     device = request.pattern_match.group(1)
     if device:
@@ -280,13 +301,11 @@ async def twrp(request):
     elif textx:
         device = textx.text.split(" ")[0]
     else:
-        await request.edit("`Usage: .twrp <codename>`")
-        return
+        return await request.edit("`Usage: .twrp <codename>`")
     url = get(f"https://dl.twrp.me/{device}/")
     if url.status_code == 404:
         reply = f"`Couldn't find twrp downloads for {device}!`\n"
-        await request.edit(reply)
-        return
+        return await request.edit(reply)
     page = BeautifulSoup(url.content, "lxml")
     download = page.find("table").find("tr").find("a")
     dl_link = f"https://dl.twrp.me{download['href']}"
