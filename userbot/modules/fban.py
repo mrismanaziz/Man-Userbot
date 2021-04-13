@@ -160,9 +160,7 @@ async def addf(event):
     try:
         add_flist(event.chat_id, fed_name)
     except IntegrityError:
-        return await event.edit(
-            "`Grup ini sudah terhubung ke daftar federasi.`"
-        )
+        return await event.edit("`Grup ini sudah terhubung ke daftar federasi.`")
 
     await event.edit("`Menambahkan grup ini ke daftar federasi!`")
 
