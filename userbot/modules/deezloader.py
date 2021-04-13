@@ -31,7 +31,7 @@ async def deeznuts(event):
 
     try:
         link = get(event.pattern_match.group(1)).url
-    except:
+    except BaseException:
         return await event.edit("**Error: Invalid link provided.**")
 
     quality = {"flac": "FLAC", "320": "MP3_320", "256": "MP3_256", "128": "MP3_128"}
