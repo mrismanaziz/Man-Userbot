@@ -21,7 +21,12 @@ def subprocess_run(cmd):
     talk = subproc.communicate()
     exitCode = subproc.returncode
     if exitCode != 0:
-        return
+        print(
+            "An error was detected while running the subprocess:\n"
+            f"exit code: {exitCode}\n"
+            f"stdout: {talk[0]}\n"
+            f"stderr: {talk[1]}"
+        )
     return talk
 
 
@@ -32,25 +37,32 @@ trackers_list = get(
 trackers = f"[{trackers_list}]"
 
 cmd = f"aria2c \
+--allow-overwrite=true \
+--bt-max-peers=0 \
+--bt-tracker={trackers} \
+--check-certificate=false \
+--daemon=true \
 --enable-rpc \
+--follow-torrent=mem \
+--max-concurrent-downloads=5 \
+--max-connection-per-server=10 \
+--max-upload-limit=1K \
+--min-split-size=10M \
 --rpc-listen-all=false \
 --rpc-listen-port 8210 \
---max-connection-per-server=10 \
 --rpc-max-request-size=1024M \
 --seed-time=0.01 \
---max-upload-limit=5K \
---max-concurrent-downloads=5 \
---min-split-size=10M \
---follow-torrent=mem \
 --split=10 \
---bt-tracker={trackers} \
---daemon=true \
---allow-overwrite=true"
+"
 
 subprocess_run(cmd)
+
 if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
     os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
+
 download_path = os.getcwd() + TEMP_DOWNLOAD_DIRECTORY.strip(".")
+if not download_path.endswith("/"):
+    download_path += "/"
 
 aria2 = aria2p.API(aria2p.Client(host="http://localhost", port=8210, secret=""))
 
@@ -65,10 +77,10 @@ async def magnet_download(event):
         download = aria2.add_magnet(magnet_uri)
     except Exception as e:
         LOGS.info(str(e))
-        return await event.edit("Error:\n`" + str(e) + "`")
+        return await event.edit(f"**Error:**\n`{e}`")
     gid = download.gid
     await check_progress_for_dl(gid=gid, event=event, previous=None)
-    await sleep(5)
+    await sleep(15)
     new_gid = await check_metadata(gid)
     await check_progress_for_dl(gid=new_gid, event=event, previous=None)
 
@@ -82,7 +94,7 @@ async def torrent_download(event):
             torrent_file_path, uris=None, options=None, position=None
         )
     except Exception as e:
-        return await event.edit(str(e))
+        return await event.edit(f"**Error:**\n`{e}`")
     gid = download.gid
     await check_progress_for_dl(gid=gid, event=event, previous=None)
 
@@ -94,7 +106,7 @@ async def aurl_download(event):
         download = aria2.add_uris(uri, options=None, position=None)
     except Exception as e:
         LOGS.info(str(e))
-        return await event.edit("Error :\n`{}`".format(str(e)))
+        return await event.edit(f"**Error:**\n`{e}`")
     gid = download.gid
     await check_progress_for_dl(gid=gid, event=event, previous=None)
     file = aria2.get_download(gid)
@@ -112,10 +124,9 @@ async def remove_all(event):
         pass
     if not removed:  # If API returns False Try to Remove Through System Call.
         subprocess_run("aria2p remove-all")
-    await event.edit("`Clearing on-going downloads... `")
+    await event.edit("`Clearing on-going downloads...`")
     await sleep(2.5)
     await event.edit("`Successfully cleared all downloads.`")
-    await sleep(2.5)
 
 
 @register(outgoing=True, pattern=r"^\.apause(?: |$)(.*)")
@@ -125,7 +136,6 @@ async def pause_all(event):
     aria2.pause_all(force=True)
     await sleep(2.5)
     await event.edit("`Successfully paused on-going downloads.`")
-    await sleep(2.5)
 
 
 @register(outgoing=True, pattern=r"^\.aresume(?: |$)(.*)")
@@ -133,7 +143,7 @@ async def resume_all(event):
     await event.edit("`Resuming downloads...`")
     aria2.resume_all()
     await sleep(1)
-    await event.edit("`Downloads resumed.`")
+    await event.edit("`Resumed downloads.`")
     await sleep(2.5)
     await event.delete()
 
@@ -160,24 +170,21 @@ async def show_all(event):
             + "\n\n"
         )
     if len(msg) <= 4096:
-        await event.edit("`On-going Downloads: `\n" + msg)
+        await event.edit("**On-going Downloads:**\n" + msg)
         await sleep(5)
-        await event.delete()
     else:
         await event.edit("`Output is too big, sending it as a file...`")
         output = "output.txt"
         with open(output, "w") as f:
             f.write(msg)
         await sleep(2)
-        await event.delete()
         await event.client.send_file(
             event.chat_id,
             output,
-            force_document=True,
-            supports_streaming=False,
-            allow_cache=False,
             reply_to=event.message.id,
         )
+
+    await event.delete()
 
 
 async def check_metadata(gid):
@@ -193,48 +200,48 @@ async def check_progress_for_dl(gid, event, previous):
         file = aria2.get_download(gid)
         complete = file.is_complete
         try:
-            if not (complete or file.error_message):
+            if complete or file.error_message:
+                await event.edit(f"`{msg}`")
+            else:
                 percentage = int(file.progress)
                 downloaded = percentage * int(file.total_length) / 100
-                prog_str = "[{0}{1}] `{2}`".format(
-                    "".join("█" for i in range(math.floor(percentage / 10))),
-                    "".join("░" for i in range(10 - math.floor(percentage / 10))),
+                prog_str = "**Downloading:** `[{}{}]` **{}**".format(
+                    "".join("●" for _ in range(math.floor(percentage / 10))),
+                    "".join("○" for _ in range(10 - math.floor(percentage / 10))),
                     file.progress_string(),
                 )
+
                 msg = (
-                    f"{file.name} - Downloading\n"
+                    f"**Name:** `{file.name}`\n"
+                    f"**Status:** {file.status.capitalize()}\n"
                     f"{prog_str}\n"
-                    f"`Size:` {humanbytes(downloaded)} of {file.total_length_string()}\n"
-                    f"`Speed:` {file.download_speed_string()}\n"
-                    f"`ETA:` {file.eta_string()}\n"
+                    f"{humanbytes(downloaded)} of {file.total_length_string()}"
+                    f" @ {file.download_speed_string()}\n"
+                    f"**ETA:** {file.eta_string()}\n"
                 )
                 if msg != previous:
                     await event.edit(msg)
                     msg = previous
-            else:
-                await event.edit(f"`{msg}`")
-            await sleep(5)
+            await sleep(15)
             await check_progress_for_dl(gid, event, previous)
             file = aria2.get_download(gid)
             complete = file.is_complete
             if complete:
                 return await event.edit(
-                    f"`Name`: `{file.name}`\n"
-                    f"`Size`: `{file.total_length_string()}`\n"
-                    f"`Path`: `{TEMP_DOWNLOAD_DIRECTORY + file.name}`\n"
-                    "`Resp`: **OK** - Successfully downloaded..."
+                    "**Downloaded successfully!**\n\n"
+                    f"**Name:** `{file.name}`\n"
+                    f"**Size:** {file.total_length_string()}\n"
+                    f"**Path:** `{TEMP_DOWNLOAD_DIRECTORY + file.name}`\n"
                 )
         except Exception as e:
             if " not found" in str(e) or "'file'" in str(e):
-                await event.edit("Download Canceled :\n`{}`".format(file.name))
+                await event.edit(f"**Download canceled:**\n`{file.name}`")
                 await sleep(2.5)
                 return await event.delete()
-            elif " depth exceeded" in str(e):
+            if " depth exceeded" in str(e):
                 file.remove(force=True)
                 await event.edit(
-                    "Download Auto Canceled :\n`{}`\nYour Torrent/Link is Dead.".format(
-                        file.name
-                    )
+                    f"**Download cancelled automatically:**\n`{file.name}`\n**Given link/torrent is dead.**"
                 )
 
 
