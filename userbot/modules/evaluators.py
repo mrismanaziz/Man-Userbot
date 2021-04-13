@@ -18,22 +18,19 @@ from userbot.events import register
 @register(outgoing=True, pattern=r"^\.eval(?: |$|\n)([\s\S]*)")
 async def evaluate(event):
     """For .eval command, evaluates the given Python expression."""
-    if event.is_channel and not event.is_group:
-        return await event.edit("`Eval isn't permitted on channels.`")
-
-    if event.pattern_match.group(1):
-        expression = event.pattern_match.group(1)
-    else:
+    expression = event.pattern_match.group(1)
+    if not expression:
         return await event.edit("`Give an expression to evaluate.`")
 
     if expression in ("userbot.session", "config.env"):
         return await event.edit("`Itu operasi yang berbahaya! Tidak diperbolehkan!`")
 
+    await event.edit("`Processing...`")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = StringIO()
     redirected_error = sys.stderr = StringIO()
-    stdout, stderr, exc = None, None, None
+    stdout, stderr, exc, returned = None, None, None, None
 
     async def aexec(code, event):
         head = "async def __aexec(event):\n "
@@ -50,49 +47,38 @@ async def evaluate(event):
     stderr = redirected_error.getvalue().strip()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
-    evaluation = exc or stderr or stdout or returned
-
     expression.encode("unicode-escape").decode().replace("\\\\", "\\")
-    evaluation.encode("unicode-escape").decode().replace("\\\\", "\\")
 
-    try:
-        if evaluation:
-            if len(str(evaluation)) >= 4096:
-                with open("output.txt", "w+") as file:
-                    file.write(evaluation)
-                await event.client.send_file(
-                    event.chat_id,
-                    "output.txt",
-                    reply_to=event.id,
-                    caption="`Output terlalu besar, dikirim sebagai file...`",
-                )
-                remove("output.txt")
-                return
-            await event.edit(
-                f"**Query:**\n`{expression}`\n\n**Result:**\n`{evaluation}`"
-            )
-        else:
-            await event.edit(
-                f"**Query:**\n`{expression}`\n\n**Result:**\n`No Result Returned/False`"
-            )
-    except Exception as err:
-        await event.edit(f"**Query:**\n`{expression}`\n\n**Exception:**\n`{err}`")
+    evaluation = str(exc or stderr or stdout or returned)
+    if evaluation and evaluation != "":
+        evaluation = evaluation.encode("unicode-escape").decode().replace("\\\\", "\\")
+    else:
+        evaluation = "None"
+
+    if len(str(evaluation)) >= 4096:
+        with open("output.txt", "w+") as file:
+            file.write(evaluation)
+        await event.client.send_file(
+            event.chat_id,
+            "output.txt",
+            reply_to=event.id,
+            caption="`Output terlalu besar, dikirim sebagai file...`",
+        )
+        return remove("output.txt")
+    await event.edit(f"**Query:**\n`{expression}`\n\n**Result:**\n`{evaluation}`")
 
 
 @register(outgoing=True, pattern=r"^\.exec(?: |$|\n)([\s\S]*)")
 async def run(event):
     """For .exec command, which executes the dynamically created program"""
     code = event.pattern_match.group(1)
-
-    if event.is_channel and not event.is_group:
-        return await event.edit("`Exec isn't permitted on channels!`")
-
     if not code:
         return await event.edit("**Read** `.help exec` **for an example.**")
 
     if code in ("userbot.session", "config.env"):
         return await event.edit("`Itu operasi yang berbahaya! Tidak diperbolehkan!`")
 
+    await event.edit("`Processing...`")
     if len(code.splitlines()) <= 5:
         codepre = code
     else:
@@ -109,28 +95,26 @@ async def run(event):
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.STDOUT,
     )
-    stdout, _ = await process.communicate()
-    result = str(stdout.decode().strip())
-
     codepre.encode("unicode-escape").decode().replace("\\\\", "\\")
-    result.encode("unicode-escape").decode().replace("\\\\", "\\")
 
-    if result:
-        if len(result) > 4096:
-            with open("output.txt", "w+") as file:
-                file.write(result)
-            await event.client.send_file(
-                event.chat_id,
-                "output.txt",
-                reply_to=event.id,
-                caption="`Output terlalu besar, dikirim sebagai file...`",
-            )
-            return remove("output.txt")
-        await event.edit(f"**Query:**\n`{codepre}`\n\n**Result:**\n`{result}`")
+    stdout, _ = await process.communicate()
+    if stdout and stdout != "":
+        stdout = str(stdout.decode().strip())
+        stdout.encode("unicode-escape").decode().replace("\\\\", "\\")
     else:
-        await event.edit(
-            f"**Query:**\n`{codepre}`\n\n**Result:**\n`No result returned/False`"
+        stdout = "None"
+
+    if len(stdout) > 4096:
+        with open("output.txt", "w+") as file:
+            file.write(stdout)
+        await event.client.send_file(
+            event.chat_id,
+            "output.txt",
+            reply_to=event.id,
+            caption="`Output terlalu besar, dikirim sebagai file...`",
         )
+        return remove("output.txt")
+    await event.edit(f"**Query:**\n`{codepre}`\n\n**Result:**\n`{stdout}`")
 
 
 @register(outgoing=True, pattern=r"^\.term(?: |$|\n)([\s\S]*)")
@@ -138,23 +122,24 @@ async def terminal_runner(event):
     """For .term command, runs bash commands and scripts on your server."""
     command = event.pattern_match.group(1)
 
-    if event.is_channel and not event.is_group:
-        return await event.edit("**Term commands aren't permitted on channels!**")
-
     if not command:
-        return await event.edit("**Give a command or use .help term for an example.**")
+        return await event.edit("`Give a command or use .help term for an example.`")
 
     if command in ("userbot.session", "config.env"):
         return await event.edit("`Itu operasi yang berbahaya! Tidak diperbolehkan!`")
 
+    await event.edit("`Processing...`")
     process = await asyncio.create_subprocess_shell(
         command, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.STDOUT
     )
-    stdout, _ = await process.communicate()
-    result = str(stdout.decode().strip())
-
     command.encode("unicode-escape").decode().replace("\\\\", "\\")
-    output = result.encode("unicode-escape").decode().replace("\\\\", "\\")
+
+    stdout, _ = await process.communicate()
+    if stdout and stdout != "":
+        result = str(stdout.decode().strip())
+        result.encode("unicode-escape").decode().replace("\\\\", "\\")
+    else:
+        result = "None"
 
     if len(result) > 4096:
         with open("output.txt", "w+") as output:
