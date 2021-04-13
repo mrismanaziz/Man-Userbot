@@ -98,20 +98,22 @@ def register(**args):
                 if not disable_errors:
                     date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
-                    text = "**MAN-USERBOT ERROR REPORT**\n"
-                    text += "Nothing is logged except the fact of error and date\n\n"
+                    text = "**✘ MAN-USERBOT ERROR REPORT ✘**\n\n"
+                    link = "[Group Support](https://t.me/SharingUserbot)"
+                    text += "Jika mau, Anda bisa melaporkan error ini, "
+                    text += f"Cukup forward saja pesan ini ke {link}.\n\n"
 
                     ftext = "========== DISCLAIMER =========="
-                    ftext += "\nThis file uploaded ONLY here,"
-                    ftext += "\nwe logged only fact of error and date,"
-                    ftext += "\nwe respect your privacy,"
-                    ftext += "\nyou may not report this error if you've"
-                    ftext += "\nany confidential data here, no one will see your data\n"
-                    ftext += "================================\n\n"
+                    ftext += "\nFile ini HANYA diupload di sini,"
+                    ftext += "\nkami hanya mencatat fakta error dan tanggal,"
+                    ftext += "\nkami menghormati privasi Anda."
+                    ftext += "\nJika mau, Anda bisa melaporkan error ini,"
+                    ftext += "\ncukup forward saja pesan ini ke @SharingUserbot"
+                    ftext += "\n================================\n\n"
                     ftext += "--------BEGIN USERBOT TRACEBACK LOG--------\n"
-                    ftext += "\nDate: " + date
-                    ftext += "\nChat ID: " + str(check.chat_id)
-                    ftext += "\nSender ID: " + str(check.sender_id)
+                    ftext += "\nTanggal : " + date
+                    ftext += "\nChat ID : " + str(check.chat_id)
+                    ftext += "\nUser ID : " + str(check.sender_id)
                     ftext += "\n\nEvent Trigger:\n"
                     ftext += str(check.text)
                     ftext += "\n\nTraceback info:\n"
@@ -122,7 +124,7 @@ def register(**args):
 
                     command = "git log --pretty=format:\"%an: %s\" -10"
 
-                    ftext += "\n\n\nLast 10 commits:\n"
+                    ftext += "\n\n\n10 commits Terakhir:\n"
 
                     process = await asyncsubshell(command,
                                                   stdout=asyncsub.PIPE,
@@ -138,8 +140,8 @@ def register(**args):
 
                     if LOGSPAMMER:
                         await check.respond(
-                            "`Sorry, my userbot has crashed.\
-                        \nThe error logs are stored in the userbot's log chat.`"
+                            "`Maaf, userbot anda sedang stress.\
+                        \nSilahkan cek file error di Log Userbot.`"
                         )
 
                         log = codecs.open("error.txt", "r", encoding="utf-8")
@@ -154,7 +156,7 @@ def register(**args):
                             .get("key")
                         )
                         url = f"https://nekobin.com/raw/{key}"
-                        anu = f"{text}Pasted to: [Nekobin]({url})"
+                        anu = f"{text}**✣ Paste ke :** [Nekobin]({url})"
 
                         await check.client.send_file(send_to,
                                                      "error.txt",
