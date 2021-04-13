@@ -1,3 +1,5 @@
+# Copyright (C) 2020 Adek Maulana.
+# All rights reserved.
 """
    Heroku manager for your userbot
 """
@@ -28,7 +30,7 @@ else:
 """
 
 
-@register(outgoing=True, pattern=r"^.(get|del) var(?: |$)(\w*)")
+@register(outgoing=True, pattern=r"^\.(get|del) var(?: |$)(\w*)")
 async def variable(var):
     exe = var.pattern_match.group(1)
     if app is None:
@@ -89,7 +91,7 @@ async def variable(var):
             return True
 
 
-@register(outgoing=True, pattern=r"^.set var (\w*) ([\s\S]*)")
+@register(outgoing=True, pattern=r"^\.set var (\w*) ([\s\S]*)")
 async def set_var(var):
     await var.edit("`Processing Config Vars..`")
     variable = var.pattern_match.group(1)
@@ -120,7 +122,7 @@ async def set_var(var):
 """
 
 
-@register(outgoing=True, pattern=r"^.usage(?: |$)")
+@register(outgoing=True, pattern=r"^\.usage(?: |$)")
 async def dyno_usage(dyno):
     """
     Get your account Dyno Usage
@@ -181,8 +183,6 @@ async def dyno_usage(dyno):
                 f"     •  `{hours}`**h**  `{minutes}`**m**  "
                 f"**|**  [`{percentage}`**%**]"
             )
-            await asyncio.sleep(20)
-            await event.delete()
             return True
 
 
@@ -207,7 +207,7 @@ async def _(dyno):
         .get("key")
     )
     url = f"https://nekobin.com/raw/{key}"
-    await dyno.edit(f"**Ini Logs Heroku Anda :**\n\n**Paste Ke:** [Nekobin]({url})")
+    await dyno.edit(f"**✣ Ini Logs Heroku Anda :** [Klik Disini]({url})")
     return os.remove("logs.txt")
 
 
@@ -219,9 +219,9 @@ CMD_HELP.update(
         \n\n  •  **Syntax :** `.set var <nama var> <value>`\
         \n  •  **Function : **Tambahkan Variabel Baru Atau Memperbarui Variabel\n Setelah Menyetel Variabel Man-Userbot Akan Di Restart.\
         \n\n  •  **Syntax :** `.get var or .get var <nama var>`\
-        \n  •  **Function : **Dapatkan Variabel Yang Ada, Gunakan Hanya Di Grup Privasi Anda!\n Ini Mengembalikan Semua Informasi Pribadi Anda, Harap berhati-hati.\
+        \n  •  **Function : **Dapatkan Variabel Yang Ada,Harap Gunakan Di Grup Private Anda! Ini Untuk Mengembalikan Informasi Heroku Pribadi Anda.\
         \n\n  •  **Syntax :** `.del var <nama var>`\
-        \n  •  **Function : **Check Kouta Dyno Heroku\
+        \n  •  **Function : **Untuk Menghapus var heroku\
         \n\n  •  **Syntax :** `.usange`\
         \n  •  **Function : **Fake Check Kouta Dyno Heroku jadi 9989jam Untuk menipu temanmu wkwk\
     "
