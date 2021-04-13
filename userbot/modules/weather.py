@@ -19,13 +19,10 @@ from userbot import WEATHER_DEFCITY
 from userbot.events import register
 
 # ===== CONSTANT =====
-if WEATHER_DEFCITY:
-    DEFCITY = WEATHER_DEFCITY
-else:
-    DEFCITY = None
+DEFCITY = WEATHER_DEFCITY or None
+
+
 # ====================
-
-
 async def get_tz(con):
     """ Get time zone of the given country. """
     """ Credits: @aragon12 and @zakaryan2004. """
@@ -39,25 +36,31 @@ async def get_tz(con):
         return
 
 
-@register(outgoing=True, pattern="^.weather(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.weather(?: |$)(.*)")
 async def get_weather(weather):
     """ For .weather command, gets the current weather of a city. """
 
     if not OWM_API:
-        await weather.edit("`Get an API key from` https://openweathermap.org/ `first.`")
-        return
+        return await weather.edit(
+            "**Get an API key from** https://openweathermap.org **first.**"
+        )
 
     APPID = OWM_API
 
+    anonymous = False
+
     if not weather.pattern_match.group(1):
         CITY = DEFCITY
-        if not CITY:
-            await weather.edit(
-                "`Please specify a city or set one as default using the WEATHER_DEFCITY config variable.`"
-            )
-            return
+    elif weather.pattern_match.group(1).lower() == "anon":
+        CITY = DEFCITY
+        anonymous = True
     else:
         CITY = weather.pattern_match.group(1)
+
+    if not CITY:
+        return await weather.edit(
+            "**Please specify a city or set one as default using the WEATHER_DEFCITY config variable.**"
+        )
 
     timezone_countries = {
         timezone: country
@@ -74,8 +77,7 @@ async def get_weather(weather):
             try:
                 countrycode = timezone_countries[f"{country}"]
             except KeyError:
-                await weather.edit("`Invalid country.`")
-                return
+                return await weather.edit("`Invalid country.`")
             CITY = newcity[0].strip() + "," + countrycode.strip()
 
     url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={APPID}"
@@ -83,8 +85,7 @@ async def get_weather(weather):
     result = json.loads(request.text)
 
     if request.status_code != 200:
-        await weather.edit("`Invalid country.`")
-        return
+        return await weather.edit("`Invalid country.`")
 
     cityname = result["name"]
     curtemp = result["main"]["temp"]
@@ -112,18 +113,17 @@ async def get_weather(weather):
     mph = str(wind * 2.237).split(".")
 
     def fahrenheit(f):
-        temp = str(((f - 273.15) * 9 / 5 + 32)).split(".")
+        temp = str((f - 273.15) * 9 / 5 + 32).split(".")
         return temp[0]
 
     def celsius(c):
-        temp = str((c - 273.15)).split(".")
+        temp = str(c - 273.15).split(".")
         return temp[0]
 
     def sun(unix):
-        xx = datetime.fromtimestamp(unix, tz=ctimezone).strftime("%I:%M %p")
-        return xx
+        return datetime.fromtimestamp(unix, tz=ctimezone).strftime("%I:%M %p")
 
-    await weather.edit(
+    results = (
         f"**Temperature:** `{celsius(curtemp)}°C | {fahrenheit(curtemp)}°F`\n"
         + f"**Min. Temp.:** `{celsius(min_temp)}°C | {fahrenheit(min_temp)}°F`\n"
         + f"**Max. Temp.:** `{celsius(max_temp)}°C | {fahrenheit(max_temp)}°F`\n"
@@ -132,9 +132,12 @@ async def get_weather(weather):
         + f"**Sunrise:** `{sun(sunrise)}`\n"
         + f"**Sunset:** `{sun(sunset)}`\n\n"
         + f"**{desc}**\n"
-        + f"`{cityname}, {fullc_n}`\n"
-        + f"`{time}`"
+        + f"`{time}`\n"
     )
+    if not anonymous:
+        results += f"`{cityname}, {fullc_n}`"
+
+    await weather.edit(results)
 
 
 CMD_HELP.update(
@@ -142,6 +145,8 @@ CMD_HELP.update(
         "weather": "**Plugin : **`weather`\
         \n\n  •  **Syntax :** `.weather` <city> or `.weather` <city>, <country name/code>\
         \n  •  **Function : **Untuk Mendapat informasi cuaca kota.\
+        \n\n  •  **Syntax : **`.weather anon` \
+        \n  •  **Function : **Untuk Mendapat informasi cuaca kota, dan menghilangkan detail lokasi di hasil. (Ini membutuhkan var WEATHER_DEFCITY untuk disetel)\
     "
     }
 )
