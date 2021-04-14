@@ -5,22 +5,20 @@
 #
 """Userbot module for managing events. One of the main components of the userbot."""
 
-import codecs
+
 import sys
 from asyncio import create_subprocess_shell as asyncsubshell
 from asyncio import subprocess as asyncsub
-from os import remove
 from time import gmtime, strftime
 from traceback import format_exc
 
-import requests
 from telethon import events
 
-from userbot import bot, BOTLOG_CHATID, LOGSPAMMER
+from userbot import LOGSPAMMER, bot
 
 
 def register(**args):
-    """Register a new event."""
+    """ Register a new event. """
     pattern = args.get('pattern', None)
     disable_edited = args.get('disable_edited', False)
     ignore_unsafe = args.get('ignore_unsafe', False)
@@ -62,9 +60,9 @@ def register(**args):
                 # Ignore edits that take place in channels.
                 return
             if not LOGSPAMMER:
-                send_to = check.chat_id
+                check.chat_id
             else:
-                send_to = BOTLOG_CHATID
+                pass
 
             if not trigger_on_fwd and check.fwd_from:
                 return
@@ -135,33 +133,10 @@ def register(**args):
 
                     ftext += result
 
-                    with open("error.txt", "w+") as file:
-                        file.write(ftext)
+                    file = open("error.log", "w+")
+                    file.write(ftext)
+                    file.close()
 
-                    if LOGSPAMMER:
-                        await check.respond(
-                            "`Maaf, userbot anda sedang stress.\
-                        \nSilahkan cek file error di Log Userbot.`"
-                        )
-
-                        log = codecs.open("error.txt", "r", encoding="utf-8")
-                        data = log.read()
-                        key = (
-                            requests.post(
-                                "https://nekobin.com/api/documents",
-                                json={"content": data},
-                            )
-                            .json()
-                            .get("result")
-                            .get("key")
-                        )
-                        url = f"https://nekobin.com/raw/{key}"
-                        anu = f"{text}**✣ Paste ke :** [Nekobin]({url})"
-
-                        await check.client.send_file(send_to,
-                                                     "error.txt",
-                                                     caption=anu)
-                        remove("error.txt")
             else:
                 pass
 
@@ -169,5 +144,4 @@ def register(**args):
             bot.add_event_handler(wrapper, events.MessageEdited(**args))
         bot.add_event_handler(wrapper, events.NewMessage(**args))
         return wrapper
-
     return decorator
