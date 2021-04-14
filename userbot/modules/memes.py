@@ -988,12 +988,13 @@ async def slap(replied_user, event):
 
 @register(outgoing=True, pattern=r"^\.boobs(?: |$)(.*)")
 async def boobs(e):
-    await e.edit("`Berdosa, Mendapatkan Gambar Boobs...`")
+    await e.edit("`Mencari Gambar Boobs, Dosa ditanggung sendiri...`")
     await sleep(3)
     await e.edit("`Mengirim Gambar Boobs...`")
-    nsfw = requests.get("http://api.oboobs.ru/noise/1").json()[0]["Gambar Boobs"]
-    urllib.request.urlretrieve("http://media.oboobs.ru/{}".format(nsfw), "*.jpg")
-    os.rename("*.jpg", "boobs.jpg")
+    nsfw = requests.get('http://api.oboobs.ru/noise/1').json()[0]["preview"]
+    urllib.request.urlretrieve(
+        "http://media.oboobs.ru/{}".format(nsfw), "*.jpg")
+    os.rename('*.jpg', 'boobs.jpg')
     await e.client.send_file(e.chat_id, "boobs.jpg")
     os.remove("boobs.jpg")
     await e.delete()
@@ -1001,12 +1002,13 @@ async def boobs(e):
 
 @register(outgoing=True, pattern=r"^\.pantat(?: |$)(.*)")
 async def butts(e):
-    await e.edit("`Berdosa, Mendapatkan Gambar Pantat Yang Indah...`")
+    await e.edit("`Mencari Gambar Pantat, Dosa ditanggung sendiri...`")
     await sleep(3)
     await e.edit("`Mengirim Gambar Pantat Indah...`")
-    nsfw = requests.get("http://api.obutts.ru/noise/1").json()[0]["Gambar Pantat"]
-    urllib.request.urlretrieve("http://media.obutts.ru/{}".format(nsfw), "*.jpg")
-    os.rename("*.jpg", "butts.jpg")
+    nsfw = requests.get('http://api.obutts.ru/noise/1').json()[0]["preview"]
+    urllib.request.urlretrieve(
+        "http://media.obutts.ru/{}".format(nsfw), "*.jpg")
+    os.rename('*.jpg', 'butts.jpg')
     await e.client.send_file(e.chat_id, "butts.jpg")
     os.remove("butts.jpg")
     await e.delete()
@@ -1833,15 +1835,6 @@ async def emoji_kontl(e):
     if emoji:
         kontl = kontl.replace("😂", emoji)
     await e.edit(kontl)
-
-
-@register(outgoing=True, pattern=r"^\.ok$")
-async def emoji_oke(e):
-    emoji = e.pattern_match.group(1)
-    oke = GAMBAR_OK
-    if emoji:
-        oke = oke.replace("😂", emoji)
-    await e.edit(oke)
 
 
 @register(outgoing=True, pattern=r"^\.skull$")
