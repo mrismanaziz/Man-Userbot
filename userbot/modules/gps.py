@@ -6,7 +6,7 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.gps(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.gps(?: |$)(.*)")
 async def gps(event):
     if event.fwd_from:
         return

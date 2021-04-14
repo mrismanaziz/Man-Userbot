@@ -27,12 +27,12 @@ from userbot import ALIVE_NAME, CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern=r"^\.song (.*)")
+@register(outgoing=True, pattern=r"^\.fsong (.*)")
 async def download_video(event):
     await event.edit("`Processing...`")
     url = event.pattern_match.group(1)
     if not url:
-        return await event.edit("**ERROR!**\nGunakan Perintah `.song <judul lagu>`")
+        return await event.edit("**ERROR!**\nGunakan Perintah `.fsong <judul lagu>`")
     search = SearchVideos(url, offset=1, mode="json", max_results=1)
     test = search.result()
     p = json.loads(test)
@@ -127,8 +127,8 @@ Artis - {}
 
 CMD_HELP.update(
     {
-        "song": "**Plugin : **`song`\
-        \n\n  •  **Syntax :** `.song` <judul lagu>`\
+        "fsong": "**Plugin : **`fsong`\
+        \n\n  •  **Syntax :** `.fsong` <judul lagu>`\
         \n  •  **Function : **Untuk Mendownload Lagu.\
     "
     }

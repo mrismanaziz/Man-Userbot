@@ -30,7 +30,7 @@ from userbot.events import register
 from userbot.modules.admin import get_user_from_event
 
 
-@register(outgoing=True, pattern="^.getid(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.getid(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -69,7 +69,7 @@ async def permalink(mention):
         await mention.edit(f"[{tag}](tg://user?id={user.id})")
 
 
-@register(outgoing=True, pattern="^.getbot(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.getbot(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -122,21 +122,21 @@ async def log(log_text):
     await log_text.delete()
 
 
-@register(outgoing=True, pattern="^.kickme$")
+@register(outgoing=True, pattern=r"^\.kickme$")
 async def kickme(leave):
     """ Basically it's .kickme command """
     await leave.edit("`Master has left this group, bye!!`")
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
-@register(outgoing=True, pattern="^.kikme$")
+@register(outgoing=True, pattern=r"^\.kikme$")
 async def kickme(leave):
     """ Basically it's .kickme command """
     await leave.edit("**GC NYA JELEK GOBLOK KELUAR DULU AH CROTT** 🥴")
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
-@register(outgoing=True, pattern="^.unmutechat$")
+@register(outgoing=True, pattern=r"^\.unmutechat$")
 async def unmute_chat(unm_e):
     """ For .unmutechat command, unmute a muted chat. """
     try:
@@ -150,7 +150,7 @@ async def unmute_chat(unm_e):
     await unm_e.delete()
 
 
-@register(outgoing=True, pattern="^.mutechat$")
+@register(outgoing=True, pattern=r"^\.mutechat$")
 async def mute_chat(mute_e):
     """ For .mutechat command, mute any chat. """
     try:
@@ -195,7 +195,7 @@ async def sedNinja(event):
         await event.delete()
 
 
-@register(outgoing=True, pattern="^.regexninja (on|off)$")
+@register(outgoing=True, pattern=r"^\.regexninja (on|off)$")
 async def sedNinjaToggle(event):
     """ Aktifkan Atau Nonaktifkan Modul Regex Ninja. """
     global regexNinja
@@ -211,7 +211,7 @@ async def sedNinjaToggle(event):
         await event.delete()
 
 
-@register(pattern=".chatinfo(?: |$)(.*)", outgoing=True)
+@register(pattern=r"^\.chatinfo(?: |$)(.*)", outgoing=True)
 async def info(event):
     await event.edit("`Menganalisis Obrolan Ini...`")
     chat = await get_chatinfo(event)
@@ -481,38 +481,39 @@ async def fetch_info(chat, event):
     return caption
 
 
-@register(outgoing=True, pattern="^.invite(?: |$)(.*)")
+@register(outgoing=True, pattern=r"\.invite(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
     to_add_users = event.pattern_match.group(1)
     if event.is_private:
-        await event.edit("`.invite` Pengguna Ke Obrolan, Tidak Ke Pesan Pribadi")
+        await event.edit("`.invite` users to a chat, not to a Private Message")
     else:
         if not event.is_channel and event.is_group:
             # https://lonamiwebs.github.io/Telethon/methods/messages/add_chat_user.html
             for user_id in to_add_users.split(" "):
                 try:
-                    await event.client(
-                        functions.messages.AddChatUserRequest(
-                            chat_id=event.chat_id, user_id=user_id, fwd_limit=1000000
-                        )
-                    )
+                    await event.client(functions.messages.AddChatUserRequest(
+                        chat_id=event.chat_id,
+                        user_id=user_id,
+                        fwd_limit=1000000
+                    ))
                 except Exception as e:
-                    await event.reply(str(e))
-            await event.edit("`Berhasil Menambahkan Pengguna Ke Obrolan`")
+                    await event.edit(str(e))
+                    return
         else:
             # https://lonamiwebs.github.io/Telethon/methods/channels/invite_to_channel.html
             for user_id in to_add_users.split(" "):
                 try:
-                    await event.client(
-                        functions.channels.InviteToChannelRequest(
-                            channel=event.chat_id, users=[user_id]
-                        )
-                    )
+                    await event.client(functions.channels.InviteToChannelRequest(
+                        channel=event.chat_id,
+                        users=[user_id]
+                    ))
                 except Exception as e:
-                    await event.reply(str(e))
-            await event.edit("`Berhasil Menambahkan Pengguna Ke Obrolan`")
+                    await event.edit(str(e))
+                    return
+
+        await event.edit("`Invited Successfully`")
 
 
 CMD_HELP.update(

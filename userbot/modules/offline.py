@@ -46,7 +46,7 @@ afk_start = {}
 # =================================================================
 
 
-@register(outgoing=True, pattern="^.off(?: |$)(.*)", disable_errors=True)
+@register(outgoing=True, pattern=r"^\.off(?: |$)(.*)", disable_errors=True)
 async def set_afk(afk_e):
     """ For .afk command, allows you to inform people that you are afk when they message you """
     message = afk_e.text  # pylint:disable=E0602

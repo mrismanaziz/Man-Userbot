@@ -89,7 +89,7 @@ async def pingme(pong):
     )
 
 
-@register(outgoing=True, pattern="^.a(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.a(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
@@ -101,7 +101,7 @@ async def typewriter(typew):
 # Owner @Si_Dian
 
 
-@register(outgoing=True, pattern="^.j(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.j(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
@@ -113,7 +113,7 @@ async def typewriter(typew):
 # Owner @Si_Dian
 
 
-@register(outgoing=True, pattern="^.k(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.k(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
@@ -125,7 +125,7 @@ async def typewriter(typew):
 # Owner @Si_Dian
 
 
-@register(outgoing=True, pattern="^.ass(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.ass(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)

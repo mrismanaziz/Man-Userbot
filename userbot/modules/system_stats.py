@@ -227,7 +227,7 @@ async def amireallyalive(alive):
     user = await bot.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
     output = (
-        f" **┗┓ ✮ USERBOT MAN ✮ ┏┛** \n"
+        f" **┗┓ ✮ USERBOT {DEFAULTUSER} ✮ ┏┛** \n"
         f"\n__**{ALIVE_TEKS_CUSTOM}**__\n"
         f"**━━━━━━━━━━━━━━━**\n"
         f"**✮ Master ✮** \n"
@@ -267,7 +267,7 @@ async def amireallyalive(alive):
     user = await bot.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
     output = (
-        f"۝⩵►MAN USERBOT◄⩵۝\n \n"
+        f"۝⩵►{DEFAULTUSER} USERBOT◄⩵۝\n \n"
         f"╭━━━━━━━━━━━━━━━━━━━━━╮\n"
         f"┣[•👤 `USER     :`{DEFAULTUSER}\n"
         f"┣[ 👁‍🗨 `Username :`@{user.username}\n"
@@ -306,7 +306,7 @@ async def amireallyalive(alive):
     user = await bot.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
     output = (
-        f"**♕ ┗┓ MAN USERBOT ┏┛ ♕** \n\n"
+        f"**♕ ┗┓ {DEFAULTUSER} USERBOT ┏┛ ♕** \n\n"
         f"┏━━━━━━━━━━━━━━ \n"
         f"┣ ✥ `Master   : `{DEFAULTUSER} \n"
         f"┣ ✥ `Username : `@{user.username} \n"

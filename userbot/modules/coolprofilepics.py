@@ -74,7 +74,7 @@ async def animepp():
     urllib.request.urlretrieve(fy, "donottouch.jpg")
 
 
-@register(outgoing=True, pattern="^.randompp(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.randompp(?: |$)(.*)")
 async def main(event):
 
     await event.edit("`changing your Profile Pic...`\n\n`Check Your DP in 10 seconds.`")

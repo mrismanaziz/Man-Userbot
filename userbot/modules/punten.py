@@ -4,7 +4,7 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.sadboy(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.sadboy(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(2)
@@ -18,7 +18,7 @@ async def typewriter(typew):
 # Create by myself @localheart
 
 
-@register(outgoing=True, pattern="^.punten(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.punten(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -33,7 +33,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern="^.pantau(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.pantau(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(

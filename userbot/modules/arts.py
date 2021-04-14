@@ -5,7 +5,7 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.frog(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.frog(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -27,7 +27,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern="^.dfrog(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.dfrog(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -49,7 +49,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern="^.strump(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.strump(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -71,7 +71,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern="^.scina(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.scina(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -94,7 +94,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern="^.wlcm(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.wlcm(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -111,7 +111,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern="^.gta(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.gta(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -129,7 +129,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern="^.sthink(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.sthink(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(

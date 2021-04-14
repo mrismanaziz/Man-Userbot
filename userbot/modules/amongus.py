@@ -16,7 +16,7 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.imp (.*)")
+@register(outgoing=True, pattern=r"^\.imp (.*)")
 async def f_load(message):
     clrs = {
         "red": 1,

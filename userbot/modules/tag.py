@@ -17,7 +17,7 @@ from userbot.events import register
 
 @register(
     outgoing=True,
-    pattern=".tag(on|off|all|bots|rec|admins|owner)?(.*)",
+    pattern=r"^\.tag(on|off|all|bots|rec|admins|owner)?(.*)",
     disable_errors=True,
 )
 async def _(e):

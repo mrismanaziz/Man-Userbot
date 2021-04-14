@@ -57,7 +57,7 @@ async def pingme(pong):
     )
 
 
-@register(outgoing=True, pattern="^.pink$")
+@register(outgoing=True, pattern=r"^\.pink$")
 async def pingme(pong):
     """ For .ping command, ping the userbot from any chat.  """
     uptime = await get_readable_time((time.time() - StartTime))
@@ -73,7 +73,7 @@ async def pingme(pong):
     )
 
 
-@register(outgoing=True, pattern="^.ungu$")
+@register(outgoing=True, pattern=r"^\.ungu$")
 async def pingme(pong):
     """ For .ping command, ping the userbot from any chat.  """
     uptime = await get_readable_time((time.time() - StartTime))
@@ -199,7 +199,7 @@ async def speedtst(spd):
     )
 
 
-@register(outgoing=True, pattern="^.pong$")
+@register(outgoing=True, pattern=r"^\.pong$")
 async def pingme(pong):
     """ For .ping command, ping the userbot from any chat.  """
     start = datetime.now()

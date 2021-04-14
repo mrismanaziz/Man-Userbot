@@ -98,7 +98,7 @@ if 1 == 1:
     client = bot
 
 
-@register(outgoing=True, pattern="^.app(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.app(?: |$)(.*)")
 async def apk(e):
     try:
         app_name = e.pattern_match.group(1)
@@ -168,7 +168,7 @@ async def apk(e):
         await e.edit("Exception Occured:- " + str(err))
 
 
-@register(outgoing=True, pattern="^.undlt(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.undlt(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -185,7 +185,7 @@ async def _(event):
         await event.delete()
 
 
-@register(outgoing=True, pattern="^.calc(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.calc(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -221,7 +221,7 @@ async def _(event):
         await event.edit("use .calc help")
 
 
-@register(outgoing=True, pattern="^.xcd(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.xcd(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -266,7 +266,7 @@ Year: {}""".format(
         await event.edit("xkcd n.{} not found!".format(xkcd_id))
 
 
-@register(outgoing=True, pattern="^.remove(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.remove(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -415,7 +415,7 @@ async def ban_user(chat_id, i, rights):
         return False, str(exc)
 
 
-@register(outgoing=True, pattern="^.rnupload(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.rnupload(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -465,7 +465,7 @@ async def _(event):
         )
 
 
-@register(outgoing=True, pattern="^.grab(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.grab(?: |$)(.*)")
 async def potocmd(event):
     """Gets the profile photos of replied users, channels or chats"""
     id = "".join(event.raw_text.split(maxsplit=2)[1:])
@@ -498,7 +498,7 @@ async def potocmd(event):
             return
 
 
-@register(outgoing=True, pattern="^.res(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.res(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -530,7 +530,7 @@ async def _(event):
             await event.client.delete_message(chat, event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern="^.clone(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.clone(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -702,7 +702,7 @@ def get_provider(url):
     return url
 
 
-@register(outgoing=True, pattern="^.watch(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.watch(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -757,7 +757,7 @@ async def _(event):
 # Modified by :- @kirito6969,@deleteduser420
 
 
-@register(outgoing=True, pattern="^.weeb(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.weeb(?: |$)(.*)")
 async def weebify(event):
 
     args = event.pattern_match.group(1)
@@ -805,7 +805,7 @@ boldfont = [
 ]
 
 
-@register(outgoing=True, pattern="^.bold(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.bold(?: |$)(.*)")
 async def thicc(bolded):
 
     args = bolded.pattern_match.group(1)
@@ -853,7 +853,7 @@ medievalbold = [
 ]
 
 
-@register(outgoing=True, pattern="^.medibold(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.medibold(?: |$)(.*)")
 async def mediv(medievalx):
 
     args = medievalx.pattern_match.group(1)
@@ -901,7 +901,7 @@ doublestruckt = [
 ]
 
 
-@register(outgoing=True, pattern="^.doublestruck(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.doublestruck(?: |$)(.*)")
 async def doublex(doublestrucktx):
 
     args = doublestrucktx.pattern_match.group(1)
@@ -949,7 +949,7 @@ cursiveboldx = [
 ]
 
 
-@register(outgoing=True, pattern="^.curbold(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.curbold(?: |$)(.*)")
 async def cursive2(cursivebolded):
 
     args = cursivebolded.pattern_match.group(1)
@@ -997,7 +997,7 @@ medival2 = [
 ]
 
 
-@register(outgoing=True, pattern="^.medi(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.medi(?: |$)(.*)")
 async def medival22(medivallite):
 
     args = medivallite.pattern_match.group(1)
@@ -1045,7 +1045,7 @@ cursive = [
 ]
 
 
-@register(outgoing=True, pattern="^.cur(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.cur(?: |$)(.*)")
 async def xcursive(cursivelite):
 
     args = cursivelite.pattern_match.group(1)
@@ -1063,7 +1063,7 @@ async def xcursive(cursivelite):
     await cursivelite.edit(string)
 
 
-@register(outgoing=True, pattern="^.rclone(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.rclone(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return

@@ -7,7 +7,7 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.dice(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.dice(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -24,7 +24,7 @@ async def _(event):
             pass
 
 
-@register(outgoing=True, pattern="^.dart(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.dart(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -41,7 +41,7 @@ async def _(event):
             pass
 
 
-@register(outgoing=True, pattern="^.ball(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.ball(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return

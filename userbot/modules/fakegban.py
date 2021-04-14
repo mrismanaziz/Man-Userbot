@@ -15,7 +15,7 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
 
 
-@register(outgoing=True, pattern="^.fgban(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.fgban(?: |$)(.*)")
 async def gbun(event):
     if event.fwd_from:
         return

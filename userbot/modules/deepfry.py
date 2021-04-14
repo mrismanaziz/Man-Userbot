@@ -41,7 +41,7 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.deepfry(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.deepfry(?: |$)(.*)")
 async def deepfryer(event):
     try:
         frycount = int(event.pattern_match.group(1))

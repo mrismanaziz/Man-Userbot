@@ -13,7 +13,7 @@ from userbot import bot
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.itos$")
+@register(outgoing=True, pattern=r"^\.itos$")
 async def _(event):
     if event.fwd_from:
         return
@@ -47,7 +47,7 @@ async def _(event):
             await event.client.delete_message(event.chat_id, [msg.id, response.id])
 
 
-@register(outgoing=True, pattern="^.get$")
+@register(outgoing=True, pattern=r"^\.get$")
 async def _(event):
     if event.fwd_from:
         return
@@ -94,7 +94,7 @@ async def _(event):
         await bot.send_read_acknowledge(conv.chat_id)
 
 
-@register(outgoing=True, pattern="^.stoi$")
+@register(outgoing=True, pattern=r"^\.stoi$")
 async def sticker_to_png(sticker):
     if not sticker.is_reply:
         await sticker.edit("`NULL information to feftch...`")

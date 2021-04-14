@@ -307,7 +307,7 @@ async def tweet(event):
     await purge()
 
 
-@register(pattern="^.threat(?: |$)(.*)", outgoing=True)
+@register(pattern=r"^\.threat(?: |$)(.*)", outgoing=True)
 async def nekobot(event):
     replied = await event.get_reply_message()
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
@@ -349,7 +349,7 @@ async def nekobot(event):
     await bot.send_file(event.chat_id, file, reply_to=replied)
 
 
-@register(pattern="^.trash(?: |$)(.*)", outgoing=True)
+@register(pattern=r"^\.trash(?: |$)(.*)", outgoing=True)
 async def nekobot(event):
     replied = await event.get_reply_message()
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
@@ -391,7 +391,7 @@ async def nekobot(event):
     await bot.send_file(event.chat_id, file, reply_to=replied)
 
 
-@register(pattern="^.trap(?: |$)(.*)", outgoing=True)
+@register(pattern=r"^\.trap(?: |$)(.*)", outgoing=True)
 async def nekobot(e):
     input_str = e.pattern_match.group(1)
     input_str = deEmojify(input_str)
@@ -443,7 +443,7 @@ async def nekobot(e):
 # Ported by @AshSTR
 
 
-@register(outgoing=True, pattern="^.fgs ((.*) ; (.*))")
+@register(outgoing=True, pattern=r"^\.fgs ((.*) ; (.*))")
 async def FakeGoogleSearch(event):
     """ Get a user-customised google search meme! """
     input_str = event.pattern_match.group(1)

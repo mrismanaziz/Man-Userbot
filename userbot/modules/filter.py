@@ -40,7 +40,7 @@ async def filter_incoming_handler(handler):
         pass
 
 
-@register(outgoing=True, pattern=r"^.filter (.*)")
+@register(outgoing=True, pattern=r"^\.filter (.*)")
 async def add_new_filter(new_handler):
     """ For .filter command, allows adding new filters in a chat """
     try:
@@ -85,7 +85,7 @@ async def add_new_filter(new_handler):
         await new_handler.edit(success.format(keyword, "Disini"))
 
 
-@register(outgoing=True, pattern=r"^.stop (.*)")
+@register(outgoing=True, pattern=r"^\.stop (.*)")
 async def remove_a_filter(r_handler):
     """ For .stop command, allows you to remove a filter from a chat. """
     try:
@@ -101,7 +101,7 @@ async def remove_a_filter(r_handler):
         )
 
 
-@register(outgoing=True, pattern="^.hapusbotfilter (.*)")
+@register(outgoing=True, pattern=r"^\.delfilterbot (.*)")
 async def kick_marie_filter(event):
     """ For .bersihkanbotfilter command, allows you to kick all \
         Marie(or her clones) filters from a chat. """
@@ -126,7 +126,7 @@ async def kick_marie_filter(event):
         )
 
 
-@register(outgoing=True, pattern="^.filters$")
+@register(outgoing=True, pattern=r"^\.filters$")
 async def filters_active(event):
     """ For .filters command, lists all of the active filters in a chat. """
     try:
@@ -154,7 +154,7 @@ CMD_HELP.update(
         \n  •  **Function : **Membuat filter di obrolan, Bot Akan Membalas Jika Ada Yang Menyebut 'keyword' yang dibuat. Bisa dipakai ke media/sticker/vn/file.\
         \n\n  •  **Syntax :** `.stop` <keyword>\
         \n  •  **Function : **Untuk Nonaktifkan Filter.\
-        \n\n  •  **Syntax :** `.hapusbotfilter` <marie/rose>\
+        \n\n  •  **Syntax :** `.delfilterbot` <marie/rose>\
         \n  •  **Function : **Menghapus semua filter yang ada di bot grup (Saat ini bot yang didukung: Marie, Rose.) dalam obrolan.\
     "
     }

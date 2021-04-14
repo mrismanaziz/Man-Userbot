@@ -86,7 +86,7 @@ async def quotess(qotli):
         await qotli.edit()
 
 
-@register(outgoing=True, pattern="^.xquote(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.xquote(?: |$)(.*)")
 async def quote_search(event):
     if event.fwd_from:
         return

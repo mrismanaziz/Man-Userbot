@@ -7,7 +7,7 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
 
 
-@register(outgoing=True, pattern="^.ihelp$")
+@register(outgoing=True, pattern=r"^\.ihelp$")
 async def usit(e):
     await e.edit(
         f"**Hai {DEFAULTUSER} Kalo Anda Tidak Tau Perintah Untuk Memerintah Ku Ketik** `.help` Atau Bisa Minta Bantuan Ke:\n"
@@ -17,7 +17,7 @@ async def usit(e):
     )
 
 
-@register(outgoing=True, pattern="^.listvar$")
+@register(outgoing=True, pattern=r"^\.listvar$")
 async def var(m):
     await m.edit(
         f"**Disini Daftar Vars Dari {DEFAULTUSER}:**\n"

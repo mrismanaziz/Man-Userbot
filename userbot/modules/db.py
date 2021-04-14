@@ -15,7 +15,7 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
 
 
-@register(outgoing=True, pattern="^.db$")
+@register(outgoing=True, pattern=r"^\.db$")
 async def amireallydbs(dbs):
     if not is_mongo_alive() and not is_redis_alive():
         db = "Both Mongo and Redis Database seems to be failing!"
@@ -29,6 +29,6 @@ async def amireallydbs(dbs):
         ""
         f"**User:** `{DEFAULTUSER}` \n"
         f"**Status Database:** `{db}`\n"
-        f"**Userbot:** `{BOT_VER}`"
+        f"**Userbot:** `{BOT_VER}`@Man-Userbot"
         ""
     )

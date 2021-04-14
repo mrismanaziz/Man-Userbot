@@ -104,7 +104,7 @@ DOGBIN_URL = "https://del.dog/"
 NEKOBIN_URL = "https://nekobin.com/"
 
 
-@register(outgoing=True, pattern="^.crblang (.*)")
+@register(outgoing=True, pattern=r"^\.crblang (.*)")
 async def setlang(prog):
     global CARBONLANG
     CARBONLANG = prog.pattern_match.group(1)
@@ -175,7 +175,7 @@ async def carbon_api(e):
     await e.delete()  # Deleting msg
 
 
-@register(outgoing=True, pattern="^.img (.*)")
+@register(outgoing=True, pattern=r"^\.img (.*)")
 async def img_sampler(event):
     """ For .img command, search and return images matching the query. """
     await event.edit("`Sedang Mencari Gambar Yang Anda Cari...`")
@@ -271,7 +271,7 @@ async def gsearch(q_event):
         )
 
 
-@register(outgoing=True, pattern=r"^.wiki (.*)")
+@register(outgoing=True, pattern=r"^\.wiki (.*)")
 async def wiki(wiki_q):
     """ For .wiki command, fetch content from Wikipedia. """
     match = wiki_q.pattern_match.group(1)
@@ -304,7 +304,7 @@ async def wiki(wiki_q):
         )
 
 
-@register(outgoing=True, pattern="^.ud (.*)")
+@register(outgoing=True, pattern=r"^\.ud (.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -365,7 +365,7 @@ async def text_to_speech(query):
         await query.delete()
 
 
-@register(outgoing=True, pattern="^.tr(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.tr(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -474,7 +474,7 @@ async def yt_search(video_q):
     await video_q.edit(output, link_preview=False)
 
 
-@register(outgoing=True, pattern=r".yt(audio|video) (.*)")
+@register(outgoing=True, pattern=r".yt(a|v) (.*)")
 async def download_video(v_url):
     """ For .yt command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
@@ -1325,7 +1325,7 @@ async def neko(nekobin):
         )
 
 
-@register(pattern="^.ss (.*)", outgoing=True)
+@register(pattern=r"^\.ss (.*)", outgoing=True)
 async def capture(url):
     """ For .ss command, capture a website's screenshot and send the photo. """
     await url.edit("`Processing...`")
@@ -1515,8 +1515,10 @@ CMD_HELP.update(
 CMD_HELP.update(
     {
         "ytdl": "**Plugin : **`Youtube Download`\
-        \n\n  •  **Syntax :** `.ytaudio` <url> atau .ytvideo <url>\
-        \n  •  **Function : **Unduh video dan lagu dari YouTube.\
+        \n\n  •  **Syntax :** `.yta` <url>\
+        \n  •  **Function : **Unduh lagu dari YouTube.\
+        \n\n  •  **Syntax :** `.ytv` <url>\
+        \n  •  **Function : **Unduh video dari YouTube.\
     "
     }
 )

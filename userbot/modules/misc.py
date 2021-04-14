@@ -79,7 +79,7 @@ async def killdabot(event):
     await event.delete()
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID, "#SHUTDOWN \n" "`Userbot Telah Dimatikan`"
+            BOTLOG_CHATID, "#SHUTDOWN \n" "**Userbot Telah Dimatikan**"
         )
     await bot.disconnect()
 
@@ -89,7 +89,7 @@ async def killdabot(event):
     await event.edit("`Restarting Man-Userbot...`")
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID, "#RESTARTBOT \n" "`Man-Userbot Telah Di Restart`"
+            BOTLOG_CHATID, "#RESTARTBOT \n" "**Man-Userbot Telah Di Restart**"
         )
     # Spin a new instance of bot
     args = [sys.executable, "-m", "userbot"]
@@ -124,7 +124,7 @@ async def repeat(rep):
     await rep.edit(replyText)
 
 
-@register(outgoing=True, pattern="^.repo$")
+@register(outgoing=True, pattern=r"^\.repo$")
 async def repo_is_here(wannasee):
     """ For .repo command, just returns the repo URL. """
     await wannasee.edit(
@@ -137,15 +137,15 @@ async def repo_is_here(wannasee):
     )
 
 
-@register(outgoing=True, pattern="^.string$")
+@register(outgoing=True, pattern=r"^\.string$")
 async def repo_is_here(wannasee):
     """ For .repo command, just returns the repo URL. """
     await wannasee.edit(
-        f"✥ **GET STRING SESSION TELEGRAM :** [KLIK DISINI](https://repl.it/@mrismanaziz/stringenSession?lite=1&outputonly=1)\n"
+        f"✥ **GET STRING SESSION TELEGRAM :** [KLIK DISINI](https://t.me/sharinguserbot) Terus ketik #string\n"
     )
 
 
-@register(outgoing=True, pattern="^.raw$")
+@register(outgoing=True, pattern=r"^\.raw$")
 async def raw(event):
     the_real_message = None
     reply_to_id = None
