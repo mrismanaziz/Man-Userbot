@@ -2,7 +2,6 @@
 # Don't edit or you gay
 # credits: spechide,ravana69,mkaraniya & me
 import asyncio
-import random
 from collections import deque
 
 from telethon import events
