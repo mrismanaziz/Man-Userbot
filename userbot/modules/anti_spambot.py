@@ -98,7 +98,9 @@ async def ANTI_SPAMBOTS(welcm):
                         data = None
 
                     if data and data["ok"]:
-                        reason = f"[CAS Banned](https://cas.chat/query?u={check_user.id})"
+                        reason = (
+                            f"[CAS Banned](https://cas.chat/query?u={check_user.id})"
+                        )
                         spambot = True
                     elif "t.cn/" in message.text:
                         reason = "Match on `t.cn` URLs"
