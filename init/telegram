@@ -11,7 +11,7 @@
 TELEGRAM=$SEMAPHORE_PROJECT_DIR/init/telegramapi
 export TELEGRAM
 # Caster configurations
-MAINGROUP_ID="-1001445525038"
+MAINGROUP_ID="-1001280947482"
 
 # sendcast to group
 tg_sendinfo() {
@@ -30,12 +30,12 @@ kickstart_pub() {
      "PR: <code>${PULL_REQUEST_NUMBER}</code>" \
      "Commit Point <code>${COMMIT_POINT}</code>" \
      " " \
-     "<b>Github Link: </b> https://github.com/mrismanaziz/Man-Userbot/commit/${COMMIT_HASH}"
+     "<b>Github Link: </b> https://github.com/xz5pd/Man-Userbot/commit/${COMMIT_HASH}"
   else
     tg_sendinfo "I am starting build" \
     "Branch <code>${PARSE_BRANCH}</code>" \
     "Commit Point <code>${COMMIT_POINT}</code>" \
     " " \
-    "<b>Github Link: </b> https://github.com/mrismanaziz/Man-Userbot/commit/${COMMIT_HASH}"  
+    "<b>Github Link: </b> https://github.com/xz5pd/Man-Userbot/commit/${COMMIT_HASH}"  
 fi
 }
