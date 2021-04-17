@@ -9,9 +9,9 @@
     "modular",
     "productivity"
   ],
-  "repository": "https://github.com/mrismanaziz/Man-Userbot",
-  "telegram": "https://t.me/mrismanaziz",
-  "success_url": "https://t.me/mrismanaziz",
+  "repository": "https://github.com/xz5pd/Man-Userbot",
+  "telegram": "https://t.me/xz5pd",
+  "success_url": "https://t.me/xz5pd",
   "stack": "container",
   "env": {
     "API_KEY": {
@@ -23,7 +23,7 @@
       "required": true
     },
      "STRING_SESSION": {
-      "description": "Dapatkan String Session di Grup » https://t.me/sharinguserbot » Lalu ketik #string",
+      "description": "Dapatkan String Session di Grup » https://t.me/GrupCinta » Lalu ketik #string",
       "required": true
     },
     "HEROKU_APP_NAME": {
