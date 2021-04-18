@@ -474,7 +474,7 @@ async def yt_search(video_q):
     await video_q.edit(output, link_preview=False)
 
 
-@register(outgoing=True, pattern=r".yt(a|v) (.*)")
+@register(outgoing=True, pattern=r".yt(a|v)( \d{0,4})?) (.*)")
 async def download_video(v_url):
     """ For .yt command, download media from YouTube and many other sites. """
     dl_type = v_url.pattern_match.group(1).lower()
