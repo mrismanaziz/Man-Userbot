@@ -59,9 +59,9 @@ async def typewriter(typew):
     sleep(1.5)
     await typew.edit("**BOCAH KAMPUNG**")
     sleep(1.5)
-    await typew.edit("MENTAL TEMPE")
+    await typew.edit("**MENTAL TEMPE**")
     sleep(1.5)
-    await typew.edit("LEMBEK NGENTOT🔥")
+    await typew.edit("**LEMBEK NGENTOT🔥**")
 
 
 @register(outgoing=True, pattern=r"^\.pp(?: |$)(.*)")

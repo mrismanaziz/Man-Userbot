@@ -10,7 +10,7 @@ from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.events import register
 
 
-@register(outgoing=True, pattern=r"^.hz(:? |$)(.*)?")
+@register(outgoing=True, pattern=r"^\.hz(:? |$)(.*)?")
 async def _(hazmat):
     await hazmat.edit("`Processing Hazmat...`")
     level = hazmat.pattern_match.group(2)

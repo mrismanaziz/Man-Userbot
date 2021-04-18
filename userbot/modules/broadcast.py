@@ -340,12 +340,12 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk menghapus Obrolan / pengguna / saluran dari nama kategori yang diberikan. \
         \n\n  •  **Syntax :** `.list` <category_name>\
         \n  •  **Function : **Akan menampilkan daftar semua obrolan dalam kategori yang diberikan. \
+        \n\n  •  **Syntax :** `.listall`\
+        \n  •  **Function : **Akan menampilkan daftar semua nama kategori. \
         \n\n  •  **Syntax :** `.frmfrom` <category_name/chat_id>\
         \n  •  **Function : **Untuk memaksa menghapus chat_id yang diberikan dari nama kategori yang diberikan berguna ketika Anda meninggalkan obrolan itu atau melarang Anda di sana \
         \n\n  •  **Syntax :** `.delc` <category_name>\
-        \n  •  **Function : **Akan menampilkan daftar semua nama kategori. \
-        \n\n  •  **Syntax :** `.dez`\
-        \n  •  **Function : **Menghapus kategori sepenuhnya di database. \
+        \n  •  **Function : **Menghapus kategori sepenuhnya di database \
     "
     }
 )

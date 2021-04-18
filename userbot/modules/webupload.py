@@ -11,12 +11,12 @@ from userbot.events import register
 
 @register(
     outgoing=True,
-    pattern="^.webupload ?(.+?|) (?:--)(anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles)",
+    pattern=r"^\.webupload ?(.+?|) (?:--)(anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles)",
 )
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("Processing ...")
+    await event.edit("`Processing ...`")
     PROCESS_RUN_TIME = 100
     input_str = event.pattern_match.group(1)
     selected_transfer = event.pattern_match.group(2)
