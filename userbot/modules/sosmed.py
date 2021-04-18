@@ -77,7 +77,7 @@ async def DeezLoader(event):
 CMD_HELP.update(
     {
         "sosmed": "**Plugin : **`sosmed`\
-        \n\n  •  **Syntax :** `.sosmed` <link>`\
+        \n\n  •  **Syntax :** `.sosmed` <link>\
         \n  •  **Function : **Download Media Dari Pinterest / Tiktok / Instagram.\
         \n\n  •  **Syntax :** `.dez` <link>\
         \n  •  **Function : **Download Lagu Via Deezloader\
