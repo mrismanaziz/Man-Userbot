@@ -14,8 +14,7 @@ import os
 import re
 import shutil
 import time
-from asyncio import get_event_loop, sleep
-from glob import glob
+from asyncio import sleep
 from os import popen
 from random import choice
 from re import findall, match
@@ -474,21 +473,17 @@ async def yt_search(video_q):
 
     await video_q.edit(output, link_preview=False)
 
-
-@register(outgoing=True, pattern=r".yt(a|v)( \d{0,4})?) (.*)")
+@register(outgoing=True, pattern=r".yt(audio|video) (.*)")
 async def download_video(v_url):
     """ For .yt command, download media from YouTube and many other sites. """
     dl_type = v_url.pattern_match.group(1).lower()
-    reso = v_url.pattern_match.group(2)
-    reso = reso.strip() if reso else None
-    url = v_url.pattern_match.group(3)
+    url = v_url.pattern_match.group(2)
 
     await v_url.edit("`Preparing to download...`")
-    s_time = time.time()
     video = False
     audio = False
 
-    if "audio" in dl_type:
+    if dl_type == "audio":
         opts = {
             "format": "bestaudio",
             "addmetadata": True,
@@ -510,22 +505,18 @@ async def download_video(v_url):
         }
         audio = True
 
-    elif "video" in dl_type:
-        quality = (
-            f"bestvideo[height<={reso}]+bestaudio/best[height<={reso}]"
-            if reso
-            else "bestvideo+bestaudio/best"
-        )
+    elif dl_type == "video":
         opts = {
-            "format": quality,
+            "format": "best",
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
             "nocheckcertificate": True,
-            "outtmpl": os.path.join(
-                TEMP_DOWNLOAD_DIRECTORY, str(s_time), "%(title)s.%(ext)s"
-            ),
+            "postprocessors": [
+                {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
+            ],
+            "outtmpl": "%(id)s.%(ext)s",
             "logtostderr": False,
             "quiet": True,
         }
@@ -568,7 +559,7 @@ async def download_video(v_url):
                 client=v_url.client,
                 file=f,
                 name=f_name,
-                progress_callback=lambda d, t: get_event_loop().create_task(
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(
                         d, t, v_url, c_time, "Uploading..", f"{rip_data['title']}.mp3"
                     )
@@ -603,27 +594,23 @@ async def download_video(v_url):
         await v_url.delete()
     elif video:
         await v_url.edit(
-            f"**Preparing to upload video:**\n`{rip_data.get('title')}`"
+            f"**Sedang Mengupload Video:**\n`{rip_data.get('title')}`"
             f"\nby **{rip_data.get('uploader')}**"
         )
-        f_path = glob(os.path.join(TEMP_DOWNLOAD_DIRECTORY, str(s_time), "*"))[0]
-        # Noob way to convert from .mkv to .mp4
-        if f_path.endswith(".mkv"):
-            base = os.path.splitext(f_path)[0]
-            os.rename(f_path, base + ".mp4")
-            f_path = glob(os.path.join(TEMP_DOWNLOAD_DIRECTORY, str(s_time), "*"))[0]
-        f_name = os.path.basename(f_path)
-        with open(f_path, "rb") as f:
+        f_name = rip_data.get("id") + ".mp4"
+        with open(f_name, "rb") as f:
             result = await upload_file(
                 client=v_url.client,
                 file=f,
                 name=f_name,
-                progress_callback=lambda d, t: get_event_loop().create_task(
-                    progress(d, t, v_url, c_time, "Uploading..", f_name)
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(
+                        d, t, v_url, c_time, "Uploading..", f"{rip_data['title']}.mp4"
+                    )
                 ),
             )
-        thumb_image = await get_video_thumb(f_path, "thumb.png")
-        metadata = extractMetadata(createParser(f_path))
+        thumb_image = await get_video_thumb(f_name, "thumb.png")
+        metadata = extractMetadata(createParser(f_name))
         duration = 0
         width = 0
         height = 0
@@ -645,9 +632,9 @@ async def download_video(v_url):
                     supports_streaming=True,
                 )
             ],
-            caption=f"[{rip_data.get('title')}]({url})",
+            caption=rip_data["title"],
         )
-        shutil.rmtree(os.path.join(TEMP_DOWNLOAD_DIRECTORY, str(s_time)))
+        os.remove(f_name)
         os.remove(thumb_image)
         await v_url.delete()
 
@@ -1541,11 +1528,10 @@ CMD_HELP.update(
 CMD_HELP.update(
     {
         "ytdl": "**Plugin : **`ytdl`\
-        \n\n  •  **Syntax :** `.yta` <url>\
+        \n\n  •  **Syntax :** `.ytaudio` <url>\
         \n  •  **Function : **Untuk Mendownload lagu dari YouTube.\
-        \n\n  •  **Syntax :** `.ytv` <quality> <url> (quality video itu sunah)\
+        \n\n  •  **Syntax :** `.ytvideo` <url>\
         \n  •  **Function : **Untuk Mendownload video dari YouTube.\
-        \n  •  **Quality Video :** `144` `240` `360` `480` `720` `1080` `2160`\
     "
     }
 )
