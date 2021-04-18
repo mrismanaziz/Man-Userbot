@@ -473,6 +473,7 @@ async def yt_search(video_q):
 
     await video_q.edit(output, link_preview=False)
 
+
 @register(outgoing=True, pattern=r".yt(audio|video) (.*)")
 async def download_video(v_url):
     """ For .yt command, download media from YouTube and many other sites. """
