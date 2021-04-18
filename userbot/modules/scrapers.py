@@ -38,9 +38,8 @@ from search_engine_parser import YahooSearch as GoogleSearch
 from telethon.tl.types import DocumentAttributeAudio, MessageMediaPhoto
 from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError, PageError
-from youtube_search import YoutubeSearch
-from yt_dlp import YoutubeDL
-from yt_dlp.utils import (
+from youtube_dl import YoutubeDL
+from youtube_dl.utils import (
     ContentTooShortError,
     DownloadError,
     ExtractorError,
@@ -50,6 +49,7 @@ from yt_dlp.utils import (
     UnavailableVideoError,
     XAttrMetadataError,
 )
+from youtube_search import YoutubeSearch
 
 from userbot import (
     BOTLOG,
@@ -477,12 +477,17 @@ async def yt_search(video_q):
 @register(outgoing=True, pattern=r".yt(a|v) (.*)")
 async def download_video(v_url):
     """ For .yt command, download media from YouTube and many other sites. """
-    url = v_url.pattern_match.group(2)
-    type = v_url.pattern_match.group(1).lower()
+    dl_type = v_url.pattern_match.group(1).lower()
+    reso = v_url.pattern_match.group(2)
+    reso = reso.strip() if reso else None
+    url = v_url.pattern_match.group(3)
 
     await v_url.edit("`Preparing to download...`")
+    s_time = time.time()
+    video = False
+    audio = False
 
-    if type == "audio":
+    if "audio" in dl_type:
         opts = {
             "format": "bestaudio",
             "addmetadata": True,
@@ -498,31 +503,31 @@ async def download_video(v_url):
                     "preferredquality": "320",
                 }
             ],
-            "outtmpl": "%(id)s.mp3",
+            "outtmpl": "%(id)s.%(ext)s",
             "quiet": True,
             "logtostderr": False,
-            "external_downloader": "aria2c",
         }
-        video = False
-        song = True
+        audio = True
 
-    elif type == "video":
+    elif "video" in dl_type:
+        quality = (
+            f"bestvideo[height<={reso}]+bestaudio/best[height<={reso}]"
+            if reso
+            else "bestvideo+bestaudio/best"
+        )
         opts = {
-            "format": "best",
+            "format": quality,
             "addmetadata": True,
             "key": "FFmpegMetadata",
             "prefer_ffmpeg": True,
             "geo_bypass": True,
             "nocheckcertificate": True,
-            "postprocessors": [
-                {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
-            ],
-            "outtmpl": "%(id)s.mp4",
+            "outtmpl": os.path.join(
+                TEMP_DOWNLOAD_DIRECTORY, str(s_time), "%(title)s.%(ext)s"
+            ),
             "logtostderr": False,
             "quiet": True,
-            "external_downloader": "aria2c",
         }
-        song = False
         video = True
 
     try:
@@ -551,17 +556,18 @@ async def download_video(v_url):
     except Exception as e:
         return await v_url.edit(f"{str(type(e)): {str(e)}}")
     c_time = time.time()
-    if song:
+    if audio:
         await v_url.edit(
-            f"`Preparing to upload song:`\n**{rip_data['title']}**"
-            f"\nby **{rip_data['uploader']}**"
+            f"**Sedang Mengupload Lagu:**\n`{rip_data.get('title')}`"
+            f"\nby **{rip_data.get('uploader')}**"
         )
-        with open(rip_data["id"] + ".mp3", "rb") as f:
+        f_name = rip_data.get("id") + ".mp3"
+        with open(f_name, "rb") as f:
             result = await upload_file(
                 client=v_url.client,
                 file=f,
-                name=f"{rip_data['id']}.mp3",
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                name=f_name,
+                progress_callback=lambda d, t: get_event_loop().create_task(
                     progress(
                         d, t, v_url, c_time, "Uploading..", f"{rip_data['title']}.mp3"
                     )
@@ -574,54 +580,73 @@ async def download_video(v_url):
             if any(fn_img.endswith(ext_img) for ext_img in img_extensions)
         ]
         thumb_image = img_filenames[0]
+        metadata = extractMetadata(createParser(f_name))
+        duration = 0
+        if metadata.has("duration"):
+            duration = metadata.get("duration").seconds
         await v_url.client.send_file(
             v_url.chat_id,
             result,
             supports_streaming=True,
             attributes=[
                 DocumentAttributeAudio(
-                    duration=int(rip_data["duration"]),
-                    title=str(rip_data["title"]),
-                    performer=str(rip_data["uploader"]),
+                    duration=duration,
+                    title=rip_data.get("title"),
+                    performer=rip_data.get("uploader"),
                 )
             ],
             thumb=thumb_image,
         )
         os.remove(thumb_image)
-        os.remove(f"{rip_data['id']}.mp3")
+        os.remove(f_name)
         await v_url.delete()
     elif video:
         await v_url.edit(
-            f"`Preparing to upload video:`\n**{rip_data['title']}**"
-            f"\nby **{rip_data['uploader']}**"
+            f"**Preparing to upload video:**\n`{rip_data.get('title')}`"
+            f"\nby **{rip_data.get('uploader')}**"
         )
-        thumb_image = await get_video_thumb(rip_data["id"] + ".mp4", "thumb.png")
-        with open(rip_data["id"] + ".mp4", "rb") as f:
+        f_path = glob(os.path.join(TEMP_DOWNLOAD_DIRECTORY, str(s_time), "*"))[0]
+        # Noob way to convert from .mkv to .mp4
+        if f_path.endswith(".mkv"):
+            base = os.path.splitext(f_path)[0]
+            os.rename(f_path, base + ".mp4")
+            f_path = glob(os.path.join(TEMP_DOWNLOAD_DIRECTORY, str(s_time), "*"))[0]
+        f_name = os.path.basename(f_path)
+        with open(f_path, "rb") as f:
             result = await upload_file(
                 client=v_url.client,
                 file=f,
-                name=f"{rip_data['id']}.mp4",
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(
-                        d, t, v_url, c_time, "Uploading..", f"{rip_data['title']}.mp4"
-                    )
+                name=f_name,
+                progress_callback=lambda d, t: get_event_loop().create_task(
+                    progress(d, t, v_url, c_time, "Uploading..", f_name)
                 ),
             )
+        thumb_image = await get_video_thumb(f_path, "thumb.png")
+        metadata = extractMetadata(createParser(f_path))
+        duration = 0
+        width = 0
+        height = 0
+        if metadata.has("duration"):
+            duration = metadata.get("duration").seconds
+        if metadata.has("width"):
+            width = metadata.get("width")
+        if metadata.has("height"):
+            height = metadata.get("height")
         await v_url.client.send_file(
             v_url.chat_id,
             result,
             thumb=thumb_image,
             attributes=[
                 DocumentAttributeVideo(
-                    duration=rip_data["duration"],
-                    w=rip_data["width"],
-                    h=rip_data["height"],
+                    duration=duration,
+                    w=width,
+                    h=height,
                     supports_streaming=True,
                 )
             ],
-            caption=rip_data["title"],
+            caption=f"[{rip_data.get('title')}]({url})",
         )
-        os.remove(f"{rip_data['id']}.mp4")
+        shutil.rmtree(os.path.join(TEMP_DOWNLOAD_DIRECTORY, str(s_time)))
         os.remove(thumb_image)
         await v_url.delete()
 
@@ -1514,11 +1539,12 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "ytdl": "**Plugin : **`Youtube Download`\
+        "ytdl": "**Plugin : **`ytdl`\
         \n\n  •  **Syntax :** `.yta` <url>\
-        \n  •  **Function : **Unduh lagu dari YouTube.\
-        \n\n  •  **Syntax :** `.ytv` <url>\
-        \n  •  **Function : **Unduh video dari YouTube.\
+        \n  •  **Function : **Untuk Mendownload lagu dari YouTube.\
+        \n\n  •  **Syntax :** `.ytv` <quality> <url> (quality video itu sunah)\
+        \n  •  **Function : **Untuk Mendownload video dari YouTube.\
+        \n  •  **Quality Video :** `144` `240` `360` `480` `720` `1080` `2160`\
     "
     }
 )
