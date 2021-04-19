@@ -108,7 +108,7 @@ NEKOBIN_URL = "https://nekobin.com/"
 async def setlang(prog):
     global CARBONLANG
     CARBONLANG = prog.pattern_match.group(1)
-    await prog.edit(f"Language for carbon.now.sh set to {CARBONLANG}")
+    await prog.edit(f"Bahasa untuk carbon.now.sh mulai {CARBONLANG}")
 
 
 @register(outgoing=True, pattern="^.carbon")
@@ -264,12 +264,6 @@ async def gsearch(q_event):
         "**Search Query:**\n`" + match + "`\n\n**Results:**\n" + msg, link_preview=False
     )
 
-    if BOTLOG:
-        await q_event.client.send_message(
-            BOTLOG_CHATID,
-            "Google Search query `" + match + "` was executed successfully",
-        )
-
 
 @register(outgoing=True, pattern=r"^\.wiki (.*)")
 async def wiki(wiki_q):
@@ -278,10 +272,10 @@ async def wiki(wiki_q):
     try:
         summary(match)
     except DisambiguationError as error:
-        await wiki_q.edit(f"Disambiguated page found.\n\n{error}")
+        await wiki_q.edit(f"Ditemukan halaman yang tidak ambigu.\n\n{error}")
         return
     except PageError as pageerror:
-        await wiki_q.edit(f"Page not found.\n\n{pageerror}")
+        await wiki_q.edit(f"Halaman tidak ditemukan.\n\n{pageerror}")
         return
     result = summary(match)
     if len(result) >= 4096:
@@ -292,16 +286,12 @@ async def wiki(wiki_q):
             wiki_q.chat_id,
             "output.txt",
             reply_to=wiki_q.id,
-            caption="`Output too large, sending as file`",
+            caption="`Output terlalu besar, dikirim sebagai file`",
         )
         if os.path.exists("output.txt"):
             os.remove("output.txt")
         return
     await wiki_q.edit("**Search:**\n`" + match + "`\n\n**Result:**\n" + result)
-    if BOTLOG:
-        await wiki_q.client.send_message(
-            BOTLOG_CHATID, f"Wiki query `{match}` was executed successfully"
-        )
 
 
 @register(outgoing=True, pattern=r"^\.ud (.*)")
@@ -314,12 +304,12 @@ async def _(event):
     try:
         mean = await urban.get_word(word)
         await event.edit(
-            "Text: **{}**\n\nMeaning: **{}**\n\nExample: __{}__".format(
+            "Text: **{}**\n\nBerarti: **{}**\n\nContoh: __{}__".format(
                 mean.word, mean.definition, mean.example
             )
         )
     except asyncurban.WordNotFoundError:
-        await event.edit("No result found for **" + word + "**")
+        await event.edit("Tidak ada hasil untuk **" + word + "**")
 
 
 @register(outgoing=True, pattern=r"^.tts(?: |$)([\s\S]*)")
@@ -333,20 +323,20 @@ async def text_to_speech(query):
         message = textx.text
     else:
         return await query.edit(
-            "`Give a text or reply to a message for Text-to-Speech!`"
+            "`Berikan teks atau balas pesan untuk Text-to-Speech!`"
         )
 
     try:
         gTTS(message, lang=TTS_LANG)
     except AssertionError:
         return await query.edit(
-            "The text is empty.\n"
-            "Nothing left to speak after pre-precessing, tokenizing and cleaning."
+            "Teksnya kosong.\n"
+            "Tidak ada yang tersisa untuk dibicarakan setelah pra-pemrosesan, pembuatan token, dan pembersihan."
         )
     except ValueError:
-        return await query.edit("Language is not supported.")
+        return await query.edit("Bahasa tidak didukung.")
     except RuntimeError:
-        return await query.edit("Error loading the languages dictionary.")
+        return await query.edit("Error saat memuat kamus bahasa.")
     tts = gTTS(message, lang=TTS_LANG)
     tts.save("k.mp3")
     with open("k.mp3", "rb") as audio:
@@ -380,7 +370,7 @@ async def _(event):
     elif "|" in input_str:
         lan, text = input_str.split("|")
     else:
-        await event.edit("`.tr LanguageCode` as reply to a message")
+        await event.edit("`.tr LanguageCode` sambil reply ke pesan")
         return
     text = emoji.demojize(text.strip())
     lan = lan.strip()
@@ -390,7 +380,7 @@ async def _(event):
         after_tr_text = translated.text
         # TODO: emojify the :
         # either here, or before translation
-        output_str = """**TRANSLATED** from {} to {}
+        output_str = """**DITERJEMAHKAN** dari `{}` ke `{}`
 {}""".format(
             translated.src, lan, after_tr_text
         )
@@ -412,7 +402,7 @@ async def lang(value):
             LANG = LANGUAGES[arg]
         else:
             await value.edit(
-                f"`Invalid Language code !!`\n`Available language codes for TRT`:\n\n`{LANGUAGES}`"
+                f"`Kode Bahasa tidak valid !!`\n`Kode bahasa yang tersedia untuk TRT`:\n\n`{LANGUAGES}`"
             )
             return
     elif util == "tts":
@@ -424,13 +414,13 @@ async def lang(value):
             LANG = tts_langs()[arg]
         else:
             await value.edit(
-                f"`Invalid Language code !!`\n`Available language codes for TTS`:\n\n`{tts_langs()}`"
+                f"`Kode Bahasa tidak valid  !!`\n`Kode bahasa yang tersedia untuk  TTS`:\n\n`{tts_langs()}`"
             )
             return
-    await value.edit(f"`Language for {scraper} changed to {LANG.title()}.`")
+    await value.edit(f"`Bahasa untuk {scraper} diubah menjadi {LANG.title()}.`")
     if BOTLOG:
         await value.client.send_message(
-            BOTLOG_CHATID, f"`Language for {scraper} changed to {LANG.title()}.`"
+            BOTLOG_CHATID, f"`Bahasa untuk {scraper} diubah menjadi {LANG.title()}.`"
         )
 
 
@@ -448,17 +438,17 @@ async def yt_search(video_q):
 
     query = video_q.pattern_match.group(2)
     if not query:
-        await video_q.edit("`Enter query to search`")
+        await video_q.edit("`Masukkan keyword untuk dicari`")
     await video_q.edit("`Processing...`")
 
     try:
         results = json.loads(YoutubeSearch(query, max_results=counter).to_json())
     except KeyError:
         return await video_q.edit(
-            "`Youtube Search gone retard.\nCan't search this query!`"
+            "`Pencarian Youtube menjadi lambat.\nTidak dapat mencari keyword ini!`"
         )
 
-    output = f"**Search Query:**\n`{query}`\n\n**Results:**\n\n"
+    output = f"**Pencarian Keyword:**\n`{query}`\n\n**Hasil:**\n\n"
 
     for i in results["videos"]:
         try:
@@ -670,7 +660,7 @@ async def kbg(remob):
                 output_file_name = await ReTrieveFile(downloaded_file_name)
                 os.remove(downloaded_file_name)
             else:
-                await remob.edit("`How do I remove the background from this ?`")
+                await remob.edit("`Bagaimana cara menghapus latar belakang ini ?`")
         except Exception as e:
             await remob.edit(str(e))
             return
@@ -680,7 +670,7 @@ async def kbg(remob):
         )
         output_file_name = await ReTrieveURL(input_str)
     else:
-        await remob.edit("`I need something to remove the background from.`")
+        await remob.edit("`Saya butuh sesuatu untuk menghapus latar belakang.`")
         return
     contentType = output_file_name.headers.get("content-type")
     if "image" in contentType:
@@ -689,7 +679,7 @@ async def kbg(remob):
             await remob.client.send_file(
                 remob.chat_id,
                 remove_bg_image,
-                caption="Background removed using remove.bg",
+                caption="Support @SharingUserbot",
                 force_document=True,
                 reply_to=message_id,
             )
@@ -742,7 +732,7 @@ async def ocr(event):
         return await event.edit(
             "`Error: OCR.Space API key is missing! Add it to environment variables or config.env.`"
         )
-    await event.edit("`Reading...`")
+    await event.edit("`Sedang Membaca...`")
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
     lang_code = event.pattern_match.group(1)
@@ -753,9 +743,9 @@ async def ocr(event):
     try:
         ParsedText = test_file["ParsedResults"][0]["ParsedText"]
     except BaseException:
-        await event.edit("`Couldn't read it.`\n`I guess I need new glasses.`")
+        await event.edit("`Tidak bisa membacanya.`\n`Saya rasa saya perlu kacamata baru.`")
     else:
-        await event.edit(f"`Here's what I could read from it:`\n\n{ParsedText}")
+        await event.edit(f"`Inilah yang bisa saya baca darinya:`\n\n{ParsedText}")
     os.remove(downloaded_file_name)
 
 
@@ -788,7 +778,7 @@ async def parseqr(qr_e):
     if not t_response:
         LOGS.info(e_response)
         LOGS.info(t_response)
-        return await qr_e.edit("Failed to decode.")
+        return await qr_e.edit("Gagal untuk decode.")
     soup = BeautifulSoup(t_response, "html.parser")
     qr_contents = soup.find_all("pre")[0].text
     await qr_e.edit(qr_contents)
@@ -1227,11 +1217,6 @@ async def paste(pstl):
         reply_text = "`Failed to reach Dogbin`"
 
     await pstl.edit(reply_text)
-    if BOTLOG:
-        await pstl.client.send_message(
-            BOTLOG_CHATID,
-            "Paste query was executed successfully",
-        )
 
 
 @register(outgoing=True, pattern=r"^\.getpaste(?: |$)(.*)")
@@ -1279,11 +1264,6 @@ async def get_dogbin_content(dog_url):
     )
 
     await dog_url.edit(reply_text)
-    if BOTLOG:
-        await dog_url.client.send_message(
-            BOTLOG_CHATID,
-            "Get dogbin content query was executed successfully",
-        )
 
 
 @register(outgoing=True, pattern=r"^\.neko(?: |$)([\s\S]*)")
@@ -1329,14 +1309,9 @@ async def neko(nekobin):
             f"[View RAW]({NEKOBIN_URL}raw/{key})"
         )
     else:
-        reply_text = "`Failed to reach Nekobin`"
+        reply_text = "`Gagal menjangkau Nekobin`"
 
     await nekobin.edit(reply_text)
-    if BOTLOG:
-        await nekobin.client.send_message(
-            BOTLOG_CHATID,
-            "Paste query was executed successfully",
-        )
 
 
 @register(pattern=r"^\.ss (.*)", outgoing=True)
