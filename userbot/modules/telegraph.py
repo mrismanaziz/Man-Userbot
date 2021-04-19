@@ -3,7 +3,7 @@
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 #
-""" Userbot module for filter commands """
+""" Userbot module for Telegraph commands """
 
 import os
 from datetime import datetime
@@ -21,6 +21,7 @@ auth_url = r["auth_url"]
 
 @register(outgoing=True, pattern=r"^\.tg (m|t)$")
 async def telegraphs(graph):
+    """ For telegraph command, upload media & text to telegraph site. """
     await graph.edit("`Processing...`")
     if not graph.text[0].isalpha() and graph.text[0] not in ("/", "#", "@", "!"):
         if graph.fwd_from:
@@ -38,31 +39,23 @@ async def telegraphs(graph):
                 end = datetime.now()
                 ms = (end - start).seconds
                 await graph.edit(
-                    "Di Download Ke {} Dalam {} Detik.".format(downloaded_file_name, ms)
+                    f"**Di Download Ke** `{downloaded_file_name}` **di** `{ms}` **detik.**"
                 )
+                if downloaded_file_name.endswith(".webp"):
+                    resize_image(downloaded_file_name)
                 try:
-                    if downloaded_file_name.endswith((".webp")):
-                        resize_image(downloaded_file_name)
-                except AttributeError:
-                    return await graph.edit("`Tidak Ada Media Yang Disediakan`")
-                try:
-                    start = datetime.now()
                     media_urls = upload_file(downloaded_file_name)
                 except exceptions.TelegraphException as exc:
-                    await graph.edit("ERROR: " + str(exc))
+                    await graph.edit("**ERROR:** " + str(exc))
                     os.remove(downloaded_file_name)
                 else:
-                    end = datetime.now()
-                    ms_two = (end - start).seconds
                     os.remove(downloaded_file_name)
                     await graph.edit(
-                        "**Berhasil Mengunggah Ke** [Telegraph](https://telegra.ph{}).".format(
-                            media_urls[0], (ms + ms_two)
-                        ),
+                        f"**Berhasil diupload ke** [telegra.ph](https://telegra.ph{media_urls[0]})",
                         link_preview=True,
                     )
             elif input_str == "t":
-                user_object = await bot.get_entity(r_message.from_id)
+                user_object = await bot.get_entity(r_message.sender_id)
                 title_of_page = user_object.first_name  # + " " + user_object.last_name
                 # apparently, all Users do not have last_name field
                 page_content = r_message.message
@@ -82,12 +75,8 @@ async def telegraphs(graph):
                 response = telegraph.create_page(
                     title_of_page, html_content=page_content
                 )
-                end = datetime.now()
-                ms = (end - start).seconds
                 await graph.edit(
-                    "**Berhasil Mengunggah Ke** [Telegraph](https://telegra.ph/{}).".format(
-                        response["path"], ms
-                    ),
+                    f'**Berhasil diupload ke** [telegra.ph](https://telegra.ph/{response["path"]})',
                     link_preview=True,
                 )
         else:
@@ -100,13 +89,6 @@ def resize_image(image):
     im = Image.open(image)
     im.save(image, "PNG")
 
-
-CMD_HELP.update(
-    {
-        "telegraph": ">`.tg` <m|t>"
-        "\nUsage: Mengunggah t(Teks) Atau m(Media) Ke Telegraph."
-    }
-)
 
 CMD_HELP.update(
     {
