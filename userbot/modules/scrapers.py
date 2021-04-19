@@ -322,9 +322,7 @@ async def text_to_speech(query):
     elif textx:
         message = textx.text
     else:
-        return await query.edit(
-            "`Berikan teks atau balas pesan untuk Text-to-Speech!`"
-        )
+        return await query.edit("`Berikan teks atau balas pesan untuk Text-to-Speech!`")
 
     try:
         gTTS(message, lang=TTS_LANG)
@@ -743,7 +741,9 @@ async def ocr(event):
     try:
         ParsedText = test_file["ParsedResults"][0]["ParsedText"]
     except BaseException:
-        await event.edit("`Tidak bisa membacanya.`\n`Saya rasa saya perlu kacamata baru.`")
+        await event.edit(
+            "`Tidak bisa membacanya.`\n`Saya rasa saya perlu kacamata baru.`"
+        )
     else:
         await event.edit(f"`Inilah yang bisa saya baca darinya:`\n\n{ParsedText}")
     os.remove(downloaded_file_name)
