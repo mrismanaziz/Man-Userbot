@@ -18,7 +18,7 @@ from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
 
 
-@register(pattern=r"^\.whois(?: |$)(.*)", outgoing=True)
+@register(pattern=r"\.whois(?: |$)(.*)", outgoing=True)
 async def who(event):
 
     await event.edit("`Mengambil Informasi Pengguna Ini...`")
@@ -27,11 +27,15 @@ async def who(event):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
 
     replied_user = await get_user(event)
+    if replied_user is None:
+        return await event.edit(
+            "`itu admin anonim, selamat mencoba cari tahu yang mana!`"
+        )
 
     try:
         photo, caption = await fetch_info(replied_user, event)
     except AttributeError:
-        return event.edit("`Saya Tidak Mendapatkan Informasi Apapun.`")
+        return await event.edit("`Saya Tidak Mendapatkan Informasi Apapun.`")
 
     message_id_to_reply = event.message.reply_to_msg_id
 
@@ -46,7 +50,7 @@ async def who(event):
             link_preview=False,
             force_document=False,
             reply_to=message_id_to_reply,
-            parse_mode="html",
+            parse_mode=r"html",
         )
 
         if not photo.startswith("http"):
@@ -54,14 +58,18 @@ async def who(event):
         await event.delete()
 
     except TypeError:
-        await event.edit(caption, parse_mode="html")
+        await event.edit(caption, parse_mode=r"html")
 
 
 async def get_user(event):
     """ Get the user from argument or replied message. """
     if event.reply_to_msg_id and not event.pattern_match.group(1):
         previous_message = await event.get_reply_message()
-        replied_user = await event.client(GetFullUserRequest(previous_message.from_id))
+        if previous_message.from_id is None and not event.is_private:
+            return None
+        replied_user = await event.client(
+            GetFullUserRequest(previous_message.sender_id)
+        )
     else:
         user = event.pattern_match.group(1)
 
@@ -106,7 +114,7 @@ async def fetch_info(replied_user, event):
     first_name = replied_user.user.first_name
     last_name = replied_user.user.last_name
     try:
-        dc_id, location = get_input_location(replied_user.profile_photo)
+        dc_id, _ = get_input_location(replied_user.profile_photo)
     except Exception as e:
         dc_id = "Tidak Dapat Mengambil DC ID!"
         str(e)
@@ -125,22 +133,22 @@ async def fetch_info(replied_user, event):
     last_name = (
         last_name.replace("\u2060", "") if last_name else ("Tidak Ada Nama Belakang")
     )
-    username = "@{}".format(username) if username else ("Tidak Menggunakan Username")
-    user_bio = "Tidak Punya Bio" if not user_bio else user_bio
+    username = f"@{username}" if username else ("Tidak Menggunakan Username")
+    user_bio = "Tidak Menggunakan Bio" if not user_bio else user_bio
 
-    caption = "<b>INFORMASI PENGGUNA:</b>\n\n"
-    caption += f"Nama Depan: {first_name}\n"
-    caption += f"Nama Belakang: {last_name}\n"
-    caption += f"Username: {username}\n"
-    caption += f"Data Centre ID: {dc_id}\n"
-    caption += f"Total Foto Profil: {replied_user_profile_photos_count}\n"
-    caption += f"Apakah Bot: {is_bot}\n"
-    caption += f"Dibatasi: {restricted}\n"
-    caption += f"Diverifikasi Oleh Telegram: {verified}\n"
-    caption += f"ID: <code>{user_id}</code>\n\n"
-    caption += f"Bio: \n<code>{user_bio}</code>\n\n"
-    caption += f"Obrolan Umum Dengan Pengguna Ini: {common_chat}\n"
-    caption += f"Link Permanen Ke Profil: "
+    caption = "<b>INFORMASI PENGGUNA :</b>\n\n"
+    caption += f"Nama Depan : {first_name}\n"
+    caption += f"Nama Belakang : {last_name}\n"
+    caption += f"Username : {username}\n"
+    caption += f"Data Centre ID : {dc_id}\n"
+    caption += f"Total Foto Profil : {replied_user_profile_photos_count}\n"
+    caption += f"Apakah Bot : {is_bot}\n"
+    caption += f"Apakah Dibatasi : {restricted}\n"
+    caption += f"Diverifikasi Oleh Telegram : {verified}\n"
+    caption += f"User ID : <code>{user_id}</code>\n\n"
+    caption += f"Bio : <code>{user_bio}</code>\n\n"
+    caption += f"Group yang sama Dengan Pengguna Ini : {common_chat}\n"
+    caption += "Link Permanen Ke Profil : "
     caption += f'<a href="tg://user?id={user_id}">{first_name}</a>'
 
     return photo, caption
