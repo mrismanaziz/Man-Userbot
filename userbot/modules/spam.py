@@ -10,7 +10,7 @@ from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^\.cspam (.+)")
+@register(outgoing=True, pattern="^\\.cspam (.+)")
 async def tmeme(e):
     cspam = str(e.pattern_match.group(1))
     message = cspam.replace(" ", "")
