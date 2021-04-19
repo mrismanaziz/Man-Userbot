@@ -10,7 +10,7 @@ from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.cspam (.*)")
+@register(outgoing=True, pattern="^\.cspam (.+)")
 async def tmeme(e):
     cspam = str(e.pattern_match.group(1))
     message = cspam.replace(" ", "")
@@ -23,8 +23,8 @@ async def tmeme(e):
         )
 
 
-@register(outgoing=True, pattern="^.wspam (.*)")
-async def tmeme(e):
+@register(outgoing=True, pattern=r"^\.wspam (.+)")
+async def t_meme(e):
     wspam = str(e.pattern_match.group(1))
     message = wspam.split()
     await e.delete()
@@ -36,10 +36,10 @@ async def tmeme(e):
         )
 
 
-@register(outgoing=True, pattern="^.spam (.*)")
+@register(outgoing=True, pattern=r"^\.spam (\d+) (.+)")
 async def spammer(e):
-    counter = int(e.pattern_match.group(1).split(" ", 1)[0])
-    spam_message = str(e.pattern_match.group(1).split(" ", 1)[1])
+    counter = int(e.pattern_match.group(1))
+    spam_message = str(e.pattern_match.group(2))
     await e.delete()
     await asyncio.wait([e.respond(spam_message) for i in range(counter)])
     if BOTLOG:
@@ -48,12 +48,10 @@ async def spammer(e):
         )
 
 
-@register(outgoing=True, pattern="^.picspam")
+@register(outgoing=True, pattern=r"^\.picspam (\d+) (.+)")
 async def tiny_pic_spam(e):
-    message = e.text
-    text = message.split()
-    counter = int(text[1])
-    link = str(text[2])
+    counter = int(e.pattern_match.group(1))
+    link = str(e.pattern_match.group(2))
     await e.delete()
     for _ in range(1, counter):
         await e.client.send_file(e.chat_id, link)
