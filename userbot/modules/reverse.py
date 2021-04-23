@@ -9,7 +9,7 @@
 
 import io
 import os
-import re
+import shutil
 import urllib
 
 import requests
@@ -18,9 +18,14 @@ from PIL import Image
 
 from userbot import CMD_HELP, bot
 from userbot.events import register
+from userbot.utils import googleimagesdownload
 
 opener = urllib.request.build_opener()
-useragent = "Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.70 Mobile Safari/537.36"
+useragent = (
+    "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/80.0.3987.149 Mobile Safari/537.36"
+)
 opener.addheaders = [("User-agent", useragent)]
 
 
@@ -31,71 +36,100 @@ async def okgoogle(img):
         os.remove("okgoogle.png")
 
     message = await img.get_reply_message()
-    if message and message.media:
-        photo = io.BytesIO()
-        await bot.download_media(message, photo)
-    else:
-        await img.edit("`Mohon Balas Ke Sticker`")
-        return
 
-    if photo:
-        await img.edit("`Sedang Mencari Gambar Yang Mirip....`")
-        try:
-            image = Image.open(photo)
-        except OSError:
-            await img.edit("`Pornography Tidak Didukung.`")
-            return
-        name = "okgoogle.png"
-        image.save(name, "PNG")
-        image.close()
-        # https://stackoverflow.com/questions/23270175/google-reverse-image-search-using-post-request#28792943
-        searchUrl = "https://www.google.com/searchbyimage/upload"
-        multipart = {"encoded_image": (name, open(name, "rb")), "image_content": ""}
-        response = requests.post(searchUrl, files=multipart, allow_redirects=False)
-        fetchUrl = response.headers["Location"]
+    if not message or not message.media:
+        return await img.edit("`Reply foto atau stiker.`")
 
-        if response != 400:
-            await img.edit(
-                "`Gambar sudah di upload ke google, Mungkin`"
-                "\n`Mengobok-obok sumber gambar...`"
-            )
-        else:
-            await img.edit("`Google Menyuruhku Pergi`")
-            return
+    photo = io.BytesIO()
+    await bot.download_media(message, photo)
+    if not photo:
+        return await img.edit("`Gagal mendownload gambar.`")
 
-        os.remove(name)
-        match = await ParseSauce(fetchUrl + "&preferences?hl=en&fg=1#languages")
-        guess = match["best_guess"]
-        imgspage = match["similar_images"]
+    await img.edit("`Processing...`")
 
-        if guess and imgspage:
-            await img.edit(
-                f"[{guess}]({fetchUrl})\n\n`Sedang Mencari Gambar Yang Mirip...`"
-            )
-        else:
-            await img.edit("`Maaf, Saya Tidak Bisa Menemukan Apapun`")
-            return
+    try:
+        image = Image.open(photo)
+    except OSError:
+        return await img.edit("`sexuality tidak didukung, kemungkinan besar.`")
 
-        if img.pattern_match.group(1):
-            lim = img.pattern_match.group(1)
-        else:
-            lim = 3
-        images = await scam(match, lim)
-        yeet = []
-        for i in images:
-            k = requests.get(i)
-            yeet.append(k.content)
-        try:
-            await img.client.send_file(
-                entity=await img.client.get_input_entity(img.chat_id),
-                file=yeet,
-                reply_to=img,
-            )
-        except TypeError:
-            pass
-        await img.edit(
-            f"[{guess}]({fetchUrl})\n\n[Gambar Yang Mirip Secara Visual]({imgspage})"
+    name = "okgoogle.png"
+    image.save(name, "PNG")
+    image.close()
+
+    # https://stackoverflow.com/questions/23270175/google-reverse-image-search-using-post-request#28792943
+    searchUrl = "https://www.google.com/searchbyimage/upload"
+    multipart = {"encoded_image": (name, open(name, "rb")), "image_content": ""}
+    response = requests.post(searchUrl, files=multipart, allow_redirects=False)
+    fetchUrl = response.headers["Location"]
+
+    if response == 400:
+        return await img.edit("`Google menyuruhku pergi.`")
+
+    await img.edit(
+        "**Image successfully uploaded to Google. Maybe.**"
+        "\n**Parsing source now. Maybe.**"
+    )
+    os.remove(name)
+    match = await ParseSauce(fetchUrl + "&preferences?hl=en&fg=1#languages")
+    guess = str(match["best_guess"])
+    imgspage = match["similar_images"]
+
+    if not guess and not imgspage:
+        return await img.edit("`Tidak dapat menemukan apa pun untuk si jelek.`")
+
+    try:
+        counter = int(img.pattern_match.group(1))
+    except:
+        counter = int(3)
+    counter = int(10) if counter > 10 else counter
+    counter = int(3) if counter < 0 else counter
+
+    if counter == 0:
+        return await img.edit(
+            f"**Best match:** `{guess}`\
+                              \n\n[Visually similar images]({fetchUrl})\
+                              \n\n[Results for {guess}]({imgspage})"
         )
+
+    await img.edit(
+        f"**Best match:** `{guess}`\
+                   \n\n[Visually similar images]({fetchUrl})\
+                   \n\n[Results for {guess}]({imgspage})\
+                   \n\n**Fetching images...**"
+    )
+
+    response = googleimagesdownload()
+
+    # creating list of arguments
+    arguments = {
+        "keywords": guess,
+        "limit": counter,
+        "format": "png",
+        "no_directory": "no_directory",
+    }
+
+    try:
+        paths = response.download(arguments)
+    except Exception as e:
+        return await img.edit(
+            f"**Best match:** `{guess}`\
+                              \n\n[Visually similar images]({fetchUrl})\
+                              \n\n[Results for {guess}]({imgspage})\
+                              \n\n**Error:** `{e}`**.**"
+        )
+
+    lst = paths[0][guess]
+    await img.client.send_file(
+        entity=img.chat_id,
+        file=lst,
+        reply_to=img,
+    )
+    await img.edit(
+        f"**Best match:** `{guess}`\
+                   \n\n[Visually similar images]({fetchUrl})\
+                   \n\n[Results for {guess}]({imgspage})"
+    )
+    shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
 
 
 async def ParseSauce(googleurl):
@@ -103,7 +137,6 @@ async def ParseSauce(googleurl):
 
     source = opener.open(googleurl).read()
     soup = BeautifulSoup(source, "html.parser")
-
     results = {"similar_images": "", "best_guess": ""}
 
     try:
@@ -118,35 +151,16 @@ async def ParseSauce(googleurl):
     for best_guess in soup.findAll("div", attrs={"class": "r5a77d"}):
         results["best_guess"] = best_guess.get_text()
 
+    results["best_guess"] = results["best_guess"][12:]
     return results
-
-
-async def scam(results, lim):
-
-    single = opener.open(results["similar_images"]).read()
-    decoded = single.decode("utf-8")
-
-    imglinks = []
-    counter = 0
-
-    pattern = r"^,\[\"(.*[.png|.jpg|.jpeg])\",[0-9]+,[0-9]+\]$"
-    oboi = re.findall(pattern, decoded, re.I | re.M)
-
-    for imglink in oboi:
-        counter += 1
-        if not counter >= int(lim):
-            imglinks.append(imglink)
-        else:
-            break
-
-    return imglinks
 
 
 CMD_HELP.update(
     {
         "reverse": "**Plugin : **`reverse`\
-        \n\n  •  **Syntax :** `.reverse`\
+        \n\n  •  **Syntax :** `.reverse` <jumlah>\
         \n  •  **Function : **Balas gambar/stiker untuk melakukan pencarian terbalik di google/\
+        \n\n  •  **NOTE :** Hasil Reverse dapat ditentukan, defaultnya adalah 3. Jika penghitung adalah 0, hanya info dan tautan yang akan diberikan. Bot mungkin saja gagal mengunggah gambar jika hasil yang di minta terlalu banyak.\
     "
     }
 )
