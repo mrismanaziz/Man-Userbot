@@ -217,7 +217,9 @@ async def unzip_file(event):
         elif is_rarfile(input_str):
             zip_type = RarFile
         else:
-            return await event.edit("`Jenis file tidak didukung!`\n`Hanya Bisa ZIP dan RAR`")
+            return await event.edit(
+                "`Jenis file tidak didukung!`\n`Hanya Bisa ZIP dan RAR`"
+            )
         try:
             with zip_type(input_str, "r") as zip_obj:
                 zip_obj.extractall(output_path)
