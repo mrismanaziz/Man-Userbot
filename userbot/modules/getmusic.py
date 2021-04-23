@@ -115,7 +115,9 @@ async def _(event):
     if l:
         await event.edit("`Ya..! aku menemukan sesuatu..`")
     else:
-        await event.edit(f"`Maaf..! saya tidak dapat menemukan apa pun dengan` **{query}**")
+        await event.edit(
+            f"`Maaf..! saya tidak dapat menemukan apa pun dengan` **{query}**"
+        )
         return
     try:
         loa = l[0]
@@ -176,7 +178,9 @@ async def _(event):
     if event.pattern_match.group(1) == "now":
         playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
         if playing is None:
-            return await event.edit("`Error: Tidak ada data scrobbling yang ditemukan.`")
+            return await event.edit(
+                "`Error: Tidak ada data scrobbling yang ditemukan.`"
+            )
         artist = playing.get_artist()
         song = playing.get_title()
     else:
@@ -201,7 +205,9 @@ async def _(event):
                 r = await res
                 await bot.send_read_acknowledge(conv.chat_id)
             except YouBlockedUserError:
-                await event.reply("`Unblock `@SpotifyMusicDownloaderBot` dan coba lagi`")
+                await event.reply(
+                    "`Unblock `@SpotifyMusicDownloaderBot` dan coba lagi`"
+                )
                 return
             await bot.forward_messages(event.chat_id, respond.message)
         await event.client.delete_messages(conv.chat_id, [msg.id, r.id, respond.id])
@@ -219,7 +225,9 @@ async def _(event):
     if event.pattern_match.group(1) == "now":
         playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
         if playing is None:
-            return await event.edit("`Error: Tidak ada scrobble saat ini yang ditemukan.`")
+            return await event.edit(
+                "`Error: Tidak ada scrobble saat ini yang ditemukan.`"
+            )
         artist = playing.get_artist()
         song = playing.get_title()
     else:
