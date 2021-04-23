@@ -160,4 +160,3 @@ async def run_cmd(cmd: List) -> (str, str):
     t_resp = out.strip()
     e_resp = err.strip()
     return t_resp, e_resp
-    
