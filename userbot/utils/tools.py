@@ -148,3 +148,16 @@ async def check_media(reply_message):
         return False
     else:
         return data
+
+
+async def run_cmd(cmd: List) -> (str, str):
+    process = await asyncio.create_subprocess_exec(
+        *cmd,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+    )
+    out, err = await process.communicate()
+    t_resp = out.strip()
+    e_resp = err.strip()
+    return t_resp, e_resp
+    
