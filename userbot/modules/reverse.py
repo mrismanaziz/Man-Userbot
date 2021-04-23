@@ -79,7 +79,7 @@ async def okgoogle(img):
 
     try:
         counter = int(img.pattern_match.group(1))
-    except:
+    except BaseException:
         counter = int(3)
     counter = int(10) if counter > 10 else counter
     counter = int(3) if counter < 0 else counter
