@@ -11,8 +11,10 @@ from io import StringIO
 from os import remove
 from traceback import format_exc
 
-from userbot import CMD_HELP
+from userbot import CMD_HELP, bot
 from userbot.events import register
+
+MAX_MESSAGE_SIZE_LIMIT = 4095
 
 
 @register(outgoing=True, pattern=r"^\.eval(?: |$|\n)([\s\S]*)")
@@ -153,6 +155,44 @@ async def terminal_runner(event):
         return remove("output.txt")
 
     await event.edit(f"**Command:**\n`{command}`\n\n**Result:**\n`{result}`")
+
+
+@register(outgoing=True, pattern="^.json$")
+async def _(event):
+    if event.fwd_from:
+        return
+    the_real_message = None
+    reply_to_id = None
+    if event.reply_to_msg_id:
+        previous_message = await event.get_reply_message()
+        the_real_message = previous_message.stringify()
+        reply_to_id = event.reply_to_msg_id
+    else:
+        the_real_message = event.stringify()
+        reply_to_id = event.message.id
+    if len(the_real_message) > MAX_MESSAGE_SIZE_LIMIT:
+        with io.BytesIO(str.encode(the_real_message)) as out_file:
+            out_file.name = "json.text"
+            await bot.send_file(
+                event.chat_id,
+                out_file,
+                force_document=True,
+                allow_cache=False,
+                reply_to=reply_to_id,
+            )
+            await event.delete()
+    else:
+        await event.edit("`{}`".format(the_real_message))
+
+
+CMD_HELP.update(
+    {
+        "json": "**Plugin : **`json`\
+        \n\n  •  **Syntax :** `.json` <reply ke pesan>\
+        \n  •  **Function : **Untuk mendapatkan detail pesan dalam format json.\
+    "
+    }
+)
 
 
 CMD_HELP.update(
