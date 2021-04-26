@@ -10,7 +10,7 @@ from userbot.events import register
 
 @register(outgoing=True, pattern=r"\$\w*", ignore_unsafe=True, disable_errors=True)
 async def on_snip(event):
-    """ Snips logic. """
+    """Snips logic."""
     try:
         from userbot.modules.sql_helper.snips_sql import get_snip
     except AttributeError:
@@ -37,7 +37,7 @@ async def on_snip(event):
 
 @register(outgoing=True, pattern=r"^.snip (\w*)")
 async def on_snip_save(event):
-    """ For .snip command, saves snips for future use. """
+    """For .snip command, saves snips for future use."""
     try:
         from userbot.modules.sql_helper.snips_sql import add_snip
     except AtrributeError:
@@ -76,7 +76,7 @@ async def on_snip_save(event):
 
 @register(outgoing=True, pattern="^.snips$")
 async def on_snip_list(event):
-    """ For .snips command, lists snips saved by you. """
+    """For .snips command, lists snips saved by you."""
     try:
         from userbot.modules.sql_helper.snips_sql import get_snips
     except AttributeError:
@@ -97,7 +97,7 @@ async def on_snip_list(event):
 
 @register(outgoing=True, pattern=r"^.rmsnip (\w*)")
 async def on_snip_delete(event):
-    """ For .rmsnip command, deletes a snip. """
+    """For .rmsnip command, deletes a snip."""
     try:
         from userbot.modules.sql_helper.snips_sql import remove_snip
     except AttributeError:

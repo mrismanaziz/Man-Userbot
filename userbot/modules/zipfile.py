@@ -72,7 +72,7 @@ async def _(event):
 
 @register(outgoing=True, pattern=r"^\.addzip(?: |$)(.*)")
 async def addzip(add):
-    """ Copyright (c) 2020 azrim @github"""
+    """Copyright (c) 2020 azrim @github"""
     # Prevent Channel Bug to use update
     if add.is_channel and not add.is_group:
         await add.edit("`Command isn't permitted on channels`")

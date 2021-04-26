@@ -107,7 +107,7 @@ logger.setLevel(logging.ERROR)
 
 @register(pattern=r"^\.gdauth(?: |$)", outgoing=True)
 async def generate_credentials(gdrive):
-    """ - Only generate once for long run - """
+    """- Only generate once for long run -"""
     if helper.get_credentials(str(gdrive.sender_id)) is not None:
         await gdrive.edit("**You've already authorized the bot.**")
         await asyncio.sleep(1.5)
@@ -164,7 +164,7 @@ async def generate_credentials(gdrive):
 
 
 async def create_app(gdrive):
-    """ - Create google drive service app - """
+    """- Create google drive service app -"""
     creds = helper.get_credentials(str(gdrive.sender_id))
     if creds is not None:
         # Repack credential objects from strings
@@ -185,7 +185,7 @@ async def create_app(gdrive):
 
 @register(pattern=r"^\.gdreset(?: |$)", outgoing=True)
 async def reset_credentials(gdrive):
-    """ - Reset credentials or change account - """
+    """- Reset credentials or change account -"""
     await gdrive.edit("**Resetting credentials...**")
     helper.clear_credentials(str(gdrive.sender_id))
     await gdrive.edit("**Credentials have been reset.**")
@@ -195,12 +195,12 @@ async def reset_credentials(gdrive):
 
 
 async def get_raw_name(file_path):
-    """ - Get file_name from file_path - """
+    """- Get file_name from file_path -"""
     return file_path.split("/")[-1]
 
 
 async def get_mimeType(name):
-    """ - Check mimeType given file - """
+    """- Check mimeType given file -"""
     mimeType = guess_type(name)[0]
     if not mimeType:
         mimeType = "text/plain"
@@ -796,7 +796,7 @@ async def lists(gdrive):
 
 @register(pattern=r"^\.gdf (mkdir|rm|chck) (.*)", outgoing=True)
 async def google_drive_managers(gdrive):
-    """ - Google Drive folder/file management - """
+    """- Google Drive folder/file management -"""
     await gdrive.edit("**Sending information...**")
     service = await create_app(gdrive)
     if service is False:
@@ -1081,7 +1081,7 @@ async def google_drive(gdrive):
 
 @register(pattern=r"^\.gdfset (put|rm)(?: |$)(.*)", outgoing=True)
 async def set_upload_folder(gdrive):
-    """ - Set parents dir for upload/check/makedir/remove - """
+    """- Set parents dir for upload/check/makedir/remove -"""
     await gdrive.edit("**Sending information...**")
     global parent_Id
     exe = gdrive.pattern_match.group(1)

@@ -43,7 +43,7 @@ opener.addheaders = [("User-agent", useragent)]
 
 @register(outgoing=True, pattern="^.random")
 async def randomise(items):
-    """ For .random command, get a random item from the list of items. """
+    """For .random command, get a random item from the list of items."""
     itemo = (items.text[8:]).split()
     if len(itemo) < 2:
         await items.edit(
@@ -58,7 +58,7 @@ async def randomise(items):
 
 @register(outgoing=True, pattern=r"^\.sleep ([0-9]+)$")
 async def sleepybot(time):
-    """ For .sleep command, let the userbot snooze for a few second. """
+    """For .sleep command, let the userbot snooze for a few second."""
     counter = int(time.pattern_match.group(1))
     await time.edit("`I am sulking and snoozing...`")
     if BOTLOG:
@@ -73,7 +73,7 @@ async def sleepybot(time):
 
 @register(outgoing=True, pattern=r"^\.shutdown$")
 async def killdabot(event):
-    """ For .shutdown command, shut the bot down."""
+    """For .shutdown command, shut the bot down."""
     await event.edit("`Mematikan Man-Userbot....`")
     await asyncio.sleep(7)
     await event.delete()
@@ -126,7 +126,7 @@ async def repeat(rep):
 
 @register(outgoing=True, pattern=r"^\.repo$")
 async def repo_is_here(wannasee):
-    """ For .repo command, just returns the repo URL. """
+    """For .repo command, just returns the repo URL."""
     await wannasee.edit(
         f"**Hey**, __I am using__ 🔥 **Man-Userbot** 🔥\n\n"
         f"      __Thanks For Using me__\n\n"
@@ -139,7 +139,7 @@ async def repo_is_here(wannasee):
 
 @register(outgoing=True, pattern=r"^\.string$")
 async def repo_is_here(wannasee):
-    """ For .repo command, just returns the repo URL. """
+    """For .repo command, just returns the repo URL."""
     await wannasee.edit(
         f"✥ **GET STRING SESSION TELEGRAM :** [KLIK DISINI](https://t.me/sharinguserbot) Terus ketik #string\n"
     )
@@ -171,7 +171,7 @@ async def raw(event):
 
 @register(outgoing=True, pattern=r"^.reverse(?: |$)(\d*)")
 async def okgoogle(img):
-    """ For .reverse command, Google search images and stickers. """
+    """For .reverse command, Google search images and stickers."""
     if os.path.isfile("okgoogle.png"):
         os.remove("okgoogle.png")
 

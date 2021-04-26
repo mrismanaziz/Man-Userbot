@@ -43,7 +43,7 @@ async def get_readable_time(seconds: int) -> str:
 
 @register(outgoing=True, pattern="^.ping$")
 async def pingme(pong):
-    """ For .ping command, ping the userbot from any chat.  """
+    """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     await pong.edit("`Pinging....`")
@@ -59,7 +59,7 @@ async def pingme(pong):
 
 @register(outgoing=True, pattern=r"^\.pink$")
 async def pingme(pong):
-    """ For .ping command, ping the userbot from any chat.  """
+    """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     await pong.edit("`Pinging....`")
@@ -75,7 +75,7 @@ async def pingme(pong):
 
 @register(outgoing=True, pattern=r"^\.ungu$")
 async def pingme(pong):
-    """ For .ping command, ping the userbot from any chat.  """
+    """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     await pong.edit("`Pinging....`")
@@ -91,7 +91,7 @@ async def pingme(pong):
 
 @register(outgoing=True, pattern="^.xping$")
 async def pingme(pong):
-    """ For .ping command, ping the userbot from any chat.  """
+    """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     await pong.edit("`Pinging....`")
@@ -104,7 +104,7 @@ async def pingme(pong):
 
 @register(outgoing=True, pattern="^.lping$")
 async def pingme(pong):
-    """ For .ping command, ping the userbot from any chat.  """
+    """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     await pong.edit("**★ PING ★**")
@@ -125,7 +125,7 @@ async def pingme(pong):
 
 @register(outgoing=True, pattern="^.fping$")
 async def pingme(pong):
-    """ For .ping command, ping the userbot from any chat.  """
+    """For .ping command, ping the userbot from any chat."""
     await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     await pong.edit(".                       /¯ )")
@@ -166,7 +166,7 @@ async def pingme(pong):
 
 @register(outgoing=True, pattern=r"^\.speedtest$")
 async def speedtst(spd):
-    """ For .speedtest command, use SpeedTest to check server speeds. """
+    """For .speedtest command, use SpeedTest to check server speeds."""
     await spd.edit("`Running speed test...`")
 
     test = Speedtest()
@@ -201,7 +201,7 @@ async def speedtst(spd):
 
 @register(outgoing=True, pattern=r"^\.pong$")
 async def pingme(pong):
-    """ For .ping command, ping the userbot from any chat.  """
+    """For .ping command, ping the userbot from any chat."""
     start = datetime.now()
     await pong.edit("`Sepong.....🏓`")
     end = datetime.now()

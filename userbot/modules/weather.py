@@ -24,7 +24,7 @@ DEFCITY = WEATHER_DEFCITY or None
 
 # ====================
 async def get_tz(con):
-    """ Get time zone of the given country. """
+    """Get time zone of the given country."""
     """ Credits: @aragon12 and @zakaryan2004. """
     for c_code in c_n:
         if con == c_n[c_code]:
@@ -38,7 +38,7 @@ async def get_tz(con):
 
 @register(outgoing=True, pattern=r"^\.weather(?: |$)(.*)")
 async def get_weather(weather):
-    """ For .weather command, gets the current weather of a city. """
+    """For .weather command, gets the current weather of a city."""
 
     if not OWM_API:
         return await weather.edit(

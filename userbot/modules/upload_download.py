@@ -30,7 +30,7 @@ from userbot.utils.FastTelethon import download_file, upload_file
 
 @register(pattern=r"^\.download(?: |$)(.*)", outgoing=True)
 async def download(target_file):
-    """ For .download command, download files to the userbot's server. """
+    """For .download command, download files to the userbot's server."""
     await target_file.edit("`Processing...`")
     input_str = target_file.pattern_match.group(1)
     replied = await target_file.get_reply_message()
@@ -141,7 +141,7 @@ async def download(target_file):
 
 
 async def get_video_thumb(file, output):
-    """ Get video thumbnail """
+    """Get video thumbnail"""
     command = ["ffmpeg", "-i", file, "-ss", "00:00:01.000", "-vframes", "1", output]
     t_resp, e_resp = await run_cmd(command)
     if os.path.lexists(output):

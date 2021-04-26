@@ -17,7 +17,7 @@ DELIMITERS = ("/", ":", "|", "_")
 
 
 async def separate_sed(sed_string):
-    """ Separate sed arguments. """
+    """Separate sed arguments."""
 
     if len(sed_string) < 2:
         return
@@ -70,7 +70,7 @@ async def separate_sed(sed_string):
 
 @register(outgoing=True, pattern=r"^\.s")
 async def sed(command):
-    """ For sed command, use sed on Telegram. """
+    """For sed command, use sed on Telegram."""
     sed_result = await separate_sed(command.text)
     textx = await command.get_reply_message()
     if sed_result:

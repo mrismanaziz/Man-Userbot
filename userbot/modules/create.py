@@ -13,7 +13,7 @@ from userbot.events import register
 
 @register(outgoing=True, pattern=r"^\.buat (gb|g|c)(?: |$)(.*)")
 async def telegraphs(grop):
-    """ For .create command, Creating New Group & Channel """
+    """For .create command, Creating New Group & Channel"""
     if not grop.text[0].isalpha() and grop.text[0] not in ("/", "#", "@", "!"):
         if grop.fwd_from:
             return

@@ -113,7 +113,7 @@ async def setlang(prog):
 
 @register(outgoing=True, pattern="^.carbon")
 async def carbon_api(e):
-    """ A Wrapper for carbon.now.sh """
+    """A Wrapper for carbon.now.sh"""
     await e.edit("`Processing..`")
     CARBON = "https://carbon.now.sh/?l={lang}&code={code}"
     global CARBONLANG
@@ -177,7 +177,7 @@ async def carbon_api(e):
 
 @register(outgoing=True, pattern=r"^\.img (.*)")
 async def img_sampler(event):
-    """ For .img command, search and return images matching the query. """
+    """For .img command, search and return images matching the query."""
     await event.edit("`Sedang Mencari Gambar Yang Anda Cari...`")
     query = event.pattern_match.group(1)
     lim = findall(r"lim=\d+", query)
@@ -236,7 +236,7 @@ async def moni(event):
 
 @register(outgoing=True, pattern=r"^\.google (.*)")
 async def gsearch(q_event):
-    """ For .google command, do a Google search. """
+    """For .google command, do a Google search."""
     match = q_event.pattern_match.group(1)
     page = findall(r"page=\d+", match)
     try:
@@ -267,7 +267,7 @@ async def gsearch(q_event):
 
 @register(outgoing=True, pattern=r"^\.wiki (.*)")
 async def wiki(wiki_q):
-    """ For .wiki command, fetch content from Wikipedia. """
+    """For .wiki command, fetch content from Wikipedia."""
     match = wiki_q.pattern_match.group(1)
     try:
         summary(match)
@@ -314,7 +314,7 @@ async def _(event):
 
 @register(outgoing=True, pattern=r"^.tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
-    """ For .tts command, a wrapper for Google Text-to-Speech. """
+    """For .tts command, a wrapper for Google Text-to-Speech."""
     textx = await query.get_reply_message()
     message = query.pattern_match.group(1)
     if message:
@@ -389,7 +389,7 @@ async def _(event):
 
 @register(pattern=".lang (tr|tts) (.*)", outgoing=True)
 async def lang(value):
-    """ For .lang command, change the default langauge of userbot scrapers. """
+    """For .lang command, change the default langauge of userbot scrapers."""
     util = value.pattern_match.group(1).lower()
     if util == "tr":
         scraper = "Translator"
@@ -464,7 +464,7 @@ async def yt_search(video_q):
 
 @register(outgoing=True, pattern=r".yt(audio|video) (.*)")
 async def download_video(v_url):
-    """ For .yt command, download media from YouTube and many other sites. """
+    """For .yt command, download media from YouTube and many other sites."""
     dl_type = v_url.pattern_match.group(1).lower()
     url = v_url.pattern_match.group(2)
 
@@ -629,13 +629,13 @@ async def download_video(v_url):
 
 
 def deEmojify(inputString):
-    """ Remove emojis and other non-safe characters from string """
+    """Remove emojis and other non-safe characters from string"""
     return get_emoji_regexp().sub("", inputString)
 
 
 @register(outgoing=True, pattern="^.rbg(?: |$)(.*)")
 async def kbg(remob):
-    """ For .rbg command, Remove Image Background. """
+    """For .rbg command, Remove Image Background."""
     if REM_BG_API_KEY is None:
         await remob.edit(
             "`Error: Remove.BG API key missing! Add it to environment vars or config.env.`"
@@ -751,7 +751,7 @@ async def ocr(event):
 
 @register(pattern=r"^.decode$", outgoing=True)
 async def parseqr(qr_e):
-    """ For .decode command, get QR Code/BarCode content from the replied photo. """
+    """For .decode command, get QR Code/BarCode content from the replied photo."""
     downloaded_file_name = await qr_e.client.download_media(
         await qr_e.get_reply_message()
     )
@@ -786,7 +786,7 @@ async def parseqr(qr_e):
 
 @register(pattern=r".barcode(?: |$)([\s\S]*)", outgoing=True)
 async def bq(event):
-    """ For .barcode command, genrate a barcode containing the given content. """
+    """For .barcode command, genrate a barcode containing the given content."""
     await event.edit("`Processing..`")
     input_str = event.pattern_match.group(1)
     message = "SYNTAX: `.barcode <long text to include>`"
@@ -823,7 +823,7 @@ async def bq(event):
 
 @register(pattern=r".makeqr(?: |$)([\s\S]*)", outgoing=True)
 async def make_qr(makeqr):
-    """ For .makeqr command, make a QR Code containing the given content. """
+    """For .makeqr command, make a QR Code containing the given content."""
     input_str = makeqr.pattern_match.group(1)
     message = "SYNTAX: `.makeqr <long text to include>`"
     reply_msg_id = None
@@ -863,7 +863,7 @@ async def make_qr(makeqr):
 
 @register(outgoing=True, pattern=r"^.direct(?: |$)([\s\S]*)")
 async def direct_link_generator(request):
-    """ direct links generator """
+    """direct links generator"""
     await request.edit("`Processing...`")
     textx = await request.get_reply_message()
     message = request.pattern_match.group(1)
@@ -904,7 +904,7 @@ async def direct_link_generator(request):
 
 
 def gdrive(url: str) -> str:
-    """ GDrive direct links generator """
+    """GDrive direct links generator"""
     drive = "https://drive.google.com"
     try:
         link = re.findall(r"\bhttps?://drive\.google\.com\S+", url)[0]
@@ -1018,7 +1018,7 @@ def cm_ru(url: str) -> str:
 
 
 def mediafire(url: str) -> str:
-    """ MediaFire direct links generator """
+    """MediaFire direct links generator"""
     try:
         link = re.findall(r"\bhttps?://.*mediafire\.com\S+", url)[0]
     except IndexError:
@@ -1035,7 +1035,7 @@ def mediafire(url: str) -> str:
 
 
 def sourceforge(url: str) -> str:
-    """ SourceForge direct links generator """
+    """SourceForge direct links generator"""
     try:
         link = re.findall(r"\bhttps?://.*sourceforge\.net\S+", url)[0]
     except IndexError:
@@ -1060,7 +1060,7 @@ def sourceforge(url: str) -> str:
 
 
 def osdn(url: str) -> str:
-    """ OSDN direct links generator """
+    """OSDN direct links generator"""
     osdn_link = "https://osdn.net"
     try:
         link = re.findall(r"\bhttps?://.*osdn\.net\S+", url)[0]
@@ -1081,7 +1081,7 @@ def osdn(url: str) -> str:
 
 
 def github(url: str) -> str:
-    """ GitHub direct links generator """
+    """GitHub direct links generator"""
     try:
         link = re.findall(r"\bhttps?://.*github\.com.*releases\S+", url)[0]
     except IndexError:
@@ -1100,7 +1100,7 @@ def github(url: str) -> str:
 
 
 def androidfilehost(url: str) -> str:
-    """ AFH direct links generator """
+    """AFH direct links generator"""
     try:
         link = re.findall(r"\bhttps?://.*androidfilehost.*fid.*\S+", url)[0]
     except IndexError:
@@ -1316,7 +1316,7 @@ async def neko(nekobin):
 
 @register(pattern=r"^\.ss (.*)", outgoing=True)
 async def capture(url):
-    """ For .ss command, capture a website's screenshot and send the photo. """
+    """For .ss command, capture a website's screenshot and send the photo."""
     await url.edit("`Processing...`")
     chrome_options = await options()
     chrome_options.add_argument("--test-type")
