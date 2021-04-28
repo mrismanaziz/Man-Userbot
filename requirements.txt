@@ -100,3 +100,4 @@ youtube-search
 youtube-dl
 js2py
 nekos.py
+rarfile
