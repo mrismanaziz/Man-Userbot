@@ -100,7 +100,7 @@
       "required": false
     },
     "ALIVE_TEKS_CUSTOM": {
-      "description": "Kustom Pesan Alive Mu Untuk Perintah .calive (Isi Terserah)",
+      "description": "Pesan Text Kustom Alive Mu Untuk Perintah .alive (Isi Terserah)",
       "required": false
     },
     "S_PACK_NAME": {

@@ -11,7 +11,7 @@ from userbot import CMD_HELP, bot
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.tiny(?: |$)(.*)", disable_errors=True)
+@register(outgoing=True, pattern=r"^\.tiny(?: |$)(.*)", disable_errors=True)
 async def ultiny(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):

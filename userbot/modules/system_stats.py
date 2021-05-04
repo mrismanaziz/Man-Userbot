@@ -227,7 +227,7 @@ async def amireallyalive(alive):
     user = await bot.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
     output = (
-        f" **┗┓ ✮ USERBOT {DEFAULTUSER} ✮ ┏┛** \n"
+        f" **┗┓ ✮ {DEFAULTUSER} USERBOT  ✮ ┏┛** \n"
         f"\n__**{ALIVE_TEKS_CUSTOM}**__\n"
         f"**━━━━━━━━━━━━━━━**\n"
         f"**✮ Master ✮** \n"
@@ -235,12 +235,15 @@ async def amireallyalive(alive):
         f"**✮ Username ✮** \n"
         f" ➥ `@{user.username}` \n"
         f"┏━━━━━━━━━━━━━━━━\n"
-        f"┣✣ `Telethon : `Ver {version.__version__} \n"
-        f"┣✣ `Python   : `Ver {python_version()} \n"
-        f"┣✣ `Bot Ver  : `{BOT_VER} \n"
-        f"┣✣ `Modules  : `{len(modules)} \n"
-        f"┣✣ `Uptime   : `{uptime} \n"
-        f"┗━━━━━━━━━━━━━━━━"
+        f"┣ ✥ `Telethon : `Ver {version.__version__} \n"
+        f"┣ ✥ `Python   : `Ver {python_version()} \n"
+        f"┣ ✥ `Bot Ver  : `{BOT_VER} \n"
+        f"┣ ✥ `Modules  : `{len(modules)} \n"
+        f"┣ ✥ `Uptime   : `{uptime} \n"
+        f"┗━━━━━━━━━━━━━━ \n"
+        f"⚡️ **Repo Userbot :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) \n"
+        f"⚡️ **Grup Userbot :** [Tekan Disini](https://t.me/sharinguserbot) \n"
+        f"⚡️ **Owner :** [Risman](t.me/mrismanaziz) \n"
     )
     if ALIVE_LOGO:
         try:
@@ -303,24 +306,17 @@ async def amireallyalive(alive):
 
 @register(outgoing=True, pattern=r"^\.(?:alive|on)\s?(.)?")
 async def amireallyalive(alive):
-    user = await bot.get_me()
+    await bot.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
     output = (
-        f"**♕ ┗┓ {DEFAULTUSER} USERBOT ┏┛ ♕** \n\n"
-        f"┏━━━━━━━━━━━━━━ \n"
-        f"┣ ✥ `Master   : `{DEFAULTUSER} \n"
-        f"┣ ✥ `Username : `@{user.username} \n"
-        f"┣ ✥ `Telethon : `Ver {version.__version__} \n"
-        f"┣ ✥ `Python   : `Ver {python_version()} \n"
-        f"┣ ✥ `Bot Ver  : `{BOT_VER} \n"
-        f"┣ ✥ `Branch   : `{UPSTREAM_REPO_BRANCH} \n"
-        f"┣ ✥ `Modules  : `{len(modules)} Modules \n"
-        f"┣ ✥ `Uptime   : `{uptime} \n"
-        f"┗━━━━━━━━━━━━━━ \n"
-        f"❃ **Repo Userbot :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) \n"
-        f"❃ **Grup Userbot :** [Tekan Disini](https://t.me/sharinguserbot) \n"
-        f"❃ **Owner :** [Risman](t.me/mrismanaziz) \n"
-        f"┗━━━━━━━━━━━━━━ \n"
+        f"**[Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) is Up and Running.**\n\n"
+        f"__**{ALIVE_TEKS_CUSTOM}**__\n\n"
+        f"⚡️ **Master :** `{DEFAULTUSER}` \n"
+        f"⚡️ **Modules :** `{len(modules)} Modules` \n"
+        f"⚡️ **Bot Version :** `{BOT_VER}` \n"
+        f"⚡️ **Python Version :** `{python_version()}` \n"
+        f"⚡️ **Telethon Version :** `{version.__version__}` \n"
+        f"⚡️ **Bot Uptime :** `{uptime}` \n"
     )
     if ALIVE_LOGO:
         try:

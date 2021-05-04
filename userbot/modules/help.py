@@ -7,7 +7,7 @@
 
 import asyncio
 
-from userbot import CMD_HELP
+from userbot import ALIVE_NAME, CMD_HELP
 from userbot.events import register
 
 modules = CMD_HELP
@@ -30,9 +30,9 @@ async def help(event):
             string += "`" + str(i)
             string += "`\t❉ "
         await event.edit(
-            "**✦ Daftar Perintah Untuk Userbot-Man :\n\n**"
+            f"**✦ Daftar Perintah Untuk {ALIVE_NAME}-UserBot :\n\n**"
             f"❉{string}❉"
-            "\n\n**Support** @sharinguserbot"
+            "\n\n**Support @SharingUserbot**"
         )
         await event.reply(
             f"\n**Ketik Contoh** `.help afk` **Untuk Melihat Informasi Perintah**"
