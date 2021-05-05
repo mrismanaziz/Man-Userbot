@@ -10,6 +10,8 @@ import random
 import urllib.request
 from os import remove
 
+import requests
+from bs4 import BeautifulSoup as bs
 from PIL import Image
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import (
@@ -349,20 +351,50 @@ async def sticker_to_png(sticker):
     return
 
 
+@register(outgoing=True, pattern=r"^\.findsticker (.*)")
+async def cb_sticker(event):
+    query = event.pattern_match.group(1)
+    if not query:
+        return await event.edit("`Masukan Nama Sticker Pack!`")
+    await event.edit("`Searching sticker packs...`")
+    text = requests.get("https://combot.org/telegram/stickers?q=" + query).text
+    soup = bs(text, "lxml")
+    results = soup.find_all("div", {"class": "sticker-pack__header"})
+    if not results:
+        return await event.edit("`Tidak Menemukan Sticker Pack :(`")
+    reply = f"**Keyword Sticker Pack:** {query}\n\n**Hasil:**\n"
+    for pack in results:
+        if pack.button:
+            packtitle = (pack.find("div", "sticker-pack__title")).get_text()
+            packlink = (pack.a).get("href")
+            reply += f"- [{packtitle}]({packlink})\n\n"
+    await event.edit(reply)
+
+
 CMD_HELP.update(
     {
         "stickers": "**Plugin : **`stickers`\
-        \n\n  •  **Syntax :** `.kang | .tikel [emoji('s)]?`\
-        \n  •  **Function : **Balas .tikel Ke Sticker Atau Gambar Untuk Menambahkan Ke Pack Mu\
-        \n\n  •  **Syntax :** `.kang | .tikel  (emoji['s]]?` [nomer]?\
-        \n  •  **Function : **Untuk Mengetahui Detail Tentang Film.\
+        \n\n  •  **Syntax :** `.kang` atau `.tikel` [emoji]?`\
+        \n  •  **Function : **Balas .kang Ke Sticker Atau Gambar Untuk Menambahkan Ke Sticker Pack Mu\
+        \n\n  •  **Syntax :** `.kang` [emoji] atau `.tikel` `[emoji]`\
+        \n  •  **Function : **Balas .kang emoji Ke Sticker Atau Gambar Untuk Menambahkan dan costum emoji sticker Ke Pack Mu\
         \n\n  •  **Syntax :** `.stkrinfo`\
-        \n  •  **Function : **Dapatkan Informasi Pack Sticker.\
-        \n\n  •  **Syntax :** `.getsticker` <nama movie/tv>\
+        \n  •  **Function : **Dapatkan Informasi Sticker Pack.\
+        \n\n  •  **Syntax :** `.findsticker` <nama pack sticker>\
+        \n  •  **Function : **Untuk Mencari Sticker Pack.\
+    "
+    }
+)
+
+
+CMD_HELP.update(
+    {
+        "sticker_v2": "**Plugin : **`stickers`\
+        \n\n  •  **Syntax :** `.getsticker`\
         \n  •  **Function : **Balas Ke Stcker Untuk Mendapatkan File 'PNG' Sticker.\
         \n\n  •  **Syntax :** `.get`\
         \n  •  **Function : **Balas ke sticker untuk mendapatkan file 'PNG' sticker\
-        \n\n  •  **Syntax :** `.stoi` <nama movie/tv>\
+        \n\n  •  **Syntax :** `.stoi`\
         \n  •  **Function : **Balas Ke Stcker Untuk Mendapatkan File 'PNG' Sticker.\
         \n\n  •  **Syntax :** `.itos`\
         \n  •  **Function : **Balas ke sticker atau gambar .itos untuk mengambil sticker bukan ke pack\
