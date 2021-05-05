@@ -362,7 +362,7 @@ async def cb_sticker(event):
     results = soup.find_all("div", {"class": "sticker-pack__header"})
     if not results:
         return await event.edit("`Tidak Menemukan Sticker Pack :(`")
-    reply = f"**Keyword Sticker Pack:** {query}\n\n**Hasil:**\n"
+    reply = f"**Keyword Sticker Pack:**\n {query}\n\n**Hasil:**\n"
     for pack in results:
         if pack.button:
             packtitle = (pack.find("div", "sticker-pack__title")).get_text()
@@ -374,7 +374,7 @@ async def cb_sticker(event):
 CMD_HELP.update(
     {
         "stickers": "**Plugin : **`stickers`\
-        \n\n  •  **Syntax :** `.kang` atau `.tikel` [emoji]?`\
+        \n\n  •  **Syntax :** `.kang` atau `.tikel` [emoji]?\
         \n  •  **Function : **Balas .kang Ke Sticker Atau Gambar Untuk Menambahkan Ke Sticker Pack Mu\
         \n\n  •  **Syntax :** `.kang` [emoji] atau `.tikel` `[emoji]`\
         \n  •  **Function : **Balas .kang emoji Ke Sticker Atau Gambar Untuk Menambahkan dan costum emoji sticker Ke Pack Mu\
