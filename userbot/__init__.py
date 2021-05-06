@@ -155,6 +155,9 @@ ALIVE_TEKS_CUSTOM = os.environ.get(
 # Default .alive name
 ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
 
+# Custom Emoji Alive
+ALIVE_EMOJI = os.environ.get("ALIVE_EMOJI", "⚡️")
+
 # Time & Date - Country and Time Zone
 COUNTRY = str(os.environ.get("COUNTRY", "ID"))
 TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
@@ -172,7 +175,7 @@ BITLY_TOKEN = os.environ.get("BITLY_TOKEN", None)
 TERM_ALIAS = os.environ.get("TERM_ALIAS", "Man-Userbot")
 
 # Bot version
-BOT_VER = os.environ.get("BOT_VER", "0.1.3")
+BOT_VER = os.environ.get("BOT_VER", "0.5.1")
 
 # Default .alive username
 ALIVE_USERNAME = os.environ.get("ALIVE_USERNAME", None)
@@ -302,13 +305,13 @@ else:
 async def check_botlog_chatid():
     if not BOTLOG_CHATID and LOGSPAMMER:
         LOGS.info(
-            "You must set up the BOTLOG_CHATID variable in the config.env or environment variables, for the private error log storage to work."
+            "Anda harus menambahkan var BOTLOG_CHATID di config.env atau di var heroku, agar penyimpanan log error userbot pribadi berfungsi."
         )
         quit(1)
 
     elif not BOTLOG_CHATID and BOTLOG:
         LOGS.info(
-            "You must set up the BOTLOG_CHATID variable in the config.env or environment variables, for the userbot logging feature to work."
+            "Anda harus menambahkan var BOTLOG_CHATID di config.env atau di var heroku, agar fitur logging userbot berfungsi."
         )
         quit(1)
 
@@ -318,8 +321,8 @@ async def check_botlog_chatid():
     entity = await bot.get_entity(BOTLOG_CHATID)
     if entity.default_banned_rights.send_messages:
         LOGS.info(
-            "Your account doesn't have rights to send messages to BOTLOG_CHATID "
-            "group. Check if you typed the Chat ID correctly.")
+            "Akun Anda tidak bisa mengirim pesan ke BOTLOG_CHATID "
+            "Periksa apakah Anda memasukan ID grup dengan benar.")
         quit(1)
 
 
@@ -328,8 +331,9 @@ with bot:
         bot.loop.run_until_complete(check_botlog_chatid())
     except BaseException:
         LOGS.info(
-            "BOTLOG_CHATID environment variable isn't a "
-            "valid entity. Check your environment variables/config.env file.")
+            "var BOTLOG_CHATID kamu belum di isi. "
+            "Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id "
+            "Masukan id grup nya di var BOTLOG_CHATID")
         quit(1)
 
 
@@ -342,8 +346,9 @@ with bot:
         bot.loop.run_until_complete(check_alive())
     except BaseException:
         LOGS.info(
-            "BOTLOG_CHATID environment variable isn't a "
-            "valid entity. Check your environment variables/config.env file.")
+            "var BOTLOG_CHATID kamu belum di isi. "
+            "Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id "
+            "Masukan id grup nya di var BOTLOG_CHATID")
         quit(1)
 
 # Global Variables
@@ -383,6 +388,9 @@ def paginate_help(page_number, loaded_modules, prefix):
                     "««", data="{}_prev({})".format(prefix, modulo_page)
                 ),
                 custom.Button.inline(
+                    'Tutup', b'close'
+                ),
+                custom.Button.inline(
                     "»»", data="{}_next({})".format(prefix, modulo_page)
                 )
             )
@@ -401,13 +409,28 @@ with bot:
         dugmeler = CMD_HELP
         me = bot.get_me()
         uid = me.id
+        logo = "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
 
         @tgbot.on(events.NewMessage(pattern="/start"))
         async def handler(event):
-            if event.message.from_id != uid:
-                await event.reply(f"**Hey**, __I am using__ 🔥 **Man-Userbot** 🔥\n\n"f"      __Thanks For Using me__\n\n"f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n")
-            else:
-                await event.reply(f"**Hey**, __I am using__ 🔥 **Man-Userbot** 🔥\n\n"f"      __Thanks For Using me__\n\n"f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n")
+            await event.message.get_sender()
+            text = (
+                f"**Hey**, __I am using__ 🔥 **Man-Userbot** 🔥\n\n"
+                f"       __Thanks For Using me__\n\n"
+                f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
+                f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
+                f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"
+                f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n")
+            await tgbot.send_file(event.chat_id, logo, caption=text,
+                                  buttons=[
+                                      [
+                                          custom.Button.url(
+                                              text="⛑ Group Support ⛑",
+                                              url="https://t.me/SharingUserbot"
+                                          )
+                                      ]
+                                  ]
+                                  )
 
         @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
         async def inline_handler(event):
@@ -477,6 +500,11 @@ with bot:
                 reply_pop_up_alert = f"Harap Deploy Userbot Sendiri, Jangan Menggunakan Milik {ALIVE_NAME}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
+        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"close")))
+        async def close(event):
+            await event.edit("**Help Mode Button Ditutup!**")
+            await event.delete()
+
         @tgbot.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"helpme_prev\((.+?)\)")
@@ -518,7 +546,7 @@ with bot:
                 reply_pop_up_alert = (
                     help_string
                     if help_string is not None
-                    else "{} No document has been written for module.".format(
+                    else "{} Tidak ada dokumen yang telah ditulis untuk modul.".format(
                         modul_name
                     )
                 )
@@ -529,13 +557,14 @@ with bot:
 
     except BaseException:
         LOGS.info(
-            "Mode Inline Bot Mu Nonaktif. "
-            "Untuk Mengaktifkan Pergi Ke @BotFather, lalu settings bot > pilih mode inline > Turn On. ")
+            "Help Mode Inline Bot Mu Tidak aktif. Tidak di aktifkan juga tidak apa-apa. "
+            "Untuk Mengaktifkannya Buat bot di @BotFather Lalu Tambahkan var BOT_TOKEN dan BOT_USERNAME. "
+            "Pergi Ke @BotFather lalu settings bot » Pilih mode inline » Turn On. ")
     try:
         bot.loop.run_until_complete(check_botlog_chatid())
     except BaseException:
         LOGS.info(
-            "BOTLOG_CHATID environment variable isn't a "
-            "valid entity. Check your environment variables/config.env file."
-        )
+            "var BOTLOG_CHATID kamu belum di isi. "
+            "Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id "
+            "Masukan id grup nya di var BOTLOG_CHATID")
         quit(1)
