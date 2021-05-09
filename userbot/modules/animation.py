@@ -14,7 +14,7 @@ async def _(event):
 
         return
 
-    animation_interval = 0.1
+    animation_interval = 1
 
     animation_ttl = range(117)
 
@@ -93,18 +93,18 @@ async def koc(e):
         await e.edit("SAYANG KAMU💞")
 
 
-@register(outgoing=True, pattern=r"^\.dino(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.sultan(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit("`DIN DINNN.....`")
+    await typew.edit("`SUL SULLLL.....`")
     sleep(1)
-    await typew.edit("`DINOOOOSAURUSSSSS!!`")
+    await typew.edit("`SUULLLLLLTTTAAAANN!!`")
     sleep(1)
     await typew.edit("`🏃                        🦖`")
     await typew.edit("`🏃                       🦖`")
     await typew.edit("`🏃                      🦖`")
     await typew.edit("`🏃                     🦖`")
-    await typew.edit("`🏃   `LARII`          🦖`")
+    await typew.edit("`🏃   `KEJAR`          🦖`")
     await typew.edit("`🏃                   🦖`")
     await typew.edit("`🏃                  🦖`")
     await typew.edit("`🏃                 🦖`")
@@ -144,7 +144,7 @@ async def typewriter(typew):
     await typew.edit("`🏃      🦖`")
     await typew.edit("`🏃     🦖`")
     await typew.edit("`🏃    🦖`")
-    await typew.edit("`Dahlah Pasrah Aja`")
+    await typew.edit("`Dahlah SULTAN pasrah Aja`")
     sleep(1)
     await typew.edit("`🧎🦖`")
     sleep(2)
