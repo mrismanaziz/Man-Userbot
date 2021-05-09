@@ -3,7 +3,7 @@
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 # inline credit @keselekpermen69
-# Pengguna Man-Userbot
+# Pengguna SULTAN-Userbot
 """ Userbot initialization. """
 
 import os
@@ -103,7 +103,7 @@ UPSTREAM_REPO_URL = os.environ.get(
     "UPSTREAM_REPO_URL",
     "https://github.com/pockybear28/Man-Userbot.git")
 UPSTREAM_REPO_BRANCH = os.environ.get(
-    "UPSTREAM_REPO_BRANCH", "Man-Userbot")
+    "UPSTREAM_REPO_BRANCH", "SULTAN-Userbot")
 
 # Console verbose logging
 CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
@@ -172,7 +172,7 @@ ZIP_DOWNLOAD_DIRECTORY = os.environ.get("ZIP_DOWNLOAD_DIRECTORY", "./zips")
 BITLY_TOKEN = os.environ.get("BITLY_TOKEN", None)
 
 # Bot Name
-TERM_ALIAS = os.environ.get("TERM_ALIAS", "Man-Userbot")
+TERM_ALIAS = os.environ.get("TERM_ALIAS", "SULTAN-Userbot")
 
 # Bot version
 BOT_VER = os.environ.get("BOT_VER", "0.5.1")
@@ -189,7 +189,7 @@ ALIVE_LOGO = os.environ.get(
 
 # Last.fm Module
 BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
-DEFAULT_BIO = os.environ.get("DEFAULT_BIO", None)
+DEFAULT_BIO = os.environ.get("D@telefriendsgc", None)
 
 LASTFM_API = os.environ.get("LASTFM_API", None)
 LASTFM_SECRET = os.environ.get("LASTFM_SECRET", None)
@@ -338,7 +338,7 @@ with bot:
 
 
 async def check_alive():
-    await bot.send_message(BOTLOG_CHATID, "```🔥✘ SULTAN-Userbot Berhasil Di Aktifkan ✘🔥```")
+    await bot.send_message(BOTLOG_CHATID, "```👳✘ SULTAN-Userbot Berhasil Di Aktifkan ✘👳```")
     return
 
 with bot:
@@ -415,18 +415,18 @@ with bot:
         async def handler(event):
             await event.message.get_sender()
             text = (
-                f"**Hey**, __I am using__ 🔥 **Man-Userbot** 🔥\n\n"
+                f"**Hey**, __I am using__ 👳 **SULTAN-Userbot** 👳\n\n"
                 f"       __Thanks For Using me__\n\n"
                 f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
-                f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
-                f"✣ **Owner Repo :** [Risman](t.me/suppnigga)\n"
-                f"✣ **Repo :** [Man-Userbot](https://github.com/pockybear28/Man-Userbot)\n")
+                f"✣ **Group Support :** [Sharing Userbot](t.me/telefriendsgc)\n"
+                f"✣ **Owner Repo :** [SULTAN](t.me/suppnigga)\n"
+                f"✣ **Repo :** [SULTAN-Userbot](https://github.com/pockybear28/Man-Userbot)\n")
             await tgbot.send_file(event.chat_id, logo, caption=text,
                                   buttons=[
                                       [
                                           custom.Button.url(
                                               text="⛑ Group Support ⛑",
-                                              url="https://t.me/SharingUserbot"
+                                              url="https://t.me/telefriendsgc"
                                           )
                                       ]
                                   ]
@@ -442,7 +442,7 @@ with bot:
                 result = builder.article(
                     "Harap Gunakan .help Untuk Perintah",
                     text="{}\n\n**✥ Jumlah Module Yang Tersedia :** `{}` **Module**\n               \n**✥ Daftar Modul Man-Userbot :** \n".format(
-                        "**✗ Man-Userbot Main Menu ✗**",
+                        "**✗ SULTAN-Userbot Main Menu ✗**",
                         len(dugmeler),
                     ),
                     buttons=buttons,
@@ -453,12 +453,12 @@ with bot:
                     title="Repository",
                     description="Repository SULTAN - Userbot",
                     url="https://t.me/telefriendsgc",
-                    text="**SULTAN - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **Owner Repo :** [SULTAN](https://t.me/suppnigga)\n✣ **Grup Support :** @telefriendsgs\n✣ **Repository :** [Man-Userbot](https://github.com/pockybear28/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
+                    text="**SULTAN - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **Owner Repo :** [SULTAN](https://t.me/suppnigga)\n✣ **Grup Support :** @telefriendsgs\n✣ **Repository :** [SULTAN-Userbot](https://github.com/pockybear28/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url(
                                 "Support",
-                                "https://t.me/SharingUserbot"),
+                                "https://t.me/telefriendsgc"),
                             custom.Button.url(
                                 "Repo",
                                 "https://github.com/pockybear28/Man-Userbot")],
