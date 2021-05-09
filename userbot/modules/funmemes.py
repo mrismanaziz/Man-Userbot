@@ -497,7 +497,7 @@ async def _(event):
             "`Hacking... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
             "`Hacking... 84%\n█████████████████████▒▒▒▒ `",
             "`Hacking... 100%\n█████████HACKED███████████ `",
-            f"`Targeted Account Hacked...\n\nPay 9999$ To @{DEFAULTUSER} or gib a pizza party 🍕 To Remove This Hack`",
+            f"`Targeted Account Hacked...\n\nPay 9999$ To @suppnigga or give a your couple To Remove This Hack`",
         ]
 
         for i in animation_ttl:
@@ -520,7 +520,7 @@ async def _(event):
 
     input_str = event.pattern_match.group(1)
 
-    if input_str == "hypno":
+    if input_str == "hipnotis":
 
         await event.edit(input_str)
 
@@ -539,7 +539,7 @@ async def _(event):
             "⬜⬜⬜⬜⬜⬜⬜\n⬜⬛⬛⬛⬛⬛⬜\n⬜⬛⬜⬜⬜⬛⬜\n⬜⬛⬜⬛⬜⬛⬜\n⬜⬛⬜⬜⬜⬛⬜\n⬜⬛⬛⬛⬛⬛⬜\n⬜⬜⬜⬜⬜⬜⬜",
             "⬛⬛⬛⬛⬛\n⬛⬜⬜⬜⬛\n⬛⬜⬛⬜⬛\n⬛⬜⬜⬜⬛\n⬛⬛⬛⬛⬛",
             "⬜⬜⬜\n⬜⬛⬜\n⬜⬜⬜",
-            "[👉🔴👈](t.me/heyworld)",
+            "[👉🔴👈](t.me/suppnigga)",
         ]
 
         for i in animation_ttl:
@@ -1011,7 +1011,7 @@ async def _(event):
             "**(8) Change Chat Info: ☑️**",
             "**(8) Change Chat Info: ✅**",
             "**Permission Granted Successfully**",
-            "**pRoMooTeD SuCcEsSfUlLy**",
+            "**Promoted Successfully**",
         ]
 
         for i in animation_ttl:
@@ -1476,7 +1476,7 @@ async def _(event):
             "😧",
             "😡",
             "😢",
-            "__**...BOY oh BOY! i feel like a wamen....**__",
+            "__**...BOY oh BOY! i feel like a woman....**__",
         ]
 
         for i in animation_ttl:
@@ -1509,7 +1509,7 @@ async def _(event):
             "😁🏽",
             "😁🏼",
             "‎😁",
-            "**Fair & Lovely GeNg Is BeHiNd You....**",
+            "**Fair & Lovely Geng Is Behind You....**",
         ]
 
         for i in animation_ttl:
@@ -1763,7 +1763,7 @@ CMD_HELP.update(
 \nUsage: Untuk Hack Telegram:v\
 \n\n`.dump`\
 \nUsage: xD\
-\n\n`.hypno`\
+\n\n`.hipnotis`\
 \nUsage: Ah Sial Mataku 👀\
 \n\n`.whatsapp`\
 \nUsage: Untuk Hack Whatsapp:v \
