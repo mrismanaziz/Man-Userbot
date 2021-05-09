@@ -27,7 +27,7 @@
 /**
 ```
 ### Repo Man-UserBot
-Repo Yang Dibuat Berbagai Repo Userbot Github dan di Recode Oleh [Risman](https://t.me/mrismanaziz)
+Repo Yang Dibuat Berbagai Repo Userbot Github dan di Recode Oleh [Sultan](https://t.me/suppnigga)
 
 ## Generate String Session
 
