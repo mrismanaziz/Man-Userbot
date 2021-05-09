@@ -1,7 +1,7 @@
 <p align="center">
     <a href="https://app.codacy.com/gh/mrismanaziz/Man-Userbot/dashboard"> <img src="https://img.shields.io/codacy/grade/a8f0747a964e4712818a28d2a7f4edd3?color=blue&logo=codacy&style=for-the-badge" alt="Codacy" /></a>
-    <a href="https://github.com/mrismanaziz/Man-Userbot"> <img src="https://img.shields.io/github/repo-size/mrismanaziz/Man-Userbot?logo=github&style=for-the-badge" /></a>
-    <a href="https://github.com/mrismanaziz/Man-Userbot/network/members"> <img src="https://img.shields.io/github/forks/mrismanaziz/Man-Userbot?logo=github&style=for-the-badge" /></a>
+    <a href="https://github.com/pockybear28/Man-Userbot"> <img src="https://img.shields.io/github/repo-size/mrismanaziz/Man-Userbot?logo=github&style=for-the-badge" /></a>
+    <a href="https://github.com/pockybear28/Man-Userbot/network/members"> <img src="https://img.shields.io/github/forks/mrismanaziz/Man-Userbot?logo=github&style=for-the-badge" /></a>
     <a href="https://pypi.org/project/Telethon/"> <img src="https://img.shields.io/pypi/v/telethon?label=telethon&logo=pypi&logoColor=white&style=for-the-badge" /></a>
     <img alt="PYTHON" src="https://img.shields.io/badge/PYTHON-v3.9.0-blue?style=for-the-badge&logo=appveyor"/>
    </p>
@@ -75,4 +75,5 @@ Gabung Ke [Grup Support](https://t.me/sharinguserbot) Man-UserBot Lalu Ketik #st
 *   [Kampang-Bot](https://github.com/ManusiaRakitan/Kampang-Bot) - Koala
 *   [X-REMIX](https://github.com/ximfine) -  X_ImFine
 *   [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) -  Risman
+*   [Sultan](https://github.com/pockybear28/Man-Userbot) - Sultan
 *   AND OTHER
