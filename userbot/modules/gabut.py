@@ -85,7 +85,7 @@ async def pingme(pong):
     end = datetime.now()
     duration = (end - start).microseconds / 1000
     await pong.edit(
-        f"**NGENTOT!! 🐨**\n**KAMPANG** : %sms\n**Bot Uptime** : {uptime}🕛" % (duration)
+        f"**SULTAN-UserBot!! 🐨**\n**LOG** : %sms\n**Bot Uptime** : {uptime}🕛" % (duration)
     )
 
 
@@ -98,7 +98,7 @@ async def typewriter(typew):
     await typew.edit("**Assalamualaikum**")
 
 
-# Owner @Si_Dian
+# Owner @suppnigga
 
 
 @register(outgoing=True, pattern=r"^\.j(?: |$)(.*)")
@@ -107,10 +107,10 @@ async def typewriter(typew):
     sleep(1)
     await typew.edit(f"**JAKA SEMBUNG BAWA GOLOK**")
     sleep(3)
-    await typew.edit("**NIMBRUNG GOBLOKK!!!🔥**")
+    await typew.edit("**MAKANYA NIMBRUNG GOBLOKK!!!🔥**")
 
 
-# Owner @Si_Dian
+# Owner @suppnigga
 
 
 @register(outgoing=True, pattern=r"^\.k(?: |$)(.*)")
@@ -122,10 +122,10 @@ async def typewriter(typew):
     await typew.edit("**LU SEMUA NGENTOT 🔥**")
 
 
-# Owner @Si_Dian
+# Owner @suppnigga
 
 
-@register(outgoing=True, pattern=r"^\.ass(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.assalam(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
