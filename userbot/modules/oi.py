@@ -164,7 +164,7 @@ async def typewriter(typew):
     await typew.edit("**GC SAMPAH KAYA GINI, BUBARIN AJA GOBLOK!!**")
 
 
-@register(outgoing=True, pattern=r"^\.gcs(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.skb(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**EMANG KITA KENAL? KAGA GOBLOK SOKAB BANGET LU GOBLOK**")
@@ -185,6 +185,8 @@ CMD_HELP.update(
         \n  •  **Function : **Ngeledek orang norak baru pake bot\
         \n\n  •  **Syntax :** `.so`\
         \n  •  **Function : **Ngeledek orang sokab\
+        \n\n  •  **Syntax :** `.skb`\
+        \n  •  **Function : **Ngeledek orang sokab versi 2\
         \n\n  •  **Syntax :** `.met`\
         \n  •  **Function : **Ngeledek si jamet caper\
         \n\n  •  **Syntax :** `.war`\
