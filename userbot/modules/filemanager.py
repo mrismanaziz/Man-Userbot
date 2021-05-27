@@ -9,6 +9,7 @@ import time
 from datetime import datetime
 from os.path import basename, dirname, exists, isdir, isfile, join, relpath
 from shutil import rmtree
+from tarfile import TarFile, is_tarfile
 from zipfile import ZIP_DEFLATED, BadZipFile, ZipFile, is_zipfile
 
 from natsort import os_sorted
@@ -208,7 +209,7 @@ async def unzip_file(event):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
     input_str = event.pattern_match.group(1)
     file_name = basename(input_str)
-    output_path = TEMP_DOWNLOAD_DIRECTORY + re.split("(.zip|.rar)", file_name)[0]
+    output_path = TEMP_DOWNLOAD_DIRECTORY + re.split("(.zip|.rar|.tar)", file_name)[0]
     if exists(input_str):
         start_time = datetime.now()
         await event.edit("`Unzipping...`")
@@ -216,9 +217,11 @@ async def unzip_file(event):
             zip_type = ZipFile
         elif is_rarfile(input_str):
             zip_type = RarFile
+        elif is_tarfile(input_str):
+            zip_type = TarFile
         else:
             return await event.edit(
-                "`Jenis file tidak didukung!`\n`Hanya Bisa ZIP dan RAR`"
+                "`Jenis file tidak didukung!`\n`Hanya Bisa ZIP, RAR dan TAR`"
             )
         try:
             with zip_type(input_str, "r") as zip_obj:
@@ -250,7 +253,7 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk mengcompress file atau folder.\
         \n\n  •  **Syntax :** `.unzip` <path ke zip file>\
         \n  •  **Function : **Untuk mengekstrak file arsip.\
-        \n  •  **NOTE : **Hanya bisa untuk file ZIP dan RAR!\
+        \n  •  **NOTE : **Hanya bisa untuk file ZIP, RAR dan TAR!\
     "
     }
 )
