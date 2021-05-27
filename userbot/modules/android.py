@@ -11,6 +11,7 @@ import os
 import re
 import time
 
+from aiohttp import ClientSession
 from bs4 import BeautifulSoup
 from requests import get
 
@@ -29,32 +30,23 @@ DEVICES_DATA = (
 async def magisk(request):
     """magisk latest releases"""
     magisk_dict = {
-        "Stable": "https://raw.githubusercontent.com/topjohnwu/magisk_files/master/stable.json",
-        "Beta": "https://raw.githubusercontent.com/topjohnwu/magisk_files/master/beta.json",
-        "Canary": "https://raw.githubusercontent.com/topjohnwu/magisk_files/canary/canary.json",
+        "Stable": "https://raw.githubusercontent.com/topjohnwu/magisk-files/master/stable.json",
+        "Beta": "https://raw.githubusercontent.com/topjohnwu/magisk-files/master/beta.json",
+        "Canary": "https://raw.githubusercontent.com/topjohnwu/magisk-files/master/canary.json",
     }
-    releases = "Latest Magisk Releases:\n"
-    for name, release_url in magisk_dict.items():
-        data = get(release_url).json()
-        if str(name) == "Canary":
-            data["magisk"]["link"] = (
-                "https://github.com/topjohnwu/magisk_files/raw/canary/"
-                + data["magisk"]["link"]
-            )
-            data["app"]["link"] = (
-                "https://github.com/topjohnwu/magisk_files/raw/canary/"
-                + data["app"]["link"]
-            )
-            data["uninstaller"]["link"] = (
-                "https://github.com/topjohnwu/magisk_files/raw/canary/"
-                + data["uninstaller"]["link"]
-            )
-
-        releases += (
-            f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | '
-            f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | '
-            f'[Uninstaller]({data["uninstaller"]["link"]})\n'
-        )
+    releases = "**Latest Magisk Releases :**\n"
+    async with ClientSession() as ses:
+        for name, release_url in magisk_dict.items():
+            async with ses.get(release_url) as resp:
+                data = await resp.json(content_type="text/plain")
+                version = data["magisk"]["version"]
+                version_code = data["magisk"]["versionCode"]
+                note = data["magisk"]["note"]
+                url = data["magisk"]["link"]
+                releases += (
+                    f"**{name}** - __v{version} ({version_code})__ : "
+                    f"[APK]({url}) | [Note]({note})\n"
+                )
     await request.edit(releases)
 
 
