@@ -481,7 +481,7 @@ async def fetch_info(chat, event):
     return caption
 
 
-@register(outgoing=True, pattern=r"\.invite(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.invite(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -491,30 +491,36 @@ async def _(event):
     else:
         if not event.is_channel and event.is_group:
             # https://lonamiwebs.github.io/Telethon/methods/messages/add_chat_user.html
-            for user_id in to_add_users.split(" "):
+            for user_id in to_add_users.split():
                 try:
+                    if user_id.isdigit():
+                        user_id = int(user_id)
                     await event.client(
                         functions.messages.AddChatUserRequest(
                             chat_id=event.chat_id, user_id=user_id, fwd_limit=1000000
                         )
                     )
                 except Exception as e:
-                    await event.edit(str(e))
-                    return
+                    return await event.edit(str(e))
+            await event.edit("`Invited Successfully`")
+            await sleep(3)
+            await event.delete()
         else:
             # https://lonamiwebs.github.io/Telethon/methods/channels/invite_to_channel.html
-            for user_id in to_add_users.split(" "):
+            for user_id in to_add_users.split():
                 try:
+                    if user_id.isdigit():
+                        user_id = int(user_id)
                     await event.client(
                         functions.channels.InviteToChannelRequest(
                             channel=event.chat_id, users=[user_id]
                         )
                     )
                 except Exception as e:
-                    await event.edit(str(e))
-                    return
-
-        await event.edit("`Invited Successfully`")
+                    return await event.edit(str(e))
+            await event.edit("`Invited Successfully`")
+            await sleep(3)
+            await event.delete()
 
 
 CMD_HELP.update(
