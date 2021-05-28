@@ -63,9 +63,7 @@ async def _(event):
                 )
             else:
                 os.remove(downloaded_file_name)
-                await event.edit(
-                    "**Error!** Plugin ini sudah terinstall di userbot."
-                )
+                await event.edit("**Error!** Plugin ini sudah terinstall di userbot.")
         except Exception as e:  # pylint:disable=C0103,W0703
             await event.edit(str(e))
             os.remove(downloaded_file_name)
