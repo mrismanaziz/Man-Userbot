@@ -6,7 +6,6 @@
 # You can find misc modules, which dont fit in anything xD
 """ Userbot module for other small commands. """
 
-import asyncio
 import io
 import os
 import re
@@ -18,6 +17,7 @@ from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
+from heroku3 import from_key
 from PIL import Image
 
 from userbot import (
@@ -26,6 +26,8 @@ from userbot import (
     BOTLOG,
     BOTLOG_CHATID,
     CMD_HELP,
+    HEROKU_API_KEY,
+    HEROKU_APP_NAME,
     UPSTREAM_REPO_BRANCH,
     bot,
 )
@@ -34,6 +36,7 @@ from userbot.utils import time_formatter
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
+HEROKU_APP = from_key(HEROKU_API_KEY).apps()[HEROKU_APP_NAME]
 # ============================================
 
 opener = urllib.request.build_opener()
@@ -47,7 +50,7 @@ async def randomise(items):
     itemo = (items.text[8:]).split()
     if len(itemo) < 2:
         await items.edit(
-            "`2 or more items are required! Check .help random for more info.`"
+            "`2 atau lebih banyak item diperlukan! Periksa .help random untuk info lebih lanjut.`"
         )
         return
     index = randint(1, len(itemo) - 1)
@@ -60,36 +63,40 @@ async def randomise(items):
 async def sleepybot(time):
     """For .sleep command, let the userbot snooze for a few second."""
     counter = int(time.pattern_match.group(1))
-    await time.edit("`I am sulking and snoozing...`")
+    await time.edit("`Saya mengantuk dan tertidur...`")
     if BOTLOG:
         str_counter = time_formatter(counter)
         await time.client.send_message(
             BOTLOG_CHATID,
-            f"You put the bot to sleep for {str_counter}.",
+            f"Anda menyuruh bot untuk tidur {str_counter}.",
         )
     sleep(counter)
-    await time.edit("`OK, I'm awake now.`")
+    await time.edit("`Oke, saya sudah bangun sekarang.`")
 
 
 @register(outgoing=True, pattern=r"^\.shutdown$")
 async def killdabot(event):
-    """For .shutdown command, shut the bot down."""
-    await event.edit("`Mematikan Man-Userbot....`")
-    await asyncio.sleep(7)
-    await event.delete()
+    if event.fwd_from:
+        return
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID, "#SHUTDOWN \n" "**Userbot Telah Dimatikan**"
+            BOTLOG_CHATID,
+            "**#SHUTDOWN** \n"
+            "**Man-Userbot** telah di matikan!\nJika ingin menghidupkan kembali silahkan buka heroku",
         )
-    await bot.disconnect()
+    await event.edit("`Man-Userbot Berhasil di matikan!`")
+    if HEROKU_APP is not None:
+        HEROKU_APP.process_formation()["worker"].scale(0)
+    else:
+        sys.exit(0)
 
 
 @register(outgoing=True, pattern=r"^\.restart$")
 async def killdabot(event):
-    await event.edit("`Restarting Man-Userbot...`")
+    await event.edit("`Man-Userbot Berhasil di Restart`")
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID, "#RESTARTBOT \n" "**Man-Userbot Telah Di Restart**"
+            BOTLOG_CHATID, "#RESTART \n" "**Man-Userbot Berhasil Di Restart**"
         )
     # Spin a new instance of bot
     args = [sys.executable, "-m", "userbot"]
@@ -99,14 +106,14 @@ async def killdabot(event):
 @register(outgoing=True, pattern=r"^\.readme$")
 async def reedme(e):
     await e.edit(
-        "Here's something for you to read :\n"
-        "\n[Userbot Repo](https://github.com/mrismanaziz/Man-Userbot/blob/Man-Userbot/README.md)"
-        "\n[Setup Guide - Basic](https://telegra.ph/How-to-host-a-Telegram-Userbot-11-02)"
-        "\n[Setup Guide - Google Drive](https://telegra.ph/How-To-Setup-GDrive-11-02)"
-        "\n[Setup Guide - LastFM Module](https://telegra.ph/How-to-set-up-LastFM-module-for-Paperplane-userbot-11-02)"
-        "\n[Video Tutorial - 576p](https://mega.nz/#!ErwCESbJ!1ZvYAKdTEfb6y1FnqqiLhHH9vZg4UB2QZNYL9fbQ9vs)"
-        "\n[Video Tutorial - 1080p](https://mega.nz/#!x3JVhYwR!u7Uj0nvD8_CyyARrdKrFqlZEBFTnSVEiqts36HBMr-o)"
-        "\n[Special - Note](https://telegra.ph/Special-Note-11-02)"
+        "**Berikut sesuatu untuk kamu baca:**\n"
+        "\n✣ [Userbot Repo](https://github.com/mrismanaziz/Man-Userbot/blob/Man-Userbot/README.md)"
+        "\n✣ [Setup Guide - Basic](https://telegra.ph/How-to-host-a-Telegram-Userbot-11-02)"
+        "\n✣ [Setup Guide - Google Drive](https://telegra.ph/How-To-Setup-GDrive-11-02)"
+        "\n✣ [Setup Guide - LastFM Module](https://telegra.ph/How-to-set-up-LastFM-module-for-Paperplane-userbot-11-02)"
+        "\n✣ [Video Tutorial - 576p](https://mega.nz/#!ErwCESbJ!1ZvYAKdTEfb6y1FnqqiLhHH9vZg4UB2QZNYL9fbQ9vs)"
+        "\n✣ [Video Tutorial - 1080p](https://mega.nz/#!x3JVhYwR!u7Uj0nvD8_CyyARrdKrFqlZEBFTnSVEiqts36HBMr-o)"
+        "\n✣ [Special - Note](https://telegra.ph/Special-Note-11-02)"
     )
 
 
@@ -141,7 +148,7 @@ async def repo_is_here(wannasee):
 async def repo_is_here(wannasee):
     """For .repo command, just returns the repo URL."""
     await wannasee.edit(
-        f"✥ **GET STRING SESSION TELEGRAM :** [KLIK DISINI](https://t.me/sharinguserbot) Terus ketik #string\n"
+        f"✥ **GET STRING SESSION TELEGRAM :** [KLIK DISINI](https://repl.it/@mrismanaziz/stringenSession?lite=1&outputonly=1)\n"
     )
 
 
