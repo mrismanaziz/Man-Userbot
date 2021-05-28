@@ -22,6 +22,7 @@ import shlex
 import os
 from os.path import basename
 import os.path
+from html_telegraph_poster import TelegraphPoster
 from typing import Optional, List
 from userbot import bot, LOGS
 
@@ -150,7 +151,7 @@ async def check_media(reply_message):
         return data
 
 
-async def run_cmd(cmd: List) -> (str, str):
+async def run_cmd(cmd: List) -> (bytes, bytes):
     process = await asyncio.create_subprocess_exec(
         *cmd,
         stdout=asyncio.subprocess.PIPE,
@@ -160,3 +161,17 @@ async def run_cmd(cmd: List) -> (str, str):
     t_resp = out.strip()
     e_resp = err.strip()
     return t_resp, e_resp
+
+
+def post_to_telegraph(title, html_format_content):
+    post_client = TelegraphPoster(use_api=True)
+    auth_name = "Man-Userbot"
+    auth_url = "https://github.com/mrismanaziz/Man-Userbot"
+    post_client.create_api_token(auth_name)
+    post_page = post_client.post(
+        title=title,
+        author=auth_name,
+        author_url=auth_url,
+        text=html_format_content,
+    )
+    return post_page["url"]
