@@ -24,6 +24,7 @@ from pymongo import MongoClient
 from redis import StrictRedis
 from dotenv import load_dotenv
 from requests import get
+from time import sleep
 from telethon.sync import TelegramClient, custom, events
 from telethon.sessions import StringSession
 
@@ -285,6 +286,41 @@ for binary, path in binaries.items():
     downloader = SmartDL(binary, path, progress_bar=False)
     downloader.start()
     os.chmod(path, 0o755)
+
+
+# Heroku's dyno migration
+def migration_workaround():
+    try:
+        from userbot.modules.sql_helper.globals import addgvar, delgvar, gvarstatus
+    except BaseException:
+        return None
+
+    old_ip = gvarstatus("public_ip")
+    new_ip = get("https://api.ipify.org").text
+
+    if old_ip is None:
+        delgvar("public_ip")
+        addgvar("public_ip", new_ip)
+        return None
+
+    if old_ip == new_ip:
+        return None
+
+    sleep_time = 180
+    LOGS.info(
+        f"Perubahan alamat IP terdeteksi, menunggu {sleep_time / 60} menit sebelum memulai bot."
+    )
+    sleep(sleep_time)
+    LOGS.info("Starting Man-Userbot...")
+
+    delgvar("public_ip")
+    addgvar("public_ip", new_ip)
+    return None
+
+
+if HEROKU_APP_NAME is not None and HEROKU_API_KEY is not None:
+    migration_workaround()
+
 
 # 'bot' variable
 if STRING_SESSION:
