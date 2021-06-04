@@ -121,10 +121,10 @@ async def update(event, repo, ups_rem, ac_br):
     execle(sys.executable, *args, environ)
 
 
-@register(outgoing=True, pattern=r"^.update(?: |$)(now|deploy)?")
+@register(outgoing=True, pattern=r"^\.update(?: |$)(now|deploy)?")
 async def upstream(event):
     "For .update command, check if the bot is up to date, update if specified"
-    await event.edit("`Mengecek Pembaruan, Silakan Menunggu....`")
+    await event.edit("`Mengecek Pembaruan, Tunggu Sebentar...`")
     conf = event.pattern_match.group(1)
     off_repo = UPSTREAM_REPO_URL
     force_update = False
@@ -210,12 +210,12 @@ async def upstream(event):
         await event.edit("`✣ Proses Update Man-Userbot, Updating...92%`")
         await event.edit("`✣ Proses Update Man-Userbot, Tunggu Sebentar....100%`")
     if conf == "now":
-        if changelog != "":
-            for commit in changelog.splitlines():
-                if commit.startswith("- [NQ]"):
+        for commit in changelog.splitlines():
+            if commit.startswith("- [NQ]"):
+                if HEROKU_APP_NAME is not None and HEROKU_API_KEY is not None:
                     return await event.edit(
-                        "**Quick update has been disabled for this update; "
-                        "use** `.update deploy` **instead.**"
+                        "**Quick update telah dinonaktifkan untuk pembaruan ini; "
+                        "Gunakan** `.update deploy` **sebagai gantinya.**"
                     )
         await event.edit("**Perfoming a quick update, please wait...**")
         await update(event, repo, ups_rem, ac_br)
