@@ -33,7 +33,7 @@ else:
 async def variable(var):
     exe = var.pattern_match.group(1)
     if app is None:
-        await var.edit("`[HEROKU]" "\nHarap Siapkan`  **HEROKU_APP_NAME**.")
+        await var.edit("**[HEROKU]" "\nHarap Siapkan** `HEROKU_APP_NAME`")
         return False
     if exe == "get":
         await var.edit("`Mendapatkan Informasi...`")
@@ -43,8 +43,8 @@ async def variable(var):
                 if BOTLOG:
                     await var.client.send_message(
                         BOTLOG_CHATID,
-                        "#ConfigVars\n\n"
-                        "**Config Vars**:\n"
+                        "**Logger : #SYSTEM**\n\n"
+                        "**#SET #VAR_HEROKU #ADDED**:\n\n"
                         f"`{variable}` **=** `{heroku_var[variable]}`\n",
                     )
                     await var.edit("`Diterima Ke BOTLOG_CHATID...`")
@@ -79,8 +79,8 @@ async def variable(var):
             if BOTLOG:
                 await var.client.send_message(
                     BOTLOG_CHATID,
-                    "#MenghapusConfigVars\n\n"
-                    "**Menghapus Config Vars**:\n"
+                    "**Logger : #SYSTEM**\n\n"
+                    "**#SET #VAR_HEROKU #DELETED**:\n\n"
                     f"`{variable}`",
                 )
             await var.edit("`Config Vars Telah Dihapus`")
@@ -99,20 +99,20 @@ async def set_var(var):
         if BOTLOG:
             await var.client.send_message(
                 BOTLOG_CHATID,
-                "#SetelConfigVars\n\n"
-                "**Mengganti Config Vars**:\n"
+                "**Logger : #SYSTEM**\n\n"
+                "**#SET #VAR_HEROKU #ADDED**:\n\n"
                 f"`{variable}` = `{value}`",
             )
-        await var.edit("`Sedang Proses,Tunggu Dalam Beberapa Detik..`")
+        await var.edit("`Sedang Proses, Mohon Tunggu sebentar..`")
     else:
         if BOTLOG:
             await var.client.send_message(
                 BOTLOG_CHATID,
-                "#MenambahkanConfigVar\n\n"
-                "**Menambahkan Config Vars**:\n"
+                "**Logger : #SYSTEM**\n\n"
+                "**#SET #VAR_HEROKU #ADDED**:\n\n"
                 f"`{variable}` **=** `{value}`",
             )
-        await var.edit("`Menambahkan Config Vars....`")
+        await var.edit("`Menambahkan Config Vars..`")
     heroku_var[variable] = value
 
 
@@ -173,14 +173,16 @@ async def dyno_usage(dyno):
             AppMinutes = math.floor(AppQuotaUsed % 60)
 
             await dyno.edit(
-                "** Informasi Dyno Heroku :**\n\n"
-                f" -> `Pemakaian Dyno Untuk`  **{app.name}** :\n"
-                f"     •  `{AppHours}`**h**  `{AppMinutes}`**m**  "
+                "✥ **Informasi Dyno Heroku :**\n"
+                "╔════════════════════╗\n"
+                f" ✣ **Penggunaan Dyno** `{app.name}` :\n"
+                f"     •  `{AppHours}`**Jam**  `{AppMinutes}`**Menit**  "
                 f"**|**  [`{AppPercentage}`**%**]"
-                "\n\n"
-                " -> `Sisa kuota jam dyno bulan ini` :\n"
-                f"     •  `{hours}`**h**  `{minutes}`**m**  "
+                "\n◖════════════════════◗\n"
+                " ✣ **Sisa kuota dyno bulan ini** :\n"
+                f"     •  `{hours}`**Jam**  `{minutes}`**Menit**  "
                 f"**|**  [`{percentage}`**%**]"
+                "\n╚════════════════════╝"
             )
             return True
 
