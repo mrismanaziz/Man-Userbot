@@ -49,11 +49,6 @@
       "description": "Jika Anda membutuhkan verbosity di console logging",
       "value": "False"
     },
-    "NC_LOG_P_M_S": {
-      "description": "setel ke False jika Anda ingin memberhentikan Logs Tags ke BOTLOG_CHATID",
-      "value": "True",
-      "required": false
-    },
     "COUNTRY": {
       "description": "Setel Negara Anda untuk digunakan dalam perintah .time dan .date.",
       "value": "ID",
