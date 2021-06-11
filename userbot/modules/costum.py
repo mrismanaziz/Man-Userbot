@@ -4,8 +4,12 @@
 # you may not use this file except in compliance with the License.
 #
 # Recode by @mrismanaziz
+# FROM Man-Userbot
 # t.me/SharingUserbot
+#
 """ Userbot module containing commands for keeping costum global notes. """
+
+from sqlalchemy.orm.exc import UnmappedInstanceError
 
 from userbot import BOTLOG_CHATID, CMD_HELP
 from userbot.events import register
@@ -44,7 +48,7 @@ async def on_snip_save(event):
     try:
         from userbot.modules.sql_helper.snips_sql import add_snip
     except AtrributeError:
-        await event.edit("`Berjalan pada mode Non-SQL!`")
+        await event.edit("**Berjalan pada mode Non-SQL!**")
         return
     keyword = event.pattern_match.group(1)
     string = event.text.partition(keyword)[2]
@@ -54,9 +58,9 @@ async def on_snip_save(event):
         if BOTLOG_CHATID:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"#COSTUM\
-            \nKEYWORD: {keyword}\
-            \n\nPesan berikut disimpan sebagai data untuk costum, tolong JANGAN dihapus untuk catatan!!",
+                f"📝 **#COSTUM**\
+            \n • **KEYWORD:** `{keyword}`\
+            \n • 🔖 Pesan ini disimpan sebagai catatan data untuk costum, Tolong JANGAN Dihapus!!",
             )
             msg_o = await event.client.forward_messages(
                 entity=BOTLOG_CHATID, messages=msg, from_peer=event.chat_id, silent=True
@@ -64,7 +68,7 @@ async def on_snip_save(event):
             msg_id = msg_o.id
         else:
             await event.edit(
-                "`Menyimpan kostum dengan media membutuhkan BOTLOG_CHATID untuk disetel.`"
+                "**Menyimpan kostum dengan media membutuhkan `BOTLOG_CHATID` untuk disetel.**"
             )
             return
     elif event.reply_to_msg_id and not string:
@@ -73,10 +77,13 @@ async def on_snip_save(event):
     success = (
         "**Costum {} disimpan. Gunakan** `.{}` **di mana saja untuk menggunakannya**"
     )
-    if add_snip(keyword, string, msg_id) is False:
-        await event.edit(success.format("Berhasil", keyword))
-    else:
-        await event.edit(success.format("Berhasil", keyword))
+    try:
+        if add_snip(keyword, string, msg_id) is False:
+            await event.edit(success.format("Berhasil", keyword))
+        else:
+            await event.edit(success.format("Berhasil", keyword))
+    except UnmappedInstanceError:
+        return await event.edit(f"**ERROR: Costum** `{keyword}` **Sudah ada.**")
 
 
 @register(outgoing=True, pattern=r"^\.costums$")
@@ -85,13 +92,13 @@ async def on_snip_list(event):
     try:
         from userbot.modules.sql_helper.snips_sql import get_snips
     except AttributeError:
-        await event.edit("`Berjalan pada mode Non-SQL!`")
+        await event.edit("**Berjalan pada mode Non-SQL!**")
         return
 
-    message = "`Tidak ada kostum yang tersedia saat ini.`"
+    message = "**Tidak ada kostum yang tersedia saat ini.**"
     all_snips = get_snips()
     for a_snip in all_snips:
-        if message == "`Tidak ada kostum yang tersedia saat ini.`":
+        if message == "**Tidak ada kostum yang tersedia saat ini.**":
             message = "**List Costum yang tersedia:**\n"
             message += f"✣ `.{a_snip.snip}`\n"
         else:
@@ -106,7 +113,7 @@ async def on_snip_delete(event):
     try:
         from userbot.modules.sql_helper.snips_sql import remove_snip
     except AttributeError:
-        await event.edit("`Berjalan pada mode Non-SQL!`")
+        await event.edit("**Berjalan pada mode Non-SQL!**")
         return
     name = event.pattern_match.group(1)
     if remove_snip(name) is True:
