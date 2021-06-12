@@ -27,7 +27,6 @@ from urllib.parse import quote_plus
 
 import asyncurban
 import barcode
-import emoji
 import qrcode
 import requests
 from barcode.writer import ImageWriter
