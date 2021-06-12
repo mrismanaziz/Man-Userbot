@@ -28,6 +28,7 @@ git+https://github.com/voins/google-images-download.git@2cd68173c961324a2c41c61e
 gitpython
 glitch_this
 google_images_download
+google_trans_new
 google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
