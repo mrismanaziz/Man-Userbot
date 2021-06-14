@@ -13,6 +13,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 
+# Recode by @mrismanaziz
+# FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
+# t.me/SharingUserbot & t.me/Lunatic0de
+#
 
 
 import re
@@ -22,12 +27,17 @@ import shlex
 import os
 from os.path import basename
 import os.path
+from hachoir.metadata import extractMetadata
+from hachoir.parser import createParser
 from html_telegraph_poster import TelegraphPoster
 from typing import Optional, Union
 from userbot import bot, LOGS
+from PIL import Image
+from typing import Optional
 
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantCreator, DocumentAttributeFilename
+from userbot import SUDO_USERS
 
 
 async def md5(fname: str) -> str:
@@ -36,6 +46,26 @@ async def md5(fname: str) -> str:
         for chunk in iter(lambda: f.read(4096), b""):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
+
+
+def media_type(message):
+    if message and message.photo:
+        return "Photo"
+    if message and message.audio:
+        return "Audio"
+    if message and message.voice:
+        return "Voice"
+    if message and message.video_note:
+        return "Round Video"
+    if message and message.gif:
+        return "Gif"
+    if message and message.sticker:
+        return "Sticker"
+    if message and message.video:
+        return "Video"
+    if message and message.document:
+        return "Document"
+    return None
 
 
 def humanbytes(size: Union[int, float]) -> str:
@@ -125,6 +155,74 @@ async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Op
     return thumb_image_path if os.path.exists(thumb_image_path) else None
 
 
+async def edit_or_reply(
+    event,
+    text,
+    parse_mode=None,
+    link_preview=None,
+    file_name=None,
+    aslink=False,
+    linktext=None,
+    caption=None,
+):
+    link_preview = link_preview or False
+    reply_to = await event.get_reply_message()
+    if len(text) < 4096:
+        parse_mode = parse_mode or "md"
+        if event.sender_id in SUDO_USERS:
+            if reply_to:
+                return await reply_to.reply(
+                    text, parse_mode=parse_mode, link_preview=link_preview
+                )
+            return await event.reply(
+                text, parse_mode=parse_mode, link_preview=link_preview
+            )
+        await event.edit(text, parse_mode=parse_mode, link_preview=link_preview)
+        return event
+    asciich = ["*", "`", "_"]
+    for i in asciich:
+        text = re.sub(rf"\{i}", "", text)
+    if aslink:
+        linktext = linktext or "Pesan terlalu besar jadi ditempel ke nekobin"
+        try:
+            key = (
+                requests.post(
+                    "https://nekobin.com/api/documents", json={"content": text}
+                )
+                .json()
+                .get("result")
+                .get("key")
+            )
+            text = linktext + f" [Disini](https://nekobin.com/{key})"
+        except Exception:
+            text = re.sub(r"•", ">>", text)
+            kresult = requests.post(
+                "https://del.dog/documents", data=text.encode("UTF-8")
+            ).json()
+            text = linktext + f" [Disini](https://del.dog/{kresult['key']})"
+        if event.sender_id in SUDO_USERS:
+            if reply_to:
+                return await reply_to.reply(text, link_preview=link_preview)
+            return await event.reply(text, link_preview=link_preview)
+        await event.edit(text, link_preview=link_preview)
+        return event
+    file_name = file_name or "output.txt"
+    caption = caption or None
+    with open(file_name, "w+") as output:
+        output.write(text)
+    if reply_to:
+        await reply_to.reply(caption, file=file_name)
+        await event.delete()
+        return os.remove(file_name)
+    if event.sender_id in SUDO_USERS:
+        await event.reply(caption, file=file_name)
+        await event.delete()
+        return os.remove(file_name)
+    await event.client.send_file(event.chat_id, file_name, caption=caption)
+    await event.delete()
+    os.remove(file_name)
+
+
 async def check_media(reply_message):
     if reply_message and reply_message.media:
         if reply_message.photo:
@@ -178,3 +276,59 @@ def post_to_telegraph(title, html_format_content):
         text=html_format_content,
     )
     return post_page["url"]
+
+
+async def edit_delete(event, text, time=None, parse_mode=None, link_preview=None):
+    parse_mode = parse_mode or "md"
+    link_preview = link_preview or False
+    time = time or 5
+    if event.sender_id in SUDO_USERS:
+        reply_to = await event.get_reply_message()
+        newevent = (
+            await reply_to.reply(text, link_preview=link_preview, parse_mode=parse_mode)
+            if reply_to
+            else await event.reply(
+                text, link_preview=link_preview, parse_mode=parse_mode
+            )
+        )
+    else:
+        newevent = await event.edit(
+            text, link_preview=link_preview, parse_mode=parse_mode
+        )
+    await asyncio.sleep(time)
+    return await newevent.delete()
+
+
+async def media_to_pic(event, reply):
+    mediatype = media_type(reply)
+    if mediatype not in ["Photo", "Round Video", "Gif", "Sticker", "Video"]:
+        await edit_delete(
+            event,
+            "**Saya tidak dapat mengekstrak gambar untuk memproses lebih lanjut ke media yang tepat**",
+        )
+        return None
+    media = await reply.download_media(file="./temp")
+    event = await edit_or_reply(event, f"`Transfiguration Time! Converting....`")
+    file = os.path.join("./temp/", "meme.png")
+    if mediatype == "Sticker":
+        if media.endswith(".tgs"):
+            await runcmd(
+                f"lottie_convert.py --frame 0 -if lottie -of png '{media}' '{file}'"
+            )
+        elif media.endswith(".webp"):
+            im = Image.open(media)
+            im.save(file)
+    elif mediatype in ["Round Video", "Video", "Gif"]:
+        extractMetadata(createParser(media))
+        await runcmd(f"rm -rf '{file}'")
+        await take_screen_shot(media, 0, file)
+        if not os.path.exists(file):
+            await edit_delete(
+                event, f"**Maaf. Saya tidak dapat mengekstrak gambar dari ini {mediatype}**"
+            )
+            return None
+    else:
+        im = Image.open(media)
+        im.save(file)
+    await runcmd(f"rm -rf '{media}'")
+    return [event, file, mediatype]
