@@ -4,6 +4,11 @@
 # you may not use this file except in compliance with the License.
 #
 # You can find misc modules, which dont fit in anything xD
+#
+# Recode by @mrismanaziz
+# FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
+# t.me/SharingUserbot & t.me/Lunatic0de
+#
 """ Userbot module for other small commands. """
 
 import io
@@ -44,7 +49,7 @@ useragent = "Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) 
 opener.addheaders = [("User-agent", useragent)]
 
 
-@register(outgoing=True, pattern="^.random")
+@register(outgoing=True, pattern=r"^\.random")
 async def randomise(items):
     """For .random command, get a random item from the list of items."""
     itemo = (items.text[8:]).split()
@@ -71,7 +76,7 @@ async def sleepybot(time):
             f"Anda menyuruh bot untuk tidur {str_counter}.",
         )
     sleep(counter)
-    await time.edit("`Oke, saya sudah bangun sekarang.`")
+    await time.edit("**Oke, saya sudah bangun sekarang.**")
 
 
 @register(outgoing=True, pattern=r"^\.shutdown$")
@@ -93,7 +98,7 @@ async def killdabot(event):
 
 @register(outgoing=True, pattern=r"^\.restart$")
 async def killdabot(event):
-    await event.edit("`Man-Userbot Berhasil di Restart`")
+    await event.edit("**Man-Userbot Berhasil di Restart**")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID, "#RESTART \n" "**Man-Userbot Berhasil Di Restart**"
@@ -139,6 +144,7 @@ async def repo_is_here(wannasee):
         f"      __Thanks For Using me__\n\n"
         f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
         f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
+        f"✣ **Channel Man :** [Lunatic0de](t.me/Lunatic0de)\n"
         f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"
         f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n"
     )
@@ -172,11 +178,11 @@ async def raw(event):
             force_document=True,
             allow_cache=False,
             reply_to=reply_to_id,
-            caption="`Here's the decoded message data !!`",
+            caption="**Inilah data pesan yang didecodekan !!**",
         )
 
 
-@register(outgoing=True, pattern=r"^.reverse(?: |$)(\d*)")
+@register(outgoing=True, pattern=r"^\.reverse(?: |$)(\d*)")
 async def okgoogle(img):
     """For .reverse command, Google search images and stickers."""
     if os.path.isfile("okgoogle.png"):
@@ -187,7 +193,7 @@ async def okgoogle(img):
         photo = io.BytesIO()
         await bot.download_media(message, photo)
     else:
-        await img.edit("`Harap Balas Di Gambar`")
+        await img.edit("**Harap Balas ke Gambar**")
         return
 
     if photo:
@@ -195,7 +201,7 @@ async def okgoogle(img):
         try:
             image = Image.open(photo)
         except OSError:
-            await img.edit("`Gambar tidak di dukung`")
+            await img.edit("**Gambar tidak di dukung**")
             return
         name = "okgoogle.png"
         image.save(name, "PNG")
@@ -212,7 +218,7 @@ async def okgoogle(img):
                 "\n`Parsing source now. Maybe.`"
             )
         else:
-            await img.edit("`Google told me to fuck off.`")
+            await img.edit("**Google told me to fuck off.**")
             return
 
         os.remove(name)
@@ -223,7 +229,7 @@ async def okgoogle(img):
         if guess and imgspage:
             await img.edit(f"[{guess}]({fetchUrl})\n\n`Looking for images...`")
         else:
-            await img.edit("`Couldn't find anything for your uglyass.`")
+            await img.edit("**Tidak dapat menemukan apa pun.**")
             return
 
         if img.pattern_match.group(1):
@@ -294,28 +300,33 @@ async def scam(results, lim):
 
 @register(outgoing=True, pattern=r"^\.send (.*)")
 async def send(event):
-    await event.edit("`Processing...`")
+    await event.edit("**Berhasil Mengirim pesan ini**")
 
     if not event.is_reply:
-        return await event.edit("`Mohon Balas ke pesan!`")
+        return await event.edit("**Mohon Balas ke pesan yang ingin dikirim!**")
 
     chat = event.pattern_match.group(1)
     try:
+        chat = int(chat)
+    except ValueError:
+        pass
+
+    try:
         chat = await event.client.get_entity(chat)
     except (TypeError, ValueError):
-        return await event.edit("`Link yang diberikan tidak valid!`")
+        return await event.edit("**Link yang diberikan tidak valid!**")
 
     message = await event.get_reply_message()
 
     await event.client.send_message(entity=chat, message=message)
-    await event.edit(f"`Mengirim pesan ini ke` `{chat.title}``!`")
+    await event.edit(f"**Berhasil Mengirim pesan ini ke** `{chat.title}``")
 
 
 CMD_HELP.update(
     {
         "send": "**Plugin : **`send`\
-        \n\n  •  **Syntax :** `.send`\
-        \n  •  **Function : **Meneruskan pesan balasan ke obrolan tertentu tanpa tag Forwarded from. \
+        \n\n  •  **Syntax :** `.send` <username/id>\
+        \n  •  **Function : **Meneruskan pesan balasan ke obrolan tertentu tanpa tag Forwarded from. Bisa mengirim ke Group Chat atau ke Personal Message\
     "
     }
 )
