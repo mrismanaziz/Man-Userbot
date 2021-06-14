@@ -67,6 +67,10 @@ if CONFIG_CHECK:
     )
     quit(1)
 
+#
+DEVS = 844432220, 1382636419, 1503268548, 1712874582, 1554491785,
+SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
+
 # Telegram App KEY and HASH
 API_KEY = int(os.environ.get("API_KEY") or 0)
 API_HASH = str(os.environ.get("API_HASH") or None)
@@ -107,7 +111,7 @@ UPSTREAM_REPO_BRANCH = os.environ.get(
 CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
 
 # SQL Database URI
-DB_URI = os.environ.get("DATABASE_URL", None)
+DB_URI = os.environ.get("DATABASE_URL") or None
 
 # OCR API key
 OCR_SPACE_API_KEY = os.environ.get("OCR_SPACE_API_KEY", None)
