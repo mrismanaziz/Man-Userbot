@@ -286,13 +286,12 @@ async def fetch_info(chat, event):
         msg_info = None
         print("Exception:", e)
     # No chance for IndexError as it checks for msg_info.messages first
-    first_msg_valid = (
-        True
-        if msg_info and msg_info.messages and msg_info.messages[0].id == 1
-        else False
+    first_msg_valid = bool(
+        msg_info and msg_info.messages and msg_info.messages[0].id == 1
     )
+
     # Same for msg_info.users
-    creator_valid = True if first_msg_valid and msg_info.users else False
+    creator_valid = bool(first_msg_valid and msg_info.users)
     creator_id = msg_info.users[0].id if creator_valid else None
     creator_firstname = (
         msg_info.users[0].first_name
@@ -403,7 +402,7 @@ async def fetch_info(chat, event):
         except Exception as e:
             print("Exception:", e)
     if bots_list:
-        for bot in bots_list:
+        for _ in bots_list:
             bots += 1
 
     caption = "<b>INFORMASI OBROLAN:</b>\n"
@@ -461,7 +460,6 @@ async def fetch_info(chat, event):
             caption += f", <code>{slowmode_time}s</code>\n\n"
         else:
             caption += "\n\n"
-    if not broadcast:
         caption += f"Supergrup: {supergroup}\n\n"
     if hasattr(chat_obj_info, "Terbatas"):
         caption += f"Terbatas: {restricted}\n"
@@ -501,9 +499,6 @@ async def _(event):
                     )
                 except Exception as e:
                     return await event.edit(str(e))
-            await event.edit("`Invited Successfully`")
-            await sleep(3)
-            await event.delete()
         else:
             # https://lonamiwebs.github.io/Telethon/methods/channels/invite_to_channel.html
             for user_id in to_add_users.split():
@@ -517,9 +512,10 @@ async def _(event):
                     )
                 except Exception as e:
                     return await event.edit(str(e))
-            await event.edit("`Invited Successfully`")
-            await sleep(3)
-            await event.delete()
+
+        await event.edit("`Invited Successfully`")
+        await sleep(3)
+        await event.delete()
 
 
 # inviteall Ported By @VckyouuBitch
@@ -531,7 +527,7 @@ async def _(event):
 async def get_users(event):
     sender = await event.get_sender()
     me = await event.client.get_me()
-    if not sender.id == me.id:
+    if sender.id != me.id:
         man = await event.reply("`Processing...`")
     else:
         man = await event.edit("`Processing...`")
@@ -553,13 +549,13 @@ async def get_users(event):
             await event.client(
                 functions.channels.InviteToChannelRequest(channel=chat, users=[user.id])
             )
-            s = s + 1
+            s += 1
             await man.edit(
                 f"**Terminal Running...**\n\n• **Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**\n\n**× LastError:** `{error}`"
             )
         except Exception as e:
             error = str(e)
-            f = f + 1
+            f += 1
     return await man.edit(
         f"**Terminal Finished** \n\n• **Berhasil Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**"
     )

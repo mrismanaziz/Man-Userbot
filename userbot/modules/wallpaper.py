@@ -32,27 +32,26 @@ async def _(event):
                 return await event.edit(
                     f"`Saya Tidak Menemukan Wallpaper Yang Anda Cari`"
                 )
-            else:
-                img = await event.client.download_media(r1)
-                img2 = await event.client.download_media(r2)
-                await event.edit("`Sedang Mengunggah Wallpaper....`")
-                p = await event.client.send_file(
-                    event.chat_id,
-                    img,
-                    force_document=False,
-                    caption="Wallpaper Yang Anda Cari",
-                    reply_to=event.reply_to_msg_id,
-                )
-                await event.client.send_file(
-                    event.chat_id,
-                    img2,
-                    force_document=True,
-                    caption=f"{query}",
-                    reply_to=p,
-                )
-                await event.client.delete_messages(
-                    conv.chat_id, [r1.id, r2.id, query1.id]
-                )
+            img = await event.client.download_media(r1)
+            img2 = await event.client.download_media(r2)
+            await event.edit("`Sedang Mengunggah Wallpaper....`")
+            p = await event.client.send_file(
+                event.chat_id,
+                img,
+                force_document=False,
+                caption="Wallpaper Yang Anda Cari",
+                reply_to=event.reply_to_msg_id,
+            )
+            await event.client.send_file(
+                event.chat_id,
+                img2,
+                force_document=True,
+                caption=f"{query}",
+                reply_to=p,
+            )
+            await event.client.delete_messages(
+                conv.chat_id, [r1.id, r2.id, query1.id]
+            )
         await event.delete()
         os.system("rm *.png *.jpg")
     except TimeoutError:

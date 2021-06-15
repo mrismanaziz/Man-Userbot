@@ -8,7 +8,7 @@ from userbot.events import register
 async def get_full_user(event):
     args = event.pattern_match.group(1).split(":", 1)
     extra = None
-    if event.reply_to_msg_id and not len(args) == 2:
+    if event.reply_to_msg_id and len(args) != 2:
         previous_message = await event.get_reply_message()
         user_obj = await event.client.get_entity(previous_message.sender_id)
         extra = event.pattern_match.group(1)
@@ -50,7 +50,7 @@ async def gspider(userbot):
     lol = userbot
     sender = await lol.get_sender()
     me = await lol.client.get_me()
-    if not sender.id == me.id:
+    if sender.id != me.id:
         friday = await lol.reply("`Gbanning...`")
     else:
         friday = await lol.edit("`Gbanning......`")
@@ -110,19 +110,13 @@ async def gspider(userbot):
         f"`Gbanned` [{user.first_name}](tg://user?id={user.id}) `in {a} chats.\nAdded to gbanwatch.`"
     )
 
-    if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID,
-            "#GBANNED\n" f"USER: [{user.first_name}](tg://user?id={user.id})",
-        )
-
 
 @register(outgoing=True, pattern=r"^\.ungband(?: |$)(.*)")
 async def gspider(userbot):
     lol = userbot
     sender = await lol.get_sender()
     me = await lol.client.get_me()
-    if not sender.id == me.id:
+    if sender.id != me.id:
         friday = await lol.reply("`UnGbanning...`")
     else:
         friday = await lol.edit("`UnGbanning....`")

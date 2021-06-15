@@ -27,19 +27,20 @@ async def on_snip(event):
     message_id_to_reply = event.message.reply_to_msg_id
     if not message_id_to_reply:
         message_id_to_reply = None
-    if snip and snip.f_mesg_id:
-        msg_o = await event.client.get_messages(
-            entity=BOTLOG_CHATID, ids=int(snip.f_mesg_id)
-        )
-        await event.client.send_message(
-            event.chat_id, msg_o.message, reply_to=message_id_to_reply, file=msg_o.media
-        )
-        await event.delete()
-    elif snip and snip.reply:
-        await event.client.send_message(
-            event.chat_id, snip.reply, reply_to=message_id_to_reply
-        )
-        await event.delete()
+    if snip:
+        if snip.f_mesg_id:
+            msg_o = await event.client.get_messages(
+                entity=BOTLOG_CHATID, ids=int(snip.f_mesg_id)
+            )
+            await event.client.send_message(
+                event.chat_id, msg_o.message, reply_to=message_id_to_reply, file=msg_o.media
+            )
+            await event.delete()
+        elif snip.reply:
+            await event.client.send_message(
+                event.chat_id, snip.reply, reply_to=message_id_to_reply
+            )
+            await event.delete()
 
 
 @register(outgoing=True, pattern=r"^\.costum (\w*)")
@@ -78,9 +79,10 @@ async def on_snip_save(event):
         "**Costum {} disimpan. Gunakan** `.{}` **di mana saja untuk menggunakannya**"
     )
     try:
-        if add_snip(keyword, string, msg_id) is False:
-            await event.edit(success.format("Berhasil", keyword))
-        else:
+        if (
+            add_snip(keyword, string, msg_id) is False
+            or add_snip(keyword, string, msg_id) is not False
+        ):
             await event.edit(success.format("Berhasil", keyword))
     except UnmappedInstanceError:
         return await event.edit(f"**ERROR: Costum** `{keyword}` **Sudah ada.**")
@@ -100,10 +102,7 @@ async def on_snip_list(event):
     for a_snip in all_snips:
         if message == "**Tidak ada kostum yang tersedia saat ini.**":
             message = "**List Costum yang tersedia:**\n"
-            message += f"✣ `.{a_snip.snip}`\n"
-        else:
-            message += f"✣ `.{a_snip.snip}`\n"
-
+        message += f"✣ `.{a_snip.snip}`\n"
     await event.edit(message)
 
 

@@ -22,13 +22,11 @@ from userbot.events import register
 
 
 async def gen_chlog(repo, diff):
-    ch_log = ""
     d_form = "%d/%m/%y"
-    for c in repo.iter_commits(diff):
-        ch_log += (
-            f"•[{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n"
-        )
-    return ch_log
+    return "".join(
+        f"•[{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n"
+        for c in repo.iter_commits(diff)
+    )
 
 
 async def deploy(event, repo, ups_rem, ac_br, txt):
@@ -172,19 +170,18 @@ async def upstream(event):
 
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
 
-    if changelog == "" and force_update is False:
+    if changelog == "" and not force_update:
         await event.edit(f"\n**✥ Man-Userbot Sudah Versi Terbaru**\n")
         await asyncio.sleep(15)
         await event.delete()
         return repo.__del__()
 
-    if conf is None and force_update is False:
+    if conf is None and not force_update:
         changelog_str = f"**✥ Pembaruan Untuk Man-Userbot [{ac_br}] :\n\n✥ Pembaruan:**\n`{changelog}`"
         if len(changelog_str) > 4096:
             await event.edit("`Changelog Terlalu Besar, Buka File Untuk Melihatnya.`")
-            file = open("output.txt", "w+")
-            file.write(changelog_str)
-            file.close()
+            with open("output.txt", "w+") as file:
+                file.write(changelog_str)
             await event.client.send_file(
                 event.chat_id,
                 "output.txt",
@@ -211,12 +208,15 @@ async def upstream(event):
         await event.edit("`✣ Proses Update Man-Userbot, Tunggu Sebentar....100%`")
     if conf == "now":
         for commit in changelog.splitlines():
-            if commit.startswith("- [NQ]"):
-                if HEROKU_APP_NAME is not None and HEROKU_API_KEY is not None:
-                    return await event.edit(
-                        "**Quick update telah dinonaktifkan untuk pembaruan ini; "
-                        "Gunakan** `.update deploy` **sebagai gantinya.**"
-                    )
+            if (
+                commit.startswith("- [NQ]")
+                and HEROKU_APP_NAME is not None
+                and HEROKU_API_KEY is not None
+            ):
+                return await event.edit(
+                    "**Quick update telah dinonaktifkan untuk pembaruan ini; "
+                    "Gunakan** `.update deploy` **sebagai gantinya.**"
+                )
         await event.edit("**Perfoming a quick update, please wait...**")
         await update(event, repo, ups_rem, ac_br)
     elif conf == "deploy":

@@ -115,17 +115,18 @@ async def mega_downloader(megadl):
     start = time.time()
     while not downloader.isFinished():
         status = downloader.get_status().capitalize()
-        total_length = downloader.filesize if downloader.filesize else None
+        total_length = downloader.filesize or None
         downloaded = downloader.get_dl_size()
         percentage = int(downloader.get_progress() * 100)
         speed = downloader.get_speed(human=True)
         estimated_total_time = round(downloader.get_eta())
         progress_str = "`{0}` | [{1}{2}] `{3}%`".format(
             status,
-            "".join(["●" for i in range(math.floor(percentage / 10))]),
-            "".join(["○" for i in range(10 - math.floor(percentage / 10))]),
+            "".join("●" for i in range(math.floor(percentage / 10))),
+            "".join("○" for i in range(10 - math.floor(percentage / 10))),
             round(percentage, 2),
         )
+
         diff = time.time() - start
         try:
             current_message = (
@@ -177,32 +178,31 @@ async def mega_downloader(megadl):
                 "`[FILE - CANCELLED]`\n\n"
                 "`Status` : **OK** - Sinyal yang diterima dibatalkan."
             )
-        if resultgd and msg_link:
-            await megadl.respond(
-                "`[FILE - UPLOAD]`\n\n"
-                f"`Name   :` `{file_name}`\n"
-                f"`Size   :` `{humanbytes(resultgd[0])}`\n"
-                f"`Link   :` [{file_name}]({resultgd[1]})\n"
-                "`Status :` **OK** - Berhasil diupload.\n",
-                link_preview=False,
-                reply_to=link_msg_id,
-            )
-            await megadl.delete()
-        elif resultgd and link:
-            await megadl.respond(
-                "`[FILE - UPLOAD]`\n\n"
-                f"`Name   :` `{file_name}`\n"
-                f"`Size   :` `{humanbytes(resultgd[0])}`\n"
-                f"`Link   :` [{file_name}]({resultgd[1]})\n"
-                "`Status :` **OK** - Berhasil diupload.\n",
-                link_preview=False,
-            )
-            await megadl.delete()
+        if resultgd:
+            if msg_link:
+                await megadl.respond(
+                    "`[FILE - UPLOAD]`\n\n"
+                    f"`Name   :` `{file_name}`\n"
+                    f"`Size   :` `{humanbytes(resultgd[0])}`\n"
+                    f"`Link   :` [{file_name}]({resultgd[1]})\n"
+                    "`Status :` **OK** - Berhasil diupload.\n",
+                    link_preview=False,
+                    reply_to=link_msg_id,
+                )
+                await megadl.delete()
+            elif link:
+                await megadl.respond(
+                    "`[FILE - UPLOAD]`\n\n"
+                    f"`Name   :` `{file_name}`\n"
+                    f"`Size   :` `{humanbytes(resultgd[0])}`\n"
+                    f"`Link   :` [{file_name}]({resultgd[1]})\n"
+                    "`Status :` **OK** - Berhasil diupload.\n",
+                    link_preview=False,
+                )
+                await megadl.delete()
 
         if os.path.exists(file_path):
             os.remove(file_path)
-        else:
-            pass
     else:
         await megadl.edit(
             "`Gagal Mendownload, " "Check Log heroku untuk lebih jelasnya.`"

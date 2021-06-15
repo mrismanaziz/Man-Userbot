@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 @register(outgoing=True, pattern=r"^.stats(?: |$)(.*)")
 async def stats(
     event: NewMessage.Event,
-) -> None:  # pylint: disable = R0912, R0914, R0915
+) -> None:    # pylint: disable = R0912, R0914, R0915
     """Command to get stats about the account"""
     await event.edit("`Collecting stats, Wait Master`")
     start_time = time.time()
@@ -39,38 +39,34 @@ async def stats(
     async for dialog in event.client.iter_dialogs():
         entity = dialog.entity
 
-        if isinstance(entity, Channel):
-            # participants_count = (await event.get_participants(dialog,
-            # limit=0)).total
-            if entity.broadcast:
-                broadcast_channels += 1
-                if entity.creator or entity.admin_rights:
-                    admin_in_broadcast_channels += 1
-                if entity.creator:
-                    creator_in_channels += 1
-
-            elif entity.megagroup:
-                groups += 1
-                # if participants_count > largest_group_member_count:
-                #     largest_group_member_count = participants_count
-                if entity.creator or entity.admin_rights:
-                    # if participants_count > largest_group_with_admin:
-                    #     largest_group_with_admin = participants_count
-                    admin_in_groups += 1
-                if entity.creator:
-                    creator_in_groups += 1
-
-        elif isinstance(entity, User):
-            private_chats += 1
-            if entity.bot:
-                bots += 1
-
-        elif isinstance(entity, Chat):
-            groups += 1
+        if isinstance(entity, Channel) and entity.broadcast:
+            broadcast_channels += 1
             if entity.creator or entity.admin_rights:
+                admin_in_broadcast_channels += 1
+            if entity.creator:
+                creator_in_channels += 1
+
+        elif (
+            isinstance(entity, Channel)
+            and entity.megagroup
+            or not isinstance(entity, Channel)
+            and not isinstance(entity, User)
+            and isinstance(entity, Chat)
+        ):
+            groups += 1
+            # if participants_count > largest_group_member_count:
+            #     largest_group_member_count = participants_count
+            if entity.creator or entity.admin_rights:
+                # if participants_count > largest_group_with_admin:
+                #     largest_group_with_admin = participants_count
                 admin_in_groups += 1
             if entity.creator:
                 creator_in_groups += 1
+
+        elif not isinstance(entity, Channel) and isinstance(entity, User):
+            private_chats += 1
+            if entity.bot:
+                bots += 1
 
         unread_mentions += dialog.unread_mentions_count
         unread += dialog.unread_count
@@ -113,8 +109,7 @@ def inline_mention(user):
 def user_full_name(user):
     names = [user.first_name, user.last_name]
     names = [i for i in list(names) if i]
-    full_name = " ".join(names)
-    return full_name
+    return " ".join(names)
 
 
 @register(outgoing=True, pattern=r"^\.ustat")
@@ -140,19 +135,18 @@ async def _(event):
             return
         if response.text.startswith("I understand only text"):
             await event.edit("Sorry i cant't check group this user **BURIK!!**")
+        elif response.text.startswith("Information"):
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=1557162396)
+            )
+            response = await response
+            await event.delete()
+            await event.client.send_message(
+                event.chat_id, response.message, reply_to=reply_message.id
+            )
+            await event.client.delete_messages(conv.chat_id, [msg.id, response.id])
         else:
-            if response.text.startswith("Information"):
-                response = conv.wait_event(
-                    events.NewMessage(incoming=True, from_users=1557162396)
-                )
-                response = await response
-                await event.delete()
-                await event.client.send_message(
-                    event.chat_id, response.message, reply_to=reply_message.id
-                )
-                await event.client.delete_messages(conv.chat_id, [msg.id, response.id])
-            else:
-                await event.edit("try again")
+            await event.edit("try again")
         await bot.send_read_acknowledge(conv.chat_id)
 
 

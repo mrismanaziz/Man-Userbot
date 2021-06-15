@@ -347,36 +347,35 @@ async def spider(spdr):
     )
     if mute(spdr.chat_id, user.id) is False:
         return await spdr.edit("`Error! Pengguna Sudah Dibisukan.`")
-    else:
-        try:
-            await spdr.client(EditBannedRequest(spdr.chat_id, user.id, MUTE_RIGHTS))
+    try:
+        await spdr.client(EditBannedRequest(spdr.chat_id, user.id, MUTE_RIGHTS))
 
-            # Announce that the function is done
-            if reason:
-                await spdr.edit(
-                    r"\\**#DMute_User**//"
-                    f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
-                    f"**User ID:** `{user.id}`\n"
-                    f"**Reason:** `{reason}`"
-                )
-            else:
-                await spdr.edit(
-                    r"\\**#DMute_User**//"
-                    f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
-                    f"**User ID:** `{user.id}`\n"
-                    f"**Action:** `DMute by {ALIVE_NAME}`"
-                )
+        # Announce that the function is done
+        if reason:
+            await spdr.edit(
+                r"\\**#DMute_User**//"
+                f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
+                f"**User ID:** `{user.id}`\n"
+                f"**Reason:** `{reason}`"
+            )
+        else:
+            await spdr.edit(
+                r"\\**#DMute_User**//"
+                f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
+                f"**User ID:** `{user.id}`\n"
+                f"**Action:** `DMute by {ALIVE_NAME}`"
+            )
 
-            # Announce to logging group
-            if BOTLOG:
-                await spdr.client.send_message(
-                    BOTLOG_CHATID,
-                    "#MUTE\n"
-                    f"PENGGUNA: [{user.first_name}](tg://user?id={user.id})\n"
-                    f"GRUP: {spdr.chat.title}(`{spdr.chat_id}`)",
-                )
-        except UserIdInvalidError:
-            return await spdr.edit("`Terjadi Kesalahan!`")
+        # Announce to logging group
+        if BOTLOG:
+            await spdr.client.send_message(
+                BOTLOG_CHATID,
+                "#MUTE\n"
+                f"PENGGUNA: [{user.first_name}](tg://user?id={user.id})\n"
+                f"GRUP: {spdr.chat.title}(`{spdr.chat_id}`)",
+            )
+    except UserIdInvalidError:
+        return await spdr.edit("`Terjadi Kesalahan!`")
 
 
 @register(outgoing=True, pattern=r"^\.undmute(?: |$)(.*)")
@@ -405,25 +404,23 @@ async def unmoot(unmot):
 
     if unmute(unmot.chat_id, user.id) is False:
         return await unmot.edit("**ERROR!** Pengguna Sudah Tidak Dibisukan.")
-    else:
+    try:
+        await unmot.client(EditBannedRequest(unmot.chat_id, user.id, UNBAN_RIGHTS))
+        await unmot.edit(
+            "**Berhasil Melakukan Unmute! User Sudah Tidak Lagi Dibisukan**"
+        )
+        await sleep(3)
+        await unmot.delete()
+    except UserIdInvalidError:
+        return await unmot.edit("**Terjadi ERROR!**")
 
-        try:
-            await unmot.client(EditBannedRequest(unmot.chat_id, user.id, UNBAN_RIGHTS))
-            await unmot.edit(
-                "**Berhasil Melakukan Unmute! User Sudah Tidak Lagi Dibisukan**"
-            )
-            await sleep(3)
-            await unmot.delete()
-        except UserIdInvalidError:
-            return await unmot.edit("**Terjadi ERROR!**")
-
-        if BOTLOG:
-            await unmot.client.send_message(
-                BOTLOG_CHATID,
-                "#UNMUTE\n"
-                f"PENGGUNA: [{user.first_name}](tg://user?id={user.id})\n"
-                f"GRUP: {unmot.chat.title}(`{unmot.chat_id}`)",
-            )
+    if BOTLOG:
+        await unmot.client.send_message(
+            BOTLOG_CHATID,
+            "#UNMUTE\n"
+            f"PENGGUNA: [{user.first_name}](tg://user?id={user.id})\n"
+            f"GRUP: {unmot.chat.title}(`{unmot.chat_id}`)",
+        )
 
 
 @register(incoming=True)
@@ -631,7 +628,7 @@ async def rm_deletedacc(show):
 @register(outgoing=True, pattern=r"^\.admins$")
 async def get_admin(show):
     info = await show.client.get_entity(show.chat_id)
-    title = info.title if info.title else "Grup Ini"
+    title = info.title or "Grup Ini"
     mentions = f"<b>👑 Daftar Admin Grup {title}:</b> \n"
     try:
         async for user in show.client.iter_participants(
@@ -737,7 +734,7 @@ async def kick(usr):
 @register(outgoing=True, pattern=r"^\.users ?(.*)")
 async def get_users(show):
     info = await show.client.get_entity(show.chat_id)
-    title = info.title if info.title else "Grup Ini"
+    title = info.title or "Grup Ini"
     mentions = "Pengguna Di {}: \n".format(title)
     try:
         if not show.pattern_match.group(1):
@@ -767,9 +764,8 @@ async def get_users(show):
         await show.edit(
             "Grup Ini Terlalu Besar Mengunggah Daftar Pengguna Sebagai File."
         )
-        file = open("daftarpengguna.txt", "w+")
-        file.write(mentions)
-        file.close()
+        with open("daftarpengguna.txt", "w+") as file:
+            file.write(mentions)
         await show.client.send_file(
             show.chat_id,
             "daftarpengguna.txt",
@@ -827,7 +823,7 @@ async def get_user_from_id(user, event):
 @register(outgoing=True, pattern=r"^\.usersdel ?(.*)")
 async def get_usersdel(show):
     info = await show.client.get_entity(show.chat_id)
-    title = info.title if info.title else "Grup Ini"
+    title = info.title or "Grup Ini"
     mentions = "**Daftar Akun Terhapus Di** {}: \n".format(title)
     try:
         if not show.pattern_match.group(1):
@@ -857,9 +853,8 @@ async def get_usersdel(show):
         await show.edit(
             "Grup Ini Terlalu Besar, Mengunggah Daftar Akun Terhapus Sebagai File."
         )
-        file = open("daftarpengguna.txt", "w+")
-        file.write(mentions)
-        file.close()
+        with open("daftarpengguna.txt", "w+") as file:
+            file.write(mentions)
         await show.client.send_file(
             show.chat_id,
             "daftarpengguna.txt",
@@ -917,23 +912,22 @@ async def get_userdel_from_id(user, event):
 @register(outgoing=True, pattern=r"^\.bots$", groups_only=True)
 async def get_bots(show):
     info = await show.client.get_entity(show.chat_id)
-    title = info.title if info.title else "Grup Ini"
+    title = info.title or "Grup Ini"
     mentions = f"<b>Daftar Bot Di {title}:</b>\n"
     try:
         if isinstance(show.to_id, PeerChat):
             return await show.edit(
                 "`Saya mendengar bahwa hanya Supergrup yang dapat memiliki bot`"
             )
-        else:
-            async for user in show.client.iter_participants(
-                show.chat_id, filter=ChannelParticipantsBots
-            ):
-                if not user.deleted:
-                    link = f'<a href="tg://user?id={user.id}">{user.first_name}</a>'
-                    userid = f"<code>{user.id}</code>"
-                    mentions += f"\n ⚜️ {link} {userid}"
-                else:
-                    mentions += f"\nBot Terhapus <code>{user.id}</code>"
+        async for user in show.client.iter_participants(
+            show.chat_id, filter=ChannelParticipantsBots
+        ):
+            if not user.deleted:
+                link = f'<a href="tg://user?id={user.id}">{user.first_name}</a>'
+                userid = f"<code>{user.id}</code>"
+                mentions += f"\n ⚜️ {link} {userid}"
+            else:
+                mentions += f"\nBot Terhapus <code>{user.id}</code>"
     except ChatAdminRequiredError as err:
         mentions += " " + str(err) + "\n"
     try:
@@ -942,9 +936,8 @@ async def get_bots(show):
         await show.edit(
             "Terlalu Banyak Bot Di Grup Ini, Mengunggah Daftar Bot Sebagai File."
         )
-        file = open("botlist.txt", "w+")
-        file.write(mentions)
-        file.close()
+        with open("botlist.txt", "w+") as file:
+            file.write(mentions)
         await show.client.send_file(
             show.chat_id,
             "botlist.txt",

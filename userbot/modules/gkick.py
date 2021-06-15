@@ -11,7 +11,7 @@ from userbot.events import register
 async def get_user_from_event(event):
     args = event.pattern_match.group(1).split(":", 1)
     extra = None
-    if event.reply_to_msg_id and not len(args) == 2:
+    if event.reply_to_msg_id and len(args) != 2:
         previous_message = await event.get_reply_message()
         user_obj = await event.client.get_entity(previous_message.from_id)
         extra = event.pattern_match.group(1)
@@ -61,7 +61,7 @@ async def gspide(rk):
     lazy = rk
     sender = await lazy.get_sender()
     me = await lazy.client.get_me()
-    if not sender.id == me.id:
+    if sender.id != me.id:
         rkp = await lazy.reply("`Processing...`")
     else:
         rkp = await lazy.edit("`Processing...`")

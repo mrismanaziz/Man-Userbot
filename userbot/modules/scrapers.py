@@ -212,27 +212,27 @@ async def img_sampler(event):
 async def moni(event):
     input_str = event.pattern_match.group(1)
     input_sgra = input_str.split(" ")
-    if len(input_sgra) == 3:
-        try:
-            number = float(input_sgra[0])
-            currency_from = input_sgra[1].upper()
-            currency_to = input_sgra[2].upper()
-            request_url = f"https://api.ratesapi.io/api/latest?base={currency_from}"
-            current_response = get(request_url).json()
-            if currency_to in current_response["rates"]:
-                current_rate = float(current_response["rates"][currency_to])
-                rebmun = round(number * current_rate, 2)
-                await event.edit(
-                    "{} {} = {} {}".format(number, currency_from, rebmun, currency_to)
-                )
-            else:
-                await event.edit(
-                    "`Sepertinya ini adalah mata uang asing, yang tidak dapat saya konversi sekarang.`"
-                )
-        except Exception as e:
-            await event.edit(str(e))
-    else:
+    if len(input_sgra) != 3:
         return await event.edit("`Invalid syntax.`")
+
+    try:
+        number = float(input_sgra[0])
+        currency_from = input_sgra[1].upper()
+        currency_to = input_sgra[2].upper()
+        request_url = f"https://api.ratesapi.io/api/latest?base={currency_from}"
+        current_response = get(request_url).json()
+        if currency_to in current_response["rates"]:
+            current_rate = float(current_response["rates"][currency_to])
+            rebmun = round(number * current_rate, 2)
+            await event.edit(
+                "{} {} = {} {}".format(number, currency_from, rebmun, currency_to)
+            )
+        else:
+            await event.edit(
+                "`Sepertinya ini adalah mata uang asing, yang tidak dapat saya konversi sekarang.`"
+            )
+    except Exception as e:
+        await event.edit(str(e))
 
 
 @register(outgoing=True, pattern=r"^\.google (.*)")
@@ -280,9 +280,8 @@ async def wiki(wiki_q):
         return
     result = summary(match)
     if len(result) >= 4096:
-        file = open("output.txt", "w+")
-        file.write(result)
-        file.close()
+        with open("output.txt", "w+") as file:
+            file.write(result)
         await wiki_q.client.send_file(
             wiki_q.chat_id,
             "output.txt",
@@ -735,14 +734,13 @@ async def ReTrieveFile(input_file_name):
     files = {
         "image_file": (input_file_name, open(input_file_name, "rb")),
     }
-    r = requests.post(
+    return requests.post(
         "https://api.remove.bg/v1.0/removebg",
         headers=headers,
         files=files,
         allow_redirects=True,
         stream=True,
     )
-    return r
 
 
 async def ReTrieveURL(input_url):
@@ -750,14 +748,13 @@ async def ReTrieveURL(input_url):
         "X-API-Key": REM_BG_API_KEY,
     }
     data = {"image_url": input_url}
-    r = requests.post(
+    return requests.post(
         "https://api.remove.bg/v1.0/removebg",
         headers=headers,
         data=data,
         allow_redirects=True,
         stream=True,
     )
-    return r
 
 
 @register(pattern=r".ocr (.*)", outgoing=True)
@@ -837,9 +834,7 @@ async def bq(event):
             m_list = None
             with open(downloaded_file_name, "rb") as fd:
                 m_list = fd.readlines()
-            message = ""
-            for m in m_list:
-                message += m.decode("UTF-8") + "\r\n"
+            message = "".join(m.decode("UTF-8") + "\r\n" for m in m_list)
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message
@@ -873,9 +868,7 @@ async def make_qr(makeqr):
             m_list = None
             with open(downloaded_file_name, "rb") as file:
                 m_list = file.readlines()
-            message = ""
-            for media in m_list:
-                message += media.decode("UTF-8") + "\r\n"
+            message = "".join(media.decode("UTF-8") + "\r\n" for media in m_list)
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message
@@ -1219,9 +1212,7 @@ async def paste(pstl):
             m_list = None
             with open(downloaded_file_name, "rb") as fd:
                 m_list = fd.readlines()
-            message = ""
-            for m in m_list:
-                message += m.decode("UTF-8")
+            message = "".join(m.decode("UTF-8") for m in m_list)
             os.remove(downloaded_file_name)
         else:
             message = message.message
@@ -1324,9 +1315,7 @@ async def neko(nekobin):
             m_list = None
             with open(downloaded_file_name, "rb") as fd:
                 m_list = fd.readlines()
-            message = ""
-            for m in m_list:
-                message += m.decode("UTF-8")
+            message = "".join(m.decode("UTF-8") for m in m_list)
             os.remove(downloaded_file_name)
         else:
             message = message.text

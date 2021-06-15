@@ -27,7 +27,7 @@ async def lst(event):
     if event.fwd_from:
         return
     cat = event.pattern_match.group(1)
-    path = cat if cat else os.getcwd()
+    path = cat or os.getcwd()
     if not exists(path):
         await event.edit(
             f"Tidak ada direktori atau file dengan nama `{cat}` coba check lagi!"
