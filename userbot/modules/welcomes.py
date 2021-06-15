@@ -45,7 +45,7 @@ async def welcome_to_chat(event):
             now_utc = datetime.now(timezone("UTC"))
 
             # Convert to Jakarta time zone
-            jakarta_timezone = now_utc.astimezone(timezone("Asia/Jakarta"))
+            now_utc.astimezone(timezone("Asia/Jakarta"))
             title = chat.title or "Grup Ini"
             participants = await event.client.get_participants(chat)
             count = len(participants)

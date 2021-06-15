@@ -161,11 +161,7 @@ async def mention_afk(mention):
     back_alivee = datetime.now()
     afk_end = back_alivee.replace(microsecond=0)
     afk_since = "**Terakhir Online**"
-    if (
-        mention.message.mentioned
-        and not (await mention.get_sender()).bot
-        and ISAFK
-    ):
+    if mention.message.mentioned and not (await mention.get_sender()).bot and ISAFK:
         now = datetime.now()
         datime_since_afk = now - afk_time  # pylint:disable=E0602
         time = float(datime_since_afk.seconds)

@@ -248,7 +248,8 @@ class ParallelTransferrer:
 
         part = 0
         while part < part_count:
-            tasks = [self.loop.create_task(sender.next()) for sender in self.senders]
+            tasks = [self.loop.create_task(sender.next())
+                     for sender in self.senders]
             for task in tasks:
                 data = await task
                 if not data:

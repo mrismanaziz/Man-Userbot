@@ -59,8 +59,7 @@ async def _(event):
     if doujin.tag:
         msg += "\n**Tags :**"
         tags = [
-            "#" + tag.name.replace(" ", "_").replace("-", "_")
-            for tag in doujin.tag
+            "#" + tag.name.replace(" ", "_").replace("-", "_") for tag in doujin.tag
         ]
 
         msg += "\n" + " ".join(natsorted(tags))

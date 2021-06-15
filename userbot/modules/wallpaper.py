@@ -49,9 +49,7 @@ async def _(event):
                 caption=f"{query}",
                 reply_to=p,
             )
-            await event.client.delete_messages(
-                conv.chat_id, [r1.id, r2.id, query1.id]
-            )
+            await event.client.delete_messages(conv.chat_id, [r1.id, r2.id, query1.id])
         await event.delete()
         os.system("rm *.png *.jpg")
     except TimeoutError:
