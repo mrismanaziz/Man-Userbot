@@ -697,25 +697,23 @@ async def lists(gdrive):
     else:
         page_size = 25  # default page_size is 25
     checker = gdrive.pattern_match.group(2)
-    if checker != "":
-        if checker.startswith("-p"):
-            parents = checker.split(None, 2)[1]
-            try:
-                name = checker.split(None, 2)[2]
-            except IndexError:
-                query = f"'{parents}' in parents and (name contains '*')"
-            else:
-                query = f"'{parents}' in parents and (name contains '{name}')"
-        else:
-            if re.search("-p (.*)", checker):
-                parents = re.search("-p (.*)", checker).group(1)
-                name = checker.split("-p")[0].strip()
-                query = f"'{parents}' in parents and (name contains '{name}')"
-            else:
-                name = checker
-                query = f"name contains '{name}'"
-    else:
+    if checker == "":
         query = ""
+    elif checker.startswith("-p"):
+        parents = checker.split(None, 2)[1]
+        try:
+            name = checker.split(None, 2)[2]
+        except IndexError:
+            query = f"'{parents}' in parents and (name contains '*')"
+        else:
+            query = f"'{parents}' in parents and (name contains '{name}')"
+    elif re.search("-p (.*)", checker):
+        parents = re.search("-p (.*)", checker).group(1)
+        name = checker.split("-p")[0].strip()
+        query = f"'{parents}' in parents and (name contains '{name}')"
+    else:
+        name = checker
+        query = f"name contains '{name}'"
     service = await create_app(gdrive)
     if service is False:
         return False
@@ -1295,15 +1293,14 @@ async def gdrive_clone(event):
         return await event.edit("**What should I clone?**")
     _file_id = input_str
     await event.edit("**Processing...**")
-    if "https://" or "http://" in input_str:
-        if "id=" in input_str:
-            _file_id = input_str.split("id=")[1]
-            _file_id = re.split("[? &]", _file_id)[0]
-        elif "folders/" in input_str:
-            _file_id = input_str.split("folders/")[1]
-            _file_id = re.split("[? &]", _file_id)[0]
-        elif "/view" in input_str:
-            _file_id = input_str.split("/")[-2]
+    if "id=" in input_str:
+        _file_id = input_str.split("id=")[1]
+        _file_id = re.split("[? &]", _file_id)[0]
+    elif "folders/" in input_str:
+        _file_id = input_str.split("folders/")[1]
+        _file_id = re.split("[? &]", _file_id)[0]
+    elif "/view" in input_str:
+        _file_id = input_str.split("/")[-2]
     try:
         await get_information(service, _file_id)
     except BaseException as gd_e:

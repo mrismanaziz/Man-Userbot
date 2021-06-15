@@ -117,8 +117,7 @@ async def ANTI_SPAMBOTS(welcm):
                     elif "bit.ly/" in message.text:
                         reason = "Match on `bit.ly` URLs"
                         spambot = True
-                    else:
-                        if (
+                    elif (
                             check_user.first_name
                             in (
                                 "Bitmex",
@@ -130,8 +129,8 @@ async def ANTI_SPAMBOTS(welcm):
                             )
                             and users.last_name == "Bot"
                         ):
-                            reason = "Known spambot"
-                            spambot = True
+                        reason = "Known spambot"
+                        spambot = True
 
                     if spambot:
                         print(f"Potential Spam Message: {message.text}")
@@ -144,14 +143,7 @@ async def ANTI_SPAMBOTS(welcm):
                 chat = await welcm.get_chat()
                 admin = chat.admin_rights
                 creator = chat.creator
-                if not admin and not creator:
-                    if ANTI_SPAMBOT_SHOUT:
-                        await welcm.reply(
-                            f"**Alert!** [{check_user.first_name}](tg://user?id={check_user.id}) is a known spammer and is {reason}.\n**Ban is strongly recommended.**"
-                        )
-                        kicked = False
-                        reported = True
-                else:
+                if admin or creator:
                     try:
 
                         await welcm.reply(
@@ -175,6 +167,12 @@ async def ANTI_SPAMBOTS(welcm):
                             kicked = False
                             reported = True
 
+                elif ANTI_SPAMBOT_SHOUT:
+                    await welcm.reply(
+                        f"**Alert!** [{check_user.first_name}](tg://user?id={check_user.id}) is a known spammer and is {reason}.\n**Ban is strongly recommended.**"
+                    )
+                    kicked = False
+                    reported = True
                 if BOTLOG and (kicked or reported):
                     await welcm.client.send_message(
                         BOTLOG_CHATID,

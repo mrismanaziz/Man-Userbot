@@ -56,8 +56,7 @@ def remove_snip(keyword):
     to_check = get_snip(keyword)
     if not to_check:
         return False
-    else:
-        rem = SESSION.query(Snips).filter(Snips.snip == keyword)
-        rem.delete()
-        SESSION.commit()
-        return True
+    rem = SESSION.query(Snips).filter(Snips.snip == keyword)
+    rem.delete()
+    SESSION.commit()
+    return True

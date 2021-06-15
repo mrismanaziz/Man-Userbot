@@ -104,10 +104,8 @@ async def asciiart(IMG, color1, color2, bgcolor):
     draw = ImageDraw.Draw(newImg)
     leftpadding = 0
     y = 0
-    lineIdx = 0
-    for line in lines:
+    for lineIdx, line in enumerate(lines):
         color = colorRange[lineIdx]
-        lineIdx += 1
         draw.text((leftpadding, y), line, color.hex, font=font)
         y += letter_height
     IMG = newImg.save("ascii.png")
@@ -116,11 +114,10 @@ async def asciiart(IMG, color1, color2, bgcolor):
 
 # this is from userge
 async def random_color():
-    color = [
-        "#" + "".join([random.choice("0123456789ABCDEF") for k in range(6)])
+    return [
+        "#" + "".join(random.choice("0123456789ABCDEF") for k in range(6))
         for i in range(2)
     ]
-    return color
 
 
 @register(outgoing=True, pattern=r"^\.asciibg(?: |$)(.*)")

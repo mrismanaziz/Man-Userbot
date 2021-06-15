@@ -23,9 +23,8 @@ async def ultiny(event):
     if ik.endswith(".tgs"):
         await event.client.download_media(reply, "ult.tgs")
         os.system("lottie_convert.py ult.tgs json.json")
-        json = open("json.json", "r")
-        jsn = json.read()
-        json.close()
+        with open("json.json", "r") as json:
+            jsn = json.read()
         jsn = jsn.replace("512", "2000")
         open("json.json", "w").write(jsn)
         os.system("lottie_convert.py json.json ult.tgs")

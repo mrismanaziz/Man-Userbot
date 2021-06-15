@@ -19,17 +19,16 @@ async def fastpurger(purg):
     itermsg = purg.client.iter_messages(chat, min_id=purg.reply_to_msg_id)
     count = 0
 
-    if purg.reply_to_msg_id is not None:
-        async for msg in itermsg:
-            msgs.append(msg)
-            count += 1
-            msgs.append(purg.reply_to_msg_id)
-            if len(msgs) == 100:
-                await purg.client.delete_messages(chat, msgs)
-                msgs = []
-    else:
+    if purg.reply_to_msg_id is None:
         return await purg.edit("`Mohon Balas Ke Pesan`")
 
+    async for msg in itermsg:
+        msgs.append(msg)
+        count += 1
+        msgs.append(purg.reply_to_msg_id)
+        if len(msgs) == 100:
+            await purg.client.delete_messages(chat, msgs)
+            msgs = []
     if msgs:
         await purg.client.delete_messages(chat, msgs)
     done = await purg.client.send_message(

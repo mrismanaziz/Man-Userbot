@@ -47,24 +47,26 @@ def set_flood(chat_id, amount):
 
 
 def update_flood(chat_id: str, user_id) -> bool:
-    if str(chat_id) in CHAT_FLOOD:
-        curr_user_id, count, limit = CHAT_FLOOD.get(str(chat_id), DEF_OBJ)
+    if str(chat_id) not in CHAT_FLOOD:
+        return
 
-        if limit == 0:  # no antiflood
-            return False
+    curr_user_id, count, limit = CHAT_FLOOD.get(str(chat_id), DEF_OBJ)
 
-        if user_id != curr_user_id or user_id is None:  # other user
-            CHAT_FLOOD[str(chat_id)] = (user_id, DEF_COUNT + 1, limit)
-            return False
-
-        count += 1
-        if count > limit:  # too many msgs, kick
-            CHAT_FLOOD[str(chat_id)] = (None, DEF_COUNT, limit)
-            return True
-
-        # default -> update
-        CHAT_FLOOD[str(chat_id)] = (user_id, count, limit)
+    if limit == 0:  # no antiflood
         return False
+
+    if user_id != curr_user_id or user_id is None:  # other user
+        CHAT_FLOOD[str(chat_id)] = (user_id, DEF_COUNT + 1, limit)
+        return False
+
+    count += 1
+    if count > limit:  # too many msgs, kick
+        CHAT_FLOOD[str(chat_id)] = (None, DEF_COUNT, limit)
+        return True
+
+    # default -> update
+    CHAT_FLOOD[str(chat_id)] = (user_id, count, limit)
+    return False
 
 
 def get_flood_limit(chat_id):

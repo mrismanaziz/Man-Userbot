@@ -19,7 +19,7 @@ async def _(event):
     if input_str:
         try:
             required_number = int(input_str)
-            while not r.media.value == required_number:
+            while r.media.value != required_number:
                 await r.delete()
                 r = await event.reply(file=InputMediaDice(""))
         except BaseException:
@@ -36,7 +36,7 @@ async def _(event):
     if input_str:
         try:
             required_number = int(input_str)
-            while not r.media.value == required_number:
+            while r.media.value != required_number:
                 await r.delete()
                 r = await event.reply(file=InputMediaDice("🎯"))
         except BaseException:
@@ -53,7 +53,7 @@ async def _(event):
     if input_str:
         try:
             required_number = int(input_str)
-            while not r.media.value == required_number:
+            while r.media.value != required_number:
                 await r.delete()
                 r = await event.reply(file=InputMediaDice("🏀"))
         except BaseException:
@@ -70,7 +70,7 @@ async def _(event):
     if input_str:
         try:
             required_number = int(input_str)
-            while not r.media.value == required_number:
+            while r.media.value != required_number:
                 await r.delete()
                 r = await event.reply(file=InputMediaDice("🎳"))
         except BaseException:
@@ -87,7 +87,7 @@ async def _(event):
     if input_str:
         try:
             required_number = int(input_str)
-            while not r.media.value == required_number:
+            while r.media.value != required_number:
                 await r.delete()
                 r = await event.reply(file=InputMediaDice("⚽"))
         except BaseException:
@@ -104,7 +104,7 @@ async def _(event):
     if input_str:
         try:
             required_number = int(input_str)
-            while not r.media.value == required_number:
+            while r.media.value != required_number:
                 await r.delete()
                 r = await event.reply(file=InputMediaDice("🎰"))
         except BaseException:

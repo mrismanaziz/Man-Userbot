@@ -48,9 +48,11 @@ USERNAME_TAKEN = "```Mohon Maaf, Username Itu Sudah Ada Yang Menggunakannya.```"
 async def mine(event):
     """For .reserved command, get a list of your reserved usernames."""
     result = await bot(GetAdminedPublicChannelsRequest())
-    output_str = ""
-    for channel_obj in result.chats:
-        output_str += f"{channel_obj.title}\n@{channel_obj.username}\n\n"
+    output_str = "".join(
+        f"{channel_obj.title}\n@{channel_obj.username}\n\n"
+        for channel_obj in result.chats
+    )
+
     await event.edit(output_str)
 
 
@@ -168,15 +170,11 @@ async def remove_profilepic(delpfp):
     pfplist = await delpfp.client(
         GetUserPhotosRequest(user_id=delpfp.from_id, offset=0, max_id=0, limit=lim)
     )
-    input_photos = []
-    for sep in pfplist.photos:
-        input_photos.append(
-            InputPhoto(
+    input_photos = [InputPhoto(
                 id=sep.id,
                 access_hash=sep.access_hash,
                 file_reference=sep.file_reference,
-            )
-        )
+            ) for sep in pfplist.photos]
     await delpfp.client(DeletePhotosRequest(id=input_photos))
     await delpfp.edit(f"`Berhasil Menghapus {len(input_photos)} Foto Profil.`")
 

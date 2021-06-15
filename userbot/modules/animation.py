@@ -14,10 +14,6 @@ async def _(event):
 
         return
 
-    animation_interval = 0.1
-
-    animation_ttl = range(117)
-
     input_str = event.pattern_match.group(1)
 
     if input_str == "bulan":
@@ -58,6 +54,10 @@ async def _(event):
             "🌕",
             f"🌖",
         ]
+
+        animation_interval = 0.1
+
+        animation_ttl = range(117)
 
         for i in animation_ttl:
 
@@ -442,10 +442,6 @@ async def _(event):
 
         return
 
-    animation_interval = 2
-
-    animation_ttl = range(0, 11)
-
     input_str = event.pattern_match.group(1)
 
     if input_str == "cinta":
@@ -465,6 +461,10 @@ async def _(event):
             "`Mengirim Cintaku.. 100%\n█████████CINTAKU███████████ `",
             f"`Cintaku Sekarang Sepenuhnya Terkirim Padamu, Dan Sekarang Aku Sangat Mencintai Mu, I Love You 💞`",
         ]
+
+        animation_interval = 2
+
+        animation_ttl = range(11)
 
         for i in animation_ttl:
 
@@ -804,10 +804,6 @@ async def _(event):
 
         return
 
-    animation_interval = 3
-
-    animation_ttl = range(0, 103)
-
     input_str = event.pattern_match.group(1)
 
     if input_str == "ceritacinta":
@@ -831,6 +827,10 @@ async def _(event):
             "`TAMAT 😅`",
         ]
 
+        animation_interval = 3
+
+        animation_ttl = range(103)
+
         for i in animation_ttl:
 
             await asyncio.sleep(animation_interval)
@@ -844,10 +844,6 @@ async def _(event):
     if event.fwd_from:
 
         return
-
-    animation_interval = 1
-
-    animation_ttl = range(0, 11)
 
     input_str = event.pattern_match.group(1)
 
@@ -863,6 +859,10 @@ async def _(event):
             "`⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀\n ⠀⣴⠿⠏⠀⠀⠀⠀⠀   ⢳⡀⠀⡏⠀⠀    ⠀⢷\n⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀ ⠀     ⡇\n⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿  ⣸ Bwhaha  ⡇\n ⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀  ⣿  ⢹⠀        ⡇\n  ⠙⢿⣯⠄⠀⠀|__| ⠀⡿ ⠀⡇⠀⠀⠀⠀    ⡼\n⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀   ⠘⠤⣄⣠⠞⠀\n⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀\n⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀\n⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀ ⠀⣄⢸⠀⠀⠀⠀⠀⠀`",
             "`⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀\n ⠀⣴⠿⠏⠀⠀⠀⠀⠀  ⠀⢳⡀⠀⡏⠀⠀    ⠀⢷\n⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀  ⠀     ⡇\n⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿  ⣸ Canda   ⡇\n ⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀   ⣿  ⢹⠀        ⡇\n  ⠙⢿⣯⠄⠀⠀****⠀⠀⡿ ⠀⡇⠀⠀⠀⠀    ⡼\n⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀   ⠘⠤⣄⣠⠞⠀\n⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀\n⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀\n⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀ ⠀⣄⢸⠀⠀⠀⠀⠀⠀`",
         ]
+
+        animation_interval = 1
+
+        animation_ttl = range(11)
 
         for i in animation_ttl:
 
@@ -901,13 +901,13 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █▎")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █▍")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █▌")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █▊")
     number = number + 1
@@ -919,13 +919,13 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██▎")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██▍")
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██▌")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██▊")
     number = number + 1
@@ -934,10 +934,10 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███▎")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███▍")
     number = number + 1
@@ -946,10 +946,10 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███▊")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███▉")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████")
     number = number + 1
@@ -964,7 +964,7 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████▊")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████▉")
     number = number + 1
@@ -973,7 +973,7 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █████▎")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █████▍")
     number = number + 1
@@ -1012,13 +1012,13 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████▍")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████▌")
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████▊")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████▉")
     number = number + 1
@@ -1027,10 +1027,10 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████▎")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████▍")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████▌")
     number = number + 1
@@ -1054,52 +1054,52 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █████████▊")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █████████▉")
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██████████")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██████████▎")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██████████▍")
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██████████▌")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██████████▊")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██████████▉")
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████████")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████████▎")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████████▍")
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████████▌")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████████▊")
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████████▉")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████████")
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████████▎")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████████▍")
     number = number + 1
@@ -1114,10 +1114,10 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █████████████")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █████████████▎")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █████████████▍")
     number = number + 1
@@ -1126,13 +1126,13 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █████████████▊")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █████████████▉")
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██████████████")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██████████████▎")
     number = number + 1
@@ -1141,7 +1141,7 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██████████████▌")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ██████████████▊")
     number = number + 1
@@ -1153,7 +1153,7 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████████████▎")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████████████▍")
     number = number + 1
@@ -1162,13 +1162,13 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████████████▊")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████████████▉")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████████████")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████████████▎")
     number = number + 1
@@ -1177,7 +1177,7 @@ async def typewriter(typew):
     number = number + 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████████████▌")
-    number = number + 1
+    number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████████████▌")
     sleep(1)

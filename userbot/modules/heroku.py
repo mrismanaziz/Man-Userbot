@@ -38,29 +38,10 @@ async def variable(var):
     if exe == "get":
         await var.edit("`Mendapatkan Informasi...`")
         variable = var.pattern_match.group(2)
-        if variable != "":
-            if variable in heroku_var:
-                if BOTLOG:
-                    await var.client.send_message(
-                        BOTLOG_CHATID,
-                        "**Logger : #SYSTEM**\n\n"
-                        "**#SET #VAR_HEROKU #ADDED**:\n\n"
-                        f"`{variable}` **=** `{heroku_var[variable]}`\n",
-                    )
-                    await var.edit("`Diterima Ke BOTLOG_CHATID...`")
-                    return True
-                else:
-                    await var.edit("`Mohon Ubah BOTLOG Ke True...`")
-                    return False
-            else:
-                await var.edit("`Informasi Tidak Ditemukan...`")
-                return True
-        else:
+        if variable == "":
             configvars = heroku_var.to_dict()
-            msg = ""
             if BOTLOG:
-                for item in configvars:
-                    msg += f"`{item}` = `{configvars[item]}`\n"
+                msg = "".join(f"`{item}` = `{configvars[item]}`\n" for item in configvars)
                 await var.client.send_message(
                     BOTLOG_CHATID, "#CONFIGVARS\n\n" "**Config Vars**:\n" f"{msg}"
                 )
@@ -69,6 +50,22 @@ async def variable(var):
             else:
                 await var.edit("`Mohon Ubah BOTLOG Ke True`")
                 return False
+        elif variable in heroku_var:
+            if BOTLOG:
+                await var.client.send_message(
+                    BOTLOG_CHATID,
+                    "**Logger : #SYSTEM**\n\n"
+                    "**#SET #VAR_HEROKU #ADDED**:\n\n"
+                    f"`{variable}` **=** `{heroku_var[variable]}`\n",
+                )
+                await var.edit("`Diterima Ke BOTLOG_CHATID...`")
+                return True
+            else:
+                await var.edit("`Mohon Ubah BOTLOG Ke True...`")
+                return False
+        else:
+            await var.edit("`Informasi Tidak Ditemukan...`")
+            return True
     elif exe == "del":
         await var.edit("`Menghapus Config Vars...`")
         variable = var.pattern_match.group(2)
