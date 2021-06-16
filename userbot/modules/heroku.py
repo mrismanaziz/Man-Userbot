@@ -47,23 +47,23 @@ async def variable(var):
                 await var.client.send_message(
                     BOTLOG_CHATID, "#CONFIGVARS\n\n" "**Config Vars**:\n" f"{msg}"
                 )
-                await var.edit("`Diterima Ke BOTLOG_CHATID`")
+                await var.edit("**Berhasil Mengirim Ke BOTLOG_CHATID**")
                 return True
             else:
-                await var.edit("`Mohon Ubah BOTLOG Ke True`")
+                await var.edit("**Mohon Ubah Var** `BOTLOG` **Ke** `True`")
                 return False
         elif variable in heroku_var:
             if BOTLOG:
                 await var.client.send_message(
                     BOTLOG_CHATID,
                     "**Logger : #SYSTEM**\n\n"
-                    "**#SET #VAR_HEROKU #ADDED**:\n\n"
+                    "**#SET #VAR_HEROKU #ADDED**\n\n"
                     f"`{variable}` **=** `{heroku_var[variable]}`\n",
                 )
-                await var.edit("`Diterima Ke BOTLOG_CHATID...`")
+                await var.edit("**Berhasil Mengirim Ke BOTLOG_CHATID**")
                 return True
             else:
-                await var.edit("`Mohon Ubah BOTLOG Ke True...`")
+                await var.edit("**Mohon Ubah Var** `BOTLOG` **Ke** `True`")
                 return False
         else:
             await var.edit("`Informasi Tidak Ditemukan...`")
@@ -79,13 +79,13 @@ async def variable(var):
                 await var.client.send_message(
                     BOTLOG_CHATID,
                     "**Logger : #SYSTEM**\n\n"
-                    "**#SET #VAR_HEROKU #DELETED**:\n\n"
+                    "**#SET #VAR_HEROKU #DELETED**\n\n"
                     f"`{variable}`",
                 )
-            await var.edit("`Config Vars Telah Dihapus`")
+            await var.edit("**Config Vars Telah Dihapus**")
             del heroku_var[variable]
         else:
-            await var.edit("`Tidak Dapat Menemukan Config Vars`")
+            await var.edit("**Tidak Dapat Menemukan Config Vars**")
             return True
 
 
@@ -99,7 +99,7 @@ async def set_var(var):
             await var.client.send_message(
                 BOTLOG_CHATID,
                 "**Logger : #SYSTEM**\n\n"
-                "**#SET #VAR_HEROKU #ADDED**:\n\n"
+                "**#SET #VAR_HEROKU #ADDED**\n\n"
                 f"`{variable}` = `{value}`",
             )
         await var.edit("`Sedang Proses, Mohon Tunggu sebentar..`")
@@ -108,7 +108,7 @@ async def set_var(var):
             await var.client.send_message(
                 BOTLOG_CHATID,
                 "**Logger : #SYSTEM**\n\n"
-                "**#SET #VAR_HEROKU #ADDED**:\n\n"
+                "**#SET #VAR_HEROKU #ADDED**\n\n"
                 f"`{variable}` **=** `{value}`",
             )
         await var.edit("`Menambahkan Config Vars..`")
@@ -125,7 +125,7 @@ async def dyno_usage(dyno):
     """
     Get your account Dyno Usage
     """
-    await dyno.edit("`Processing Informasi Dyno Heroku..`")
+    await dyno.edit("`Processing...`")
     useragent = (
         "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -144,7 +144,7 @@ async def dyno_usage(dyno):
                 await dyno.client.send_message(
                     dyno.chat_id, f"`{r.reason}`", reply_to=dyno.id
                 )
-                await dyno.edit("`Gagal Mendapatkan Informasi Dyno`")
+                await dyno.edit("**Gagal Mendapatkan Informasi Dyno**")
                 return False
             result = await r.json()
             quota = result["account_quota"]
@@ -188,26 +188,17 @@ async def dyno_usage(dyno):
 
 @register(outgoing=True, pattern=r"^\.logs")
 async def _(dyno):
-    try:
-        Heroku = heroku3.from_key(HEROKU_API_KEY)
-        app = Heroku.app(HEROKU_APP_NAME)
-    except BaseException:
-        return await dyno.reply(
-            "`Please make sure your Heroku API Key, Your App name are configured correctly in the heroku var.`"
+    if app is None:
+        return await dyno.edit(
+            "**Wajib Mengisi Var** `HEROKU_APP_NAME` **dan** `HEROKU_API_KEY`"
         )
-    await dyno.edit("`Sedang Mengambil Logs Heroku`")
+    await dyno.edit("**Sedang Mengambil Logs Heroku**")
     with open("logs.txt", "w") as log:
         log.write(app.get_log())
-    fd = codecs.open("logs.txt", "r", encoding="utf-8")
-    data = fd.read()
-    key = (
-        requests.post("https://nekobin.com/api/documents", json={"content": data})
-        .json()
-        .get("result")
-        .get("key")
+    await dyno.client.send_file(
+        entity=dyno.chat_id, file="logs.txt", caption="**Ini Logs Heroku anda**"
     )
-    url = f"https://nekobin.com/raw/{key}"
-    await dyno.edit(f"**✣ Ini Logs Heroku Anda :** [Klik Disini]({url})")
+    await dyno.delete()
     return os.remove("logs.txt")
 
 
