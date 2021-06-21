@@ -190,7 +190,7 @@ async def get_user_from_event(event):
 
 async def purge():
     try:
-        os.system("rm *.png *.webp")
+        os.system("rm -rf *.png *.webp")
     except OSError:
         pass
 
@@ -296,7 +296,7 @@ async def tweet(event):
             await event.edit("What should i tweet? Give your username and tweet!`")
             return
     if "." in text:
-        username, text = text.split(".")
+        username, text = text.split(".", 1)
     else:
         await event.edit("`What should i tweet? Give your username and tweet!`")
     await event.edit(f"`Requesting {username} to tweet...`")
