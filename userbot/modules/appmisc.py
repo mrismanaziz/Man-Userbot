@@ -1,7 +1,6 @@
 # imported from github.com/ravana69/PornHub to userbot by @heyworld
 # please don't nuke my credits 😓
 import asyncio
-import html
 import logging
 import os
 import time
@@ -15,10 +14,8 @@ from telethon import *
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl import functions
-from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import (
     ChatBannedRights,
-    MessageEntityMentionName,
     UserStatusEmpty,
     UserStatusLastMonth,
     UserStatusLastWeek,
@@ -27,7 +24,7 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 
-from userbot import ALIVE_NAME, CMD_HELP, DEFAULT_BIO, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.events import register
 
 normiefont = [
@@ -292,13 +289,13 @@ async def _(event):
     r = 0
     await event.edit("`Mencari Daftar Peserta....`")
     async for i in bot.iter_participants(event.chat_id):
-        p += 1
+        p = p + 1
         #
         # Note that it's "reversed". You must set to ``True`` the permissions
         # you want to REMOVE, and leave as ``None`` those you want to KEEP.
         rights = ChatBannedRights(until_date=None, view_messages=True)
         if isinstance(i.status, UserStatusEmpty):
-            y += 1
+            y = y + 1
             if "y" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
@@ -306,9 +303,9 @@ async def _(event):
                     e.append(str(e))
                     break
                 else:
-                    c += 1
+                    c = c + 1
         if isinstance(i.status, UserStatusLastMonth):
-            m += 1
+            m = m + 1
             if "m" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
@@ -316,9 +313,9 @@ async def _(event):
                     e.append(str(e))
                     break
                 else:
-                    c += 1
+                    c = c + 1
         if isinstance(i.status, UserStatusLastWeek):
-            w += 1
+            w = w + 1
             if "w" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
@@ -326,9 +323,9 @@ async def _(event):
                     e.append(str(e))
                     break
                 else:
-                    c += 1
+                    c = c + 1
         if isinstance(i.status, UserStatusOffline):
-            o += 1
+            o = o + 1
             if "o" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
@@ -336,9 +333,9 @@ async def _(event):
                     e.append(str(e))
                     break
                 else:
-                    c += 1
+                    c = c + 1
         if isinstance(i.status, UserStatusOnline):
-            q += 1
+            q = q + 1
             if "q" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
@@ -346,9 +343,9 @@ async def _(event):
                     e.append(str(e))
                     break
                 else:
-                    c += 1
+                    c = c + 1
         if isinstance(i.status, UserStatusRecently):
-            r += 1
+            r = r + 1
             if "r" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
@@ -356,9 +353,9 @@ async def _(event):
                     e.append(str(e))
                     break
                 else:
-                    c += 1
+                    c = c + 1
         if i.bot:
-            b += 1
+            b = b + 1
             if "b" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
@@ -366,18 +363,18 @@ async def _(event):
                     e.append(str(e))
                     break
                 else:
-                    c += 1
+                    c = c + 1
         elif i.deleted:
-            d += 1
+            d = d + 1
             if "d" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
                     await event.edit("I need admin priveleges to perform this action!")
                     e.append(str(e))
                 else:
-                    c += 1
+                    c = c + 1
         elif i.status is None:
-            n += 1
+            n = n + 1
     if input_str:
         required_string = """Kicked {} / {} users
 Deleted Accounts: {}
@@ -528,110 +525,6 @@ async def _(event):
             await event.delete()
             await event.client.send_message(event.chat_id, response.message)
             await event.client.delete_message(chat, event.chat_id, response.message)
-
-
-@register(outgoing=True, pattern=r"^\.clone(?: |$)(.*)")
-async def _(event):
-    if event.fwd_from:
-        return
-    reply_message = await event.get_reply_message()
-    replied_user, error_i_a = await get_full_user(event)
-    if replied_user is None:
-        await event.edit(str(error_i_a))
-        return False
-    user_id = replied_user.user.id
-    profile_pic = await event.client.download_profile_photo(
-        user_id, TEMP_DOWNLOAD_DIRECTORY
-    )
-    # some people have weird HTML in their names
-    first_name = html.escape(replied_user.user.first_name)
-    # https://stackoverflow.com/a/5072031/4723940
-    # some Deleted Accounts do not have first_name
-    if first_name is not None:
-        # some weird people (like me) have more than 4096 characters in their
-        # names
-        first_name = first_name.replace("\u2060", "")
-    last_name = replied_user.user.last_name
-    # last_name is not Manadatory in @Telegram
-    if last_name is not None:
-        last_name = html.escape(last_name)
-        last_name = last_name.replace("\u2060", "")
-    if last_name is None:
-        last_name = "⁪⁬⁮⁮⁮⁮ ‌‌‌‌"
-    # inspired by https://telegram.dog/afsaI181
-    user_bio = replied_user.about
-    if user_bio is not None:
-        user_bio = html.escape(replied_user.about)
-    await bot(functions.account.UpdateProfileRequest(first_name=first_name))
-    await bot(functions.account.UpdateProfileRequest(last_name=last_name))
-    await bot(functions.account.UpdateProfileRequest(about=user_bio))
-    pfile = await bot.upload_file(profile_pic)  # pylint:disable=E060
-    await bot(functions.photos.UploadProfilePhotoRequest(pfile))  # pylint:disable=E0602
-    # message_id_to_reply = event.message.reply_to_msg_id
-    # if not message_id_to_reply:
-    #    message_id_to_reply = event.message.id
-    # await bot.send_message(
-    #  event.chat_id,
-    #  "Hai, Apa Kabarmu?",
-    #  reply_to=message_id_to_reply,
-    #  )
-    await event.delete()
-    await bot.send_message(
-        event.chat_id, "`Berhasil Mengclone User`", reply_to=reply_message
-    )
-
-
-async def get_full_user(event):
-    if event.reply_to_msg_id:
-        previous_message = await event.get_reply_message()
-        if previous_message.forward:
-            replied_user = await event.client(
-                GetFullUserRequest(
-                    previous_message.forward.from_id
-                    or previous_message.forward.channel_id
-                )
-            )
-        else:
-            replied_user = await event.client(
-                GetFullUserRequest(previous_message.from_id)
-            )
-        return replied_user, None
-    else:
-        input_str = None
-        try:
-            input_str = event.pattern_match.group(1)
-        except IndexError as e:
-            return None, e
-        if event.message.entities is not None:
-            mention_entity = event.message.entities
-            probable_user_mention_entity = mention_entity[0]
-            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
-                user_id = probable_user_mention_entity.user_id
-                replied_user = await event.client(GetFullUserRequest(user_id))
-                return replied_user, None
-            else:
-                try:
-                    user_object = await event.client.get_entity(input_str)
-                    user_id = user_object.id
-                    replied_user = await event.client(GetFullUserRequest(user_id))
-                    return replied_user, None
-                except Exception as e:
-                    return None, e
-        elif event.is_private:
-            try:
-                user_id = event.chat_id
-                replied_user = await event.client(GetFullUserRequest(user_id))
-                return replied_user, None
-            except Exception as e:
-                return None, e
-        else:
-            try:
-                user_object = await event.client.get_entity(int(input_str))
-                user_id = user_object.id
-                replied_user = await event.client(GetFullUserRequest(user_id))
-                return replied_user, None
-            except Exception as e:
-                return None, e
 
 
 def get_stream_data(query):
@@ -1060,35 +953,6 @@ async def xcursive(cursivelite):
             cursivecharacter = cursive[normiefont.index(normiecharacter)]
             string = string.replace(normiecharacter, cursivecharacter)
     await cursivelite.edit(string)
-
-
-@register(outgoing=True, pattern=r"^\.rclone(?: |$)(.*)")
-async def _(event):
-    if event.fwd_from:
-        return
-    name = f"{ALIVE_NAME}"
-    bio = f"{DEFAULT_BIO}"
-    n = 1
-    await bot(
-        functions.photos.DeletePhotosRequest(
-            await event.client.get_profile_photos("me", limit=n)
-        )
-    )
-    await bot(functions.account.UpdateProfileRequest(about=bio))
-    await bot(functions.account.UpdateProfileRequest(first_name=name))
-    await event.edit("`Berhasil Mengembalikan Akun Anda dari clone`")
-
-
-CMD_HELP.update(
-    {
-        "clone": "**Plugin : **`clone`\
-        \n\n  •  **Syntax :** `.clone` <reply ke user yang ingin di clone>\
-        \n  •  **Function : **Untuk Mengclone Akun Orang\
-        \n\n  •  **Syntax : **`.rclone`\
-        \n  •  **Function : **Kembali ke profil Anda yang telah Anda tetapkan di heroku untuk ALIVE_NAME, DEFAULT_BIO\
-    "
-    }
-)
 
 
 CMD_HELP.update(
