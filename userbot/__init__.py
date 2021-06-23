@@ -81,10 +81,10 @@ API_KEY = int(os.environ.get("API_KEY") or 0)
 API_HASH = str(os.environ.get("API_HASH") or None)
 
 # Userbot Session String
-STRING_SESSION = os.environ.get("STRING_SESSION", "")
+STRING_SESSION = os.environ.get("STRING_SESSION", None)
 
 # Logging channel/group ID configuration.
-BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", ""))
+BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", 0))
 
 # Userbot logging feature switch.
 BOTLOG = sb(os.environ.get("BOTLOG", "True"))
@@ -94,9 +94,8 @@ LOGSPAMMER = sb(os.environ.get("LOGSPAMMER", "False"))
 PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "False"))
 
 # Heroku Credentials for updater.
-HEROKU_MEMEZ = sb(os.environ.get("HEROKU_MEMEZ", "False"))
-HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", "")
-HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", "")
+HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
+HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
 
 # JustWatch Country
 WATCH_COUNTRY = os.environ.get("WATCH_COUNTRY", "ID")
@@ -110,13 +109,13 @@ UPSTREAM_REPO_URL = os.environ.get(
     "UPSTREAM_REPO_URL",
     "https://github.com/mrismanaziz/Man-Userbot.git")
 UPSTREAM_REPO_BRANCH = os.environ.get(
-    "UPSTREAM_REPO_BRANCH", "alpha")
+    "UPSTREAM_REPO_BRANCH", "Man-Userbot")
 
 # Console verbose logging
 CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
 
 # SQL Database URI
-DB_URI = os.environ.get("DATABASE_URL") or None
+DB_URI = os.environ.get("DATABASE_URL", None)
 
 # OCR API key
 OCR_SPACE_API_KEY = os.environ.get("OCR_SPACE_API_KEY", None)
@@ -248,8 +247,8 @@ API_TOKEN = os.environ.get("API_TOKEN", None)
 API_URL = os.environ.get("API_URL", "http://antiddos.systems")
 
 # Inline bot helper
-BOT_TOKEN = os.environ.get("BOT_TOKEN") or None
-BOT_USERNAME = os.environ.get("BOT_USERNAME") or None
+BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
+BOT_USERNAME = os.environ.get("BOT_USERNAME", None)
 
 # Init Mongo
 MONGOCLIENT = MongoClient(MONGO_URI, 27017, serverSelectionTimeoutMS=1)
