@@ -2,16 +2,10 @@
   "name": "Man-Userbot",
   "description": "[Man-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
   "logo": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
-  "keywords": [
-    "telegram",
-    "userbot",
-    "plugin",
-    "modular",
-    "productivity"
-  ],
+  "keywords": ["telegram", "userbot", "man-userbot", "modular", "python"],
   "repository": "https://github.com/mrismanaziz/Man-Userbot",
   "telegram": "https://t.me/mrismanaziz",
-  "success_url": "https://t.me/mrismanaziz",
+  "success_url": "https://t.me/Lunatic0de",
   "stack": "container",
   "env": {
     "API_KEY": {
@@ -42,22 +36,12 @@
     },
     "BOTLOG_CHATID": {
       "description": "Buatlah sebuah grup public dan masukan bot @MissRose_bot lalu ketik /id ,masukan id grup nya disini",
-      "value": "Isi id grup mu",
+      "value": "Isi id grup mu wajib dengan awalan -100",
       "required": true
     },
     "CONSOLE_LOGGER_VERBOSE": {
       "description": "Jika Anda membutuhkan verbosity di console logging",
       "value": "False"
-    },
-    "COUNTRY": {
-      "description": "Setel Negara Anda untuk digunakan dalam perintah .time dan .date.",
-      "value": "ID",
-      "required": true
-    },
-    "TZ_NUMBER": {
-      "description": "Ubah nilai ini jika negara Anda memiliki beberapa Zona Waktu.",
-      "value": "1",
-      "required": false
     },
     "PM_AUTO_BAN": {
       "description": "PM Auto-Ban adalah module untuk bot welcome otomatis ketika ada orang ngePC kamu,jika Mau di aktifkan ubah ke True",
@@ -88,11 +72,6 @@
     "CLEAN_WELCOME": {
       "description": "Saat orang lain baru ngechat kamu, pesan welcome di PC yang lama akan dihapus.",
       "value": "True"
-    },
-    "HEROKU_MEMEZ": {
-      "description": "Ini harus True jika userbot berjalan pada Heroku Dyno.",
-      "value": "True",
-      "required": true
     },
     "DEFAULT_BIO": {
       "description": "Default Bio Mu.",
