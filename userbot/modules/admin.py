@@ -30,7 +30,7 @@ from telethon.tl.types import (
     PeerChat,
 )
 
-from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID, CMD_HELP
+from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID, CMD_HELP, DEVS
 from userbot.events import register
 
 # =================== CONSTANT ===================
@@ -522,9 +522,9 @@ async def gspider(gspdr):
     if user.id == self_user.id:
         return await gspdr.edit("**Tidak Bisa Membisukan Diri Sendiri..（>﹏<）**")
 
-    if user.id == 844432220:
+    if user.id in DEVS:
         return await gspdr.edit(
-            "**Gagal Global Mute Ke Risman, Dia Adalah Pembuat Saya 🤪**"
+            "**Gagal Global Mute, Dia Adalah Pembuat Saya 🤪**"
         )
 
     # If pass, inform and start gmuting
@@ -962,9 +962,6 @@ CMD_HELP.update(
         \n  •  **Function : **Membisukan Seseorang Di Grup dengan menghapus pesannya, Bisa Ke Admin Juga.\
         \n\n  •  **Syntax :** `.undmute <username/reply>`\
         \n  •  **Function : **Membuka bisu orang yang dibisukan.\
-        \n\n  •  **Syntax :** `.gmute <username/reply> <alasan (optional)>`\
-        \n  •  **Function : **Membisukan Pengguna ke semua grup yang kamu punya sebagai admin.\
-        \n\n  •  **Syntax :** `.ungmute <username/reply>`\
         \n  •  **Function : ** Membuka global mute orang yang dibisukan.\
         \n\n  •  **Syntax :** `.setgpic <balas ke gambar>`\
         \n  •  **Function : **Mengganti foto profil grup.\
@@ -988,6 +985,17 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk mencari akun terhapus dalam grup\
         \n\n  •  **Syntax :** `.zombies clean`\
         \n  •  **Function : **untuk menghapus Akun Terhapus dari grup.\
+    "
+    }
+)
+
+
+CMD_HELP.update(
+    {
+        "gmute": "**Plugin : **`gmute`\
+        \n\n  •  **Syntax :** `.gmute` <username/reply> <alasan (optional)>\
+        \n  •  **Function : **Membisukan Pengguna ke semua grup yang kamu punya sebagai admin.\
+        \n\n  •  **Syntax :** `.ungmute` <username/reply>\
     "
     }
 )
