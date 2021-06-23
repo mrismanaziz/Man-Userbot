@@ -523,9 +523,7 @@ async def gspider(gspdr):
         return await gspdr.edit("**Tidak Bisa Membisukan Diri Sendiri..（>﹏<）**")
 
     if user.id in DEVS:
-        return await gspdr.edit(
-            "**Gagal Global Mute, Dia Adalah Pembuat Saya 🤪**"
-        )
+        return await gspdr.edit("**Gagal Global Mute, Dia Adalah Pembuat Saya 🤪**")
 
     # If pass, inform and start gmuting
     await gspdr.edit("**Berhasil Membisukan Pengguna!**")
