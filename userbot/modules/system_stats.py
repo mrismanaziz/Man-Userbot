@@ -138,7 +138,7 @@ async def sysdetails(sysd):
 
             await sysd.edit("`" + result + "`")
         except FileNotFoundError:
-            await sysd.edit("`Terlebih dahulu Install neofetch!!`")
+            await sysd.edit("**Install neofetch Terlebih dahulu!!**")
 
 
 @register(outgoing=True, pattern=r"^\.botver$")
@@ -169,7 +169,7 @@ async def bot_ver(event):
         revout = str(stdout.decode().strip()) + str(stderr.decode().strip())
 
         await event.edit(
-            "✥ **Userbot Versi :** " f"{verout}" "\n**✥ **Revisi :** " f"{revout}"
+            "✥ **Userbot Versi :** " f"`{verout}`" "\n✥ **Revisi :** " f"`{revout}`"
         )
     else:
         await event.edit("anda tidak memiliki git, Anda Menjalankan Bot - 'v1.beta.4'!")
@@ -181,7 +181,7 @@ async def pipcheck(pip):
         return
     pipmodule = pip.pattern_match.group(1)
     if pipmodule:
-        await pip.edit("`Mencari...`")
+        await pip.edit("`Sedang Mencari...`")
         pipc = await asyncrunapp(
             "pip3",
             "search",
@@ -216,19 +216,19 @@ async def pipcheck(pip):
             await pip.edit(
                 "**Query: **\n`"
                 f"pip3 search {pipmodule}"
-                "`\n**Result: **\n`No Result Returned/False`"
+                "`\n**Result: **\n`Tidak Ada Hasil yang Temukan/Salah`"
             )
     else:
-        await pip.edit("Gunakan `.help pip` Untuk Melihat Contoh")
+        await pip.edit("**Gunakan** `.help pip` **Untuk Melihat Contoh**")
 
 
-@register(outgoing=True, pattern=r"^\.(?:calive|con)\s?(.)?")
+@register(outgoing=True, pattern=r"^\.(?:calive)\s?(.)?")
 async def amireallyalive(alive):
     user = await bot.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
     output = (
         f" **┗┓ ✮ {DEFAULTUSER} USERBOT ✮ ┏┛** \n"
-        f"\n__**{ALIVE_TEKS_CUSTOM}**__\n"
+        f"\n**{ALIVE_TEKS_CUSTOM}**\n"
         f"**━━━━━━━━━━━━━━━**\n"
         f"**✮ Master ✮** \n"
         f" ➥ `{DEFAULTUSER}` \n"
@@ -254,8 +254,8 @@ async def amireallyalive(alive):
             await msg.delete()
         except BaseException:
             await alive.edit(
-                output + "\n\n *`The provided logo is invalid."
-                "\nMake sure the link is directed to the logo picture`"
+                output + "\n\n ***Logo yang diberikan tidak valid."
+                "\nPastikan link diarahkan ke gambar logo**"
             )
             await asyncio.sleep(100)
             await alive.delete()
@@ -265,7 +265,7 @@ async def amireallyalive(alive):
         await alive.delete()
 
 
-@register(outgoing=True, pattern=r"^\.(?:xalive|xon)\s?(.)?")
+@register(outgoing=True, pattern=r"^\.(?:xalive)\s?(.)?")
 async def amireallyalive(alive):
     user = await bot.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
@@ -293,8 +293,8 @@ async def amireallyalive(alive):
             await msg.delete()
         except BaseException:
             await alive.edit(
-                output + "\n\n *`The provided logo is invalid."
-                "\nMake sure the link is directed to the logo picture`"
+                output + "\n\n ***Logo yang diberikan tidak valid."
+                "\nPastikan link diarahkan ke gambar logo**"
             )
             await asyncio.sleep(100)
             await alive.delete()
@@ -310,7 +310,7 @@ async def amireallyalive(alive):
     uptime = await get_readable_time((time.time() - StartTime))
     output = (
         f"**[Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) is Up and Running.**\n\n"
-        f"__**{ALIVE_TEKS_CUSTOM}**__\n\n"
+        f"**{ALIVE_TEKS_CUSTOM}**\n\n"
         f"{ALIVE_EMOJI} **Master :** `{DEFAULTUSER}` \n"
         f"{ALIVE_EMOJI} **Modules :** `{len(modules)} Modules` \n"
         f"{ALIVE_EMOJI} **Bot Version :** `{BOT_VER}` \n"
@@ -328,8 +328,8 @@ async def amireallyalive(alive):
             await msg.delete()
         except BaseException:
             await alive.edit(
-                output + "\n\n *`Logo Yang Disediakan Tidak Valid."
-                "\nPastikan Tautan Yang Anda Gunakan Valid`"
+                output + "\n\n ***Logo yang diberikan tidak valid."
+                "\nPastikan link diarahkan ke gambar logo**"
             )
             await asyncio.sleep(100)
             await alive.delete()
@@ -339,25 +339,6 @@ async def amireallyalive(alive):
         await alive.delete()
 
 
-@register(outgoing=True, pattern=r"^\.aliveu")
-async def amireallyaliveuser(username):
-    message = username.text
-    output = ".aliveu [new user without brackets] nor can it be empty"
-    if message != ".aliveu" and message[7:8] == " ":
-        newuser = message[8:]
-        global DEFAULTUSER
-        DEFAULTUSER = newuser
-        output = "Successfully changed user to " + newuser + "!"
-    await username.edit("`" f"{output}" "`")
-
-
-@register(outgoing=True, pattern=r"^\.resetalive$")
-async def amireallyalivereset(ureset):
-    global DEFAULTUSER
-    DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-    await ureset.edit("`" "Successfully reset user for alive!" "`")
-
-
 CMD_HELP.update(
     {
         "system": "**Plugin : **`system`.\
@@ -365,16 +346,22 @@ CMD_HELP.update(
         \n  •  **Function : **Menampilkan informasi sistem menggunakan neofetch\
         \n\n\n  •  **Syntax :** `.botver`\
         \n  •  **Function : **Menampilkan versi userbot\
-        \n\n  •  **Syntax :** `.pip` <module(s)>\
+        \n\n  •  **Syntax :** `.pip` <modules>\
         \n  •  **Function : **Melakukan pencarian modul pip\
-        \n\n  •  **Syntax :** `.alive` atau `.on`\
-        \n  •  **Function : **Ketik .alive untuk melihat apakah bot Anda berfungsi atau tidak.\
-        \n\n  •  **Syntax :** `.resetalive`\
-        \n  •  **Function : **Untuk Membanned Akun yang sedang online\
         \n\n  •  **Syntax :** `.db`\
         \n  •  **Function : **Menampilkan info terkait database.\
         \n\n  •  **Syntax :** `.spc`\
         \n  •  **Function : **Show system specification\
+    "
+    }
+)
+
+
+CMD_HELP.update(
+    {
+        "alive": "**Plugin : **`alive`\
+        \n\n  •  **Syntax :** `.alive` atau `.on`\
+        \n  •  **Function : **Untuk melihat apakah bot Anda berfungsi atau tidak.\
     "
     }
 )
