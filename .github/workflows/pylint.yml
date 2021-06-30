@@ -1,0 +1,48 @@
+name: PEP8
+on:
+  push:
+    branches: [ '*' ]
+
+jobs:
+  PEP8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+
+      - name: Install Python lint libraries
+        run: |
+          pip install autopep8 autoflake isort black
+          
+      - name: Check for showstoppers
+        run: |
+          autopep8 --verbose --in-place --recursive --aggressive --aggressive . *.py
+      - name: Remove unused imports and variables
+        run: |
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports .
+      - name: lint with isort and black
+        run: |
+          isort userbot/modules/*.py
+          black userbot/modules/*.py
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@v2
+        with:
+            git_user_signingkey: true
+            git_commit_gpgsign: true
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+
+      # commit changes
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'pylint: auto fixes'
+          commit_options: '--no-verify --signoff'
+          repository: .
+          commit_user_name: mrismanaziz
+          commit_user_email: mrismanaziz@gmail.com
+          commit_author: mrismanaziz <mrismanaziz@gmail.com>
