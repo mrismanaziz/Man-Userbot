@@ -1,12 +1,19 @@
-# We're using Ubuntu 20.10
+# Using Python Slim-Buster
 FROM biansepang/weebproject:buster
 
-RUN git clone -b alpha https://github.com/mrismanaziz/Man-Userbot /root/userbot
-RUN mkdir /root/userbot/.bin
-RUN pip install --upgrade pip setuptools
-WORKDIR /root/userbot
+# Clone repo and prepare working directory
+RUN git clone -b alpha https://github.com/mrismanaziz/Man-Userbot /home/man-userbot/ \
+    && chmod 777 /home/man-userbot \
+    && mkdir /home/man-userbot/bin/
+
+# Copies config.env (if exists)
+COPY ./sample_config.env ./config.env* /home/man-userbot/
+
+# Setup Working Directory
+WORKDIR /home/man-userbot/
 
 #Install python requirements
 RUN pip3 install -r https://raw.githubusercontent.com/mrismanaziz/Man-Userbot/Man-Userbot/requirements.txt
 
+# Finalization
 CMD ["python3","-m","userbot"]
