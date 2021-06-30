@@ -24,11 +24,11 @@ Gunakan bot ini dengan risiko Anda sendiri, dan gunakan dengan bijak.
 [![Run repl.it](https://img.shields.io/badge/run-string__session.py-blue?style=for-the-badge&logo=repl.it)](https://repl.it/@mrismanaziz/stringenSession?lite=1&outputonly=1)
 
 <h3 align="center">Klik Tombol di Bawah ini untuk Deploy di Heroku</h3>
-<p align="center"><a href="https://heroku.com/deploy?template=https://github.com/mrismanaziz/Man-Userbot/tree/Man-Userbot"><img src="https://www.herokucdn.com/deploy/button.png" alt="Deploy to Heroku"/></a></p>
+<p align="center"><a href="https://dashboard.heroku.com/new?template=https://github.com/SharingUserbot/Man-Userbot"><img src="https://www.herokucdn.com/deploy/button.png" alt="Deploy to Heroku"/></a></p>
 
 ## Updates dan support
 
-Follow [Channel](https://t.me/Lunatic0de) saya untuk info Update bot dan Gabung Group [@SharingUserbot](https://t.me/SharingUserbot) untuk untuk diskusi, pelaporan bug, dan bantuan tentang Man-Userbot.
+Follow Channel [@Lunatic0de](https://t.me/Lunatic0de) untuk info Update bot dan Gabung Group [@SharingUserbot](https://t.me/SharingUserbot) untuk untuk diskusi, pelaporan bug, dan bantuan tentang Man-Userbot.
 
 ## Credits
 Thanks For all :
