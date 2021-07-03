@@ -135,15 +135,15 @@ async def apk(e):
             .img["data-src"]
         )
         app_details = "<a href='" + app_icon + "'>📲&#8203;</a>"
-        app_details += " <b>" + app_name + "</b>"
+        app_details += "<b>" + app_name + "</b>"
         app_details += (
-            "\n\n<code>Developer :</code> <a href='"
+            "\n\n<b>Developer :</b> <a href='"
             + app_dev_link
             + "'>"
             + app_dev
             + "</a>"
         )
-        app_details += "\n<code>Rating :</code> " + app_rating.replace(
+        app_details += "\n<b>Rating :</b> " + app_rating.replace(
             "Rated ", "⭐ "
         ).replace(" out of ", "/").replace(" stars", "", 1).replace(
             " stars", "⭐ "
@@ -151,21 +151,21 @@ async def apk(e):
             "five", "5"
         )
         app_details += (
-            "\n<code>Features :</code> <a href='"
+            "\n<b>Features :</b> <a href='"
             + app_link
             + "'>View in Play Store</a>"
         )
-        app_details += "\n\n===> @heyw𝖔rld <==="
+        app_details += "\n\n===> Support @Lunatic0de <==="
         await e.edit(app_details, link_preview=True, parse_mode="HTML")
     except IndexError:
         await e.edit(
-            "Pencarian tidak ditemukan. Mohon masukkan **Nama app yang valid**"
+            "**Pencarian tidak ditemukan. Mohon masukkan** `Nama app yang valid`"
         )
     except Exception as err:
         await e.edit("Exception Occured:- " + str(err))
 
 
-@register(outgoing=True, pattern=r"^\.undlt(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.undelete(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -177,7 +177,7 @@ async def _(event):
         for i in a:
             await event.reply(i.original.action.message)
     else:
-        await event.edit("Memerlukan izin Admin untuk melakukan perintah ini")
+        await event.edit("**Memerlukan izin Admin untuk melakukan perintah ini**")
         await asyncio.sleep(3)
         await event.delete()
 
@@ -299,7 +299,7 @@ async def _(event):
             if "y" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
                     e.append(str(e))
                     break
                 else:
@@ -309,7 +309,7 @@ async def _(event):
             if "m" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
                     e.append(str(e))
                     break
                 else:
@@ -319,7 +319,7 @@ async def _(event):
             if "w" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
                     e.append(str(e))
                     break
                 else:
@@ -329,7 +329,7 @@ async def _(event):
             if "o" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
                     e.append(str(e))
                     break
                 else:
@@ -339,7 +339,7 @@ async def _(event):
             if "q" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
                     e.append(str(e))
                     break
                 else:
@@ -349,7 +349,7 @@ async def _(event):
             if "r" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
                     e.append(str(e))
                     break
                 else:
@@ -359,7 +359,7 @@ async def _(event):
             if "b" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
                     e.append(str(e))
                     break
                 else:
@@ -369,7 +369,7 @@ async def _(event):
             if "d" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("I need admin priveleges to perform this action!")
+                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
                     e.append(str(e))
                 else:
                     c += 1
@@ -450,7 +450,7 @@ async def _(event):
             os.remove(downloaded_file_name)
             ms_two = (end_two - end).seconds
             await event.edit(
-                "Downloaded in {} seconds. Uploaded in {} seconds.".format(
+                "**Downloaded in** `{}` **seconds. Uploaded in** `{}` **seconds**".format(
                     ms_one, ms_two
                 )
             )
@@ -458,7 +458,7 @@ async def _(event):
             await event.edit("File Not Found {}".format(input_str))
     else:
         await event.edit(
-            "Syntax // .rnupload filename.extension as reply to a Telegram media"
+            "Syntax // .rnupload filename.extension <reply ke media>"
         )
 
 
@@ -482,16 +482,16 @@ async def potocmd(event):
         try:
             id = int(id)
             if id <= 0:
-                await event.edit("`Nomer ID Yang Anda Masukkan Tidak Valid`")
+                await event.edit("**Nomer ID Yang Anda Masukkan Tidak Valid**")
                 return
         except BaseException:
-            await event.edit("`Lmao`")
+            await event.edit("**Lmao**")
             return
         if int(id) <= (len(photos)):
             send_photos = await event.client.download_media(photos[id - 1])
             await bot.send_file(event.chat_id, send_photos)
         else:
-            await event.edit("`Tidak Dapat Menemukan Foto Pengguna Ini`")
+            await event.edit("**Tidak Dapat Menemukan Foto Pengguna Ini**")
             return
 
 
@@ -500,11 +500,11 @@ async def _(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.edit("```Mohon Balas Ke Link.```")
+        await event.edit("**Mohon Balas Ke Link.**")
         return
     reply_message = await event.get_reply_message()
     if not reply_message.text:
-        await event.edit("```Mohon Balas Ke Link.```")
+        await event.edit("**Mohon Balas Ke Link.**")
         return
     chat = "@CheckRestrictionsBot"
     reply_message.sender
@@ -517,10 +517,10 @@ async def _(event):
             await event.client.forward_messages(chat, reply_message)
             response = await response
         except YouBlockedUserError:
-            await event.reply("`Mohon Jangan Memblokir` @CheckRestrictionsBot")
+            await event.reply("**Mohon Jangan Memblokir** @CheckRestrictionsBot")
             return
         if response.text.startswith(""):
-            await event.edit("`Terjadi Kesalahan`")
+            await event.edit("**Terjadi Error**")
         else:
             await event.delete()
             await event.client.send_message(event.chat_id, response.message)
@@ -657,7 +657,7 @@ async def weebify(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await event.edit("`Teks Apa Yang Harus Saya Weebify Kan?`")
+        await event.edit("**Teks Apa Yang Harus Saya Weebify Kan?**")
         return
     string = " ".join(args).lower()
     for normiecharacter in string:
@@ -705,7 +705,7 @@ async def thicc(bolded):
         get = await bolded.get_reply_message()
         args = get.text
     if not args:
-        await bolded.edit("`Teks Apa Yang Harus Saya Bold Kan?`")
+        await bolded.edit("**Teks Apa Yang Harus Saya Bold Kan?**")
         return
     string = "".join(args).lower()
     for normiecharacter in string:
@@ -753,7 +753,7 @@ async def mediv(medievalx):
         get = await medievalx.get_reply_message()
         args = get.text
     if not args:
-        await medievalx.edit("`Teks Apa Yang Harus Saya Medibold Kan?`")
+        await medievalx.edit("**Teks Apa Yang Harus Saya Medibold Kan?**")
         return
     string = "".join(args).lower()
     for normiecharacter in string:
@@ -801,7 +801,7 @@ async def doublex(doublestrucktx):
         get = await doublestrucktx.get_reply_message()
         args = get.text
     if not args:
-        await doublestrucktx.edit("`Teks Apa Yang Harus Saya Double Struck Kan?`")
+        await doublestrucktx.edit("**Teks Apa Yang Harus Saya Double Struck Kan?**")
         return
     string = "".join(args).lower()
     for normiecharacter in string:
@@ -849,7 +849,7 @@ async def cursive2(cursivebolded):
         get = await cursivebolded.get_reply_message()
         args = get.text
     if not args:
-        await cursivebolded.edit("`Teks Apa Yang Harus Saya Cursive Bold Kan?`")
+        await cursivebolded.edit("**Teks Apa Yang Harus Saya Cursive Bold Kan?**")
         return
     string = "".join(args).lower()
     for normiecharacter in string:
@@ -897,7 +897,7 @@ async def medival22(medivallite):
         get = await medivallite.get_reply_message()
         args = get.text
     if not args:
-        await medivallite.edit("`Teks Apa Yang Harus Saya Medival Kan?`")
+        await medivallite.edit("****Teks Apa Yang Harus Saya Medival Kan?****")
         return
     string = "".join(args).lower()
     for normiecharacter in string:
@@ -945,7 +945,7 @@ async def xcursive(cursivelite):
         get = await cursivelite.get_reply_message()
         args = get.text
     if not args:
-        await cursivelite.edit("`Teks Apa Yang Harus Saya Cursive Kan?`")
+        await cursivelite.edit("**Teks Apa Yang Harus Saya Cursive Kan?**")
         return
     string = "".join(args).lower()
     for normiecharacter in string:

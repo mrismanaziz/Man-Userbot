@@ -9,8 +9,6 @@
 #
 """ Userbot module containing commands for keeping costum global notes. """
 
-from sqlalchemy.orm.exc import UnmappedInstanceError
-
 from userbot import BOTLOG_CHATID, CMD_HELP
 from userbot.events import register
 
@@ -81,14 +79,10 @@ async def on_snip_save(event):
     success = (
         "**Costum {} disimpan. Gunakan** `.{}` **di mana saja untuk menggunakannya**"
     )
-    try:
-        if (
-            add_snip(keyword, string, msg_id) is False
-            or add_snip(keyword, string, msg_id) is not False
-        ):
-            await event.edit(success.format("Berhasil", keyword))
-    except UnmappedInstanceError:
-        return await event.edit(f"**ERROR: Costum** `{keyword}` **Sudah ada.**")
+    if add_snip(keyword, string, msg_id) is False:
+        await event.edit(success.format("Berhasil", keyword))
+    else:
+        await event.edit(success.format("Berhasil", keyword))
 
 
 @register(outgoing=True, pattern=r"^\.costums$")

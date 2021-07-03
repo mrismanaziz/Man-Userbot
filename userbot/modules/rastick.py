@@ -33,7 +33,7 @@ async def rastick(animu):
         if animu.is_reply:
             text = (await animu.get_reply_message()).message
         else:
-            await animu.answer("`No text given, hence no stickers.`")
+            await animu.answer("**Tidak ada teks yang diberikan.**")
             return
     animus = [
         1,

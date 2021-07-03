@@ -70,11 +70,11 @@ async def quotess(qotli):
                 await bot.send_read_acknowledge(conv.chat_id)
             except YouBlockedUserError:
                 return await qotli.reply(
-                    "```Harap Jangan Blockir @QuotLyBot Buka Blokir Lalu Coba Lagi```"
+                    "**Harap Jangan Blockir** @QuotLyBot **Buka Blokir Lalu Coba Lagi**"
                 )
             if response.text.startswith("Hi!"):
                 await qotli.edit(
-                    "```Mohon Menonaktifkan Pengaturan Privasi Forward Anda```"
+                    "**Mohon Menonaktifkan Pengaturan Privasi Forward Anda**"
                 )
             else:
                 await qotli.delete()
@@ -109,7 +109,7 @@ async def quote_search(event):
     if result:
         await event.edit(result.replace("<code>", "`").replace("</code>", "`"))
     else:
-        await event.edit("`Tidak Ada Hasil Yang Ditemukan`")
+        await event.edit("**Tidak Ada Hasil Yang Ditemukan**")
 
 
 CMD_HELP.update(

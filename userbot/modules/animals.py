@@ -28,7 +28,7 @@ async def shibe(event):
     await event.edit("`Processing...`")
     response = requests.get("https://shibe.online/api/shibes").json()
     if not response:
-        await event.edit("`Tidak bisa menemukan Anjing.`")
+        await event.edit("**Tidak bisa menemukan Anjing.**")
         return
     await event.client.send_message(entity=event.chat_id, file=response[0])
     await event.delete()
@@ -39,7 +39,7 @@ async def cats(event):
     await event.edit("`Processing...`")
     response = requests.get("https://shibe.online/api/cats").json()
     if not response:
-        await event.edit("`Tidak bisa menemukan kucing.`")
+        await event.edit("**Tidak bisa menemukan kucing.**")
         return
     await event.client.send_message(entity=event.chat_id, file=response[0])
     await event.delete()

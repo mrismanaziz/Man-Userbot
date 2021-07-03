@@ -1,3 +1,4 @@
+# Copyright by @danish
 # Recode by @mrismanaziz
 # @SharingUserbot
 
@@ -17,7 +18,7 @@ from userbot.utils import progress
 async def frg(animu):
     text = animu.pattern_match.group(1)
     if not text:
-        await animumedit("`Silahkan Masukan Kata!`")
+        await animumedit("**Silahkan Masukan Kata!**")
     else:
         sticcers = await bot.inline_query("honka_says_bot", f"{text}.")
     try:

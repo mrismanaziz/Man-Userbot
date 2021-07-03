@@ -48,7 +48,7 @@ async def gethash(hash_q):
             hash_q.chat_id,
             "hashes.txt",
             reply_to=hash_q.id,
-            caption="`It's too big, sending a text file instead. `",
+            caption="**It's too big, sending a text file instead.**",
         )
         runapp(["rm", "hashes.txt"], stdout=PIPE)
     else:
@@ -62,14 +62,14 @@ async def endecrypt(query):
         lething = str(pybase64.b64encode(bytes(query.pattern_match.group(2), "utf-8")))[
             2:
         ]
-        await query.reply("Encoded: `" + lething[:-1] + "`")
+        await query.reply("**Encoded:** `" + lething[:-1] + "`")
     else:
         lething = str(
             pybase64.b64decode(
                 bytes(query.pattern_match.group(2), "utf-8"), validate=True
             )
         )[2:]
-        await query.reply("Decoded: `" + lething[:-1] + "`")
+        await query.reply("**Decoded:** `" + lething[:-1] + "`")
 
 
 CMD_HELP.update(

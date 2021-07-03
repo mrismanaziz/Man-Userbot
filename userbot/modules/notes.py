@@ -17,12 +17,12 @@ async def notes_active(svd):
     try:
         from userbot.modules.sql_helper.notes_sql import get_notes
     except AttributeError:
-        return await svd.edit("`Running on Non-SQL mode!`")
-    message = "`There are no saved notes in this chat`"
+        return await svd.edit("**Running on Non-SQL mode!**")
+    message = "**Tidak ada catatan yang disimpan dalam obrolan ini**"
     notes = get_notes(svd.chat_id)
     for note in notes:
-        if message == "`There are no saved notes in this chat`":
-            message = "Notes saved in this chat:\n"
+        if message == "**Tidak ada catatan yang disimpan dalam obrolan ini**":
+            message = "**Catatan yang disimpan dalam obrolan ini:**\n"
         message += "`#{}`\n".format(note.keyword)
     await svd.edit(message)
 
@@ -33,12 +33,12 @@ async def remove_notes(clr):
     try:
         from userbot.modules.sql_helper.notes_sql import rm_note
     except AttributeError:
-        return await clr.edit("`Running on Non-SQL mode!`")
+        return await clr.edit("**Running on Non-SQL mode!**")
     notename = clr.pattern_match.group(1)
     if rm_note(clr.chat_id, notename) is False:
-        return await clr.edit("`Couldn't find note:` **{}**".format(notename))
+        return await clr.edit("**Tidak dapat menemukan catatan:** `{}`".format(notename))
     else:
-        return await clr.edit("`Successfully deleted note:` **{}**".format(notename))
+        return await clr.edit("**Berhasil Menghapus Catatan:** `{}`".format(notename))
 
 
 @register(outgoing=True, pattern=r"^\.save (\w*)")
@@ -47,7 +47,7 @@ async def add_note(fltr):
     try:
         from userbot.modules.sql_helper.notes_sql import add_note
     except AttributeError:
-        return await fltr.edit("`Running on Non-SQL mode!`")
+        return await fltr.edit("**Running on Non-SQL mode!**")
     keyword = fltr.pattern_match.group(1)
     string = fltr.text.partition(keyword)[2]
     msg = await fltr.get_reply_message()
@@ -57,7 +57,7 @@ async def add_note(fltr):
             await fltr.client.send_message(
                 BOTLOG_CHATID,
                 f"#NOTE\nCHAT ID: {fltr.chat_id}\nKEYWORD: {keyword}"
-                "\n\nThe following message is saved as the note's reply data for the chat, please do NOT delete it !!",
+                "\n\nPesan berikut disimpan sebagai data balasan catatan untuk obrolan, mohon JANGAN dihapus !!",
             )
             msg_o = await fltr.client.forward_messages(
                 entity=BOTLOG_CHATID, messages=msg, from_peer=fltr.chat_id, silent=True
@@ -65,16 +65,16 @@ async def add_note(fltr):
             msg_id = msg_o.id
         else:
             return await fltr.edit(
-                "`Saving media as data for the note requires the BOTLOG_CHATID to be set.`"
+                "**Menyimpan media sebagai data untuk catatan memerlukan BOTLOG_CHATID untuk disetel.**"
             )
     elif fltr.reply_to_msg_id and not string:
         rep_msg = await fltr.get_reply_message()
         string = rep_msg.text
-    success = "`Note {} successfully. Use` #{} `to get it`"
+    success = "**Catatan {} disimpan. Gunakan** `#{}` **untuk mengambilnya**"
     if add_note(str(fltr.chat_id), keyword, string, msg_id) is False:
-        return await fltr.edit(success.format("updated", keyword))
+        return await fltr.edit(success.format("Berhasil", keyword))
     else:
-        return await fltr.edit(success.format("added", keyword))
+        return await fltr.edit(success.format("Berhasil", keyword))
 
 
 @register(pattern=r"#\w*", disable_edited=True, disable_errors=True, ignore_unsafe=True)
@@ -110,7 +110,7 @@ async def incom_note(getnt):
         pass
 
 
-@register(outgoing=True, pattern="^.rmbotnotes (.*)")
+@register(outgoing=True, pattern=r"^\.rmbotnotes (.*)")
 async def kick_marie_notes(kick):
     """ For .rmbotnotes command, allows you to kick all \
         Marie(or her clones) notes from a chat. """

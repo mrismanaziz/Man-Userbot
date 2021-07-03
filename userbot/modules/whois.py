@@ -29,13 +29,13 @@ async def who(event):
     replied_user = await get_user(event)
     if replied_user is None:
         return await event.edit(
-            "`itu admin anonim, selamat mencoba cari tahu yang mana!`"
+            "**itu admin anonim, selamat mencoba cari tahu yang mana!**"
         )
 
     try:
         photo, caption = await fetch_info(replied_user, event)
     except AttributeError:
-        return await event.edit("`Saya Tidak Mendapatkan Informasi Apapun.`")
+        return await event.edit("**Saya Tidak Mendapatkan Informasi Apapun.**")
 
     message_id_to_reply = event.message.reply_to_msg_id
 

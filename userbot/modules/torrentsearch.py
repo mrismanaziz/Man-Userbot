@@ -40,7 +40,7 @@ async def gengkapak(e):
             break
 
     if not listdata:
-        return await e.edit("`Error: No results found`")
+        return await e.edit("**Error:** `No results found`")
 
     tsfileloc = f"{TEMP_DOWNLOAD_DIRECTORY}/{query}.txt"
     with open(tsfileloc, "w+", encoding="utf8") as out_file:
@@ -55,7 +55,7 @@ async def gengkapak(e):
     )
     url = f"https://nekobin.com/raw/{key}"
     caption = (
-        f"`Here the results for the query: {query}`\n\nPasted to: [Nekobin]({url})"
+        f"**Here the results for the query:** `{query}`\n\nPasted to: [Nekobin]({url})"
     )
     os.remove(tsfileloc)
     await e.edit(caption, link_preview=False)

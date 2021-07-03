@@ -1,6 +1,11 @@
+# by:koala @mixiologist
+# Lord Userbot
+
+from telethon.events import ChatAction
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import MessageEntityMentionName
 
+from userbot import ALIVE_NAME, DEVS, bot
 from userbot.events import register
 
 
@@ -18,7 +23,7 @@ async def get_full_user(event):
         if user.isnumeric():
             user = int(user)
         if not user:
-            await event.edit("`User ID Is Required")
+            await event.edit("`Ini Tidak Mungkin Tanpa ID Pengguna`")
             return
         if event.message.entities is not None:
             probable_user_mention_entity = event.message.entities[0]
@@ -29,11 +34,13 @@ async def get_full_user(event):
         try:
             user_obj = await event.client.get_entity(user)
         except Exception as err:
-            return await event.edit("Something Went Wrong", str(err))
+            return await event.edit(
+                "`Terjadi Kesalahan... Mohon Lapor Ke ` @mrismanaziz", str(err)
+            )
     return user_obj, extra
 
 
-async def get_user_sender_id(user, event):
+async def get_user_from_id(user, event):
     if isinstance(user, str):
         user = int(user)
     try:
@@ -44,17 +51,51 @@ async def get_user_sender_id(user, event):
     return user_obj
 
 
+# Ported For Lord-Userbot by liualvinas/Alvin
+
+
+@bot.on(ChatAction)
+async def handler(tele):
+    if not tele.user_joined and not tele.user_added:
+        return
+    try:
+        from userbot.modules.sql_helper.gmute_sql import is_gmuted
+
+        guser = await tele.get_user()
+        gmuted = is_gmuted(guser.id)
+    except BaseException:
+        return
+    if gmuted:
+        for i in gmuted:
+            if i.sender == str(guser.id):
+                chat = await tele.get_chat()
+                admin = chat.admin_rights
+                creator = chat.creator
+                if admin or creator:
+                    try:
+                        await client.edit_permissions(
+                            tele.chat_id, guser.id, view_messages=False
+                        )
+                        await tele.reply(
+                            f"**Gbanned Spoted** \n"
+                            f"**First Name :** [{guser.id}](tg://user?id={guser.id})\n"
+                            f"**Action :** `Banned`"
+                        )
+                    except BaseException:
+                        return
+
+
 @register(outgoing=True, pattern=r"^\.gband(?: |$)(.*)")
-async def gspider(userbot):
-    lol = userbot
-    sender = await lol.get_sender()
-    me = await lol.client.get_me()
+async def gben(userbot):
+    dc = userbot
+    sender = await dc.get_sender()
+    me = await dc.client.get_me()
     if sender.id != me.id:
-        friday = await lol.reply("`Gbanning...`")
+        dark = await dc.reply("`Gbanning...`")
     else:
-        friday = await lol.edit("`Gbanning......`")
+        dark = await dc.edit("`Memproses Global Banned Jamet..`")
     me = await userbot.client.get_me()
-    await friday.edit(f"`Global Banned user...`")
+    await dark.edit(f"`Global Banned Akan Segera Aktif..`")
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     f"@{me.username}" if me.username else my_mention
     await userbot.get_chat()
@@ -72,11 +113,11 @@ async def gspider(userbot):
         if not reason:
             reason = "Private"
     except BaseException:
-        return await friday.edit(f"**Terjadi Kesalahan!!**")
+        return await dark.edit(f"**Gagal Global Banned :(**")
     if user:
-        if user.id == 844432220:
-            return await friday.edit(
-                f"**Didn't , Your Father Teach You ? That You Cant Gban your creator🖕**"
+        if user.id in DEVS:
+            return await dark.edit(
+                f"**Gagal Global Banned, Dia Adalah Pembuat Saya 🤪**"
             )
         try:
             from userbot.modules.sql_helper.gmute_sql import gmute
@@ -95,32 +136,42 @@ async def gspider(userbot):
             try:
                 await userbot.client.edit_permissions(i, user, view_messages=False)
                 a += 1
-                await friday.edit(f"`Gbanned Total Affected Chats : {a}`")
+                await dark.edit(
+                    r"\\**#GBanned_User**//"
+                    f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
+                    f"**User ID:** `{user.id}`\n"
+                    f"**Action:** `Global Banned`"
+                )
             except BaseException:
                 b += 1
     else:
-        await friday.edit(f"`Reply to a user !!`")
+        await dark.edit(f"**Balas Ke Pesan Penggunanya Goblok**")
     try:
         if gmute(user.id) is False:
-            return await friday.edit(f"`Error! User telah di gbanned.`")
+            return await dark.edit(
+                f"**#Already_GBanned**\n\nUser Already Exists in My Gban List.**"
+            )
     except BaseException:
         pass
-    return await friday.edit(
-        f"`Gbanned` [{user.first_name}](tg://user?id={user.id}) `in {a} chats.\nAdded to gbanwatch.`"
+    return await dark.edit(
+        r"\\**#GBanned_User**//"
+        f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
+        f"**User ID:** `{user.id}`\n"
+        f"**Action:** `Global Banned by {ALIVE_NAME}`"
     )
 
 
 @register(outgoing=True, pattern=r"^\.ungband(?: |$)(.*)")
-async def gspider(userbot):
-    lol = userbot
-    sender = await lol.get_sender()
-    me = await lol.client.get_me()
+async def gunben(userbot):
+    dc = userbot
+    sender = await dc.get_sender()
+    me = await dc.client.get_me()
     if sender.id != me.id:
-        friday = await lol.reply("`UnGbanning...`")
+        dark = await dc.reply("`Ungbanning...`")
     else:
-        friday = await lol.edit("`UnGbanning....`")
+        dark = await dc.edit("`Ungbanning....`")
     me = await userbot.client.get_me()
-    await friday.edit(f"`Trying To Ungban User !`")
+    await dark.edit(f"`Membatalkan Perintah Global Banned`")
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     f"@{me.username}" if me.username else my_mention
     await userbot.get_chat()
@@ -138,11 +189,11 @@ async def gspider(userbot):
         if not reason:
             reason = "Private"
     except BaseException:
-        return await friday.edit("`Terjadi Kesalahan!!`")
+        return await dark.edit("**Gagal Ungbanned :(**")
     if user:
-        if user.id == 844432220:
-            return await friday.edit(
-                "`You Cant gban him... as a result you can not ungban him... He is My Creator!`"
+        if user.id in DEVS:
+            return await dark.edit(
+                "**Man Tidak Bisa Terkena Perintah Ini, Karna Dia Pembuat saya**"
             )
         try:
             from userbot.modules.sql_helper.gmute_sql import ungmute
@@ -161,16 +212,19 @@ async def gspider(userbot):
             try:
                 await userbot.client.edit_permissions(i, user, send_messages=True)
                 a += 1
-                await friday.edit(f"`UnGbanning... AFFECTED CHATS - {a} `")
+                await dark.edit(f"`Membatalkan Global Banned...`")
             except BaseException:
                 b += 1
     else:
-        await friday.edit("`Reply to a user !!`")
+        await dark.edit("`Balas Ke Pesan Penggunanya Goblok`")
     try:
         if ungmute(user.id) is False:
-            return await friday.edit("`Error! User probably already ungbanned.`")
+            return await dark.edit("**Error! Pengguna Sedang Tidak Di Global Banned.**")
     except BaseException:
         pass
-    return await friday.edit(
-        f"`Ungbanned` [{user.first_name}](tg://user?id={user.id}) `in {a} chats.\nRemoved from gbanwatch.`"
+    return await dark.edit(
+        r"\\**#UnGbanned_User**//"
+        f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
+        f"**User ID:** `{user.id}`\n"
+        f"**Action:** `UnGBanned by {ALIVE_NAME}`"
     )

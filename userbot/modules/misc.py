@@ -113,11 +113,10 @@ async def reedme(e):
     await e.edit(
         "**Berikut sesuatu untuk kamu baca:**\n"
         "\n✣ [Userbot Repo](https://github.com/mrismanaziz/Man-Userbot/blob/Man-Userbot/README.md)"
-        "\n✣ [Setup Guide - Basic](https://telegra.ph/How-to-host-a-Telegram-Userbot-11-02)"
+        "\n✣ [Video Tutorial](https://youtu.be/tTDaPKsGC1I)"
+        "\n✣ [Setup Guide - Basic](https://mrismanaziz.medium.com/cara-memasang-userbot-telegram-repo-man-userbot-deploy-di-heroku-c56d1f8b5537)"
         "\n✣ [Setup Guide - Google Drive](https://telegra.ph/How-To-Setup-GDrive-11-02)"
         "\n✣ [Setup Guide - LastFM Module](https://telegra.ph/How-to-set-up-LastFM-module-for-Paperplane-userbot-11-02)"
-        "\n✣ [Video Tutorial - 576p](https://mega.nz/#!ErwCESbJ!1ZvYAKdTEfb6y1FnqqiLhHH9vZg4UB2QZNYL9fbQ9vs)"
-        "\n✣ [Video Tutorial - 1080p](https://mega.nz/#!x3JVhYwR!u7Uj0nvD8_CyyARrdKrFqlZEBFTnSVEiqts36HBMr-o)"
         "\n✣ [Special - Note](https://telegra.ph/Special-Note-11-02)"
     )
 
@@ -316,7 +315,7 @@ async def send(event):
     message = await event.get_reply_message()
 
     await event.client.send_message(entity=chat, message=message)
-    await event.edit(f"**Berhasil Mengirim pesan ini ke** `{chat.title}``")
+    await event.edit(f"**Berhasil Mengirim pesan ini ke** `{chat.title}`")
 
 
 CMD_HELP.update(
