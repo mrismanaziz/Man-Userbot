@@ -36,7 +36,9 @@ async def remove_notes(clr):
         return await clr.edit("**Running on Non-SQL mode!**")
     notename = clr.pattern_match.group(1)
     if rm_note(clr.chat_id, notename) is False:
-        return await clr.edit("**Tidak dapat menemukan catatan:** `{}`".format(notename))
+        return await clr.edit(
+            "**Tidak dapat menemukan catatan:** `{}`".format(notename)
+        )
     else:
         return await clr.edit("**Berhasil Menghapus Catatan:** `{}`".format(notename))
 

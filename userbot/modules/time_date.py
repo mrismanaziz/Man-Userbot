@@ -94,7 +94,9 @@ async def time_func(tdata):
     dtnow = dt.now(tz(time_zone)).strftime(t_form)
 
     if c_name != COUNTRY:
-        await tdata.edit(f"**Sekarang Jam**  `{dtnow}`  **di {c_name}({time_zone} timezone).**")
+        await tdata.edit(
+            f"**Sekarang Jam**  `{dtnow}`  **di {c_name}({time_zone} timezone).**"
+        )
         return
 
     elif COUNTRY:
@@ -128,7 +130,9 @@ async def date_func(dat):
         tz_num = TZ_NUMBER
         timezones = await get_tz(COUNTRY)
     else:
-        await dat.edit(f"**Sekarang Tanggal**  `{dt.now().strftime(d_form)}`  **disini.**")
+        await dat.edit(
+            f"**Sekarang Tanggal**  `{dt.now().strftime(d_form)}`  **disini.**"
+        )
         return
 
     if not timezones:
@@ -157,12 +161,15 @@ async def date_func(dat):
     dtnow = dt.now(tz(time_zone)).strftime(d_form)
 
     if c_name != COUNTRY:
-        await dat.edit(f"**Sekarang Tanggal**  `{dtnow}`  **di {c_name}({time_zone} timezone).**")
+        await dat.edit(
+            f"**Sekarang Tanggal**  `{dtnow}`  **di {c_name}({time_zone} timezone).**"
+        )
         return
 
     elif COUNTRY:
         await dat.edit(
-            f"**Sekarang Tanggal**  `{dtnow}`  **di {COUNTRY}" f"({time_zone} timezone).**"
+            f"**Sekarang Tanggal**  `{dtnow}`  **di {COUNTRY}"
+            f"({time_zone} timezone).**"
         )
         return
 

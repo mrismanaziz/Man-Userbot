@@ -137,11 +137,7 @@ async def apk(e):
         app_details = "<a href='" + app_icon + "'>📲&#8203;</a>"
         app_details += "<b>" + app_name + "</b>"
         app_details += (
-            "\n\n<b>Developer :</b> <a href='"
-            + app_dev_link
-            + "'>"
-            + app_dev
-            + "</a>"
+            "\n\n<b>Developer :</b> <a href='" + app_dev_link + "'>" + app_dev + "</a>"
         )
         app_details += "\n<b>Rating :</b> " + app_rating.replace(
             "Rated ", "⭐ "
@@ -151,9 +147,7 @@ async def apk(e):
             "five", "5"
         )
         app_details += (
-            "\n<b>Features :</b> <a href='"
-            + app_link
-            + "'>View in Play Store</a>"
+            "\n<b>Features :</b> <a href='" + app_link + "'>View in Play Store</a>"
         )
         app_details += "\n\n===> Support @Lunatic0de <==="
         await e.edit(app_details, link_preview=True, parse_mode="HTML")
@@ -299,7 +293,9 @@ async def _(event):
             if "y" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
+                    await event.edit(
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    )
                     e.append(str(e))
                     break
                 else:
@@ -309,7 +305,9 @@ async def _(event):
             if "m" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
+                    await event.edit(
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    )
                     e.append(str(e))
                     break
                 else:
@@ -319,7 +317,9 @@ async def _(event):
             if "w" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
+                    await event.edit(
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    )
                     e.append(str(e))
                     break
                 else:
@@ -329,7 +329,9 @@ async def _(event):
             if "o" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
+                    await event.edit(
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    )
                     e.append(str(e))
                     break
                 else:
@@ -339,7 +341,9 @@ async def _(event):
             if "q" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
+                    await event.edit(
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    )
                     e.append(str(e))
                     break
                 else:
@@ -349,7 +353,9 @@ async def _(event):
             if "r" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
+                    await event.edit(
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    )
                     e.append(str(e))
                     break
                 else:
@@ -359,7 +365,9 @@ async def _(event):
             if "b" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
+                    await event.edit(
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    )
                     e.append(str(e))
                     break
                 else:
@@ -369,7 +377,9 @@ async def _(event):
             if "d" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await event.edit("**Saya memerlukan hak admin untuk melakukan tindakan ini!**")
+                    await event.edit(
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    )
                     e.append(str(e))
                 else:
                     c += 1
@@ -457,9 +467,7 @@ async def _(event):
         else:
             await event.edit("File Not Found {}".format(input_str))
     else:
-        await event.edit(
-            "Syntax // .rnupload filename.extension <reply ke media>"
-        )
+        await event.edit("Syntax // .rnupload filename.extension <reply ke media>")
 
 
 @register(outgoing=True, pattern=r"^\.grab(?: |$)(.*)")

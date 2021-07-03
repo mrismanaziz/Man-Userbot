@@ -19,9 +19,7 @@ async def _(event):
         return
     d_link = event.pattern_match.group(1)
     if ".com" not in d_link:
-        await event.edit(
-            "**Berikan Link Video Tiktok Untuk Download Video Tiktok**"
-        )
+        await event.edit("**Berikan Link Video Tiktok Untuk Download Video Tiktok**")
     else:
         await event.edit("```Video Sedang Diproses.....```")
     chat = "@ttsavebot"
