@@ -5,42 +5,60 @@ from sqlalchemy.exc import IntegrityError
 from userbot import CMD_HELP, bot
 from userbot.events import register
 
+fban_replies = [
+    "New FedBan",
+    "Starting a federation ban",
+    "Start a federation ban",
+    "FedBan Reason update",
+    "FedBan reason updated",
+    "has already been fbanned, with the exact same reason.",
+]
 
-@register(outgoing=True, disable_edited=True, pattern=r"^\.fban(?: |$)(.*)")
+unfban_replies = ["New un-FedBan", "I'll give", "Un-FedBan"]
+
+
+@register(outgoing=True, disable_edited=True, pattern=r"^\.(d)?fban(?: |$)(.*)")
 async def fban(event):
     """Bans a user from connected federations."""
     try:
         from userbot.modules.sql_helper.fban_sql import get_flist
     except IntegrityError:
-        return await event.edit("`Running on Non-SQL mode!`")
+        return await event.edit("**Running on Non-SQL mode!**")
+
+    match = event.pattern_match.group(2)
 
     if event.is_reply:
         reply_msg = await event.get_reply_message()
         fban_id = reply_msg.sender_id
-        reason = event.pattern_match.group(1)
+
+        if event.pattern_match.group(1) == "d":
+            await reply_msg.delete()
+
+        reason = match
     else:
-        pattern = str(event.pattern_match.group(1)).split()
+        pattern = match.split()
         fban_id = pattern[0]
         reason = " ".join(pattern[1:])
 
     try:
         fban_id = await event.client.get_peer_id(fban_id)
-    except BaseException:
+    except Exception:
         pass
 
     if event.sender_id == fban_id:
         return await event.edit(
-            "`Error: Tindakan ini telah dicegah oleh protokol keamanan diri Man-UserBot.`"
+            "**Error: Tindakan ini telah dicegah oleh protokol keamanan diri Man-UserBot.**"
         )
 
-    if len((fed_list := get_flist())) == 0:
-        return await event.edit("`Anda belum terhubung ke federasi mana pun!`")
+    fed_list = get_flist()
+    if len(fed_list) == 0:
+        return await event.edit("**Anda belum terhubung ke federasi mana pun!**")
 
     user_link = f"[{fban_id}](tg://user?id={fban_id})"
 
-    await event.edit(f"`Fbanning` {user_link}...")
+    await event.edit(f"**Fbanning** {user_link}...")
     failed = []
-    total = int(0)
+    total = 0
 
     for i in fed_list:
         total += 1
@@ -53,14 +71,9 @@ async def fban(event):
                     conv.chat_id, message=reply, clear_mentions=True
                 )
 
-                if (
-                    ("New FedBan" not in reply.text)
-                    and ("Starting a federation ban" not in reply.text)
-                    and ("Start a federation ban" not in reply.text)
-                    and ("FedBan reason updated" not in reply.text)
-                ):
+                if not any(i in reply.text for i in fban_replies):
                     failed.append(i.fed_name)
-        except BaseException:
+        except Exception:
             failed.append(i.fed_name)
 
     reason = reason if reason else "Not specified."
@@ -68,7 +81,7 @@ async def fban(event):
     if failed:
         status = f"Failed to fban in {len(failed)}/{total} feds.\n"
         for i in failed:
-            status += "• " + i + "\n"
+            status += f"• {i}\n"
     else:
         status = f"Success! Fbanned in {total} feds."
 
@@ -83,14 +96,14 @@ async def unfban(event):
     try:
         from userbot.modules.sql_helper.fban_sql import get_flist
     except IntegrityError:
-        return await event.edit("`Running on Non-SQL mode!`")
+        return await event.edit("**Running on Non-SQL mode!**")
 
+    match = event.pattern_match.group(1)
     if event.is_reply:
-        reply_msg = await event.get_reply_message()
-        unfban_id = reply_msg.sender_id
-        reason = event.pattern_match.group(1)
+        unfban_id = (await event.get_reply_message()).sender_id
+        reason = match
     else:
-        pattern = str(event.pattern_match.group(1)).split()
+        pattern = match.split()
         unfban_id = pattern[0]
         reason = " ".join(pattern[1:])
 
@@ -100,16 +113,17 @@ async def unfban(event):
         pass
 
     if event.sender_id == unfban_id:
-        return await event.edit("`Tunggu itu ilegal`")
+        return await event.edit("**Tunggu, itu illegal**")
 
-    if len((fed_list := get_flist())) == 0:
-        return await event.edit("`Anda belum terhubung ke federasi mana pun!`")
+    fed_list = get_flist()
+    if len(fed_list) == 0:
+        return await event.edit("**Anda belum terhubung ke federasi mana pun!**")
 
     user_link = f"[{unfban_id}](tg://user?id={unfban_id})"
 
-    await event.edit(f"`Un-fbanning `{user_link}`...`")
+    await event.edit(f"**Un-fbanning **{user_link}**...**")
     failed = []
-    total = int(0)
+    total = 0
 
     for i in fed_list:
         total += 1
@@ -122,13 +136,9 @@ async def unfban(event):
                     conv.chat_id, message=reply, clear_mentions=True
                 )
 
-                if (
-                    ("New un-FedBan" not in reply.text)
-                    and ("I'll give" not in reply.text)
-                    and ("Un-FedBan" not in reply.text)
-                ):
+                if not any(i in reply.text for i in unfban_replies):
                     failed.append(i.fed_name)
-        except BaseException:
+        except Exception:
             failed.append(i.fed_name)
 
     reason = reason if reason else "Not specified."
@@ -136,7 +146,7 @@ async def unfban(event):
     if failed:
         status = f"Failed to un-fban in {len(failed)}/{total} feds.\n"
         for i in failed:
-            status += "• " + i + "\n"
+            status += f"• {i}\n"
     else:
         status = f"Success! Un-fbanned in {total} feds."
 
@@ -152,17 +162,18 @@ async def addf(event):
     try:
         from userbot.modules.sql_helper.fban_sql import add_flist
     except IntegrityError:
-        return await event.edit("`Running on Non-SQL mode!`")
+        return await event.edit("**Running on Non-SQL mode!**")
 
-    if not (fed_name := event.pattern_match.group(1)):
-        return await event.edit("`Berikan nama untuk terhubung ke grup ini!`")
+    fed_name = event.pattern_match.group(1)
+    if not fed_name:
+        return await event.edit("**Berikan nama untuk terhubung ke grup ini!**")
 
     try:
         add_flist(event.chat_id, fed_name)
     except IntegrityError:
-        return await event.edit("`Grup ini sudah terhubung ke daftar federasi.`")
+        return await event.edit("**Grup ini sudah terhubung ke daftar federasi.**")
 
-    await event.edit("`Menambahkan grup ini ke daftar federasi!`")
+    await event.edit("**Menambahkan grup ini ke daftar federasi!**")
 
 
 @register(outgoing=True, pattern=r"^\.delf$")
@@ -171,10 +182,10 @@ async def delf(event):
     try:
         from userbot.modules.sql_helper.fban_sql import del_flist
     except IntegrityError:
-        return await event.edit("`Running on Non-SQL mode!`")
+        return await event.edit("**Running on Non-SQL mode!**")
 
     del_flist(event.chat_id)
-    await event.edit("`Menghapus grup ini dari daftar federasi!`")
+    await event.edit("**Menghapus grup ini dari daftar federasi!**")
 
 
 @register(outgoing=True, pattern=r"^\.listf$")
@@ -183,36 +194,39 @@ async def listf(event):
     try:
         from userbot.modules.sql_helper.fban_sql import get_flist
     except IntegrityError:
-        return await event.edit("`Running on Non-SQL mode!`")
+        return await event.edit("**Running on Non-SQL mode!**")
 
-    if len((fed_list := get_flist())) == 0:
-        return await event.edit("`Anda belum terhubung ke federasi mana pun!`")
+    fed_list = get_flist()
+    if len(fed_list) == 0:
+        return await event.edit("**Anda belum terhubung ke federasi mana pun!**")
 
     msg = "**Connected federations:**\n\n"
 
     for i in fed_list:
-        msg += "• " + str(i.fed_name) + "\n"
+        msg += f"• {i.fed_name}\n"
 
     await event.edit(msg)
 
 
 @register(outgoing=True, disable_edited=True, pattern=r"^\.clearf$")
-async def delf(event):
+async def clearf(event):
     """Removes all chats from connected federations."""
     try:
         from userbot.modules.sql_helper.fban_sql import del_flist_all
     except IntegrityError:
-        return await event.edit("`Running on Non-SQL mode!`")
+        return await event.edit("**Running on Non-SQL mode!**")
 
     del_flist_all()
-    await event.edit("`Disconnected dari semua federasi yang terhubung!`")
+    await event.edit("**Disconnected dari semua federasi yang terhubung!**")
 
 
 CMD_HELP.update(
     {
         "fban": "**Plugin : **`Federations Banned`\
         \n\n  •  **Syntax :** `.fban` <id/username/reply> <reason>\
-        \n  •  **Function : **Bans user dari federasi yang terhubung.\
+        \n  •  **Function : **Membanned user dari federasi yang terhubung.\
+        \n\n  •  **Syntax :** `.dfban` <id/username/reply> <reason>\
+        \n  •  **Function : **Membanned user dari federasi yang terhubung dengan menghapus pesan yang dibalas.\
         \n\n  •  **Syntax :** `.unfban` <id/username/reply> <reason>\
         \n  •  **Function : **Membatalkan Federations Banned\
         \n\n  •  **Syntax :** `.addf` <nama>\
@@ -221,6 +235,8 @@ CMD_HELP.update(
         \n  •  **Function : **Menghapus grup saat ini dari federasi yang terhubung\
         \n\n  •  **Syntax :** `.listf`\
         \n  •  **Function : **Mencantumkan semua federasi yang terhubung dengan nama yang ditentukan.\
+        \n\n  •  **Syntax :** `.clearf`\
+        \n  •  **Function : **Menghapus dari semua federasi yang terhubung. Gunakan dengan hati-hati.\
     "
     }
 )
