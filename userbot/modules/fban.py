@@ -109,7 +109,7 @@ async def unfban(event):
 
     try:
         unfban_id = await event.client.get_peer_id(unfban_id)
-    except:
+    except BaseException:
         pass
 
     if event.sender_id == unfban_id:
@@ -171,9 +171,7 @@ async def addf(event):
     try:
         add_flist(event.chat_id, fed_name)
     except IntegrityError:
-        return await event.edit(
-            "**Grup ini sudah terhubung ke daftar federasi.**"
-        )
+        return await event.edit("**Grup ini sudah terhubung ke daftar federasi.**")
 
     await event.edit("**Menambahkan grup ini ke daftar federasi!**")
 
@@ -220,7 +218,6 @@ async def clearf(event):
 
     del_flist_all()
     await event.edit("**Disconnected dari semua federasi yang terhubung!**")
-
 
 
 CMD_HELP.update(
