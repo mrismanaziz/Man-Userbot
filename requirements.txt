@@ -59,6 +59,7 @@ pip>=19.2.3
 psutil
 psycopg2
 psycopg2-binary
+py7zr
 pyaztro
 pyaztro
 pybase64
