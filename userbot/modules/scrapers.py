@@ -324,7 +324,9 @@ async def text_to_speech(query):
     elif textx:
         message = textx.text
     else:
-        return await query.edit("**Berikan teks atau balas pesan untuk Text-to-Speech!**")
+        return await query.edit(
+            "**Berikan teks atau balas pesan untuk Text-to-Speech!**"
+        )
 
     try:
         gTTS(message, lang=TTS_LANG)
@@ -411,10 +413,13 @@ async def lang(value):
                 f"**Kode Bahasa tidak valid!!**\n**Kode bahasa yang tersedia**:\n\n`{tts_langs()}`"
             )
             return
-    await value.edit(f"**Bahasa untuk** `{scraper}` **diganti menjadi** `{LANG.title()}`")
+    await value.edit(
+        f"**Bahasa untuk** `{scraper}` **diganti menjadi** `{LANG.title()}`"
+    )
     if BOTLOG:
         await value.client.send_message(
-            BOTLOG_CHATID, f"**Bahasa untuk** `{scraper}` **diganti menjadi** `{LANG.title()}`"
+            BOTLOG_CHATID,
+            f"**Bahasa untuk** `{scraper}` **diganti menjadi** `{LANG.title()}`",
         )
 
 
