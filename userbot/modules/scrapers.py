@@ -32,7 +32,7 @@ import requests
 from barcode.writer import ImageWriter
 from bs4 import BeautifulSoup
 from emoji import get_emoji_regexp
-from google_trans_new import LANGUAGES, google_translator
+from googletrans import LANGUAGES, Translator
 from gtts import gTTS
 from gtts.lang import tts_langs
 from humanize import naturalsize
@@ -68,6 +68,8 @@ from userbot.events import register
 from userbot.utils import chrome, googleimagesdownload, options, progress
 
 CARBONLANG = "auto"
+TTS_LANG = "id"
+TRT_LANG = "id"
 TEMP_DOWNLOAD_DIRECTORY = "/root/userbot/.bin"
 
 
@@ -315,32 +317,19 @@ async def _(event):
 @register(outgoing=True, pattern=r"^\.tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
     """For .tts command, a wrapper for Google Text-to-Speech."""
-
-    if query.is_reply and not query.pattern_match.group(1):
-        message = await query.get_reply_message()
-        message = str(message.message)
+    textx = await query.get_reply_message()
+    message = query.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
     else:
-        message = str(query.pattern_match.group(1))
-
-    if not message:
         return await query.edit(
             "**Berikan teks atau balas pesan untuk Text-to-Speech!**"
         )
 
-    await query.edit("`Processing...`")
-
     try:
-        from userbot.modules.sql_helper.globals import gvarstatus
-    except AttributeError:
-        return await query.edit("**Running on Non-SQL mode!**")
-
-    if gvarstatus("tts_lang") is not None:
-        target_lang = str(gvarstatus("tts_lang"))
-    else:
-        target_lang = "id"
-
-    try:
-        gTTS(message, lang=target_lang)
+        gTTS(message, lang=TTS_LANG)
     except AssertionError:
         return await query.edit(
             "**Teksnya kosong.**\n"
@@ -350,103 +339,80 @@ async def text_to_speech(query):
         return await query.edit("**Bahasa tidak didukung.**")
     except RuntimeError:
         return await query.edit("**Error saat memuat kamus bahasa.**")
-    tts = gTTS(message, lang=target_lang)
+    tts = gTTS(message, lang=TTS_LANG)
     tts.save("k.mp3")
     with open("k.mp3", "rb") as audio:
         linelist = list(audio)
         linecount = len(linelist)
     if linecount == 1:
-        tts = gTTS(message, lang=target_lang)
+        tts = gTTS(message, lang=TTS_LANG)
         tts.save("k.mp3")
-    with open("k.mp3"):
+    with open("k.mp3", "r"):
         await query.client.send_file(query.chat_id, "k.mp3", voice_note=True)
         os.remove("k.mp3")
-    await query.delete()
+        await query.delete()
 
 
-@register(outgoing=True, pattern=r"^\.tr(?: |$)([\s\S]*)")
-async def translateme(trans):
-    """For .tr command, translate the given text using Google Translate."""
+@register(outgoing=True, pattern=r"^\.tr(?: |$)(.*)")
+async def _(event):
+    if event.fwd_from:
+        return
+    if "trim" in event.raw_text:
 
-    if trans.is_reply and not trans.pattern_match.group(1):
-        message = await trans.get_reply_message()
-        message = str(message.message)
+        return
+    input_str = event.pattern_match.group(1)
+    if event.reply_to_msg_id:
+        previous_message = await event.get_reply_message()
+        text = previous_message.message
+        lan = input_str or "en"
+    elif "|" in input_str:
+        lan, text = input_str.split("|")
     else:
-        message = str(trans.pattern_match.group(1))
-
-    if not message:
-        return await trans.edit(
-            "**Berikan teks atau balas pesan untuk diterjemahkan!**"
+        await event.edit("**.tr <kode bahasa>** sambil reply ke pesan")
+        return
+    text = emoji.demojize(text.strip())
+    lan = lan.strip()
+    translator = Translator()
+    try:
+        translated = translator.translate(text, dest=lan)
+        after_tr_text = translated.text
+        output_str = """**DITERJEMAHKAN** dari `{}` ke `{}`
+{}""".format(
+            translated.src, lan, after_tr_text
         )
-
-    await trans.edit("`Processing...`")
-    translator = google_translator()
-
-    try:
-        from userbot.modules.sql_helper.globals import gvarstatus
-    except AttributeError:
-        return await trans.edit("**Running on Non-SQL mode!**")
-
-    if gvarstatus("tr_lang") is not None:
-        target_lang = str(gvarstatus("tr_lang"))
-    else:
-        target_lang = "id"
-
-    try:
-        reply_text = translator.translate(deEmojify(message), lang_tgt=target_lang)
-    except ValueError:
-        return await trans.edit(
-            "**Bahasa yang dipilih tidak valid, Gunakan **`.lang tr <kode bahasa>`"
-        )
-
-    try:
-        source_lan = translator.detect(deEmojify(message))[1].title()
-    except BaseException:
-        source_lan = "(Google tidak memberikan info ini)"
-
-    reply_text = f"**Terjemahan** Dari `{source_lan}` Ke `{LANGUAGES.get(target_lang).title()}`\n\n{reply_text}"
-
-    await trans.edit(reply_text)
+        await event.edit(output_str)
+    except Exception as exc:
+        await event.edit(str(exc))
 
 
 @register(pattern=r"\.lang (tr|tts) (.*)", outgoing=True)
 async def lang(value):
     """For .lang command, change the default langauge of userbot scrapers."""
     util = value.pattern_match.group(1).lower()
-
-    try:
-        from userbot.modules.sql_helper.globals import addgvar, delgvar, gvarstatus
-    except AttributeError:
-        return await lang.edit("**Running on Non-SQL mode!**")
-
     if util == "tr":
-        scraper = "Translate"
+        scraper = "Translator"
+        global TRT_LANG
         arg = value.pattern_match.group(2).lower()
-
-        if arg not in LANGUAGES:
-            return await value.edit(
-                f"**Kode bahasa tidak valid!**\nKode bahasa yang tersedia:\n\n`{LANGUAGES}`"
+        if arg in LANGUAGES:
+            TRT_LANG = arg
+            LANG = LANGUAGES[arg]
+        else:
+            await value.edit(
+                f"**Kode Bahasa tidak valid !!**\n**Kode bahasa yang tersedia**:\n\n`{LANGUAGES}`"
             )
-
-        if gvarstatus("tr_lang"):
-            delgvar("tr_lang")
-        addgvar("tr_lang", arg)
-        LANG = LANGUAGES[arg]
-
+            return
     elif util == "tts":
         scraper = "Text to Speech"
+        global TTS_LANG
         arg = value.pattern_match.group(2).lower()
-
-        if arg not in tts_langs():
-            return await value.edit(
-                f"**Kode bahasa tidak valid!**\nKode bahasa yang tersedia:\n\n`{tts_langs()}`"
+        if arg in tts_langs():
+            TTS_LANG = arg
+            LANG = tts_langs()[arg]
+        else:
+            await value.edit(
+                f"**Kode Bahasa tidak valid!!**\n**Kode bahasa yang tersedia**:\n\n`{tts_langs()}`"
             )
-
-        if gvarstatus("tts_lang"):
-            delgvar("tts_lang")
-        addgvar("tts_lang", arg)
-        LANG = tts_langs()[arg]
-
+            return
     await value.edit(
         f"**Bahasa untuk** `{scraper}` **diganti menjadi** `{LANG.title()}`"
     )
