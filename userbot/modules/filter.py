@@ -41,7 +41,7 @@ async def filter_incoming_handler(handler):
         pass
 
 
-@register(outgoing=True, pattern=r"^\.filter (.*)")
+@register(outgoing=True, pattern="^.filter (.*)")
 async def add_new_filter(new_handler):
     """For .filter command, allows adding new filters in a chat"""
     try:
@@ -62,8 +62,8 @@ async def add_new_filter(new_handler):
         if BOTLOG_CHATID:
             await new_handler.client.send_message(
                 BOTLOG_CHATID,
-                f"#FILTER\nID OBROLAN: {new_handler.chat_id}\nTRIGGER: {keyword}"
-                "\n\n`Pesan Berikut Disimpan Sebagai Data Balasan Filter Untuk Obrolan, Mohon Jangan Menghapusnya`",
+                f"**#FILTER\nID OBROLAN:** {new_handler.chat_id}\n**TRIGGER:** `{keyword}`"
+                "\n\n**Pesan Berikut Disimpan Sebagai Data Balasan Filter Untuk Obrolan, Mohon Jangan Menghapusnya**",
             )
             msg_o = await new_handler.client.forward_messages(
                 entity=BOTLOG_CHATID,
@@ -92,7 +92,7 @@ async def remove_a_filter(r_handler):
     try:
         from userbot.modules.sql_helper.filter_sql import remove_filter
     except AttributeError:
-        return await r_handler.edit("`Berjalan Pada Mode Non-SQL!`")
+        return await r_handler.edit("**Berjalan Pada Mode Non-SQL!**")
     filt = r_handler.pattern_match.group(1)
     if not remove_filter(r_handler.chat_id, filt):
         await r_handler.edit("**Filter** `{}` **Tidak Ada Disini**.".format(filt))
@@ -127,7 +127,7 @@ async def kick_marie_filter(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.filters$")
+@register(outgoing=True, pattern="^.filters$")
 async def filters_active(event):
     """For .filters command, lists all of the active filters in a chat."""
     try:
