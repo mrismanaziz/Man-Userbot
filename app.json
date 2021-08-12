@@ -1,11 +1,11 @@
 {
-  "name": "Man-Userbot",
-  "description": "[Man-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
+  "name": "Rio-Userbot",
+  "description": "[Rio-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
   "logo": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
-  "keywords": ["telegram", "userbot", "man-userbot", "modular", "python"],
-  "repository": "https://github.com/mrismanaziz/Man-Userbot",
-  "telegram": "https://t.me/mrismanaziz",
-  "success_url": "https://t.me/Lunatic0de",
+  "keywords": ["telegram", "userbot", "rio-userbot", "modular", "python"],
+  "repository": "https://github.com/RioUserbot/Rio-Userbot",
+  "telegram": "https://t.me/rio00",
+  "success_url": "https://t.me/riobotsupport",
   "stack": "container",
   "env": {
     "API_KEY": {
@@ -17,7 +17,7 @@
       "required": true
     },
      "STRING_SESSION": {
-      "description": "Dapatkan String Session di Grup » https://t.me/sharinguserbot » Lalu ketik #string",
+      "description": "Dapatkan String Session di Grup » https://t.me/siiniaja » Lalu ketik #string",
       "required": true
     },
     "HEROKU_APP_NAME": {
