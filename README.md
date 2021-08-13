@@ -20,7 +20,7 @@ Gunakan bot ini dengan risiko Anda sendiri, dan gunakan dengan bijak.
 
 ## Tutorial
 
-- [Panduan Cara Memasang Rio-Userbot](https://t.me/siijiaja)
+- [Panduan Cara Memasang Rio-Userbot](https://t.me/siiniaja)
 - [Cara Setting GDrive modules](https://telegra.ph/How-To-Setup-Google-Drive-04-03)
 - [Cara Setting Last.FM modules](https://telegra.ph/How-to-set-up-LastFM-module-for-Paperplane-userbot-11-02)
 
