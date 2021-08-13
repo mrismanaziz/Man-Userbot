@@ -1,7 +1,7 @@
 {
   "name": "Rio-Userbot",
   "description": "[Rio-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
-  "logo": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
+  "logo": "https://telegra.ph/file/68ccbcf462e754a56c618.jpg",
   "keywords": ["telegram", "userbot", "rio-userbot", "modular", "python"],
   "repository": "https://github.com/RioUserbot/Rio-Userbot",
   "telegram": "https://t.me/rio00",
@@ -53,8 +53,8 @@
       "required": true
     },
     "ALIVE_LOGO": {
-      "description": "Gambar dalam module .alive",
-      "value": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
+      "description": "Gambar dalam module .alive (kalo gaada gausah ganti :v)",
+      "value": "https://telegra.ph/file/68ccbcf462e754a56c618.jpg",
       "required": false
     },
     "ANTI_SPAMBOT": {
@@ -75,7 +75,7 @@
     },
     "DEFAULT_BIO": {
       "description": "Default Bio Mu.",
-      "value": "✘ i'm using userbot ✘",
+      "value": "✘ i'm using Rio userbot ✘",
       "required": false
     },
     "ALIVE_TEKS_CUSTOM": {
