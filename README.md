@@ -20,12 +20,12 @@ Gunakan bot ini dengan risiko Anda sendiri, dan gunakan dengan bijak.
 
 ## Tutorial
 
-- [Panduan Cara Memasang Rio-Userbot] Pergi Ke Group Telegram Rioyz Sharing Bot (https://t.me/siijiaja)
+- [Panduan Cara Memasang Rio-Userbot](https://t.me/siijiaja)
 - [Cara Setting GDrive modules](https://telegra.ph/How-To-Setup-Google-Drive-04-03)
 - [Cara Setting Last.FM modules](https://telegra.ph/How-to-set-up-LastFM-module-for-Paperplane-userbot-11-02)
 
 ### Generate String Session
-[![Run repl.it](https://img.shields.io/badge/run-string__session.py-blue?style=for-the-badge&logo=repl.it)](https://repl.it/@mrismanaziz/stringenSession?lite=1&outputonly=1)
+[![Run repl.it](https://img.shields.io/badge/run-string__session.py-blue?style=for-the-badge&logo=repl.it)](https://repl.it/@Riio00/stringenSession?lite=1&outputonly=1)
 
 <h3 align="center">Klik Tombol di Bawah ini untuk Deploy di Heroku</h3>
 <p align="center"><a href="https://dashboard.heroku.com/new?template=https://github.com/RioProjectX/UserBot"><img src="https://www.herokucdn.com/deploy/button.png" alt="Deploy to Heroku" target="_blank"/></a></p>
@@ -39,4 +39,4 @@ Thanks :
 *   [Rio-Userbot](https://github.com/RioProjectX/Rio-Userbot) -  Rio
 
 ## License
-Licensed under [Raphielscape Public License](https://github.com/RioProjectX/Rio-Userbot/blob/Man-Userbot/LICENSE) - Version 1.d, February 2020
+Licensed under [Raphielscape Public License](https://github.com/RioProjectX/Rio-Userbot/blob/Rio-Userbot/LICENSE) - Version 1.d, February 2020
