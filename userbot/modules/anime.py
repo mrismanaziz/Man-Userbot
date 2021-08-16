@@ -4,20 +4,17 @@
 # you may not use this file except in compliance with the License.
 #
 
-import asyncio
 import html
 import json
 import re
 import textwrap
 from io import BytesIO, StringIO
-from urllib.parse import quote as urlencode
 
 import aiohttp
 import bs4
 import jikanpy
 import pendulum
 import requests
-from html_telegraph_poster import TelegraphPoster
 from jikanpy import Jikan
 from jikanpy.exceptions import APIException
 from telethon.errors.rpcerrorlist import FilePartsInvalidError
@@ -82,7 +79,7 @@ def get_anime_manga(mal_id, search_type, _user_id):
         result = jikan.anime(mal_id)
         trailer = result["trailer_url"]
         if trailer:
-            LOL = f"<a href='{trailer}'>Trailer</a>"
+            LOL = f"<a href='{trailer}'>YouTube</a>"
         else:
             LOL = "<code>No Trailer Available</code>"
         image = getBannerLink(mal_id)
@@ -95,7 +92,7 @@ def get_anime_manga(mal_id, search_type, _user_id):
     elif search_type == "anime_manga":
         result = jikan.manga(mal_id)
         image = result["image_url"]
-    caption = f"📺 <a href='{result['url']}'>{result['title']}</a>"
+    caption = f"<a href='{result['url']}'>{result['title']}</a>"
     if result["title_japanese"]:
         caption += f" ({result['title_japanese']})\n"
     else:
@@ -106,7 +103,7 @@ def get_anime_manga(mal_id, search_type, _user_id):
     alternative_names.extend(result["title_synonyms"])
     if alternative_names:
         alternative_names_string = ", ".join(alternative_names)
-        caption += f"\n<b>Also known as</b>: <code>{alternative_names_string}</code>"
+        caption += f"\n<b>Also known as</b> : <code>{alternative_names_string}</code>\n"
     genre_string = ", ".join(genre_info["name"] for genre_info in result["genres"])
     if result["synopsis"] is not None:
         synopsis = result["synopsis"].split(" ", 60)
@@ -123,30 +120,29 @@ def get_anime_manga(mal_id, search_type, _user_id):
     if search_type == "anime_anime":
         caption += textwrap.dedent(
             f"""
-        🆎 <b>Type</b>: <code>{result['type']}</code>
-        📡 <b>Status</b>: <code>{result['status']}</code>
-        🎙️ <b>Aired</b>: <code>{result['aired']['string']}</code>
-        🔢 <b>Episodes</b>: <code>{result['episodes']}</code>
-        💯 <b>Score</b>: <code>{result['score']}</code>
-        🌐 <b>Premiered</b>: <code>{result['premiered']}</code>
-        ⌛ <b>Duration</b>: <code>{result['duration']}</code>
-        🎭 <b>Genres</b>: <code>{genre_string}</code>
-        🎙️ <b>Studios</b>: <code>{studio_string}</code>
-        💸 <b>Producers</b>: <code>{producer_string}</code>
-        🎬 <b>Trailer:</b> {LOL}
-        📖 <b>Synopsis</b>: <code>{synopsis_string}</code> <a href='{result['url']}'>Read More</a>
+            <b>Type :</b> <code>{result['type']}</code>
+            <b>Status :</b> <code>{result['status']}</code>
+            <b>Aired :</b> <code>{result['aired']['string']}</code>
+            <b>Episodes :</b> <code>{result['episodes']} ({result['duration']})</code>
+            <b>Rating :</b> <code>{result['score']}</code>
+            <b>Premiered :</b> <code>{result['premiered']}</code>
+            <b>Genres :</b> <code>{genre_string}</code>
+            <b>Studios :</b> <code>{studio_string}</code>
+            <b>Producers :</b> <code>{producer_string}</code>
+            <b>Trailer :</b> {LOL}
+            <b>📖 Synopsis :</b> <i>{synopsis_string}</i> <a href='{result['url']}'>Read More</a>
         """
         )
     elif search_type == "anime_manga":
         caption += textwrap.dedent(
             f"""
-        🆎 <b>Type</b>: <code>{result['type']}</code>
-        📡 <b>Status</b>: <code>{result['status']}</code>
-        🔢 <b>Volumes</b>: <code>{result['volumes']}</code>
-        📃 <b>Chapters</b>: <code>{result['chapters']}</code>
-        💯 <b>Score</b>: <code>{result['score']}</code>
-        🎭 <b>Genres</b>: <code>{genre_string}</code>
-        📖 <b>Synopsis</b>: <code>{synopsis_string}</code>
+            <b>Type :</b> <code>{result['type']}</code>
+            <b>Status :</b> <code>{result['status']}</code>
+            <b>Volumes :</b> <code>{result['volumes']}</code>
+            <b>Chapters :</b> <code>{result['chapters']}</code>
+            <b>Score :</b> <code>{result['score']}</code>
+            <b>Genres :</b> <code>{genre_string}</code>
+            📖 <b>Synopsis :</b> <i>{synopsis_string}</i> <a href='{result['url']}'>Read More</a>
         """
         )
     return caption, image
@@ -169,20 +165,6 @@ def get_poster(query):
     if image is not None:
         # img_path = wget.download(image, os.path.join(Config.DOWNLOAD_LOCATION, 'imdb_poster.jpg'))
         return image
-
-
-def post_to_telegraph(title, html_format_content):
-    post_client = TelegraphPoster(use_api=True)
-    auth_name = "WeebProject"
-    auth_url = "https://github.com/BianSepang/WeebProject"
-    post_client.create_api_token(auth_name)
-    post_page = post_client.post(
-        title=title,
-        author=auth_name,
-        author_url=auth_url,
-        text=html_format_content,
-    )
-    return post_page["url"]
 
 
 def replace_text(text):
@@ -263,119 +245,39 @@ async def anilist(event):
 
 
 @register(outgoing=True, pattern=r"^\.anime ?(.*)")
-async def anime(event):
-    query = event.pattern_match.group(1)
-    reply = await event.get_reply_message()
-    await event.edit("`Searching Anime...`")
-    if query:
-        pass
-    elif reply:
-        query = reply.text
-    else:
-        await event.edit("`Bruh.. What I am supposed to search ?`")
-        await asyncio.sleep(6)
-        await event.delete()
-        return
+async def search_anime(message):
+    search_query = message.pattern_match.group(1)
+    await message.get_reply_message()
+    await message.edit("`Searching Anime..`")
+    jikan = jikanpy.jikan.Jikan()
+    search_result = jikan.search("anime", search_query)
+    first_mal_id = search_result["results"][0]["mal_id"]
+    caption, image = get_anime_manga(first_mal_id, "anime_anime", message.chat_id)
     try:
-        res = jikan.search("anime", query)
-    except Exception as err:
-        await event.edit(f"**Error:** \n`{err}`")
-        return
-    try:
-        res = res.get("results")[0].get("mal_id")  # Grab first result
-    except APIException:
-        await event.edit("`Error connecting to the API. Please try again!`")
-        return
-    if res:
-        anime = jikan.anime(res)
-        title = anime.get("title")
-        japanese = anime.get("title_japanese")
-        anime.get("title_english")
-        type = anime.get("type")
-        duration = anime.get("duration")
-        synopsis = anime.get("synopsis")
-        source = anime.get("source")
-        status = anime.get("status")
-        episodes = anime.get("episodes")
-        score = anime.get("score")
-        rating = anime.get("rating")
-        genre_lst = anime.get("genres")
-        genres = "".join(genre.get("name") + ", " for genre in genre_lst)
-        genres = genres[:-2]
-        studio_lst = anime.get("studios")
-        studios = "".join(studio.get("name") + ", " for studio in studio_lst)
-        studios = studios[:-2]
-        duration = anime.get("duration")
-        premiered = anime.get("premiered")
-        image_url = anime.get("image_url")
-        trailer = anime.get("trailer_url")
-        if trailer:
-            bru = f"<a href='{trailer}'>Trailer</a>"
-        url = anime.get("url")
-    else:
-        await event.edit("`No results Found!`")
-        return
-    rep = f"<b>{title}</b> - ({japanese})\n"
-    rep += f"<b>Type:</b> <code>{type}</code>\n"
-    rep += f"<b>Source:</b> <code>{source}</code>\n"
-    rep += f"<b>Status:</b> <code>{status}</code>\n"
-    rep += f"<b>Genres:</b> <code>{genres}</code>\n"
-    rep += f"<b>Episodes:</b> <code>{episodes}</code>\n"
-    rep += f"<b>Duration:</b> <code>{duration}</code>\n"
-    rep += f"<b>Score:</b> <code>{score}</code>\n"
-    rep += f"<b>Studio(s):</b> <code>{studios}</code>\n"
-    rep += f"<b>Premiered:</b> <code>{premiered}</code>\n"
-    rep += f"<b>Rating:</b> <code>{rating}</code>\n\n"
-    rep += f"<a href='{image_url}'>\u200c</a>"
-    rep += f"📖 <b>Synopsis</b>: <i>{synopsis}</i>\n"
-    rep += f'<b>Read More:</b> <a href="{url}">MyAnimeList</a>'
-    await event.edit(rep, parse_mode="HTML", link_preview=False)
+        await message.delete()
+        await message.client.send_file(
+            message.chat_id, file=image, caption=caption, parse_mode="HTML"
+        )
+    except BaseException:
+        image = getBannerLink(first_mal_id, False)
+        await message.client.send_file(
+            message.chat_id, file=image, caption=caption, parse_mode="HTML"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.manga ?(.*)")
-async def manga(event):
-    query = event.pattern_match.group(1)
-    await event.edit("`Searching Manga...`")
-    if not query:
-        await event.edit("`Bruh.. Gib me Something to Search`")
-        return
-    res = ""
-    manga = ""
-    try:
-        res = jikan.search("manga", query).get("results")[0].get("mal_id")
-    except APIException:
-        await event.edit("`Error connecting to the API. Please try again!`")
-        return ""
-    if res:
-        try:
-            manga = jikan.manga(res)
-        except APIException:
-            await event.edit("`Error connecting to the API. Please try again!`")
-            return ""
-        title = manga.get("title")
-        japanese = manga.get("title_japanese")
-        type = manga.get("type")
-        status = manga.get("status")
-        score = manga.get("score")
-        volumes = manga.get("volumes")
-        chapters = manga.get("chapters")
-        genre_lst = manga.get("genres")
-        genres = "".join(genre.get("name") + ", " for genre in genre_lst)
-        genres = genres[:-2]
-        synopsis = manga.get("synopsis")
-        image = manga.get("image_url")
-        url = manga.get("url")
-        rep = f"<b>{title} ({japanese})</b>\n"
-        rep += f"<b>Type:</b> <code>{type}</code>\n"
-        rep += f"<b>Status:</b> <code>{status}</code>\n"
-        rep += f"<b>Genres:</b> <code>{genres}</code>\n"
-        rep += f"<b>Score:</b> <code>{score}</code>\n"
-        rep += f"<b>Volumes:</b> <code>{volumes}</code>\n"
-        rep += f"<b>Chapters:</b> <code>{chapters}</code>\n\n"
-        rep += f"<a href='{image}'>\u200c</a>"
-        rep += f"📖 <b>Synopsis</b>: <i>{synopsis}</i>\n"
-        rep += f'<b>Read More:</b> <a href="{url}">MyAnimeList</a>'
-        await event.edit(rep, parse_mode="HTML", link_preview=False)
+async def search_manga(message):
+    search_query = message.pattern_match.group(1)
+    await message.get_reply_message()
+    await message.edit("`Searching Manga..`")
+    jikan = jikanpy.jikan.Jikan()
+    search_result = jikan.search("manga", search_query)
+    first_mal_id = search_result["results"][0]["mal_id"]
+    caption, image = get_anime_manga(first_mal_id, "anime_manga", message.chat_id)
+    await message.delete()
+    await message.client.send_file(
+        message.chat_id, file=image, caption=caption, parse_mode="HTML"
+    )
 
 
 @register(outgoing=True, pattern=r"^\.a(kaizoku|kayo) ?(.*)")
@@ -438,6 +340,7 @@ async def character(event):
     else:
         await event.edit("Format: `.char <character name>`")
         return
+    await event.edit("`Searching Character...`")
 
     try:
         search_result = jikan.search("character", search_query)
@@ -476,7 +379,7 @@ async def character(event):
     )
 
 
-@register(outgoing=True, pattern=r"^\.upcoming ?(.*)")
+@register(outgoing=True, pattern=r"^\.upcoming$")
 async def upcoming(message):
     rep = "<b>Upcoming anime</b>\n"
     later = jikan.season_later()
@@ -490,141 +393,7 @@ async def upcoming(message):
         await message.edit(rep, parse_mode="html")
 
 
-@register(outgoing=True, pattern=r"^\.scanime ?(.*)")
-async def get_anime(message):
-    try:
-        query = message.pattern_match.group(1)
-    except IndexError:
-        if message.reply_to_msg_id:
-            query = await message.get_reply_message().text
-        else:
-            await message.reply(
-                "You gave nothing to search. (｡ì _ í｡)\n `Usage: .scanime <anime name>`"
-            )
-            return
-    except Exception as err:
-        await message.edit(f"**Encountered an Unknown Exception**: \n{err}")
-        return
-
-    p_rm = await message.reply("`Searching Anime...`")
-    f_mal_id = ""
-    try:
-        jikan = jikanpy.AioJikan()
-        search_res = await jikan.search("anime", query)
-        f_mal_id = search_res["results"][0]["mal_id"]
-    except IndexError:
-        await p_rm.edit(f"No Results Found for {query}")
-        return
-    except Exception as err:
-        await p_rm.edit(f"**Encountered an Unknown Exception**: \n{err}")
-        return
-
-    results_ = await jikan.anime(f_mal_id)
-    await jikan.close()
-    await message.delete()
-
-    # Get All Info of anime
-    anime_title = results_["title"]
-    jap_title = results_["title_japanese"]
-    eng_title = results_["title_english"]
-    type_ = results_["type"]
-    results_["source"]
-    episodes = results_["episodes"]
-    status = results_["status"]
-    results_["aired"].get("string")
-    results_["duration"]
-    rating = results_["rating"]
-    score = results_["score"]
-    synopsis = results_["synopsis"]
-    results_["background"]
-    producer_list = results_["producers"]
-    studios_list = results_["studios"]
-    genres_list = results_["genres"]
-
-    # Info for Buttons
-    mal_dir_link = results_["url"]
-    trailer_link = results_["trailer_url"]
-
-    main_poster = ""
-    telegraph_poster = ""
-    # Poster Links Search
-    try:
-        main_poster = get_poster(anime_title)
-    except BaseException:
-        pass
-    try:
-        telegraph_poster = getBannerLink(f_mal_id)
-    except BaseException:
-        pass
-    # if not main_poster:
-    main_poster = telegraph_poster
-    if not telegraph_poster:
-        telegraph_poster = main_poster
-
-    genress_md = "".join(f"{i['name']} " for i in genres_list)
-    "".join(f"[{i['name']}]({i['url']}) " for i in producer_list)
-    "".join(f"[{i['name']}]({i['url']}) " for i in studios_list)
-    # Build synopsis telegraph post
-    html_enc = ""
-    html_enc += f"<img src = '{telegraph_poster}' title = {anime_title}/>"
-    html_enc += "<br><b>» Synopsis: </b></br>"
-    html_enc += f"<br><em>{synopsis}</em></br>"
-    synopsis_link = post_to_telegraph(anime_title, html_enc)
-
-    # Build captions:
-    captions = f"""📺  `{anime_title}` - `{eng_title}` - `{jap_title}`
-**🎭 Genre:** `{genress_md}`
-**🆎 Type:** `{type_}`
-**🔢 Episodes:** `{episodes}`
-**📡 Status:** `{status}`
-**🔞 Rating:** `{rating}`
-**💯 Score:** `{score}`
-[📖 Synopsis]({synopsis_link})
-[🎬 Trailer]({trailer_link})
-[📚 More Info]({mal_dir_link})
-"""
-
-    await p_rm.delete()
-    await message.client.send_file(message.chat_id, file=main_poster, caption=captions)
-
-
-@register(outgoing=True, pattern=r"^\.smanga ?(.*)")
-async def manga(message):
-    search_query = message.pattern_match.group(1)
-    await message.get_reply_message()
-    await message.edit("`Searching Manga..`")
-    jikan = jikanpy.jikan.Jikan()
-    search_result = jikan.search("manga", search_query)
-    first_mal_id = search_result["results"][0]["mal_id"]
-    caption, image = get_anime_manga(first_mal_id, "anime_manga", message.chat_id)
-    await message.delete()
-    await message.client.send_file(
-        message.chat_id, file=image, caption=caption, parse_mode="HTML"
-    )
-
-
-@register(outgoing=True, pattern=r"^\.sanime ?(.*)")
-async def anime(message):
-    search_query = message.pattern_match.group(1)
-    await message.get_reply_message()
-    await message.edit("`Searching Anime..`")
-    jikan = jikanpy.jikan.Jikan()
-    search_result = jikan.search("anime", search_query)
-    first_mal_id = search_result["results"][0]["mal_id"]
-    caption, image = get_anime_manga(first_mal_id, "anime_anime", message.chat_id)
-    try:
-        await message.delete()
-        await message.client.send_file(
-            message.chat_id, file=image, caption=caption, parse_mode="HTML"
-        )
-    except BaseException:
-        image = getBannerLink(first_mal_id, False)
-        await message.client.send_file(
-            message.chat_id, file=image, caption=caption, parse_mode="HTML"
-        )
-
-
-@register(outgoing=True, pattern=r"^\.whatanime")
+@register(outgoing=True, pattern=r"^\.whatanime$")
 async def whatanime(e):
     media = e.media
     if not media:
@@ -649,23 +418,24 @@ async def whatanime(e):
     await e.edit("`Searching for result..`")
     file = memory_file(filename, content)
     async with aiohttp.ClientSession() as session:
-        url = "https://trace.moe/api/search"
+        url = "https://api.trace.moe/search?anilistInfo"
         async with session.post(url, data={"image": file}) as raw_resp0:
-            resp0 = await raw_resp0.text()
-        js0 = json.loads(resp0)["docs"]
+            resp0 = await raw_resp0.json()
+        js0 = resp0.get("result")
         if not js0:
             await e.edit("`No results found.`")
             return
         js0 = js0[0]
-        text = f'<b>{html.escape(js0["title_romaji"])}'
-        if js0["title_native"]:
-            text += f' ({html.escape(js0["title_native"])})'
+        text = f'<b>{html.escape(js0["anilist"]["title"]["romaji"])}'
+        if js0["anilist"]["title"]["native"]:
+            text += f' ({html.escape(js0["anilist"]["title"]["native"])})'
         text += "</b>\n"
         if js0["episode"]:
             text += f'<b>Episode:</b> {html.escape(str(js0["episode"]))}\n'
         percent = round(js0["similarity"] * 100, 2)
         text += f"<b>Similarity:</b> {percent}%\n"
-        dt = pendulum.from_timestamp(js0["at"])
+        at = re.findall(r"t=(.+)&", js0["video"])[0]
+        dt = pendulum.from_timestamp(float(at))
         text += f"<b>At:</b> {html.escape(dt.to_time_string())}"
         await e.edit(text, parse_mode="html")
         dt0 = pendulum.from_timestamp(js0["from"])
@@ -673,14 +443,7 @@ async def whatanime(e):
         ctext = (
             f"{html.escape(dt0.to_time_string())} - {html.escape(dt1.to_time_string())}"
         )
-        url = (
-            "https://media.trace.moe/video/"
-            f'{urlencode(str(js0["anilist_id"]))}' + "/"
-            f'{urlencode(js0["filename"])}'
-            f'?t={urlencode(str(js0["at"]))}'
-            f'&token={urlencode(js0["tokenthumb"])}'
-        )
-        async with session.get(url) as raw_resp1:
+        async with session.get(js0["video"]) as raw_resp1:
             file = memory_file("preview.mp4", await raw_resp1.read())
         try:
             await e.reply(ctext, file=file, parse_mode="html")
@@ -688,10 +451,10 @@ async def whatanime(e):
             await e.reply("`Cannot send preview.`")
 
 
-def memory_file(name=None, contents=None, *, bytes=True):
-    if isinstance(contents, str) and bytes:
+def memory_file(name=None, contents=None, *, _bytes=True):
+    if isinstance(contents, str) and _bytes:
         contents = contents.encode()
-    file = BytesIO() if bytes else StringIO()
+    file = BytesIO() if _bytes else StringIO()
     if name:
         file.name = name
     if contents:
