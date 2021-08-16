@@ -4,8 +4,7 @@ import asyncio
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import ALIVE_NAME
-from userbot import CMD_HELP
+from userbot import ALIVE_NAME, CMD_HELP
 from userbot.events import register
 
 
@@ -29,7 +28,8 @@ async def _(event):
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             await event.edit(
-                "**Error: Mohon Buka Blokir** @tdtapibot **Dan Coba Lagi!**")
+                "**Error: Mohon Buka Blokir** @tdtapibot **Dan Coba Lagi!**"
+            )
             return
         await asyncio.sleep(0.5)
         await event.client.send_file(
@@ -37,15 +37,15 @@ async def _(event):
             logo,
             caption=f"Logo by [{ALIVE_NAME}](tg://user?id={aing.id})",
         )
-        await event.client.delete_messages(conv.chat_id,
-                                           [msg.id, response.id, logo.id])
+        await event.client.delete_messages(conv.chat_id, [msg.id, response.id, logo.id])
         await event.delete()
 
 
-CMD_HELP.update({
-    "logo":
-    "**Plugin : **`logo`\
+CMD_HELP.update(
+    {
+        "logo": "**Plugin : **`logo`\
         \n\n  •  **Syntax :** `.logo` <text>\
         \n  •  **Function : **Membuat logo dari Teks yang diberikan\
     "
-})
+    }
+)
