@@ -88,7 +88,7 @@ BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", 0))
 
 # Userbot logging feature switch.
 BOTLOG = sb(os.environ.get("BOTLOG", "True"))
-LOGSPAMMER = sb(os.environ.get("LOGSPAMMER", "False"))
+LOGSPAMMER = sb(os.environ.get("LOGSPAMMER", "True"))
 
 # Bleep Blop, this is a bot ;)
 PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "False"))
@@ -133,7 +133,7 @@ NC_LOG_P_M_S = bool(os.environ.get("NC_LOG_P_M_S", "False"))
 
 # OpenWeatherMap API Key
 OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
-WEATHER_DEFCITY = os.environ.get("WEATHER_DEFCITY", None)
+WEATHER_DEFCITY = os.environ.get("WEATHER_DEFCITY", "Jakarta")
 
 # Lydia API
 LYDIA_API_KEY = os.environ.get("LYDIA_API_KEY", None)
