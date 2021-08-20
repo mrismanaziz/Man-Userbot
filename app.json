@@ -2,7 +2,13 @@
   "name": "Man-Userbot",
   "description": "[Man-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
   "logo": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
-  "keywords": ["telegram", "userbot", "man-userbot", "modular", "python"],
+  "keywords": [
+    "telegram",
+    "userbot",
+    "man-userbot",
+    "modular",
+    "python"
+  ],
   "repository": "https://github.com/mrismanaziz/Man-Userbot",
   "telegram": "https://t.me/mrismanaziz",
   "success_url": "https://t.me/Lunatic0de",
@@ -16,7 +22,7 @@
       "description": "Dapatkan Api hash di web my.telegram.org.",
       "required": true
     },
-     "STRING_SESSION": {
+    "STRING_SESSION": {
       "description": "Dapatkan String Session di Grup » https://t.me/sharinguserbot » Lalu ketik #string",
       "required": true
     },
@@ -68,21 +74,31 @@
         "version": "12"
       }
     }
-  ],"buildpacks": [{
-    "url": "https://github.com/heroku/heroku-buildpack-python.git"
-  }, {
-    "url": "https://github.com/heroku/heroku-buildpack-redis"
-  }, {
-    "url": "https://github.com/heroku/heroku-buildpack-google-chrome"
-  }, {
-    "url": "https://github.com/HasibulKabir/heroku-buildpack-rarlab"
-  },{
-    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
-  }, {
-    "url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip"
-  }, {
-    "url": "https://github.com/amivin/aria2-heroku"
-  }, {
-    "url": "https://github.com/stevo550/buildpack-slug-cleaner"
-  }]
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-python.git"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-redis"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-google-chrome"
+    },
+    {
+      "url": "https://github.com/HasibulKabir/heroku-buildpack-rarlab"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+    },
+    {
+      "url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip"
+    },
+    {
+      "url": "https://github.com/amivin/aria2-heroku"
+    },
+    {
+      "url": "https://github.com/stevo550/buildpack-slug-cleaner"
+    }
+  ]
 }
