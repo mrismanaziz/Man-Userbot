@@ -26,12 +26,6 @@
     },
     "HEROKU_API_KEY": {
       "description": "Ambil Heroku API KEY mu disini » https://dashboard.heroku.com/account",
-      "value": "Check Di Heroku Dashboard Mu",
-      "required": true
-    },
-    "BOTLOG": {
-      "description": "Kalo Mau Off in BOTLOG Ganti False",
-      "value": "True",
       "required": true
     },
     "BOTLOG_CHATID": {
@@ -39,14 +33,10 @@
       "value": "Isi id grup mu wajib dengan awalan -100",
       "required": true
     },
-    "CONSOLE_LOGGER_VERBOSE": {
-      "description": "Jika Anda membutuhkan verbosity di console logging",
-      "value": "False"
-    },
     "PM_AUTO_BAN": {
       "description": "PM Auto-Ban adalah module untuk bot welcome otomatis ketika ada orang ngePC kamu,jika Mau di aktifkan ubah ke True",
       "value": "False",
-      "required": true
+      "required": false
     },
     "ALIVE_NAME": {
       "description": "Masukan Nama untuk menunjukan pesan di perintah .alive / .afk / .ping dan lain lain",
@@ -55,27 +45,6 @@
     "ALIVE_LOGO": {
       "description": "Gambar dalam module .alive",
       "value": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
-      "required": false
-    },
-    "ANTI_SPAMBOT": {
-      "description": "Kick spambot dari grup setelah mereka bergabung. [Membutuhkan hak admin untuk kick.]",
-      "value": "False"
-    },
-    "ANTI_SPAMBOT_SHOUT": {
-      "description": "Laporkan robot spam ke @admin dalam grup setelah mereka bergabung, untuk berjaga-jaga jika Anda tidak memiliki kekuatan admin untuk menendang sendiri.",
-      "value": "False"
-    },
-    "TMP_DOWNLOAD_DIRECTORY": {
-      "description": "Lokasi File Download-an untuk banyak modul seperti (GDrive, .download dll..)",
-      "value": "./downloads/"
-    },
-    "CLEAN_WELCOME": {
-      "description": "Saat orang lain baru ngechat kamu, pesan welcome di PC yang lama akan dihapus.",
-      "value": "True"
-    },
-    "DEFAULT_BIO": {
-      "description": "Default Bio Mu.",
-      "value": "✘ i'm using userbot ✘",
       "required": false
     },
     "ALIVE_TEKS_CUSTOM": {
@@ -90,11 +59,6 @@
       "description": "isi kota kamu tinggal untuk default module .weather / cuaca",
       "value": "Jakarta",
       "required": false
-    },
-    "LOGSPAMMER": {
-      "description": "Setel ini ke True jika Anda ingin ada log error yg disimpan di grup log userbot. Jika tidak mau ada error log ganti ke False",
-      "value": "True",
-      "required": true
     }
   },
   "addons": [
