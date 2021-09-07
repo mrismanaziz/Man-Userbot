@@ -1,63 +1,46 @@
+# ported from uniborg
+# https://github.com/muhammedfurkan/UniBorg/blob/master/stdplugins/ezanvakti.py
+
 import json
 
 import requests
 
 from userbot import CMD_HELP
 from userbot.events import register
+from userbot.modules.sql_helper.globals import gvarstatus
+from userbot.utils import edit_delete, edit_or_reply
 
-PLACE = ""
 
-
-@register(pattern=r"^\.adzan(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.adzan(?:\s|$)([\s\S]*)")
 async def get_adzan(adzan):
-    if not adzan.pattern_match.group(1):
-        LOCATION = PLACE
-        if not LOCATION:
-            await adzan.edit("`Harap Masukan Kota Atau Negara.`")
-            return
-    else:
-        LOCATION = adzan.pattern_match.group(1)
-
-    # url = f'http://muslimsalat.com/{LOCATION}.json?key=bd099c5825cbedb9aa934e255a81a5fc'
-    url = f"https://api.pray.zone/v2/times/today.json?city={LOCATION}"
+    "Shows you the Islamic prayer times of the given city name"
+    input_str = adzan.pattern_match.group(1)
+    LOKASI = gvarstatus("WEATHER_DEFCITY") or "Jakarta" if not input_str else input_str
+    url = f"http://muslimsalat.com/{LOKASI}.json?key=bd099c5825cbedb9aa934e255a81a5fc"
     request = requests.get(url)
-    if request.status_code == 500:
-        return await adzan.edit(f"**Tidak Dapat Menemukan Kota** `{LOCATION}`")
-
-    parsed = json.loads(request.text)
-
-    city = parsed["results"]["location"]["city"]
-    country = parsed["results"]["location"]["country"]
-    timezone = parsed["results"]["location"]["timezone"]
-    date = parsed["results"]["datetime"][0]["date"]["gregorian"]
-
-    imsak = parsed["results"]["datetime"][0]["times"]["Imsak"]
-    subuh = parsed["results"]["datetime"][0]["times"]["Fajr"]
-    zuhur = parsed["results"]["datetime"][0]["times"]["Dhuhr"]
-    ashar = parsed["results"]["datetime"][0]["times"]["Asr"]
-    maghrib = parsed["results"]["datetime"][0]["times"]["Maghrib"]
-    isya = parsed["results"]["datetime"][0]["times"]["Isha"]
-
-    result = (
-        f"**Jadwal Sholat**:\n"
-        f"📆 `{date} | {timezone}`\n"
-        f"📍 `{city} | {country}`\n\n"
-        f"**Imsak :** `{imsak}`\n"
-        f"**Subuh :** `{subuh}`\n"
-        f"**Zuhur :** `{zuhur}`\n"
-        f"**Ashar :** `{ashar}`\n"
-        f"**Maghrib :** `{maghrib}`\n"
-        f"**Isya :** `{isya}`\n"
-    )
-
-    await adzan.edit(result)
+    if request.status_code != 200:
+        return await edit_delete(
+            adzan, f"**Tidak Dapat Menemukan Kota** `{LOCATION}`", 120
+        )
+    result = json.loads(request.text)
+    catresult = f"<b>Jadwal Shalat Hari Ini:</b>\
+            \n<b>📆 Tanggal </b><code>{result['items'][0]['date_for']}</code>\
+            \n<b>📍 Kota</b> <code>{result['query']}</code> | <code>{result['country']}</code>\
+            \n\n<b>Terbit  : </b><code>{result['items'][0]['shurooq']}</code>\
+            \n<b>Subuh : </b><code>{result['items'][0]['fajr']}</code>\
+            \n<b>Zuhur  : </b><code>{result['items'][0]['dhuhr']}</code>\
+            \n<b>Ashar  : </b><code>{result['items'][0]['asr']}</code>\
+            \n<b>Maghrib : </b><code>{result['items'][0]['maghrib']}</code>\
+            \n<b>Isya : </b><code>{result['items'][0]['isha']}</code>\
+    "
+    await edit_or_reply(adzan, catresult, "html")
 
 
 CMD_HELP.update(
     {
         "adzan": "**Plugin : **`adzan`\
         \n\n  •  **Syntax :** `.adzan` <nama kota>\
-        \n  •  **Function : **Memberikan Informasi Waktu Sholat.\
+        \n  •  **Function : **Menunjukkan waktu jadwal sholat dari kota yang diberikan.\
     "
     }
 )
