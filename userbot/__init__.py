@@ -242,6 +242,9 @@ QUOTES_API_TOKEN = os.environ.get("QUOTES_API_TOKEN", None)
 # Deezloader
 DEEZER_ARL_TOKEN = os.environ.get("DEEZER_ARL_TOKEN", None)
 
+# NSFW Detect DEEP AI
+DEEP_AI = os.environ.get("DEEP_AI", None)
+
 # Photo Chat - Get this value from http://antiddos.systems
 API_TOKEN = os.environ.get("API_TOKEN", None)
 API_URL = os.environ.get("API_URL", "http://antiddos.systems")
