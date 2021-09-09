@@ -22,7 +22,6 @@ fontTools
 geopy
 git+https://github.com/ahupp/python-magic
 git+https://github.com/johnwmillr/LyricsGenius.git
-git+https://github.com/LonamiWebs/Telethon
 git+https://github.com/Ncode2014/search-engine-parser
 git+https://github.com/voins/google-images-download.git@2cd68173c961324a2c41c61e8b6f40a49663ce60
 gitpython
@@ -88,7 +87,7 @@ setuptools>=28.8.0
 speedtest-cli
 sqlalchemy<=1.3.23
 telegraph
-Telethon>=1.21.1
+telethon
 telethon-session-sqlalchemy
 telethon-tgcrypto
 twitter_scraper
