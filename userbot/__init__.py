@@ -182,7 +182,7 @@ BITLY_TOKEN = os.environ.get("BITLY_TOKEN", None)
 TERM_ALIAS = os.environ.get("TERM_ALIAS", "Man-Userbot")
 
 # Bot version
-BOT_VER = os.environ.get("BOT_VER", "0.5.3")
+BOT_VER = os.environ.get("BOT_VER", "0.6.1")
 
 # Default .alive username
 ALIVE_USERNAME = os.environ.get("ALIVE_USERNAME", None)
@@ -225,7 +225,7 @@ G_DRIVE_FOLDER_ID = os.environ.get("G_DRIVE_FOLDER_ID", None)
 G_DRIVE_INDEX_URL = os.environ.get("G_DRIVE_INDEX_URL", None)
 
 TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY",
-                                         "./downloads")
+                                         "./downloads/")
 # Google Photos
 G_PHOTOS_CLIENT_ID = os.environ.get("G_PHOTOS_CLIENT_ID", None)
 G_PHOTOS_CLIENT_SECRET = os.environ.get("G_PHOTOS_CLIENT_SECRET", None)
