@@ -52,7 +52,7 @@ async def _(event):
             entity=event.chat_id,
             message="""**Automatic AntiFlooder**
 [User](tg://user?id={}) Membanjiri obrolan.
-**Aksi:** Saya membisukan dia 🔇""".format(
+**Aksi:** Hahahaha Cok Saya membisukan dia 🔇""".format(
                 event.message.from_id
             ),
             reply_to=event.message.id,
@@ -80,7 +80,7 @@ CMD_HELP.update(
     {
         "antiflood": "**Plugin : **`antiflood`\
         \n\n  •  **Syntax :** `.setflood` [jumlah pesan]\
-        \n  •  **Function : **memperingatkan pengguna jika dia melakukan spam pada obrolan dan jika Anda adalah admin maka itu akan membisukan dia dalam grup itu.\
+        \n  •  **Function : **memperingatkan pengguna jika dia melakukan spam pada obrolan dan jika Anda adalah admin maka itu akan membisukan dia dalam grup itu Cok.\
         \n\n  •  **NOTE :** Untuk mematikan setflood, atur jumlah pesan menjadi 0 » `.setflood 0`\
     "
     }
