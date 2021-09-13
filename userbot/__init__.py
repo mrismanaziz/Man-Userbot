@@ -333,7 +333,7 @@ async def check_botlog_chatid():
     if entity.default_banned_rights.send_messages:
         LOGS.info(
             "Akun Anda tidak bisa mengirim pesan ke BOTLOG_CHATID "
-            "Periksa apakah Anda memasukan ID grup dengan benar.")
+            "Periksa Cok apakah Anda memasukan ID grup dengan benar.")
         quit(1)
 
 
@@ -349,7 +349,7 @@ with bot:
 
 
 async def check_alive():
-    await bot.send_message(BOTLOG_CHATID, "```🔥 Man-Userbot Berhasil Di Aktifkan 🔥```")
+    await bot.send_message(BOTLOG_CHATID, "```乂 Cokk-Userbot Sudah Aktif Cok 乂```")
     return
 
 with bot:
@@ -426,17 +426,17 @@ with bot:
         async def handler(event):
             await event.message.get_sender()
             text = (
-                f"**Hey**, __I am using__ 🔥 **Cokk-Userbot** 🔥\n\n"
+                f"**Hey**, __I am using__ 乂 **COKK-Userbot** 乂\n\n"
                 f"       __Thanks For Using me__\n\n"
                 f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
                 f"✣ **Support :** [For Support](t.me/yangmutebabi)\n"
                 f"✣ **Owner Repo :** [AB](t.me/yangmutebabi)\n"
-                f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n")
+                f"✣ **Repo :** [COKK-Userbot](https://github.com/ABKeceX/Man-Userbot)\n")
             await tgbot.send_file(event.chat_id, logo, caption=text,
                                   buttons=[
                                       [
                                           custom.Button.url(
-                                              text="⛑ Help Support ⛑",
+                                              text="乂 Help Support 乂",
                                               url="https://t.me/yangmutebabi"
                                           )
                                       ]
@@ -452,7 +452,7 @@ with bot:
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.article(
                     "Harap Gunakan .help Untuk Perintah",
-                    text="{}\n\n**✥ Jumlah Module Yang Tersedia :** `{}` **Module**\n               \n**✥ Daftar Modul Man-Userbot :** \n".format(
+                    text="{}\n\n**✥ Jumlah Module Yang Tersedia :** `{}` **Module**\n               \n**ꗄ Daftar Modul Cokk-Userbot :** \n".format(
                         "**𖣘 COKK-UserBot Main Menu 𖣘**",
                         len(dugmeler),
                     ),
@@ -464,31 +464,31 @@ with bot:
                     title="Repository",
                     description="Repository Man - Userbot",
                     url="https://t.me/SharingUserbot",
-                    text="**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **Owner Repo :** [Risman](https://t.me/mrismanaziz)\n✣ **Grup Support :** @SharingUserbot\n✣ **Repository :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
+                    text="**COKK - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n𖣘 **Owner Repo COK :** [『AB』](https://t.me/yangmutebabi)\n𖣘 **For Support :** [𝑲𝑳𝑰𝑲 𝑫𝑰𝑺𝑰𝑵𝑰](t.me/@yangmutebabi)\n𖣘 **Repo :** [Cokk-Userbot](https://github.com/ABKeceX/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url(
-                                "Support",
-                                "https://t.me/SharingUserbot"),
+                                "乂 For Support 乂",
+                                "https://t.me/yangmutebabi"),
                             custom.Button.url(
                                 "Repo",
-                                "https://github.com/mrismanaziz/Man-Userbot")],
+                                "https://github.com/ABKeceX/Man-Userbot")],
                     ],
                     link_preview=False)
             else:
                 result = builder.article(
-                    title="✗ Man-Userbot ✗",
-                    description="Man - UserBot | Telethon",
-                    url="https://t.me/SharingUserbot",
-                    text="**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **Owner Repo :** [Risman](https://t.me/mrismanaziz)\n✣ **Grup Support :** @SharingUserbot\n✣ **Repository :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
+                    title="𖣘 Cokk-Userbot 𖣘",
+                    description="Cokk - UserBot | Telethon",
+                    url="https://t.me/yangmutebabi",
+                    text="**COKK - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n𖣘 **Owner Repo COK :** [『AB』](https://t.me/yangmutebabi)\n𖣘 **For Support :** [𝑲𝑳𝑰𝑲 𝑫𝑰𝑺𝑰𝑵𝑰](t.me/@yangmutebabi)\n𖣘 **Repo :** [Cokk-Userbot](https://github.com/ABKeceX/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url(
-                                "Support",
+                                "乂 For Support 乂",
                                 "https://t.me/yangmutebabi"),
                             custom.Button.url(
                                 "Repo",
-                                "https://github.com/mrismanaziz/Man-Userbot")],
+                                "https://github.com/ABKeceX/Man-Userbot")],
                     ],
                     link_preview=False,
                 )
@@ -508,7 +508,7 @@ with bot:
                 # https://t.me/TelethonChat/115200
                 await event.edit(buttons=buttons)
             else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {ALIVE_NAME}"
+                reply_pop_up_alert = f"Kamu Tidak diizinkan Cok, ini Userbot Milik {ALIVE_NAME}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"close")))
