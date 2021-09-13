@@ -5,7 +5,7 @@
 #
 # inline credit @keselekpermen69
 # Recode by @mrismanaziz
-# t.me/SharingUserbot
+# t.me/yangmutebabi
 #
 """ Userbot initialization. """
 
@@ -426,18 +426,18 @@ with bot:
         async def handler(event):
             await event.message.get_sender()
             text = (
-                f"**Hey**, __I am using__ 🔥 **Man-Userbot** 🔥\n\n"
+                f"**Hey**, __I am using__ 🔥 **Cokk-Userbot** 🔥\n\n"
                 f"       __Thanks For Using me__\n\n"
                 f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
-                f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
-                f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"
+                f"✣ **Support :** [For Support](t.me/yangmutebabi)\n"
+                f"✣ **Owner Repo :** [AB](t.me/yangmutebabi)\n"
                 f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n")
             await tgbot.send_file(event.chat_id, logo, caption=text,
                                   buttons=[
                                       [
                                           custom.Button.url(
-                                              text="⛑ Group Support ⛑",
-                                              url="https://t.me/SharingUserbot"
+                                              text="⛑ Help Support ⛑",
+                                              url="https://t.me/yangmutebabi"
                                           )
                                       ]
                                   ]
@@ -453,7 +453,7 @@ with bot:
                 result = builder.article(
                     "Harap Gunakan .help Untuk Perintah",
                     text="{}\n\n**✥ Jumlah Module Yang Tersedia :** `{}` **Module**\n               \n**✥ Daftar Modul Man-Userbot :** \n".format(
-                        "**✗ Man-Userbot Main Menu ✗**",
+                        "**𖣘 COKK-UserBot Main Menu 𖣘**",
                         len(dugmeler),
                     ),
                     buttons=buttons,
@@ -485,7 +485,7 @@ with bot:
                         [
                             custom.Button.url(
                                 "Support",
-                                "https://t.me/SharingUserbot"),
+                                "https://t.me/yangmutebabi"),
                             custom.Button.url(
                                 "Repo",
                                 "https://github.com/mrismanaziz/Man-Userbot")],
@@ -514,9 +514,9 @@ with bot:
         @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"close")))
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid:
-                await event.edit("**Help Mode Button Ditutup!**")
+                await event.edit("**Help Mode Button Ditutup Cok!**")
             else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {ALIVE_NAME}"
+                reply_pop_up_alert = f"Kamu Tidak diizinkan Cok, ini Userbot Milik {ALIVE_NAME}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(
@@ -534,7 +534,7 @@ with bot:
                 # https://t.me/TelethonChat/115200
                 await event.edit(buttons=buttons)
             else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {ALIVE_NAME}"
+                reply_pop_up_alert = f"Kamu Tidak diizinkan Cok, ini Userbot Milik {ALIVE_NAME}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(
@@ -550,7 +550,7 @@ with bot:
                 if len(cmdhel) > 150:
                     help_string = (
                         str(CMD_HELP[modul_name]).replace('`', '')[:150] + "..."
-                        + "\n\nBaca Teks Berikutnya Ketik .help "
+                        + "\n\nBaca Teks Berikutnya Ketik .help Cok "
                         + modul_name
                         + " "
                     )
@@ -565,13 +565,13 @@ with bot:
                     )
                 )
             else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {ALIVE_NAME}"
+                reply_pop_up_alert = f"Kamu Tidak diizinkan Cok, ini Userbot Milik {ALIVE_NAME}"
 
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
     except BaseException:
         LOGS.info(
-            "Help Mode Inline Bot Mu Tidak aktif. Tidak di aktifkan juga tidak apa-apa. "
+            "Help Mode Inline Bot Mu Tidak aktif Cok. Tidak di aktifkan juga tidak apa-apa Cok. "
             "Untuk Mengaktifkannya Buat bot di @BotFather Lalu Tambahkan var BOT_TOKEN dan BOT_USERNAME. "
             "Pergi Ke @BotFather lalu settings bot » Pilih mode inline » Turn On. ")
     try:
