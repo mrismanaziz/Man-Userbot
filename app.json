@@ -1,9 +1,9 @@
 {
-  "name": "Man-Userbot",
-  "description": "[Man-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
-  "logo": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
-  "keywords": ["telegram", "userbot", "man-userbot", "modular", "python"],
-  "repository": "https://github.com/mrismanaziz/Man-Userbot",
+  "name": "Cok-Userbot",
+  "description": "[Cok-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
+  "logo": "https://telegra.ph/file/1cdbbd432ccb206eb4c9b.jpg",
+  "keywords": ["telegram", "userbot", "cok-userbot", "modular", "python"],
+  "repository": "https://github.com/ABKeceX/Man-Userbot",
   "telegram": "https://t.me/yangmutebabi",
   "For Support": "https://t.me/yangmutebabi",
   "stack": "container",
@@ -17,7 +17,7 @@
       "required": true
     },
      "STRING_SESSION": {
-      "description": "Dapatkan String Session di Grup » https://t.me/sharinguserbot » Lalu ketik #string",
+      "description": "Dapatkan String Session di https://replit.com/@mrismanaziz/stringen?lite=1&outputonly=1#main.py",
       "required": true
     },
     "HEROKU_APP_NAME": {
@@ -44,7 +44,7 @@
     },
     "ALIVE_LOGO": {
       "description": "Gambar dalam module .alive",
-      "value": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
+      "value": "https://telegra.ph/file/408f4327fd0d9040c6fae.jpg",
       "required": false
     },
     "ALIVE_TEKS_CUSTOM": {
