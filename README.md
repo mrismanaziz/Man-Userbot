@@ -16,7 +16,7 @@ Gunakan bot ini dengan risiko Anda sendiri, dan gunakan dengan bijak.
 
 ## Tutorial
 
-- [Panduan Cara Memasang Man-Userbot](https://mrismanaziz.medium.com/cara-memasang-userbot-telegram-repo-man-userbot-deploy-di-heroku-c56d1f8b5537)
+- [Panduan Cara Memasang Cok-Userbot](https://mrismanaziz.medium.com/cara-memasang-userbot-telegram-repo-man-userbot-deploy-di-heroku-c56d1f8b5537)
 - [Cara Setting GDrive modules](https://telegra.ph/How-To-Setup-Google-Drive-04-03)
 - [Cara Setting Last.FM modules](https://telegra.ph/How-to-set-up-LastFM-module-for-Paperplane-userbot-11-02)
 
@@ -37,6 +37,7 @@ Thanks For all :
 *   [Kampang-Bot](https://github.com/ManusiaRakitan/Kampang-Bot) - Koala
 *   [X-REMIX](https://github.com/ximfine) -  X_ImFine
 *   [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) -  Risman
+*   [Cok-UserBot](https://github.com/ABKeceX/Cok-Userbot/tree/Cok-UserBot) - AB
 
 ## License
 Licensed under [Raphielscape Public License](https://github.com/mrismanaziz/Man-Userbot/blob/Man-Userbot/LICENSE) - Version 1.d, February 2020
