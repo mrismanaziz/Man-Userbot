@@ -49,7 +49,7 @@
     },
     "ALIVE_TEKS_CUSTOM": {
       "description": "Pesan Text Kustom Alive Mu Untuk Perintah .alive (Isi Terserah aja Cok)",
-      "value": "Woi Cok, Keren Amat Lu"
+      "value": "Woi Cok, Keren Amat Lu",
       "required": false
     },
     "S_PACK_NAME": {
