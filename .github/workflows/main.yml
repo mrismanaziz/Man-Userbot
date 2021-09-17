@@ -1,9 +1,9 @@
 name: CI
 on:
   push:
-    branches: [ Man-Userbot ]
+    branches: [ Cok-Userbot ]
   pull_request:
-    branches: [ Man-Userbot ]
+    branches: [ Cok-Userbot ]
   workflow_dispatch:
 jobs:
   build:
