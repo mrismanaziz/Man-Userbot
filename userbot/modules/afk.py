@@ -110,13 +110,15 @@ async def on_afk(event):
             message_to_reply = (
                 f"**乂 {ALIVE_NAME} Sedang AFK Cok** `{total_afk_time}` **Yang Lalu 乂**\n"
                 + f"**✦҈͜͡𖣘 Karena :** `{reason}`\n"
-                + f"**TOLONG JANGAN GANGGU DULU YA COKKK**"
+                + '**TOLONG JANGAN GANGGU DULU YA COKKK**'
             )
+
         else:
             message_to_reply = (
                 f"**乂 Maaf Ya Cok{ALIVE_NAME} Sedang AFK** `{total_afk_time}` **Yang Lalu 乂**\n"
-                + f"** TOLONG JANGAN DIGANGGU DULU YA COKKK**"
+                + '** TOLONG JANGAN DIGANGGU DULU YA COKKK**'
             )
+
         try:
             if pic.endswith((".tgs", ".webp")):
                 msg = await event.reply(file=pic)
