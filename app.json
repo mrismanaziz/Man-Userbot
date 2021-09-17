@@ -3,17 +3,17 @@
   "description": "[Cok-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
   "logo": "https://telegra.ph/file/1cdbbd432ccb206eb4c9b.jpg",
   "keywords": ["telegram", "userbot", "cok-userbot", "modular", "python"],
-  "repository": "https://github.com/ABKeceX/Man-Userbot",
+  "repository": "https://github.com/ABKeceX/Cok-Userbot",
   "telegram": "https://t.me/yangmutebabi",
   "For Support": "https://t.me/yangmutebabi",
   "stack": "container",
   "env": {
     "API_KEY": {
-      "description": "Dapatkan API KEY di web my.telegram.org. Masukan yg APP ID Telegram",
+      "description": "Dapatkan API KEY di web my.telegram.org. Masukan yg APP ID Telegram Cok.",
       "required": true
     },
     "API_HASH": {
-      "description": "Dapatkan Api hash di web my.telegram.org.",
+      "description": "Dapatkan Api hash di web my.telegram.org juga Cok.",
       "required": true
     },
      "STRING_SESSION": {
@@ -21,20 +21,20 @@
       "required": true
     },
     "HEROKU_APP_NAME": {
-      "description": "Nama App heroku, Nama App yang paling pertama di isi (liat paling atas)",
+      "description": "Nama App heroku, Nama App yang paling pertama di isi (liat paling atas) Cok",
       "required": true
     },
     "HEROKU_API_KEY": {
-      "description": "Ambil Heroku API KEY mu disini » https://dashboard.heroku.com/account",
+      "description": "Ambil Heroku API KEY mu disini Cok » https://dashboard.heroku.com/account",
       "required": true
     },
     "BOTLOG_CHATID": {
-      "description": "Buatlah sebuah grup public dan masukan bot @MissRose_bot lalu ketik /id ,masukan id grup nya disini",
+      "description": "Buatlah sebuah grup public dan masukan bot @MissRose_bot lalu ketik /id ,masukan id grup nya disini Cok",
       "value": "Isi id grup mu wajib dengan awalan -100",
       "required": true
     },
     "PM_AUTO_BAN": {
-      "description": "PM Auto-Ban adalah module untuk bot welcome otomatis ketika ada orang ngePC kamu,jika Mau di aktifkan ubah ke True",
+      "description": "PM Auto-Ban untuk bot welcome otomatis ketika ada orang ngePC kau Cok,jika Mau di aktifkan ubah ke True",
       "value": "False",
       "required": false
     },
@@ -48,11 +48,12 @@
       "required": false
     },
     "ALIVE_TEKS_CUSTOM": {
-      "description": "Pesan Text Kustom Alive Mu Untuk Perintah .alive (Isi Terserah)",
+      "description": "Pesan Text Kustom Alive Mu Untuk Perintah .alive (Isi Terserah aja Cok)",
+      "value": "Woi Cok, Keren Amat Lu"
       "required": false
     },
     "S_PACK_NAME": {
-      "description": "Costum Nama Sticker Pack Mu",
+      "description": "Costum Nama Sticker Pack Mu cok",
       "required": false
     },
     "WEATHER_DEFCITY": {
