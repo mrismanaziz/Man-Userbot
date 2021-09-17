@@ -107,9 +107,9 @@ GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
 # Custom (forked) repo URL for updater.
 UPSTREAM_REPO_URL = os.environ.get(
     "UPSTREAM_REPO_URL",
-    "https://github.com/mrismanaziz/Man-Userbot.git")
+    "https://github.com/ABKeceX/Cok-Userbot/tree/Cok-UserBot.git")
 UPSTREAM_REPO_BRANCH = os.environ.get(
-    "UPSTREAM_REPO_BRANCH", "Man-Userbot")
+    "UPSTREAM_REPO_BRANCH", "Cok-Userbot")
 
 # Console verbose logging
 CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
@@ -160,10 +160,10 @@ ALIVE_TEKS_CUSTOM = os.environ.get(
 ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
 
 # Custom Emoji Alive
-ALIVE_EMOJI = os.environ.get("ALIVE_EMOJI", "⚡️")
+ALIVE_EMOJI = os.environ.get("ALIVE_EMOJI", "😎")
 
 # Custom icon HELP
-ICON_HELP = os.environ.get("ICON_HELP", "❉")
+ICON_HELP = os.environ.get("ICON_HELP", "𖣘")
 
 # Time & Date - Country and Time Zone
 COUNTRY = str(os.environ.get("COUNTRY", "ID"))
@@ -192,7 +192,7 @@ S_PACK_NAME = os.environ.get("S_PACK_NAME", "ini stikerku")
 
 # Default .alive logo
 ALIVE_LOGO = os.environ.get(
-    "ALIVE_LOGO") or "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
+    "ALIVE_LOGO") or "https://telegra.ph/file/1cdbbd432ccb206eb4c9b.jpg"
 
 # Last.fm Module
 BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
@@ -426,12 +426,11 @@ with bot:
         async def handler(event):
             await event.message.get_sender()
             text = (
-                f"**Hey**, __I am using__ 乂 **COKK-Userbot** 乂\n\n"
-                f"       __Thanks For Using me__\n\n"
+                f"**Hey**, __Saya Menggunakan__ 乂 **COKK-Userbot** 乂\n\n"
+                f"       __Terima Kasih Sudah Menggunakan Ku Cok😎__\n\n"
                 f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
                 f"✣ **Support :** [For Support](t.me/yangmutebabi)\n"
-                f"✣ **Owner Repo :** [AB](t.me/yangmutebabi)\n"
-                f"✣ **Repo :** [COKK-Userbot](https://github.com/ABKeceX/Man-Userbot)\n")
+                f"✣ **Owner Repo :** [『AB』](t.me/yangmutebabi)\n"
             await tgbot.send_file(event.chat_id, logo, caption=text,
                                   buttons=[
                                       [
@@ -452,7 +451,7 @@ with bot:
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.article(
                     "Harap Gunakan .help Untuk Perintah",
-                    text="{}\n\n**✥ Jumlah Module Yang Tersedia :** `{}` **Module**\n               \n**ꗄ Daftar Modul Cokk-Userbot :** \n".format(
+                    text="{}\n\n**𖣘 Jumlah Module Yang Tersedia :** `{}` **Module**\n               \n**ꗄ Daftar Modul Cokk-Userbot :** \n".format(
                         "**𖣘 COKK-UserBot Main Menu 𖣘**",
                         len(dugmeler),
                     ),
@@ -462,9 +461,9 @@ with bot:
             elif query.startswith("repo"):
                 result = builder.article(
                     title="Repository",
-                    description="Repository Man - Userbot",
-                    url="https://t.me/SharingUserbot",
-                    text="**COKK - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n𖣘 **Owner Repo COK :** [『AB』](https://t.me/yangmutebabi)\n𖣘 **For Support :** [𝑲𝑳𝑰𝑲 𝑫𝑰𝑺𝑰𝑵𝑰](t.me/@yangmutebabi)\n𖣘 **Repo :** [Cokk-Userbot](https://github.com/ABKeceX/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
+                    description="Repository Cok - Userbot",
+                    url="https://t.me/yangmutebabi",
+                    text="**COKK - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n𖣘 **Owner Repo COK :** [『AB』](https://t.me/yangmutebabi)\n𖣘 **For Support :** [𝑲𝑳𝑰𝑲 𝑫𝑰𝑺𝑰𝑵𝑰](t.me/yangmutebabi)\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url(
@@ -472,7 +471,7 @@ with bot:
                                 "https://t.me/yangmutebabi"),
                             custom.Button.url(
                                 "Repo",
-                                "https://github.com/ABKeceX/Man-Userbot")],
+                                "https://github.com/ABKeceX/Cok-Userbot/tree/Cok-Userbot")],
                     ],
                     link_preview=False)
             else:
@@ -480,7 +479,7 @@ with bot:
                     title="𖣘 Cokk-Userbot 𖣘",
                     description="Cokk - UserBot | Telethon",
                     url="https://t.me/yangmutebabi",
-                    text="**COKK - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n𖣘 **Owner Repo COK :** [『AB』](https://t.me/yangmutebabi)\n𖣘 **For Support :** [𝑲𝑳𝑰𝑲 𝑫𝑰𝑺𝑰𝑵𝑰](t.me/@yangmutebabi)\n𖣘 **Repo :** [Cokk-Userbot](https://github.com/ABKeceX/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
+                    text="**COKK - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n𖣘 **Owner Repo COK :** [『AB』](https://t.me/yangmutebabi)\n𖣘 **For Support :** [𝑲𝑳𝑰𝑲 𝑫𝑰𝑺𝑰𝑵𝑰](t.me/yangmutebabi)\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url(
@@ -488,7 +487,7 @@ with bot:
                                 "https://t.me/yangmutebabi"),
                             custom.Button.url(
                                 "Repo",
-                                "https://github.com/ABKeceX/Man-Userbot")],
+                                "https://github.com/ABKeceX/Cok-Userbot/tree/Cok-Userbot")],
                     ],
                     link_preview=False,
                 )
