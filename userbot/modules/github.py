@@ -51,7 +51,7 @@ async def _(event):
                     limit -= 1
                     if limit == 0:
                         break
-            REPLY = "**GitHub Info for** `{username}`\
+            REPLY = "**GitHub Info Cok** `{username}`\
                 \n👤 **Name :** [{name}]({html_url})\
                 \n🔧 **Type :** `{type}`\
                 \n🏢 **Company :** `{company}`\
