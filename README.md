@@ -30,23 +30,16 @@ Gunakan bot ini dengan risiko Anda sendiri, dan gunakan dengan bijak.
 
 Follow Channel [@Lunatic0de](https://t.me/Lunatic0de) untuk info Update bot dan Gabung Group [@SharingUserbot](https://t.me/SharingUserbot) untuk untuk diskusi, pelaporan bug, dan bantuan tentang Man-Userbot.
 
-## Credits
-Thanks For all :
-*   [RaphielGang](https://github.com/RaphielGang) - Telegram-Paperplane
-*   [AvinashReddy3108](https://github.com/AvinashReddy3108) - PaperplaneExtended
-*   [Mkaraniya](https://github.com/mkaraniya) & [Dev73](https://github.com/Devp73) - OpenUserBot
-*   [Mr.Miss](https://github.com/keselekpermen69) - UserButt
-*   [adekmaulana](https://github.com/adekmaulana) - ProjectBish
-*   [MoveAngel](https://github.com/MoveAngel) - One4uBot
-*   [AidilAryanto](https://github.com/aidilaryanto) - ProjectDils 
-*   [Alfianandaa](https://github.com/alfianandaa/ProjectAlf) - ProjectAlf
-*   [AnggaR69s](https://github.com/GengKapak/DCLXVI) - DCLXVI
-*   [BianSepang](https://github.com/BianSepang/WeebProject) - WeebProject
-*   [TeamUserge](https://github.com/UsergeTeam/Userge) - Userge
-*   [Lord-Userbot](https://github.com/Zora24/Lord-Userbot) - Alvin
-*   [Kampang-Bot](https://github.com/ManusiaRakitan/Kampang-Bot) - Koala
-*   [X-REMIX](https://github.com/ximfine) -  X_ImFine
-*   [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) -  Risman
+## © Credits
+#### Thanks To Everyone Who Has Helped Make This Userbot Awesome!
+*   [AdekMaulana](https://github.com/adekmaulana) : ProjectBish
+*   [RaphielGang](https://github.com/RaphielGang) : Paperplane
+*   [BianSepang](https://github.com/BianSepang/WeebProject) : WeebProject
+*   [Sandy1709](https://github.com/sandy1709/catuserbot) : CatUserbot
+*   [X_ImFine](https://github.com/ximfine) :  XBot-REMIX
+*   [Risman](https://github.com/mrismanaziz/Man-Userbot) :  Man-Userbot
+*   [Koala](https://github.com/ManusiaRakitan/Kampang-Bot) : Kampang-Bot
+*   [Alvin](https://github.com/Zora24/Lord-Userbot) : Lord-Userbot
 
 ## License
 Licensed under [Raphielscape Public License](https://github.com/mrismanaziz/Man-Userbot/blob/Man-Userbot/LICENSE) - Version 1.d, February 2020
