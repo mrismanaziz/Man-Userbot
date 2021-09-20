@@ -15,7 +15,6 @@ from userbot import (
     CMD_HELP,
     HEROKU_API_KEY,
     HEROKU_APP_NAME,
-    UPSTREAM_REPO_BRANCH,
     UPSTREAM_REPO_URL,
 )
 from userbot.events import register
@@ -24,7 +23,7 @@ from userbot.events import register
 async def gen_chlog(repo, diff):
     d_form = "%d/%m/%y"
     return "".join(
-        f"•[{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n"
+        f"• [{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n"
         for c in repo.iter_commits(diff)
     )
 
@@ -38,8 +37,8 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         heroku_applications = heroku.apps()
         if HEROKU_APP_NAME is None:
             await event.edit(
-                "`[HEROKU]: Harap Siapkan Variabel` **HEROKU_APP_NAME** `"
-                " untuk dapat deploy perubahan terbaru dari Userbot.`"
+                "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_APP_NAME` "
+                " **untuk deploy perubahan terbaru dari Userbot.**"
             )
             repo.__del__()
             return
@@ -49,7 +48,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
                 break
         if heroku_app is None:
             await event.edit(
-                f"{txt}\n`Kredensial Heroku tidak valid untuk deploy Man-Userbot dyno.`"
+                f"{txt}\n**Kredensial Heroku tidak valid untuk deploy Man-Userbot dyno.**"
             )
             return repo.__del__()
         await event.edit("`[HEROKU]: Update Deploy Man-Userbot Sedang Dalam Proses...`")
@@ -88,7 +87,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             )
 
     else:
-        await event.edit("`[HEROKU]: Harap Siapkan Variabel` **HEROKU_API_KEY** `.`")
+        await event.edit("**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_API_KEY`")
         await asyncio.sleep(10)
         await event.delete()
     return
@@ -127,20 +126,20 @@ async def upstream(event):
     off_repo = UPSTREAM_REPO_URL
     force_update = False
     try:
-        txt = "`Pembaruan Tidak Dapat Di Lanjutkan Karna "
-        txt += "Beberapa Masalah Terjadi`\n\n**LOGTRACE:**\n"
+        txt = "**Pembaruan Tidak Dapat Di Lanjutkan Karna "
+        txt += "Beberapa Masalah Terjadi**\n\n**LOGTRACE:**\n"
         repo = Repo()
     except NoSuchPathError as error:
-        await event.edit(f"{txt}\n`Directory {error} Tidak Dapat Di Temukan`")
+        await event.edit(f"{txt}\n**Directory {error} Tidak Dapat Di Temukan**")
         return repo.__del__()
     except GitCommandError as error:
-        await event.edit(f"{txt}\n`Gagal Awal! {error}`")
+        await event.edit(f"{txt}\n**Gagal Awal!** `{error}`")
         return repo.__del__()
     except InvalidGitRepositoryError as error:
         if conf is None:
             return await event.edit(
-                f"`Sayangnya, Directory {error} Tampaknya Bukan Dari Repo."
-                "\nTapi Kita Bisa Memperbarui Paksa Userbot Menggunakan .update now.`"
+                f"**Sayangnya, Directory {error} Tampaknya Bukan Dari Repo."
+                "\nTapi Kita Bisa Memperbarui Paksa Userbot Menggunakan** `.update deply`"
             )
         repo = Repo.init()
         origin = repo.create_remote("upstream", off_repo)
@@ -151,15 +150,6 @@ async def upstream(event):
         repo.heads.master.checkout(True)
 
     ac_br = repo.active_branch.name
-    if ac_br != UPSTREAM_REPO_BRANCH:
-        await event.edit(
-            "**[UPDATER]:**\n"
-            f"`Looks like you are using your own custom branch ({ac_br}). "
-            "in that case, Updater is unable to identify "
-            "which branch is to be merged. "
-            "please checkout to any official branch`"
-        )
-        return repo.__del__()
     try:
         repo.create_remote("upstream", off_repo)
     except BaseException:
@@ -179,7 +169,7 @@ async def upstream(event):
     if conf is None and not force_update:
         changelog_str = f"**✥ Pembaruan Untuk Man-Userbot [{ac_br}] :\n\n✥ Pembaruan:**\n`{changelog}`"
         if len(changelog_str) > 4096:
-            await event.edit("`Changelog Terlalu Besar, Buka File Untuk Melihatnya.`")
+            await event.edit("**Changelog Terlalu Besar, Buka File Untuk Melihatnya.**")
             with open("output.txt", "w+") as file:
                 file.write(changelog_str)
             await event.client.send_file(
@@ -191,7 +181,7 @@ async def upstream(event):
         else:
             await event.edit(changelog_str)
         return await event.respond(
-            "✥ **Perintah Untuk Update Man-Userbot**\n ›`.update now`\n ›`.update deploy`\n\n__Untuk Meng Update Fitur Terbaru Dari Man-Userbot.__"
+            "✥ **Perintah Untuk Update Man-Userbot**\n › `.update now`\n › `.update deploy`\n\n__Untuk Meng Update Fitur Terbaru Dari Man-Userbot.__"
         )
 
     if force_update:
