@@ -21,6 +21,7 @@ from userbot import (
     LASTMSG,
     LOGS,
     PM_AUTO_BAN,
+    PM_LIMIT,
 )
 from userbot.events import register
 
@@ -91,9 +92,9 @@ async def permitpm(event):
             else:
                 COUNT_PM[event.chat_id] = COUNT_PM[event.chat_id] + 1
 
-            if COUNT_PM[event.chat_id] > 6:
+            if COUNT_PM[event.chat_id] > PM_LIMIT:
                 await event.respond(
-                    "**Maaf Anda Telah Di Blokir Karna Melakukan Spam Chat*"
+                    "**Maaf Anda Telah Di Blokir Karna Melakukan Spam Chat**"
                 )
 
                 try:
