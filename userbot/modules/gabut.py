@@ -105,7 +105,7 @@ async def typewriter(typew):
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
-    await typew.edit(f"**JAKA SEMBUNG BAWA GOLOK**")
+    await typew.edit('**JAKA SEMBUNG BAWA GOLOK**')
     sleep(3)
     await typew.edit("**NIMBRUNG GOBLOKK!!!🔥**")
 
@@ -129,7 +129,7 @@ async def typewriter(typew):
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
-    await typew.edit(f"**Salam Dulu Biar Sopan**")
+    await typew.edit('**Salam Dulu Biar Sopan**')
     sleep(2)
     await typew.edit("**السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ**")
 

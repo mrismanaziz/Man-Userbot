@@ -426,9 +426,7 @@ async def ban_user(chat_id, i, rights):
 async def _(event):
     if event.fwd_from:
         return
-    thumb = None
-    if os.path.exists(thumb_image_path):
-        thumb = thumb_image_path
+    thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
     await event.edit("`Rename & Upload in processing ....`")
     input_str = event.pattern_match.group(1)
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):

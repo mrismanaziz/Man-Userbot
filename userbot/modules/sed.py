@@ -61,9 +61,7 @@ async def separate_sed(sed_string):
         else:
             return replace, sed_string[start:], ""
 
-        flags = ""
-        if counter < len(sed_string):
-            flags = sed_string[counter:]
+        flags = sed_string[counter:] if counter < len(sed_string) else ""
         return replace, replace_with, flags.lower()
     return None
 

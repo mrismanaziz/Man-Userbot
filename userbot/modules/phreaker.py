@@ -11,7 +11,7 @@ async def _(event):
         return
     link = event.pattern_match.group(1)
     chat = "@scriptkiddies_bot"  # pylint:disable=E0602
-    nmap = f"nmap"  # pylint:disable=E0602
+    nmap = 'nmap'
     await event.edit("Processing....")
     async with bot.conversation("@scriptkiddies_bot") as conv:
         try:
@@ -34,7 +34,7 @@ async def _(event):
         return
     link = event.pattern_match.group(1)
     chat = "@scriptkiddies_bot"  # pylint:disable=E0602
-    subdomain = f"subdomain"  # pylint:disable=E0602
+    subdomain = 'subdomain'
     await event.edit("Processing....")
     async with bot.conversation("@scriptkiddies_bot") as conv:
         try:
@@ -57,7 +57,7 @@ async def _(event):
         return
     link = event.pattern_match.group(1)
     chat = "@scriptkiddies_bot"  # pylint:disable=E0602
-    httpheader = f"httpheader"  # pylint:disable=E0602
+    httpheader = 'httpheader'
     await event.edit("Processing....")
     async with bot.conversation("@scriptkiddies_bot") as conv:
         try:
@@ -80,7 +80,7 @@ async def _(event):
         return
     link = event.pattern_match.group(1)
     chat = "@Carol5_bot"  # pylint:disable=E0602
-    bin = f"bin"  # pylint:disable=E0602
+    bin = 'bin'
     await event.edit("Processing....")
     async with bot.conversation("@Carol5_bot") as conv:
         try:
@@ -103,7 +103,7 @@ async def _(event):
         return
     link = event.pattern_match.group(1)
     chat = "@Carol5_bot"  # pylint:disable=E0602
-    ss = f"ss"  # pylint:disable=E0602
+    ss = 'ss'
     await event.edit("Processing....")
     async with bot.conversation("@Carol5_bot") as conv:
         try:

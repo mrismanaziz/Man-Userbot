@@ -34,9 +34,7 @@ async def paste(pstl):
             m_list = None
             with open(downloaded_file_name, "rb") as fd:
                 m_list = fd.readlines()
-            message = ""
-            for m in m_list:
-                message += m.decode("UTF-8")
+            message = "".join(m.decode("UTF-8") for m in m_list)
             os.remove(downloaded_file_name)
         else:
             message = message.message

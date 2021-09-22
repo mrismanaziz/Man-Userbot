@@ -161,7 +161,7 @@ async def upstream(event):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
 
     if changelog == "" and not force_update:
-        await event.edit(f"\n**✥ Man-Userbot Sudah Versi Terbaru**\n")
+        await event.edit('\n**✥ Man-Userbot Sudah Versi Terbaru**\n')
         await asyncio.sleep(15)
         await event.delete()
         return repo.__del__()

@@ -11,7 +11,7 @@ async def _(event):
         return
     event.pattern_match.group(1)
     chat = "@GeDebugBetaBot"  # pylint:disable=E0602
-    resi = f"resi"  # pylint:disable=E0602
+    resi = 'resi'
     await event.edit("Processing....")
     async with bot.conversation("@GeDebugBetaBot") as conv:
         try:

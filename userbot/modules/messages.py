@@ -33,9 +33,9 @@ async def fastpurger(purg):
         await purg.client.delete_messages(chat, msgs)
     done = await purg.client.send_message(
         purg.chat_id,
-        f"`Berhasil Menghapus Kenangan`\
-        \nJumlah Pesan Yang Dihapus {str(count)} Pesan",
+        f'`Berhasil Menghapus Kenangan`\\\x1f        \nJumlah Pesan Yang Dihapus {count} Pesan',
     )
+
     """
     if BOTLOG:
         await purg.client.send_message(

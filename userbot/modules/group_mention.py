@@ -29,17 +29,15 @@ async def log_tagged_messages(event):
             fwd_message = await event.client.forward_messages(
                 e, event.message, silent=True
             )
-        else:
-            if event.is_private:
-                if not (await event.get_chat()).bot:
-                    await event.client.send_message(
-                        BOTLOG_CHATID,
-                        f"<b>📨 #TAGS</b> \n<b> • Dari : </b>{sender.first_name}\
+        elif event.is_private and not (await event.get_chat()).bot:
+            await event.client.send_message(
+                BOTLOG_CHATID,
+                f"<b>📨 #TAGS</b> \n<b> • Dari : </b>{sender.first_name}\
                                 \n<b> • User ID : </b><code>{sender.id}</code>",
-                        parse_mode="html",
-                        link_preview=True,
-                    )
-                    e = await event.client.get_entity(int(BOTLOG_CHATID))
-                    fwd_message = await event.client.forward_messages(
-                        e, event.message, silent=True
-                    )
+                parse_mode="html",
+                link_preview=True,
+            )
+            e = await event.client.get_entity(int(BOTLOG_CHATID))
+            fwd_message = await event.client.forward_messages(
+                e, event.message, silent=True
+            )
