@@ -17,6 +17,7 @@ from cowpy import cow
 from userbot import CMD_HELP, bot
 from userbot.events import register
 from userbot.modules.admin import get_user_from_event
+from userbot.utils import edit_delete
 
 # ================= CONSTANT =================
 METOOSTR = [
@@ -977,11 +978,11 @@ async def slap(replied_user, event):
     )
 
 
-@register(outgoing=True, pattern=r"^\.boobs(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.tt(?: |$)(.*)")
 async def boobs(e):
-    await e.edit("`Mencari Gambar Boobs, Dosa ditanggung sendiri...`")
+    await e.edit("`Mencari Gambar tt, Dosa ditanggung sendiri...`")
     await sleep(3)
-    await e.edit("`Mengirim Gambar Boobs...`")
+    await e.edit("`Mengirim Gambar tt...`")
     nsfw = requests.get("http://api.oboobs.ru/noise/1").json()[0]["preview"]
     urllib.request.urlretrieve("http://media.oboobs.ru/{}".format(nsfw), "*.jpg")
     os.rename("*.jpg", "boobs.jpg")
@@ -1006,7 +1007,7 @@ async def butts(e):
 @register(outgoing=True, pattern=r"^\.(yes|no|maybe|decide)$")
 async def decide(event):
     decision = event.pattern_match.group(1).lower()
-    message_id = event.reply_to_msg_id or None
+    message_id = event.reply_to_msg_id if event.reply_to_msg_id else None
     if decision != "decide":
         r = requests.get(f"https://yesno.wtf/api?force={decision}").json()
     else:
@@ -1017,10 +1018,18 @@ async def decide(event):
     )
 
 
+@register(outgoing=True, pattern=r"^\.;_;$", ignore_unsafe=True)
+async def fun(idk):
+    t = ";_;"
+    for j in range(10):
+        t = t[:-1] + "_;"
+        await idk.edit(t)
+
+
 @register(outgoing=True, pattern=r"^\.fp$")
-async def facepalm(e):
+async def facepalm(palm):
     """Facepalm  🤦‍♂"""
-    await e.edit("🤦‍♂")
+    await palm.edit("🤦‍♂")
 
 
 @register(outgoing=True, pattern=r"^\.cry$")
@@ -1223,7 +1232,7 @@ async def iqless(e):
     await e.edit("♿")
 
 
-@register(outgoing=True, pattern="^.fuck$")
+@register(outgoing=True, pattern=r"^\.fuck$")
 async def iqless(e):
     await e.edit(".                       /¯ )")
     await e.edit(".                       /¯ )\n                      /¯  /")
@@ -1254,12 +1263,12 @@ async def iqless(e):
 
 
 @register(outgoing=True, pattern=r"^\.moon$")
-async def moon(event):
+async def moon(moone):
     deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
     try:
-        for _ in range(32):
+        for x in range(32):
             await sleep(0.1)
-            await event.edit("".join(deq))
+            await moone.edit("".join(deq))
             deq.rotate(1)
     except BaseException:
         return
@@ -1313,7 +1322,7 @@ async def clock(event):
         return
 
 
-@register(outgoing=True, pattern="^.rain$")
+@register(outgoing=True, pattern=r"^\.rain$")
 async def rain(event):
     deq = deque(list("☀️🌤⛅️🌥☁️🌧⛈"))
     try:
@@ -1325,7 +1334,55 @@ async def rain(event):
         return
 
 
-@register(outgoing=True, pattern="^.love$")
+@register(outgoing=True, pattern=r"^\.boxes$")
+async def boxes(event):
+    deq = deque(list("🟥🟧🟨🟩🟦🟪🟫⬛⬜"))
+    try:
+        for x in range(32):
+            await sleep(0.1)
+            await event.edit("".join(deq))
+            deq.rotate(1)
+    except BaseException:
+        return
+
+
+@register(outgoing=True, pattern=r"^\.hmm$")
+async def hmm(event):
+    deq = deque(list("🤔🧐🤔🧐🤔🧐"))
+    try:
+        for x in range(32):
+            await sleep(0.1)
+            await event.edit("".join(deq))
+            deq.rotate(1)
+    except BaseException:
+        return
+
+
+@register(outgoing=True, pattern=r"^\.haha$")
+async def haha(event):
+    deq = deque(list("😂🤣😂🤣😂🤣"))
+    try:
+        for x in range(32):
+            await sleep(0.1)
+            await event.edit("".join(deq))
+            deq.rotate(1)
+    except BaseException:
+        return
+
+
+@register(outgoing=True, pattern=r"^\.operations$")
+async def operations(event):
+    deq = deque(list("!@#$%^&*()_+="))
+    try:
+        for x in range(32):
+            await sleep(0.1)
+            await event.edit("".join(deq))
+            deq.rotate(1)
+    except BaseException:
+        return
+
+
+@register(outgoing=True, pattern=r"^\.love$")
 async def love(event):
     deq = deque(list("❤️🧡💛💚💙💜🖤💕💞💓💗💖💘💝"))
     try:
@@ -1337,7 +1394,7 @@ async def love(event):
         return
 
 
-@register(outgoing=True, pattern="^.earth$")
+@register(outgoing=True, pattern=r"^\.earth$")
 async def earth(event):
     deq = deque(list("🌏🌍🌎🌎🌍🌏🌍🌎"))
     try:
@@ -1349,7 +1406,7 @@ async def earth(event):
         return
 
 
-@register(outgoing=True, pattern="^.hati$")
+@register(outgoing=True, pattern=r"^\.hati$")
 async def earth(event):
     deq = deque(list("🖤💜💙💚💛🧡❤️🤍"))
     try:
@@ -1490,6 +1547,15 @@ async def let_me_google_that_for_you(lmgtfy_q):
     )
 
 
+@register(outgoing=True, pattern=r"\^.-_-$", ignore_unsafe=True)
+async def emo(sigh):
+    """Ok..."""
+    okay = "-_-"
+    for i in range(10):
+        okay = okay[:-1] + "_-"
+        await sigh.edit(okay)
+
+
 @register(outgoing=True, pattern=r"^\.sayhi$")
 async def sayhi(e):
     await e.edit(
@@ -1505,41 +1571,41 @@ async def sayhi(e):
     )
 
 
-@register(pattern=r".scam(?: |$)(.*)", outgoing=True)
-async def scam(event):
-    """Just a small command to fake chat actions for fun !!"""
+@register(outgoing=True, pattern=r"^\.scam(?:\s|$)([\s\S]*)")
+async def _(event):
     options = [
-        "mengetik",
-        "kontak",
+        "typing",
+        "contact",
         "game",
-        "lokasi",
-        "suara",
-        "bulat",
+        "location",
+        "voice",
+        "round",
         "video",
-        "foto",
-        "dokumen",
-        "batal",
+        "photo",
+        "document",
+        "cancel",
+        "sticker",
     ]
     input_str = event.pattern_match.group(1)
     args = input_str.split()
-    if len(args) == 0:  # Let bot decide action and time
+    if len(args) == 0:
         scam_action = choice(options)
-        scam_time = randint(30, 60)
-    elif len(args) == 1:  # User decides time/action, bot decides the other.
+        scam_time = randint(300, 360)
+    elif len(args) == 1:
         try:
             scam_action = str(args[0]).lower()
-            scam_time = randint(30, 60)
+            scam_time = randint(300, 360)
         except ValueError:
             scam_action = choice(options)
             scam_time = int(args[0])
-    elif len(args) == 2:  # User decides both action and time
+    elif len(args) == 2:
         scam_action = str(args[0]).lower()
         scam_time = int(args[1])
     else:
-        await event.edit("`Tidak Valid`")
+        await edit_delete(event, "**Masukan jumlah detik yang benar !!**", 120)
         return
     try:
-        if scam_time > 300:
+        if scam_time > 0:
             await event.delete()
             async with event.client.action(event.chat_id, scam_action):
                 await sleep(scam_time)
@@ -1547,7 +1613,7 @@ async def scam(event):
         return
 
 
-@register(pattern=r".type(?: |$)(.*)", outgoing=True)
+@register(pattern=r"^\.type(?: |$)(.*)", outgoing=True)
 async def typewriter(typew):
     """Just a small command to make your keyboard become a typewriter!"""
     textx = await typew.get_reply_message()
@@ -1572,10 +1638,24 @@ async def typewriter(typew):
         await sleep(sleep_time)
 
 
-@register(outgoing=True, pattern=r"^\.leave$")
-async def leave(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`Master Telah Meninggalkan Grup, bye !!`")
+@register(outgoing=True, pattern=r"^\.f (.*)")
+async def payf(event):
+    paytext = event.pattern_match.group(1)
+    pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
+        paytext * 8,
+        paytext * 8,
+        paytext * 2,
+        paytext * 2,
+        paytext * 2,
+        paytext * 6,
+        paytext * 6,
+        paytext * 2,
+        paytext * 2,
+        paytext * 2,
+        paytext * 2,
+        paytext * 2,
+    )
+    await event.edit(pay)
 
 
 @register(outgoing=True, pattern=r"^\.fail$")
@@ -1918,7 +1998,19 @@ CMD_HELP.update(
         "\n\n> `.nou` `.bot` `.rock` `.gey` `.tf` `.paw` `.tai` `.nih`"
         "\n> `.fag` `.gtfo`; `.stfu` `.lol` `.lool` `.fail` `.leave`"
         "\n> `.iwi` `.sayhi` `.koc` `.gas` `.earth` `.love` `.rain`"
-        "\n> `.penis` `.emo` `.fuck` `.skull`  `.monyet`\nUsage: Cobain aja"
+        "\n> `.penis` `.emo` `.fuck` `.skull`  `.monyet` `.haha` `.hmm` `.boxes` `.-_-` `;_;`\nUsage: Cobain aja"
         "\n\n\n**Semoga Harimu Menyenangkan**\n➥ `Alvin`"
+    }
+)
+
+
+CMD_HELP.update(
+    {
+        "scam": "**Plugin : **`scam`\
+        \n\n  •  **Syntax :** `.scam` <action> <detik>\
+        \n  •  **Function : **Untuk menunjukkan tindakan palsu dengan jangka waktu (sama seperti fakeaction)\
+        \n  •  **List Action :** `typing`, `contact`, `game`, `location`, `voice`, `round`, `video`, `photo`, `document`\
+\
+    "
     }
 )
