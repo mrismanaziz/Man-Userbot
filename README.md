@@ -17,7 +17,6 @@ Gunakan bot ini dengan risiko Anda sendiri, dan gunakan dengan bijak.
 ## Tutorial
 
 - [Panduan Cara Memasang Man-Userbot](https://mrismanaziz.medium.com/cara-memasang-userbot-telegram-repo-man-userbot-deploy-di-heroku-c56d1f8b5537)
-- [Cara Setting GDrive modules](https://telegra.ph/How-To-Setup-Google-Drive-04-03)
 - [Cara Setting Last.FM modules](https://telegra.ph/How-to-set-up-LastFM-module-for-Paperplane-userbot-11-02)
 
 ### Generate String Session
@@ -31,7 +30,7 @@ Gunakan bot ini dengan risiko Anda sendiri, dan gunakan dengan bijak.
 Follow Channel [@Lunatic0de](https://t.me/Lunatic0de) untuk info Update bot dan Gabung Group [@SharingUserbot](https://t.me/SharingUserbot) untuk untuk diskusi, pelaporan bug, dan bantuan tentang Man-Userbot.
 
 ## © Credits
-#### Thanks To Everyone Who Has Helped Make This Userbot Awesome!
+#### Thanks To [Everyone](https://github.com/mrismanaziz/Man-Userbot/graphs/contributors) Who Has Helped Make This Userbot Awesome!
 *   [AdekMaulana](https://github.com/adekmaulana) : ProjectBish
 *   [RaphielGang](https://github.com/RaphielGang) : Paperplane
 *   [BianSepang](https://github.com/BianSepang/WeebProject) : WeebProject
