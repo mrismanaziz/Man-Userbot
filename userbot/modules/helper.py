@@ -11,9 +11,10 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 async def usit(e):
     await e.edit(
         f"**Hai {DEFAULTUSER} Kalo Anda Tidak Tau Perintah Untuk Memerintah Ku Ketik** `.help` Atau Bisa Minta Bantuan Ke:\n"
-        "\n[Telegram](t.me/mrismanaziz)"
-        "\n[Repo](https://github.com/mrismanaziz/Man-Userbot)"
-        "\n[Instagram](Instagram.com/mrismanaziz_)"
+        f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
+        f"✣ **Channel Man :** [Lunatic0de](t.me/Lunatic0de)\n"
+        f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"
+        f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n"
     )
 
 
@@ -21,7 +22,7 @@ async def usit(e):
 async def var(m):
     await m.edit(
         f"**Disini Daftar Vars Dari {DEFAULTUSER}:**\n"
-        "\n[DAFTAR VARS](https://raw.githubusercontent.com/mrismanaziz/Man-Userbot/Man-Userbot/varshelper.txt)"
+        "\n[DAFTAR VARS](https://telegra.ph/List-Variabel-Heroku-untuk-Man-Userbot-09-22)"
     )
 
 
