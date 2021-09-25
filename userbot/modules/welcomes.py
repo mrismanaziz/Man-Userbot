@@ -10,7 +10,7 @@ from datetime import datetime
 from pytz import timezone
 from telethon.events import ChatAction
 
-from userbot import BOTLOG_CHATID, CLEAN_WELCOME, CMD_HELP, LOGS, bot
+from userbot import BLACKLIST_CHAT, BOTLOG_CHATID, CLEAN_WELCOME, CMD_HELP, LOGS, bot
 from userbot.events import register
 
 
@@ -94,6 +94,8 @@ async def welcome_to_chat(event):
 
 @register(outgoing=True, pattern=r"^\.setwelcome(?: |$)(.*)")
 async def save_welcome(event):
+    if event.chat_id in BLACKLIST_CHAT:
+        return await event.edit("**Perintah ini Dilarang digunakan di Group ini**")
     try:
         from userbot.modules.sql_helper.welcome_sql import add_welcome_setting
     except AttributeError:

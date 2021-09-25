@@ -44,6 +44,8 @@ async def filter_incoming_handler(handler):
 @register(outgoing=True, pattern="^.filter (.*)")
 async def add_new_filter(new_handler):
     """For .filter command, allows adding new filters in a chat"""
+    if leave.chat_id in BLACKLIST_CHAT:
+        return await leave.edit("**Perintah ini Dilarang digunakan di Group ini**")
     try:
         from userbot.modules.sql_helper.filter_sql import add_filter
     except AttributeError:

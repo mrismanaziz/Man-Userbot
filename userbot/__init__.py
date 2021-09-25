@@ -76,6 +76,11 @@ if CONFIG_CHECK:
 DEVS = 844432220, 1382636419, 1503268548, 1712874582, 1554491785, 1738637033,
 SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
 
+# For Blacklist Group Support
+BLACKLIST_CHAT = os.environ.get("BLACKLIST_CHAT", None)
+if not BLACKLIST_CHAT:
+    BLACKLIST_CHAT = [-1001473548283]
+
 # Telegram App KEY and HASH
 API_KEY = int(os.environ.get("API_KEY") or 0)
 API_HASH = str(os.environ.get("API_HASH") or None)
