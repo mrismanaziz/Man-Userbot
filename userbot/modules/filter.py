@@ -44,7 +44,7 @@ async def filter_incoming_handler(handler):
 @register(outgoing=True, pattern="^.filter (.*)")
 async def add_new_filter(new_handler):
     """For .filter command, allows adding new filters in a chat"""
-    if leave.chat_id in BLACKLIST_CHAT:
+    if new_handler.chat_id in BLACKLIST_CHAT:
         return await leave.edit("**Perintah ini Dilarang digunakan di Group ini**")
     try:
         from userbot.modules.sql_helper.filter_sql import add_filter
@@ -81,7 +81,7 @@ async def add_new_filter(new_handler):
     elif new_handler.reply_to_msg_id and not string:
         rep_msg = await new_handler.get_reply_message()
         string = rep_msg.text
-    success = "**Berhasil Menambahkan Filter** `{}` `{}`"
+    success = "**Berhasil Menambahkan Filter** `{}` **{}**"
     if add_filter(str(new_handler.chat_id), keyword, string, msg_id) is True:
         await new_handler.edit(success.format(keyword, "Disini"))
     else:
