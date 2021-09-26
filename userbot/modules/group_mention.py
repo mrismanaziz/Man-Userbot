@@ -5,14 +5,15 @@
 
 import asyncio
 
-from userbot import BOTLOG_CHATID
+from userbot import TAG_LOG, BOTLOG_CHATID
 from userbot.events import register
 
 
 @register(outgoing=True, incoming=True, func=lambda e: e.mentioned)
 async def log_tagged_messages(event):
+    if not TAG_LOG:
+        return
     hmm = await event.get_chat()
-
     if BOTLOG_CHATID:
         sender = await event.get_sender()
         await asyncio.sleep(5)
