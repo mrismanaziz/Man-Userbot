@@ -136,6 +136,7 @@ GOOGLE_CHROME_BIN = os.environ.get(
 
 # set to True if you want to log PMs to your BOTLOG_CHATID
 NC_LOG_P_M_S = bool(os.environ.get("NC_LOG_P_M_S", "False"))
+TAG_LOG = bool(os.environ.get("TAG_LOG", "True"))
 
 # OpenWeatherMap API Key
 OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
