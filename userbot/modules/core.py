@@ -1,5 +1,6 @@
 # Recode By @mrismanaziz
-# @SharingUserbot
+# FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
+# t.me/SharingUserbot & t.me/Lunatic0de
 
 import importlib
 import logging
@@ -7,10 +8,21 @@ import os
 import sys
 from pathlib import Path
 
-from userbot import CMD_HELP, LOGS, bot  # pylint:disable=E0602
+from userbot import CMD_HELP, DEVS, LOGS, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.events import register
+from userbot.utils import edit_or_reply
 
 DELETE_TIMEOUT = 5
+thumb_image_path = os.path.join(TEMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
+
+
+async def reply_id(event):
+    reply_to_id = None
+    if event.sender_id in DEVS:
+        reply_to_id = event.id
+    if event.reply_to_msg_id:
+        reply_to_id = event.reply_to_msg_id
+    return reply_to_id
 
 
 def load_module(shortname):
@@ -64,16 +76,39 @@ async def _(event):
             else:
                 os.remove(downloaded_file_name)
                 await event.edit("**Error!** Plugin ini sudah terinstall di userbot.")
-        except Exception as e:  # pylint:disable=C0103,W0703
+        except Exception as e:
             await event.edit(str(e))
             os.remove(downloaded_file_name)
+
+
+@register(outgoing=True, pattern=r"^\.psend ([\s\S]*)")
+async def send(event):
+    reply_to_id = await reply_id(event)
+    thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
+    input_str = event.pattern_match.group(1)
+    the_plugin_file = f"./userbot/modules/{input_str}.py"
+    if os.path.exists(the_plugin_file):
+        caat = await event.client.send_file(
+            event.chat_id,
+            the_plugin_file,
+            force_document=True,
+            allow_cache=False,
+            reply_to=reply_to_id,
+            thumb=thumb,
+            caption=f"➠ **Nama Plugin:** `{input_str}`",
+        )
+        await event.delete()
+    else:
+        await edit_or_reply(event, "**ERROR: Modules Tidak ditemukan**")
 
 
 CMD_HELP.update(
     {
         "core": "**Plugin : **`core`\
-        \n\n  •  **Syntax :** `.install` <reply ke file plugins>\
+        \n\n  •  **Syntax :** `.install` <reply ke file module>\
         \n  •  **Function : **Untuk Menginstall plugins userbot secara instan.\
+        \n\n  •  **Syntax :** `.psend` <nama module>\
+        \n  •  **Function : **Untuk Mengirim module userbot secara instan.\
     "
     }
 )
