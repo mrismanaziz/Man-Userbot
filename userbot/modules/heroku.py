@@ -89,7 +89,11 @@ async def variable(var):
 
 @register(outgoing=True, pattern=r"^\.set var (\w*) ([\s\S]*)")
 async def set_var(var):
-    await var.edit("`Processing Config Vars..`")
+    if app is None:
+        return await var.edit(
+            "**Silahkan Tambahkan Var** `HEROKU_APP_NAME` **dan** `HEROKU_API_KEY`"
+        )
+    await var.edit("`Processing...`")
     variable = var.pattern_match.group(1)
     value = var.pattern_match.group(2)
     if variable in heroku_var:
@@ -109,7 +113,7 @@ async def set_var(var):
                 "**#SET #VAR_HEROKU #ADDED**\n\n"
                 f"`{variable}` **=** `{value}`",
             )
-        await var.edit("`Menambahkan Config Vars..`")
+        await var.edit("`Menambahkan Config Vars...`")
     heroku_var[variable] = value
 
 
@@ -120,9 +124,10 @@ async def set_var(var):
 
 @register(outgoing=True, pattern=r"^\.usage(?: |$)")
 async def dyno_usage(dyno):
-    """
-    Get your account Dyno Usage
-    """
+    if app is None:
+        return await dyno.edit(
+            "**Silahkan Tambahkan Var** `HEROKU_APP_NAME` **dan** `HEROKU_API_KEY`"
+        )
     await dyno.edit("`Processing...`")
     useragent = (
         "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
@@ -154,6 +159,7 @@ async def dyno_usage(dyno):
             minutes_remaining = remaining_quota / 60
             hours = math.floor(minutes_remaining / 60)
             minutes = math.floor(minutes_remaining % 60)
+            day = math.floor(hours / 24)
 
             """ - User App Used Quota - """
             Apps = result["apps"]
@@ -170,16 +176,17 @@ async def dyno_usage(dyno):
             AppMinutes = math.floor(AppQuotaUsed % 60)
 
             await dyno.edit(
-                "✥ **Informasi Dyno Heroku :**\n"
-                "╔════════════════════╗\n"
-                f" ✣ **Penggunaan Dyno** `{app.name}` :\n"
+                "✥ **Informasi Dyno Heroku :**"
+                "\n╔════════════════════╗\n"
+                f" ➠ **Penggunaan Dyno** `{app.name}` :\n"
                 f"     •  `{AppHours}`**Jam**  `{AppMinutes}`**Menit**  "
                 f"**|**  [`{AppPercentage}`**%**]"
                 "\n◖════════════════════◗\n"
-                " ✣ **Sisa kuota dyno bulan ini** :\n"
+                " ➠ **Sisa kuota dyno bulan ini** :\n"
                 f"     •  `{hours}`**Jam**  `{minutes}`**Menit**  "
                 f"**|**  [`{percentage}`**%**]"
-                "\n╚════════════════════╝"
+                "\n╚════════════════════╝\n"
+                f"✥ **Sisa Dyno Heroku** `{day}` **Hari Lagi**"
             )
             return True
 
