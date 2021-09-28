@@ -10,8 +10,9 @@
 """ Userbot initialization. """
 
 import os
-import time
 import re
+import sys
+import time
 
 from sys import version_info
 from logging import basicConfig, getLogger, INFO, DEBUG
@@ -48,18 +49,18 @@ CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
 
 if CONSOLE_LOGGER_VERBOSE:
     basicConfig(
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        format="[%(name)s] - [%(levelname)s] - %(message)s",
         level=DEBUG,
     )
 else:
-    basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    basicConfig(format="[%(name)s] - [%(levelname)s] - %(message)s",
                 level=INFO)
 LOGS = getLogger(__name__)
 
-if version_info[0] < 3 or version_info[1] < 8:
-    LOGS.info("Anda HARUS memiliki versi python setidaknya 3.8."
-              "Beberapa fitur tergantung pada ini. Bot berhenti.")
-    quit(1)
+if version_info[0] < 3 or version_info[1] < 9:
+    LOGS.info("Anda HARUS memiliki python setidaknya versi 3.9."
+              "Beberapa fitur tergantung versi python ini. Bot berhenti.")
+    sys.exit(1)
 
 # Check if the config was edited by using the already used variable.
 # Basically, its the 'virginity check' for the config file ;)
@@ -68,9 +69,9 @@ CONFIG_CHECK = os.environ.get(
 
 if CONFIG_CHECK:
     LOGS.info(
-        "Please remove the line mentioned in the first hashtag from the config.env file"
+        "Harap hapus baris yang disebutkan dalam tagar pertama dari file config.env"
     )
-    quit(1)
+    sys.exit(1)
 
 #
 DEVS = 844432220, 1382636419, 1503268548, 1712874582, 1554491785, 1738637033,
@@ -188,7 +189,7 @@ BITLY_TOKEN = os.environ.get("BITLY_TOKEN", None)
 TERM_ALIAS = os.environ.get("TERM_ALIAS", "Man-Userbot")
 
 # Bot version
-BOT_VER = os.environ.get("BOT_VER", "0.6.1")
+BOT_VER = os.environ.get("BOT_VER", "0.6.9")
 
 # Default .alive username
 ALIVE_USERNAME = os.environ.get("ALIVE_USERNAME", None)
@@ -292,7 +293,6 @@ for binary, path in binaries.items():
 
 # 'bot' variable
 if STRING_SESSION:
-    # pylint: disable=invalid-name
     bot = TelegramClient(
         session=StringSession(STRING_SESSION),
         api_id=API_KEY,
@@ -301,7 +301,6 @@ if STRING_SESSION:
         connection_retries=-1,
     )
 else:
-    # pylint: disable=invalid-name
     bot = TelegramClient("userbot", API_KEY, API_HASH)
 
 
@@ -310,13 +309,13 @@ async def check_botlog_chatid():
         LOGS.info(
             "Anda harus menambahkan var BOTLOG_CHATID di config.env atau di var heroku, agar penyimpanan log error userbot pribadi berfungsi."
         )
-        quit(1)
+        sys.exit(1)
 
     elif not BOTLOG_CHATID and BOTLOG:
         LOGS.info(
             "Anda harus menambahkan var BOTLOG_CHATID di config.env atau di var heroku, agar fitur logging userbot berfungsi."
         )
-        quit(1)
+        sys.exit(1)
 
     elif not BOTLOG or not LOGSPAMMER:
         return
@@ -326,7 +325,7 @@ async def check_botlog_chatid():
         LOGS.info(
             "Akun Anda tidak bisa mengirim pesan ke BOTLOG_CHATID "
             "Periksa apakah Anda memasukan ID grup dengan benar.")
-        quit(1)
+        sys.exit(1)
 
 
 with bot:
@@ -337,7 +336,7 @@ with bot:
             "var BOTLOG_CHATID kamu belum di isi. "
             "Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id "
             "Masukan id grup nya di var BOTLOG_CHATID")
-        quit(1)
+        sys.exit(1)
 
 
 async def check_alive():
@@ -352,7 +351,7 @@ with bot:
             "var BOTLOG_CHATID kamu belum di isi. "
             "Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id "
             "Masukan id grup nya di var BOTLOG_CHATID")
-        quit(1)
+        sys.exit(1)
 
 # Global Variables
 COUNT_MSG = 0
@@ -435,7 +434,7 @@ with bot:
                                   ]
                                   )
 
-        @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
+        @tgbot.on(events.InlineQuery)
         async def inline_handler(event):
             builder = event.builder
             result = None
@@ -487,12 +486,12 @@ with bot:
             await event.answer([result] if result else None)
 
         @tgbot.on(
-            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+            events.callbackquery.CallbackQuery(
                 data=re.compile(rb"helpme_next\((.+?)\)")
             )
         )
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid:  # pylint:disable=E0602
+            if event.query.user_id == uid:
                 current_page_number = int(
                     event.data_match.group(1).decode("UTF-8"))
                 buttons = paginate_help(
@@ -512,16 +511,16 @@ with bot:
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(
-            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+            events.callbackquery.CallbackQuery(
                 data=re.compile(rb"helpme_prev\((.+?)\)")
             )
         )
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid:  # pylint:disable=E0602
+            if event.query.user_id == uid:
                 current_page_number = int(
                     event.data_match.group(1).decode("UTF-8"))
                 buttons = paginate_help(
-                    current_page_number - 1, dugmeler, "helpme"  # pylint:disable=E0602
+                    current_page_number - 1, dugmeler, "helpme"
                 )
                 # https://t.me/TelethonChat/115200
                 await event.edit(buttons=buttons)
@@ -530,12 +529,12 @@ with bot:
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(
-            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+            events.callbackquery.CallbackQuery(
                 data=re.compile(b"ub_modul_(.*)")
             )
         )
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid:  # pylint:disable=E0602
+            if event.query.user_id == uid:
                 modul_name = event.data_match.group(1).decode("UTF-8")
 
                 cmdhel = str(CMD_HELP[modul_name])
@@ -573,4 +572,4 @@ with bot:
             "var BOTLOG_CHATID kamu belum di isi. "
             "Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id "
             "Masukan id grup nya di var BOTLOG_CHATID")
-        quit(1)
+        sys.exit(1)
