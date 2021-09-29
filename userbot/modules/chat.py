@@ -97,29 +97,11 @@ async def _(event):
     await event.edit(mentions)
 
 
-@register(outgoing=True, pattern=r"^\.log(?: |$)([\s\S]*)")
-async def log(log_text):
-    """For .log command, forwards a message or the command argument to the bot logs group"""
-    if BOTLOG:
-        if log_text.reply_to_msg_id:
-            reply_msg = await log_text.get_reply_message()
-            await reply_msg.forward_to(BOTLOG_CHATID)
-        elif log_text.pattern_match.group(1):
-            user = f"**#LOG** / **Chat ID:** {log_text.chat_id}\n\n"
-            textx = user + log_text.pattern_match.group(1)
-            await bot.send_message(BOTLOG_CHATID, textx)
-        else:
-            return await log_text.edit("**Apa yang harus saya log?**")
-        await log_text.edit("**Berhasil disimpan di Group Log**")
-    else:
-        await log_text.edit("**Fitur Ini Mengharuskan Loging Diaktifkan!**")
-    await sleep(2)
-    await log_text.delete()
-
-
 @register(outgoing=True, pattern=r"^\.kickme$")
 async def kickme(leave):
     """Basically it's .kickme command"""
+    if leave.chat_id in BLACKLIST_CHAT:
+        return await leave.edit("**Perintah ini Dilarang digunakan di Group ini**")
     await leave.edit(f"`{ALIVE_NAME} has left this group, bye!!`")
     await leave.client.kick_participant(leave.chat_id, "me")
 
@@ -570,8 +552,6 @@ CMD_HELP.update(
         \n  •  **Function : **untuk Mengambil ID obrolan saat ini\
         \n\n  •  **Syntax :** `.getbot`\
         \n  •  **Function : **Dapatkan List Bot dalam grup caht.\
-        \n\n  •  **Syntax :** `.log`\
-        \n  •  **Function : **Meneruskan pesan yang Anda balas di grup log bot Anda.\
         \n\n  •  **Syntax :** `.mutechat`\
         \n  •  **Function : **membisukan Grup chat (membutuhkan hak admin).\
         \n\n  •  **Syntax :** `.unmutechat`\

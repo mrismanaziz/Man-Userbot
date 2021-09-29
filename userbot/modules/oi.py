@@ -1,6 +1,6 @@
 from time import sleep
 
-from userbot import CMD_HELP
+from userbot import BLACKLIST_CHAT, CMD_HELP
 from userbot.events import register
 
 
@@ -35,7 +35,7 @@ async def typewriter(typew):
 @register(outgoing=True, pattern=r"^\.ywc(?: |$)(.*)")
 async def typewriter(typew):
     typew.pattern_match.group(1)
-    await typew.edit("**Sama sama kawan**")
+    await typew.edit("**Ok Sama Sama**")
 
 
 @register(outgoing=True, pattern=r"^\.jamet(?: |$)(.*)")
@@ -86,6 +86,8 @@ async def typewriter(typew):
 
 @register(outgoing=True, pattern=r"^\.nb(?: |$)(.*)")
 async def typewriter(typew):
+    if typew.chat_id in BLACKLIST_CHAT:
+        return await typew.edit("**Perintah ini Dilarang digunakan di Group ini**")
     typew.pattern_match.group(1)
     await typew.edit("**MAEN BOT MULU ALAY NGENTOTT, KESANNYA NORAK GOBLOK!!!**")
 
@@ -160,6 +162,8 @@ async def typewriter(typew):
 
 @register(outgoing=True, pattern=r"^\.gcs(?: |$)(.*)")
 async def typewriter(typew):
+    if typew.chat_id in BLACKLIST_CHAT:
+        return await typew.edit("**Perintah ini Dilarang digunakan di Group ini**")
     typew.pattern_match.group(1)
     await typew.edit("**GC SAMPAH KAYA GINI, BUBARIN AJA GOBLOK!!**")
 
