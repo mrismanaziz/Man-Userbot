@@ -1,16 +1,9 @@
-import logging
-
 from telethon.utils import pack_bot_file_id
 
 from userbot import CMD_HELP, LOGS
 from userbot.events import register
 from userbot.utils import edit_delete, edit_or_reply
-
-logging.basicConfig(
-    format="[%(levelname)s- %(asctime)s]- %(name)s- %(message)s",
-    level=logging.INFO,
-    datefmt="%H:%M:%S",
-)
+from userbot.utils.logger import logging
 
 LOGS = logging.getLogger(__name__)
 
@@ -44,17 +37,23 @@ async def _(event):
             bot_api_file_id = pack_bot_file_id(r_msg.media)
             await edit_or_reply(
                 event,
-                f"**👥 Chat ID : **`{event.chat_id}`\n**🙋‍♂️ From User ID : **`{r_msg.sender_id}`\n**📸 Media File ID: **`{bot_api_file_id}`",
+                "**💬 Message ID:** `{}`\n**🙋‍♂️ From User ID:** `{}`\n**💎 Bot API File ID:** `{}`".format(
+                    str(r_msg.id),
+                    str(r_msg.sender_id),
+                    bot_api_file_id,
+                ),
             )
 
         else:
             await edit_or_reply(
                 event,
-                f"**👥 Chat ID : **`{event.chat_id}`\n**🙋‍♂️ From User ID : **`{r_msg.sender_id}`",
+                "**👥 Chat ID:** `{}`\n**💬 Message ID:** `{}`\n**🙋‍♂️ From User ID:** `{}`".format(
+                    str(event.chat_id), str(r_msg.id), str(r_msg.sender_id)
+                ),
             )
 
     else:
-        await edit_or_reply(event, f"**👥 Chat ID : **`{event.chat_id}`")
+        await edit_or_reply(event, f"**👥 Chat ID: **`{event.chat_id}`")
 
 
 CMD_HELP.update(
