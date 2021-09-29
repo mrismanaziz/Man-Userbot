@@ -72,6 +72,8 @@ async def monito_p_m_s(event):
 
 @bot.on(events.NewMessage(incoming=True, func=lambda e: e.mentioned))
 async def log_tagged_messages(event):
+    if BOTLOG_CHATID == -100:
+        return
     hmm = await event.get_chat()
 
     if gvarstatus("GRUPLOG") and gvarstatus("GRUPLOG") == "false":
@@ -174,7 +176,7 @@ async def set_pmlog(event):
         addgvar("PMLOG", h_type)
         await event.edit("**PM LOG Berhasil Diaktifkan**")
     else:
-        await event.edit("**PM LOG Sudah Dimatikan`")
+        await event.edit("**PM LOG Sudah Dimatikan**")
 
 
 @register(outgoing=True, pattern=r"^\.gruplog (on|off)$")
