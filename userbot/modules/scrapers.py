@@ -374,7 +374,7 @@ async def _(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         text = previous_message.message
-        lan = input_str or "en"
+        lan = input_str or "id"
     elif "|" in input_str:
         lan, text = input_str.split("|")
     else:
