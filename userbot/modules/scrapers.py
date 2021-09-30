@@ -15,6 +15,7 @@ import asyncio
 import io
 import json
 import os
+import re
 import shutil
 import time
 from asyncio import sleep
@@ -34,7 +35,8 @@ from googletrans import LANGUAGES, Translator
 from gtts import gTTS
 from gtts.lang import tts_langs
 from requests import get
-from search_engine_parser import YahooSearch as GoogleSearch
+from search_engine_parser import BingSearch, GoogleSearch, YahooSearch
+from search_engine_parser.core.exceptions import NoResultsOrTrafficError
 from telethon.tl.types import DocumentAttributeAudio, MessageMediaPhoto
 from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError, PageError
@@ -62,7 +64,14 @@ from userbot import (
     bot,
 )
 from userbot.events import register
-from userbot.utils import chrome, googleimagesdownload, options, progress
+from userbot.utils import (
+    chrome,
+    edit_delete,
+    edit_or_reply,
+    googleimagesdownload,
+    options,
+    progress,
+)
 
 CARBONLANG = "auto"
 TTS_LANG = "id"
@@ -213,34 +222,59 @@ async def moni(event):
     await event.edit(f"**{c_from_val} {c_from} = {c_to_val} {c_to}**")
 
 
-@register(outgoing=True, pattern=r"^\.google (.*)")
+@register(outgoing=True, pattern=r"^\.google ([\s\S]*)")
 async def gsearch(q_event):
-    """For .google command, do a Google search."""
+    man = await edit_or_reply(q_event, "`Processing...`")
     match = q_event.pattern_match.group(1)
-    page = findall(r"page=\d+", match)
+    page = re.findall(r"-p\d+", match)
+    lim = re.findall(r"-l\d+", match)
     try:
         page = page[0]
-        page = page.replace("page=", "")
-        match = match.replace("page=" + page[0], "")
+        page = page.replace("-p", "")
+        match = match.replace("-p" + page, "")
     except IndexError:
         page = 1
     try:
-        search_args = (str(match), int(page))
-        gsearch = GoogleSearch()
+        lim = lim[0]
+        lim = lim.replace("-l", "")
+        match = match.replace("-l" + lim, "")
+        lim = int(lim)
+        if lim <= 0:
+            lim = int(5)
+    except IndexError:
+        lim = 5
+    smatch = match.replace(" ", "+")
+    search_args = (str(smatch), int(page))
+    gsearch = GoogleSearch()
+    bsearch = BingSearch()
+    ysearch = YahooSearch()
+    try:
         gresults = await gsearch.async_search(*search_args)
-        msg = ""
-        for i in range(5):
+    except NoResultsOrTrafficError:
+        try:
+            gresults = await bsearch.async_search(*search_args)
+        except NoResultsOrTrafficError:
             try:
-                title = gresults["titles"][i]
-                link = gresults["links"][i]
-                desc = gresults["descriptions"][i]
-                msg += f"[{title}]({link})\n`{desc}`\n\n"
-            except IndexError:
-                break
-    except BaseException as g_e:
-        return await q_event.edit(f"**Error : ** `{g_e}`")
-    await q_event.edit(
-        "**Search Query:**\n`" + match + "`\n\n**Results:**\n" + msg, link_preview=False
+                gresults = await ysearch.async_search(*search_args)
+            except Exception as e:
+                return await edit_delete(man, f"**ERROR:**\n`{e}`", time=10)
+    msg = ""
+    for i in range(lim):
+        if i > len(gresults["links"]):
+            break
+        try:
+            title = gresults["titles"][i]
+            link = gresults["links"][i]
+            desc = gresults["descriptions"][i]
+            msg += f"👉 [{title}]({link})\n`{desc}`\n\n"
+        except IndexError:
+            break
+    await edit_or_reply(
+        man,
+        "**Keyword Google Search:**\n`" + match + "`\n\n**Results:**\n" + msg,
+        link_preview=False,
+        aslink=True,
+        linktext=f"**Hasil Pencarian untuk Keyword** `{match}` **adalah** :",
     )
 
 
@@ -952,8 +986,10 @@ CMD_HELP.update(
 CMD_HELP.update(
     {
         "google": "**Plugin : **`google`\
-        \n\n  •  **Syntax :** `.google` <query>\
-        \n  •  **Function : **Melakukan pencarian di google.\
+        \n\n  •  **Syntax :** `.google` <flags> <query>\
+        \n  •  **Function : **Untuk Melakukan pencarian di google (default 5 hasil pencarian)\
+        \n  •  **Flags :** `-l` **= Untuk jumlah hasil pencarian.**\
+        \n  •  **Example :** `.google -l4 mrismanaziz` atau `.google mrismanaziz`\
     "
     }
 )
