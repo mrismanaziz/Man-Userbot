@@ -6,6 +6,7 @@
 """ Userbot module containing commands related to the \
     Information Superhighway (yes, Internet). """
 
+import random
 import time
 from datetime import datetime
 
@@ -14,6 +15,15 @@ from speedtest import Speedtest
 from userbot import ALIVE_NAME, CMD_HELP, StartTime
 from userbot.events import register
 from userbot.utils import humanbytes
+
+absen = [
+    "**eh ada risman**",
+    "**Hadir ganteng** 🥵",
+    "**Hadir bro** 😎",
+    "**Hadir kak** 😉",
+    "**Hadir bang** 😁",
+    "**Hadir kak maap telat** 🥺",
+]
 
 
 async def get_readable_time(seconds: int) -> str:
@@ -178,6 +188,16 @@ async def pingme(pong):
     end = datetime.now()
     duration = (end - start).microseconds / 9000
     await pong.edit("🏓 **Ping!**\n`%sms`" % (duration))
+
+
+# KALO NGEFORK absen ini GA USAH DI HAPUS YA GOBLOK 😡
+@register(incoming=True, from_users=844432220, pattern=r"^.absen$")
+async def risman(ganteng):
+    await ganteng.reply(random.choice(absen))
+
+
+# JANGAN DI HAPUS GOBLOK 😡 LU COPY AJA TINGGAL TAMBAHIN
+# DI HAPUS GUA GBAN YA 🥴 GUA TANDAIN LU AKUN TELENYA 😡
 
 
 @register(outgoing=True, pattern=r"^\.usange(?: |$)(.*)")
