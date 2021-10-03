@@ -10,6 +10,7 @@ import os
 from asyncio import sleep
 
 from telethon import events
+from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import ChannelParticipantsKicked
 
@@ -34,7 +35,7 @@ async def _(event):
 
 
 @register(outgoing=True, pattern=r"^\.sendbot (.*)")
-async def sendbot(event):
+async def _(event):
     if event.fwd_from:
         return
     chat = str(event.pattern_match.group(1).split(" ", 1)[0])
@@ -85,7 +86,7 @@ async def _(event):
 
 
 @register(outgoing=True, pattern=r"^\.(?:dm)\s?(.*)?")
-async def dm(event):
+async def _(event):
     p = event.pattern_match.group(1)
     m = p.split(" ")
     chat_id = m[0]
@@ -119,7 +120,7 @@ async def _(e):
     msg = await e.get_reply_message()
     fwd = await msg.forward_to(msg.sender_id)
     await fwd.reply(message)
-    await edit_delete(e, "**Check in Private**", 15)
+    await edit_delete(e, "**Silahkan Check di Private**", 15)
 
 
 @register(outgoing=True, pattern=r"^\.getlink(?: |$)(.*)", groups_only=True)
@@ -151,6 +152,23 @@ async def _(event):
     await event.edit(
         f"**Total ada `{a.total}` Chat Yang dikirim Oleh saya di Grup Chat ini**"
     )
+
+
+@register(outgoing=True, pattern=r"^\.limit(?: |$)(.*)")
+async def _(event):
+    await event.edit("`Processing...`")
+    async with bot.conversation("@SpamBot") as conv:
+        try:
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=178220800)
+            )
+            await conv.send_message("/start")
+            response = await response
+            await bot.send_read_acknowledge(conv.chat_id)
+        except YouBlockedUserError:
+            await event.edit("**Mohon Unblock @SpamBot dan coba lagi**")
+            return
+        await event.edit(f"~ {response.message.message}")
 
 
 CMD_HELP.update(
@@ -210,6 +228,15 @@ CMD_HELP.update(
         "unbanall": "**Plugin : **`unbanall`\
         \n\n  •  **Syntax :** `.unbanall`\
         \n  •  **Function : **Untuk Menghapus Semua Pengguna yang dibanned di Daftar Banned GC.\
+    "
+    }
+)
+
+CMD_HELP.update(
+    {
+        "limit": "**Plugin : **`limit`\
+        \n\n  •  **Syntax :** `.limit`\
+        \n  •  **Function : **Untuk Mengecek akun anda sedang terkena limit atau tidak dengan menggunakan @spambot.\
     "
     }
 )
