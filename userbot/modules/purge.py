@@ -40,9 +40,9 @@ async def fastpurger(purg):
         await purg.client.delete_messages(chat, msgs)
     done = await purg.client.send_message(
         purg.chat_id,
-        f"**Fast purge complete!**\
-        \n**Berhasil Menghapus** `{str(count)}` **Pesan**",
+        f"**Fast purge complete!**\\\x1f        \n**Berhasil Menghapus** `{count}` **Pesan**",
     )
+
     await sleep(2)
     await done.delete()
 
@@ -162,12 +162,13 @@ async def purgto(purgke):
             await purgke.client.delete_messages(chat, pmsgs)
             await purgke.delete()
         man = await purgke.reply(
-            f"**Fast purge complete!**\n**Purged** `{str(message)}` **messages**"
+            f"**Fast purge complete!**\n**Berhasil Menghapus** `{message}` **Pesan**"
         )
+
         await sleep(5)
         await man.delete()
     except Exception as er:
-        await purgke.edit(f"**ERROR:** `{str(er)}`")
+        await purgke.edit(f"**ERROR:** `{er}`")
 
 
 CMD_HELP.update(

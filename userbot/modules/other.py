@@ -22,10 +22,9 @@ from userbot.utils import edit_delete, edit_or_reply
 @register(outgoing=True, pattern=r"^\.open(?: |$)(.*)")
 async def _(event):
     b = await event.client.download_media(await event.get_reply_message())
-    a = open(b, "r")
-    c = a.read()
-    a.close()
-    a = await event.reply("**Berkas Sudah Dibaca...**")
+    with open(b, "r") as a:
+        c = a.read()
+    a = await event.edit("**Berhasil Membaca Berkas**")
     if len(c) > 4095:
         await a.edit("**File Terlalu Panjang Untuk dibaca**")
     else:
@@ -94,13 +93,11 @@ async def _(event):
         chat_id = int(chat_id)
     except BaseException:
         pass
-    msg = ""
     mssg = await event.get_reply_message()
     if event.reply_to_msg_id:
         await event.client.send_message(chat_id, mssg)
         await event.edit("**Berhasil Mengirim Pesan Anda.**")
-    for i in m[1:]:
-        msg += i + " "
+    msg = "".join(i + " " for i in m[1:])
     if msg == "":
         return
     try:
@@ -132,8 +129,6 @@ async def _(event):
         )
     except ChatAdminRequiredError:
         return await bot.send_message(f"**Maaf {ALIVE_NAME} Bukan Admin 👮**")
-        sleep(15)
-        await event.delete()
     await event.edit(f"**Link Invite GC**: {e.link}")
 
 
