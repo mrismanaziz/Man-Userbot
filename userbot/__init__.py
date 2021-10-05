@@ -105,6 +105,13 @@ PM_LIMIT = int(os.environ.get("PM_LIMIT", 6))
 # Custom Handler command
 CMD_HANDLER = os.environ.get("CMD_HANDLER") or "."
 
+# Owner ID
+OWNER_ID = int(os.environ.get("OWNER_ID") or 0)
+
+# Support
+GROUP = os.environ.get("GROUP", "SharingUserbot")
+CHANNEL = os.environ.get("CHANNEL", "Lunatic0de")
+
 # Heroku Credentials for updater.
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
 HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
@@ -343,20 +350,6 @@ with bot:
             "Masukan id grup nya di var BOTLOG_CHATID")
         sys.exit(1)
 
-
-async def check_alive():
-    await bot.send_message(BOTLOG_CHATID, "```🔥 Man-Userbot Berhasil Di Aktifkan 🔥```")
-    return
-
-with bot:
-    try:
-        bot.loop.run_until_complete(check_alive())
-    except BaseException:
-        LOGS.info(
-            "var BOTLOG_CHATID kamu belum di isi. "
-            "Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id "
-            "Masukan id grup nya di var BOTLOG_CHATID")
-        sys.exit(1)
 
 # Global Variables
 COUNT_MSG = 0
