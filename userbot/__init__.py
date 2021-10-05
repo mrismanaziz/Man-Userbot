@@ -27,6 +27,7 @@ from redis import StrictRedis
 from dotenv import load_dotenv
 from requests import get
 from telethon.sync import TelegramClient, custom, events
+from telethon.network.connection.tcpabridged import ConnectionTcpAbridged
 from telethon.sessions import StringSession
 
 from .storage import Storage
@@ -305,15 +306,21 @@ for binary, path in binaries.items():
 
 # 'bot' variable
 if STRING_SESSION:
+    session = StringSession(str(STRING_SESSION))
+else:
+    session = "ManUserBot"
+try:
     bot = TelegramClient(
-        session=StringSession(STRING_SESSION),
+        session=session,
         api_id=API_KEY,
         api_hash=API_HASH,
+        connection=ConnectionTcpAbridged,
         auto_reconnect=True,
-        connection_retries=-1,
+        connection_retries=None,
     )
-else:
-    bot = TelegramClient("userbot", API_KEY, API_HASH)
+except Exception as e:
+    print(f"STRING_SESSION - {e}")
+    sys.exit()
 
 
 async def check_botlog_chatid():
@@ -405,8 +412,11 @@ with bot:
         tgbot = TelegramClient(
             "TG_BOT_TOKEN",
             api_id=API_KEY,
-            api_hash=API_HASH).start(
-            bot_token=BOT_TOKEN)
+            api_hash=API_HASH,
+            connection=ConnectionTcpAbridged,
+            auto_reconnect=True,
+            connection_retries=None,
+        ).start(bot_token=BOT_TOKEN)
 
         dugmeler = CMD_HELP
         me = bot.get_me()
