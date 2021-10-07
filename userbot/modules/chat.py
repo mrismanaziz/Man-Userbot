@@ -4,6 +4,9 @@
 # you may not use this file except in compliance with the License.
 """ Userbot module containing userid, chatid and log commands"""
 
+import asyncio
+import csv
+import random
 from asyncio import sleep
 from datetime import datetime
 from math import sqrt
@@ -15,12 +18,23 @@ from telethon.errors import (
     ChannelPrivateError,
     ChannelPublicGroupNaError,
 )
-from telethon.tl.functions.channels import GetFullChannelRequest, GetParticipantsRequest
+from telethon.errors.rpcerrorlist import (
+    UserAlreadyParticipantError,
+    UserNotMutualContactError,
+    UserPrivacyRestrictedError,
+)
+from telethon.tl import functions
+from telethon.tl.functions.channels import (
+    GetFullChannelRequest,
+    GetParticipantsRequest,
+    InviteToChannelRequest,
+)
 from telethon.tl.functions.messages import GetFullChatRequest, GetHistoryRequest
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantsAdmins,
     ChannelParticipantsBots,
+    InputPeerUser,
     MessageActionChannelMigrateFrom,
 )
 from telethon.utils import get_input_location
@@ -28,6 +42,7 @@ from telethon.utils import get_input_location
 from userbot import ALIVE_NAME, BLACKLIST_CHAT, BOTLOG, BOTLOG_CHATID, CMD_HELP, bot
 from userbot.events import register
 from userbot.modules.admin import get_user_from_event
+from userbot.utils import edit_or_reply
 
 
 @register(outgoing=True, pattern=r"^\.userid$")
@@ -223,10 +238,10 @@ async def get_chatinfo(event):
         else:
             chat = event.chat_id
     try:
-        chat_info = await event.client(GetFullChatRequest(chat))
+        chat_info = await bot(GetFullChatRequest(chat))
     except BaseException:
         try:
-            chat_info = await event.client(GetFullChannelRequest(chat))
+            chat_info = await bot(GetFullChannelRequest(chat))
         except ChannelInvalidError:
             await event.reply("`Invalid channel/group`")
             return None
@@ -507,42 +522,100 @@ async def _(event):
 # Copyright © Team Geez - Project
 
 
-@register(outgoing=True, pattern=r"^\.inviteall(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.inviteall ?(.*)")
 async def get_users(event):
-    sender = await event.get_sender()
-    me = await event.client.get_me()
-    if sender.id != me.id:
-        man = await event.reply("`Processing...`")
-    else:
-        man = await event.edit("`Processing...`")
+    man_ = event.text[11:]
+    chat_man = man_.lower()
+    restricted = ["@SharingUserbot", "@sharinguserbot"]
+    man = await edit_or_reply(event, f"**Mengundang Member Dari Group {man_}**")
+    if chat_man in restricted:
+        await man.edit("**Anda tidak dapat Mengundang Anggota dari sana.**")
+        await bot.send_message(
+            -1001473548283, "**Maaf Telah Mencuri Member dari Sini.**"
+        )
+        return
     manuserbot = await get_chatinfo(event)
     chat = await event.get_chat()
     if event.is_private:
-        return await man.edit("**Maaf, tidak bisa menambahkan pengguna di sini**")
+        return await man.edit(
+            "**Tidak bisa Menambahkan Member di sini Harap ketik di Grup Chat**"
+        )
     s = 0
     f = 0
     error = "None"
 
     await man.edit("**Terminal Status**\n\n`Sedang Mengumpulkan Pengguna...`")
-    async for user in event.client.iter_participants(manuserbot.full_chat.id):
+    async for user in bot.iter_participants(manuserbot.full_chat.id):
         try:
-            if error.startswith("Too"):
-                return await man.edit(
-                    f"**Terminal Finished With Error**\n(**Mungkin Mendapat Limit dari telethon Silakan coba lagi Nanti**)\n**Error** : \n`{error}`\n\n• Menambahkan `{s}` orang \n• Gagal Menambahkan `{f}` orang"
-                )
-            await event.client(
-                functions.channels.InviteToChannelRequest(channel=chat, users=[user.id])
-            )
-            s += 1
+            await bot(InviteToChannelRequest(channel=chat, users=[user.id]))
+            s = s + 1
             await man.edit(
-                f"**Terminal Running...**\n\n• **Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**\n\n**× LastError:** `{error}`"
+                f"**Terminal Running**\n\n• **Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**\n\n**× LastError:** `{error}`"
             )
         except Exception as e:
             error = str(e)
-            f += 1
+            f = f + 1
     return await man.edit(
         f"**Terminal Finished** \n\n• **Berhasil Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**"
     )
+
+
+# Scraper & Add Member Telegram
+# Coded By Abdul <https://github.com/DoellBarr>
+
+
+@register(outgoing=True, pattern=r"^\.getmember$")
+async def scrapmem(event):
+    chat = event.chat_id
+    await event.edit("`Processing...`")
+    event.client
+    members = await event.client.get_participants(chat, aggressive=True)
+
+    with open("members.csv", "w", encoding="UTF-8") as f:
+        writer = csv.writer(f, delimiter=",", lineterminator="\n")
+        writer.writerow(["user_id", "hash"])
+        for member in members:
+            writer.writerow([member.id, member.access_hash])
+    await event.edit("**Berhasil Mengumpulkan Member**")
+
+
+@register(outgoing=True, pattern=r"^\.addmember$")
+async def admem(event):
+    await event.edit("**Proses Menambahkan** `0` **Member**")
+    chat = await event.get_chat()
+    event.client
+    users = []
+    with open("members.csv", encoding="UTF-8") as f:
+        rows = csv.reader(f, delimiter=",", lineterminator="\n")
+        next(rows, None)
+        for row in rows:
+            user = {"id": int(row[0]), "hash": int(row[1])}
+            users.append(user)
+    n = 0
+    for user in users:
+        n += 1
+        if n % 30 == 0:
+            await event.edit(
+                f"**Sudah Mencapai 30 anggota, Tunggu Selama** `{900/60}` **menit**"
+            )
+            await asyncio.sleep(900)
+        try:
+            userin = InputPeerUser(user["id"], user["hash"])
+            await event.client(InviteToChannelRequest(chat, [userin]))
+            await asyncio.sleep(random.randrange(5, 7))
+            await event.edit(f"**Proses Menambahkan** `{n}` **Member**")
+        except TypeError:
+            n -= 1
+            continue
+        except UserAlreadyParticipantError:
+            n -= 1
+            continue
+        except UserPrivacyRestrictedError:
+            n -= 1
+            continue
+        except UserNotMutualContactError:
+            n -= 1
+            continue
 
 
 CMD_HELP.update(
@@ -570,8 +643,8 @@ CMD_HELP.update(
         "invite": "**Plugin : **`invite`\
         \n\n  •  **Syntax :** `.invite` <username/user id>\
         \n  •  **Function : **Untuk Menambahkan/invite pengguna ke group chat.\
-        \n\n  •  **Syntax :** `.inviteall`\
-        \n  •  **Function : **Untuk Menambahkan/invite pengguna dari yang chat kita ke group chat.\
+        \n\n  •  **Syntax :** `.inviteall` <username grup yang mau di culik membernya>\
+        \n  •  **Function : **Untuk Menambahkan/invite pengguna dari grup yang ditargetkan ke grup Anda. (ketik perintah `.inviteall` di gc lu)\
     "
     }
 )
@@ -610,6 +683,21 @@ CMD_HELP.update(
         \n\n  •  **Syntax :** `regexninja off`)\
         \n  •  **Function : **Menonaktifkan modul ninja regex secara global. \
         \n\n  •  **NOTE :** Modul Regex Ninja dapat membantu menghapus pesan pemicu bot regex.\
+    "
+    }
+)
+
+
+CMD_HELP.update(
+    {
+        "scraper": "**Plugin : **`scraper`\
+        \n\n  •  **Syntax :** `.getmember`\
+        \n  •  **Function : **Untuk Mengumpulkan Anggota dari group chat.\
+        \n\n  •  **Syntax :** `.addmember`\
+        \n  •  **Function : **Untuk Menambahkan Anggota ke group chat.\
+        \n\n**Cara Menggunakannya:** \
+        \n1. Anda harus melakukan `.getmemb` terlebih dahulu di Grup Chat Orang lain.\
+        \n2. Buka Grup Anda dan ketik `.addmemb` untuk menambahkan mereka ke grup Anda.\
     "
     }
 )
