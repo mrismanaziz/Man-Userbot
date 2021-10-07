@@ -5,7 +5,6 @@ import requests
 from googletrans import Translator
 from telethon import events
 from telethon.tl.types import User
-
 from userbot import CMD_HELP, LOGS, bot
 from userbot.events import register
 from userbot.utils import edit_or_reply
@@ -26,8 +25,8 @@ async def ngapain_rep(message):
             return (data.json())["msg"]
         else:
             LOGS.info("ERROR: API chatbot sedang down, report ke @tedesupport.")
-    except Exception:
-        LOGS.info("ERROR: {str(e)}")
+    except Exception as e:
+        LOGS.info(str(e))
 
 
 async def chat_bot_toggle(db, event):
@@ -44,7 +43,7 @@ async def chat_bot_toggle(db, event):
             return await edit_or_reply(event, "ChatBot Dinonaktifkan!")
         await edit_or_reply(event, "ChatBot Sudah Dinonaktifkan.")
     else:
-        await edit_or_reply(event, "**Usage:**\n.chatbot <on/off>")
+        await edit_or_reply(event, "**Usage:** `.chatbot` <on/off>")
 
 
 @register(outgoing=True, pattern=r"^\.chatbot(?: |$)(.*)")
@@ -52,14 +51,19 @@ async def on_apa_off(event):
     await chat_bot_toggle(aktifnya_chat_bot, event)
 
 
-@bot.on(events.NewMessage(incoming=True))
+@bot.on(
+    events.NewMessage(
+        incoming=True,
+        func=lambda e: (e.mentioned),
+    ),
+)
 async def tede_chatbot(event):
     sender = await event.get_sender()
-    if not isinstance(sender, User):
-        return
     if event.chat_id not in aktifnya_chat_bot:
         return
-    if event.text and event.is_reply:
+    if not isinstance(sender, User):
+        return
+    if event.text:
         rep = await ngapain_rep(event.message.message)
         tr = translator.translate(rep, LANGUAGE)
         if tr:
@@ -70,7 +74,7 @@ CMD_HELP.update(
     {
         "chatbot": "**Plugin : **`chatbot`\
       \n\n  •  **Syntax :** `.chatbot` <on/off>\
-      \n  •  **Function :** Ya chatbot\
+      \n  •  **Function :** Untuk membalas chat dengan chatbot AI.\
       "
     }
 )
