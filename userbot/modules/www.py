@@ -17,11 +17,11 @@ from userbot.events import register
 from userbot.utils import humanbytes
 
 absen = [
-    "**eh ada risman**",
+    "**Hadir bang** 😁",
+    "**Hadir kak** 😉",
+    "**Hadir dong** 😁",
     "**Hadir ganteng** 🥵",
     "**Hadir bro** 😎",
-    "**Hadir kak** 😉",
-    "**Hadir bang** 😁",
     "**Hadir kak maap telat** 🥺",
 ]
 
