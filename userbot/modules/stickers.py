@@ -3,16 +3,20 @@
 # Licensed under the Raphielscape Public License, Version 1.c (the "License");
 # you may not use this file except in compliance with the License.
 #
+# Recode by @mrismanaziz
+# FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
+# t.me/SharingUserbot & t.me/Lunatic0de
 
+import asyncio
 import io
 import math
 import random
 import urllib.request
 from os import remove
 
-import requests
-from bs4 import BeautifulSoup as bs
 from PIL import Image
+from telethon import events
+from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import (
     DocumentAttributeFilename,
@@ -25,13 +29,14 @@ from userbot import CMD_HELP
 from userbot import S_PACK_NAME as custompack
 from userbot import bot
 from userbot.events import register
+from userbot.utils import edit_or_reply
 
 KANGING_STR = [
-    "Wao.,Bagus Nih...Colong Dulu Yekan..",
     "Colong Sticker dulu yee kan",
-    "ehh, mantep nih.....aku colong ya...",
     "Ini Sticker aku colong yaa DUARR!",
-    "leh ugha ni Sticker Colong ahh~",
+    "Waw Stickernya Bagus Nih...Colong Dulu Yekan..",
+    "ehh, keren nih... gua colong ya stickernya...",
+    "Boleh juga ni Sticker Colong ahh~",
 ]
 
 
@@ -96,10 +101,10 @@ async def kang(args):
                 # pack
                 emoji = splat[1]
 
-        u_name = user.username
+        u_id = user.id
         f_name = user.first_name
-        packname = f"StickerBy{u_name}_{pack}"
-        custom_packnick = f"{custompack}" or f"{f_name}"
+        packname = f"Sticker_u{u_id}_Ke{pack}"
+        custom_packnick = f"{custompack}" or f"{f_name} Sticker Pack"
         packnick = f"{custom_packnick}"
         cmd = "/newpack"
         file = io.BytesIO()
@@ -131,12 +136,12 @@ async def kang(args):
                 x = await conv.get_response()
                 while "120" in x.text:
                     pack += 1
-                    packname = f"StickerBy{u_name}_{pack}"
+                    packname = f"Sticker_u{u_id}_Ke{pack}"
                     packnick = f"{custom_packnick}"
                     await args.edit(
-                        "`Switching to Pack "
+                        "`Membuat Sticker Pack Baru "
                         + str(pack)
-                        + " due to insufficient space`"
+                        + " Karena Sticker Pack Sudah Penuh`"
                     )
                     await conv.send_message(packname)
                     x = await conv.get_response()
@@ -192,7 +197,7 @@ async def kang(args):
                 rsp = await conv.get_response()
                 if "Sorry, the file type is invalid." in rsp.text:
                     return await args.edit(
-                        "`Gagal Menambahkan Sticker, Gunakan` @Stickers ` Bot Untuk Menambahkan Sticker Anda.`"
+                        "**Gagal Menambahkan Sticker, Gunakan @Stickers Bot Untuk Menambahkan Sticker Anda.**"
                     )
                 await conv.send_message(emoji)
                 # Ensure user doesn't get spamming notifications
@@ -203,7 +208,7 @@ async def kang(args):
                 # Ensure user doesn't get spamming notifications
                 await bot.send_read_acknowledge(conv.chat_id)
         else:
-            await args.edit("`Membuat Pack Sticker Baru`")
+            await args.edit("`Membuat Sticker Pack Baru`")
             async with bot.conversation("Stickers") as conv:
                 await conv.send_message(cmd)
                 await conv.get_response()
@@ -222,7 +227,7 @@ async def kang(args):
                 rsp = await conv.get_response()
                 if "Sorry, the file type is invalid." in rsp.text:
                     return await args.edit(
-                        "`Gagal Menambahkan Sticker, Gunakan` @Stickers ` Bot Untuk Menambahkan Sticker.`"
+                        "**Gagal Menambahkan Sticker, Gunakan @Stickers Bot Untuk Menambahkan Sticker.**"
                     )
                 await conv.send_message(emoji)
                 # Ensure user doesn't get spamming notifications
@@ -277,23 +282,23 @@ async def resize_photo(photo):
     return image
 
 
-@register(outgoing=True, pattern=r"^\.stkrinfo$")
+@register(outgoing=True, pattern=r"^\.stickerinfo$")
 async def get_pack_info(event):
     if not event.is_reply:
-        return await event.edit("`Mohon Balas Ke Sticker `")
+        return await event.edit("**Mohon Balas Ke Sticker**")
 
     rep_msg = await event.get_reply_message()
     if not rep_msg.document:
-        return await event.edit("`Balas ke sticker untuk melihat detail pack`")
+        return await event.edit("**Balas ke sticker untuk melihat detail pack**")
 
     try:
         stickerset_attr = rep_msg.document.attributes[1]
-        await event.edit("`Fetching details of the sticker pack, please wait..`")
+        await event.edit("`Processing...`")
     except BaseException:
-        return await event.edit("`Ini bukan sticker, Mohon balas ke sticker.`")
+        return await event.edit("**Ini bukan sticker, Mohon balas ke sticker.**")
 
     if not isinstance(stickerset_attr, DocumentAttributeSticker):
-        return await event.edit("`Ini bukan sticker, Mohon balas ke sticker.`")
+        return await event.edit("**Ini bukan sticker, Mohon balas ke sticker.**")
 
     get_stickerset = await bot(
         GetStickerSetRequest(
@@ -309,15 +314,107 @@ async def get_pack_info(event):
             pack_emojis.append(document_sticker.emoticon)
 
     OUTPUT = (
-        f"**Sticker Title:** `{get_stickerset.set.title}\n`"
-        f"**Nama Pendek Sticker:** `{get_stickerset.set.short_name}`\n"
-        f"**Official:** `{get_stickerset.set.official}`\n"
-        f"**Arsip:** `{get_stickerset.set.archived}`\n"
-        f"**Sticker Dalam Pack:** `{len(get_stickerset.packs)}`\n"
-        f"**Emoji Dalam Pack:**\n{' '.join(pack_emojis)}"
+        f"➠ **Nama Sticker:** [{get_stickerset.set.title}](http://t.me/addstickers/{get_stickerset.set.short_name})\n"
+        f"➠ **Official:** `{get_stickerset.set.official}`\n"
+        f"➠ **Arsip:** `{get_stickerset.set.archived}`\n"
+        f"➠ **Sticker Dalam Pack:** `{len(get_stickerset.packs)}`\n"
+        f"➠ **Emoji Dalam Pack:** {' '.join(pack_emojis)}"
     )
 
     await event.edit(OUTPUT)
+
+
+@register(outgoing=True, pattern=r"^\.delsticker ?(.*)")
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("**Mohon Reply ke Sticker yang ingin anda Hapus.**")
+        return
+    reply_message = await event.get_reply_message()
+    chat = "@Stickers"
+    reply_message.sender
+    if reply_message.sender.bot:
+        await edit_or_reply(event, "**Mohon Reply ke Sticker.**")
+        return
+    await event.edit("`Processing...`")
+    async with bot.conversation(chat) as conv:
+        try:
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=429000)
+            )
+            await conv.send_message("/delsticker")
+            await conv.get_response()
+            await asyncio.sleep(2)
+            await bot.forward_messages(chat, reply_message)
+            response = await response
+        except YouBlockedUserError:
+            await event.reply("**Silahkan Buka Blokir @Stikers dan coba lagi**")
+            return
+        if response.text.startswith(
+            "Sorry, I can't do this, it seems that you are not the owner of the relevant pack."
+        ):
+            await event.edit(
+                "**Maaf, Sepertinya Anda bukan Pemilik Sticker pack ini.**"
+            )
+        elif response.text.startswith(
+            "You don't have any sticker packs yet. You can create one using the /newpack command."
+        ):
+            await event.edit("**Anda Tidak Memiliki Stiker untuk di Hapus**")
+        elif response.text.startswith("Please send me the sticker."):
+            await event.edit("**Tolong Reply ke Sticker yang ingin dihapus**")
+        elif response.text.startswith("Invalid pack selected."):
+            await event.edit("**Maaf Paket yang dipilih tidak valid.**")
+        else:
+            await event.edit("**Berhasil Menghapus Stiker.**")
+
+
+@register(outgoing=True, pattern=r"^\.editsticker ?(.*)")
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("**Mohon Reply ke Sticker dan Berikan emoji.**")
+        return
+    reply_message = await event.get_reply_message()
+    emot = event.pattern_match.group(1)
+    chat = "@Stickers"
+    reply_message.sender
+    if reply_message.sender.bot:
+        await edit_or_reply(event, "**Mohon Reply ke Sticker.**")
+        return
+    await event.edit("`Processing...`")
+    if emot == "":
+        await event.edit("**Silahkan Kirimkan Emot Baru.**")
+    else:
+        async with bot.conversation(chat) as conv:
+            try:
+                response = conv.wait_event(
+                    events.NewMessage(incoming=True, from_users=429000)
+                )
+                await conv.send_message(f"/editsticker")
+                await conv.get_response()
+                await asyncio.sleep(2)
+                await bot.forward_messages(chat, reply_message)
+                await conv.get_response()
+                await asyncio.sleep(2)
+                await conv.send_message(f"{emot}")
+                response = await response
+            except YouBlockedUserError:
+                await event.reply("**Buka blokir @Stiker dan coba lagi**")
+                return
+            if response.text.startswith("Invalid pack selected."):
+                await event.edit("**Maaf Paket yang dipilih tidak valid.**")
+            elif response.text.startswith(
+                "Please send us an emoji that best describes your sticker."
+            ):
+                await event.edit(
+                    "**Silahkan Kirimkan emoji yang paling menggambarkan stiker Anda.**"
+                )
+            else:
+                await event.edit(
+                    f"**Berhasil Mengedit Emoji Stiker**\n**Emoji Baru:** {emot}"
+                )
 
 
 @register(outgoing=True, pattern=r"^\.getsticker$")
@@ -373,14 +470,20 @@ async def cb_sticker(event):
 CMD_HELP.update(
     {
         "stickers": "**Plugin : **`stickers`\
-        \n\n  •  **Syntax :** `.kang` atau `.tikel` [emoji]?\
+        \n\n  •  **Syntax :** `.kang` atau `.tikel` [emoji]\
         \n  •  **Function : **Balas .kang Ke Sticker Atau Gambar Untuk Menambahkan Ke Sticker Pack Mu\
-        \n\n  •  **Syntax :** `.kang` [emoji] atau `.tikel` `[emoji]`\
+        \n\n  •  **Syntax :** `.kang` [emoji] atau `.tikel` [emoji]\
         \n  •  **Function : **Balas .kang emoji Ke Sticker Atau Gambar Untuk Menambahkan dan costum emoji sticker Ke Pack Mu\
-        \n\n  •  **Syntax :** `.stkrinfo`\
-        \n  •  **Function : **Dapatkan Informasi Sticker Pack.\
+        \n\n  •  **Syntax :** `.delsticker` <reply sticker>\
+        \n  •  **Function : **Untuk Menghapus sticker dari Sticker Pack.\
+        \n\n  •  **Syntax :** `.editsticker` <reply sticker> <emoji>\
+        \n  •  **Function : **Untuk Mengedit emoji stiker dengan emoji yang baru.\
+        \n\n  •  **Syntax :** `.stickerinfo`\
+        \n  •  **Function : **Untuk Mendapatkan Informasi Sticker Pack.\
         \n\n  •  **Syntax :** `.findsticker` <nama pack sticker>\
         \n  •  **Function : **Untuk Mencari Sticker Pack.\
+        \n\n  •  **NOTE:** Untuk Membuat Sticker Pack baru Gunakan angka dibelakang `.kang`\
+        \n  •  **CONTOH:** `.kang 2` untuk membuat dan menyimpan ke sticker pack ke 2\
     "
     }
 )
