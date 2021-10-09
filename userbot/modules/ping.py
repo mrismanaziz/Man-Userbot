@@ -3,8 +3,9 @@
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 #
-""" Userbot module containing commands related to the \
-    Information Superhighway (yes, Internet). """
+# ReCode by @mrismanaziz
+# FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
+# t.me/SharingUserbot & t.me/Lunatic0de
 
 import random
 import time
@@ -12,7 +13,7 @@ from datetime import datetime
 
 from speedtest import Speedtest
 
-from userbot import ALIVE_NAME, CMD_HELP, StartTime
+from userbot import CMD_HELP, StartTime, bot
 from userbot.events import register
 from userbot.utils import humanbytes
 
@@ -52,103 +53,106 @@ async def get_readable_time(seconds: int) -> str:
 
 
 @register(outgoing=True, pattern=r"^\.ping$")
-async def pingme(pong):
+async def _(ping):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    await pong.edit("**✣**")
-    await pong.edit("**✣✣**")
-    await pong.edit("**✣✣✣**")
-    await pong.edit("**✣✣✣✣**")
+    await ping.edit("**✣**")
+    await ping.edit("**✣✣**")
+    await ping.edit("**✣✣✣**")
+    await ping.edit("**✣✣✣✣**")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
-    await pong.edit(
+    user = await bot.get_me()
+    await ping.edit(
         f"**PONG!!🏓**\n"
         f"✣ **Pinger** - `%sms`\n"
         f"✣ **Uptime -** `{uptime}` \n"
-        f"**✦҈͜͡Owner :** `{ALIVE_NAME}`" % (duration)
+        f"**✦҈͜͡Owner :** [{user.first_name}](tg://user?id={user.id})" % (duration)
     )
 
 
 @register(outgoing=True, pattern=r"^\.xping$")
-async def pingme(pong):
+async def _(ping):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    await pong.edit("`Pinging....`")
+    await ping.edit("`Pinging....`")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
-    await pong.edit(
+    await ping.edit(
         f"**PONG!! 🍭**\n**Pinger** : %sms\n**Bot Uptime** : {uptime}🕛" % (duration)
     )
 
 
 @register(outgoing=True, pattern=r"^\.lping$")
-async def pingme(pong):
+async def _(ping):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    await pong.edit("**★ PING ★**")
-    await pong.edit("**★★ PING ★★**")
-    await pong.edit("**★★★ PING ★★★**")
-    await pong.edit("**★★★★ PING ★★★★**")
-    await pong.edit("**✦҈͜͡➳ PONG!**")
+    await ping.edit("**★ PING ★**")
+    await ping.edit("**★★ PING ★★**")
+    await ping.edit("**★★★ PING ★★★**")
+    await ping.edit("**★★★★ PING ★★★★**")
+    await ping.edit("**✦҈͜͡➳ PONG!**")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
-    await pong.edit(
+    user = await bot.get_me()
+    await ping.edit(
         f"❃ **Ping !!** "
         f"`%sms` \n"
         f"❃ **Uptime -** "
         f"`{uptime}` \n"
-        f"**✦҈͜͡➳ Master :** `{ALIVE_NAME}`" % (duration)
+        f"**✦҈͜͡➳ Master :** [{user.first_name}](tg://user?id={user.id})" % (duration)
     )
 
 
 @register(outgoing=True, pattern=r"^\.fping$")
-async def pingme(pong):
+async def _(f):
     """For .ping command, ping the userbot from any chat."""
     await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    await pong.edit(".                       /¯ )")
-    await pong.edit(".                       /¯ )\n                      /¯  /")
-    await pong.edit(
+    await f.edit(".                       /¯ )")
+    await f.edit(".                       /¯ )\n                      /¯  /")
+    await f.edit(
         ".                       /¯ )\n                      /¯  /\n                    /    /"
     )
-    await pong.edit(
+    await f.edit(
         ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸"
     )
-    await pong.edit(
+    await f.edit(
         ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸\n          /'/   /    /       /¨¯\\ "
     )
-    await pong.edit(
+    await f.edit(
         ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸\n          /'/   /    /       /¨¯\\ \n        ('(   (   (   (  ¯~/'  ')"
     )
-    await pong.edit(
+    await f.edit(
         ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸\n          /'/   /    /       /¨¯\\ \n        ('(   (   (   (  ¯~/'  ')\n         \\                        /"
     )
-    await pong.edit(
+    await f.edit(
         ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸\n          /'/   /    /       /¨¯\\ \n        ('(   (   (   (  ¯~/'  ')\n         \\                        /\n          \\                _.•´"
     )
-    await pong.edit(
+    await f.edit(
         ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸\n          /'/   /    /       /¨¯\\ \n        ('(   (   (   (  ¯~/'  ')\n         \\                        /\n          \\                _.•´\n            \\              ("
     )
-    await pong.edit(
+    await f.edit(
         ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸\n          /'/   /    /       /¨¯\\ \n        ('(   (   (   (  ¯~/'  ')\n         \\                        /\n          \\                _.•´\n            \\              (\n              \\  "
     )
     end = datetime.now()
     duration = (end - start).microseconds / 1000
-    await pong.edit(
+    user = await bot.get_me()
+    await f.edit(
         f"**PONG!!🏓**\n"
         f"✣ **Pinger** - `%sms`\n"
         f"✣ **Uptime -** `{uptime}` \n"
-        f"**✦҈͜͡Owner :** `{ALIVE_NAME}`" % (duration)
+        f"**✦҈͜͡Owner :** [{user.first_name}](tg://user?id={user.id})" % (duration)
     )
 
 
 @register(outgoing=True, pattern=r"^\.speedtest$")
-async def speedtst(spd):
+async def _(speed):
     """For .speedtest command, use SpeedTest to check server speeds."""
-    await spd.edit("`Running speed test...`")
+    await speed.edit("`Running speed test...`")
 
     test = Speedtest()
     test.get_best_server()
@@ -171,9 +175,9 @@ async def speedtst(spd):
         f"**Download :** `{humanbytes(result['download'])}/s`"
     )
 
-    await spd.delete()
-    await spd.client.send_file(
-        spd.chat_id,
+    await speed.delete()
+    await speed.client.send_file(
+        speed.chat_id,
         result["share"],
         caption=msg,
         force_document=False,
@@ -181,7 +185,7 @@ async def speedtst(spd):
 
 
 @register(outgoing=True, pattern=r"^\.pong$")
-async def pingme(pong):
+async def _(pong):
     """For .ping command, ping the userbot from any chat."""
     start = datetime.now()
     await pong.edit("`Sepong.....🏓`")
@@ -201,14 +205,14 @@ async def risman(ganteng):
 
 
 @register(outgoing=True, pattern=r"^\.usange(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+async def _(e):
+    user = await bot.get_me()
     sleep(1)
-    await typew.edit("`Getting Information...`")
+    await e.edit("`Getting Information...`")
     sleep(1)
-    await typew.edit(
-        "**Informasi Dyno Usage ★**:\n\n╭━━━━━━━━━━━━━━━━━━━━╮\n"
-        f"-> `Penggunaan Dyno` **{ALIVE_NAME}**:\n"
+    await e.edit(
+        "**Informasi Dyno Usage ★**:\n╭━━━━━━━━━━━━━━━━━━━━╮\n"
+        f"-> `Penggunaan Dyno` **{user.first_name}**:\n"
         f" ❉ **10 Jam - "
         f"51 Menit - 0%**"
         "\n ◐━─━─━─━─━──━─━─━─━─━◐\n"
