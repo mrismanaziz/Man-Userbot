@@ -13,7 +13,6 @@ import time
 from asyncio import create_subprocess_exec as asyncrunapp
 from asyncio.subprocess import PIPE as asyncPIPE
 from datetime import datetime
-from os import remove
 from platform import python_version, uname
 from shutil import which
 
@@ -26,8 +25,9 @@ from userbot import (
     ALIVE_NAME,
     ALIVE_TEKS_CUSTOM,
     BOT_VER,
+    CHANNEL,
     CMD_HELP,
-    UPSTREAM_REPO_BRANCH,
+    GROUP,
     StartTime,
     bot,
 )
@@ -175,149 +175,20 @@ async def bot_ver(event):
         await event.edit("anda tidak memiliki git, Anda Menjalankan Bot - 'v1.beta.4'!")
 
 
-@register(outgoing=True, pattern=r"^\.pip(?: |$)(.*)")
-async def pipcheck(pip):
-    if pip.text[0].isalpha() or pip.text[0] in ("/", "#", "@", "!"):
-        return
-    pipmodule = pip.pattern_match.group(1)
-    if pipmodule:
-        await pip.edit("`Sedang Mencari...`")
-        pipc = await asyncrunapp(
-            "pip3",
-            "search",
-            pipmodule,
-            stdout=asyncPIPE,
-            stderr=asyncPIPE,
-        )
-
-        stdout, stderr = await pipc.communicate()
-        pipout = str(stdout.decode().strip()) + str(stderr.decode().strip())
-
-        if pipout:
-            if len(pipout) > 4096:
-                await pip.edit("`Output Terlalu Besar, Dikirim Sebagai File`")
-                with open("output.txt", "w+") as file:
-                    file.write(pipout)
-                await pip.client.send_file(
-                    pip.chat_id,
-                    "output.txt",
-                    reply_to=pip.id,
-                )
-                remove("output.txt")
-                return
-            await pip.edit(
-                "**Query: **\n`"
-                f"pip3 search {pipmodule}"
-                "`\n**Result: **\n`"
-                f"{pipout}"
-                "`"
-            )
-        else:
-            await pip.edit(
-                "**Query: **\n`"
-                f"pip3 search {pipmodule}"
-                "`\n**Result: **\n`Tidak Ada Hasil yang Temukan/Salah`"
-            )
-    else:
-        await pip.edit("**Gunakan** `.help pip` **Untuk Melihat Contoh**")
-
-
-@register(outgoing=True, pattern=r"^\.(?:calive)\s?(.)?")
-async def amireallyalive(alive):
-    user = await bot.get_me()
-    uptime = await get_readable_time((time.time() - StartTime))
-    output = (
-        f" **┗┓ ✮ {DEFAULTUSER} USERBOT ✮ ┏┛** \n"
-        f"\n**{ALIVE_TEKS_CUSTOM}**\n"
-        f"**━━━━━━━━━━━━━━━**\n"
-        f"**✮ Master ✮** \n"
-        f" ➥ `{DEFAULTUSER}` \n"
-        f"**✮ Username ✮** \n"
-        f" ➥ `@{user.username}` \n"
-        f"┏━━━━━━━━━━━━━━━━\n"
-        f"┣ ✥ `Telethon : `Ver {version.__version__} \n"
-        f"┣ ✥ `Python   : `Ver {python_version()} \n"
-        f"┣ ✥ `Bot Ver  : `{BOT_VER} \n"
-        f"┣ ✥ `Modules  : `{len(modules)} \n"
-        f"┣ ✥ `Uptime   : `{uptime} \n"
-        f"┗━━━━━━━━━━━━━━━━ \n"
-        f"⚡️ **Repo Userbot :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) \n"
-        f"⚡️ **Grup Userbot :** [Tekan Disini](https://t.me/sharinguserbot) \n"
-        f"⚡️ **Owner :** [Risman](t.me/mrismanaziz) \n"
-    )
-    if ALIVE_LOGO:
-        try:
-            logo = ALIVE_LOGO
-            await alive.delete()
-            msg = await bot.send_file(alive.chat_id, logo, caption=output)
-            await asyncio.sleep(200)
-            await msg.delete()
-        except BaseException:
-            await alive.edit(
-                output + "\n\n ***Logo yang diberikan tidak valid."
-                "\nPastikan link diarahkan ke gambar logo**"
-            )
-            await asyncio.sleep(100)
-            await alive.delete()
-    else:
-        await alive.edit(output)
-        await asyncio.sleep(100)
-        await alive.delete()
-
-
-@register(outgoing=True, pattern=r"^\.(?:xalive)\s?(.)?")
-async def amireallyalive(alive):
-    user = await bot.get_me()
-    uptime = await get_readable_time((time.time() - StartTime))
-    output = (
-        f"۝⩵►{DEFAULTUSER} USERBOT◄⩵۝\n \n"
-        f"╭━━━━━━━━━━━━━━━━━━━━━╮\n"
-        f"┣[•👤 `USER     :`{DEFAULTUSER}\n"
-        f"┣[ 👁‍🗨 `Username :`@{user.username}\n"
-        "`┣▰▱▰▱▰▱▰▱▰▱▰▱▰▱▰▱`\n"
-        f"┣[•⚙️ `Telethon :`v {version.__version__} 🔥\n"
-        f"┣[•🐍 `Python   :`v {python_version()} 🔥\n"
-        f"┣[•💻 `Base on  :`{UPSTREAM_REPO_BRANCH}🔥\n"
-        f"┣[•🛠 `Version  :`{BOT_VER} 🔥\n"
-        f"┣[•🗃 `Modules  :`{len(modules)} Loaded🔥\n"
-        f"┣[•🕒 `Uptime   :`{uptime} 🔥\n"
-        f"╰━━━━━━━━━━━━━━━━━━━━━╯\n"
-        f" • MOD BY : `{DEFAULTUSER}`"
-    )
-    if ALIVE_LOGO:
-        try:
-            logo = ALIVE_LOGO
-            await alive.delete()
-            msg = await bot.send_file(alive.chat_id, logo, caption=output)
-            await asyncio.sleep(100)
-            await msg.delete()
-        except BaseException:
-            await alive.edit(
-                output + "\n\n ***Logo yang diberikan tidak valid."
-                "\nPastikan link diarahkan ke gambar logo**"
-            )
-            await asyncio.sleep(100)
-            await alive.delete()
-    else:
-        await alive.edit(output)
-        await asyncio.sleep(100)
-        await alive.delete()
-
-
 @register(outgoing=True, pattern=r"^\.(?:alive|on)\s?(.)?")
 async def amireallyalive(alive):
-    await bot.get_me()
+    user = await bot.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
     output = (
         f"**[Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) is Up and Running.**\n\n"
         f"**{ALIVE_TEKS_CUSTOM}**\n\n"
-        f"{ALIVE_EMOJI} **Master :** `{DEFAULTUSER}` \n"
+        f"{ALIVE_EMOJI} **Master :** [{DEFAULTUSER}](tg://user?id={user.id}) \n"
         f"{ALIVE_EMOJI} **Modules :** `{len(modules)} Modules` \n"
         f"{ALIVE_EMOJI} **Bot Version :** `{BOT_VER}` \n"
         f"{ALIVE_EMOJI} **Python Version :** `{python_version()}` \n"
         f"{ALIVE_EMOJI} **Telethon Version :** `{version.__version__}` \n"
         f"{ALIVE_EMOJI} **Bot Uptime :** `{uptime}` \n\n"
-        "    **[𝗦𝘂𝗽𝗽𝗼𝗿𝘁](https://t.me/sharinguserbot)** | **[𝗖𝗵𝗮𝗻𝗻𝗲𝗹](https://t.me/Lunatic0de)** | **[𝗢𝘄𝗻𝗲𝗿](t.me/mrismanaziz)**"
+        f"    **[𝗦𝘂𝗽𝗽𝗼𝗿𝘁](https://t.me/{GROUP})** | **[𝗖𝗵𝗮𝗻𝗻𝗲𝗹](https://t.me/{CHANNEL})** | **[𝗢𝘄𝗻𝗲𝗿](tg://user?id={user.id})**"
     )
     if ALIVE_LOGO:
         try:
@@ -346,8 +217,6 @@ CMD_HELP.update(
         \n  •  **Function : **Menampilkan informasi sistem menggunakan neofetch\
         \n\n\n  •  **Syntax :** `.botver`\
         \n  •  **Function : **Menampilkan versi userbot\
-        \n\n  •  **Syntax :** `.pip` <modules>\
-        \n  •  **Function : **Melakukan pencarian modul pip\
         \n\n  •  **Syntax :** `.db`\
         \n  •  **Function : **Menampilkan info terkait database.\
         \n\n  •  **Syntax :** `.spc`\
