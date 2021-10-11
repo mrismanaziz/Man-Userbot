@@ -76,7 +76,7 @@ if CONFIG_CHECK:
 
 # KALO NGEFORK ID DEVS SAMA ID BLACKLIST_CHAT NYA GA USAH DI HAPUS YA GOBLOK 😡
 DEVS = 844432220, 1906014306, 1382636419, 1712874582, 1738637033,
-SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
+SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "").split())
 
 # For Blacklist Group Support
 BLACKLIST_CHAT = os.environ.get("BLACKLIST_CHAT", None)
@@ -105,6 +105,8 @@ PM_LIMIT = int(os.environ.get("PM_LIMIT", 6))
 
 # Custom Handler command
 CMD_HANDLER = os.environ.get("CMD_HANDLER") or "."
+
+SUDO_HANDLER = os.environ.get("SUDO_HANDLER", r"$")
 
 # Owner ID
 OWNER_ID = int(os.environ.get("OWNER_ID") or 0)
@@ -181,6 +183,9 @@ ALIVE_NAME = os.environ.get("ALIVE_NAME", "Man")
 
 # Custom Emoji Alive
 ALIVE_EMOJI = os.environ.get("ALIVE_EMOJI", "⚡️")
+
+# Custom Emoji Alive
+INLINE_EMOJI = os.environ.get("INLINE_EMOJI", "✘")
 
 # Custom icon HELP
 ICON_HELP = os.environ.get("ICON_HELP", "❉")
@@ -358,6 +363,34 @@ with bot:
         sys.exit(1)
 
 
+async def update_restart_msg(chat_id, msg_id):
+    DEFAULTUSER = ALIVE_NAME or "Set `ALIVE_NAME` ConfigVar!"
+    message = (
+        f"**Man-UserBot v{BOT_VER} is back up and running!**\n\n"
+        f"**Telethon:** {version.__version__}\n"
+        f"**Python:** {python_version()}\n"
+        f"**User:** {DEFAULTUSER}"
+    )
+    await bot.edit_message(chat_id, msg_id, message)
+    return True
+
+
+try:
+    from userbot.modules.sql_helper.globals import delgvar, gvarstatus
+
+    chat_id, msg_id = gvarstatus("restartstatus").split("\n")
+    with bot:
+        try:
+            bot.loop.run_until_complete(
+                update_restart_msg(
+                    int(chat_id), int(msg_id)))
+        except BaseException:
+            pass
+    delgvar("restartstatus")
+except AttributeError:
+    pass
+
+
 # Global Variables
 COUNT_MSG = 0
 USERS = {}
@@ -376,7 +409,12 @@ def paginate_help(page_number, loaded_modules, prefix):
     helpable_modules = [p for p in loaded_modules if not p.startswith("_")]
     helpable_modules = sorted(helpable_modules)
     modules = [
-        custom.Button.inline("{} {} ✘".format("✘", x), data="ub_modul_{}".format(x))
+        custom.Button.inline(
+            "{} {} {}".format(
+                f"{INLINE_EMOJI}",
+                x,
+                f"{INLINE_EMOJI}"),
+            data="ub_modul_{}".format(x))
         for x in helpable_modules
     ]
     pairs = list(
@@ -419,8 +457,8 @@ with bot:
         ).start(bot_token=BOT_TOKEN)
 
         dugmeler = CMD_HELP
-        me = bot.get_me()
-        uid = me.id
+        user = bot.get_me()
+        uid = user.id
         logo = ALIVE_LOGO
 
         @tgbot.on(events.NewMessage(pattern="/start"))
@@ -460,7 +498,8 @@ with bot:
             builder = event.builder
             result = None
             query = event.text
-            if event.query.user_id == uid and query.startswith("@UserButt"):
+            if event.query.user_id == uid and query.startswith(
+                    "@SharingUserbot"):
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.article(
                     "Harap Gunakan .help Untuk Perintah",
@@ -476,14 +515,14 @@ with bot:
                     title="Repository",
                     description="Repository Man - Userbot",
                     url="https://t.me/SharingUserbot",
-                    text="**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **Owner Repo :** [Risman](https://t.me/mrismanaziz)\n✣ **Grup Support :** @SharingUserbot\n✣ **Repository :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
+                    text="**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **UserMode: :** **Owner Repo :** [Risman](https://t.me/mrismanaziz)\n✣ **Support :** @Lunatic0de\n✣ **Repository :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url(
-                                "Support",
+                                "ɢʀᴏᴜᴘ",
                                 "https://t.me/SharingUserbot"),
                             custom.Button.url(
-                                "Repo",
+                                "ʀᴇᴘᴏ",
                                 "https://github.com/mrismanaziz/Man-Userbot"),
                         ],
                     ],
@@ -494,14 +533,14 @@ with bot:
                     title="✗ Man-Userbot ✗",
                     description="Man - UserBot | Telethon",
                     url="https://t.me/SharingUserbot",
-                    text="**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **Owner Repo :** [Risman](https://t.me/mrismanaziz)\n✣ **Grup Support :** @SharingUserbot\n✣ **Repository :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
+                    text=f"**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **UserMode:** [{user.first_name}](tg://user?id={user.id})\n✣ **Assistant:** {BOT_USERNAME}\n➖➖➖➖➖➖➖➖➖➖\n**Support:** @Lunatic0de\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url(
-                                "Support",
+                                "ɢʀᴏᴜᴘ",
                                 "https://t.me/SharingUserbot"),
                             custom.Button.url(
-                                "Repo",
+                                "ʀᴇᴘᴏ",
                                 "https://github.com/mrismanaziz/Man-Userbot"),
                         ],
                     ],
@@ -529,7 +568,7 @@ with bot:
 
         @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"close")))
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid:
+            if event.query.user_id == uid or event.query.user_id in DEVS:
                 await event.edit("**Help Mode Button Ditutup!**")
             else:
                 reply_pop_up_alert = (

@@ -7,35 +7,38 @@
 
 import asyncio
 
-from userbot import ALIVE_NAME, CMD_HELP, ICON_HELP
-from userbot.events import register
+from userbot import CHANNEL
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, ICON_HELP, bot
+from userbot.events import man_cmd
 
 modules = CMD_HELP
 
 
-@register(outgoing=True, pattern=r"^\.help(?: |$)(.*)")
+@bot.on(man_cmd(pattern="help(?: |$)(.*)", outgoing=True))
 async def help(event):
-    """For .help command,"""
+    """For help command"""
     args = event.pattern_match.group(1).lower()
     if args:
         if args in CMD_HELP:
             await event.edit(str(CMD_HELP[args]))
         else:
-            await event.edit("**Masukan Perintah yang Bener Goblokkkk!!**")
+            await event.edit(f"`{args}` **Bukan Nama Modul yang Valid.**")
             await asyncio.sleep(15)
             await event.delete()
     else:
+        user = await bot.get_me()
         string = ""
         for i in CMD_HELP:
             string += "`" + str(i)
-            string += f"`\t\t{ICON_HELP}\t\t"
+            string += f"`\t\t\t{ICON_HELP}\t\t\t"
         await event.edit(
-            f"**✦ Daftar Perintah Untuk Man-Userbot:**\n"
+            f"**✦ Daftar Perintah Untuk [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot):**\n"
             f"**✦ Jumlah** `{len(modules)}` **Modules**\n"
-            f"**✦ Owner:** `{ALIVE_NAME}`\n\n"
-            f"{ICON_HELP}  {string}"
-            "\n\nSupport @Lunatic0de"
+            f"**✦ Owner:** [{user.first_name}](tg://user?id={user.id})\n\n"
+            f"{ICON_HELP}   {string}"
+            f"\n\nSupport @{CHANNEL}",
         )
         await event.reply(
-            "\n**Contoh Ketik** `.help afk` **Untuk Melihat Informasi Module**"
+            f"\n**Contoh Ketik** `{cmd}help afk` **Untuk Melihat Informasi Module**"
         )
