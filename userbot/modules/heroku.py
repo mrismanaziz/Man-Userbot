@@ -198,13 +198,16 @@ async def _(dyno):
             "**Wajib Mengisi Var** `HEROKU_APP_NAME` **dan** `HEROKU_API_KEY`"
         )
     await dyno.edit("**Sedang Mengambil Logs Heroku**")
-    with open("logs.txt", "w") as log:
+    with open("Logs.txt", "w") as log:
         log.write(app.get_log())
     await dyno.client.send_file(
-        entity=dyno.chat_id, file="logs.txt", caption="**Ini Logs Heroku anda**"
+        entity=dyno.chat_id,
+        file="Logs.txt",
+        thumb="userbot/resources/logo.jpg",
+        caption="**Ini Logs Heroku anda**",
     )
     await dyno.delete()
-    return os.remove("logs.txt")
+    return os.remove("Logs.txt")
 
 
 CMD_HELP.update(

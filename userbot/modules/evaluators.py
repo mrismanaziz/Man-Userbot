@@ -10,20 +10,19 @@ import io
 import sys
 import traceback
 from os import remove
+from pprint import pprint
 
 from userbot import CMD_HELP, bot
 from userbot.events import register
 
-MAX_MESSAGE_SIZE_LIMIT = 4095
-
-p = print
+p, pp = print, pprint
 
 
 @register(outgoing=True, pattern=r"^\.eval(?:\s|$)([\s\S]*)")
 async def _(event):
     expression = event.pattern_match.group(1)
     if not expression:
-        return await event.edit("**Berikan Code untuk di Eksekusi.**")
+        return await event.edit("**Berikan Code untuk di eksekusi.**")
 
     if expression in ("userbot.session", "config.env"):
         return await event.edit("**Itu operasi yang berbahaya! Tidak diperbolehkan!**")
@@ -84,8 +83,9 @@ async def _(event):
                 event.chat_id,
                 out_file,
                 force_document=True,
+                thumb="userbot/resources/logo.jpg",
                 allow_cache=False,
-                caption="**Output terlalu besar, dikirim sebagai file**",
+                caption=f"`{cmd}`" if len(cmd) < 998 else None,
                 reply_to=reply_to_id,
             )
             await xx.delete()
@@ -136,6 +136,7 @@ async def run(event):
             event.chat_id,
             "output.txt",
             reply_to=event.id,
+            thumb="userbot/resources/logo.jpg",
             caption="**Output terlalu besar, dikirim sebagai file**",
         )
         return remove("output.txt")
@@ -173,6 +174,7 @@ async def terminal_runner(event):
             event.chat_id,
             "output.txt",
             reply_to=event.id,
+            thumb="userbot/resources/logo.jpg",
             caption="**Output terlalu besar, dikirim sebagai file**",
         )
         return remove("output.txt")
@@ -193,13 +195,14 @@ async def _(event):
     else:
         the_real_message = event.stringify()
         reply_to_id = event.message.id
-    if len(the_real_message) > MAX_MESSAGE_SIZE_LIMIT:
+    if len(the_real_message) > 4096:
         with io.BytesIO(str.encode(the_real_message)) as out_file:
             out_file.name = "json.text"
             await bot.send_file(
                 event.chat_id,
                 out_file,
                 force_document=True,
+                thumb="userbot/resources/logo.jpg",
                 allow_cache=False,
                 reply_to=reply_to_id,
             )
