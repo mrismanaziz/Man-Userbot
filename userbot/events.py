@@ -15,7 +15,7 @@ from telethon import events
 from time import gmtime, strftime
 from traceback import format_exc
 
-from userbot import CMD_HELP, CMD_HANDLER, LOGSPAMMER, bot
+from userbot import CMD_HANDLER, CMD_LIST, LOGSPAMMER, bot
 
 
 def man_cmd(pattern=None, command=None, **args):
@@ -32,9 +32,9 @@ def man_cmd(pattern=None, command=None, **args):
             args["pattern"] = re.compile(pattern)
             cmd = pattern.replace("$", "").replace("^", "").replace("\\", "")
             try:
-                CMD_HELP[file_test].append(cmd)
+                CMD_LIST[file_test].append(cmd)
             except BaseException:
-                CMD_HELP.update({file_test: [cmd]})
+                CMD_LIST.update({file_test: [cmd]})
         else:
             if len(CMD_HANDLER) == 2:
                 catreg = "^" + CMD_HANDLER
@@ -56,9 +56,9 @@ def man_cmd(pattern=None, command=None, **args):
                         "^",
                         ""))
             try:
-                CMD_HELP[file_test].append(cmd)
+                CMD_LIST[file_test].append(cmd)
             except BaseException:
-                CMD_HELP.update({file_test: [cmd]})
+                CMD_LIST.update({file_test: [cmd]})
 
     if "allow_edited_updates" in args and args["allow_edited_updates"]:
         del args["allow_edited_updates"]
@@ -102,9 +102,9 @@ def command(**args):
             except BaseException:
                 pass
             try:
-                CMD_HELP[file_test].append(cmd)
+                CMD_LIST[file_test].append(cmd)
             except BaseException:
-                CMD_HELP.update({file_test: [cmd]})
+                CMD_LIST.update({file_test: [cmd]})
         except BaseException:
             pass
 
