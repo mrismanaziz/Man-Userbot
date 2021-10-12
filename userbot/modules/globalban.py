@@ -8,13 +8,14 @@ import asyncio
 import base64
 from datetime import datetime
 
+from telethon import events
 from telethon.errors import BadRequestError
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
 from telethon.tl.types import Channel, ChatBannedRights, MessageEntityMentionName
 
 import userbot.modules.sql_helper.gban_sql as gban_sql
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, DEVS
+from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, DEVS, bot
 from userbot.events import register
 from userbot.utils import edit_delete, edit_or_reply
 
@@ -106,7 +107,7 @@ async def get_user_from_event(event, uevent=None, secondgroup=None):
 async def gban(event):
     if event.fwd_from:
         return
-    gbun = await edit_or_reply(event, "`Gbanning.......`")
+    gbun = await edit_or_reply(event, "`Gbanning...`")
     start = datetime.now()
     user, reason = await get_user_from_event(event, gbun)
     if not user:
@@ -195,7 +196,7 @@ async def gban(event):
 async def ungban(event):
     if event.fwd_from:
         return
-    ungbun = await edit_or_reply(event, "`UnGbanning.....`")
+    ungbun = await edit_or_reply(event, "`UnGbanning...`")
     start = datetime.now()
     user, reason = await get_user_from_event(event, ungbun)
     if not user:
@@ -279,6 +280,26 @@ async def gablist(event):
     else:
         GBANNED_LIST = "Belum ada Pengguna yang Di-Gban"
     await edit_or_reply(event, GBANNED_LIST)
+
+
+@bot.on(events.ChatAction)
+async def _(event):
+    if event.user_joined or event.added_by:
+        user = await event.get_user()
+        chat = await event.get_chat()
+        if gban_sql.is_gbanned(user.id):
+            if chat.admin_rights:
+                try:
+                    await event.client.edit_permissions(
+                        chat.id,
+                        user.id,
+                        view_messages=False,
+                    )
+                    await event.reply(
+                        f"**#GBanned_User** Joined.\n\n** • First Name:** [{user.first_name}](tg://user?id={user.id})\n • **Action:** `Banned`"
+                    )
+                except BaseException:
+                    pass
 
 
 # Ported by @mrismanaziz
