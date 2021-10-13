@@ -122,7 +122,7 @@ async def _(e):
     await edit_delete(e, "**Silahkan Check di Private**", 15)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"getlink(?: |$)(.*)", groups_only=True))
+@bot.on(man_cmd(outgoing=True, pattern=r"getlink(?: |$)(.*)"))
 async def _(event):
     await event.edit("`Processing...`")
     try:
@@ -213,7 +213,7 @@ CMD_HELP.update(
 CMD_HELP.update(
     {
         "getlink": f"**Plugin : **`getlink`\
-        \n\n  •  **Syntax :** `fgetlink`\
+        \n\n  •  **Syntax :** `{cmd}getlink`\
         \n  •  **Function : **Untuk Mendapatkan link invite grup chat.\
     "
     }
