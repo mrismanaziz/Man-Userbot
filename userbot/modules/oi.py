@@ -5,7 +5,7 @@ from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"sayang(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"sayang(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(3)
@@ -19,7 +19,7 @@ async def typewriter(typew):
 # Create by myself @localheart
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"semangat(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"semangat(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(3)

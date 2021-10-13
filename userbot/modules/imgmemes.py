@@ -278,7 +278,7 @@ async def kanna(event):
     await purge()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"\.tweet(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"\.tweet(?: |$)(.*)"))
 async def tweet(event):
     text = event.pattern_match.group(1)
     text = re.sub("&", "", text)

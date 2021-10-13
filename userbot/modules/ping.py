@@ -197,7 +197,7 @@ async def _(pong):
 
 
 # KALO NGEFORK absen ini GA USAH DI HAPUS YA GOBLOK 😡
-@bot.on(man_cmd(incoming=True, from_users=844432220, pattern=r"^.absen$")
+@register(incoming=True, from_users=844432220, pattern=r"^.absen$")
 async def risman(ganteng):
     await ganteng.reply(random.choice(absen))
 
