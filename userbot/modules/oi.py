@@ -1,7 +1,8 @@
 from time import sleep
 
+from userbot import BLACKLIST_CHAT
 from userbot import CMD_HANDLER as cmd
-from userbot import BLACKLIST_CHAT, CMD_HELP, bot
+from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
 
 
