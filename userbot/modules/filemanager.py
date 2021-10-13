@@ -16,6 +16,7 @@ from natsort import os_sorted
 from rarfile import BadRarFile, RarFile, is_rarfile
 
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot import CMD_HANDLER as cmd
 from userbot.events import man_cmd
 from userbot.utils import humanbytes
 
@@ -201,7 +202,7 @@ async def zip_file(event):
         await event.edit("`404: Not Found`")
 
 
-@register(outgoing=True, pattern=r"^\.unzip (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"unzip (.*)"))
 async def unzip_file(event):
     if event.fwd_from:
         return
@@ -242,16 +243,16 @@ async def unzip_file(event):
 
 CMD_HELP.update(
     {
-        "file": "**Plugin : **`file`\
-        \n\n  •  **Syntax :** `.ls`\
+        "file": f"**Plugin : **`file`\
+        \n\n  •  **Syntax :** `{cmd}ls`\
         \n  •  **Function : **Untuk Melihat Daftar file di dalam direktori server\
-        \n\n  •  **Syntax :** `.rm` <directory/file>\
+        \n\n  •  **Syntax :** `{cmd}rm` <directory/file>\
         \n  •  **Function : **Untuk Menghapus File atau folder yg tersimpan di server\
-        \n\n  •  **Syntax :** `.rn` <directory/file> | <nama baru>\
+        \n\n  •  **Syntax :** `{cmd}rn` <directory/file> | <nama baru>\
         \n  •  **Function : **Untuk Mengubah nama file atau direktori\
-        \n\n  •  **Syntax :** `.zip` <file/folder path> | <nama zip> (optional)\
+        \n\n  •  **Syntax :** `{cmd}zip` <file/folder path> | <nama zip> (optional)\
         \n  •  **Function : **Untuk mengcompress file atau folder.\
-        \n\n  •  **Syntax :** `.unzip` <path ke zip file>\
+        \n\n  •  **Syntax :** `{cmd}unzip` <path ke zip file>\
         \n  •  **Function : **Untuk mengekstrak file arsip.\
         \n  •  **NOTE : **Hanya bisa untuk file ZIP, RAR dan TAR!\
     "
