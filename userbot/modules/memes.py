@@ -1019,7 +1019,7 @@ async def decide(event):
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r";_;$", ignore_unsafe=True))
+@bot.on(man_cmd(outgoing=True, pattern=r";_;$"))
 async def fun(idk):
     t = ";_;"
     for j in range(10):
@@ -1548,7 +1548,7 @@ async def let_me_google_that_for_you(lmgtfy_q):
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"-_-$", ignore_unsafe=True))
+@bot.on(man_cmd(outgoing=True, pattern=r"-_-$"))
 async def emo(sigh):
     """Ok..."""
     okay = "-_-"
