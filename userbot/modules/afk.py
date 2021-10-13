@@ -9,6 +9,9 @@ from datetime import datetime
 from telethon import events
 from telethon.tl import functions, types
 
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
+
 from userbot import (  # noqa pylint: disable=unused-import isort:skip
     AFKREASON,
     ALIVE_NAME,
@@ -21,8 +24,6 @@ from userbot import (  # noqa pylint: disable=unused-import isort:skip
     USERS,
     bot,
 )
-from userbot import CMD_HANDLER as cmd
-from userbot.events import man_cmd
 
 global USER_AFK
 global afk_time

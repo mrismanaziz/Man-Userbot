@@ -11,7 +11,6 @@ import textwrap
 from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import InputMessagesFilterDocument
 
-from userbot import CMD_HANDLER as cmd
 from userbot import bot
 from userbot.events import man_cmd
 

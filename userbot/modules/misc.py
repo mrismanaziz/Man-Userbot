@@ -25,19 +25,9 @@ from bs4 import BeautifulSoup
 from heroku3 import from_key
 from PIL import Image
 
-from userbot import (
-    ALIVE_NAME,
-    BOT_VER,
-    BOTLOG,
-    BOTLOG_CHATID,
-    CMD_HELP,
-    HEROKU_API_KEY,
-    HEROKU_APP_NAME,
-    UPSTREAM_REPO_BRANCH,
-    bot,
-)
+from userbot import ALIVE_NAME, BOT_VER, BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, UPSTREAM_REPO_BRANCH, bot
 from userbot.events import man_cmd
 from userbot.utils import time_formatter
 

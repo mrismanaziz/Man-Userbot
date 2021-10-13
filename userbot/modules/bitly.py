@@ -9,7 +9,6 @@ from re import match
 
 from bitlyshortener import Shortener
 
-from userbot import CMD_HANDLER as cmd
 from userbot import BITLY_TOKEN, BOTLOG, BOTLOG_CHATID, bot
 from userbot.events import man_cmd
 

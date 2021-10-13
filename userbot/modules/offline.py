@@ -11,7 +11,8 @@ from random import choice, randint
 from telethon.events import StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from userbot.events import register
+from userbot import bot
+from userbot.events import man_cmd, register
 
 from userbot import (  # noqa pylint: disable=unused-import isort:skip
     AFKREASON,
@@ -25,9 +26,7 @@ from userbot import (  # noqa pylint: disable=unused-import isort:skip
     PM_AUTO_BAN,
     bot,
 )
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+
 # ========================= CONSTANTS ============================
 AFKSTR = [
     f"**Maaf {ALIVE_NAME} Sedang OFF!**",

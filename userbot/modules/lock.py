@@ -7,8 +7,9 @@
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
+from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
-from userbot import ALIVE_NAME, CMD_HELP, bot
+from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
 
 
@@ -182,7 +183,9 @@ async def rem_locks(event):
                 peer=peer_id, banned_rights=unlock_rights
             )
         )
-        await event.edit(f"`{ALIVE_NAME} Telah Membuka Kunci {what} Untuk Obrolan Ini!!`")
+        await event.edit(
+            f"`{ALIVE_NAME} Telah Membuka Kunci {what} Untuk Obrolan Ini!!`"
+        )
     except BaseException as e:
         await event.edit(
             f"`Apakah {ALIVE_NAME} Mempunyai Izin Melakukan Itu Disini?`\n**ERROR:** {str(e)}"

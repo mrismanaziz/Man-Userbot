@@ -25,11 +25,11 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from userbot import CMD_HELP, bot
-from userbot import S_PACK_NAME as custompack
 from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP
+from userbot import S_PACK_NAME as custompack
+from userbot import bot
 from userbot.events import man_cmd
-from userbot.events import register
 from userbot.utils import edit_or_reply
 
 KANGING_STR = [

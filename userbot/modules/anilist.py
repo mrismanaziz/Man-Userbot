@@ -10,7 +10,6 @@ import re
 
 import requests
 
-from userbot import CMD_HANDLER as cmd
 from userbot import bot
 from userbot.events import man_cmd
 

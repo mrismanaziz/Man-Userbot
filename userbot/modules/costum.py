@@ -9,10 +9,10 @@
 #
 """ Userbot module containing commands for keeping costum global notes. """
 
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import BOTLOG_CHATID, CMD_HELP, bot
-from userbot.events import register
-from userbot.events import man_cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd, register
 
 
 @register(outgoing=True, pattern=r"\.\w*", ignore_unsafe=True, disable_errors=True)

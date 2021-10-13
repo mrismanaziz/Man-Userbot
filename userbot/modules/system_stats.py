@@ -26,12 +26,9 @@ from userbot import (
     ALIVE_TEKS_CUSTOM,
     BOT_VER,
     CHANNEL,
-    CMD_HELP,
-    GROUP,
-    StartTime,
-    bot,
 )
 from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, GROUP, StartTime, bot
 from userbot.events import man_cmd
 
 # ================= CONSTANT =================

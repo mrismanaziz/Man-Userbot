@@ -16,6 +16,7 @@ from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
+from userbot import CMD_HANDLER as cmd
 from userbot import (
     CMD_HELP,
     DEEZER_ARL_TOKEN,
@@ -24,7 +25,6 @@ from userbot import (
     bot,
     lastfm,
 )
-from userbot import CMD_HANDLER as cmd
 from userbot.events import man_cmd
 from userbot.utils import chrome, progress
 from userbot.utils.FastTelethon import upload_file
@@ -296,7 +296,9 @@ async def _(event):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"deez (.+?|) (FLAC|MP3\_320|MP3\_256|MP3\_128)"))
+@bot.on(
+    man_cmd(outgoing=True, pattern=r"deez (.+?|) (FLAC|MP3\_320|MP3\_256|MP3\_128)")
+)
 async def _(event):
     """DeezLoader by @An0nimia. Ported for UniBorg by @SpEcHlDe"""
     if event.fwd_from:

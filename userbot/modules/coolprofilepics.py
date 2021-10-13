@@ -9,8 +9,7 @@ import urllib
 import requests
 from telethon.tl import functions
 
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import bot
 from userbot.events import man_cmd
 
 COLLECTION_STRING = [

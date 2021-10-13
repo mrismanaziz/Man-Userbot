@@ -14,7 +14,6 @@ import requests
 from bs4 import BeautifulSoup as bs
 
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"ts (.*)"))

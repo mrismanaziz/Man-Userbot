@@ -17,8 +17,6 @@ from telethon import functions, types
 from telethon.tl.types import DocumentAttributeFilename
 
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
 from userbot.utils import progress
 

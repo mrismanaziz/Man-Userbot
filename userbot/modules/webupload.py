@@ -6,8 +6,6 @@ import asyncio
 import time
 
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot import CMD_HANDLER as cmd
-from userbot.events import man_cmd
 
 
 @register(

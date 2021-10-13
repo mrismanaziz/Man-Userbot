@@ -14,11 +14,10 @@ from pytz import timezone as tz
 from requests import get
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
 from userbot import OPEN_WEATHER_MAP_APPID as OWM_API
-from userbot import WEATHER_DEFCITY
-from userbot.events import register
+from userbot import WEATHER_DEFCITY, bot
+from userbot.events import man_cmd
 
 # ===== CONSTANT =====
 DEFCITY = WEATHER_DEFCITY or None

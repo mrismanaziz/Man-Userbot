@@ -19,7 +19,9 @@ from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"convert ?(foto|sound|gif|voice|photo|mp3)? ?(.*)"))
+@bot.on(
+    man_cmd(outgoing=True, pattern=r"convert ?(foto|sound|gif|voice|photo|mp3)? ?(.*)")
+)
 async def cevir(event):
     botman = event.pattern_match.group(1)
     try:

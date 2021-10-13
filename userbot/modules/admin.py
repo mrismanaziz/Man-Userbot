@@ -32,9 +32,10 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_display_name
 
+from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID, CMD_HELP, DEVS, bot
-from userbot.events import register, man_cmd
+from userbot import CMD_HELP, DEVS, bot
+from userbot.events import man_cmd, register
 from userbot.utils import _format, edit_delete, edit_or_reply
 
 # =================== CONSTANT ===================

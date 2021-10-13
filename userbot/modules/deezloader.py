@@ -12,8 +12,8 @@ from hachoir.parser import createParser
 from requests import get
 from telethon.tl.types import DocumentAttributeAudio
 
-from userbot import CMD_HELP, DEEZER_ARL_TOKEN, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, DEEZER_ARL_TOKEN, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.events import man_cmd
 
 if not TEMP_DOWNLOAD_DIRECTORY.endswith("/"):

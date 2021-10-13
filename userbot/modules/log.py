@@ -7,15 +7,15 @@ import asyncio
 
 from telethon import events
 
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, LOGS, bot
+from userbot import BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot.events import register, man_cmd
+from userbot import CMD_HELP, LOGS, bot
+from userbot.events import man_cmd
 from userbot.modules.sql_helper import no_log_pms_sql
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.utils import _format, edit_delete
 from userbot.utils.logger import logging
 from userbot.utils.tools import media_type
-
 
 LOGS = logging.getLogger(__name__)
 

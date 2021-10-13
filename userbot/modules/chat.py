@@ -39,8 +39,9 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_input_location
 
-from userbot import ALIVE_NAME, BLACKLIST_CHAT, BOTLOG, BOTLOG_CHATID, CMD_HELP, bot
+from userbot import ALIVE_NAME, BLACKLIST_CHAT, BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
 from userbot.modules.admin import get_user_from_event
 from userbot.utils import edit_or_reply

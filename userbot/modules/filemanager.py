@@ -15,9 +15,7 @@ from zipfile import ZIP_DEFLATED, BadZipFile, ZipFile, is_zipfile
 from natsort import os_sorted
 from rarfile import BadRarFile, RarFile, is_rarfile
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.events import man_cmd
 from userbot.utils import humanbytes
 

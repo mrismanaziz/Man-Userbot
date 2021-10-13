@@ -9,9 +9,8 @@ import os
 import lyricsgenius
 from pylast import User
 
-from userbot import CMD_HELP, GENIUS, LASTFM_USERNAME, lastfm
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP, GENIUS, LASTFM_USERNAME, bot, lastfm
 from userbot.events import man_cmd
 
 if GENIUS is not None:

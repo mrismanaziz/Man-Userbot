@@ -11,7 +11,6 @@ from validators.url import url
 from wget import download
 
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import register
 
 EMOJI_PATTERN = re.compile(
     "["

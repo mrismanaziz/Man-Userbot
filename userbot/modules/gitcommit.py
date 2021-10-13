@@ -10,13 +10,10 @@ from datetime import datetime
 
 from github import Github
 
-# from userbot.events import humanbytes, progress, time_formatter
-from userbot import CMD_HELP, GIT_REPO_NAME, GITHUB_ACCESS_TOKEN, bot
-
 # from sample_config import Config
 # from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+# from userbot.events import humanbytes, progress, time_formatter
+from userbot import CMD_HELP, GIT_REPO_NAME, GITHUB_ACCESS_TOKEN, bot
 from userbot.events import man_cmd
 
 GIT_TEMP_DIR = "./userbot/temp/"
