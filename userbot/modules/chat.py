@@ -163,7 +163,7 @@ async def mute_chat(mute_e):
         )
 
 
-@bot.on(man_cmd(incoming=True, disable_errors=True))
+@bot.on(man_cmd(incoming=True))
 async def keep_read(message):
     """The mute logic."""
     try:
