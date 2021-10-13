@@ -6,7 +6,8 @@ from telethon.tl.types import ChatBannedRights
 import userbot.modules.sql_helper.antiflood_sql as sql
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd, register
+from userbot.events import man_cmd
+from userbot.events import register
 from userbot.utils.tools import is_admin
 
 CHAT_FLOOD = sql.__load_flood_settings()
