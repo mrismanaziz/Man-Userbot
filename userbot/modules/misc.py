@@ -41,21 +41,6 @@ useragent = "Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) 
 opener.addheaders = [("User-agent", useragent)]
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"random"))
-async def randomise(items):
-    """For .random command, get a random item from the list of items."""
-    itemo = (items.text[8:]).split()
-    if len(itemo) < 2:
-        await items.edit(
-            "`2 atau lebih banyak item diperlukan! Periksa .help random untuk info lebih lanjut.`"
-        )
-        return
-    index = randint(1, len(itemo) - 1)
-    await items.edit(
-        "**Query: **\n`" + items.text[8:] + "`\n**Output: **\n`" + itemo[index] + "`"
-    )
-
-
 @bot.on(man_cmd(outgoing=True, pattern=r"sleep ([0-9]+)$"))
 async def sleepybot(time):
     """For .sleep command, let the userbot snooze for a few second."""
