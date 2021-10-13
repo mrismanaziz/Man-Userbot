@@ -171,9 +171,9 @@ CMD_HELP.update(
         \n\n  •  **Syntax :** `{cmd}checkwelcome`\
         \n  •  **Function : **Check pesan welcome yang anda simpan.\
         \n\n  •  **Syntax :** `{cmd}rmwelcome`\
-        \n  •  **Function : **Menghapus pesan welcome yang anda simpan.\
-        \n\n  •  **Format Variabel yang bisa digunakan di setwelcome :**\
-        \n`{mention}`, `{title}`, `{count}`, `{first}`, `{last}`, `{fullname}`, `{userid}`, `{username}`, `{my_first}`, `{my_fullname}`, `{my_last}`, `{my_mention}`, `{my_username}`\
+        \n  •  **Function : **Menghapus pesan welcome yang anda simpan."
+        "\n\n  •  **Format Variabel yang bisa digunakan di setwelcome :**\
+        `{mention}`, `{title}`, `{count}`, `{first}`, `{last}`, `{fullname}`, `{userid}`, `{username}`, `{my_first}`, `{my_fullname}`, `{my_last}`, `{my_mention}`, `{my_username}`\
     "
     }
 )
