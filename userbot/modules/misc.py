@@ -17,7 +17,6 @@ import re
 import sys
 import urllib
 from os import environ, execle
-from random import randint
 from time import sleep
 
 import requests
