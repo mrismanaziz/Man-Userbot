@@ -33,7 +33,7 @@ def user_list(l, n):
         yield l[i : i + n]
 
 
-@bot.on(man_cmd(outgoing=True, groups_only=True, pattern=r"startvc$"))
+@bot.on(man_cmd(outgoing=True, pattern=r"startvc$"))
 async def start_voice(c):
     chat = await c.get_chat()
     admin = chat.admin_rights
@@ -49,7 +49,7 @@ async def start_voice(c):
         await c.edit(f"**ERROR:** `{ex}`")
 
 
-@bot.on(man_cmd(outgoing=True, groups_only=True, pattern=r"stopvc$"))
+@bot.on(man_cmd(outgoing=True, pattern=r"stopvc$"))
 async def stop_voice(c):
     chat = await c.get_chat()
     admin = chat.admin_rights
@@ -65,7 +65,7 @@ async def stop_voice(c):
         await c.edit(f"**ERROR:** `{ex}`")
 
 
-@bot.on(man_cmd(outgoing=True, groups_only=True, pattern=r"vcinvite"))
+@bot.on(man_cmd(outgoing=True, pattern=r"vcinvite"))
 async def _(c):
     await c.edit("`Inviting Members to Voice Chat...`")
     users = []
