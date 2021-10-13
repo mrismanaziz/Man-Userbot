@@ -3,11 +3,12 @@ from time import sleep
 
 from telethon import events
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd, register
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -66,7 +67,7 @@ async def _(event):
             await event.edit(animation_chars[i % 32])
 
 
-@register(outgoing=True, pattern=r"^\.sayang$")
+@bot.on(man_cmd(outgoing=True, pattern=r"sayang$"))
 async def koc(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("I LOVEE YOUUU 💕")
@@ -95,7 +96,7 @@ async def koc(e):
         await e.edit("SAYANG KAMU💞")
 
 
-@register(outgoing=True, pattern=r"^\.dino(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"dino(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("`DIN DINNN.....`")
@@ -153,7 +154,7 @@ async def typewriter(typew):
     await typew.edit("`-TAMAT-`")
 
 
-@register(outgoing=True, pattern=r"^\.gabut$")
+@bot.on(man_cmd(outgoing=True, pattern=r"gabut$"))
 async def koc(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("`PERNAAHHHHH KAHHH KAUUU MENGIRA`")
@@ -410,7 +411,7 @@ async def koc(e):
         await e.edit("`GABUT`")
 
 
-@register(outgoing=True, pattern=r"^\.terkadang(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"terkadang(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("`Terkadang`")
@@ -429,13 +430,13 @@ async def typewriter(typew):
 # Create by myself @localheart
 
 
-@register(outgoing=True, pattern=r"^\.mf$")
+@bot.on(man_cmd(outgoing=True, pattern=r"mf$"))
 async def koc(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("`mf g dl` **ミ(ノ;_ _)ノ=3** ")
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -473,7 +474,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@register(outgoing=True, pattern=r"^\.gombal(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"gombal(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
@@ -501,7 +502,7 @@ async def typewriter(typew):
 # Create by myself @localheart
 
 
-@register(outgoing=True, pattern=r"^\.helikopter(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"helikopter(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -524,7 +525,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.tembak(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"tembak(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -532,7 +533,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.bundir(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"bundir(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -553,7 +554,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.awk(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"awk(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -565,7 +566,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.ular(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ular(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -657,7 +658,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.y(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"y(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -677,7 +678,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.tank(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"tank(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -688,7 +689,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.babi(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"babi(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -703,7 +704,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.ajg(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ajg(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -716,7 +717,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.bernyanyi(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"bernyanyi(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**Ganteng Doang Gak Bernyanyi (ง˙o˙)ว**")
@@ -752,7 +753,7 @@ async def typewriter(typew):
     await typew.edit("**♪┗ ( ･o･) ┓♪┏ (・o･) ┛♪**")
 
 
-@register(outgoing=True, pattern=r"^\.hua$")
+@bot.on(man_cmd(outgoing=True, pattern=r"hua$"))
 async def koc(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("أ‿أ")
@@ -787,7 +788,7 @@ async def koc(e):
         await e.edit("༼ ༎ຶ ෴ ༎ຶ༽")
 
 
-@register(outgoing=True, pattern=r"^\.huh(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"huh(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n />❤️ *Ini Buat Kamu`")
@@ -797,7 +798,7 @@ async def typewriter(typew):
     await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n💔<\\  *Terimakasih`")
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -838,7 +839,7 @@ async def _(event):
             await event.edit(animation_chars[i % 103])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -871,7 +872,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@register(outgoing=True, pattern=r"^\.santet(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"santet(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("`Mengaktifkan Perintah Santet Online....`")
@@ -1184,7 +1185,7 @@ async def typewriter(typew):
     await typew.edit("`Target Berhasil Tersantet Online 🥴`")
 
 
-@register(outgoing=True, pattern="^.nah(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=".nah(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n />💖 *Ini Buat Kamu`")
@@ -1195,7 +1196,7 @@ async def typewriter(typew):
 # Alpinnnn Gans
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1230,37 +1231,37 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "animasi": "`.gabut` ; `.dino`\
+        "animasi": f"`{cmd}gabut` ; `{cmd}dino`\
     \nUsage: ntahlah gabut doang.\
-    \n\n`.gombal`\
+    \n\n`{cmd}gombal`\
     \nUsage: buat bercanda\
-    \n\n`.cinta`\
+    \n\n`{cmd}cinta`\
     \nUsage: mengirim cintamu ke seseorang.\
-    \n\n`.sayang`\
+    \n\n`{cmd}sayang`\
     \nUsage: untuk jadi buaya.\
-    \n\n`.terkadang`\
+    \n\n`{cmd}terkadang`\
     \nUsage: Auk dah iseng doang.\
-    \n\n`.helikopter` ; `.tank` ; `.tembak`\n`.bundir`\
+    \n\n`{cmd}helikopter` ; `{cmd}tank` ; `{cmd}tembak`\n`{cmd}bundir`\
     \nUsage: liat sendiri\
-    \n\n`.y`\
+    \n\n`{cmd}y`\
     \nUsage: jempol\
-    \n\n`.bulan` ; `.hati` ; `.bernyanyi`\
+    \n\n`{cmd}bulan` ; `{cmd}hati` ; `{cmd}bernyanyi`\
     \nUsage: liat aja.\
-    \n\n`.awk`\
+    \n\n`{cmd}awk`\
     \nUsage: ketawa lari.\
-    \n\n`.ular` ; `.babi` ; `.ajg`\
+    \n\n`{cmd}lar` ; `{cmd}abi` ; `{cmd}ajg`\
     \nUsage: liat sendiri.\
-    \n\n`.nah` ; `.huh` ; `.owner`\
+    \n\n`{cmd}nah` ; `{cmd}huh` ; `{cmd}owner`\
     \nUsage: cobain.\
-    \n\n`.bunga` ; `.buah`\
+    \n\n`{cmd}bunga` ; `{cmd}buah`\
     \nUsage: animasi.\
-    \n\n`.waktu`\
+    \n\n`{cmd}waktu`\
     \nUsage: animasi.\
-    \n\n`.hua`\
+    \n\n`{cmd}hua`\
     \nUsage: nangis.\
-    \n\n`.ceritacinta` ; `.canda`\
+    \n\n`{cmd}ceritacinta` ; `{cmd}canda`\
     \nUsage: liat sendiri\
-    \n\n`.santet`\
+    \n\n`{cmd}santet`\
     \nUsage: Santet Online Buat Bercanda."
     }
 )
