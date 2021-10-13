@@ -40,12 +40,13 @@ from telethon.tl.types import (
 from telethon.utils import get_input_location
 
 from userbot import ALIVE_NAME, BLACKLIST_CHAT, BOTLOG, BOTLOG_CHATID, CMD_HELP, bot
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
 from userbot.modules.admin import get_user_from_event
 from userbot.utils import edit_or_reply
 
 
-@register(outgoing=True, pattern=r"^\.userid$")
+@bot.on(man_cmd(outgoing=True, pattern="userid$"))
 async def useridgetter(target):
     """For .userid command, returns the ID of the target user."""
     message = await target.get_reply_message()
@@ -65,7 +66,7 @@ async def useridgetter(target):
         await target.edit(f"**Username:** {name} \n**User ID:** `{user_id}`")
 
 
-@register(outgoing=True, pattern=r"^\.link(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"link(?: |$)(.*)"))
 async def permalink(mention):
     """For .link command, generates a link to the user's PM with a custom text."""
     user, custom = await get_user_from_event(mention)
@@ -80,7 +81,7 @@ async def permalink(mention):
         await mention.edit(f"[{tag}](tg://user?id={user.id})")
 
 
-@register(outgoing=True, pattern=r"^\.getbot(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"getbot(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -112,7 +113,7 @@ async def _(event):
     await event.edit(mentions)
 
 
-@register(outgoing=True, pattern=r"^\.kickme$")
+@bot.on(man_cmd(outgoing=True, pattern="kickme$"))
 async def kickme(leave):
     """Basically it's .kickme command"""
     if leave.chat_id in BLACKLIST_CHAT:
@@ -121,7 +122,7 @@ async def kickme(leave):
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
-@register(outgoing=True, pattern=r"^\.kikme$")
+@bot.on(man_cmd(outgoing=True, pattern="kikme$"))
 async def kickme(leave):
     """Basically it's .kickme command"""
     if leave.chat_id in BLACKLIST_CHAT:
@@ -130,7 +131,7 @@ async def kickme(leave):
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
-@register(outgoing=True, pattern=r"^\.unmutechat$")
+@bot.on(man_cmd(outgoing=True, pattern="unmutechat$"))
 async def unmute_chat(unm_e):
     """For .unmutechat command, unmute a muted chat."""
     try:
@@ -143,7 +144,7 @@ async def unmute_chat(unm_e):
     await unm_e.delete()
 
 
-@register(outgoing=True, pattern=r"^\.mutechat$")
+@bot.on(man_cmd(outgoing=True, pattern="mutechat$"))
 async def mute_chat(mute_e):
     """For .mutechat command, mute any chat."""
     try:
@@ -161,7 +162,7 @@ async def mute_chat(mute_e):
         )
 
 
-@register(incoming=True, disable_errors=True)
+@bot.on(man_cmd(incoming=True, disable_errors=True))
 async def keep_read(message):
     """The mute logic."""
     try:
@@ -175,7 +176,7 @@ async def keep_read(message):
                 await message.client.send_read_acknowledge(message.chat_id)
 
 
-@register(outgoing=True, pattern=r"^s/")
+@bot.on(man_cmd(outgoing=True, pattern="s/"))
 async def sedNinja(event):
     """For regex-ninja module, auto delete command starting with s/"""
     try:
@@ -186,7 +187,7 @@ async def sedNinja(event):
         await event.delete()
 
 
-@register(outgoing=True, pattern=r"^\.regexninja (on|off)$")
+@bot.on(man_cmd(outgoing=True, pattern=r"regexninja (on|off)$"))
 async def sedNinjaToggle(event):
     """Enables or disables the regex ninja module."""
     if event.pattern_match.group(1) == "on":
@@ -209,7 +210,7 @@ async def sedNinjaToggle(event):
         await event.delete()
 
 
-@register(pattern=r"^\.chatinfo(?: |$)(.*)", outgoing=True)
+@bot.on(man_cmd(outgoing=True, pattern=r"chatinfo(?: |$)(.*)"))
 async def info(event):
     await event.edit("`Menganalisis Obrolan Ini...`")
     chat = await get_chatinfo(event)
@@ -477,7 +478,7 @@ async def fetch_info(chat, event):
     return caption
 
 
-@register(outgoing=True, pattern=r"^\.invite(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"invite(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -522,7 +523,7 @@ async def _(event):
 # Copyright © Team Geez - Project
 
 
-@register(outgoing=True, pattern=r"^\.inviteall ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"inviteall ?(.*)"))
 async def get_users(event):
     man_ = event.text[11:]
     chat_man = man_.lower()
@@ -564,7 +565,7 @@ async def get_users(event):
 # Coded By Abdul <https://github.com/DoellBarr>
 
 
-@register(outgoing=True, pattern=r"^\.getmember$")
+@bot.on(man_cmd(outgoing=True, pattern="getmember$"))
 async def scrapmem(event):
     chat = event.chat_id
     await event.edit("`Processing...`")
@@ -579,7 +580,7 @@ async def scrapmem(event):
     await event.edit("**Berhasil Mengumpulkan Member**")
 
 
-@register(outgoing=True, pattern=r"^\.addmember$")
+@bot.on(man_cmd(outgoing=True, pattern="addmember$"))
 async def admem(event):
     await event.edit("**Proses Menambahkan** `0` **Member**")
     chat = await event.get_chat()
@@ -620,18 +621,18 @@ async def admem(event):
 
 CMD_HELP.update(
     {
-        "chat": "**Plugin : **`chat`\
-        \n\n  •  **Syntax :** `.userid`\
+        "chat": f"**Plugin : **`chat`\
+        \n\n  •  **Syntax :** `{cmd}userid`\
         \n  •  **Function : **untuk Mengambil ID obrolan saat ini\
-        \n\n  •  **Syntax :** `.getbot`\
+        \n\n  •  **Syntax :** `{cmd}getbot`\
         \n  •  **Function : **Dapatkan List Bot dalam grup caht.\
-        \n\n  •  **Syntax :** `.mutechat`\
+        \n\n  •  **Syntax :** `{cmd}mutechat`\
         \n  •  **Function : **membisukan Grup chat (membutuhkan hak admin).\
-        \n\n  •  **Syntax :** `.unmutechat`\
+        \n\n  •  **Syntax :** `{cmd}unmutechat`\
         \n  •  **Function : **Membuka Grup chat yang dibisukan (membutuhkan hak admin).\
-        \n\n  •  **Syntax :** `.getbot`\
+        \n\n  •  **Syntax :** `{cmd}getbot`\
         \n  •  **Function : **Dapatkan List Bot dalam grup caht.\
-        \n\n  •  **Syntax :** `.chatinfo [opsional: <reply/tag/chat id/invite link>]`\
+        \n\n  •  **Syntax :** `{cmd}chatinfo [opsional: <reply/tag/chat id/invite link>]`\
         \n  •  **Function : **Mendapatkan info obrolan. Beberapa info mungkin dibatasi karena izin yang hilang.\
     "
     }
@@ -640,10 +641,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "invite": "**Plugin : **`invite`\
-        \n\n  •  **Syntax :** `.invite` <username/user id>\
+        "invite": f"**Plugin : **`invite`\
+        \n\n  •  **Syntax :** `{cmd}invite` <username/user id>\
         \n  •  **Function : **Untuk Menambahkan/invite pengguna ke group chat.\
-        \n\n  •  **Syntax :** `.inviteall` <username grup yang mau di culik membernya>\
+        \n\n  •  **Syntax :** `{cmd}inviteall` <username grup yang mau di culik membernya>\
         \n  •  **Function : **Untuk Menambahkan/invite pengguna dari grup yang ditargetkan ke grup Anda. (ketik perintah `.inviteall` di gc lu)\
     "
     }
@@ -652,12 +653,12 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "kickme": "**Plugin : **`kickme`\
-        \n\n  •  **Syntax :** `.kickme`\
+        "kickme": f"**Plugin : **`kickme`\
+        \n\n  •  **Syntax :** `{cmd}kickme`\
         \n  •  **Function : **Keluar grup dengan menampilkan pesan Master has left this group, bye!!\
-        \n\n  •  **Syntax :** `.leave`\
+        \n\n  •  **Syntax :** `{cmd}leave`\
         \n  •  **Function : **Keluar grup dengan menampilkan pesan Master Telah Meninggalkan Grup, bye !!\
-        \n\n  •  **Syntax :** `.kikme`\
+        \n\n  •  **Syntax :** `{cmd}kikme`\
         \n  •  **Function : **Keluar grup dengan menampilkan pesan GC NYA JELEK GOBLOK KELUAR DULU AH CROTT 🥴\
     "
     }
@@ -666,10 +667,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "link": "**Plugin : **`link`\
-        \n\n  •  **Syntax :** `.link` <username/userid> <opsional teks> (atau) Reply pesan .link <teks opsional>\
+        "link": f"**Plugin : **`link`\
+        \n\n  •  **Syntax :** `{cmd}link` <username/userid> <opsional teks> (atau) Reply pesan .link <teks opsional>\
         \n  •  **Function : **Membuat link permanen ke profil pengguna dengan teks ubahsuaian opsional.\
-        \n  •  **Contoh : **.link @mrismanaziz Ganteng\
+        \n  •  **Contoh : **{cmd}link @mrismanaziz Ganteng\
     "
     }
 )
@@ -677,10 +678,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "regexninja": "**Plugin : **`regexninja`\
-        \n\n  •  **Syntax :** `regexninja on`\
+        "regexninja": f"**Plugin : **`regexninja`\
+        \n\n  •  **Syntax :** `{cmd}regexninja on`\
         \n  •  **Function : **Mengaktifkan modul ninja regex secara global. \
-        \n\n  •  **Syntax :** `regexninja off`)\
+        \n\n  •  **Syntax :** `{cmd}regexninja off`)\
         \n  •  **Function : **Menonaktifkan modul ninja regex secara global. \
         \n\n  •  **NOTE :** Modul Regex Ninja dapat membantu menghapus pesan pemicu bot regex.\
     "
@@ -690,14 +691,14 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "scraper": "**Plugin : **`scraper`\
-        \n\n  •  **Syntax :** `.getmember`\
+        "scraper": f"**Plugin : **`scraper`\
+        \n\n  •  **Syntax :** `{cmd}getmember`\
         \n  •  **Function : **Untuk Mengumpulkan Anggota dari group chat.\
-        \n\n  •  **Syntax :** `.addmember`\
+        \n\n  •  **Syntax :** `{cmd}addmember`\
         \n  •  **Function : **Untuk Menambahkan Anggota ke group chat.\
         \n\n**Cara Menggunakannya:** \
-        \n1. Anda harus melakukan `.getmemb` terlebih dahulu di Grup Chat Orang lain.\
-        \n2. Buka Grup Anda dan ketik `.addmemb` untuk menambahkan mereka ke grup Anda.\
+        \n1. Anda harus melakukan `{cmd}getmember` terlebih dahulu di Grup Chat Orang lain.\
+        \n2. Buka Grup Anda dan ketik `{cmd}addmember` untuk menambahkan mereka ke grup Anda.\
     "
     }
 )

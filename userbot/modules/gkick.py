@@ -4,8 +4,9 @@
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import MessageEntityMentionName
 
-from userbot import ALIVE_NAME, CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import ALIVE_NAME, CMD_HELP, bot
+from userbot.events import man_cmd
 
 
 async def get_user_from_event(event):
@@ -56,7 +57,7 @@ except BaseException:
     client2 = client3 = None
 
 
-@register(outgoing=True, pattern=r"^\.gkick(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"gkick(?: |$)(.*)"))
 async def gspide(rk):
     lazy = rk
     sender = await lazy.get_sender()
@@ -119,8 +120,8 @@ async def gspide(rk):
 
 CMD_HELP.update(
     {
-        "gkick": "**Plugin : **`gkick`\
-        \n\n  •  **Syntax :** `.gkick` <alasan>\
+        "gkick": f"**Plugin : **`gkick`\
+        \n\n  •  **Syntax :** `{cmd}gkick` <alasan>\
         \n  •  **Function : **kick pengguna secara global dari semua Administrasi Grup di mana Anda berada.\
     "
     }

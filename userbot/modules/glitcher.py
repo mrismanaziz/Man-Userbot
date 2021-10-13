@@ -17,7 +17,9 @@ from telethon import functions, types
 from telethon.tl.types import DocumentAttributeFilename
 
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 from userbot.utils import progress
 
 Glitched = TEMP_DOWNLOAD_DIRECTORY + "glitch.gif"
@@ -39,7 +41,7 @@ EMOJI_PATTERN = re.compile(
 )
 
 
-@register(outgoing=True, pattern=r"^\.glitch(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"glitch(?: |$)(.*)"))
 async def glitch(event):
     if not event.reply_to_msg_id:
         await event.edit("`Aku Mau Glitch Sebuah Hantu!`")

@@ -1,10 +1,11 @@
 from time import sleep
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.sadboy(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r".sadboy(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(2)
@@ -18,7 +19,7 @@ async def typewriter(typew):
 # Create by myself @localheart
 
 
-@register(outgoing=True, pattern=r"^\.punten(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r".punten(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -33,7 +34,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.pantau(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r".pantau(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -53,13 +54,11 @@ async def typewriter(typew):
 
 CMD_HELP.update(
     {
-        "punten": "**Plugin : **`Animasi Punten`\
-        \n\n  •  **Syntax :** `.punten` ; `.pantau`\
+        "punten": f"**Plugin : **`Animasi Punten`\
+        \n\n  •  **Syntax :** `{cmd}punten` ; `{cmd}pantau`\
         \n  •  **Function : **Arts Beruang kek lagi mantau.\
-        \n\n  •  **Syntax :** `.sadboy`\
+        \n\n  •  **Syntax :** `{cmd}sadboy`\
         \n  •  **Function : **ya sadboy coba aja.\
-        \n\n  •  **Syntax :** `.calive`\
-        \n  •  **Function : **alive bot costum.\
     "
     }
 )

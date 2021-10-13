@@ -9,8 +9,9 @@ from os import environ, execle, remove
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
-from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, UPSTREAM_REPO_URL
-from userbot.events import register
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, UPSTREAM_REPO_URL, bot
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
 
 
 async def gen_chlog(repo, diff):
@@ -119,7 +120,7 @@ async def update(event, repo, ups_rem, ac_br):
     execle(sys.executable, *args, environ)
 
 
-@register(outgoing=True, pattern=r"^\.update( now| deploy|$)")
+@bot.on(man_cmd(outgoing=True, pattern=r"update( now| deploy|$)"))
 async def upstream(event):
     "For .update command, check if the bot is up to date, update if specified"
     await event.edit("`Mengecek Pembaruan, Tunggu Sebentar...`")
@@ -199,10 +200,10 @@ async def upstream(event):
 
 CMD_HELP.update(
     {
-        "update": "**Plugin : **`update`\
-        \n\n  •  **Syntax :** `.update`\
+        "update": f"**Plugin : **`update`\
+        \n\n  •  **Syntax :** `{cmd}update`\
         \n  •  **Function : **Untuk Melihat Pembaruan Terbaru Man-Userbot.\
-        \n\n  •  **Syntax :** `.update deploy`\
+        \n\n  •  **Syntax :** `{cmd}update deploy`\
         \n  •  **Function : **Untuk MengUpdate Fitur Terbaru Dari Man-Userbot.\
     "
     }

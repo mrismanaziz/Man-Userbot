@@ -7,8 +7,9 @@
 
 from telethon import events
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 PRINTABLE_ASCII = range(0x21, 0x7F)
 
@@ -23,7 +24,7 @@ def aesthetify(string):
         yield chr(c)
 
 
-@register(outgoing=True, pattern=r"^\.ae(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern="ae(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -35,8 +36,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "aeshtetic": "**Plugin : **`aeshtetic`\
-        \n\n  •  **Syntax :** `.ae <teks>`\
+        "aeshtetic": f"**Plugin : **`aeshtetic`\
+        \n\n  •  **Syntax :** `{cmd}ae <teks>`\
         \n  •  **Function : **Mengubah font teks Menjadi aeshtetic.\
     "
     }

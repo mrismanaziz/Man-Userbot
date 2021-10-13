@@ -15,14 +15,14 @@ from userbot import CMD_HELP, GIT_REPO_NAME, GITHUB_ACCESS_TOKEN, bot
 
 # from sample_config import Config
 # from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 GIT_TEMP_DIR = "./userbot/temp/"
-# @borg.on(admin_cmd(pattern="commit ?(.*)", allow_sudo=True))
 
 
-@register(outgoing=True, pattern=r"^\.gcommit(?: |$)(.*)")
-# @register(pattern=r".commit (.*)", outgoing=True)
+@bot.on(man_cmd(outgoing=True, pattern=r"gcommit(?: |$)(.*)"))
 async def download(event):
     if event.fwd_from:
         return

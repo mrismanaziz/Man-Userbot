@@ -12,14 +12,15 @@ from hachoir.parser import createParser
 from requests import get
 from telethon.tl.types import DocumentAttributeAudio
 
-from userbot import CMD_HELP, DEEZER_ARL_TOKEN, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register
+from userbot import CMD_HELP, DEEZER_ARL_TOKEN, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
 
 if not TEMP_DOWNLOAD_DIRECTORY.endswith("/"):
     TEMP_DOWNLOAD_DIRECTORY += "/"
 
 
-@register(outgoing=True, pattern=r"^\.deezloader (.*) (flac|320|256|128)")
+@bot.on(man_cmd(outgoing=True, pattern=r"deezloader (.*) (flac|320|256|128)"))
 async def deeznuts(event):
     if DEEZER_ARL_TOKEN is None:
         return await event.edit("**Set** `DEEZER_ARL_TOKEN` **first.**")
@@ -163,8 +164,8 @@ async def upload_track(track_location, message):
 
 CMD_HELP.update(
     {
-        "deezloader": "**Plugin : **`deezloader`\
-        \n\n  •  **Syntax :** `.deezloader` <spotify/deezer link> <quality>\
+        "deezloader": f"**Plugin : **`deezloader`\
+        \n\n  •  **Syntax :** `{cmd}deezloader` <spotify/deezer link> <quality>\
         \n  •  **Function : **Download  musik menggunakan Deezloader.\
         \n\n  •  **Available qualities:** `flac`, `320`, `256`, `128`\
     "

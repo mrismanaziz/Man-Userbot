@@ -14,11 +14,12 @@ from asyncio import sleep
 
 from telethon.errors import rpcbaseerrors
 
-from userbot import CMD_HELP, DEVS
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, DEVS bot
+from userbot.events import register, man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.purge$")
+@bot.on(man_cmd(outgoing=True, pattern="purge$"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cpurge$")
 async def fastpurger(purg):
     chat = await purg.get_input_chat()
@@ -47,7 +48,7 @@ async def fastpurger(purg):
     await done.delete()
 
 
-@register(outgoing=True, pattern=r"^\.purgeme")
+@bot.on(man_cmd(outgoing=True, pattern="purgeme"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cpurgeme")
 async def purgeme(delme):
     message = delme.text
@@ -69,7 +70,7 @@ async def purgeme(delme):
     await smsg.delete()
 
 
-@register(outgoing=True, pattern=r"^\.del$")
+@bot.on(man_cmd(outgoing=True, pattern=r"del$"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cdel$")
 async def delete_it(delme):
     msg_src = await delme.get_reply_message()
@@ -81,7 +82,7 @@ async def delete_it(delme):
             await delme.edit("**Tidak Bisa Menghapus Pesan**")
 
 
-@register(outgoing=True, pattern=r"^\.edit")
+@bot.on(man_cmd(outgoing=True, pattern=r"edit"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cedit")
 async def editer(edit):
     message = edit.text
@@ -97,7 +98,7 @@ async def editer(edit):
         i += 1
 
 
-@register(outgoing=True, pattern=r"^\.sd")
+@bot.on(man_cmd(outgoing=True, pattern="sd"))
 async def selfdestruct(destroy):
     message = destroy.text
     counter = int(message[4:6])
@@ -111,7 +112,7 @@ async def selfdestruct(destroy):
 purgechat = {}
 
 
-@register(outgoing=True, pattern=r"^\.(p|purge)(from$|to$)")
+@bot.on(man_cmd(outgoing=True, pattern=r"(p|purge)(from$|to$)"))
 async def purgfromto(prgnew):
     reply = await prgnew.get_reply_message()
     if reply:
@@ -173,20 +174,20 @@ async def purgto(purgke):
 
 CMD_HELP.update(
     {
-        "purge": "**Plugin : **`Menghapus Kenangan Chat`\
-        \n\n  •  **Syntax :** `.purge`\
+        "purge": f"**Plugin : **`Menghapus Kenangan Chat`\
+        \n\n  •  **Syntax :** `{cmd}purge`\
         \n  •  **Function : **Menghapus semua pesan mulai dari pesan yang dibalas.\
-        \n\n  •  **Syntax :** `.purgefrom` atau `.pfrom`\
+        \n\n  •  **Syntax :** `{cmd}purgefrom` atau `{cmd}pfrom`\
         \n  •  **Function : **Menandai awal dari mana harus dihapus.\
-        \n\n  •  **Syntax :** `.purgeto` atau `.pto`\
+        \n\n  •  **Syntax :** `{cmd}purgeto` atau `{cmd}pto`\
         \n  •  **Function : **Menandai akhir dari pesan yang akan dihapus.\
-        \n\n  •  **Syntax :** `.purgeme` <angka>\
+        \n\n  •  **Syntax :** `{cmd}purgeme` <angka>\
         \n  •  **Function : **Menghapus jumlah pesan anda, yang mau anda hapus.\
-        \n\n  •  **Syntax :** `.del`\
+        \n\n  •  **Syntax :** `{cmd}del`\
         \n  •  **Function : **Menghapus pesan, balas ke pesan.\
-        \n\n  •  **Syntax :** `.edit <pesan baru>`\
+        \n\n  •  **Syntax :** `{cmd}edit <pesan baru>`\
         \n  •  **Function : **Ganti pesan terakhir Anda dengan <pesan baru>.\
-        \n\n  •  **Syntax :** `.sd` <detik> <pesan>\
+        \n\n  •  **Syntax :** `{cmd}sd` <detik> <pesan>\
         \n  •  **Function : **Membuat pesan yang hancur sendiri. harap pasang detik di bawah 100 untuk menghindari bot Anda akan sleep.\
     "
     }

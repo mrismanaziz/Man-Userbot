@@ -9,8 +9,6 @@ from datetime import datetime
 from telethon import events
 from telethon.tl import functions, types
 
-from userbot.events import register
-
 from userbot import (  # noqa pylint: disable=unused-import isort:skip
     AFKREASON,
     ALIVE_NAME,
@@ -23,6 +21,8 @@ from userbot import (  # noqa pylint: disable=unused-import isort:skip
     USERS,
     bot,
 )
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
 
 global USER_AFK
 global afk_time
@@ -139,9 +139,7 @@ async def on_afk(event):
             pass
 
 
-@register(
-    outgoing=True, pattern=r"^\.afk(?: |$)(.*)", disable_errors=True
-)  # pylint:disable=E0602
+@bot.on(man_cmd(outgoing=True, pattern="afk(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -246,10 +244,10 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "afk": "**Plugin : **`afk`\
-        \n\n  •  **Syntax :** `.afk` <alasan> bisa <sambil reply sticker/foto/gif/media>\
+        "afk": f"**Plugin : **`afk`\
+        \n\n  •  **Syntax :** `{cmd}afk` <alasan> bisa <sambil reply sticker/foto/gif/media>\
         \n  •  **Function : **Memberi tahu kalau Master sedang afk bisa dengan menampilkan media keren ketika seseorang menandai atau membalas salah satu pesan atau dm Anda.\
-        \n\n  •  **Syntax :** `.off`\
+        \n\n  •  **Syntax :** `{cmd}off`\
         \n  •  **Function : **Memberi tahu kalau Master sedang OFFLINE, dan menguubah nama belakang menjadi 【 OFF 】 \
     "
     }

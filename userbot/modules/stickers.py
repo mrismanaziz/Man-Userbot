@@ -25,9 +25,10 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from userbot import CMD_HELP
+from userbot import CMD_HELP, bot
 from userbot import S_PACK_NAME as custompack
-from userbot import bot
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
 from userbot.events import register
 from userbot.utils import edit_or_reply
 
@@ -40,7 +41,7 @@ KANGING_STR = [
 ]
 
 
-@register(outgoing=True, pattern=r"^\.(?:tikel|kang)\s?(.)?")
+@bot.on(man_cmd(outgoing=True, pattern=r"(?:tikel|kang)\s?(.)?"))
 async def kang(args):
     user = await bot.get_me()
     if not user.username:
@@ -282,7 +283,7 @@ async def resize_photo(photo):
     return image
 
 
-@register(outgoing=True, pattern=r"^\.stickerinfo$")
+@bot.on(man_cmd(outgoing=True, pattern=r"stickerinfo$"))
 async def get_pack_info(event):
     if not event.is_reply:
         return await event.edit("**Mohon Balas Ke Sticker**")
@@ -324,7 +325,7 @@ async def get_pack_info(event):
     await event.edit(OUTPUT)
 
 
-@register(outgoing=True, pattern=r"^\.delsticker ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"delsticker ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -369,7 +370,7 @@ async def _(event):
             await event.edit("**Berhasil Menghapus Stiker.**")
 
 
-@register(outgoing=True, pattern=r"^\.editsticker ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"editsticker ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -417,7 +418,7 @@ async def _(event):
                 )
 
 
-@register(outgoing=True, pattern=r"^\.getsticker$")
+@bot.on(man_cmd(outgoing=True, pattern=r"getsticker$"))
 async def sticker_to_png(sticker):
     if not sticker.is_reply:
         await sticker.edit("`NULL information to fetch...`")
@@ -447,7 +448,7 @@ async def sticker_to_png(sticker):
     return
 
 
-@register(outgoing=True, pattern=r"^\.findsticker (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"findsticker (.*)"))
 async def cb_sticker(event):
     query = event.pattern_match.group(1)
     if not query:
@@ -469,21 +470,21 @@ async def cb_sticker(event):
 
 CMD_HELP.update(
     {
-        "stickers": "**Plugin : **`stickers`\
-        \n\n  •  **Syntax :** `.kang` atau `.tikel` [emoji]\
+        "stickers": f"**Plugin : **`stickers`\
+        \n\n  •  **Syntax :** `{cmd}kang` atau `{cmd}tikel` [emoji]\
         \n  •  **Function : **Balas .kang Ke Sticker Atau Gambar Untuk Menambahkan Ke Sticker Pack Mu\
-        \n\n  •  **Syntax :** `.kang` [emoji] atau `.tikel` [emoji]\
-        \n  •  **Function : **Balas .kang emoji Ke Sticker Atau Gambar Untuk Menambahkan dan costum emoji sticker Ke Pack Mu\
-        \n\n  •  **Syntax :** `.delsticker` <reply sticker>\
+        \n\n  •  **Syntax :** `{cmd}kang` [emoji] atau `{cmd}tikel` [emoji]\
+        \n  •  **Function : **Balas {cmd}kang emoji Ke Sticker Atau Gambar Untuk Menambahkan dan costum emoji sticker Ke Pack Mu\
+        \n\n  •  **Syntax :** `{cmd}delsticker` <reply sticker>\
         \n  •  **Function : **Untuk Menghapus sticker dari Sticker Pack.\
-        \n\n  •  **Syntax :** `.editsticker` <reply sticker> <emoji>\
+        \n\n  •  **Syntax :** `{cmd}editsticker` <reply sticker> <emoji>\
         \n  •  **Function : **Untuk Mengedit emoji stiker dengan emoji yang baru.\
-        \n\n  •  **Syntax :** `.stickerinfo`\
+        \n\n  •  **Syntax :** `{cmd}stickerinfo`\
         \n  •  **Function : **Untuk Mendapatkan Informasi Sticker Pack.\
-        \n\n  •  **Syntax :** `.findsticker` <nama pack sticker>\
+        \n\n  •  **Syntax :** `{cmd}findsticker` <nama pack sticker>\
         \n  •  **Function : **Untuk Mencari Sticker Pack.\
-        \n\n  •  **NOTE:** Untuk Membuat Sticker Pack baru Gunakan angka dibelakang `.kang`\
-        \n  •  **CONTOH:** `.kang 2` untuk membuat dan menyimpan ke sticker pack ke 2\
+        \n\n  •  **NOTE:** Untuk Membuat Sticker Pack baru Gunakan angka dibelakang `{cmd}kang`\
+        \n  •  **CONTOH:** `{cmd}kang 2` untuk membuat dan menyimpan ke sticker pack ke 2\
     "
     }
 )
@@ -491,14 +492,14 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "sticker_v2": "**Plugin : **`stickers`\
-        \n\n  •  **Syntax :** `.getsticker`\
+        "sticker_v2": f"**Plugin : **`stickers`\
+        \n\n  •  **Syntax :** `{cmd}getsticker`\
         \n  •  **Function : **Balas Ke Stcker Untuk Mendapatkan File 'PNG' Sticker.\
-        \n\n  •  **Syntax :** `.get`\
+        \n\n  •  **Syntax :** `{cmd}get`\
         \n  •  **Function : **Balas ke sticker untuk mendapatkan file 'PNG' sticker\
-        \n\n  •  **Syntax :** `.stoi`\
+        \n\n  •  **Syntax :** `{cmd}stoi`\
         \n  •  **Function : **Balas Ke Stcker Untuk Mendapatkan File 'PNG' Sticker.\
-        \n\n  •  **Syntax :** `.itos`\
+        \n\n  •  **Syntax :** `{cmd}itos`\
         \n  •  **Function : **Balas ke sticker atau gambar .itos untuk mengambil sticker bukan ke pack\
     "
     }

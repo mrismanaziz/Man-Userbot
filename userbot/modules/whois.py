@@ -15,10 +15,12 @@ from telethon.tl.types import MessageEntityMentionName
 from telethon.utils import get_input_location
 
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(pattern=r"\.whois(?: |$)(.*)", outgoing=True)
+@bot.on(man_cmd(pattern=r"whois(?: |$)(.*)", outgoing=True))
 async def who(event):
 
     await event.edit("`Mengambil Informasi Pengguna Ini...`")
@@ -156,8 +158,8 @@ async def fetch_info(replied_user, event):
 
 CMD_HELP.update(
     {
-        "whois": "**Plugin : **`whois`\
-        \n\n  •  **Syntax :** `.whois` <username> Atau Balas Ke Pesan Pengguna Ketik `.whois`\
+        "whois": f"**Plugin : **`whois`\
+        \n\n  •  **Syntax :** `{cmd}whois` <username> Atau Balas Ke Pesan Pengguna Ketik `.whois`\
         \n  •  **Function : **Mendapatkan Informasi Pengguna.\
     "
     }

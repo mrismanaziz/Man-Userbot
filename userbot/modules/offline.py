@@ -25,7 +25,9 @@ from userbot import (  # noqa pylint: disable=unused-import isort:skip
     PM_AUTO_BAN,
     bot,
 )
-
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 # ========================= CONSTANTS ============================
 AFKSTR = [
     f"**Maaf {ALIVE_NAME} Sedang OFF!**",
@@ -46,7 +48,7 @@ afk_start = {}
 # =================================================================
 
 
-@register(outgoing=True, pattern=r"^\.off(?: |$)(.*)", disable_errors=True)
+@bot.on(man_cmd(outgoing=True, pattern=r"off(?: |$)(.*)"))
 async def set_afk(afk_e):
     """For .afk command, allows you to inform people that you are afk when they message you"""
     message = afk_e.text  # pylint:disable=E0602

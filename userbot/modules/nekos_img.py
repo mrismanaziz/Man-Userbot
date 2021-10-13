@@ -6,8 +6,9 @@
 
 import nekos
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 arguments = [
     "feet",
@@ -76,7 +77,7 @@ arguments = [
 ]
 
 
-@register(outgoing=True, pattern=r"^\.nekos(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"nekos(?: |$)(.*)"))
 async def nekos_img(event):
     args = event.pattern_match.group(1)
     if not args or args not in arguments:
@@ -94,8 +95,8 @@ async def nekos_img(event):
 
 CMD_HELP.update(
     {
-        "nekos": "**Plugin : **`nekos`\
-        \n\n  •  **Syntax :** `.nekos` <arguments>\
+        "nekos": f"**Plugin : **`nekos`\
+        \n\n  •  **Syntax :** `{cmd}nekos` <arguments>\
         \n  •  **Function : **Untuk mencari gif hentai anime untuk bahan para wibu bau bawang.\
         \n\n  •  **Arguments :** `8ball`, `anal`, `avatar`, `baka`, `bj`, `blowjob`, `boobs`, `classic`, `cuddle`, `cum`, `cum_jpg`, `ero`, `erofeet`, `erok`, `erokemo`, `eron`, `eroyuri`, `feed`, `feet`, `feetg`, `femdom`, `fox_girl`, `futanari`, `gasm`, `gecg`,`goose`, `hentai`, `holo`, `holoero`, `hololewd`, `hug`, `kemonomimi`, `keta`, `kiss`, `kuni`,`les`, `lewd`, `lewdk`, `lewdkemo`, `lizard`, `neko`, `ngif`, `nsfw_avatar`, `nsfw_neko_gif`, `pat`, `poke`, `pussy`, `pussy_jpg`, `pwankg`, `random_hentai_gif`, `slap`, `smallboobs`, `smug`, `solo`, `solog`, `spank`, `tickle`, `tits`, `trap`, `waifu`, `wallpaper`, `woof`, `yuri`\
     "

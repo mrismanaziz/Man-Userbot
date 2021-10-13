@@ -31,7 +31,8 @@ from userbot import (
     StartTime,
     bot,
 )
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
@@ -66,7 +67,7 @@ async def get_readable_time(seconds: int) -> str:
     return up_time
 
 
-@register(outgoing=True, pattern=r"^\.spc")
+@bot.on(man_cmd(outgoing=True, pattern=r"spc"))
 async def psu(event):
     uname = platform.uname()
     softw = "**Informasi Sistem**\n"
@@ -122,7 +123,7 @@ def get_size(bytes, suffix="B"):
         bytes /= factor
 
 
-@register(outgoing=True, pattern=r"^\.sysd$")
+@bot.on(man_cmd(outgoing=True, pattern=r"sysd$"))
 async def sysdetails(sysd):
     if not sysd.text[0].isalpha() and sysd.text[0] not in ("/", "#", "@", "!"):
         try:
@@ -141,7 +142,7 @@ async def sysdetails(sysd):
             await sysd.edit("**Install neofetch Terlebih dahulu!!**")
 
 
-@register(outgoing=True, pattern=r"^\.botver$")
+@bot.on(man_cmd(outgoing=True, pattern=r"botver$"))
 async def bot_ver(event):
     if event.text[0].isalpha() or event.text[0] in ("/", "#", "@", "!"):
         return
@@ -175,7 +176,7 @@ async def bot_ver(event):
         await event.edit("anda tidak memiliki git, Anda Menjalankan Bot - 'v1.beta.4'!")
 
 
-@register(outgoing=True, pattern=r"^\.(?:alive|on)\s?(.)?")
+@bot.on(man_cmd(outgoing=True, pattern=r"(?:alive|on)\s?(.)?"))
 async def amireallyalive(alive):
     user = await bot.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
@@ -212,14 +213,12 @@ async def amireallyalive(alive):
 
 CMD_HELP.update(
     {
-        "system": "**Plugin : **`system`.\
-        \n\n  •  **Syntax :** `.sysd`\
+        "system": f"**Plugin : **`system`.\
+        \n\n  •  **Syntax :** `{cmd}sysd`\
         \n  •  **Function : **Menampilkan informasi sistem menggunakan neofetch\
-        \n\n\n  •  **Syntax :** `.botver`\
+        \n\n\n  •  **Syntax :** `{cmd}botver`\
         \n  •  **Function : **Menampilkan versi userbot\
-        \n\n  •  **Syntax :** `.db`\
-        \n  •  **Function : **Menampilkan info terkait database.\
-        \n\n  •  **Syntax :** `.spc`\
+        \n\n  •  **Syntax :** `{cmd}spc`\
         \n  •  **Function : **Show system specification\
     "
     }
@@ -229,7 +228,7 @@ CMD_HELP.update(
 CMD_HELP.update(
     {
         "alive": "**Plugin : **`alive`\
-        \n\n  •  **Syntax :** `.alive` atau `.on`\
+        \n\n  •  **Syntax :** `{cmd}alive` atau `{cmd}on`\
         \n  •  **Function : **Untuk melihat apakah bot Anda berfungsi atau tidak.\
     "
     }

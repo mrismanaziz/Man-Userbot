@@ -6,11 +6,12 @@
 import asyncio
 from asyncio import sleep
 
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP
-from userbot.events import register
+from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, bot
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern="^\\.cspam (.+)")
+@bot.on(man_cmd(outgoing=True, pattern="cspam (.+)"))
 async def tmeme(e):
     cspam = str(e.pattern_match.group(1))
     message = cspam.replace(" ", "")
@@ -23,7 +24,7 @@ async def tmeme(e):
         )
 
 
-@register(outgoing=True, pattern=r"^\.wspam (.+)")
+@bot.on(man_cmd(outgoing=True, pattern=r"wspam (.+)"))
 async def t_meme(e):
     wspam = str(e.pattern_match.group(1))
     message = wspam.split()
@@ -36,7 +37,7 @@ async def t_meme(e):
         )
 
 
-@register(outgoing=True, pattern=r"^\.spam (\d+) (.+)")
+@bot.on(man_cmd(outgoing=True, pattern=r"spam (\d+) (.+)"))
 async def spammer(e):
     counter = int(e.pattern_match.group(1))
     spam_message = str(e.pattern_match.group(2))
@@ -48,7 +49,7 @@ async def spammer(e):
         )
 
 
-@register(outgoing=True, pattern=r"^\.picspam (\d+) (.+)")
+@bot.on(man_cmd(outgoing=True, pattern=r"picspam (\d+) (.+)"))
 async def tiny_pic_spam(e):
     counter = int(e.pattern_match.group(1))
     link = str(e.pattern_match.group(2))
@@ -78,14 +79,14 @@ async def spammer(e):
 
 CMD_HELP.update(
     {
-        "spam": "**Plugin : **`spam`\
-        \n\n  •  **Syntax :** `.spam` <jumlah spam> <text>\
+        "spam": f"**Plugin : **`spam`\
+        \n\n  •  **Syntax :** `{cmd}spam` <jumlah spam> <text>\
         \n  •  **Function : **Membanjiri teks dalam obrolan!! \
-        \n\n  •  **Syntax :** `.cspam` <text>\
+        \n\n  •  **Syntax :** `{cmd}cspam` <text>\
         \n  •  **Function : **Spam surat teks dengan huruf. \
-        \n\n  •  **Syntax :** `.wspam` <text>\
+        \n\n  •  **Syntax :** `{cmd}wspam` <text>\
         \n  •  **Function : **Spam kata teks demi kata. \
-        \n\n  •  **Syntax :** `.picspam` <jumlah spam> <link image/gif>\
+        \n\n  •  **Syntax :** `{cmd}picspam` <jumlah spam> <link image/gif>\
         \n  •  **Function : **Spam Foto Seolah-olah spam teks tidak cukup !! \
         \n\n  •  **Syntax :** `.delayspam` <detik> <jumlah spam> <text>\
         \n  •  **Function : **Spam surat teks dengan huruf. \

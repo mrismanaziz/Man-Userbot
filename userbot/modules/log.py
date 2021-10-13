@@ -8,12 +8,14 @@ import asyncio
 from telethon import events
 
 from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, LOGS, bot
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot.events import register, man_cmd
 from userbot.modules.sql_helper import no_log_pms_sql
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.utils import _format, edit_delete
 from userbot.utils.logger import logging
 from userbot.utils.tools import media_type
+
 
 LOGS = logging.getLogger(__name__)
 
@@ -99,7 +101,7 @@ async def log_tagged_messages(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.save(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"save(?: |$)(.*)"))
 async def log(log_text):
     if BOTLOG:
         if log_text.reply_to_msg_id:
@@ -119,7 +121,7 @@ async def log(log_text):
     await log_text.delete()
 
 
-@register(outgoing=True, pattern=r"^\.log$")
+@bot.on(man_cmd(outgoing=True, pattern=r"log$"))
 async def set_no_log_p_m(event):
     if BOTLOG_CHATID != -100:
         chat = await event.get_chat()
@@ -130,7 +132,7 @@ async def set_no_log_p_m(event):
             )
 
 
-@register(outgoing=True, pattern=r"^\.nolog$")
+@bot.on(man_cmd(outgoing=True, pattern=r"nolog$"))
 async def set_no_log_p_m(event):
     if BOTLOG_CHATID != -100:
         chat = await event.get_chat()
@@ -141,7 +143,7 @@ async def set_no_log_p_m(event):
             )
 
 
-@register(outgoing=True, pattern=r"^\.pmlog (on|off)$")
+@bot.on(man_cmd(outgoing=True, pattern=r"pmlog (on|off)$"))
 async def set_pmlog(event):
     if BOTLOG_CHATID == -100:
         return await edit_delete(
@@ -171,7 +173,7 @@ async def set_pmlog(event):
         await event.edit("**PM LOG Sudah Dimatikan**")
 
 
-@register(outgoing=True, pattern=r"^\.gruplog (on|off)$")
+@bot.on(man_cmd(outgoing=True, pattern=r"gruplog (on|off)$"))
 async def set_gruplog(event):
     if BOTLOG_CHATID == -100:
         return await edit_delete(
@@ -203,16 +205,16 @@ async def set_gruplog(event):
 
 CMD_HELP.update(
     {
-        "log": "**Plugin : **`log`\
-        \n\n  •  **Syntax :** `.save`\
+        "log": f"**Plugin : **`log`\
+        \n\n  •  **Syntax :** `{cmd}save`\
         \n  •  **Function : **__Untuk Menyimpan pesan yang ditandai ke grup pribadi.__\
-        \n\n  •  **Syntax :** `.log`\
+        \n\n  •  **Syntax :** `{cmd}log`\
         \n  •  **Function : **__Untuk mengaktifkan Log Chat dari obrolan/grup itu.__\
-        \n\n  •  **Syntax :** `.nolog`\
+        \n\n  •  **Syntax :** `{cmd}nolog`\
         \n  •  **Function : **__Untuk menonaktifkan Log Chat dari obrolan/grup itu.__\
-        \n\n  •  **Syntax :** `.pmlog on/off`\
+        \n\n  •  **Syntax :** `{cmd}pmlog on/off`\
         \n  •  **Function : **__Untuk mengaktifkan atau menonaktifkan pencatatan pesan pribadi__\
-        \n\n  •  **Syntax :** `.gruplog on/off`\
+        \n\n  •  **Syntax :** `{cmd}gruplog on/off`\
         \n  •  **Function : **__Untuk mengaktifkan atau menonaktifkan tag grup, yang akan masuk ke grup pmlogger.__"
     }
 )

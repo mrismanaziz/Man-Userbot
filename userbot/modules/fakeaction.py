@@ -10,11 +10,12 @@
 
 import asyncio
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.ftyping(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ftyping(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -34,7 +35,7 @@ async def _(event):
         await asyncio.sleep(t)
 
 
-@register(outgoing=True, pattern=r"^\.faudio(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"faudio(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -54,7 +55,7 @@ async def _(event):
         await asyncio.sleep(t)
 
 
-@register(outgoing=True, pattern=r"^\.fvideo(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"fvideo(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -74,7 +75,7 @@ async def _(event):
         await asyncio.sleep(t)
 
 
-@register(outgoing=True, pattern=r"^\.fgame(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"fgame(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -94,7 +95,7 @@ async def _(event):
         await asyncio.sleep(t)
 
 
-@register(outgoing=True, pattern=r"^\.fround(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"fround(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -114,7 +115,7 @@ async def _(event):
         await asyncio.sleep(t)
 
 
-@register(outgoing=True, pattern=r"^\.fphoto(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"fphoto(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -134,7 +135,7 @@ async def _(event):
         await asyncio.sleep(t)
 
 
-@register(outgoing=True, pattern=r"^\.fdocument(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"fdocument(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -154,7 +155,7 @@ async def _(event):
         await asyncio.sleep(t)
 
 
-@register(outgoing=True, pattern=r"^\.flocation(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"flocation(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -174,7 +175,7 @@ async def _(event):
         await asyncio.sleep(t)
 
 
-@register(outgoing=True, pattern=r"^\.fcontact(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"fcontact(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -196,24 +197,24 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "fakeaction": "**Plugin :** `fakeaction`\
-        \n\n  •  **Syntax :** `.ftyping`  <jumlah detik>\
+        "fakeaction": f"**Plugin :** `fakeaction`\
+        \n\n  •  **Syntax :** `{cmd}ftyping`  <jumlah detik>\
         \n  •  **Function :** Menampilkan Pengetikan Palsu dalam obrolan\
-        \n\n  •  **Syntax :** `.faudio` <jumlah detik>\
+        \n\n  •  **Syntax :** `{cmd}faudio` <jumlah detik>\
         \n  •  **Function :** Menampilkan Tindakan Merekam suara Palsu dalam obrolan\
-        \n\n  •  **Syntax :** `.fvideo` <jumlah detik>\
+        \n\n  •  **Syntax :** `{cmd}fvideo` <jumlah detik>\
         \n  •  **Function :** Menampilkan Tindakan Merekam Video Palsu dalam obrolan\
-        \n\n  •  **Syntax :** `.fround` <jumlah detik>\
+        \n\n  •  **Syntax :** `{cmd}fround` <jumlah detik>\
         \n  •  **Function :** Menampilkan Tindakan Merekam Live Video Round Palsu dalam obrolan\
-        \n\n  •  **Syntax :** `.fgame` <jumlah detik>\
+        \n\n  •  **Syntax :** `{cmd}fgame` <jumlah detik>\
         \n  •  **Function :** Menampilkan sedang bermain game Palsu dalam obrolan\
-        \n\n  •  **Syntax :** `.fphoto` <jumlah detik>\
+        \n\n  •  **Syntax :** `{cmd}fphoto` <jumlah detik>\
         \n  •  **Function :** Menampilkan Tindakan Mengirim Photo Palsu dalam obrolan\
-        \n\n  •  **Syntax :** `.fdocument` <jumlah detik>\
+        \n\n  •  **Syntax :** `{cmd}fdocument` <jumlah detik>\
         \n  •  **Function :** Menampilkan Tindakan Mengirim Document/File Palsu dalam obrolan\
-        \n\n  •  **Syntax :** `.flocation` <jumlah detik>\
+        \n\n  •  **Syntax :** `{cmd}flocation` <jumlah detik>\
         \n  •  **Function :** Menampilkan Tindakan Share Lokasi Palsu dalam obrolan\
-        \n\n  •  **Syntax :** `.fcontact` <jumlah detik>\
+        \n\n  •  **Syntax :** `{cmd}fcontact` <jumlah detik>\
         \n  •  **Function :** Menampilkan Tindakan Share Contact Palsu dalam obrolan\
     "
     }

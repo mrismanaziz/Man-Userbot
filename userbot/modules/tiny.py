@@ -7,11 +7,12 @@ import os
 import cv2
 from PIL import Image
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.tiny(?: |$)(.*)", disable_errors=True)
+@bot.on(man_cmd(outgoing=True, pattern=r"tiny(?: |$)(.*)"))
 async def ultiny(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
@@ -85,8 +86,8 @@ async def ultiny(event):
 
 CMD_HELP.update(
     {
-        "tiny": "**Plugin : **`tiny`\
-        \n\n  •  **Syntax :** `.tiny` <sambil reply ke media>\
+        "tiny": f"**Plugin : **`tiny`\
+        \n\n  •  **Syntax :** `{cmd}tiny` <sambil reply ke media>\
         \n  •  **Function : **Untuk Mengubah Sticker Menjadi Kecil.\
     "
     }

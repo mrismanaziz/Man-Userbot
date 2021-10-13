@@ -9,11 +9,12 @@ from re import match
 
 from bitlyshortener import Shortener
 
-from userbot import BITLY_TOKEN, BOTLOG, BOTLOG_CHATID
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import BITLY_TOKEN, BOTLOG, BOTLOG_CHATID, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.bitly(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"bitly(?: |$)(.*)"))
 async def shortener(short):
     """
     Shorten link using bit.ly API

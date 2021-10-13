@@ -12,8 +12,9 @@ import time
 from telethon.tl.custom import Dialog
 from telethon.tl.types import Channel, Chat, User
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 from userbot.utils import edit_delete, edit_or_reply
 
 # STRINGS
@@ -55,7 +56,7 @@ async def get_entity(msg):
     return bold, mono, italic, link
 
 
-@register(outgoing=True, pattern=r"^\.stats$")
+@bot.on(man_cmd(outgoing=True, pattern=r"stats$"))
 async def stats(event):
     stat = await edit_or_reply(event, STAT_INDICATION)
     start_time = time.time()
@@ -118,7 +119,7 @@ async def stats(event):
     await stat.edit(response)
 
 
-@register(outgoing=True, pattern=r"^\.(ustat|deteksi|ustats)(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"(ustat|deteksi|ustats)(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -158,10 +159,10 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "stats": "**Plugin : **`stats`\
-        \n\n  •  **Syntax :** `.stats`\
+        "stats": f"**Plugin : **`stats`\
+        \n\n  •  **Syntax :** `{cmd}stats`\
         \n  •  **Function : **Untuk memeriksa statistik pengguna\
-        \n\n  •  **Syntax :** `.ustat` atau `.ustats`\
+        \n\n  •  **Syntax :** `{cmd}ustat` atau `.ustats`\
         \n  •  **Function : **Untuk memeriksa orang tersebut bergabung ke grup mana aja\
     "
     }
@@ -170,8 +171,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "deteksi": "**Plugin : **`deteksi`\
-        \n\n  •  **Syntax :** `.deteksi`\
+        "deteksi": f"**Plugin : **`deteksi`\
+        \n\n  •  **Syntax :** `{cmd}deteksi`\
         \n  •  **Function : **Untuk memeriksa orang tersebut bergabung ke grup mana aja\
     "
     }

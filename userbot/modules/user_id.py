@@ -7,11 +7,12 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.getid(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"getid(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -46,8 +47,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "getid": "**Plugin : **`getid`\
-        \n\n  •  **Syntax :** `.gid` <username> Atau Balas Ke Pesan Pengguna Ketik `.whois`\
+        "getid": f"**Plugin : **`getid`\
+        \n\n  •  **Syntax :** `{cmd}getid` <username> Atau Balas Ke Pesan Pengguna Ketik `.whois`\
         \n  •  **Function : **Untuk Mendapatkan User ID Pengguna Telegram.\
     "
     }

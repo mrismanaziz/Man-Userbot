@@ -10,13 +10,15 @@ import lyricsgenius
 from pylast import User
 
 from userbot import CMD_HELP, GENIUS, LASTFM_USERNAME, lastfm
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 if GENIUS is not None:
     genius = lyricsgenius.Genius(GENIUS)
 
 
-@register(outgoing=True, pattern=r"^\.lyrics (?:(now)|(.*) - (.*))")
+@bot.on(man_cmd(outgoing=True, pattern=r"lyrics (?:(now)|(.*) - (.*))"))
 async def lyrics(lyric):
     await lyric.edit("`Getting information...`")
     if GENIUS is None:
@@ -57,10 +59,10 @@ async def lyrics(lyric):
 
 CMD_HELP.update(
     {
-        "lyrics": "**Plugin : **`lyrics`\
-        \n\n  •  **Syntax :** `.lyrics` **<nama artist> - <nama lagu>**\
+        "lyrics": f"**Plugin : **`lyrics`\
+        \n\n  •  **Syntax :** `{cmd}lyrics` **<nama artist> - <nama lagu>**\
         \n  •  **Function : **Dapatkan lirik yang cocok dengan artis dan lagu.\
-        \n\n  •  **Syntax :** `.lyrics now`\
+        \n\n  •  **Syntax :** `{cmd}lyrics now`\
         \n  •  **Function : **Dapatkan lirik artis dan lagu dari scrobbling lastfm saat ini.\
     "
     }

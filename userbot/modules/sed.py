@@ -10,8 +10,9 @@
 import re
 from sre_constants import error as sre_err
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 DELIMITERS = ("/", ":", "|", "_")
 
@@ -68,7 +69,7 @@ async def separate_sed(sed_string):
     return None
 
 
-@register(outgoing=True, pattern=r"^\.s")
+@bot.on(man_cmd(outgoing=True, pattern="s"))
 async def sed(command):
     """For sed command, use sed on Telegram."""
     sed_result = await separate_sed(command.text)
@@ -109,8 +110,8 @@ async def sed(command):
 
 CMD_HELP.update(
     {
-        "sed": "**Plugin : **`sed`\
-        \n\n  •  **Syntax :** `.s<delimiter><old word(s)><delimiter><new word(s)>`\
+        "sed": f"**Plugin : **`sed`\
+        \n\n  •  **Syntax :** `{cmd}s<delimiter><old word(s)><delimiter><new word(s)>`\
         \n  •  **Function : **Mengganti satu kata atau kata menggunakan sed. \
         \n  •  **Delimiters :** `/, :, |, _` \
     "

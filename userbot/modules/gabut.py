@@ -58,7 +58,7 @@ async def pingme(pong):
     )
 
 
-@register(outgoing=True, pattern=r"^\.kping$")
+@bot.on(man_cmd(outgoing=True, pattern=r"kping$"))
 async def pingme(pong):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
@@ -89,7 +89,7 @@ async def pingme(pong):
     )
 
 
-@register(outgoing=True, pattern=r"^\.a(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"a(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
@@ -101,7 +101,7 @@ async def typewriter(typew):
 # Owner @Si_Dian
 
 
-@register(outgoing=True, pattern=r"^\.j(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"j(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
@@ -113,7 +113,7 @@ async def typewriter(typew):
 # Owner @Si_Dian
 
 
-@register(outgoing=True, pattern=r"^\.k(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"k(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
@@ -125,35 +125,10 @@ async def typewriter(typew):
 # Owner @Si_Dian
 
 
-@register(outgoing=True, pattern=r"^\.ass(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ass(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(1)
     await typew.edit(f"**Salam Dulu Biar Sopan**")
     sleep(2)
     await typew.edit("**السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ**")
-
-
-# Owner @mixiologist
-
-
-@register(outgoing=True, pattern="^.usange(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    sleep(1)
-    await typew.edit("`Getting Information...`")
-    sleep(1)
-    await typew.edit(
-        "**Informasi Dyno ★**:\n\n╭━━━━━━━━━━━━━━━━━━━━╮\n"
-        f"-> `Penggunaan Dyno` **{ALIVE_NAME}**:\n"
-        f" ❉ **10 Jam - "
-        f"51 Menit - 0%**"
-        "\n ◐━─━─━─━─━──━─━─━─━─━◐\n"
-        "-> `Sisa Dyno Bulan Ini`:\n"
-        f" ❉ **9989 Jam - 9948 Menit "
-        f"- 99%**\n"
-        "╰━━━━━━━━━━━━━━━━━━━━╯"
-    )
-
-
-# @mixiologist

@@ -9,11 +9,12 @@ import io
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import bot
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.itos$")
+@bot.on(man_cmd(outgoing=True, pattern=r"itos$"))
 async def _(event):
     if event.fwd_from:
         return
@@ -47,7 +48,7 @@ async def _(event):
             await event.client.delete_message(event.chat_id, [msg.id, response.id])
 
 
-@register(outgoing=True, pattern=r"^\.get$")
+@bot.on(man_cmd(outgoing=True, pattern=r"get$"))
 async def _(event):
     if event.fwd_from:
         return
@@ -94,7 +95,7 @@ async def _(event):
         await bot.send_read_acknowledge(conv.chat_id)
 
 
-@register(outgoing=True, pattern=r"^\.stoi$")
+@bot.on(man_cmd(outgoing=True, pattern=r"stoi$"))
 async def sticker_to_png(sticker):
     if not sticker.is_reply:
         await sticker.edit("`NULL information to feftch...`")

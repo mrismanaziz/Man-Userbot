@@ -12,11 +12,12 @@ from typing import Optional
 
 from PIL import Image, ImageDraw, ImageFont
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.mmf (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"mmf (.*)"))
 async def memify(event):
     reply_msg = await event.get_reply_message()
     input_str = event.pattern_match.group(1)
@@ -155,8 +156,8 @@ async def take_screen_shot(
 
 CMD_HELP.update(
     {
-        "memify": "**Plugin : **`memify`\
-        \n\n  •  **Syntax :** `.mmf` Teks Atas ; Teks Bawah\
+        "memify": f"**Plugin : **`memify`\
+        \n\n  •  **Syntax :** `{cmd}mmf` Teks Atas ; Teks Bawah\
         \n  •  **Function :** Balas Ke Sticker/Gambar/Gif, Gambar akan Di ubah jadi teks meme yang di tentukan\
         \n\n  •  **NOTE :** Jika itu video, teks akan diedit di frame pertama.\
     "

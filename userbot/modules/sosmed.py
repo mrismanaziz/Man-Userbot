@@ -4,11 +4,12 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern="^.sosmed ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern="sosmed ?(.*)"))
 async def insta(event):
     if event.fwd_from:
         return

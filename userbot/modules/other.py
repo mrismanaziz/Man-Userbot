@@ -15,11 +15,12 @@ from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import ChannelParticipantsKicked
 
 from userbot import ALIVE_NAME, CMD_HELP, bot
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
 from userbot.utils import edit_delete, edit_or_reply
 
 
-@register(outgoing=True, pattern=r"^\.open(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"open(?: |$)(.*)"))
 async def _(event):
     b = await event.client.download_media(await event.get_reply_message())
     with open(b, "r") as a:
@@ -33,7 +34,7 @@ async def _(event):
     os.remove(b)
 
 
-@register(outgoing=True, pattern=r"^\.sendbot (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"sendbot (.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -66,7 +67,7 @@ async def _(event):
         await event.client.delete_messages(conv.chat_id, [msg.id, response.id])
 
 
-@register(outgoing=True, groups_only=True, pattern=r"^\.unbanall$")
+@bot.on(man_cmd(outgoing=True, pattern=r"unbanall$"))
 async def _(event):
     await event.edit("`Searching Participant Lists...`")
     p = 0
@@ -84,7 +85,7 @@ async def _(event):
     await event.edit(f"**Berhasil unbanned** `{p}` **Orang di Grup {title}**")
 
 
-@register(outgoing=True, pattern=r"^\.(?:dm)\s?(.*)?")
+@bot.on(man_cmd(outgoing=True, pattern=r"(?:dm)\s?(.*)?"))
 async def _(event):
     p = event.pattern_match.group(1)
     m = p.split(" ")
@@ -107,7 +108,7 @@ async def _(event):
         await event.edit("**ERROR: Gagal Mengirim Pesan.**")
 
 
-@register(outgoing=True, pattern=r"^\.fwdreply ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"fwdreply ?(.*)"))
 async def _(e):
     message = e.pattern_match.group(1)
     if not e.reply_to_msg_id:
@@ -120,7 +121,7 @@ async def _(e):
     await edit_delete(e, "**Silahkan Check di Private**", 15)
 
 
-@register(outgoing=True, pattern=r"^\.getlink(?: |$)(.*)", groups_only=True)
+@bot.on(man_cmd(outgoing=True, pattern=r"getlink(?: |$)(.*)", groups_only=True))
 async def _(event):
     await event.edit("`Processing...`")
     try:
@@ -132,7 +133,7 @@ async def _(event):
     await event.edit(f"**Link Invite GC**: {e.link}")
 
 
-@register(outgoing=True, pattern=r"^\.tmsg (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"tmsg (.*)"))
 async def _(event):
     k = await event.get_reply_message()
     if k:
@@ -149,7 +150,7 @@ async def _(event):
     )
 
 
-@register(outgoing=True, pattern=r"^\.limit(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"limit(?: |$)(.*)"))
 async def _(event):
     await event.edit("`Processing...`")
     async with bot.conversation("@SpamBot") as conv:
@@ -168,8 +169,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "open": "**Plugin : **`open`\
-        \n\n  •  **Syntax :** `.open`\
+        "open": f"**Plugin : **`open`\
+        \n\n  •  **Syntax :** `{cmd}open`\
         \n  •  **Function : **Untuk Melihat isi File Menjadi Text yang dikirim menjadi pesan telegram.\
     "
     }
@@ -178,10 +179,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "dm": "**Plugin : **`dm`\
-        \n\n  •  **Syntax :** `.dm` <username> <text>\
+        "dm": f"**Plugin : **`dm`\
+        \n\n  •  **Syntax :** `{cmd}dm` <username> <text>\
         \n  •  **Function : **Untuk mengirim chat dengan menggunakan userbot.\
-        \n\n  •  **Syntax :** `.fwdreply` <username> <text>\
+        \n\n  •  **Syntax :** `{cmd}fwdreply` <username> <text>\
         \n  •  **Function : **Untuk meneruskan chat yang di reply dengan membalasnya ke pc.\
     "
     }
@@ -190,8 +191,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "sendbot": "**Plugin : **`sendbot`\
-        \n\n  •  **Syntax :** `.sendbot` <username bot> <text>\
+        "sendbot": f"**Plugin : **`sendbot`\
+        \n\n  •  **Syntax :** `{cmd}sendbot` <username bot> <text>\
         \n  •  **Function : **Untuk mengirim ke bot dan mendapatkan respond chat dengan menggunakan userbot.\
     "
     }
@@ -200,8 +201,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "tmsg": "**Plugin : **`tmsg`\
-        \n\n  •  **Syntax :** `.tmsg` <username/me>\
+        "tmsg": f"**Plugin : **`tmsg`\
+        \n\n  •  **Syntax :** `{cmd}tmsg` <username/me>\
         \n  •  **Function : **Untuk Menghitung total jumlah chat yang sudah dikirim.\
     "
     }
@@ -210,8 +211,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "getlink": "**Plugin : **`getlink`\
-        \n\n  •  **Syntax :** `.getlink`\
+        "getlink": f"**Plugin : **`getlink`\
+        \n\n  •  **Syntax :** `fgetlink`\
         \n  •  **Function : **Untuk Mendapatkan link invite grup chat.\
     "
     }
@@ -220,8 +221,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "unbanall": "**Plugin : **`unbanall`\
-        \n\n  •  **Syntax :** `.unbanall`\
+        "unbanall": f"**Plugin : **`unbanall`\
+        \n\n  •  **Syntax :** `{cmd}unbanall`\
         \n  •  **Function : **Untuk Menghapus Semua Pengguna yang dibanned di Daftar Banned GC.\
     "
     }
@@ -229,8 +230,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "limit": "**Plugin : **`limit`\
-        \n\n  •  **Syntax :** `.limit`\
+        "limit": f"**Plugin : **`limit`\
+        \n\n  •  **Syntax :** `{cmd}limit`\
         \n  •  **Function : **Untuk Mengecek akun anda sedang terkena limit atau tidak dengan menggunakan @spambot.\
     "
     }

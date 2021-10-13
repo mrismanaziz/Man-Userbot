@@ -9,7 +9,8 @@ import sys
 from pathlib import Path
 
 from userbot import CMD_HELP, DEVS, LOGS, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
 from userbot.utils import edit_or_reply
 
 DELETE_TIMEOUT = 5
@@ -51,7 +52,7 @@ def load_module(shortname):
         LOGS.info("Successfully imported " + shortname)
 
 
-@register(outgoing=True, pattern=r"^\.install$")
+@bot.on(man_cmd(outgoing=True, pattern="install$"))
 async def _(event):
     if event.fwd_from:
         return
@@ -81,7 +82,7 @@ async def _(event):
             os.remove(downloaded_file_name)
 
 
-@register(outgoing=True, pattern=r"^\.psend ([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"psend ([\s\S]*)"))
 async def send(event):
     reply_to_id = await reply_id(event)
     thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
@@ -104,10 +105,10 @@ async def send(event):
 
 CMD_HELP.update(
     {
-        "core": "**Plugin : **`core`\
-        \n\n  •  **Syntax :** `.install` <reply ke file module>\
+        "core": f"**Plugin : **`core`\
+        \n\n  •  **Syntax :** `{cmd}install` <reply ke file module>\
         \n  •  **Function : **Untuk Menginstall plugins userbot secara instan.\
-        \n\n  •  **Syntax :** `.psend` <nama module>\
+        \n\n  •  **Syntax :** `{cmd}psend` <nama module>\
         \n  •  **Function : **Untuk Mengirim module userbot secara instan.\
     "
     }

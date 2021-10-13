@@ -16,13 +16,15 @@ from natsort import os_sorted
 from rarfile import BadRarFile, RarFile, is_rarfile
 
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 from userbot.utils import humanbytes
 
 MAX_MESSAGE_SIZE_LIMIT = 4095
 
 
-@register(outgoing=True, pattern=r"^\.ls(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ls(?: |$)(.*)"))
 async def lst(event):
     if event.fwd_from:
         return

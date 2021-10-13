@@ -11,15 +11,12 @@ from telethon.tl.types import UserStatusOnline as onn
 from telethon.tl.types import UserStatusRecently as rec
 from telethon.utils import get_display_name
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(
-    outgoing=True,
-    pattern=r"^\.tag(on|off|all|bots|rec|admins|owner)?(.*)",
-    disable_errors=True,
-)
+@bot.on(man_cmd(outgoing=True, pattern=r"^\.tag(on|off|all|bots|rec|admins|owner)?(.*)"))
 async def _(e):
     okk = e.text
     lll = e.pattern_match.group(2)
@@ -68,20 +65,20 @@ async def _(e):
 
 CMD_HELP.update(
     {
-        "tagger": "**Plugin : **`tagger`\
-        \n\n  •  **Syntax :** `.tagall`\
+        "tagger": f"**Plugin : **`tagger`\
+        \n\n  •  **Syntax :** `{cmd}tagall`\
         \n  •  **Function : **Tag Top 100 Members di group chat.\
-        \n\n  •  **Syntax :** `.tagowner`\
+        \n\n  •  **Syntax :** `{cmd}tagowner`\
         \n  •  **Function : **Tag Owner group chat\
-        \n\n  •  **Syntax : **`.tagadmins`\
+        \n\n  •  **Syntax : **`{cmd}tagadmins`\
         \n  •  **Function : **Tag Admins group chat.\
-        \n\n  •  **Syntax :** `.tagbots`\
+        \n\n  •  **Syntax :** `{cmd}tagbots`\
         \n  •  **Function : **Tag Bots group chat.\
-        \n\n  •  **Syntax :** `.tagrec`\
+        \n\n  •  **Syntax :** `{cmd}tagrec`\
         \n  •  **Function : **Tag Member yang Baru Aktif.\
-        \n\n  •  **Syntax :** `.tagon`\
+        \n\n  •  **Syntax :** `{cmd}tagon`\
         \n  •  **Function : **Tag Online Members (hanya berfungsi jika privasi dimatikan)\
-        \n\n  •  **Syntax :** `.tagoff`\
+        \n\n  •  **Syntax :** `{cmd}tagoff`\
         \n  •  **Function : **Tag Offline Members (hanya berfungsi jika privasi dimatikan)\
         "
     }

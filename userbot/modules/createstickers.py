@@ -11,10 +11,12 @@ import textwrap
 from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import InputMessagesFilterDocument
 
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.cs(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"cs(?: |$)(.*)"))
 async def sticklet(event):
     R = random.randint(0, 256)
     G = random.randint(0, 256)

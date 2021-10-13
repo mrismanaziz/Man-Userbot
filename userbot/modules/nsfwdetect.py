@@ -7,12 +7,13 @@ import os
 
 import requests
 
-from userbot import CMD_HELP, DEEP_AI
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, DEEP_AI, bot
+from userbot.events import man_cmd
 from userbot.utils import edit_delete, edit_or_reply
 
 
-@register(outgoing=True, pattern=r"^\.detect$")
+@bot.on(man_cmd(outgoing=True, pattern=r"detect$"))
 async def detect(event):
     if DEEP_AI is None:
         return await edit_delete(

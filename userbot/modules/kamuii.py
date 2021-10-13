@@ -9,10 +9,12 @@ import os
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.kamuii(:? |$)([1-8])?")
+@bot.on(man_cmd(outgoing=True, pattern=r"kamuii(:? |$)([1-8])?"))
 async def _(fry):
     await fry.edit("`Mengaktifkan Kekuatan Supersaya...`")
     level = fry.pattern_match.group(2)
@@ -68,7 +70,7 @@ async def _(fry):
     return os.remove(downloaded_file_name)
 
 
-@register(outgoing=True, pattern=r"^.df(:? |$)([1-8])?")
+@bot.on(man_cmd(outgoing=True, pattern=r".df(:? |$)([1-8])?"))
 async def _(fry):
     await fry.edit("`Sedang Dalam Proses......`")
     level = fry.pattern_match.group(2)
@@ -126,8 +128,8 @@ async def _(fry):
 
 CMD_HELP.update(
     {
-        "kamuii": "**Plugin : **`kamuii`\
-        \n\n  •  **Syntax :** `.kamuii` or `.kamuii` [level(1-8)]\
+        "kamuii": f"**Plugin : **`kamuii`\
+        \n\n  •  **Syntax :** `{cmd}kamuii` or `{cmd}kamuii` [level(1-8)]\
         \n  •  **Function : **Untuk mengubah foto/sticker menjadi penyok.\
     "
     }

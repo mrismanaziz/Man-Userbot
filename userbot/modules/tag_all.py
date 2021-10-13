@@ -10,8 +10,9 @@ import asyncio
 import random
 import re
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 usernexp = re.compile(r"@(\w{3,32})\[(.+?)\]")
 nameexp = re.compile(r"\[([\w\S]+)\]\(tg://user\?id=(\d+)\)\[(.+?)\]")
@@ -24,7 +25,7 @@ class FlagContainer:
     is_active = False
 
 
-@register(outgoing=True, pattern=r"^\.mention(?: |$)(.*)", disable_errors=True)
+@bot.on(man_cmd(outgoing=True, pattern=r"mention(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -37,7 +38,7 @@ async def _(event):
     await bot.send_message(chat, mentions, reply_to=event.message.reply_to_msg_id)
 
 
-@register(outgoing=True, groups_only=True, pattern=r"^\.emojitag(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"emojitag(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from or FlagContainer.is_active:
         return
@@ -83,7 +84,7 @@ async def _(event):
         FlagContainer.is_active = False
 
 
-@register(outgoing=True, groups_only=True, pattern=r"^\.all(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"all(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from or FlagContainer.is_active:
         return
@@ -131,12 +132,12 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "tag": "**Plugin : **`tag`\
-        \n\n  •  **Syntax :** `.mention`\
+        "tag": f"**Plugin : **`tag`\
+        \n\n  •  **Syntax :** `{cmd}mention`\
         \n  •  **Function : **Untuk Menmention semua anggota yang ada di group tanpa menyebut namanya.\
-        \n\n  •  **Syntax :** `.all` <text>\
+        \n\n  •  **Syntax :** `{cmd}all` <text>\
         \n  •  **Function : **Untuk Mengetag semua anggota Maksimal 3.000 orang yg akan ditag di grup untuk mengurangi flood wait telegram.\
-        \n\n  •  **Syntax :** `.emojitag` <text>\
+        \n\n  •  **Syntax :** `{cmd}emojitag` <text>\
         \n  •  **Function : **Untuk Mengetag semua anggota di grup dengan random emoji berbeda.\
         \n\n  •  **NOTE :** Untuk Memberhentikan Tag ketik `.restart`\
     "

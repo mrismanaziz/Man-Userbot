@@ -9,13 +9,14 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import InputPhoto
 
 from userbot import CMD_HELP, LOGS, STORAGE, bot
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
 
 if not hasattr(STORAGE, "userObj"):
     STORAGE.userObj = False
 
 
-@register(outgoing=True, pattern=r"^\.clone ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"clone ?(.*)"))
 async def impostor(event):
     inputArgs = event.pattern_match.group(1)
 
@@ -88,12 +89,12 @@ async def updateProfile(userObj, restore=False):
 
 CMD_HELP.update(
     {
-        "clone": "**Plugin : **`clone`\
-        \n\n  •  **Syntax :** `.clone` <reply/username/ID>\
+        "clone": f"**Plugin : **`clone`\
+        \n\n  •  **Syntax :** `{cmd}clone` <reply/username/ID>\
         \n  •  **Function : **Untuk mengclone identitas dari username/ID Telegram yang diberikan.\
-        \n\n  •  **Syntax :** `.clone restore`\
+        \n\n  •  **Syntax :** `{cmd}clone restore`\
         \n  •  **Function : **Mengembalikan ke identitas asli anda.\
-        \n\n  •  **NOTE :** `.clone restore` terlebih dahulu sebelum mau nge `.clone` lagi.\
+        \n\n  •  **NOTE :** `{cmd}clone restore` terlebih dahulu sebelum mau nge `{cmd}clone` lagi.\
     "
     }
 )

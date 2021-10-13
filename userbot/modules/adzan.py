@@ -5,13 +5,14 @@ import json
 
 import requests
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 from userbot.modules.sql_helper.globals import gvarstatus
 from userbot.utils import edit_delete, edit_or_reply
 
 
-@register(outgoing=True, pattern=r"^\.adzan(?:\s|$)([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"adzan(?:\s|$)([\s\S]*)"))
 async def get_adzan(adzan):
     "Shows you the Islamic prayer times of the given city name"
     input_str = adzan.pattern_match.group(1)
@@ -38,8 +39,8 @@ async def get_adzan(adzan):
 
 CMD_HELP.update(
     {
-        "adzan": "**Plugin : **`adzan`\
-        \n\n  •  **Syntax :** `.adzan` <nama kota>\
+        "adzan": f"**Plugin : **`adzan`\
+        \n\n  •  **Syntax :** `{cmd}adzan` <nama kota>\
         \n  •  **Function : **Menunjukkan waktu jadwal sholat dari kota yang diberikan.\
     "
     }

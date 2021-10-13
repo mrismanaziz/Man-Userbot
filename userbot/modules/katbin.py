@@ -5,11 +5,12 @@
 from requests import post
 from telethon.tl.types import MessageMediaWebPage
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.katbin(?:\s|$)([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"katbin(?:\s|$)([\s\S]*)"))
 async def paste(event):
     """Pastes given text to Katb.in"""
     await event.edit("**Processing...**")
@@ -33,13 +34,13 @@ async def paste(event):
             f"**Pasted successfully:** [Katb.in](https://katb.in/{response['paste_id']})\n"
         )
     else:
-        await event.edit("**sepertinya Katb.in sedang down.**")
+        await event.edit("**Sepertinya Katb.in sedang down.**")
 
 
 CMD_HELP.update(
     {
-        "katbin": "**Plugin : **`katbin`\
-        \n\n  •  **Syntax :** `.katbin`\
+        "katbin": f"**Plugin : **`katbin`\
+        \n\n  •  **Syntax :** `{cmd}katbin`\
         \n  •  **Function : **Paste teks yang diberikan ke web Katb.in\
     "
     }

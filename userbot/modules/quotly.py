@@ -7,12 +7,13 @@ import asyncio
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 from userbot.utils import edit_delete, edit_or_reply
 
 
-@register(outgoing=True, pattern=r"^\.q ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"q ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -48,8 +49,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "quotly": "**Plugin : **`quotly`\
-        \n\n  •  **Syntax :** `.q` <warna>\
+        "quotly": f"**Plugin : **`quotly`\
+        \n\n  •  **Syntax :** `{cmd}q` <warna>\
         \n  •  **Function : **Membuat pesan mu menjadi sticker bisa custom warna background.\
     "
     }

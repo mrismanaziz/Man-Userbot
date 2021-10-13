@@ -11,7 +11,8 @@ from pytz import timezone
 from telethon.events import ChatAction
 
 from userbot import BLACKLIST_CHAT, BOTLOG_CHATID, CLEAN_WELCOME, CMD_HELP, LOGS, bot
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
 
 
 @bot.on(ChatAction)
@@ -92,7 +93,7 @@ async def welcome_to_chat(event):
             update_previous_welcome(event.chat_id, current_message.id)
 
 
-@register(outgoing=True, pattern=r"^\.setwelcome(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"setwelcome(?: |$)(.*)"))
 async def save_welcome(event):
     if event.chat_id in BLACKLIST_CHAT:
         return await event.edit("**Perintah ini Dilarang digunakan di Group ini**")
@@ -129,7 +130,7 @@ async def save_welcome(event):
         await event.edit(success.format("Disini"))
 
 
-@register(outgoing=True, pattern=r"^\.checkwelcome$")
+@bot.on(man_cmd(outgoing=True, pattern=r"checkwelcome$"))
 async def show_welcome(event):
     try:
         from userbot.modules.sql_helper.welcome_sql import get_current_welcome_settings
@@ -149,7 +150,7 @@ async def show_welcome(event):
         await event.reply(cws.reply)
 
 
-@register(outgoing=True, pattern=r"^\.rmwelcome$")
+@bot.on(man_cmd(outgoing=True, pattern=r"rmwelcome$"))
 async def del_welcome(event):
     try:
         from userbot.modules.sql_helper.welcome_sql import rm_welcome_setting
@@ -163,12 +164,12 @@ async def del_welcome(event):
 
 CMD_HELP.update(
     {
-        "welcome": "**Plugin : **`welcome`\
-        \n\n  •  **Syntax :** `.setwelcome` <pesan welcome> atau balas ke pesan ketik `.setwelcome`\
+        "welcome": f"**Plugin : **`welcome`\
+        \n\n  •  **Syntax :** `{cmd}setwelcome` <pesan welcome> atau balas ke pesan ketik `.setwelcome`\
         \n  •  **Function : **Menyimpan pesan welcome digrup.\
-        \n\n  •  **Syntax :** `.checkwelcome`\
+        \n\n  •  **Syntax :** `{cmd}checkwelcome`\
         \n  •  **Function : **Check pesan welcome yang anda simpan.\
-        \n\n  •  **Syntax :** `.rmwelcome`\
+        \n\n  •  **Syntax :** `{cmd}rmwelcome`\
         \n  •  **Function : **Menghapus pesan welcome yang anda simpan.\
         \n\n  •  **Format Variabel yang bisa digunakan di setwelcome :**\
         \n`{mention}`, `{title}`, `{count}`, `{first}`, `{last}`, `{fullname}`, `{userid}`, `{username}`, `{my_first}`, `{my_fullname}`, `{my_last}`, `{my_mention}`, `{my_username}`\

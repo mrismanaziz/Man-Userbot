@@ -7,11 +7,12 @@
 
 from telethon.tl import functions
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.buat (gb|g|c)(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"buat (gb|g|c)(?: |$)(.*)"))
 async def telegraphs(grop):
     """For .create command, Creating New Group & Channel"""
     if grop.text[0].isalpha() or grop.text[0] in ("/", "#", "@", "!"):
@@ -49,7 +50,7 @@ async def telegraphs(grop):
             r = await grop.client(
                 functions.channels.CreateChannelRequest(
                     title=group_name,
-                    about="`Selamat Datang Di Channel Ini!`",
+                    about="**Selamat Datang Di Channel Ini!**",
                     megagroup=type_of_group != "c",
                 )
             )
@@ -71,12 +72,12 @@ async def telegraphs(grop):
 
 CMD_HELP.update(
     {
-        "membuat": "**Plugin : **`membuat`\
-        \n\n  •  **Syntax :** `.buat g` <nama grup>\
+        "membuat": f"**Plugin : **`membuat`\
+        \n\n  •  **Syntax :** `{cmd}buat g` <nama grup>\
         \n  •  **Function : **Membuat grup telegram.\
-        \n\n  •  **Syntax :** `.buat gb` <nama grup>\
+        \n\n  •  **Syntax :** `{cmd}buat gb` <nama grup>\
         \n  •  **Function : **Membuat Grup bersama bot.\
-        \n\n  •  **Syntax :** `.buat c` <nama channel>\
+        \n\n  •  **Syntax :** `{cmd}buat c` <nama channel>\
         \n  •  **Function : **Membuat sebuah Channel.\
     "
     }

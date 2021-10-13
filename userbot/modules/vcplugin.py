@@ -16,8 +16,9 @@ from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
 from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 
-from userbot import ALIVE_NAME, CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import ALIVE_NAME, CMD_HELP, bot
+from userbot.events import man_cmd
 
 
 async def get_call(event):
@@ -31,7 +32,7 @@ def user_list(l, n):
         yield l[i : i + n]
 
 
-@register(outgoing=True, groups_only=True, pattern=r"^\.startvc$")
+@bot.on(man_cmd(outgoing=True, groups_only=True, pattern=r"startvc$"))
 async def start_voice(c):
     chat = await c.get_chat()
     admin = chat.admin_rights
@@ -47,7 +48,7 @@ async def start_voice(c):
         await c.edit(f"**ERROR:** `{ex}`")
 
 
-@register(outgoing=True, groups_only=True, pattern=r"^\.stopvc$")
+@bot.on(man_cmd(outgoing=True, groups_only=True, pattern=r"stopvc$"))
 async def stop_voice(c):
     chat = await c.get_chat()
     admin = chat.admin_rights
@@ -63,7 +64,7 @@ async def stop_voice(c):
         await c.edit(f"**ERROR:** `{ex}`")
 
 
-@register(outgoing=True, groups_only=True, pattern=r"^\.vcinvite")
+@bot.on(man_cmd(outgoing=True, groups_only=True, pattern=r"vcinvite"))
 async def _(c):
     await c.edit("`Inviting Members to Voice Chat...`")
     users = []
@@ -83,12 +84,12 @@ async def _(c):
 
 CMD_HELP.update(
     {
-        "vcg": "**Plugin : **`vcg`\
-        \n\n  •  **Syntax :** `.startvc`\
+        "vcg": f"**Plugin : **`vcg`\
+        \n\n  •  **Syntax :** `{cmd}startvc`\
         \n  •  **Function : **Untuk Memulai voice chat group\
-        \n\n  •  **Syntax :** `.stopvc`\
+        \n\n  •  **Syntax :** `{cmd}stopvc`\
         \n  •  **Function : **Untuk Memberhentikan voice chat group\
-        \n\n  •  **Syntax :** `.vcinvite`\
+        \n\n  •  **Syntax :** `{cmd}vcinvite`\
         \n  •  **Function : **Mengundang Member group ke voice chat group\
     "
     }

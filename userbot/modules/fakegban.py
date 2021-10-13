@@ -6,16 +6,15 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import ChannelParticipantsAdmins
 
 from userbot import ALIVE_NAME, CMD_HELP, bot
-
-# from userbot.utils import admin_cmd
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
 
 
-@register(outgoing=True, pattern=r"^\.fgban(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"fgban(?: |$)(.*)"))
 async def gbun(event):
     if event.fwd_from:
         return
@@ -67,8 +66,8 @@ async def gbun(event):
 
 CMD_HELP.update(
     {
-        "fakegban": "**Plugin : **`fakegban`\
-        \n\n  •  **Syntax :** `.fgban` <reply> <reason>\
+        "fakegban": f"**Plugin : **`fakegban`\
+        \n\n  •  **Syntax :** `{cmd}fgban` <reply> <reason>\
         \n  •  **Function : **Untuk melakukan aksi Fake global banned , just for fun\
     "
     }

@@ -7,11 +7,12 @@ from asyncio.exceptions import TimeoutError
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.short(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"short(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -57,8 +58,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "shortlink": "**Plugin : **`shortlink`\
-        \n\n  •  **Syntax :** `.short` <url/reply link>\
+        "shortlink": f"**Plugin : **`shortlink`\
+        \n\n  •  **Syntax :** `{cmd}short` <url/reply link>\
         \n  •  **Function : **Untuk menyimpelkan link url menjadi pendek menggunakan @ShortUrlBot\
     "
     }

@@ -7,12 +7,13 @@
 
 import os
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot.events import man_cmd
 from userbot.utils.pastebin import PasteBin
 
 
-@register(outgoing=True, pattern=r"^\.paste(?: (-d|-n|-h|-k)|$)?(?: ([\s\S]+)|$)")
+@bot.on(man_cmd(outgoing=True, pattern=r"paste(?: (-d|-n|-h|-k)|$)?(?: ([\s\S]+)|$)"))
 async def paste(pstl):
     """For .paste command, pastes the text directly to a pastebin."""
     service = pstl.pattern_match.group(1)
@@ -65,8 +66,8 @@ async def paste(pstl):
 
 CMD_HELP.update(
     {
-        "paste": "**Plugin : **`paste`\
-        \n\n  •  **Syntax :** `.paste` <text/reply>\
+        "paste": f"**Plugin : **`paste`\
+        \n\n  •  **Syntax :** `{cmd}paste` <text/reply>\
         \n  •  **Function : **Untuk Menyimpan text ke ke layanan pastebin gunakan flags [`-d`, `-n`, `-h`]\
         \n\n  •  **NOTE :** `-d` = **Dogbin** atau `-n` = **Nekobin** atau `-h` = **Hastebin** atau `-k` = **katbin**\
     "

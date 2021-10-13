@@ -19,11 +19,12 @@
 
 import requests
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(pattern=r"^\.shibe$", outgoing=True)
+@bot.on(man_cmd(outgoing=True, pattern="shibe$"))
 async def shibe(event):
     await event.edit("`Processing...`")
     response = requests.get("https://shibe.online/api/shibes").json()
@@ -34,7 +35,7 @@ async def shibe(event):
     await event.delete()
 
 
-@register(pattern=r"^\.cat$", outgoing=True)
+@bot.on(man_cmd(outgoing=True, pattern="cat$"))
 async def cats(event):
     await event.edit("`Processing...`")
     response = requests.get("https://shibe.online/api/cats").json()
@@ -47,10 +48,10 @@ async def cats(event):
 
 CMD_HELP.update(
     {
-        "animals": "**Plugin : **`animals`\
-        \n\n  •  **Syntax :** `.cat`\
+        "animals": f"**Plugin : **`animals`\
+        \n\n  •  **Syntax :** `{cmd}cat`\
         \n  •  **Function : **Untuk Mengirim gambar kucing secara random.\
-        \n\n  •  **Syntax :** `.shibe`\
+        \n\n  •  **Syntax :** `{cmd}shibe`\
         \n  •  **Function : **Untuk Mengirim gambar random dari anjing jenis Shiba.\
     "
     }

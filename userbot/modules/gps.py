@@ -2,11 +2,12 @@
 from geopy.geocoders import Nominatim
 from telethon.tl import types
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.gps(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"gps(?: |$)(.*)"))
 async def gps(event):
     if event.fwd_from:
         return
@@ -36,8 +37,8 @@ async def gps(event):
 
 CMD_HELP.update(
     {
-        "gps": "**Plugin : **`gps`\
-        \n\n  •  **Syntax :** `.gps` <nama lokasi>\
+        "gps": f"**Plugin : **`gps`\
+        \n\n  •  **Syntax :** `{cmd}gps` <nama lokasi>\
         \n  •  **Function : **Untuk Mendapatkan Lokasi Map.\
     "
     }

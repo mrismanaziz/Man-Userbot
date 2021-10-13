@@ -9,11 +9,12 @@ from subprocess import run as runapp
 
 import pybase64
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.hash (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"hash (.*)"))
 async def gethash(hash_q):
     """For .hash command, find the md5, sha1, sha256, sha512 of the string."""
     hashtxt_ = hash_q.pattern_match.group(1)
@@ -55,7 +56,7 @@ async def gethash(hash_q):
         await hash_q.reply(ans)
 
 
-@register(outgoing=True, pattern=r"^\.base64 (en|de) (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"base64 (en|de) (.*)"))
 async def endecrypt(query):
     """For .base64 command, find the base64 encoding of the given string."""
     if query.pattern_match.group(1) == "en":
@@ -74,8 +75,8 @@ async def endecrypt(query):
 
 CMD_HELP.update(
     {
-        "hash": "**Plugin : **`hash`\
-        \n\n  •  **Syntax :** `.hash`\
+        "hash": f"**Plugin : **`hash`\
+        \n\n  •  **Syntax :** `{cmd}hash`\
         \n  •  **Function : **Untuk menemukan md5, sha1, sha256, sha512 dari string tersebut saat ditulis ke dalam file txt.\
     "
     }
@@ -84,8 +85,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "base64": "**Plugin : **`base64`\
-        \n\n  •  **Syntax :** `.base64` [en atau de]\
+        "base64": f"**Plugin : **`base64`\
+        \n\n  •  **Syntax :** `{cmd}base64` [en atau de]\
         \n  •  **Function : **Temukan pengkodean base64 dari string yang diberikan atau pecahkan kodenya.\
         \n\n  •  **NOTE : en = encode , de = decode\
     "
