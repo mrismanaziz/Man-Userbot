@@ -17,7 +17,7 @@ ANTI_FLOOD_WARN_MODE = ChatBannedRights(
 )
 
 
-@register(incoming=True, disable_edited=True, disable_errors=True))
+@register(incoming=True, disable_edited=True, disable_errors=True)
 async def _(event):
     # logger.info(CHAT_FLOOD)
     if not CHAT_FLOOD:
