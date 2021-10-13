@@ -4,6 +4,7 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+from userbot import CMD_HANDLER
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
 
@@ -49,7 +50,7 @@ async def insta(event):
             await event.delete()
 
 
-@register(outgoing=True, pattern="^.dez(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern="dez(?: |$)(.*)"))
 async def DeezLoader(event):
     if event.fwd_from:
         return
@@ -76,10 +77,10 @@ async def DeezLoader(event):
 
 CMD_HELP.update(
     {
-        "sosmed": "**Plugin : **`sosmed`\
-        \n\n  •  **Syntax :** `.sosmed` <link>\
+        "sosmed": f"**Plugin : **`sosmed`\
+        \n\n  •  **Syntax :** `{cmd}sosmed` <link>\
         \n  •  **Function : **Download Media Dari Pinterest / Tiktok / Instagram.\
-        \n\n  •  **Syntax :** `.dez` <link>\
+        \n\n  •  **Syntax :** `{cmd}dez` <link>\
         \n  •  **Function : **Download Lagu Via Deezloader\
     "
     }
