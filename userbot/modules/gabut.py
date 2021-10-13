@@ -6,8 +6,9 @@ from datetime import datetime
 from platform import uname
 from time import sleep
 
-from userbot import ALIVE_NAME, StartTime
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import ALIVE_NAME, StartTime,  bot
+from userbot.events import man_cmd
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
@@ -39,7 +40,7 @@ async def get_readable_time(seconds: int) -> str:
     return up_time
 
 
-@register(outgoing=True, pattern=r"^\.keping$")
+@bot.on(man_cmd(outgoing=True, pattern=r"keping$"))
 async def pingme(pong):
     """For .ping command, ping the userbot from any chat."""
     await get_readable_time((time.time() - StartTime))
