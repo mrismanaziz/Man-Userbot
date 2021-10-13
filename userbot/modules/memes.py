@@ -16,7 +16,7 @@ from cowpy import cow
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.events import man_cmd, register
 from userbot.modules.admin import get_user_from_event
 from userbot.utils import edit_delete
 
@@ -1814,7 +1814,7 @@ async def bot(e):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"nou$"))
+@register(outgoing=True, pattern=r"^\.nou$")
 async def nou(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
@@ -1880,7 +1880,7 @@ async def koc(e):
         await e.edit("😭😭😭😭")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=".gas$"))
+@bot.on(man_cmd(outgoing=True, pattern="gas$"))
 async def gas(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("___________________🚑")
