@@ -6,7 +6,7 @@ from telethon.tl.types import ChatBannedRights
 import userbot.modules.sql_helper.antiflood_sql as sql
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.events import man_cmd, register
 from userbot.utils.tools import is_admin
 
 CHAT_FLOOD = sql.__load_flood_settings()
@@ -16,7 +16,7 @@ ANTI_FLOOD_WARN_MODE = ChatBannedRights(
 )
 
 
-@bot.on(man_cmd(incoming=True, disable_edited=True, disable_errors=True))
+@register(incoming=True, disable_edited=True, disable_errors=True))
 async def _(event):
     # logger.info(CHAT_FLOOD)
     if not CHAT_FLOOD:
