@@ -11,7 +11,9 @@ import time
 import zipfile
 from datetime import date
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, ZIP_DOWNLOAD_DIRECTORY, bot
+from userbot.events import man_cmd
 from userbot.utils import progress
 
 # ====================
@@ -148,14 +150,14 @@ def zipdir(path, ziph):
 
 CMD_HELP.update(
     {
-        "zipfile": "**Plugin : **`zipfile`\
-        \n\n  •  **Syntax :** `.compress` **[optional: <reply to file>]**\
+        "zipfile": f"**Plugin : **`zipfile`\
+        \n\n  •  **Syntax :** `{cmd}compress` **[optional: <reply to file>]**\
         \n  •  **Function : **make files to zip.\
-        \n\n  •  **Syntax :** `.addzip` **<reply to file>**\
+        \n\n  •  **Syntax :** `{cmd}addzip` **<reply to file>**\
         \n  •  **Function : **add files to zip list.\
-        \n\n  •  **Syntax :** `.upzip` **[optional: <zip title>]**\
+        \n\n  •  **Syntax :** `{cmd}upzip` **[optional: <zip title>]**\
         \n  •  **Function : **upload zip list.\
-        \n\n  •  **Syntax :** `.rmzip` **[optional: <zip title>]**\
+        \n\n  •  **Syntax :** `{cmd}rmzip` **[optional: <zip title>]**\
         \n  •  **Function : **clear zip list.\
     "
     }
