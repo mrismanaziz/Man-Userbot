@@ -6,8 +6,7 @@ from datetime import datetime
 from platform import uname
 from time import sleep
 
-from userbot import CMD_HANDLER as cmd
-from userbot import ALIVE_NAME, StartTime,  bot
+from userbot import ALIVE_NAME, StartTime, bot
 from userbot.events import man_cmd
 
 # ================= CONSTANT =================
