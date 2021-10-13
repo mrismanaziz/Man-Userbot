@@ -5,12 +5,17 @@
 import asyncio
 import time
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.events import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"webupload ?(.+?|) (?:--)(anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles)"))
+@bot.on(
+    man_cmd(
+        outgoing=True,
+        pattern=r"webupload ?(.+?|) (?:--)(anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles)",
+    )
+)
 async def _(event):
     if event.fwd_from:
         return
