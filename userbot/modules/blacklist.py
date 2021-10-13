@@ -15,7 +15,7 @@ from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
 
 
-@bot.on(man_cmd(incoming=True, disable_edited=True, disable_errors=True))
+@bot.on(man_cmd(incoming=True))
 async def on_new_message(event):
     # TODO: exempt admins from locks
     name = event.raw_text
