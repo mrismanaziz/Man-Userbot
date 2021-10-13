@@ -122,7 +122,7 @@ async def lst(event):
         await event.edit(msg)
 
 
-@register(outgoing=True, pattern=r"^\.rm(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"rm(?: |$)(.*)"))
 async def rmove(event):
     """Removing Directory/File"""
     cat = event.pattern_match.group(1)
@@ -139,7 +139,7 @@ async def rmove(event):
     await event.edit(f"Dihapus `{cat}`")
 
 
-@register(outgoing=True, pattern=r"^\.rn ([^|]+)\|([^|]+)")
+@bot.on(man_cmd(outgoing=True, pattern=r"rn ([^|]+)\|([^|]+)"))
 async def rname(event):
     """Renaming Directory/File"""
     cat = str(event.pattern_match.group(1)).strip()
@@ -152,7 +152,7 @@ async def rname(event):
     await event.edit(f"Diganti nama dari `{cat}` ke `{new_path}`")
 
 
-@register(outgoing=True, pattern=r"^\.zip (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"zip (.*)"))
 async def zip_file(event):
     if event.fwd_from:
         return
