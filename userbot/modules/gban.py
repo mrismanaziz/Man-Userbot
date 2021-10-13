@@ -6,7 +6,8 @@ from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import MessageEntityMentionName
 
 from userbot import ALIVE_NAME, DEVS, bot
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot.events import man_cmd, register
 
 
 async def get_full_user(event):
