@@ -885,7 +885,7 @@ weebyfont = [
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"(\w+)say (.*)"))
-async def univsaye(cowmsg):
+async def _(cowmsg):
     """For .cowsay module, userbot wrapper for cow which says things."""
     arg = cowmsg.pattern_match.group(1).lower()
     text = cowmsg.pattern_match.group(2)
@@ -901,7 +901,7 @@ async def univsaye(cowmsg):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"coinflip (.*)"))
-async def coin(event):
+async def _(event):
     r = choice(["Kepala", "Ekor"])
     input_str = event.pattern_match.group(1)
     if input_str:
@@ -927,7 +927,7 @@ async def coin(event):
 
 
 @bot.on(man_cmd(pattern=r"slap(?: |$)(.*)", outgoing=True))
-async def who(event):
+async def _(event):
     """slaps a user, or get slapped if not a reply."""
     replied_user = await get_user_from_event(event)
     if replied_user:
@@ -980,7 +980,7 @@ async def slap(replied_user, event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"tt(?: |$)(.*)"))
-async def boobs(e):
+async def _(e):
     await e.edit("`Mencari Gambar tt, Dosa ditanggung sendiri...`")
     await sleep(3)
     await e.edit("`Mengirim Gambar tt...`")
@@ -993,7 +993,7 @@ async def boobs(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"pantat(?: |$)(.*)"))
-async def butts(e):
+async def _(e):
     await e.edit("`Mencari Gambar Pantat, Dosa ditanggung sendiri...`")
     await sleep(3)
     await e.edit("`Mengirim Gambar Pantat Indah...`")
@@ -1006,7 +1006,7 @@ async def butts(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"(yes|no|maybe|decide)$"))
-async def decide(event):
+async def _(event):
     decision = event.pattern_match.group(1).lower()
     message_id = event.reply_to_msg_id if event.reply_to_msg_id else None
     if decision != "decide":
@@ -1020,7 +1020,7 @@ async def decide(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r";_;$"))
-async def fun(idk):
+async def _(idk):
     t = ";_;"
     for j in range(10):
         t = t[:-1] + "_;"
@@ -1028,25 +1028,25 @@ async def fun(idk):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"fp$"))
-async def facepalm(palm):
+async def _(palm):
     """Facepalm  🤦‍♂"""
     await palm.edit("🤦‍♂")
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"cry$"))
-async def cry(e):
+async def _(e):
     """y u du dis, i cry everytime !!"""
     await e.edit(choice(CRI))
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"insult$"))
-async def insult(e):
+async def _(e):
     """I make you cry !!"""
     await e.edit(choice(INSULT_STRINGS))
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"cp(?: |$)(.*)"))
-async def copypasta(cp_e):
+async def _(cp_e):
     """Copypasta the famous meme"""
     textx = await cp_e.get_reply_message()
     message = cp_e.pattern_match.group(1)
@@ -1078,7 +1078,7 @@ async def copypasta(cp_e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"vapor(?: |$)(.*)"))
-async def vapor(vpr):
+async def _(vpr):
     """Vaporize everything!"""
     reply_text = []
     textx = await vpr.get_reply_message()
@@ -1102,7 +1102,7 @@ async def vapor(vpr):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"str(?: |$)(.*)"))
-async def stretch(stret):
+async def _(stret):
     """Stretch it."""
     textx = await stret.get_reply_message()
     message = stret.text
@@ -1120,7 +1120,7 @@ async def stretch(stret):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"zal(?: |$)(.*)"))
-async def zal(zgfy):
+async def _(zgfy):
     """Invoke the feeling of chaos."""
     reply_text = []
     textx = await zgfy.get_reply_message()
@@ -1155,13 +1155,13 @@ async def zal(zgfy):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"hi$"))
-async def hoi(hello):
+async def _(hello):
     """Greet everyone!"""
     await hello.edit(choice(HELLOSTR))
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"owo(?: |$)(.*)"))
-async def faces(owo):
+async def _(owo):
     """UwU"""
     textx = await owo.get_reply_message()
     message = owo.pattern_match.group(1)
@@ -1183,37 +1183,37 @@ async def faces(owo):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"react$"))
-async def react_meme(react):
+async def _(react):
     """Make your userbot react to everything."""
     await react.edit(choice(FACEREACTS))
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"shg$"))
-async def shrugger(shg):
+async def _(shg):
     r"""¯\_(ツ)_/¯"""
     await shg.edit(choice(SHGS))
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"chase$"))
-async def police(chase):
+async def _(chase):
     """Lari bro lari, aku akan segera menangkapmu !!"""
     await chase.edit(choice(CHASE_STR))
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"run$"))
-async def runner_lol(run):
+async def _(run):
     """Lari, lari, LARIII!"""
     await run.edit(choice(RUNS_STR))
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"metoo$"))
-async def metoo(hahayes):
+async def _(hahayes):
     """Haha yes"""
     await hahayes.edit(choice(METOOSTR))
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"oem$"))
-async def oem(e):
+async def _(e):
     t = "Oem"
     for _ in range(16):
         t = t[:-1] + "em"
@@ -1221,7 +1221,7 @@ async def oem(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"Oem$"))
-async def Oem(e):
+async def _(e):
     t = "Oem"
     for _ in range(16):
         t = t[:-1] + "em"
@@ -1229,12 +1229,12 @@ async def Oem(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"10iq$"))
-async def iqless(e):
+async def _(e):
     await e.edit("♿")
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"fuck$"))
-async def iqless(e):
+async def _(e):
     await e.edit(".                       /¯ )")
     await e.edit(".                       /¯ )\n                      /¯  /")
     await e.edit(
@@ -1264,7 +1264,7 @@ async def iqless(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"moon$"))
-async def moon(moone):
+async def _(moone):
     deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
     try:
         for x in range(32):
@@ -1276,7 +1276,7 @@ async def moon(moone):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"bunga$"))
-async def moon(event):
+async def _(event):
     deq = deque(list("🌼🌻🌺🌹🌸🌷"))
     try:
         for _ in range(35):
@@ -1288,7 +1288,7 @@ async def moon(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"waktu$"))
-async def moon(event):
+async def _(event):
     deq = deque(list("🎑🌄🌅🌇🌆🌃🌌"))
     try:
         for _ in range(100):
@@ -1300,7 +1300,7 @@ async def moon(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"buah$"))
-async def moon(event):
+async def _(event):
     deq = deque(list("🍉🍓🍇🍎🍍🍐🍌"))
     try:
         for _ in range(35):
@@ -1312,7 +1312,7 @@ async def moon(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"clock$"))
-async def clock(event):
+async def _(event):
     deq = deque(list("🕙🕘🕗🕖🕕🕔🕓🕒🕑🕐🕛"))
     try:
         for _ in range(32):
@@ -1324,7 +1324,7 @@ async def clock(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"rain$"))
-async def rain(event):
+async def _(event):
     deq = deque(list("☀️🌤⛅️🌥☁️🌧⛈"))
     try:
         for _ in range(32):
@@ -1336,7 +1336,7 @@ async def rain(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"boxes$"))
-async def boxes(event):
+async def _(event):
     deq = deque(list("🟥🟧🟨🟩🟦🟪🟫⬛⬜"))
     try:
         for x in range(32):
@@ -1348,7 +1348,7 @@ async def boxes(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"hmm$"))
-async def hmm(event):
+async def _(event):
     deq = deque(list("🤔🧐🤔🧐🤔🧐"))
     try:
         for x in range(32):
@@ -1360,7 +1360,7 @@ async def hmm(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"haha$"))
-async def haha(event):
+async def _(event):
     deq = deque(list("😂🤣😂🤣😂🤣"))
     try:
         for x in range(32):
@@ -1372,7 +1372,7 @@ async def haha(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"operations$"))
-async def operations(event):
+async def _(event):
     deq = deque(list("!@#$%^&*()_+="))
     try:
         for x in range(32):
@@ -1384,7 +1384,7 @@ async def operations(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"love$"))
-async def love(event):
+async def _(event):
     deq = deque(list("❤️🧡💛💚💙💜🖤💕💞💓💗💖💘💝"))
     try:
         for _ in range(32):
@@ -1396,7 +1396,7 @@ async def love(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"earth$"))
-async def earth(event):
+async def _(event):
     deq = deque(list("🌏🌍🌎🌎🌍🌏🌍🌎"))
     try:
         for _ in range(32):
@@ -1408,7 +1408,7 @@ async def earth(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"hati$"))
-async def earth(event):
+async def _(event):
     deq = deque(list("🖤💜💙💚💛🧡❤️🤍"))
     try:
         for _ in range(32):
@@ -1420,7 +1420,7 @@ async def earth(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=".monyet$"))
-async def earth(event):
+async def _(event):
     deq = deque(list("🙈🙉🙈🙉🙈🙉🙈🙉"))
     try:
         for _ in range(32):
@@ -1432,7 +1432,7 @@ async def earth(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=".emo$"))
-async def earth(event):
+async def _(event):
     deq = deque(list("🙂😁😄😃😂🤣😭🐵🙊🙉🙈"))
     try:
         for _ in range(32):
@@ -1444,7 +1444,7 @@ async def earth(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"mock(?: |$)(.*)"))
-async def spongemocktext(mock):
+async def _(mock):
     """Do it and find the real fun."""
     reply_text = []
     textx = await mock.get_reply_message()
@@ -1467,7 +1467,7 @@ async def spongemocktext(mock):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"weeb(?: |$)(.*)"))
-async def weebify(e):
+async def _(e):
     args = e.pattern_match.group(1)
     if not args:
         get = await e.get_reply_message()
@@ -1484,7 +1484,7 @@ async def weebify(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"clap(?: |$)(.*)"))
-async def claptext(memereview):
+async def _(memereview):
     """Praise people!"""
     textx = await memereview.get_reply_message()
     message = memereview.pattern_match.group(1)
@@ -1501,7 +1501,7 @@ async def claptext(memereview):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"teksbiru$"))
-async def bluetext(bt_e):
+async def _(bt_e):
     """Believe me, you will find this useful."""
     if await bt_e.get_reply_message() and bt_e.is_group:
         await bt_e.edit(
@@ -1511,7 +1511,7 @@ async def bluetext(bt_e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"f (.*)"))
-async def payf(event):
+async def _(event):
     paytext = event.pattern_match.group(1)
     pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
         paytext * 8,
@@ -1531,7 +1531,7 @@ async def payf(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"lfy (.*)"))
-async def let_me_google_that_for_you(lmgtfy_q):
+async def _(lmgtfy_q):
     textx = await lmgtfy_q.get_reply_message()
     qry = lmgtfy_q.pattern_match.group(1)
     if qry:
@@ -1549,7 +1549,7 @@ async def let_me_google_that_for_you(lmgtfy_q):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"-_-$"))
-async def emo(sigh):
+async def _(sigh):
     """Ok..."""
     okay = "-_-"
     for i in range(10):
@@ -1558,7 +1558,7 @@ async def emo(sigh):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"sayhi$"))
-async def sayhi(e):
+async def _(e):
     await e.edit(
         "\n💰💰💰💰💰💰💰💰💰💰💰💰"
         "\n💰🔷💰💰💰🔷💰💰🔷🔷🔷💰"
@@ -1615,7 +1615,7 @@ async def _(event):
 
 
 @bot.on(man_cmd(pattern=r"type(?: |$)(.*)", outgoing=True))
-async def typewriter(typew):
+async def _(typew):
     """Just a small command to make your keyboard become a typewriter!"""
     textx = await typew.get_reply_message()
     message = typew.pattern_match.group(1)
@@ -1640,7 +1640,7 @@ async def typewriter(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"f (.*)"))
-async def payf(event):
+async def _(event):
     paytext = event.pattern_match.group(1)
     pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
         paytext * 8,
@@ -1660,7 +1660,7 @@ async def payf(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"fail$"))
-async def fail(e):
+async def _(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
             "`\n▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ `"
@@ -1671,7 +1671,7 @@ async def fail(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"lol$"))
-async def lol(e):
+async def _(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
             "`\n╱┏┓╱╱╱╭━━━╮┏┓╱╱╱╱ `"
@@ -1682,7 +1682,7 @@ async def lol(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"rock$"))
-async def lol(e):
+async def _(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
             "`\n┈╭╮┈┈┈┈┈┈┈┈┈┈┈┈ `"
@@ -1696,7 +1696,7 @@ async def lol(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"lool$"))
-async def lool(e):
+async def _(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
             "`\n╭╭━━━╮╮┈┈┈┈┈┈┈┈┈┈\n┈┃╭━━╯┈┈┈┈▕╲▂▂╱▏┈\n┈┃┃╱▔▔▔▔▔▔▔▏╱▋▋╮┈`"
@@ -1706,7 +1706,7 @@ async def lool(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"stfu$"))
-async def stfu(e):
+async def _(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
             "`\n██████████████████████████████`"
@@ -1722,7 +1722,7 @@ async def stfu(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"gtfo$"))
-async def gtfo(e):
+async def _(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
             "`\n███████████████████████████████ `"
@@ -1738,7 +1738,7 @@ async def gtfo(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"nih$"))
-async def nih(e):
+async def _(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
             "`\n(\\_/)`"
@@ -1752,7 +1752,7 @@ async def nih(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"fag$"))
-async def gtfo(e):
+async def _(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
             "`\n█████████`"
@@ -1766,21 +1766,176 @@ async def gtfo(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"tai$"))
-async def taco(e):
+async def _(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("\n{\\__/}" "\n(●_●)" "\n( >💩 Mau Tai Ku?")
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"paw$"))
-async def paw(e):
+async def _(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("`(=ↀωↀ=)")
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"tf$"))
-async def tf(e):
+async def _(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("(̿▀̿ ̿Ĺ̯̿̿▀̿ ̿)̄  ")
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"gey$"))
+async def _(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit(
+            "`\n┈┈┈╭━━━━━╮┈┈┈┈┈\n┈┈┈┃┊┊┊┊┊┃┈┈┈┈┈`"
+            "`\n┈┈┈┃┊┊╭━╮┻╮┈┈┈┈\n┈┈┈╱╲┊┃▋┃▋┃┈┈┈┈\n┈┈╭┻┊┊╰━┻━╮┈┈┈┈`"
+            "`\n┈┈╰┳┊╭━━━┳╯┈┈┈┈\n┈┈┈┃┊┃╰━━┫┈Lu Bau Hehe`"
+            "\n┈┈┈┈┈┈┏━┓┈┈┈┈┈┈"
+        )
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"gay$"))
+async def _(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit(
+            "`\n┈┈┈╭━━━━━╮┈┈┈┈┈\n┈┈┈┃┊┊┊┊┊┃┈┈┈┈┈`"
+            "`\n┈┈┈┃┊┊╭━╮┻╮┈┈┈┈\n┈┈┈╱╲┊┃▋┃▋┃┈┈┈┈\n┈┈╭┻┊┊╰━┻━╮┈┈┈┈`"
+            "`\n┈┈╰┳┊╭━━━┳╯┈┈┈┈\n┈┈┈┃┊┃╰━━┫┈ANDA GAY`"
+            "\n┈┈┈┈┈┈┏━┓┈┈┈┈┈┈"
+        )
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"bot$"))
+async def _(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit(
+            "` \n   ╲╲╭━━━━╮ \n╭╮┃▆┈┈▆┃╭╮ \n┃╰┫▽▽▽┣╯┃ \n╰━┫△△△┣━╯`"
+            "`\n╲╲┃┈┈┈┈┃  \n╲╲┃┈┏┓┈┃ `"
+        )
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"hey$"))
+async def hey(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit(
+            "\n┈┈┈╱▔▔▔▔╲┈╭━━━━━\n┈┈▕▂▂▂▂▂▂▏┃HEY!┊😀`"
+            "`\n┈┈▕▔▇▔▔┳▔▏╰┳╮HEY!┊\n┈┈▕╭━╰╯━╮▏━╯╰━━━\n╱▔▔▏▅▅▅▅▕▔▔╲┈┈┈┈`"
+            "`\n▏┈┈╲▂▂▂▂╱┈┈┈▏┈┈┈`"
+        )
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"nou$"))
+async def _(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit(
+            "`\n┈╭╮╭╮\n┈┃┃┃┃\n╭┻┗┻┗╮`"
+            "`\n┃┈▋┈▋┃\n┃┈╭▋━╮━╮\n┃┈┈╭╰╯╰╯╮`"
+            "`\n┫┈┈  NoU\n┃┈╰╰━━━━╯`"
+            "`\n┗━━┻━┛`"
+        )
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"iwi(?: |$)(.*)"))
+async def _(siwis):
+    """IwI"""
+    textx = await siwis.get_reply_message()
+    message = siwis.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
+    else:
+        await siwis.edit("` Anda Harus Memberikan Teks Ke IwI  `")
+        return
+
+    reply_text = sub(r"(a|i|u|e|o)", "i", message)
+    reply_text = sub(r"(A|I|U|E|O)", "I", reply_text)
+    reply_text = sub(r"\!+", " " + choice(IWIS), reply_text)
+    reply_text += " " + choice(IWIS)
+    await siwis.edit(reply_text)
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"koc$"))
+async def _(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit("8✊===D")
+        await e.edit("8=✊==D")
+        await e.edit("8==✊=D")
+        await e.edit("8===✊D")
+        await e.edit("8==✊=D")
+        await e.edit("8=✊==D")
+        await e.edit("8✊===D")
+        await e.edit("8=✊==D")
+        await e.edit("8==✊=D")
+        await e.edit("8===✊D")
+        await e.edit("8==✊=D")
+        await e.edit("8=✊==D")
+        await e.edit("8✊===D")
+        await e.edit("8=✊==D")
+        await e.edit("8==✊=D")
+        await e.edit("8===✊D")
+        await e.edit("8==✊=D")
+        await e.edit("8=✊==D")
+        await e.edit("8===✊D💦")
+        await e.edit("8==✊=D💦💦")
+        await e.edit("8=✊==D💦💦💦")
+        await e.edit("8✊===D💦💦💦💦")
+        await e.edit("8===✊D💦💦💦💦💦")
+        await e.edit("8==✊=D💦💦💦💦💦💦")
+        await e.edit("8=✊==D💦💦💦💦💦💦💦")
+        await e.edit("8✊===D💦💦💦💦💦💦💦💦")
+        await e.edit("8===✊D💦💦💦💦💦💦💦💦💦")
+        await e.edit("8==✊=D💦💦💦💦💦💦💦💦💦💦")
+        await e.edit("8=✊==D Lah Kok Habis?")
+        await e.edit("😭😭😭😭")
+
+
+@bot.on(man_cmd(outgoing=True, pattern=".gas$"))
+async def _(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit("___________________🚑")
+        await e.edit("________________🚑___")
+        await e.edit("______________🚑_____")
+        await e.edit("___________🚑________")
+        await e.edit("________🚑___________")
+        await e.edit("_____🚑______________")
+        await e.edit("__🚑_________________")
+        await e.edit("🚑___________________")
+        await e.edit("_____________________")
+        await e.edit(choice(FACEREACTS))
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"shg$"))
+async def _(shg):
+    r"""¯\_(ツ)_/¯"""
+    await shg.edit(choice(SHGS))
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"(?:penis|dick)\s?(.)?"))
+async def _(e):
+    emoji = e.pattern_match.group(1)
+    titid = GAMBAR_TITIT
+    if emoji:
+        titid = titid.replace("😋", emoji)
+    await e.edit(titid)
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"(?:kontol)\s?(.)?"))
+async def _(e):
+    emoji = e.pattern_match.group(1)
+    kontl = GAMBAR_KONTL
+    if emoji:
+        kontl = kontl.replace("😂", emoji)
+    await e.edit(kontl)
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"skull$"))
+async def _(e):
+    emoji = e.pattern_match.group(1)
+    tengkorak = GAMBAR_TENGKORAK
+    if emoji:
+        tengkorak = tengkorak.replace("😂", emoji)
+    await e.edit(tengkorak)
 
 
 CMD_HELP.update(
