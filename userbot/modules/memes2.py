@@ -1,8 +1,7 @@
 from random import choice
-from re import sub
 
 from userbot import bot
-from userbot.events import man_cmd, register
+from userbot.events import man_cmd
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"gey$"))
