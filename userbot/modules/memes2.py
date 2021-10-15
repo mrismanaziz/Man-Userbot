@@ -6,7 +6,6 @@ from userbot.events import man_cmd
 
 @bot.on(man_cmd(outgoing=True, pattern=r"gey$"))
 async def gey(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
             "`\n┈┈┈╭━━━━━╮┈┈┈┈┈\n┈┈┈┃┊┊┊┊┊┃┈┈┈┈┈`"
             "`\n┈┈┈┃┊┊╭━╮┻╮┈┈┈┈\n┈┈┈╱╲┊┃▋┃▋┃┈┈┈┈\n┈┈╭┻┊┊╰━┻━╮┈┈┈┈`"
@@ -17,7 +16,6 @@ async def gey(e):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"gay$"))
 async def gey(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
             "`\n┈┈┈╭━━━━━╮┈┈┈┈┈\n┈┈┈┃┊┊┊┊┊┃┈┈┈┈┈`"
             "`\n┈┈┈┃┊┊╭━╮┻╮┈┈┈┈\n┈┈┈╱╲┊┃▋┃▋┃┈┈┈┈\n┈┈╭┻┊┊╰━┻━╮┈┈┈┈`"
@@ -28,7 +26,6 @@ async def gey(e):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"bot$"))
 async def bot(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(
             "` \n   ╲╲╭━━━━╮ \n╭╮┃▆┈┈▆┃╭╮ \n┃╰┫▽▽▽┣╯┃ \n╰━┫△△△┣━╯`"
             "`\n╲╲┃┈┈┈┈┃  \n╲╲┃┈┏┓┈┃ `"
@@ -37,7 +34,6 @@ async def bot(e):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"koc$"))
 async def koc(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("8✊===D")
         await e.edit("8=✊==D")
         await e.edit("8==✊=D")
@@ -72,7 +68,6 @@ async def koc(e):
 
 @bot.on(man_cmd(outgoing=True, pattern="gas$"))
 async def gas(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("___________________🚑")
         await e.edit("________________🚑___")
         await e.edit("______________🚑_____")
