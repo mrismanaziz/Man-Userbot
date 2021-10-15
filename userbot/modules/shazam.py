@@ -4,11 +4,12 @@
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.shazam(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"shazam(?: |$)(.*)"))
 async def _(event):
     if not event.reply_to_msg_id:
         return await event.edit("**Mohon balas ke pesan audio**")
@@ -46,8 +47,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "shazam": "**Plugin : **`shazam`\
-        \n\n  •  **Syntax :** `.shazam` <reply ke voice/audio>\
+        "shazam": f"**Plugin : **`shazam`\
+        \n\n  •  **Syntax :** `{cmd}shazam` <reply ke voice/audio>\
         \n  •  **Function : **Untuk mencari Judul lagu dengan menggunakan file audio via @auddbot \
     "
     }

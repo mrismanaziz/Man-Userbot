@@ -32,8 +32,10 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_display_name
 
-from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID, CMD_HELP, DEVS
-from userbot.events import register
+from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, DEVS, bot
+from userbot.events import man_cmd, register
 from userbot.utils import _format, edit_delete, edit_or_reply
 
 # =================== CONSTANT ===================
@@ -79,7 +81,7 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 # ================================================
 
 
-@register(outgoing=True, pattern=r"^\.setgpic( -s| -d)$")
+@bot.on(man_cmd(outgoing=True, pattern="setgpic( -s| -d)$"))
 async def set_group_photo(event):
     "For changing Group dp"
     flag = (event.pattern_match.group(1)).strip()
@@ -124,7 +126,7 @@ async def set_group_photo(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.promote(?:\s|$)([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"promote(?:\s|$)([\s\S]*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cpromote(?:\s|$)([\s\S]*)")
 async def promote(event):
     new_rights = ChatAdminRights(
@@ -156,7 +158,7 @@ async def promote(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.demote(?:\s|$)([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"demote(?:\s|$)([\s\S]*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cdemote(?:\s|$)([\s\S]*)")
 async def demote(event):
     "To demote a person in group"
@@ -187,7 +189,7 @@ async def demote(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.ban(?:\s|$)([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ban(?:\s|$)([\s\S]*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cban(?:\s|$)([\s\S]*)")
 async def ban(bon):
     # Here laying the sanity check
@@ -247,7 +249,7 @@ async def ban(bon):
         )
 
 
-@register(outgoing=True, pattern=r"^\.unban(?:\s|$)([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"unban(?:\s|$)([\s\S]*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cunban(?:\s|$)([\s\S]*)")
 async def nothanos(unbon):
     # Here laying the sanity check
@@ -284,7 +286,7 @@ async def nothanos(unbon):
         await unbon.edit("`Sepertinya Terjadi Kesalahan!`")
 
 
-@register(outgoing=True, pattern=r"^\.mute(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern="mute(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cmute(?: |$)(.*)")
 async def spider(spdr):
     # Check if the function running under SQL mode
@@ -354,7 +356,7 @@ async def spider(spdr):
         return await spdr.edit("**Terjadi Kesalahan!**")
 
 
-@register(outgoing=True, pattern=r"^\.unmute(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern="unmute(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cunmute(?: |$)(.*)")
 async def unmoot(unmot):
     # Admin or creator check
@@ -398,7 +400,7 @@ async def unmoot(unmot):
         )
 
 
-@register(incoming=True)
+@bot.on(man_cmd(incoming=True))
 async def muter(moot):
     try:
         from userbot.modules.sql_helper.gmute_sql import is_gmuted
@@ -429,7 +431,7 @@ async def muter(moot):
             await moot.delete()
 
 
-@register(outgoing=True, pattern=r"^\.ungmute(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern="ungmute(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cungmute(?: |$)(.*)")
 async def ungmoot(un_gmute):
     # Admin or creator check
@@ -472,7 +474,7 @@ async def ungmoot(un_gmute):
             )
 
 
-@register(outgoing=True, pattern=r"^\.gmute(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern="gmute(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cgmute(?: |$)(.*)")
 async def gspider(gspdr):
     # Admin or creator check
@@ -531,7 +533,7 @@ async def gspider(gspdr):
             )
 
 
-@register(outgoing=True, pattern=r"^\.zombies(?: |$)(.*)", groups_only=False)
+@bot.on(man_cmd(outgoing=True, pattern="zombies(?: |$)(.*)"))
 async def rm_deletedacc(show):
 
     con = show.pattern_match.group(1).lower()
@@ -600,7 +602,7 @@ async def rm_deletedacc(show):
         )
 
 
-@register(outgoing=True, pattern=r"^\.admins$")
+@bot.on(man_cmd(outgoing=True, pattern="admins$"))
 async def get_admin(show):
     info = await show.client.get_entity(show.chat_id)
     title = info.title or "Grup Ini"
@@ -619,7 +621,7 @@ async def get_admin(show):
     await show.edit(mentions, parse_mode="html")
 
 
-@register(outgoing=True, groups_only=True, pattern=r"^\.pin( loud|$)")
+@bot.on(man_cmd(outgoing=True, pattern="pin( loud|$)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cpin( loud|$)")
 async def pin(event):
     to_pin = event.reply_to_msg_id
@@ -644,7 +646,7 @@ async def pin(event):
         )
 
 
-@register(outgoing=True, groups_only=True, pattern=r"^\.unpin( all|$)")
+@bot.on(man_cmd(outgoing=True, pattern="unpin( all|$)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cunpin( all|$)")
 async def pin(event):
     to_unpin = event.reply_to_msg_id
@@ -680,7 +682,7 @@ async def pin(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.kick(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern="kick(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.ckick(?: |$)(.*)")
 async def kick(usr):
     # Admin or creator check
@@ -724,7 +726,7 @@ async def kick(usr):
         )
 
 
-@register(outgoing=True, groups_only=True, pattern=r"^\.undlt( -u)?(?: |$)(\d*)?")
+@bot.on(man_cmd(outgoing=True, pattern=r"undlt( -u)?(?: |$)(\d*)?"))
 async def _iundlt(event):
     catevent = await edit_or_reply(event, "`Searching recent actions...`")
     flag = event.pattern_match.group(1)
@@ -913,25 +915,25 @@ def media_type(message):
 
 CMD_HELP.update(
     {
-        "admin": "**Plugin : **`admin`\
-        \n\n  •  **Syntax :** `.promote <username/reply> <nama title (optional)>`\
+        "admin": f"**Plugin : **`admin`\
+        \n\n  •  **Syntax :** `{cmd}promote <username/reply> <nama title (optional)>`\
         \n  •  **Function : **Mempromosikan member sebagai admin.\
-        \n\n  •  **Syntax :** `.demote <username/balas ke pesan>`\
+        \n\n  •  **Syntax :** `{cmd}demote <username/balas ke pesan>`\
         \n  •  **Function : **Menurunkan admin sebagai member.\
-        \n\n  •  **Syntax :** `.ban <username/balas ke pesan> <alasan (optional)>`\
+        \n\n  •  **Syntax :** `{cmd}ban <username/balas ke pesan> <alasan (optional)>`\
         \n  •  **Function : **Membanned Pengguna dari grup.\
-        \n\n  •  **Syntax :** `.unban <username/reply>`\
+        \n\n  •  **Syntax :** `{cmd}unban <username/reply>`\
         \n  •  **Function : **Unbanned pengguna jadi bisa join grup lagi.\
-        \n\n  •  **Syntax :** `.mute <username/reply> <alasan (optional)>`\
+        \n\n  •  **Syntax :** `{cmd}mute <username/reply> <alasan (optional)>`\
         \n  •  **Function : **Membisukan Seseorang Di Grup, Bisa Ke Admin Juga.\
-        \n\n  •  **Syntax :** `.unmute <username/reply>`\
+        \n\n  •  **Syntax :** `{cmd}unmute <username/reply>`\
         \n  •  **Function : **Membuka bisu orang yang dibisukan.\
         \n  •  **Function : ** Membuka global mute orang yang dibisukan.\
-        \n\n  •  **Syntax :** `.all`\
+        \n\n  •  **Syntax :** `{cmd}all`\
         \n  •  **Function : **Tag semua member dalam grup.\
-        \n\n  •  **Syntax :** `.admins`\
+        \n\n  •  **Syntax :** `{cmd}admins`\
         \n  •  **Function : **Melihat daftar admin di grup.\
-        \n\n  •  **Syntax :** `.setgpic <flags> <balas ke gambar>`\
+        \n\n  •  **Syntax :** `{cmd}setgpic <flags> <balas ke gambar>`\
         \n  •  **Function : **Untuk mengubah foto profil grup atau menghapus gambar foto profil grup.\
         \n  •  **Flags :** `-s` = **Untuk mengubah foto grup** atau `-d` = **Untuk menghapus foto grup**\
     "
@@ -941,14 +943,14 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "pin": "**Plugin : **`pin`\
-        \n\n  •  **Syntax :** `.pin` <reply chat>\
+        "pin": f"**Plugin : **`pin`\
+        \n\n  •  **Syntax :** `{cmd}pin` <reply chat>\
         \n  •  **Function : **Untuk menyematkan pesan dalam grup.\
-        \n\n  •  **Syntax :** `.pin loud` <reply chat>\
+        \n\n  •  **Syntax :** `{cmd}pin loud` <reply chat>\
         \n  •  **Function : **Untuk menyematkan pesan dalam grup (tanpa notifikasi) / menyematkan secara diam diam.\
-        \n\n  •  **Syntax :** `.unpin` <reply chat>\
+        \n\n  •  **Syntax :** `{cmd}unpin` <reply chat>\
         \n  •  **Function : **Untuk melepaskan pin pesan dalam grup.\
-        \n\n  •  **Syntax :** `.unpin all`\
+        \n\n  •  **Syntax :** `{cmd}unpin all`\
         \n  •  **Function : **Untuk melepaskan semua sematan pesan dalam grup.\
     "
     }
@@ -957,10 +959,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "undelete": "**Plugin : **`undelete`\
-        \n\n  •  **Syntax :** `.undlt` <jumlah chat>\
+        "undelete": f"**Plugin : **`undelete`\
+        \n\n  •  **Syntax :** `{cmd}undlt` <jumlah chat>\
         \n  •  **Function : **Untuk mendapatkan pesan yang dihapus baru-baru ini di grup\
-        \n\n  •  **Syntax :** `.undlt -u` <jumlah chat>\
+        \n\n  •  **Syntax :** `{cmd}undlt -u` <jumlah chat>\
         \n  •  **Function : **Untuk mendapatkan pesan media yang dihapus baru-baru ini di grup \
         \n  •  **Flags :** `-u` = **Gunakan flags ini untuk mengunggah media.**\
         \n\n  •  **NOTE : Membutuhkan Hak admin Grup** \
@@ -971,10 +973,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "gmute": "**Plugin : **`gmute`\
-        \n\n  •  **Syntax :** `.gmute` <username/reply> <alasan (optional)>\
+        "gmute": f"**Plugin : **`gmute`\
+        \n\n  •  **Syntax :** `{cmd}gmute` <username/reply> <alasan (optional)>\
         \n  •  **Function : **Untuk Membisukan Pengguna di semua grup yang kamu admin.\
-        \n\n  •  **Syntax :** `.ungmute` <username/reply>\
+        \n\n  •  **Syntax :** `{cmd}ungmute` <username/reply>\
         \n  •  **Function : **Untuk Membuka global mute Pengguna di semua grup yang kamu admin.\
     "
     }
@@ -983,10 +985,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "zombies": "**Plugin : **`zombies`\
-        \n\n  •  **Syntax :** `.zombies`\
+        "zombies": f"**Plugin : **`zombies`\
+        \n\n  •  **Syntax :** `{cmd}zombies`\
         \n  •  **Function : **Untuk mencari akun terhapus dalam grup\
-        \n\n  •  **Syntax :** `.zombies clean`\
+        \n\n  •  **Syntax :** `{cmd}zombies clean`\
         \n  •  **Function : **untuk menghapus Akun Terhapus dari grup.\
     "
     }

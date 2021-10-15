@@ -3,11 +3,12 @@
 
 import requests
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.asupan$")
+@bot.on(man_cmd(outgoing=True, pattern="asupan$"))
 async def _(event):
     try:
         response = requests.get("https://api-tede.herokuapp.com/api/asupan/ptl").json()
@@ -17,7 +18,7 @@ async def _(event):
         await event.edit("**Tidak bisa menemukan video asupan.**")
 
 
-@register(outgoing=True, pattern=r"^\.wibu$")
+@bot.on(man_cmd(outgoing=True, pattern="wibu$"))
 async def _(event):
     try:
         response = requests.get("https://api-tede.herokuapp.com/api/asupan/wibu").json()
@@ -27,7 +28,7 @@ async def _(event):
         await event.edit("**Tidak bisa menemukan video wibu.**")
 
 
-@register(outgoing=True, pattern=r"^\.chika$")
+@bot.on(man_cmd(outgoing=True, pattern="chika$"))
 async def _(event):
     try:
         response = requests.get("https://api-tede.herokuapp.com/api/chika").json()
@@ -39,12 +40,12 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "asupan": "**Plugin : **`asupan`\
-        \n\n  •  **Syntax :** `.asupan`\
+        "asupan": f"**Plugin : **`asupan`\
+        \n\n  •  **Syntax :** `{cmd}asupan`\
         \n  •  **Function : **Untuk Mengirim video asupan secara random.\
-        \n\n  •  **Syntax :** `.wibu`\
+        \n\n  •  **Syntax :** `{cmd}wibu`\
         \n  •  **Function : **Untuk Mengirim video wibu secara random.\
-        \n\n  •  **Syntax :** `.chika`\
+        \n\n  •  **Syntax :** `{cmd}chika`\
         \n  •  **Function : **Untuk Mengirim video chikakiku secara random.\
     "
     }

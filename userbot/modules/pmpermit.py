@@ -12,18 +12,10 @@ from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.tl.types import User
 
-from userbot import (
-    ALIVE_NAME,
-    BOTLOG,
-    BOTLOG_CHATID,
-    CMD_HELP,
-    COUNT_PM,
-    LASTMSG,
-    LOGS,
-    PM_AUTO_BAN,
-    PM_LIMIT,
-)
-from userbot.events import register
+from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, COUNT_PM, LASTMSG, LOGS, PM_AUTO_BAN, PM_LIMIT, bot
+from userbot.events import man_cmd, register
 
 # ========================= CONSTANTS ============================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
@@ -173,7 +165,7 @@ async def auto_accept(event):
                     )
 
 
-@register(outgoing=True, pattern=r"^\.notifoff$")
+@bot.on(man_cmd(outgoing=True, pattern=r"notifoff$"))
 async def notifoff(noff_event):
     """For .notifoff command, stop getting notifications from unapproved PMs."""
     try:
@@ -186,7 +178,7 @@ async def notifoff(noff_event):
     )
 
 
-@register(outgoing=True, pattern=r"^\.notifon$")
+@bot.on(man_cmd(outgoing=True, pattern=r"notifon$"))
 async def notifon(non_event):
     """For .notifoff command, get notifications from unapproved PMs."""
     try:
@@ -199,7 +191,7 @@ async def notifon(non_event):
     )
 
 
-@register(outgoing=True, pattern=r"^\.(?:setuju|ok)\s?(.)?")
+@bot.on(man_cmd(outgoing=True, pattern=r"(?:setuju|ok)\s?(.)?"))
 async def approvepm(apprvpm):
     """For .ok command, give someone the permissions to PM you."""
     try:
@@ -262,7 +254,7 @@ async def approvepm(apprvpm):
         )
 
 
-@register(outgoing=True, pattern=r"^\.(?:tolak|nopm)\s?(.)?")
+@bot.on(man_cmd(outgoing=True, pattern=r"(?:tolak|nopm)\s?(.)?"))
 async def disapprovepm(disapprvpm):
     try:
         from userbot.modules.sql_helper.pm_permit_sql import dissprove
@@ -319,7 +311,7 @@ async def disapprovepm(disapprvpm):
         )
 
 
-@register(outgoing=True, pattern=r"^\.block$")
+@bot.on(man_cmd(outgoing=True, pattern=r"block$"))
 async def blockpm(block):
     """For .block command, block people from PMing you!"""
     if block.reply_to_msg_id:
@@ -353,7 +345,7 @@ async def blockpm(block):
         )
 
 
-@register(outgoing=True, pattern=r"^\.unblock$")
+@bot.on(man_cmd(outgoing=True, pattern=r"unblock$"))
 async def unblockpm(unblock):
     """For .unblock command, let people PMing you again!"""
     if unblock.reply_to_msg_id:
@@ -370,7 +362,7 @@ async def unblockpm(unblock):
         )
 
 
-@register(outgoing=True, pattern=r"^\.(set|get|reset) pmpermit(?: |$)(\w*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"(set|get|reset) pmpermit(?: |$)(\w*)"))
 async def add_pmsg(cust_msg):
     """Set your own Unapproved message"""
     if not PM_AUTO_BAN:
@@ -436,24 +428,24 @@ async def add_pmsg(cust_msg):
 
 CMD_HELP.update(
     {
-        "pmpermit": "**Plugin : **`pmpermit`\
-        \n\n  •  **Syntax :** `.setuju` atau `.ok`\
+        "pmpermit": f"**Plugin : **`pmpermit`\
+        \n\n  •  **Syntax :** `{cmd}setuju` atau `{cmd}ok`\
         \n  •  **Function : **Menerima pesan seseorang dengan cara balas pesannya atau tag dan juga untuk dilakukan di pm.\
-        \n\n  •  **Syntax :** `.tolak` atau `.nopm`\
+        \n\n  •  **Syntax :** `{cmd}tolak` atau `{cmd}nopm`\
         \n  •  **Function : **Menolak pesan seseorang dengan cara balas pesannya atau tag dan juga untuk dilakukan di pm.\
-        \n\n  •  **Syntax :** `.block`\
+        \n\n  •  **Syntax :** `{cmd}block`\
         \n  •  **Function : **Memblokir Orang Di PM.\
-        \n\n  •  **Syntax :** `.unblock`\
+        \n\n  •  **Syntax :** `{cmd}unblock`\
         \n  •  **Function : **Membuka Blokir.\
-        \n\n  •  **Syntax :** `.notifoff`\
+        \n\n  •  **Syntax :** `{cmd}notifoff`\
         \n  •  **Function : **Menghidupkan notifikasi pesan yang belum diterima.\
-        \n\n  •  **Syntax :** `.notifon`\
+        \n\n  •  **Syntax :** `{cmd}notifon`\
         \n  •  **Function : **Menghidupkan notifikasi pesan yang belum diterima.\
-        \n\n  •  **Syntax :** `.set pmpermit` <balas ke pesan>\
+        \n\n  •  **Syntax :** `{cmd}set pmpermit` <balas ke pesan>\
         \n  •  **Function : **Menyetel Pesan Pribadimu untuk orang yang pesannya belum diterima.\
-        \n\n  •  **Syntax :** `.get pmpermit`\
+        \n\n  •  **Syntax :** `{cmd}get pmpermit`\
         \n  •  **Function : **Mendapatkan Custom pesan PM mu.\
-        \n\n  •  **Syntax :** `.reset pmpermit`\
+        \n\n  •  **Syntax :** `{cmd}reset pmpermit`\
         \n  •  **Function : **Menghapus pesan PM ke default.\
         \n\n  •  **Pesan Pribadi yang belum diterima saat ini tidak dapat disetel ke teks format kaya bold, underline, link, dll. Pesan akan terkirim normal saja**\
         \n\n**NOTE: Bila ingin Mengaktifkan PMPERMIT Silahkan Ketik:** `.set var PM_AUTO_BAN True`\

@@ -1,11 +1,12 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.nmap(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"nmap(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -28,7 +29,7 @@ async def _(event):
             await event.client.delete_messages(response.message.message)
 
 
-@register(outgoing=True, pattern=r"^\.subd(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"subd(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -51,7 +52,7 @@ async def _(event):
             await event.client.delete_messages(response.message.message)
 
 
-@register(outgoing=True, pattern=r"^\.cek(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"cek(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -74,7 +75,7 @@ async def _(event):
             await event.client.delete_messages(httpheader, response.message.message)
 
 
-@register(outgoing=True, pattern=r"^\.bin(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"bin(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -97,7 +98,7 @@ async def _(event):
             await event.client.delete_messages(response.message.message)
 
 
-@register(outgoing=True, pattern=r"^\.cc(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"cc(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -122,16 +123,16 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "phreaker": "**Plugin : **`phreaker`\
-        \n\n  •  **Syntax :** `.nmap` <bug hosts>\
+        "phreaker": f"**Plugin : **`phreaker`\
+        \n\n  •  **Syntax :** `{cmd}nmap` <bug hosts>\
         \n  •  **Function : **Untuk mendapatkan info bug / host.\
-        \n\n  •  **Syntax :** `.subd` <bug hosts>\
+        \n\n  •  **Syntax :** `{cmd}subd` <bug hosts>\
         \n  •  **Function : **Untuk mendapatkan bug / host subdomain.\
-        \n\n  •  **Syntax :** `.cek <bug hosts>\
+        \n\n  •  **Syntax :** `{cmd}cek <bug hosts>\
         \n  •  **Function : **Untuk cek respons bug / host.\
-        \n\n  •  **Syntax :** `.bin <bin number>\
+        \n\n  •  **Syntax :** `{cmd}bin <bin number>\
         \n  •  **Function : **untuk cek bin ip.\
-        \n\n  •  **Syntax :** `.cc <mm|yy|cvv>\
+        \n\n  •  **Syntax :** `{cmd}cc <mm|yy|cvv>\
         \n  •  **Function : **untuk cek Statistik Kartu Kredit.\
     "
     }

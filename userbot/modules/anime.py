@@ -25,8 +25,9 @@ from telethon.tl.types import (
 )
 from telethon.utils import is_image, is_video
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 jikan = Jikan()
 
@@ -234,7 +235,7 @@ async def formatJSON(outData):
     return msg
 
 
-@register(outgoing=True, pattern=r"^\.anilist ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"anilist ?(.*)"))
 async def anilist(event):
     if event.fwd_from:
         return
@@ -244,7 +245,7 @@ async def anilist(event):
     await event.edit(msg, link_preview=True)
 
 
-@register(outgoing=True, pattern=r"^\.anime ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"anime ?(.*)"))
 async def search_anime(message):
     search_query = message.pattern_match.group(1)
     await message.get_reply_message()
@@ -265,7 +266,7 @@ async def search_anime(message):
         )
 
 
-@register(outgoing=True, pattern=r"^\.manga ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"manga ?(.*)"))
 async def search_manga(message):
     search_query = message.pattern_match.group(1)
     await message.get_reply_message()
@@ -280,7 +281,7 @@ async def search_manga(message):
     )
 
 
-@register(outgoing=True, pattern=r"^\.a(kaizoku|kayo) ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern="a(kaizoku|kayo) ?(.*)"))
 async def site_search(event):
     message = await event.get_reply_message()
     search_query = event.pattern_match.group(2)
@@ -329,7 +330,7 @@ async def site_search(event):
             await event.edit(result, parse_mode="HTML")
 
 
-@register(outgoing=True, pattern=r"^\.char ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"char ?(.*)"))
 async def character(event):
     message = await event.get_reply_message()
     search_query = event.pattern_match.group(1)
@@ -379,7 +380,7 @@ async def character(event):
     )
 
 
-@register(outgoing=True, pattern=r"^\.upcoming$")
+@bot.on(man_cmd(outgoing=True, pattern="upcoming$"))
 async def upcoming(message):
     rep = "<b>Upcoming anime</b>\n"
     later = jikan.season_later()
@@ -393,7 +394,7 @@ async def upcoming(message):
         await message.edit(rep, parse_mode="html")
 
 
-@register(outgoing=True, pattern=r"^\.whatanime$")
+@bot.on(man_cmd(outgoing=True, pattern="whatanime$"))
 async def whatanime(e):
     media = e.media
     if not media:
@@ -473,24 +474,24 @@ def is_gif(file):
 
 CMD_HELP.update(
     {
-        "anime": "**Plugin : **`anime`\
-        \n\n  •  **Syntax :** `.anilist` **<nama anime>**\
+        "anime": f"**Plugin : **`anime`\
+        \n\n  •  **Syntax :** `{cmd}anilist` **<nama anime>**\
         \n  •  **Function : **Mencari informasi anime dari anilist\
-        \n\n  •  **Syntax :** `.anime` **<nama anime>**\
+        \n\n  •  **Syntax :** `{cmd}anime` **<nama anime>**\
         \n  •  **Function : **Mencari infomasi anime.\
-        \n\n  •  **Syntax :** `.manga` **<manga name>**\
+        \n\n  •  **Syntax :** `{cmd}manga` **<manga name>**\
         \n  •  **Function : **Menari informasi manga.\
-        \n\n  •  **Syntax :** `.akaizoku` atau `.akayo` **<nama anime>**\
+        \n\n  •  **Syntax :** `{cmd}akaizoku` atau `.akayo` **<nama anime>**\
         \n  •  **Function : **Mencari anime dan memberikan link tautan Unduh Anime.\
-        \n\n  •  **Syntax :** `.char` **<nama character anime>**\
+        \n\n  •  **Syntax :** `{cmd}char` **<nama character anime>**\
         \n  •  **Function : **Mencari informasi karakter anime.\
-        \n\n  •  **Syntax :** `.upcoming`\
+        \n\n  •  **Syntax :** `{cmd}upcoming`\
         \n  •  **Function : **Mencari informasi Anime yang akan datang.\
-        \n\n  •  **Syntax :** `.scanime` **<nama anime>** atau `.sanime` **<nama anime>**\
+        \n\n  •  **Syntax :** `{cmd}scanime` **<nama anime>** atau `.sanime` **<nama anime>**\
         \n  •  **Function : **Mencari anime\
-        \n\n  •  **Syntax :** `.smanga` **<manga>**\
+        \n\n  •  **Syntax :** `{cmd}smanga` **<manga>**\
         \n  •  **Function : **Untuk mencari akun terhapus dalam grup\
-        \n\n  •  **Syntax :** `.whatanime` **<Reply Gambar scene Anime.>**\
+        \n\n  •  **Syntax :** `{cmd}whatanime` **<Reply Gambar scene Anime.>**\
         \n  •  **Function : **Temukan anime dari file media.\
     "
     }

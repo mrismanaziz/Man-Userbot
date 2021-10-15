@@ -16,8 +16,9 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 from userbot.utils import googleimagesdownload
 
 opener = urllib.request.build_opener()
@@ -29,7 +30,7 @@ useragent = (
 opener.addheaders = [("User-agent", useragent)]
 
 
-@register(outgoing=True, pattern=r"^\.reverse(?: |$)(\d*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"reverse(?: |$)(\d*)"))
 async def okgoogle(img):
     """For .reverse command, Google search images and stickers."""
     if os.path.isfile("okgoogle.png"):
@@ -157,8 +158,8 @@ async def ParseSauce(googleurl):
 
 CMD_HELP.update(
     {
-        "reverse": "**Plugin : **`reverse`\
-        \n\n  •  **Syntax :** `.reverse` <jumlah>\
+        "reverse": f"**Plugin : **`reverse`\
+        \n\n  •  **Syntax :** `{cmd}reverse` <jumlah>\
         \n  •  **Function : **Balas gambar/stiker untuk melakukan pencarian terbalik di google/\
         \n\n  •  **NOTE :** Hasil Reverse dapat ditentukan, defaultnya adalah 3. Jika penghitung adalah 0, hanya info dan tautan yang akan diberikan. Bot mungkin saja gagal mengunggah gambar jika hasil yang di minta terlalu banyak.\
     "

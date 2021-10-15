@@ -7,12 +7,13 @@ import asyncio
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 from userbot.utils import _format, edit_delete, edit_or_reply
 
 
-@register(outgoing=True, pattern=r"^\.sg(u)?(?:\s|$)([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"sg(u)?(?:\s|$)([\s\S]*)"))
 async def _(event):
     "To get name/username history."
     input_str = "".join(event.text.split(maxsplit=1)[1:])
@@ -137,10 +138,10 @@ async def sangamata_seperator(sanga_list):
 
 CMD_HELP.update(
     {
-        "sangmata": "**Plugin : **`sangmata`\
-        \n\n  •  **Syntax :** `.sg` <sambil reply chat>\
+        "sangmata": f"**Plugin : **`sangmata`\
+        \n\n  •  **Syntax :** `{cmd}sg` <sambil reply chat>\
         \n  •  **Function : **Mendapatkan Riwayat Nama Pengguna selama di telegram.\
-        \n\n  •  **Syntax :** `.sgu` <sambil reply chat>\
+        \n\n  •  **Syntax :** `{cmd}sgu` <sambil reply chat>\
         \n  •  **Function : **Mendapatkan Riwayat Username Pengguna selama di telegram.\
     "
     }

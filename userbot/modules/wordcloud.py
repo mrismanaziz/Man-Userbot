@@ -14,11 +14,12 @@ from scipy.ndimage import gaussian_gradient_magnitude
 from telethon.tl.types import DocumentAttributeFilename
 from wordcloud import ImageColorGenerator, WordCloud
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.(wc)$")
+@bot.on(man_cmd(outgoing=True, pattern=r"(wc)$"))
 async def _(event):
     if not event.reply_to_msg_id:
         await event.edit("`Mohon Balas Ke Media Apapun`")
@@ -94,8 +95,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "wordcloud": "**Plugin : **`wordcloud`\
-        \n\n  •  **Syntax :** `.wc`\
+        "wordcloud": f"**Plugin : **`wordcloud`\
+        \n\n  •  **Syntax :** `{cmd}wc`\
         \n  •  **Function : **membuat seni wordcloud dari media.\
     "
     }

@@ -7,11 +7,13 @@
 
 from asyncio import sleep
 
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP
-from userbot.events import register
+from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd, register
 
 
-@register(outgoing=True, pattern=r"^\.notes$")
+@bot.on(man_cmd(outgoing=True, pattern=r".notes$"))
 async def notes_active(svd):
     """For .notes command, list all of the notes saved in a chat."""
     try:
@@ -27,7 +29,7 @@ async def notes_active(svd):
     await svd.edit(message)
 
 
-@register(outgoing=True, pattern=r"^\.clear (\w*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"clear (\w*)"))
 async def remove_notes(clr):
     """For .clear command, clear note with the given name."""
     try:
@@ -43,7 +45,7 @@ async def remove_notes(clr):
         return await clr.edit("**Berhasil Menghapus Catatan:** `{}`".format(notename))
 
 
-@register(outgoing=True, pattern=r"^\.save (\w*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"save (\w*)"))
 async def add_note(fltr):
     """For .save command, saves notes in a chat."""
     try:
@@ -112,7 +114,7 @@ async def incom_note(getnt):
         pass
 
 
-@register(outgoing=True, pattern=r"^\.rmbotnotes (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"rmbotnotes (.*)"))
 async def kick_marie_notes(kick):
     """ For .rmbotnotes command, allows you to kick all \
         Marie(or her clones) notes from a chat. """
@@ -139,16 +141,16 @@ async def kick_marie_notes(kick):
 
 CMD_HELP.update(
     {
-        "notes": "**Plugin : **`Notes`\
+        "notes": f"**Plugin : **`Notes`\
         \n\n  •  **Syntax :** `#<notename>`\
         \n  •  **Function : **Mendapat catatan yang ditentukan.\
-        \n\n  •  **Syntax :** `.save` <notename> <notedata> atau balas pesan dengan .save <notename>\
+        \n\n  •  **Syntax :** `{cmd}save` <notename> <notedata> atau balas pesan dengan .save <notename>\
         \n  •  **Function : **Menyimpan pesan yang dibalas sebagai catatan dengan notename. (Bekerja dengan foto, dokumen, dan stiker juga!).\
-        \n\n  •  **Syntax :** `.notes`\
+        \n\n  •  **Syntax :** `{cmd}notes`\
         \n  •  **Function : **Mendapat semua catatan yang disimpan dalam obrolan \
-        \n\n  •  **Syntax :** `.clear` <notename>\
+        \n\n  •  **Syntax :** `{cmd}clear` <notename>\
         \n  •  **Function : **Menghapus catatan yang ditentukan. \
-        \n\n  •  **Syntax :** `.rmbotnotes` <marie / rose>\
+        \n\n  •  **Syntax :** `{cmd}rmbotnotes` <marie / rose>\
         \n  •  **Function : **Menghapus semua catatan bot admin (Saat ini didukung: Marie, Rose, dan klonnya.) Dalam obrolan.\
     "
     }

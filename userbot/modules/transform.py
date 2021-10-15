@@ -11,13 +11,14 @@ from hachoir.parser import createParser
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from telethon.tl.types import DocumentAttributeFilename
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 bground = "black"
 
 
-@register(outgoing=True, pattern=r"^\.(ascii|asciis)$")
+@bot.on(man_cmd(outgoing=True, pattern=r"(ascii|asciis)$"))
 async def ascii(event):
     if not event.reply_to_msg_id:
         await event.edit("`Reply to Any media..`")
@@ -126,7 +127,7 @@ async def random_color():
     ]
 
 
-@register(outgoing=True, pattern=r"^\.asciibg(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"asciibg(?: |$)(.*)"))
 async def _(event):
     BG = event.pattern_match.group(1)
     if BG.isnumeric():
@@ -142,7 +143,7 @@ async def _(event):
 Converted = TEMP_DOWNLOAD_DIRECTORY + "sticker.webp"
 
 
-@register(outgoing=True, pattern=r"^\.(mirror|flip|ghost|bw|poster)$")
+@bot.on(man_cmd(outgoing=True, pattern=r"(mirror|flip|ghost|bw|poster)$"))
 async def transform(event):
     if not event.reply_to_msg_id:
         await event.edit("`Reply to Any media..`")
@@ -209,7 +210,7 @@ async def transform(event):
         return
 
 
-@register(outgoing=True, pattern=r"^\.rotate(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"rotate(?: |$)(.*)"))
 async def rotate(event):
     if not event.reply_to_msg_id:
         await event.edit("`Reply to any media..`")
@@ -271,26 +272,26 @@ async def rotate(event):
 
 CMD_HELP.update(
     {
-        "transform": "**Plugin : **`transform`\
-        \n\n  •  **Syntax :** `.ghost`\
+        "transform": f"**Plugin : **`transform`\
+        \n\n  •  **Syntax :** `{cmd}ghost`\
         \n  •  **Function : **Enchance your image to become a ghost!.\
-        \n\n  •  **Syntax :** `.ascii`\
+        \n\n  •  **Syntax :** `{cmd}ascii`\
         \n  •  **Function : **Buat seni ascii dari media.\
-        \n\n  •  **Syntax :** `.asciis`\
+        \n\n  •  **Syntax :** `{cmd}asciis`\
         \n  •  **Function : **Sama tetapi hasil unggah sebagai stiker.\
-        \n\n  •  **Syntax :** `.asciibg <color>`\
+        \n\n  •  **Syntax :** `{cmd}asciibg <color>`\
         \n  •  **Function : **Sekarang untuk menggunakan modul ASCII ubah dulu warna latar belakang.\
-        \n\n  •  **Syntax :** `.flip`\
+        \n\n  •  **Syntax :** `{cmd}flip`\
         \n  •  **Function : **Untuk membalikan gambar Anda.\
-        \n\n  •  **Syntax :** `.mirror`\
+        \n\n  •  **Syntax :** `{cmd}mirror`\
         \n  •  **Function : **To mirror your image.\
-        \n\n  •  **Syntax :** `.bw`\
+        \n\n  •  **Syntax :** `{cmd}bw`\
         \n  •  **Function : **Untuk mengubah gambar berwarna Anda menjadi gambar b / w.\
-        \n\n  •  **Syntax :** `.poster`\
+        \n\n  •  **Syntax :** `{cmd}poster`\
         \n  •  **Function : **Untuk mem-poster gambar Anda.\
-        \n\n  •  **Syntax :** `.rotate` <value>\
+        \n\n  •  **Syntax :** `{cmd}rotate` <value>\
         \n  •  **Function : **Untuk mem-poster gambar Anda.\
-        \n\n  •  **Syntax :** `.poster`\
+        \n\n  •  **Syntax :** `{cmd}poster`\
         \n  •  **Function : **Untuk memutar gambar anda **Nilainya berkisar 1-360 jika tidak akan memberikan nilai default yaitu 90**\
     "
     }

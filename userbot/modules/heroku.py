@@ -10,8 +10,10 @@ import os
 import aiohttp
 import heroku3
 
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME
-from userbot.events import register
+from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, bot
+from userbot.events import man_cmd
 
 heroku_api = "https://api.heroku.com"
 if HEROKU_APP_NAME is not None and HEROKU_API_KEY is not None:
@@ -27,7 +29,7 @@ else:
 """
 
 
-@register(outgoing=True, pattern=r"^\.(get|del) var(?: |$)(\w*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"(get|del) var(?: |$)(\w*)"))
 async def variable(var):
     exe = var.pattern_match.group(1)
     if app is None:
@@ -87,7 +89,7 @@ async def variable(var):
             return True
 
 
-@register(outgoing=True, pattern=r"^\.set var (\w*) ([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"set var (\w*) ([\s\S]*)"))
 async def set_var(var):
     if app is None:
         return await var.edit(
@@ -122,7 +124,7 @@ async def set_var(var):
 """
 
 
-@register(outgoing=True, pattern=r"^\.usage(?: |$)")
+@bot.on(man_cmd(outgoing=True, pattern=r"usage(?: |$)"))
 async def dyno_usage(dyno):
     if app is None:
         return await dyno.edit(
@@ -191,7 +193,7 @@ async def dyno_usage(dyno):
             return True
 
 
-@register(outgoing=True, pattern=r"^\.logs")
+@bot.on(man_cmd(outgoing=True, pattern=r"logs"))
 async def _(dyno):
     if app is None:
         return await dyno.edit(
@@ -212,16 +214,16 @@ async def _(dyno):
 
 CMD_HELP.update(
     {
-        "heroku": "**Plugin : **`heroku`\
-        \n\n  •  **Syntax :** `.usage`\
+        "heroku": f"**Plugin : **`heroku`\
+        \n\n  •  **Syntax :** `{cmd}usage`\
         \n  •  **Function : **Check Kouta Dyno Heroku\
-        \n\n  •  **Syntax :** `.set var <nama var> <value>`\
+        \n\n  •  **Syntax :** `{cmd}set var <nama var> <value>`\
         \n  •  **Function : **Tambahkan Variabel Baru Atau Memperbarui Variabel\n Setelah Menyetel Variabel Man-Userbot Akan Di Restart.\
-        \n\n  •  **Syntax :** `.get var or .get var <nama var>`\
+        \n\n  •  **Syntax :** `{cmd}get var or .get var <nama var>`\
         \n  •  **Function : **Dapatkan Variabel Yang Ada,Harap Gunakan Di Grup Private Anda! Ini Untuk Mengembalikan Informasi Heroku Pribadi Anda.\
-        \n\n  •  **Syntax :** `.del var <nama var>`\
+        \n\n  •  **Syntax :** `{cmd}del var <nama var>`\
         \n  •  **Function : **Untuk Menghapus var heroku\
-        \n\n  •  **Syntax :** `.usange`\
+        \n\n  •  **Syntax :** `{cmd}usange`\
         \n  •  **Function : **Fake Check Kouta Dyno Heroku jadi 9989jam Untuk menipu temanmu wkwk\
     "
     }

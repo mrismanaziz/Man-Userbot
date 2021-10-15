@@ -15,8 +15,10 @@ from telethon.tl.functions.messages import ImportChatInviteRequest
 from telethon.tl.types import Channel, ChatBannedRights, MessageEntityMentionName
 
 import userbot.modules.sql_helper.gban_sql as gban_sql
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, DEVS, bot
-from userbot.events import register
+from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, DEVS, bot
+from userbot.events import man_cmd, register
 from userbot.utils import edit_delete, edit_or_reply
 
 BANNED_RIGHTS = ChatBannedRights(
@@ -102,7 +104,7 @@ async def get_user_from_event(event, uevent=None, secondgroup=None):
     return user_obj, extra
 
 
-@register(outgoing=True, pattern=r"^\.gban(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"gban(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cgban(?: |$)(.*)")
 async def gban(event):
     if event.fwd_from:
@@ -191,7 +193,7 @@ async def gban(event):
             pass
 
 
-@register(outgoing=True, pattern=r"^\.ungban(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ungban(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cungban(?: |$)(.*)")
 async def ungban(event):
     if event.fwd_from:
@@ -263,7 +265,7 @@ async def ungban(event):
             )
 
 
-@register(outgoing=True, pattern=r"^\.listgban$")
+@bot.on(man_cmd(outgoing=True, pattern=r"listgban$"))
 async def gablist(event):
     if event.fwd_from:
         return
@@ -309,12 +311,12 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "gban": "**Plugin : **`gban`\
-        \n\n  •  **Syntax :** `.gban` <username/id>\
+        "gban": f"**Plugin : **`gban`\
+        \n\n  •  **Syntax :** `{cmd}gban` <username/id>\
         \n  •  **Function : **Melakukan Banned Secara Global Ke Semua Grup Dimana anda Sebagai Admin.\
-        \n\n  •  **Syntax :** `.ungban` <username/id>\
+        \n\n  •  **Syntax :** `{cmd}ungban` <username/id>\
         \n  •  **Function : **Membatalkan Global Banned\
-        \n\n  •  **Syntax :** `.listgban`\
+        \n\n  •  **Syntax :** `{cmd}listgban`\
         \n  •  **Function : **Menampilkan List Global Banned\
     "
     }

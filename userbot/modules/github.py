@@ -9,8 +9,9 @@ import aiohttp
 import requests
 from pySmartDL import SmartDL
 
-from userbot import CMD_HELP, DEVS
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, DEVS, bot
+from userbot.events import man_cmd
 from userbot.utils import edit_delete, edit_or_reply
 
 
@@ -26,7 +27,7 @@ async def reply_id(event):
 ppath = os.path.join(os.getcwd(), "temp", "githubuser.jpg")
 
 
-@register(outgoing=True, pattern=r"^\.github( -l(\d+))? ([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"github( -l(\d+))? ([\s\S]*)"))
 async def _(event):
     "Get info about an GitHub User"
     reply_to = await reply_id(event)
@@ -85,8 +86,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "github": "**Plugin : **`github`\
-        \n\n  •  **Syntax :** `.github` <username>\
+        "github": f"**Plugin : **`github`\
+        \n\n  •  **Syntax :** `{cmd}github` <username>\
         \n  •  **Function : **Menampilkan informasi tentang user di GitHub dari username yang diberikan\
     "
     }

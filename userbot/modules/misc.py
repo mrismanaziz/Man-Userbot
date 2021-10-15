@@ -17,7 +17,6 @@ import re
 import sys
 import urllib
 from os import environ, execle
-from random import randint
 from time import sleep
 
 import requests
@@ -25,18 +24,10 @@ from bs4 import BeautifulSoup
 from heroku3 import from_key
 from PIL import Image
 
-from userbot import (
-    ALIVE_NAME,
-    BOT_VER,
-    BOTLOG,
-    BOTLOG_CHATID,
-    CMD_HELP,
-    HEROKU_API_KEY,
-    HEROKU_APP_NAME,
-    UPSTREAM_REPO_BRANCH,
-    bot,
-)
-from userbot.events import register
+from userbot import ALIVE_NAME, BOT_VER, BOTLOG, BOTLOG_CHATID
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, UPSTREAM_REPO_BRANCH, bot
+from userbot.events import man_cmd
 from userbot.utils import time_formatter
 
 # ================= CONSTANT =================
@@ -49,22 +40,7 @@ useragent = "Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) 
 opener.addheaders = [("User-agent", useragent)]
 
 
-@register(outgoing=True, pattern=r"^\.random")
-async def randomise(items):
-    """For .random command, get a random item from the list of items."""
-    itemo = (items.text[8:]).split()
-    if len(itemo) < 2:
-        await items.edit(
-            "`2 atau lebih banyak item diperlukan! Periksa .help random untuk info lebih lanjut.`"
-        )
-        return
-    index = randint(1, len(itemo) - 1)
-    await items.edit(
-        "**Query: **\n`" + items.text[8:] + "`\n**Output: **\n`" + itemo[index] + "`"
-    )
-
-
-@register(outgoing=True, pattern=r"^\.sleep ([0-9]+)$")
+@bot.on(man_cmd(outgoing=True, pattern=r"sleep ([0-9]+)$"))
 async def sleepybot(time):
     """For .sleep command, let the userbot snooze for a few second."""
     counter = int(time.pattern_match.group(1))
@@ -79,7 +55,7 @@ async def sleepybot(time):
     await time.edit("**Oke, saya sudah bangun sekarang.**")
 
 
-@register(outgoing=True, pattern=r"^\.shutdown$")
+@bot.on(man_cmd(outgoing=True, pattern=r"shutdown$"))
 async def killdabot(event):
     if event.fwd_from:
         return
@@ -96,7 +72,7 @@ async def killdabot(event):
         sys.exit(0)
 
 
-@register(outgoing=True, pattern=r"^\.restart$")
+@bot.on(man_cmd(outgoing=True, pattern=r"restart$"))
 async def killdabot(event):
     await event.edit("**Man-Userbot Berhasil di Restart**")
     if BOTLOG:
@@ -108,7 +84,7 @@ async def killdabot(event):
     execle(sys.executable, *args, environ)
 
 
-@register(outgoing=True, pattern=r"^\.readme$")
+@bot.on(man_cmd(outgoing=True, pattern=r"readme$"))
 async def reedme(e):
     await e.edit(
         "**Berikut sesuatu untuk kamu baca:**\n"
@@ -120,7 +96,7 @@ async def reedme(e):
     )
 
 
-@register(outgoing=True, pattern=r"^\.repeat (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"repeat (.*)"))
 async def repeat(rep):
     cnt, txt = rep.pattern_match.group(1).split(" ", 1)
     replyCount = int(cnt)
@@ -134,7 +110,7 @@ async def repeat(rep):
     await rep.edit(replyText)
 
 
-@register(outgoing=True, pattern=r"^\.repo$")
+@bot.on(man_cmd(outgoing=True, pattern=r"repo$"))
 async def repo_is_here(wannasee):
     """For .repo command, just returns the repo URL."""
     await wannasee.edit(
@@ -148,7 +124,7 @@ async def repo_is_here(wannasee):
     )
 
 
-@register(outgoing=True, pattern=r"^\.string$")
+@bot.on(man_cmd(outgoing=True, pattern=r"string$"))
 async def repo_is_here(wannasee):
     """For .repo command, just returns the repo URL."""
     await wannasee.edit(
@@ -156,7 +132,7 @@ async def repo_is_here(wannasee):
     )
 
 
-@register(outgoing=True, pattern=r"^\.raw$")
+@bot.on(man_cmd(outgoing=True, pattern=r"raw$"))
 async def raw(event):
     the_real_message = None
     reply_to_id = None
@@ -180,7 +156,7 @@ async def raw(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.reverse(?: |$)(\d*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"reverse(?: |$)(\d*)"))
 async def okgoogle(img):
     """For .reverse command, Google search images and stickers."""
     if os.path.isfile("okgoogle.png"):
@@ -293,7 +269,7 @@ async def scam(results, lim):
     return imglinks
 
 
-@register(outgoing=True, pattern=r"^\.send (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"send (.*)"))
 async def send(event):
     await event.edit("**Berhasil Mengirim pesan ini**")
 
@@ -319,8 +295,8 @@ async def send(event):
 
 CMD_HELP.update(
     {
-        "send": "**Plugin : **`send`\
-        \n\n  •  **Syntax :** `.send` <username/id>\
+        "send": f"**Plugin : **`send`\
+        \n\n  •  **Syntax :** `{cmd}send` <username/id>\
         \n  •  **Function : **Meneruskan pesan balasan ke obrolan tertentu tanpa tag Forwarded from. Bisa mengirim ke Group Chat atau ke Personal Message\
     "
     }
@@ -328,8 +304,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "random": "**Plugin : **`random`\
-        \n\n  •  **Syntax :** `.random`\
+        "random": f"**Plugin : **`random`\
+        \n\n  •  **Syntax :** `{cmd}random`\
         \n  •  **Function : **Dapatkan item acak dari daftar item. \
     "
     }
@@ -337,8 +313,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "sleep": "**Plugin : **`sleep`\
-        \n\n  •  **Syntax :** `.sleep`\
+        "sleep": f"**Plugin : **`sleep`\
+        \n\n  •  **Syntax :** `{cmd}sleep`\
         \n  •  **Function : **Biarkan Man-Userbot tidur selama beberapa detik \
     "
     }
@@ -347,10 +323,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "repo": "**Plugin : **`Repository Man-Userbot`\
-        \n\n  •  **Syntax :** `.repo`\
+        "repo": f"**Plugin : **`Repository Man-Userbot`\
+        \n\n  •  **Syntax :** `{cmd}repo`\
         \n  •  **Function : **Menampilan link Repository Man-Userbot\
-        \n\n  •  **Syntax :** `.string`\
+        \n\n  •  **Syntax :** `{cmd}string`\
         \n  •  **Function : **Menampilan link String Man-Userbot\
     "
     }
@@ -359,8 +335,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "readme": "**Plugin : **`Panduan Menggunakan userbot`\
-        \n\n  •  **Syntax :** `.readme`\
+        "readme": f"**Plugin : **`Panduan Menggunakan userbot`\
+        \n\n  •  **Syntax :** `{cmd}readme`\
         \n  •  **Function : **Menyediakan tautan untuk mengatur userbot dan modulnya\
     "
     }
@@ -369,8 +345,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "restart": "**Plugin : **`Restart Man-Userbot`\
-        \n\n  •  **Syntax :** `.restart`\
+        "restart": f"**Plugin : **`Restart Man-Userbot`\
+        \n\n  •  **Syntax :** `{cmd}restart`\
         \n  •  **Function : **Untuk Merestart userbot.\
     "
     }
@@ -379,8 +355,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "shutdown": "**Plugin : **`shutdown`\
-        \n\n  •  **Syntax :** `.shutdown`\
+        "shutdown": f"**Plugin : **`shutdown`\
+        \n\n  •  **Syntax :** `{cmd}shutdown`\
         \n  •  **Function : **Mematikan Userbot.\
     "
     }
@@ -389,8 +365,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "raw": "**Plugin : **`raw`\
-        \n\n  •  **Syntax :** `.raw`\
+        "raw": f"**Plugin : **`raw`\
+        \n\n  •  **Syntax :** `{cmd}raw`\
         \n  •  **Function : **Dapatkan data berformat seperti JSON terperinci tentang pesan yang dibalas.\
     "
     }
@@ -399,8 +375,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "repeat": "**Plugin : **`repeat`\
-        \n\n  •  **Syntax :** `.repeat`\
+        "repeat": f"**Plugin : **`repeat`\
+        \n\n  •  **Syntax :** `{cmd}repeat`\
         \n  •  **Function : **Mengulangi teks untuk beberapa kali. Jangan bingung ini dengan spam tho.\
     "
     }

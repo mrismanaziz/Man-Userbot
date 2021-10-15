@@ -1,11 +1,12 @@
 # @mrismanaziz
 # t.me/sharinguserbot
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.frog(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"frog(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -27,7 +28,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.dfrog(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"dfrog(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -49,7 +50,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.strump(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"strump(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -71,7 +72,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.scina(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"scina(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -94,7 +95,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.wlcm(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"wlcm(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -111,7 +112,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.gta(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"gta(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -129,7 +130,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.sthink(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"sthink(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -153,20 +154,20 @@ async def typewriter(typew):
 
 CMD_HELP.update(
     {
-        "arts": "**Plugin : **`arts`\
-        \n\n  •  **Syntax :** `.frog`\
+        "arts": f"**Plugin : **`arts`\
+        \n\n  •  **Syntax :** `{cmd}frog`\
         \n  •  **Function : **arts Forg.\
-        \n\n  •  **Syntax :** `.dfrog`\
+        \n\n  •  **Syntax :** `{cmd}dfrog`\
         \n  •  **Function : **arts forg bundir.\
-        \n\n  •  **Syntax :** `.strump`\
+        \n\n  •  **Syntax :** `{cmd}strump`\
         \n  •  **Function : **arts donald Trump.\
-        \n\n  •  **Syntax :** `.scina`\
+        \n\n  •  **Syntax :** `{cmd}scina`\
         \n  •  **Function : **arts presiden cina.\
-        \n\n  •  **Syntax :** `.wlcm`\
+        \n\n  •  **Syntax :** `{cmd}wlcm`\
         \n  •  **Function : **arts beruang welcome.\
-        \n\n  •  **Syntax :** `.gta`\
+        \n\n  •  **Syntax :** `{cmd}gta`\
         \n  •  **Function : **arts si jhonson.\
-        \n\n  •  **Syntax :** `.sthink`\
+        \n\n  •  **Syntax :** `{cmd}sthink`\
         \n  •  **Function : **arts berfikir\
     "
     }

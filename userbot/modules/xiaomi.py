@@ -3,11 +3,12 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.firmware(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"firmware(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -29,7 +30,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern=r"^\.fastboot(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"fastboot(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -51,7 +52,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern=r"^\.recovery(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"recovery(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -73,7 +74,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern=r"^\.pb(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"pb(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -95,7 +96,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern=r"^\.of(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"of(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -117,7 +118,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern=r"^\.eu(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"eu(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -139,7 +140,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern=r"^\.vendor(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"vendor(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -161,7 +162,7 @@ async def _(event):
             await bot.forward_messages(event.chat_id, response.message)
 
 
-@register(outgoing=True, pattern=r"^\.specs(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"specs(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -185,22 +186,22 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "xiaomi": "**Plugin : **`xiaomi`\
-        \n\n  •  **Syntax :** `firmware` (codename)\
+        "xiaomi": f"**Plugin : **`xiaomi`\
+        \n\n  •  **Syntax :** `{cmd}firmware` (codename)\
         \n  •  **Function : **Get lastest Firmware.\
-        \n\n  •  **Syntax :** `.pb` (codename)\
+        \n\n  •  **Syntax :** `{cmd}pb` (codename)\
         \n  •  **Function : **Get latest PitchBlack Recovery.\
-        \n\n  •  **Syntax :** `.specs` (codename)\
+        \n\n  •  **Syntax :** `{cmd}specs` (codename)\
         \n  •  **Function : **Get quick spec information about device.\
-        \n\n  •  **Syntax :** `.fastboot` (codename)\
+        \n\n  •  **Syntax :** `{cmd}fastboot` (codename)\
         \n  •  **Function : **Get latest fastboot MIUI.\
-        \n\n  •  **Syntax :** `.recovery` (codename)\
+        \n\n  •  **Syntax :** `{cmd}recovery` (codename)\
         \n  •  **Function : **Get latest recovery MIUI.\
-        \n\n  •  **Syntax :** `.eu` (codename)\
+        \n\n  •  **Syntax :** `{cmd}eu` (codename)\
         \n  •  **Function : **Get latest xiaomi.eu rom.\
-        \n\n  •  **Syntax :** `.vendor` (codename)\
+        \n\n  •  **Syntax :** `{cmd}vendor` (codename)\
         \n  •  **Function : **fetches latest vendor.\
-        \n\n  •  **Syntax :** `.of` (codename)\
+        \n\n  •  **Syntax :** `{cmd}of` (codename)\
         \n  •  **Function : **Get latest ORangeFox Recovery.\
     "
     }

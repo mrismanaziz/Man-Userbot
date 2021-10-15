@@ -6,8 +6,9 @@ from googletrans import Translator
 from telethon import events
 from telethon.tl.types import User
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, LOGS, bot
-from userbot.events import register
+from userbot.events import man_cmd
 from userbot.utils import edit_or_reply
 
 translator = Translator()
@@ -47,7 +48,7 @@ async def chat_bot_toggle(db, event):
         await edit_or_reply(event, "**Usage:** `.chatbot` <on/off>")
 
 
-@register(outgoing=True, pattern=r"^\.chatbot(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"chatbot(?: |$)(.*)"))
 async def on_apa_off(event):
     await chat_bot_toggle(aktifnya_chat_bot, event)
 
@@ -73,8 +74,8 @@ async def tede_chatbot(event):
 
 CMD_HELP.update(
     {
-        "chatbot": "**Plugin : **`chatbot`\
-      \n\n  •  **Syntax :** `.chatbot` <on/off>\
+        "chatbot": f"**Plugin : **`chatbot`\
+      \n\n  •  **Syntax :** `{cmd}chatbot` <on/off>\
       \n  •  **Function :** Untuk membalas chat dengan chatbot AI.\
       "
     }

@@ -10,11 +10,12 @@ import io
 import re
 
 import userbot.modules.sql_helper.blacklist_sql as sql
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(incoming=True, disable_edited=True, disable_errors=True)
+@bot.on(man_cmd(incoming=True))
 async def on_new_message(event):
     # TODO: exempt admins from locks
     name = event.raw_text
@@ -34,7 +35,7 @@ async def on_new_message(event):
             break
 
 
-@register(outgoing=True, pattern=r"^\.addbl(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"addbl(?: |$)(.*)"))
 async def on_add_black_list(addbl):
     text = addbl.pattern_match.group(1)
     to_blacklist = list(
@@ -48,7 +49,7 @@ async def on_add_black_list(addbl):
     )
 
 
-@register(outgoing=True, pattern=r"^\.listbl(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"listbl(?: |$)(.*)"))
 async def on_view_blacklist(listbl):
     all_blacklisted = sql.get_chat_blacklist(listbl.chat_id)
     OUT_STR = "Blacklists in the Current Chat:\n"
@@ -56,7 +57,7 @@ async def on_view_blacklist(listbl):
         for trigger in all_blacklisted:
             OUT_STR += f"`{trigger}`\n"
     else:
-        OUT_STR = "`Tidak Ada Blacklist Dalam Obrolan Ini.`"
+        OUT_STR = "**Tidak Ada Blacklist Dalam Obrolan Ini.**"
     if len(OUT_STR) > 4096:
         with io.BytesIO(str.encode(OUT_STR)) as out_file:
             out_file.name = "blacklist.text"
@@ -73,7 +74,7 @@ async def on_view_blacklist(listbl):
         await listbl.edit(OUT_STR)
 
 
-@register(outgoing=True, pattern=r"^\.rmbl(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"rmbl(?: |$)(.*)"))
 async def on_delete_blacklist(rmbl):
     text = rmbl.pattern_match.group(1)
     to_unblacklist = list(
@@ -93,12 +94,12 @@ async def on_delete_blacklist(rmbl):
 
 CMD_HELP.update(
     {
-        "blacklist": "**Plugin : **`blacklist`\
-        \n\n  •  **Syntax :** `.listbl`\
+        "blacklist": f"**Plugin : **`blacklist`\
+        \n\n  •  **Syntax :** `{cmd}listbl`\
         \n  •  **Function : **Melihat daftar blacklist yang aktif di obrolan.\
-        \n\n  •  **Syntax :** `.addbl` <kata>\
+        \n\n  •  **Syntax :** `{cmd}addbl` <kata>\
         \n  •  **Function : **Memasukan pesan ke blacklist 'kata blacklist'.\
-        \n\n  •  **Syntax :** `.rmbl` <kata>\
+        \n\n  •  **Syntax :** `{cmd}rmbl` <kata>\
         \n  •  **Function : **Menghapus kata blacklist.\
     "
     }

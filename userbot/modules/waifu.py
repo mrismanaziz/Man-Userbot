@@ -8,8 +8,9 @@ from asyncio import sleep
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 EMOJI_PATTERN = re.compile(
     "["
@@ -33,7 +34,7 @@ def deEmojify(inputString: str) -> str:
     return re.sub(EMOJI_PATTERN, "", inputString)
 
 
-@register(outgoing=True, pattern=r"^\.waifu(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"waifu(?: |$)(.*)"))
 async def waifu(animu):
     # """Generate random waifu sticker with the text!"""
 
@@ -64,7 +65,7 @@ async def waifu(animu):
     await animu.delete()
 
 
-@register(outgoing=True, pattern=r"^\.hz(:? |$)(.*)?")
+@bot.on(man_cmd(outgoing=True, pattern=r"hz(:? |$)(.*)?"))
 async def _(hazmat):
     await hazmat.edit("`Sending information...`")
     level = hazmat.pattern_match.group(2)
@@ -127,10 +128,10 @@ async def _(hazmat):
 
 CMD_HELP.update(
     {
-        "waifu": "**Plugin : **`waifu`\
-        \n\n  •  **Syntax :** `.waifu <text>`\
+        "waifu": f"**Plugin : **`waifu`\
+        \n\n  •  **Syntax :** `{cmd}waifu <text>`\
         \n  •  **Function : **Untuk Mengcuston sticer anime dengan text yg di tentukan.\
-        \n\n  •  **Syntax :** `.hz` or `.hz [flip, x2, rotate (degree), background (number), black]`\
+        \n\n  •  **Syntax :** `{cmd}hz` or `{cmd}hz [flip, x2, rotate (degree), background (number), black]`\
         \n  •  **Function : **Reply ke image / sticker yang sesuai!\
     "
     }

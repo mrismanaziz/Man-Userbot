@@ -11,13 +11,14 @@ from hachoir.parser import createParser
 from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import DocumentAttributeFilename
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 bground = "black"
 
 
-@register(outgoing=True, pattern=r"^\.(ascii|asciis)$")
+@bot.on(man_cmd(outgoing=True, pattern=r"(ascii|asciis)$"))
 async def ascii(event):
     if not event.reply_to_msg_id:
         await event.edit("**Mohon Balas Ke Media..**")
@@ -120,7 +121,7 @@ async def random_color():
     ]
 
 
-@register(outgoing=True, pattern=r"^\.asciibg(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern="asciibg(?: |$)(.*)"))
 async def _(event):
     BG = event.pattern_match.group(1)
     if BG.isnumeric():
@@ -135,12 +136,12 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "ascii": "**Plugin : **`ascii`\
-        \n\n  •  **Syntax :** `.ascii`\
+        "ascii": f"**Plugin : **`ascii`\
+        \n\n  •  **Syntax :** `{cmd}ascii`\
         \n  •  **Function : **Buat Ascii Art Dari Media.\
-        \n\n  •  **Syntax :** `.asciis`\
+        \n\n  •  **Syntax :** `{cmd}asciis`\
         \n  •  **Function : **Sama Tapi Unggah Hasilnya Sebagai Sticker.\
-        \n\n  •  **Syntax :** `.asciibg` <color>\
+        \n\n  •  **Syntax :** `{cmd}asciibg` <color>\
         \n  •  **Function : **Untuk Mengubah Warna Background Dari Modul Ascii Contoh `.asciibg black`.\
     "
     }

@@ -5,11 +5,12 @@
 
 from covid import Covid
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.covid (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"covid (.*)"))
 async def corona(event):
     await event.edit("`Processing...`")
     country = event.pattern_match.group(1)
@@ -31,7 +32,7 @@ async def corona(event):
     await event.edit(f"**Corona Virus Info in {country}:**\n\n{output_text}")
 
 
-@register(outgoing=True, pattern="^.covid$")
+@bot.on(man_cmd(outgoing=True, pattern="covid$"))
 async def corona(event):
     await event.edit("`Processing...`")
     country = "World"
@@ -55,10 +56,10 @@ async def corona(event):
 
 CMD_HELP.update(
     {
-        "covid": "**Plugin : **`covid`\
-        \n\n  •  **Syntax :** `.covid`\
+        "covid": f"**Plugin : **`covid`\
+        \n\n  •  **Syntax :** `{cmd}covid`\
         \n  •  **Function : **Memberikan Informasi semua data COVID-19 dari semua negara.\
-        \n\n  •  **Syntax :** `.covid` <nama negara>\
+        \n\n  •  **Syntax :** `{cmd}covid` <nama negara>\
         \n  •  **Function : **Memberikan Informasi tentang data COVID-19 dari negara.\
     "
     }

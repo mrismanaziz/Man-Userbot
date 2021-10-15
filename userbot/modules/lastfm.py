@@ -20,17 +20,10 @@ from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
-from userbot import (
-    BIO_PREFIX,
-    BOTLOG,
-    BOTLOG_CHATID,
-    CMD_HELP,
-    DEFAULT_BIO,
-    LASTFM_USERNAME,
-    bot,
-    lastfm,
-)
-from userbot.events import register
+from userbot import BIO_PREFIX, BOTLOG, BOTLOG_CHATID
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, DEFAULT_BIO, LASTFM_USERNAME, bot, lastfm
+from userbot.events import man_cmd
 
 # =================== CONSTANT ===================
 LFM_BIO_ENABLED = "**last.fm current music to bio is now enabled.**"
@@ -54,7 +47,7 @@ LastLog = False
 # ================================================
 
 
-@register(outgoing=True, pattern=r"^\.lastfm$")
+@bot.on(man_cmd(outgoing=True, pattern=r"lastfm$"))
 async def last_fm(lastFM):
     """For .lastfm command, fetch scrobble data from last.fm."""
     await lastFM.edit("`Processing...`")
@@ -218,7 +211,7 @@ async def get_curr_track(lfmbio):
     RUNNING = False
 
 
-@register(outgoing=True, pattern=r"^\.lastbio (on|off)")
+@bot.on(man_cmd(outgoing=True, pattern=r"lastbio (on|off)"))
 async def lastbio(lfmbio):
     arg = lfmbio.pattern_match.group(1).lower()
     global LASTFMCHECK
@@ -242,7 +235,7 @@ async def lastbio(lfmbio):
         await lfmbio.edit(LFM_ERR_NO_OPT)
 
 
-@register(outgoing=True, pattern=r"^\.lastlog (on|off)")
+@bot.on(man_cmd(outgoing=True, pattern=r"lastlog (on|off)"))
 async def lastlog(lstlog):
     arg = lstlog.pattern_match.group(1).lower()
     global LastLog
@@ -259,12 +252,12 @@ async def lastlog(lstlog):
 
 CMD_HELP.update(
     {
-        "lastfm": "**Plugin : **`lastfm`\
-        \n\n  •  **Syntax :** `.lastfm`\
+        "lastfm": f"**Plugin : **`lastfm`\
+        \n\n  •  **Syntax :** `{cmd}lastfm`\
         \n  •  **Function : **Menampilkan trek scrobbling saat ini atau scrobble terbaru jika tidak ada yang diputar.\
-        \n\n  •  **Syntax :** `.lastbio` <on/off>\
+        \n\n  •  **Syntax :** `{cmd}lastbio` <on/off>\
         \n  •  **Function : **Mengaktifkan / Menonaktifkan pemutaran last.fm saat ini ke bio.\
-        \n\n  •  **Syntax :** `.lastlog` <on/off>\
+        \n\n  •  **Syntax :** `{cmd}lastlog` <on/off>\
         \n  •  **Function : **Mengaktifkan / Menonaktifkan bio logging last.fm di grup bot-log.\
     "
     }

@@ -1,13 +1,12 @@
 import asyncio
 from time import sleep
 
-from telethon import events
-
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -66,38 +65,36 @@ async def _(event):
             await event.edit(animation_chars[i % 32])
 
 
-@register(outgoing=True, pattern=r"^\.sayang$")
-async def koc(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("I LOVEE YOUUU 💕")
-        await e.edit("💝💘💓💗")
-        await e.edit("💞💕💗💘")
-        await e.edit("💝💘💓💗")
-        await e.edit("💞💕💗💘")
-        await e.edit("💘💞💗💕")
-        await e.edit("💘💞💕💗")
-        await e.edit("SAYANG KAMU 💝💖💘")
-        await e.edit("💝💘💓💗")
-        await e.edit("💞💕💗💘")
-        await e.edit("💘💞💕💗")
-        await e.edit("SAYANG")
-        await e.edit("KAMU")
-        await e.edit("SELAMANYA 💕")
-        await e.edit("💘💘💘💘")
-        await e.edit("SAYANG")
-        await e.edit("KAMU")
-        await e.edit("SAYANG")
-        await e.edit("KAMU")
-        await e.edit("I LOVE YOUUUU")
-        await e.edit("MY BABY")
-        await e.edit("💕💞💘💝")
-        await e.edit("💘💕💞💝")
-        await e.edit("SAYANG KAMU💞")
+@bot.on(man_cmd(outgoing=True, pattern=r"sayang$"))
+async def _(e):
+    await e.edit("I LOVEE YOUUU 💕")
+    await e.edit("💝💘💓💗")
+    await e.edit("💞💕💗💘")
+    await e.edit("💝💘💓💗")
+    await e.edit("💞💕💗💘")
+    await e.edit("💘💞💗💕")
+    await e.edit("💘💞💕💗")
+    await e.edit("SAYANG KAMU 💝💖💘")
+    await e.edit("💝💘💓💗")
+    await e.edit("💞💕💗💘")
+    await e.edit("💘💞💕💗")
+    await e.edit("SAYANG")
+    await e.edit("KAMU")
+    await e.edit("SELAMANYA 💕")
+    await e.edit("💘💘💘💘")
+    await e.edit("SAYANG")
+    await e.edit("KAMU")
+    await e.edit("SAYANG")
+    await e.edit("KAMU")
+    await e.edit("I LOVE YOUUUU")
+    await e.edit("MY BABY")
+    await e.edit("💕💞💘💝")
+    await e.edit("💘💕💞💝")
+    await e.edit("SAYANG KAMU💞")
 
 
-@register(outgoing=True, pattern=r"^\.dino(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"dino(?: |$)(.*)"))
+async def _(typew):
     await typew.edit("`DIN DINNN.....`")
     sleep(1)
     await typew.edit("`DINOOOOSAURUSSSSS!!`")
@@ -153,266 +150,264 @@ async def typewriter(typew):
     await typew.edit("`-TAMAT-`")
 
 
-@register(outgoing=True, pattern=r"^\.gabut$")
-async def koc(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`PERNAAHHHHH KAHHH KAUUU MENGIRA`")
-        await e.edit("`SEPEEERTIIIII APAAAA BENTUKKKKKKK CINTAAAA`")
-        await e.edit("`RAMBUUUT WARNAAA WARNII`")
-        await e.edit("`BAGAI GULALI`")
-        await e.edit("`IMUUUTTTTT LUCUUU`")
-        await e.edit("`WALAAUUUU TAK TERLALU TINGGI`")
-        await e.edit("`GW GABUUTTTT`")
-        await e.edit("`EMMMM BACOTNYA`")
-        await e.edit("`GABUTTTT WOI GABUT`")
-        await e.edit("🙈🙈🙈🙈")
-        await e.edit("🙉🙉🙉🙉")
-        await e.edit("🙈🙈🙈🙈")
-        await e.edit("🙉🙉🙉🙉")
-        await e.edit("`CILUUUKKK BAAAAA`")
-        await e.edit("🙉🙉🙉🙉")
-        await e.edit("🐢                       🚶")
-        await e.edit("🐢                      🚶")
-        await e.edit("🐢                     🚶")
-        await e.edit("🐢                    🚶")
-        await e.edit("🐢                   🚶")
-        await e.edit("🐢                  🚶")
-        await e.edit("🐢                 🚶")
-        await e.edit("🐢                🚶")
-        await e.edit("🐢               🚶")
-        await e.edit("🐢              🚶")
-        await e.edit("🐢             🚶")
-        await e.edit("🐢            🚶")
-        await e.edit("🐢           🚶")
-        await e.edit("🐢          🚶")
-        await e.edit("🐢         🚶")
-        await e.edit("🐢        🚶")
-        await e.edit("🐢       🚶")
-        await e.edit("🐢      🚶")
-        await e.edit("🐢     🚶")
-        await e.edit("🐢    🚶")
-        await e.edit("🐢   🚶")
-        await e.edit("🐢  🚶")
-        await e.edit("🐢 🚶")
-        await e.edit("🐢🚶")
-        await e.edit("🚶🐢")
-        await e.edit("🚶 🐢")
-        await e.edit("🚶  🐢")
-        await e.edit("🚶   🐢")
-        await e.edit("🚶    🐢")
-        await e.edit("🚶     🐢")
-        await e.edit("🚶      🐢")
-        await e.edit("🚶       🐢")
-        await e.edit("🚶        🐢")
-        await e.edit("🚶         🐢")
-        await e.edit("🚶          🐢")
-        await e.edit("🚶           🐢")
-        await e.edit("🚶            🐢")
-        await e.edit("🚶             🐢")
-        await e.edit("🚶              🐢")
-        await e.edit("🚶               🐢")
-        await e.edit("🚶                🐢")
-        await e.edit("🚶                 🐢")
-        await e.edit("🚶                  🐢")
-        await e.edit("🚶                   🐢")
-        await e.edit("🚶                    🐢")
-        await e.edit("🚶                     🐢")
-        await e.edit("🚶                      🐢")
-        await e.edit("🚶                       🐢")
-        await e.edit("🚶                        🐢")
-        await e.edit("🚶                         🐢")
-        await e.edit("🚶                          🐢")
-        await e.edit("🚶                           🐢")
-        await e.edit("🚶                            🐢")
-        await e.edit("🚶                             🐢")
-        await e.edit("🚶                              🐢")
-        await e.edit("🚶                               🐢")
-        await e.edit("🚶                                🐢")
-        await e.edit("🚶                                 🐢")
-        await e.edit("`AHHH MANTAP`")
-        await e.edit("🙉")
-        await e.edit("🙈")
-        await e.edit("🙉")
-        await e.edit("🙈")
-        await e.edit("🙉")
-        await e.edit("😂")
-        await e.edit("🐢                       🚶")
-        await e.edit("🐢                      🚶")
-        await e.edit("🐢                     🚶")
-        await e.edit("🐢                    🚶")
-        await e.edit("🐢                   🚶")
-        await e.edit("🐢                  🚶")
-        await e.edit("🐢                 🚶")
-        await e.edit("🐢                🚶")
-        await e.edit("🐢               🚶")
-        await e.edit("🐢              🚶")
-        await e.edit("🐢             🚶")
-        await e.edit("🐢            🚶")
-        await e.edit("🐢           🚶")
-        await e.edit("🐢          🚶")
-        await e.edit("🐢         🚶")
-        await e.edit("🐢        🚶")
-        await e.edit("🐢       🚶")
-        await e.edit("🐢      🚶")
-        await e.edit("🐢     🚶")
-        await e.edit("🐢    🚶")
-        await e.edit("🐢   🚶")
-        await e.edit("🐢  🚶")
-        await e.edit("🐢 🚶")
-        await e.edit("🐢🚶")
-        await e.edit("🚶🐢")
-        await e.edit("🚶 🐢")
-        await e.edit("🚶  🐢")
-        await e.edit("🚶   🐢")
-        await e.edit("🚶    🐢")
-        await e.edit("🚶     🐢")
-        await e.edit("🚶      🐢")
-        await e.edit("🚶       🐢")
-        await e.edit("🚶        🐢")
-        await e.edit("🚶         🐢")
-        await e.edit("🚶          🐢")
-        await e.edit("🚶           🐢")
-        await e.edit("🚶            🐢")
-        await e.edit("🚶             🐢")
-        await e.edit("🚶              🐢")
-        await e.edit("🚶               🐢")
-        await e.edit("🚶                🐢")
-        await e.edit("🚶                 🐢")
-        await e.edit("🚶                  🐢")
-        await e.edit("🚶                   🐢")
-        await e.edit("🚶                    🐢")
-        await e.edit("🚶                     🐢")
-        await e.edit("🚶                      🐢")
-        await e.edit("🚶                       🐢")
-        await e.edit("🚶                        🐢")
-        await e.edit("🚶                         🐢")
-        await e.edit("🚶                          🐢")
-        await e.edit("🚶                           🐢")
-        await e.edit("🚶                            🐢")
-        await e.edit("🚶                             🐢")
-        await e.edit("🚶                              🐢")
-        await e.edit("🚶                               🐢")
-        await e.edit("🚶                                🐢")
-        await e.edit("🐢                       🚶")
-        await e.edit("🐢                      🚶")
-        await e.edit("🐢                     🚶")
-        await e.edit("🐢                    🚶")
-        await e.edit("🐢                   🚶")
-        await e.edit("🐢                  🚶")
-        await e.edit("🐢                 🚶")
-        await e.edit("🐢                🚶")
-        await e.edit("🐢               🚶")
-        await e.edit("🐢              🚶")
-        await e.edit("🐢             🚶")
-        await e.edit("🐢            🚶")
-        await e.edit("🐢           🚶")
-        await e.edit("🐢          🚶")
-        await e.edit("🐢         🚶")
-        await e.edit("🐢        🚶")
-        await e.edit("🐢       🚶")
-        await e.edit("🐢      🚶")
-        await e.edit("🐢     🚶")
-        await e.edit("🐢    🚶")
-        await e.edit("🐢   🚶")
-        await e.edit("🐢  🚶")
-        await e.edit("🐢 🚶")
-        await e.edit("🐢🚶")
-        await e.edit("🚶🐢")
-        await e.edit("🚶 🐢")
-        await e.edit("🚶  🐢")
-        await e.edit("🚶   🐢")
-        await e.edit("🚶    🐢")
-        await e.edit("🚶     🐢")
-        await e.edit("🚶      🐢")
-        await e.edit("🚶       🐢")
-        await e.edit("🚶        🐢")
-        await e.edit("🚶         🐢")
-        await e.edit("🚶          🐢")
-        await e.edit("🚶           🐢")
-        await e.edit("🚶            🐢")
-        await e.edit("🚶             🐢")
-        await e.edit("🚶              🐢")
-        await e.edit("🚶               🐢")
-        await e.edit("🚶                🐢")
-        await e.edit("🚶                 🐢")
-        await e.edit("🚶                  🐢")
-        await e.edit("🚶                   🐢")
-        await e.edit("🚶                    🐢")
-        await e.edit("🚶                     🐢")
-        await e.edit("🚶                      🐢")
-        await e.edit("🚶                       🐢")
-        await e.edit("🚶                        🐢")
-        await e.edit("🚶                         🐢")
-        await e.edit("🚶                          🐢")
-        await e.edit("🚶                           🐢")
-        await e.edit("🚶                            🐢")
-        await e.edit("🚶                             🐢")
-        await e.edit("🚶                              🐢")
-        await e.edit("🚶                               🐢")
-        await e.edit("🚶                                🐢")
-        await e.edit("🐢                       🚶")
-        await e.edit("🐢                      🚶")
-        await e.edit("🐢                     🚶")
-        await e.edit("🐢                    🚶")
-        await e.edit("🐢                   🚶")
-        await e.edit("🐢                  🚶")
-        await e.edit("🐢                 🚶")
-        await e.edit("🐢                🚶")
-        await e.edit("🐢               🚶")
-        await e.edit("🐢              🚶")
-        await e.edit("🐢             🚶")
-        await e.edit("🐢            🚶")
-        await e.edit("🐢           🚶")
-        await e.edit("🐢          🚶")
-        await e.edit("🐢         🚶")
-        await e.edit("🐢        🚶")
-        await e.edit("🐢       🚶")
-        await e.edit("🐢      🚶")
-        await e.edit("🐢     🚶")
-        await e.edit("🐢    🚶")
-        await e.edit("🐢   🚶")
-        await e.edit("🐢  🚶")
-        await e.edit("🐢 🚶")
-        await e.edit("🐢🚶")
-        await e.edit("🚶🐢")
-        await e.edit("🚶 🐢")
-        await e.edit("🚶  🐢")
-        await e.edit("🚶   🐢")
-        await e.edit("🚶    🐢")
-        await e.edit("🚶     🐢")
-        await e.edit("🚶      🐢")
-        await e.edit("🚶       🐢")
-        await e.edit("🚶        🐢")
-        await e.edit("🚶         🐢")
-        await e.edit("🚶          🐢")
-        await e.edit("🚶           🐢")
-        await e.edit("🚶            🐢")
-        await e.edit("🚶             🐢")
-        await e.edit("🚶              🐢")
-        await e.edit("🚶               🐢")
-        await e.edit("🚶                🐢")
-        await e.edit("🚶                 🐢")
-        await e.edit("🚶                  🐢")
-        await e.edit("🚶                   🐢")
-        await e.edit("🚶                    🐢")
-        await e.edit("🚶                     🐢")
-        await e.edit("🚶                      🐢")
-        await e.edit("🚶                       🐢")
-        await e.edit("🚶                        🐢")
-        await e.edit("🚶                         🐢")
-        await e.edit("🚶                          🐢")
-        await e.edit("🚶                           🐢")
-        await e.edit("🚶                            🐢")
-        await e.edit("🚶                             🐢")
-        await e.edit("🚶                              🐢")
-        await e.edit("🚶                               🐢")
-        await e.edit("🚶                                🐢")
-        await e.edit("`GABUT`")
+@bot.on(man_cmd(outgoing=True, pattern=r"gabut$"))
+async def _(e):
+    await e.edit("`PERNAAHHHHH KAHHH KAUUU MENGIRA`")
+    await e.edit("`SEPEEERTIIIII APAAAA BENTUKKKKKKK CINTAAAA`")
+    await e.edit("`RAMBUUUT WARNAAA WARNII`")
+    await e.edit("`BAGAI GULALI`")
+    await e.edit("`IMUUUTTTTT LUCUUU`")
+    await e.edit("`WALAAUUUU TAK TERLALU TINGGI`")
+    await e.edit("`GW GABUUTTTT`")
+    await e.edit("`EMMMM BACOTNYA`")
+    await e.edit("`GABUTTTT WOI GABUT`")
+    await e.edit("🙈🙈🙈🙈")
+    await e.edit("🙉🙉🙉🙉")
+    await e.edit("🙈🙈🙈🙈")
+    await e.edit("🙉🙉🙉🙉")
+    await e.edit("`CILUUUKKK BAAAAA`")
+    await e.edit("🙉🙉🙉🙉")
+    await e.edit("🐢                       🚶")
+    await e.edit("🐢                      🚶")
+    await e.edit("🐢                     🚶")
+    await e.edit("🐢                    🚶")
+    await e.edit("🐢                   🚶")
+    await e.edit("🐢                  🚶")
+    await e.edit("🐢                 🚶")
+    await e.edit("🐢                🚶")
+    await e.edit("🐢               🚶")
+    await e.edit("🐢              🚶")
+    await e.edit("🐢             🚶")
+    await e.edit("🐢            🚶")
+    await e.edit("🐢           🚶")
+    await e.edit("🐢          🚶")
+    await e.edit("🐢         🚶")
+    await e.edit("🐢        🚶")
+    await e.edit("🐢       🚶")
+    await e.edit("🐢      🚶")
+    await e.edit("🐢     🚶")
+    await e.edit("🐢    🚶")
+    await e.edit("🐢   🚶")
+    await e.edit("🐢  🚶")
+    await e.edit("🐢 🚶")
+    await e.edit("🐢🚶")
+    await e.edit("🚶🐢")
+    await e.edit("🚶 🐢")
+    await e.edit("🚶  🐢")
+    await e.edit("🚶   🐢")
+    await e.edit("🚶    🐢")
+    await e.edit("🚶     🐢")
+    await e.edit("🚶      🐢")
+    await e.edit("🚶       🐢")
+    await e.edit("🚶        🐢")
+    await e.edit("🚶         🐢")
+    await e.edit("🚶          🐢")
+    await e.edit("🚶           🐢")
+    await e.edit("🚶            🐢")
+    await e.edit("🚶             🐢")
+    await e.edit("🚶              🐢")
+    await e.edit("🚶               🐢")
+    await e.edit("🚶                🐢")
+    await e.edit("🚶                 🐢")
+    await e.edit("🚶                  🐢")
+    await e.edit("🚶                   🐢")
+    await e.edit("🚶                    🐢")
+    await e.edit("🚶                     🐢")
+    await e.edit("🚶                      🐢")
+    await e.edit("🚶                       🐢")
+    await e.edit("🚶                        🐢")
+    await e.edit("🚶                         🐢")
+    await e.edit("🚶                          🐢")
+    await e.edit("🚶                           🐢")
+    await e.edit("🚶                            🐢")
+    await e.edit("🚶                             🐢")
+    await e.edit("🚶                              🐢")
+    await e.edit("🚶                               🐢")
+    await e.edit("🚶                                🐢")
+    await e.edit("🚶                                 🐢")
+    await e.edit("`AHHH MANTAP`")
+    await e.edit("🙉")
+    await e.edit("🙈")
+    await e.edit("🙉")
+    await e.edit("🙈")
+    await e.edit("🙉")
+    await e.edit("😂")
+    await e.edit("🐢                       🚶")
+    await e.edit("🐢                      🚶")
+    await e.edit("🐢                     🚶")
+    await e.edit("🐢                    🚶")
+    await e.edit("🐢                   🚶")
+    await e.edit("🐢                  🚶")
+    await e.edit("🐢                 🚶")
+    await e.edit("🐢                🚶")
+    await e.edit("🐢               🚶")
+    await e.edit("🐢              🚶")
+    await e.edit("🐢             🚶")
+    await e.edit("🐢            🚶")
+    await e.edit("🐢           🚶")
+    await e.edit("🐢          🚶")
+    await e.edit("🐢         🚶")
+    await e.edit("🐢        🚶")
+    await e.edit("🐢       🚶")
+    await e.edit("🐢      🚶")
+    await e.edit("🐢     🚶")
+    await e.edit("🐢    🚶")
+    await e.edit("🐢   🚶")
+    await e.edit("🐢  🚶")
+    await e.edit("🐢 🚶")
+    await e.edit("🐢🚶")
+    await e.edit("🚶🐢")
+    await e.edit("🚶 🐢")
+    await e.edit("🚶  🐢")
+    await e.edit("🚶   🐢")
+    await e.edit("🚶    🐢")
+    await e.edit("🚶     🐢")
+    await e.edit("🚶      🐢")
+    await e.edit("🚶       🐢")
+    await e.edit("🚶        🐢")
+    await e.edit("🚶         🐢")
+    await e.edit("🚶          🐢")
+    await e.edit("🚶           🐢")
+    await e.edit("🚶            🐢")
+    await e.edit("🚶             🐢")
+    await e.edit("🚶              🐢")
+    await e.edit("🚶               🐢")
+    await e.edit("🚶                🐢")
+    await e.edit("🚶                 🐢")
+    await e.edit("🚶                  🐢")
+    await e.edit("🚶                   🐢")
+    await e.edit("🚶                    🐢")
+    await e.edit("🚶                     🐢")
+    await e.edit("🚶                      🐢")
+    await e.edit("🚶                       🐢")
+    await e.edit("🚶                        🐢")
+    await e.edit("🚶                         🐢")
+    await e.edit("🚶                          🐢")
+    await e.edit("🚶                           🐢")
+    await e.edit("🚶                            🐢")
+    await e.edit("🚶                             🐢")
+    await e.edit("🚶                              🐢")
+    await e.edit("🚶                               🐢")
+    await e.edit("🚶                                🐢")
+    await e.edit("🐢                       🚶")
+    await e.edit("🐢                      🚶")
+    await e.edit("🐢                     🚶")
+    await e.edit("🐢                    🚶")
+    await e.edit("🐢                   🚶")
+    await e.edit("🐢                  🚶")
+    await e.edit("🐢                 🚶")
+    await e.edit("🐢                🚶")
+    await e.edit("🐢               🚶")
+    await e.edit("🐢              🚶")
+    await e.edit("🐢             🚶")
+    await e.edit("🐢            🚶")
+    await e.edit("🐢           🚶")
+    await e.edit("🐢          🚶")
+    await e.edit("🐢         🚶")
+    await e.edit("🐢        🚶")
+    await e.edit("🐢       🚶")
+    await e.edit("🐢      🚶")
+    await e.edit("🐢     🚶")
+    await e.edit("🐢    🚶")
+    await e.edit("🐢   🚶")
+    await e.edit("🐢  🚶")
+    await e.edit("🐢 🚶")
+    await e.edit("🐢🚶")
+    await e.edit("🚶🐢")
+    await e.edit("🚶 🐢")
+    await e.edit("🚶  🐢")
+    await e.edit("🚶   🐢")
+    await e.edit("🚶    🐢")
+    await e.edit("🚶     🐢")
+    await e.edit("🚶      🐢")
+    await e.edit("🚶       🐢")
+    await e.edit("🚶        🐢")
+    await e.edit("🚶         🐢")
+    await e.edit("🚶          🐢")
+    await e.edit("🚶           🐢")
+    await e.edit("🚶            🐢")
+    await e.edit("🚶             🐢")
+    await e.edit("🚶              🐢")
+    await e.edit("🚶               🐢")
+    await e.edit("🚶                🐢")
+    await e.edit("🚶                 🐢")
+    await e.edit("🚶                  🐢")
+    await e.edit("🚶                   🐢")
+    await e.edit("🚶                    🐢")
+    await e.edit("🚶                     🐢")
+    await e.edit("🚶                      🐢")
+    await e.edit("🚶                       🐢")
+    await e.edit("🚶                        🐢")
+    await e.edit("🚶                         🐢")
+    await e.edit("🚶                          🐢")
+    await e.edit("🚶                           🐢")
+    await e.edit("🚶                            🐢")
+    await e.edit("🚶                             🐢")
+    await e.edit("🚶                              🐢")
+    await e.edit("🚶                               🐢")
+    await e.edit("🚶                                🐢")
+    await e.edit("🐢                       🚶")
+    await e.edit("🐢                      🚶")
+    await e.edit("🐢                     🚶")
+    await e.edit("🐢                    🚶")
+    await e.edit("🐢                   🚶")
+    await e.edit("🐢                  🚶")
+    await e.edit("🐢                 🚶")
+    await e.edit("🐢                🚶")
+    await e.edit("🐢               🚶")
+    await e.edit("🐢              🚶")
+    await e.edit("🐢             🚶")
+    await e.edit("🐢            🚶")
+    await e.edit("🐢           🚶")
+    await e.edit("🐢          🚶")
+    await e.edit("🐢         🚶")
+    await e.edit("🐢        🚶")
+    await e.edit("🐢       🚶")
+    await e.edit("🐢      🚶")
+    await e.edit("🐢     🚶")
+    await e.edit("🐢    🚶")
+    await e.edit("🐢   🚶")
+    await e.edit("🐢  🚶")
+    await e.edit("🐢 🚶")
+    await e.edit("🐢🚶")
+    await e.edit("🚶🐢")
+    await e.edit("🚶 🐢")
+    await e.edit("🚶  🐢")
+    await e.edit("🚶   🐢")
+    await e.edit("🚶    🐢")
+    await e.edit("🚶     🐢")
+    await e.edit("🚶      🐢")
+    await e.edit("🚶       🐢")
+    await e.edit("🚶        🐢")
+    await e.edit("🚶         🐢")
+    await e.edit("🚶          🐢")
+    await e.edit("🚶           🐢")
+    await e.edit("🚶            🐢")
+    await e.edit("🚶             🐢")
+    await e.edit("🚶              🐢")
+    await e.edit("🚶               🐢")
+    await e.edit("🚶                🐢")
+    await e.edit("🚶                 🐢")
+    await e.edit("🚶                  🐢")
+    await e.edit("🚶                   🐢")
+    await e.edit("🚶                    🐢")
+    await e.edit("🚶                     🐢")
+    await e.edit("🚶                      🐢")
+    await e.edit("🚶                       🐢")
+    await e.edit("🚶                        🐢")
+    await e.edit("🚶                         🐢")
+    await e.edit("🚶                          🐢")
+    await e.edit("🚶                           🐢")
+    await e.edit("🚶                            🐢")
+    await e.edit("🚶                             🐢")
+    await e.edit("🚶                              🐢")
+    await e.edit("🚶                               🐢")
+    await e.edit("🚶                                🐢")
+    await e.edit("`GABUT`")
 
 
-@register(outgoing=True, pattern=r"^\.terkadang(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"terkadang(?: |$)(.*)"))
+async def _(typew):
     await typew.edit("`Terkadang`")
     sleep(1)
     await typew.edit("`Mencintai Seseorang`")
@@ -429,13 +424,12 @@ async def typewriter(typew):
 # Create by myself @localheart
 
 
-@register(outgoing=True, pattern=r"^\.mf$")
-async def koc(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("`mf g dl` **ミ(ノ;_ _)ノ=3** ")
+@bot.on(man_cmd(outgoing=True, pattern=r"mf$"))
+async def _(e):
+    await e.edit("`mf g dl` **ミ(ノ;_ _)ノ=3** ")
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -473,9 +467,8 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@register(outgoing=True, pattern=r"^\.gombal(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"gombal(?: |$)(.*)"))
+async def _(typew):
     sleep(1)
     await typew.edit("`Hai, I LOVE YOU 💞`")
     sleep(1)
@@ -501,9 +494,8 @@ async def typewriter(typew):
 # Create by myself @localheart
 
 
-@register(outgoing=True, pattern=r"^\.helikopter(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"helikopter(?: |$)(.*)"))
+async def _(typew):
     await typew.edit(
         "▬▬▬.◙.▬▬▬ \n"
         "═▂▄▄▓▄▄▂ \n"
@@ -524,17 +516,15 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.tembak(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"tembak(?: |$)(.*)"))
+async def _(typew):
     await typew.edit(
         "_/﹋\\_\n" "(҂`_´)\n" "<,︻╦╤─ ҉\n" r"_/﹋\_" "\n**Mau Jadi Pacarku Gak?!**"
     )
 
 
-@register(outgoing=True, pattern=r"^\.bundir(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"bundir(?: |$)(.*)"))
+async def _(typew):
     await typew.edit(
         "`Dadah Semuanya...`          \n　　　　　|"
         "\n　　　　　| \n"
@@ -553,9 +543,8 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.awk(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"awk(?: |$)(.*)"))
+async def _(typew):
     await typew.edit(
         "────██──────▀▀▀██\n"
         "──▄▀█▄▄▄─────▄▀█▄▄▄\n"
@@ -565,9 +554,8 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.ular(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"ular(?: |$)(.*)"))
+async def _(typew):
     await typew.edit(
         "░░░░▓\n"
         "░░░▓▓\n"
@@ -657,9 +645,8 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.y(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"y(?: |$)(.*)"))
+async def _(typew):
     await typew.edit(
         "‡‡‡‡‡‡‡‡‡‡‡‡▄▄▄▄\n"
         "‡‡‡‡‡‡‡‡‡‡‡█‡‡‡‡█\n"
@@ -677,9 +664,8 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.tank(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"tank(?: |$)(.*)"))
+async def _(typew):
     await typew.edit(
         "█۞███████]▄▄▄▄▄▄▄▄▄▄▃ \n"
         "▂▄▅█████████▅▄▃▂…\n"
@@ -688,9 +674,8 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.babi(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"babi(?: |$)(.*)"))
 async def typewriter(typew):
-    typew.pattern_match.group(1)
     await typew.edit(
         "┈┈┏━╮╭━┓┈╭━━━━╮\n"
         "┈┈┃┏┗┛┓┃╭┫Ngok ┃\n"
@@ -703,9 +688,8 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.ajg(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"ajg(?: |$)(.*)"))
+async def _(typew):
     await typew.edit(
         "╥━━━━━━━━╭━━╮━━┳\n"
         "╢╭╮╭━━━━━┫┃▋▋━▅┣\n"
@@ -716,9 +700,8 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.bernyanyi(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"bernyanyi(?: |$)(.*)"))
+async def _(typew):
     await typew.edit("**Ganteng Doang Gak Bernyanyi (ง˙o˙)ว**")
     sleep(2)
     await typew.edit("**♪┗ ( ･o･) ┓♪┏ (・o･) ┛♪**")
@@ -752,44 +735,42 @@ async def typewriter(typew):
     await typew.edit("**♪┗ ( ･o･) ┓♪┏ (・o･) ┛♪**")
 
 
-@register(outgoing=True, pattern=r"^\.hua$")
-async def koc(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("أ‿أ")
-        await e.edit("╥﹏╥")
-        await e.edit("(;﹏;)")
-        await e.edit("(ToT)")
-        await e.edit("(┳Д┳)")
-        await e.edit("(ಥ﹏ಥ)")
-        await e.edit("（；へ：）")
-        await e.edit("(T＿T)")
-        await e.edit("（πーπ）")
-        await e.edit("(Ｔ▽Ｔ)")
-        await e.edit("(⋟﹏⋞)")
-        await e.edit("（ｉДｉ）")
-        await e.edit("(´Д⊂ヽ")
-        await e.edit("(;Д;)")
-        await e.edit("（>﹏<）")
-        await e.edit("(TдT)")
-        await e.edit("(つ﹏⊂)")
-        await e.edit("༼☯﹏☯༽")
-        await e.edit("(ノ﹏ヽ)")
-        await e.edit("(ノAヽ)")
-        await e.edit("(╥_╥)")
-        await e.edit("(T⌓T)")
-        await e.edit("(༎ຶ⌑༎ຶ)")
-        await e.edit("(☍﹏⁰)｡")
-        await e.edit("(ಥ_ʖಥ)")
-        await e.edit("(つд⊂)")
-        await e.edit("(≖͞_≖̥)")
-        await e.edit("(இ﹏இ`｡)")
-        await e.edit("༼ಢ_ಢ༽")
-        await e.edit("༼ ༎ຶ ෴ ༎ຶ༽")
+@bot.on(man_cmd(outgoing=True, pattern=r"hua$"))
+async def _(e):
+    await e.edit("أ‿أ")
+    await e.edit("╥﹏╥")
+    await e.edit("(;﹏;)")
+    await e.edit("(ToT)")
+    await e.edit("(┳Д┳)")
+    await e.edit("(ಥ﹏ಥ)")
+    await e.edit("（；へ：）")
+    await e.edit("(T＿T)")
+    await e.edit("（πーπ）")
+    await e.edit("(Ｔ▽Ｔ)")
+    await e.edit("(⋟﹏⋞)")
+    await e.edit("（ｉДｉ）")
+    await e.edit("(´Д⊂ヽ")
+    await e.edit("(;Д;)")
+    await e.edit("（>﹏<）")
+    await e.edit("(TдT)")
+    await e.edit("(つ﹏⊂)")
+    await e.edit("༼☯﹏☯༽")
+    await e.edit("(ノ﹏ヽ)")
+    await e.edit("(ノAヽ)")
+    await e.edit("(╥_╥)")
+    await e.edit("(T⌓T)")
+    await e.edit("(༎ຶ⌑༎ຶ)")
+    await e.edit("(☍﹏⁰)｡")
+    await e.edit("(ಥ_ʖಥ)")
+    await e.edit("(つд⊂)")
+    await e.edit("(≖͞_≖̥)")
+    await e.edit("(இ﹏இ`｡)")
+    await e.edit("༼ಢ_ಢ༽")
+    await e.edit("༼ ༎ຶ ෴ ༎ຶ༽")
 
 
-@register(outgoing=True, pattern=r"^\.huh(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"huh(?: |$)(.*)"))
+async def _(typew):
     await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n />❤️ *Ini Buat Kamu`")
     sleep(3)
     await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n/>💔  *Aku Ambil Lagi`")
@@ -797,7 +778,7 @@ async def typewriter(typew):
     await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n💔<\\  *Terimakasih`")
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -838,7 +819,7 @@ async def _(event):
             await event.edit(animation_chars[i % 103])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -871,9 +852,8 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@register(outgoing=True, pattern=r"^\.santet(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"santet(?: |$)(.*)"))
+async def _(typew):
     await typew.edit("`Mengaktifkan Perintah Santet Online....`")
     sleep(2)
     await typew.edit("`Mencari Nama Orang Ini...`")
@@ -1184,9 +1164,8 @@ async def typewriter(typew):
     await typew.edit("`Target Berhasil Tersantet Online 🥴`")
 
 
-@register(outgoing=True, pattern="^.nah(?: |$)(.*)")
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=".nah(?: |$)(.*)"))
+async def _(typew):
     await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n />💖 *Ini Buat Kamu`")
     sleep(2)
     await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n💖<\\  *Tapi Bo'ong`")
@@ -1195,7 +1174,7 @@ async def typewriter(typew):
 # Alpinnnn Gans
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1230,37 +1209,37 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "animasi": "`.gabut` ; `.dino`\
+        "animasi": f"`{cmd}gabut` ; `{cmd}dino`\
     \nUsage: ntahlah gabut doang.\
-    \n\n`.gombal`\
+    \n\n`{cmd}gombal`\
     \nUsage: buat bercanda\
-    \n\n`.cinta`\
+    \n\n`{cmd}cinta`\
     \nUsage: mengirim cintamu ke seseorang.\
-    \n\n`.sayang`\
+    \n\n`{cmd}sayang`\
     \nUsage: untuk jadi buaya.\
-    \n\n`.terkadang`\
+    \n\n`{cmd}terkadang`\
     \nUsage: Auk dah iseng doang.\
-    \n\n`.helikopter` ; `.tank` ; `.tembak`\n`.bundir`\
+    \n\n`{cmd}helikopter` ; `{cmd}tank` ; `{cmd}tembak`\n`{cmd}bundir`\
     \nUsage: liat sendiri\
-    \n\n`.y`\
+    \n\n`{cmd}y`\
     \nUsage: jempol\
-    \n\n`.bulan` ; `.hati` ; `.bernyanyi`\
+    \n\n`{cmd}bulan` ; `{cmd}hati` ; `{cmd}bernyanyi`\
     \nUsage: liat aja.\
-    \n\n`.awk`\
+    \n\n`{cmd}awk`\
     \nUsage: ketawa lari.\
-    \n\n`.ular` ; `.babi` ; `.ajg`\
+    \n\n`{cmd}lar` ; `{cmd}abi` ; `{cmd}ajg`\
     \nUsage: liat sendiri.\
-    \n\n`.nah` ; `.huh` ; `.owner`\
+    \n\n`{cmd}nah` ; `{cmd}huh` ; `{cmd}owner`\
     \nUsage: cobain.\
-    \n\n`.bunga` ; `.buah`\
+    \n\n`{cmd}bunga` ; `{cmd}buah`\
     \nUsage: animasi.\
-    \n\n`.waktu`\
+    \n\n`{cmd}waktu`\
     \nUsage: animasi.\
-    \n\n`.hua`\
+    \n\n`{cmd}hua`\
     \nUsage: nangis.\
-    \n\n`.ceritacinta` ; `.canda`\
+    \n\n`{cmd}ceritacinta` ; `{cmd}canda`\
     \nUsage: liat sendiri\
-    \n\n`.santet`\
+    \n\n`{cmd}santet`\
     \nUsage: Santet Online Buat Bercanda."
     }
 )

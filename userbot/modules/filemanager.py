@@ -15,14 +15,15 @@ from zipfile import ZIP_DEFLATED, BadZipFile, ZipFile, is_zipfile
 from natsort import os_sorted
 from rarfile import BadRarFile, RarFile, is_rarfile
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot.events import man_cmd
 from userbot.utils import humanbytes
 
 MAX_MESSAGE_SIZE_LIMIT = 4095
 
 
-@register(outgoing=True, pattern=r"^\.ls(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ls(?: |$)(.*)"))
 async def lst(event):
     if event.fwd_from:
         return
@@ -122,7 +123,7 @@ async def lst(event):
         await event.edit(msg)
 
 
-@register(outgoing=True, pattern=r"^\.rm(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"rm(?: |$)(.*)"))
 async def rmove(event):
     """Removing Directory/File"""
     cat = event.pattern_match.group(1)
@@ -139,7 +140,7 @@ async def rmove(event):
     await event.edit(f"Dihapus `{cat}`")
 
 
-@register(outgoing=True, pattern=r"^\.rn ([^|]+)\|([^|]+)")
+@bot.on(man_cmd(outgoing=True, pattern=r"rn ([^|]+)\|([^|]+)"))
 async def rname(event):
     """Renaming Directory/File"""
     cat = str(event.pattern_match.group(1)).strip()
@@ -152,7 +153,7 @@ async def rname(event):
     await event.edit(f"Diganti nama dari `{cat}` ke `{new_path}`")
 
 
-@register(outgoing=True, pattern=r"^\.zip (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"zip (.*)"))
 async def zip_file(event):
     if event.fwd_from:
         return
@@ -201,7 +202,7 @@ async def zip_file(event):
         await event.edit("`404: Not Found`")
 
 
-@register(outgoing=True, pattern=r"^\.unzip (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"unzip (.*)"))
 async def unzip_file(event):
     if event.fwd_from:
         return
@@ -242,16 +243,16 @@ async def unzip_file(event):
 
 CMD_HELP.update(
     {
-        "file": "**Plugin : **`file`\
-        \n\n  •  **Syntax :** `.ls`\
+        "file": f"**Plugin : **`file`\
+        \n\n  •  **Syntax :** `{cmd}ls`\
         \n  •  **Function : **Untuk Melihat Daftar file di dalam direktori server\
-        \n\n  •  **Syntax :** `.rm` <directory/file>\
+        \n\n  •  **Syntax :** `{cmd}rm` <directory/file>\
         \n  •  **Function : **Untuk Menghapus File atau folder yg tersimpan di server\
-        \n\n  •  **Syntax :** `.rn` <directory/file> | <nama baru>\
+        \n\n  •  **Syntax :** `{cmd}rn` <directory/file> | <nama baru>\
         \n  •  **Function : **Untuk Mengubah nama file atau direktori\
-        \n\n  •  **Syntax :** `.zip` <file/folder path> | <nama zip> (optional)\
+        \n\n  •  **Syntax :** `{cmd}zip` <file/folder path> | <nama zip> (optional)\
         \n  •  **Function : **Untuk mengcompress file atau folder.\
-        \n\n  •  **Syntax :** `.unzip` <path ke zip file>\
+        \n\n  •  **Syntax :** `{cmd}unzip` <path ke zip file>\
         \n  •  **Function : **Untuk mengekstrak file arsip.\
         \n  •  **NOTE : **Hanya bisa untuk file ZIP, RAR dan TAR!\
     "

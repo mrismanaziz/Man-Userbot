@@ -10,11 +10,12 @@ from asyncio.exceptions import TimeoutError
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.wall(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"wall(?: |$)(.*)"))
 async def _(event):
     try:
         query = event.pattern_match.group(1)
@@ -58,8 +59,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "wallpaper": "**Plugin : **`wallpaper`\
-        \n\n  •  **Syntax :** `.wall <query>`\
+        "wallpaper": f"**Plugin : **`wallpaper`\
+        \n\n  •  **Syntax :** `{cmd}wall <query>`\
         \n  •  **Function : **Mencari Wallpaper Bagus.\
     "
     }

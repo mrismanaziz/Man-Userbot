@@ -14,11 +14,14 @@ import os
 
 from PIL import Image
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.convert ?(foto|sound|gif|voice|photo|mp3)? ?(.*)")
+@bot.on(
+    man_cmd(outgoing=True, pattern=r"convert ?(foto|sound|gif|voice|photo|mp3)? ?(.*)")
+)
 async def cevir(event):
     botman = event.pattern_match.group(1)
     try:
@@ -174,14 +177,14 @@ async def cevir(event):
 
 CMD_HELP.update(
     {
-        "convert": "**Plugin : **`core`\
-        \n\n  •  **Syntax :** `.convert foto`\
+        "convert": f"**Plugin : **`core`\
+        \n\n  •  **Syntax :** `{cmd}convert foto`\
         \n  •  **Function : **Untuk Mengconvert sticker ke foto\
-        \n\n  •  **Syntax :** `.convert mp3`\
+        \n\n  •  **Syntax :** `{cmd}convert mp3`\
         \n  •  **Function : **Untuk Mengconvert dari video ke file mp3\
-        \n\n  •  **Syntax :** `.convert gif`\
+        \n\n  •  **Syntax :** `{cmd}convert gif`\
         \n  •  **Function : **Untuk Mengconvert video ke gif\
-        \n\n  •  **Syntax :** `.convert audio`\
+        \n\n  •  **Syntax :** `{cmd}convert audio`\
         \n  •  **Function : **Untuk Menambahkan efek suara jadi berskin\
         \n  •  **List Efek : `bengek`, `jedug`, `echo`, `robot`\
     "

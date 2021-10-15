@@ -7,13 +7,14 @@
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 # Alvin Gans
 
 
-@register(outgoing=True, pattern=r"^\.tiktok(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"tiktok(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -46,8 +47,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "tiktok": "**Plugin : **`tiktok`\
-        \n\n  •  **Syntax :** `.tiktok` <link>\
+        "tiktok": f"**Plugin : **`tiktok`\
+        \n\n  •  **Syntax :** `{cmd}tiktok` <link>\
         \n  •  **Function : **Download Video Tiktok Tanpa Watermark\
     "
     }

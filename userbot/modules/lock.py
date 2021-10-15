@@ -7,11 +7,13 @@
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import ALIVE_NAME
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.lock ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"lock ?(.*)"))
 async def locks(event):
     input_str = event.pattern_match.group(1).lower()
     peer_id = event.chat_id
@@ -90,15 +92,15 @@ async def locks(event):
         await event.client(
             EditChatDefaultBannedRightsRequest(peer=peer_id, banned_rights=lock_rights)
         )
-        await event.edit(f"`Master Telah Mengunci {what} Untuk Obrolan Ini!!`")
+        await event.edit(f"`{ALIVE_NAME} Telah Mengunci {what} Untuk Obrolan Ini!!`")
     except BaseException as e:
         await event.edit(
-            f"`Apakah Master Mempunyai Izin Melakukan Itu Disini?`\n**Kesalahan:** {str(e)}"
+            f"`Apakah {ALIVE_NAME} Mempunyai Izin Melakukan Itu Disini?`\n**Kesalahan:** {str(e)}"
         )
         return
 
 
-@register(outgoing=True, pattern=r"^.unlock ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"unlock ?(.*)"))
 async def rem_locks(event):
     input_str = event.pattern_match.group(1).lower()
     peer_id = event.chat_id
@@ -181,20 +183,22 @@ async def rem_locks(event):
                 peer=peer_id, banned_rights=unlock_rights
             )
         )
-        await event.edit(f"`Master Telah Membuka Kunci {what} Untuk Obrolan Ini!!`")
+        await event.edit(
+            f"`{ALIVE_NAME} Telah Membuka Kunci {what} Untuk Obrolan Ini!!`"
+        )
     except BaseException as e:
         await event.edit(
-            f"`Apakah Master Mempunyai Izin Melakukan Itu Disini?`\n**Kesalahan:** {str(e)}"
+            f"`Apakah {ALIVE_NAME} Mempunyai Izin Melakukan Itu Disini?`\n**ERROR:** {str(e)}"
         )
         return
 
 
 CMD_HELP.update(
     {
-        "locks": "**Plugin : **`locks`\
-        \n\n  •  **Syntax :** `.lock` <all atau Jenis lock>\
+        "locks": f"**Plugin : **`locks`\
+        \n\n  •  **Syntax :** `{cmd}lock` <all atau Jenis lock>\
         \n  •  **Function : **Memungkinkan anda Mengunci beberapa jenis pesan dalam obrolan.\
-        \n\n  •  **Syntax :** `.unlock` <all atau Jenis lock>\
+        \n\n  •  **Syntax :** `{cmd}unlock` <all atau Jenis lock>\
         \n  •  **Function : **Untuk membuka kunci, beberapa jenis pesan dalam obrolan.\
         \n\n  •  **Jenis pesan yang bisa dikunci atau dibuka adalah:**\
         \n  •  `all, msg, media, sticker, gif, game, inline, poll, invite, pin, info`\

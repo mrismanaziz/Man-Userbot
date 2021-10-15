@@ -10,8 +10,9 @@ from telegraph import exceptions, upload_file
 from validators.url import url
 from wget import download
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 EMOJI_PATTERN = re.compile(
     "["
@@ -195,7 +196,7 @@ async def purge():
         pass
 
 
-@register(outgoing=True, pattern=r"^\.trump(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"trump(?: |$)(.*)"))
 async def trump(event):
     text = event.pattern_match.group(1)
     text = re.sub("&", "", text)
@@ -216,7 +217,7 @@ async def trump(event):
     await purge()
 
 
-@register(pattern="^.modi(?: |$)(.*)", outgoing=True)
+@bot.on(man_cmd(pattern=r"modi(?: |$)(.*)", outgoing=True))
 async def nekobot(event):
     text = event.pattern_match.group(1)
     reply_to_id = event.message
@@ -236,7 +237,7 @@ async def nekobot(event):
     await purge()
 
 
-@register(outgoing=True, pattern=r"^\.cmm(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"cmm(?: |$)(.*)"))
 async def cmm(event):
     text = event.pattern_match.group(1)
     text = re.sub("&", "", text)
@@ -257,7 +258,7 @@ async def cmm(event):
     await purge()
 
 
-@register(outgoing=True, pattern=r"^\.kanna(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"kanna(?: |$)(.*)"))
 async def kanna(event):
     text = event.pattern_match.group(1)
     text = re.sub("&", "", text)
@@ -278,7 +279,7 @@ async def kanna(event):
     await purge()
 
 
-@register(outgoing=True, pattern=r"\.tweet(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"\.tweet(?: |$)(.*)"))
 async def tweet(event):
     text = event.pattern_match.group(1)
     text = re.sub("&", "", text)
@@ -307,7 +308,7 @@ async def tweet(event):
     await purge()
 
 
-@register(pattern=r"^\.threat(?: |$)(.*)", outgoing=True)
+@bot.on(man_cmd(pattern=r"threat(?: |$)(.*)", outgoing=True))
 async def nekobot(event):
     replied = await event.get_reply_message()
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
@@ -349,7 +350,7 @@ async def nekobot(event):
     await bot.send_file(event.chat_id, file, reply_to=replied)
 
 
-@register(pattern=r"^\.trash(?: |$)(.*)", outgoing=True)
+@bot.on(man_cmd(pattern=r"trash(?: |$)(.*)", outgoing=True))
 async def nekobot(event):
     replied = await event.get_reply_message()
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
@@ -391,7 +392,7 @@ async def nekobot(event):
     await bot.send_file(event.chat_id, file, reply_to=replied)
 
 
-@register(pattern=r"^\.trap(?: |$)(.*)", outgoing=True)
+@bot.on(man_cmd(pattern=r"trap(?: |$)(.*)", outgoing=True))
 async def nekobot(e):
     input_str = e.pattern_match.group(1)
     input_str = deEmojify(input_str)
@@ -443,7 +444,7 @@ async def nekobot(e):
 # Ported by @AshSTR
 
 
-@register(outgoing=True, pattern=r"^\.fgs ((.*) ; (.*))")
+@bot.on(man_cmd(outgoing=True, pattern=r"fgs ((.*) ; (.*))"))
 async def FakeGoogleSearch(event):
     """Get a user-customised google search meme!"""
     input_str = event.pattern_match.group(1)
@@ -478,7 +479,7 @@ async def FakeGoogleSearch(event):
     os.remove("downloads/test.jpg")
 
 
-@register(outgoing=True, pattern=r"^\.ph(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ph(?: |$)(.*)"))
 async def phcomment(event):
     try:
         await event.edit("`Processing..`")
@@ -528,29 +529,29 @@ async def phcomment(event):
 
 CMD_HELP.update(
     {
-        "imgmeme": "**Plugin : **`imgmeme`\
-        \n\n  •  **Syntax :** `.fgs`\
+        "imgmeme": f"**Plugin : **`imgmeme`\
+        \n\n  •  **Syntax :** `{cmd}fgs`\
         \n  •  **Function : **Meme dari search google yang di bisa custom user!\
-        \n  •  **Example  : **`.fgs [Teks Atas] ; [Teks Bawah]`\
-        \n\n  •  **Syntax :** `.trump`\
+        \n  •  **Example  : **`{cmd}fgs [Teks Atas] ; [Teks Bawah]`\
+        \n\n  •  **Syntax :** `{cmd}trump`\
         \n  •  **Function : **Membuat Tweet dari akun twitter Donald Trump\
-        \n\n  •  **Syntax :** `.modi` <text>\
+        \n\n  •  **Syntax :** `{cmd}modi` <text>\
         \n  •  **Function : **Membuat Tweet dari akun twitter @narendramodi\
-        \n\n  •  **Syntax :** `.cmm` <text>\
+        \n\n  •  **Syntax :** `{cmd}cmm` <text>\
         \n  •  **Function : **Membuat meme change my mind\
-        \n\n  •  **Syntax :** `.kanna` <text>\
+        \n\n  •  **Syntax :** `{cmd}kanna` <text>\
         \n  •  **Function : **Membuat meme tulisan dari nana anime bawa kertas\
-        \n\n  •  **Syntax :** `.ph` <text>\
+        \n\n  •  **Syntax :** `{cmd}ph` <text>\
         \n  •  **Function : **Membuat Tweet dari website pornhub\
-        \n\n  •  **Syntax :** `.threat` <text> (sambil reply media foto/sticker)\
+        \n\n  •  **Syntax :** `{cmd}threat` <text> (sambil reply media foto/sticker)\
         \n  •  **Function : **Membuat meme 3 hoax terbesar\
-        \n\n  •  **Syntax :** `.trash` <text> (sambil reply media foto/sticker)\
+        \n\n  •  **Syntax :** `{cmd}trash` <text> (sambil reply media foto/sticker)\
         \n  •  **Function : **Membuat meme list sampah\
-        \n\n  •  **Syntax :** `.trap` <text> (sambil reply media foto/sticker)\
+        \n\n  •  **Syntax :** `{cmd}trap` <text> (sambil reply media foto/sticker)\
         \n  •  **Function : **Membuat meme trapcard\
-        \n\n  •  **Syntax :** `.tweet`\
+        \n\n  •  **Syntax :** `{cmd}tweet`\
         \n  •  **Function : **Membuat Tweet dari akun twitter\
-        \n  •  **Example  : **.tweet @mrismanaziz.ganteng (harus pake . [titik])\
+        \n  •  **Example  : **{cmd}tweet @mrismanaziz.ganteng (harus pake . [titik])\
     "
     }
 )

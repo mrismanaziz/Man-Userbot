@@ -13,8 +13,9 @@ from datetime import datetime
 
 from speedtest import Speedtest
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, StartTime, bot
-from userbot.events import register
+from userbot.events import man_cmd, register
 from userbot.utils import humanbytes
 
 absen = [
@@ -52,7 +53,7 @@ async def get_readable_time(seconds: int) -> str:
     return up_time
 
 
-@register(outgoing=True, pattern=r"^\.ping$")
+@bot.on(man_cmd(outgoing=True, pattern=r"ping$"))
 async def _(ping):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
@@ -72,7 +73,7 @@ async def _(ping):
     )
 
 
-@register(outgoing=True, pattern=r"^\.xping$")
+@bot.on(man_cmd(outgoing=True, pattern=r"xping$"))
 async def _(ping):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
@@ -85,7 +86,7 @@ async def _(ping):
     )
 
 
-@register(outgoing=True, pattern=r"^\.lping$")
+@bot.on(man_cmd(outgoing=True, pattern=r"lping$"))
 async def _(ping):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
@@ -107,7 +108,7 @@ async def _(ping):
     )
 
 
-@register(outgoing=True, pattern=r"^\.fping$")
+@bot.on(man_cmd(outgoing=True, pattern=r"fping$"))
 async def _(f):
     """For .ping command, ping the userbot from any chat."""
     await get_readable_time((time.time() - StartTime))
@@ -149,7 +150,7 @@ async def _(f):
     )
 
 
-@register(outgoing=True, pattern=r"^\.speedtest$")
+@bot.on(man_cmd(outgoing=True, pattern=r"speedtest$"))
 async def _(speed):
     """For .speedtest command, use SpeedTest to check server speeds."""
     await speed.edit("`Running speed test...`")
@@ -184,7 +185,7 @@ async def _(speed):
     )
 
 
-@register(outgoing=True, pattern=r"^\.pong$")
+@bot.on(man_cmd(outgoing=True, pattern=r"pong$"))
 async def _(pong):
     """For .ping command, ping the userbot from any chat."""
     start = datetime.now()
@@ -204,7 +205,7 @@ async def risman(ganteng):
 # DI HAPUS GUA GBAN YA 🥴 GUA TANDAIN LU AKUN TELENYA 😡
 
 
-@register(outgoing=True, pattern=r"^\.usange(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"usange(?: |$)(.*)"))
 async def _(e):
     user = await bot.get_me()
     sleep(1)
@@ -228,10 +229,10 @@ async def _(e):
 
 CMD_HELP.update(
     {
-        "ping": "**Plugin : **`ping`\
-        \n\n  •  **Syntax :** `.ping` ; `.lping` ; `.xping` ; `.kping` ; `.fping`\
+        "ping": f"**Plugin : **`ping`\
+        \n\n  •  **Syntax :** `{cmd}ping` ; `{cmd}lping` ; `{cmd}xping` ; `{cmd}kping` ; `{cmd}fping`\
         \n  •  **Function : **Untuk menunjukkan ping userbot.\
-        \n\n  •  **Syntax :** `.pong`\
+        \n\n  •  **Syntax :** `{cmd}pong`\
         \n  •  **Function : **Sama seperti perintah ping\
     "
     }
@@ -240,8 +241,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "speedtest": "**Plugin : **`speedtest`\
-        \n\n  •  **Syntax :** `.speedtest`\
+        "speedtest": f"**Plugin : **`speedtest`\
+        \n\n  •  **Syntax :** `{cmd}speedtest`\
         \n  •  **Function : **Untuk Mengetes kecepatan server userbot.\
     "
     }

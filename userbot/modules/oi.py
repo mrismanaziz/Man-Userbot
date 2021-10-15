@@ -1,10 +1,12 @@
 from time import sleep
 
-from userbot import BLACKLIST_CHAT, CMD_HELP
-from userbot.events import register
+from userbot import BLACKLIST_CHAT
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.sayang(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"sayang(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(3)
@@ -18,7 +20,7 @@ async def typewriter(typew):
 # Create by myself @localheart
 
 
-@register(outgoing=True, pattern=r"^\.semangat(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"semangat(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     sleep(3)
@@ -32,13 +34,13 @@ async def typewriter(typew):
 # Create by myself @localheart
 
 
-@register(outgoing=True, pattern=r"^\.ywc(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ywc(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**Ok Sama Sama**")
 
 
-@register(outgoing=True, pattern=r"^\.jamet(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"jamet(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**WOII**")
@@ -64,7 +66,7 @@ async def typewriter(typew):
     await typew.edit("**LEMBEK NGENTOT🔥**")
 
 
-@register(outgoing=True, pattern=r"^\.pp(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"pp(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -72,19 +74,19 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.dp(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"dp(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**MUKA LU HINA, GAUSAH SOK KERAS YA ANJENGG!!**")
 
 
-@register(outgoing=True, pattern=r"^\.so(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"so(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**GAUSAH SOKAB SAMA GUA GOBLOK, LU BABU GA LEVEL!!**")
 
 
-@register(outgoing=True, pattern=r"^\.nb(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"nb(?: |$)(.*)"))
 async def typewriter(typew):
     if typew.chat_id in BLACKLIST_CHAT:
         return await typew.edit("**Perintah ini Dilarang digunakan di Group ini**")
@@ -92,13 +94,13 @@ async def typewriter(typew):
     await typew.edit("**MAEN BOT MULU ALAY NGENTOTT, KESANNYA NORAK GOBLOK!!!**")
 
 
-@register(outgoing=True, pattern=r"^\.met(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"met(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**NAMANYA JUGA JAMET CAPER SANA SINI BUAT CARI NAMA**")
 
 
-@register(outgoing=True, pattern=r"^\.war(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"war(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -106,7 +108,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.wartai(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"wartai(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -114,7 +116,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.kismin(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"kismin(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -122,13 +124,13 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.ded(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ded(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**MATI AJA LU GOBLOK, GAGUNA LU HIDUP DI BUMI**")
 
 
-@register(outgoing=True, pattern=r"^\.sokab(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"sokab(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -136,7 +138,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.gembel(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"gembel(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -144,7 +146,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.cuih(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"cuih(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -152,7 +154,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.dih(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"dih(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit(
@@ -160,7 +162,7 @@ async def typewriter(typew):
     )
 
 
-@register(outgoing=True, pattern=r"^\.gcs(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"gcs(?: |$)(.*)"))
 async def typewriter(typew):
     if typew.chat_id in BLACKLIST_CHAT:
         return await typew.edit("**Perintah ini Dilarang digunakan di Group ini**")
@@ -168,13 +170,13 @@ async def typewriter(typew):
     await typew.edit("**GC SAMPAH KAYA GINI, BUBARIN AJA GOBLOK!!**")
 
 
-@register(outgoing=True, pattern=r"^\.skb(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"skb(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**EMANG KITA KENAL? KAGA GOBLOK SOKAB BANGET LU GOBLOK**")
 
 
-@register(outgoing=True, pattern=r"^\.virtual(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"virtual(?: |$)(.*)"))
 async def typewriter(typew):
     typew.pattern_match.group(1)
     await typew.edit("**OOOO**")
@@ -198,44 +200,44 @@ async def typewriter(typew):
 
 CMD_HELP.update(
     {
-        "war": "**Plugin : **`war`\
-        \n\n  •  **Syntax :** `.jamet`\
+        "war": f"**Plugin : **`war`\
+        \n\n  •  **Syntax :** `{cmd}jamet`\
         \n  •  **Function : **Menghina Jamet telegram\
-        \n\n  •  **Syntax :** `.pp`\
+        \n\n  •  **Syntax :** `{cmd}pp`\
         \n  •  **Function : **Menghina Jamet telegram yang ga pake foto profil\
-        \n\n  •  **Syntax :** `.dp`\
+        \n\n  •  **Syntax :** `{cmd}dp`\
         \n  •  **Function : **Menghina Jamet muka hina!\
-        \n\n  •  **Syntax :** `.so`\
+        \n\n  •  **Syntax :** `{cmd}so`\
         \n  •  **Function : **Ngeledek orang sokab\
-        \n\n  •  **Syntax :** `.nb`\
+        \n\n  •  **Syntax :** `{cmd}nb`\
         \n  •  **Function : **Ngeledek orang norak baru pake bot\
-        \n\n  •  **Syntax :** `.so`\
+        \n\n  •  **Syntax :** `{cmd}so`\
         \n  •  **Function : **Ngeledek orang sokab\
-        \n\n  •  **Syntax :** `.skb`\
+        \n\n  •  **Syntax :** `{cmd}skb`\
         \n  •  **Function : **Ngeledek orang sokab versi 2\
-        \n\n  •  **Syntax :** `.met`\
+        \n\n  •  **Syntax :** `{cmd}met`\
         \n  •  **Function : **Ngeledek si jamet caper\
-        \n\n  •  **Syntax :** `.war`\
+        \n\n  •  **Syntax :** `{cmd}war`\
         \n  •  **Function : **Ngeledek orang so keras ngajak war\
-        \n\n  •  **Syntax :** `.wartai`\
+        \n\n  •  **Syntax :** `{cmd}wartai`\
         \n  •  **Function : **Ngeledek orang so ketrigger ngajak cod minta sharelok\
-        \n\n  •  **Syntax :** `.kismin`\
+        \n\n  •  **Syntax :** `{cmd}kismin`\
         \n  •  **Function : **Ngeledek orang kismin so jagoan di tele\
-        \n\n  •  **Syntax :** `.ded`\
+        \n\n  •  **Syntax :** `{cmd}ded`\
         \n  •  **Function : **Nyuruh orang mati aja goblok wkwk\
-        \n\n  •  **Syntax :** `.sokab`\
+        \n\n  •  **Syntax :** `{cmd}sokab`\
         \n  •  **Function : **Ngeledek orang so kenal so dekat padahal kga kenal goblok\
-        \n\n  •  **Syntax :** `.gembel`\
+        \n\n  •  **Syntax :** `{cmd}gembel`\
         \n  •  **Function : **Ngeledek bapaknya si jamet\
-        \n\n  •  **Syntax :** `.cuih`\
+        \n\n  •  **Syntax :** `{cmd}cuih`\
         \n  •  **Function : **Ngeludahin keluarganya satu satu wkwk\
-        \n\n  •  **Syntax :** `.dih`\
+        \n\n  •  **Syntax :** `{cmd}dih`\
         \n  •  **Function : **Ngeledek anak haram\
-        \n\n  •  **Syntax :** `.gcs`\
+        \n\n  •  **Syntax :** `{cmd}gcs`\
         \n  •  **Function : **Ngeledek gc sampah\
-        \n\n  •  **Syntax :** `.virtual`\
+        \n\n  •  **Syntax :** `{cmd}virtual`\
         \n  •  **Function : **Ngeledek orang pacaran virtual\
-        \n\n**Klo mau Req, kosa kata dari lu Bisa pake Module costum. Ketik** `.help costum`\
+        \n\n**Klo mau Req, kosa kata dari lu Bisa pake Module costum. Ketik** `{cmd}help costum`\
     "
     }
 )

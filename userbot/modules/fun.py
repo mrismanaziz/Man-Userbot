@@ -9,12 +9,13 @@ import time
 import cv2
 import PIL
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 from userbot.utils import progress
 
 
-@register(outgoing=True, pattern=r"^\.honka(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"honka(?: |$)(.*)"))
 async def frg(animu):
     text = animu.pattern_match.group(1)
     if not text:
@@ -36,7 +37,7 @@ async def frg(animu):
     await animu.delete()
 
 
-@register(outgoing=True, pattern=r"^\.rgif(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"rgif(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -78,8 +79,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "rgif": "**Plugin : **`rgif`\
-        \n\n  •  **Syntax :** `.gif` <sambil reply ke media>\
+        "rgif": f"**Plugin : **`rgif`\
+        \n\n  •  **Syntax :** `{cmd}gif` <sambil reply ke media>\
         \n  •  **Function : **Untuk mengubah gambar jadi gif memutar.\
     "
     }
@@ -88,10 +89,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "fun": "**Plugin : **`fun`\
-        \n\n  •  **Syntax :** `.rst` <text>\
+        "fun": f"**Plugin : **`fun`\
+        \n\n  •  **Syntax :** `{cmd}rst` <text>\
         \n  •  **Function : **Untuk membuat stiker teks dengan templat stiker acak.\
-        \n\n  •  **Syntax :** `.honka` <text>\
+        \n\n  •  **Syntax :** `{cmd}honka` <text>\
         \n  •  **Function : **Untuk membuat stiker teks dengan templat stiker Honka bot.\
     "
     }

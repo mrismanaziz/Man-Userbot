@@ -15,11 +15,12 @@ from telethon import types
 from telethon.errors import PhotoInvalidDimensionsError
 from telethon.tl.functions.messages import SendMediaRequest
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.pic(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"pic(?: |$)(.*)"))
 async def on_file_to_photo(pics):
     await pics.edit("`Processing...`")
     await sleep(1.5)
@@ -57,8 +58,8 @@ async def on_file_to_photo(pics):
 
 CMD_HELP.update(
     {
-        "pic": "**Plugin : **`pic`\
-        \n\n  •  **Syntax :** `.pic` <reply ke file document foto>\
+        "pic": f"**Plugin : **`pic`\
+        \n\n  •  **Syntax :** `{cmd}pic` <reply ke file document foto>\
         \n  •  **Function : **Untuk Mengubah Gambar Dokumen apa pun menjadi Gambar Ukuran Penuh.\
     "
     }

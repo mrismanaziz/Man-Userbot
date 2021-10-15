@@ -23,11 +23,13 @@ from youtube_dl.utils import (
 )
 from youtubesearchpython import SearchVideos
 
-from userbot import ALIVE_NAME, CMD_HELP
-from userbot.events import register
+from userbot import ALIVE_NAME
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.fsong (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"fsong (.*)"))
 async def download_video(event):
     await event.edit("`Processing...`")
     url = event.pattern_match.group(1)
@@ -127,8 +129,8 @@ Artis - {}
 
 CMD_HELP.update(
     {
-        "fsong": "**Plugin : **`fsong`\
-        \n\n  •  **Syntax :** `.fsong` <judul lagu>`\
+        "fsong": f"**Plugin : **`fsong`\
+        \n\n  •  **Syntax :** `{cmd}fsong` <judul lagu>`\
         \n  •  **Function : **Untuk Mendownload Lagu.\
     "
     }

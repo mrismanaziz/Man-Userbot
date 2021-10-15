@@ -11,11 +11,12 @@
 import pyfiglet
 from emoji import get_emoji_regexp
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.figlet (\w+) (.+)")
+@bot.on(man_cmd(outgoing=True, pattern=r"figlet (\w+) (.+)"))
 async def figlet(event):
     if event.fwd_from:
         return
@@ -54,8 +55,8 @@ def deEmojify(inputString):
 
 CMD_HELP.update(
     {
-        "figlet": "**Plugin : **`figlet`\
-        \n\n  •  **Syntax :** `.figlet` <style> <text>\
+        "figlet": f"**Plugin : **`figlet`\
+        \n\n  •  **Syntax :** `{cmd}figlet` <style> <text>\
         \n  •  **Function : **Menyesuaikan gaya teks Anda dengan figlet.\
         \n\n  •  **List style :** `slant`, `3d`, `5line`, `alpha`, `banner`, `doh`, `iso`, `letter`, `allig`, `dotm`, `bubble`, `bulb`, `digi`\
     "

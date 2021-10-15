@@ -9,12 +9,13 @@ import re
 from hentai import Hentai, Utils
 from natsort import natsorted
 
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 from userbot.utils import post_to_telegraph
 
 
-@register(outgoing=True, pattern=r"^\.nhentai(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"nhentai(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -93,10 +94,10 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "nhentai": "**Plugin : **`nhentai`\
-        \n\n  •  **Syntax :** `.nhentai` <code atau link>\
+        "nhentai": f"**Plugin : **`nhentai`\
+        \n\n  •  **Syntax :** `{cmd}nhentai` <code atau link>\
         \n  •  **Function : **Melihat nhentai di telegra.ph XD\
-        \n\n  •  **Syntax :** `.nhentai random`>\
+        \n\n  •  **Syntax :** `{cmd}nhentai random`>\
         \n  •  **Function : **Melihat nhentai di telegra.ph XD secara random\
     "
     }

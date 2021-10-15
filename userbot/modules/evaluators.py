@@ -12,13 +12,14 @@ import traceback
 from os import remove
 from pprint import pprint
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 p, pp = print, pprint
 
 
-@register(outgoing=True, pattern=r"^\.eval(?:\s|$)([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"eval(?:\s|$)([\s\S]*)"))
 async def _(event):
     expression = event.pattern_match.group(1)
     if not expression:
@@ -93,7 +94,7 @@ async def _(event):
         await xx.edit(final_output)
 
 
-@register(outgoing=True, pattern=r"^\.exec(?: |$|\n)([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"exec(?: |$|\n)([\s\S]*)"))
 async def run(event):
     """For .exec command, which executes the dynamically created program"""
     code = event.pattern_match.group(1)
@@ -143,7 +144,7 @@ async def run(event):
     await event.edit(f"**Query:**\n`{codepre}`\n\n**Result:**\n`{stdout}`")
 
 
-@register(outgoing=True, pattern=r"^\.term(?: |$|\n)([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"term(?: |$|\n)([\s\S]*)"))
 async def terminal_runner(event):
     """For .term command, runs bash commands and scripts on your server."""
     command = event.pattern_match.group(1)
@@ -182,7 +183,7 @@ async def terminal_runner(event):
     await event.edit(f"**Command:**\n`{command}`\n\n**Result:**\n`{result}`")
 
 
-@register(outgoing=True, pattern=r"^\.json$")
+@bot.on(man_cmd(outgoing=True, pattern=r"json$"))
 async def _(event):
     if event.fwd_from:
         return
@@ -213,8 +214,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "json": "**Plugin : **`json`\
-        \n\n  •  **Syntax :** `.json` <reply ke pesan>\
+        "json": f"**Plugin : **`json`\
+        \n\n  •  **Syntax :** `{cmd}json` <reply ke pesan>\
         \n  •  **Function : **Untuk mendapatkan detail pesan dalam format json.\
     "
     }
@@ -223,8 +224,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "eval": "**Plugin : **`eval`\
-        \n\n  •  **Syntax :** `.eval` <cmd>\
+        "eval": f"**Plugin : **`eval`\
+        \n\n  •  **Syntax :** `{cmd}eval` <cmd>\
         \n  •  **Function : **Evaluasi ekspresi Python dalam argumen skrip yang sedang berjalan\
     "
     }
@@ -233,8 +234,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "exec": "**Plugin : **`exec`\
-        \n\n  •  **Syntax :** `.exec print('hello')`\
+        "exec": f"**Plugin : **`exec`\
+        \n\n  •  **Syntax :** `{cmd}exec print('hello')`\
         \n  •  **Function : **Jalankan skrip python kecil di subproses.\
     "
     }
@@ -243,8 +244,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "term": "**Plugin : **`term`\
-        \n\n  •  **Syntax :** `.term` <cmd>\
+        "term": f"**Plugin : **`term`\
+        \n\n  •  **Syntax :** `{cmd}term` <cmd>\
         \n  •  **Function : **Jalankan perintah dan skrip bash di server Anda.\
     "
     }

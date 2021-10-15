@@ -6,7 +6,7 @@ from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import MessageEntityMentionName
 
 from userbot import ALIVE_NAME, DEVS, bot
-from userbot.events import register
+from userbot.events import man_cmd, register
 
 
 async def get_full_user(event):
@@ -85,7 +85,7 @@ async def handler(tele):
                         return
 
 
-@register(outgoing=True, pattern=r"^\.gband(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"gband(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cgband(?: |$)(.*)")
 async def gben(userbot):
     dc = userbot
@@ -162,7 +162,7 @@ async def gben(userbot):
     )
 
 
-@register(outgoing=True, pattern=r"^\.ungband(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ungband(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cungband(?: |$)(.*)")
 async def gunben(userbot):
     dc = userbot

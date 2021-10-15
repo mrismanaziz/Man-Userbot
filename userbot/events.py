@@ -109,6 +109,17 @@ def command(**args):
             pass
 
     def decorator(func):
+        async def wrapper(check):
+            if check.edit_date and check.is_channel and not check.is_group:
+                return
+            if not LOGSPAMMER:
+                check.chat_id
+            if not trigger_on_fwd and check.fwd_from:
+                return
+
+            if groups_only and not check.is_group:
+                await check.respond("`I don't think this is a group.`")
+                return
         if allow_edited_updates:
             bot.add_event_handler(func, events.MessageEdited(**args))
         bot.add_event_handler(func, events.NewMessage(**args))

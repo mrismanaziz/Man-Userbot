@@ -11,7 +11,8 @@ from random import choice, randint
 from telethon.events import StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from userbot.events import register
+from userbot import bot
+from userbot.events import man_cmd, register
 
 from userbot import (  # noqa pylint: disable=unused-import isort:skip
     AFKREASON,
@@ -46,7 +47,7 @@ afk_start = {}
 # =================================================================
 
 
-@register(outgoing=True, pattern=r"^\.off(?: |$)(.*)", disable_errors=True)
+@bot.on(man_cmd(outgoing=True, pattern=r"off(?: |$)(.*)"))
 async def set_afk(afk_e):
     """For .afk command, allows you to inform people that you are afk when they message you"""
     message = afk_e.text  # pylint:disable=E0602

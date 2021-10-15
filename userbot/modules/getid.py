@@ -1,14 +1,15 @@
 from telethon.utils import pack_bot_file_id
 
-from userbot import CMD_HELP, LOGS
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, LOGS, bot
+from userbot.events import man_cmd
 from userbot.utils import edit_delete, edit_or_reply
 from userbot.utils.logger import logging
 
 LOGS = logging.getLogger(__name__)
 
 
-@register(outgoing=True, pattern=r"^\.(get_id|id)(?:\s|$)([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"^\.(get_id|id)(?:\s|$)([\s\S]*)"))
 async def _(event):
     "To get id of the group or user."
     input_str = event.pattern_match.group(2)
@@ -58,10 +59,10 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "id": "**Plugin : **`id`\
-        \n\n  •  **Syntax :** `.id` <username/reply>\
+        "id": f"**Plugin : **`id`\
+        \n\n  •  **Syntax :** `{cmd}id` <username/reply>\
         \n  •  **Function : **Untuk Mengambil Chat ID obrolan saat ini\
-        \n\n  •  **Syntax :** `.userid` <username/reply>\
+        \n\n  •  **Syntax :** `{cmd}userid` <username/reply>\
         \n  •  **Function : **Untuk Mengambil ID & Username obrolan saat ini\
     "
     }

@@ -11,15 +11,16 @@ from datetime import datetime
 from PIL import Image
 from telegraph import Telegraph, exceptions, upload_file
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 telegraph = Telegraph()
 r = telegraph.create_account(short_name="telegraph")
 auth_url = r["auth_url"]
 
 
-@register(outgoing=True, pattern=r"^\.tg (m|t)$")
+@bot.on(man_cmd(outgoing=True, pattern=r"tg (m|t)$"))
 async def telegraphs(graph):
     """For telegraph command, upload media & text to telegraph site."""
     await graph.edit("`Processing...`")
@@ -92,10 +93,10 @@ def resize_image(image):
 
 CMD_HELP.update(
     {
-        "telegraph": "**Plugin : **`telegraph`\
-        \n\n  •  **Syntax :** `.tg` m\
+        "telegraph": f"**Plugin : **`telegraph`\
+        \n\n  •  **Syntax :** `{cmd}tg` m\
         \n  •  **Function : **Mengunggah m(Media) Ke Telegraph.\
-        \n\n  •  **Syntax :** `.tg` t\
+        \n\n  •  **Syntax :** `{cmd}tg` t\
         \n  •  **Function : **Mengunggah t(Teks) Ke Telegraph.\
     "
     }

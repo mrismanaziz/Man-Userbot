@@ -4,8 +4,9 @@ from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
 
 import userbot.modules.sql_helper.antiflood_sql as sql
-from userbot import CMD_HELP
-from userbot.events import register
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd, register
 from userbot.utils.tools import is_admin
 
 CHAT_FLOOD = sql.__load_flood_settings()
@@ -59,7 +60,7 @@ async def _(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.setflood(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"setflood(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -78,8 +79,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "antiflood": "**Plugin : **`antiflood`\
-        \n\n  •  **Syntax :** `.setflood` [jumlah pesan]\
+        "antiflood": f"**Plugin : **`antiflood`\
+        \n\n  •  **Syntax :** `{cmd}setflood` [jumlah pesan]\
         \n  •  **Function : **memperingatkan pengguna jika dia melakukan spam pada obrolan dan jika Anda adalah admin maka itu akan membisukan dia dalam grup itu.\
         \n\n  •  **NOTE :** Untuk mematikan setflood, atur jumlah pesan menjadi 0 » `.setflood 0`\
     "

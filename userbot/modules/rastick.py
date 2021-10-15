@@ -2,8 +2,9 @@ import random
 import re
 from asyncio import sleep
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 EMOJI_PATTERN = re.compile(
     "["
@@ -26,7 +27,7 @@ def deEmojify(inputString: str) -> str:
     return re.sub(EMOJI_PATTERN, "", inputString)
 
 
-@register(outgoing=True, pattern=r"^\.rst(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"rst(?: |$)(.*)"))
 async def rastick(animu):
     text = animu.pattern_match.group(1)
     if not text:
@@ -121,8 +122,8 @@ async def rastick(animu):
 
 CMD_HELP.update(
     {
-        "rastick": "**Plugin : **`rastick`\
-        \n\n  •  **Syntax :** `.rst`\
+        "rastick": f"**Plugin : **`rastick`\
+        \n\n  •  **Syntax :** `{cmd}rst`\
         \n  •  **Function : **Untuk membuat stiker teks Anda dengan templat stiker acak daro @StickerizerBot\
     "
     }

@@ -7,11 +7,12 @@ from asyncio.exceptions import TimeoutError
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 
-@register(outgoing=True, pattern=r"^\.pdf(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"pdf(?: |$)(.*)"))
 async def _(event):
     if not event.reply_to_msg_id:
         return await event.edit("**Mohon Reply ke teks apa pun**")
@@ -61,8 +62,8 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "pdf": "**Plugin : **`pdf`\
-        \n\n  •  **Syntax :** `.pdf` <reply text>\
+        "pdf": f"**Plugin : **`pdf`\
+        \n\n  •  **Syntax :** `{cmd}pdf` <reply text>\
         \n  •  **Function : **Untuk Mengconvert teks menjadi file PDF menggunakan @office2pdf_bot\
     "
     }

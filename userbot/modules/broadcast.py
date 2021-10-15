@@ -8,13 +8,15 @@ from asyncio import sleep
 
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, LOGS
-from userbot.events import register
+from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, LOGS, bot
+from userbot.events import man_cmd
 from userbot.modules.sql_helper import broadcast_sql as sql
 from userbot.utils import parse_pre
 
 
-@register(outgoing=True, pattern=r"^\.sendto ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"sendto ?(.*)"))
 async def catbroadcast_send(event):
     if event.fwd_from:
         return
@@ -66,7 +68,7 @@ async def catbroadcast_send(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.fwdto ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"fwdto ?(.*)"))
 async def catbroadcast_send(event):
     if event.fwd_from:
         return
@@ -118,7 +120,7 @@ async def catbroadcast_send(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.addto ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"addto ?(.*)"))
 async def catbroadcast_add(event):
     if event.fwd_from:
         return
@@ -154,7 +156,7 @@ async def catbroadcast_add(event):
             )
 
 
-@register(outgoing=True, pattern=r"^\.rmfrom ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"rmfrom ?(.*)"))
 async def catbroadcast_remove(event):
     if event.fwd_from:
         return
@@ -190,7 +192,7 @@ async def catbroadcast_remove(event):
             )
 
 
-@register(outgoing=True, pattern=r"^\.bclist ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"bclist ?(.*)"))
 async def catbroadcast_list(event):
     if event.fwd_from:
         return
@@ -230,7 +232,7 @@ async def catbroadcast_list(event):
     await catevent.edit(finaloutput)
 
 
-@register(outgoing=True, pattern=r"^\.bclistall ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"bclistall ?(.*)"))
 async def catbroadcast_list(event):
     if event.fwd_from:
         return
@@ -246,7 +248,7 @@ async def catbroadcast_list(event):
     await event.efit(resultext)
 
 
-@register(outgoing=True, pattern=r"^\.frmfrom ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"frmfrom ?(.*)"))
 async def catbroadcast_remove(event):
     if event.fwd_from:
         return
@@ -303,7 +305,7 @@ async def catbroadcast_remove(event):
             )
 
 
-@register(outgoing=True, pattern=r"^\.delc ?(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"delc ?(.*)"))
 async def catbroadcast_delete(event):
     if event.fwd_from:
         return
@@ -329,22 +331,22 @@ async def catbroadcast_delete(event):
 
 CMD_HELP.update(
     {
-        "broadcast": "**Plugin : **`broadcast`\
-        \n\n  •  **Syntax :** `.sendto` <category_name>\
+        "broadcast": f"**Plugin : **`broadcast`\
+        \n\n  •  **Syntax :** `{cmd}sendto` <category_name>\
         \n  •  **Function : **akan mengirim pesan balasan ke semua obrolan dalam kategori yang diberikan.\
-        \n\n  •  **Syntax :** `.fwdto` <category_name>\
+        \n\n  •  **Syntax :** `{cmd}fwdto` <category_name>\
         \n  •  **Function : **akan meneruskan pesan yang dibalas ke semua obrolan di kategori berikan. \
-        \n\n  •  **Syntax :** `.addto` <category name>\
+        \n\n  •  **Syntax :** `{cmd}addto` <category name>\
         \n  •  **Function : **Ini akan menambahkan obrolan / pengguna / saluran ini ke kategori nama yang diberikan. \
-        \n\n  •  **Syntax :** `.rmfrom` <category name>\
+        \n\n  •  **Syntax :** `{cmd}rmfrom` <category name>\
         \n  •  **Function : **Untuk menghapus Obrolan / pengguna / saluran dari nama kategori yang diberikan. \
-        \n\n  •  **Syntax :** `.bclist` <category_name>\
+        \n\n  •  **Syntax :** `{cmd}bclist` <category_name>\
         \n  •  **Function : **Akan menampilkan daftar semua obrolan dalam kategori yang diberikan. \
-        \n\n  •  **Syntax :** `.bclistall`\
+        \n\n  •  **Syntax :** `{cmd}bclistall`\
         \n  •  **Function : **Akan menampilkan daftar semua nama kategori. \
-        \n\n  •  **Syntax :** `.frmfrom` <category_name/chat_id>\
+        \n\n  •  **Syntax :** `{cmd}frmfrom` <category_name/chat_id>\
         \n  •  **Function : **Untuk memaksa menghapus chat_id yang diberikan dari nama kategori yang diberikan berguna ketika Anda meninggalkan obrolan itu atau melarang Anda di sana \
-        \n\n  •  **Syntax :** `.delc` <category_name>\
+        \n\n  •  **Syntax :** `{cmd}delc` <category_name>\
         \n  •  **Function : **Menghapus kategori sepenuhnya di database \
     "
     }

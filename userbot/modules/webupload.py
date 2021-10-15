@@ -5,13 +5,16 @@
 import asyncio
 import time
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import register
+from userbot.events import man_cmd
 
 
-@register(
-    outgoing=True,
-    pattern=r"^\.webupload ?(.+?|) (?:--)(anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles)",
+@bot.on(
+    man_cmd(
+        outgoing=True,
+        pattern=r"webupload ?(.+?|) (?:--)(anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles)",
+    )
 )
 async def _(event):
     if event.fwd_from:
@@ -49,9 +52,9 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "webupload": "**Plugin : **`webupload`\
-        \n\n  •  **Syntax :** `.webupload --`(`anonfiles`|`transfer`|`filebin`|`anonymousfiles`|`megaupload`|`bayfiles`)\
-        \n  •  **Function : **Reply `.webupload --anonfiles` or `.webupload --filebin` and the file will be uploaded to that website. \
+        "webupload": f"**Plugin : **`webupload`\
+        \n\n  •  **Syntax :** `{cmd}webupload --`(`anonfiles`|`transfer`|`filebin`|`anonymousfiles`|`megaupload`|`bayfiles`)\
+        \n  •  **Function : **Reply `{cmd}webupload --anonfiles` or `.webupload --filebin` dan file akan diunggah ke situs web itu. \
     "
     }
 )

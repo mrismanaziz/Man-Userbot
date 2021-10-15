@@ -13,10 +13,11 @@ from pytz import country_timezones as c_tz
 from pytz import timezone as tz
 from requests import get
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot import OPEN_WEATHER_MAP_APPID as OWM_API
-from userbot import WEATHER_DEFCITY
-from userbot.events import register
+from userbot import WEATHER_DEFCITY, bot
+from userbot.events import man_cmd
 
 # ===== CONSTANT =====
 DEFCITY = WEATHER_DEFCITY or None
@@ -36,7 +37,7 @@ async def get_tz(con):
         return
 
 
-@register(outgoing=True, pattern=r"^\.weather(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"weather(?: |$)(.*)"))
 async def get_weather(weather):
     """For .weather command, gets the current weather of a city."""
 
@@ -142,10 +143,10 @@ async def get_weather(weather):
 
 CMD_HELP.update(
     {
-        "weather": "**Plugin : **`weather`\
-        \n\n  •  **Syntax :** `.weather` <city> or `.weather` <city>, <country name/code>\
+        "weather": f"**Plugin : **`weather`\
+        \n\n  •  **Syntax :** `{cmd}weather` <city> or `.weather` <city>, <country name/code>\
         \n  •  **Function : **Untuk Mendapat informasi cuaca kota.\
-        \n\n  •  **Syntax : **`.weather anon` \
+        \n\n  •  **Syntax : **`{cmd}weather anon` \
         \n  •  **Function : **Untuk Mendapat informasi cuaca kota, dan menghilangkan detail lokasi di hasil. (Ini membutuhkan var WEATHER_DEFCITY untuk disetel)\
     "
     }

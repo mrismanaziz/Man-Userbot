@@ -16,6 +16,7 @@ from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
+from userbot import CMD_HANDLER as cmd
 from userbot import (
     CMD_HELP,
     DEEZER_ARL_TOKEN,
@@ -24,7 +25,7 @@ from userbot import (
     bot,
     lastfm,
 )
-from userbot.events import register
+from userbot.events import man_cmd
 from userbot.utils import chrome, progress
 from userbot.utils.FastTelethon import upload_file
 
@@ -56,7 +57,7 @@ async def getmusicvideo(cat):
     os.system(command)
 
 
-@register(outgoing=True, pattern=r"^\.song (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"song (.*)"))
 async def _(event):
     event.message.id
     if event.reply_to_msg_id:
@@ -95,7 +96,7 @@ async def _(event):
     subprocess.check_output("rm -rf *.mp3", shell=True)
 
 
-@register(outgoing=True, pattern=r"^\.vsong(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"vsong(?: |$)(.*)"))
 async def _(event):
     event.message.id
     if event.reply_to_msg_id:
@@ -171,7 +172,7 @@ async def _(event):
         return
 
 
-@register(outgoing=True, pattern=r"^\.smd (?:(now)|(.*) - (.*))")
+@bot.on(man_cmd(outgoing=True, pattern=r"smd (?:(now)|(.*) - (.*))"))
 async def _(event):
     if event.fwd_from:
         return
@@ -218,7 +219,7 @@ async def _(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.net (?:(now)|(.*) - (.*))")
+@bot.on(man_cmd(outgoing=True, pattern=r"net (?:(now)|(.*) - (.*))"))
 async def _(event):
     if event.fwd_from:
         return
@@ -262,7 +263,7 @@ async def _(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.mhb(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"mhb(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -295,7 +296,9 @@ async def _(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.deez (.+?|) (FLAC|MP3\_320|MP3\_256|MP3\_128)")
+@bot.on(
+    man_cmd(outgoing=True, pattern=r"deez (.+?|) (FLAC|MP3\_320|MP3\_256|MP3\_128)")
+)
 async def _(event):
     """DeezLoader by @An0nimia. Ported for UniBorg by @SpEcHlDe"""
     if event.fwd_from:
@@ -457,18 +460,18 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "getmusic": "**Plugin : **`getmusic`\
-        \n\n  •  **Syntax :** `smd` <nama lagu>\
+        "getmusic": f"**Plugin : **`getmusic`\
+        \n\n  •  **Syntax :** `{cmd}smd` <nama lagu>\
         \n  •  **Function : **Mendowload lagu dari bot @SpotifyMusicDownloaderBot\
-        \n\n  •  **Syntax :** `.smd now`\
+        \n\n  •  **Syntax :** `{cmd}smd now`\
         \n  •  **Function : **Unduh penggunaan scrobble LastFM saat ini dari bot @SpotifyMusicDownloaderBot\
-        \n\n  •  **Syntax :** `.net` <nama lagu>\
+        \n\n  •  **Syntax :** `{cmd}net` <nama lagu>\
         \n  •  **Function : **Mendowload lagu dari bot @WooMaiBot\
-        \n\n  •  **Syntax :** `.net now`\
+        \n\n  •  **Syntax :** `{cmd}net now`\
         \n  •  **Function : **Unduh penggunaan scrobble LastFM saat ini dari bot @WooMaiBot\
-        \n\n  •  **Syntax :** `.mhb` <Link Spotify/Deezer>\
+        \n\n  •  **Syntax :** `{cmd}mhb` <Link Spotify/Deezer>\
         \n  •  **Function : **Mendowload lagu dari Spotify atau Deezer dari bot @MusicsHunterBot\
-        \n\n  •  **Syntax :** `.deez` <link spotify/deezer> FORMAT\
+        \n\n  •  **Syntax :** `{cmd}deez` <link spotify/deezer> FORMAT\
         \n  •  **Function : **Mendowload lagu dari deezer atau spotify.\
         \n  •  **Format   : ** `FLAC`, `MP3_320`, `MP3_256`, `MP3_128`.\
     "
