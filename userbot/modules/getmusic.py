@@ -123,15 +123,9 @@ async def _(event):
     try:
         loa = l[0]
         metadata = extractMetadata(createParser(loa))
-        duration = 0
-        width = 0
-        height = 0
-        if metadata.has("duration"):
-            duration = metadata.get("duration").seconds
-        if metadata.has("width"):
-            width = metadata.get("width")
-        if metadata.has("height"):
-            height = metadata.get("height")
+        duration = metadata.get("duration").seconds if metadata.has("duration") else 0
+        width = metadata.get("width") if metadata.has("width") else 0
+        height = metadata.get("height") if metadata.has("height") else 0
         os.system("cp *mp4 thumb.mp4")
         os.system("ffmpeg -i thumb.mp4 -vframes 1 -an -s 480x360 -ss 5 thumb.jpg")
         thumb_image = "thumb.jpg"
@@ -403,15 +397,9 @@ async def _(event):
 
 async def upload_track(track_location, message):
     metadata = extractMetadata(createParser(track_location))
-    duration = 0
-    title = ""
-    performer = ""
-    if metadata.has("duration"):
-        duration = metadata.get("duration").seconds
-    if metadata.has("title"):
-        title = metadata.get("title")
-    if metadata.has("artist"):
-        performer = metadata.get("artist")
+    duration = metadata.get("duration").seconds if metadata.has("duration") else 0
+    title = metadata.get("title") if metadata.has("title") else ""
+    performer = metadata.get("artist") if metadata.has("artist") else ""
     document_attributes = [
         DocumentAttributeAudio(
             duration=duration,

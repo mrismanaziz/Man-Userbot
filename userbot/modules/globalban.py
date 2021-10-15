@@ -289,19 +289,18 @@ async def _(event):
     if event.user_joined or event.added_by:
         user = await event.get_user()
         chat = await event.get_chat()
-        if gban_sql.is_gbanned(user.id):
-            if chat.admin_rights:
-                try:
-                    await event.client.edit_permissions(
-                        chat.id,
-                        user.id,
-                        view_messages=False,
-                    )
-                    await event.reply(
-                        f"**#GBanned_User** Joined.\n\n** • First Name:** [{user.first_name}](tg://user?id={user.id})\n • **Action:** `Banned`"
-                    )
-                except BaseException:
-                    pass
+        if gban_sql.is_gbanned(user.id) and chat.admin_rights:
+            try:
+                await event.client.edit_permissions(
+                    chat.id,
+                    user.id,
+                    view_messages=False,
+                )
+                await event.reply(
+                    f"**#GBanned_User** Joined.\n\n** • First Name:** [{user.first_name}](tg://user?id={user.id})\n • **Action:** `Banned`"
+                )
+            except BaseException:
+                pass
 
 
 # Ported by @mrismanaziz
