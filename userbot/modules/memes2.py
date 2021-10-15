@@ -25,7 +25,7 @@ async def gey(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"bot$"))
-async def bot(e):
+async def _(e):
     await e.edit(
         "` \n   ╲╲╭━━━━╮ \n╭╮┃▆┈┈▆┃╭╮ \n┃╰┫▽▽▽┣╯┃ \n╰━┫△△△┣━╯`"
         "`\n╲╲┃┈┈┈┈┃  \n╲╲┃┈┏┓┈┃ `"
