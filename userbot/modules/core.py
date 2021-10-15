@@ -9,21 +9,29 @@ import sys
 from pathlib import Path
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEVS, LOGS, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot import CMD_HELP, LOGS, bot
 from userbot.events import man_cmd
-from userbot.utils import edit_or_reply
+from userbot.utils import edit_or_reply, reply_id
 
 DELETE_TIMEOUT = 5
-thumb_image_path = os.path.join(TEMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
-async def reply_id(event):
-    reply_to_id = None
-    if event.sender_id in DEVS:
-        reply_to_id = event.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
-    return reply_to_id
+def remove_plugin(shortname):
+    try:
+        try:
+            for i in CMD_HELP[shortname]:
+                bot.remove_event_handler(i)
+            del CMD_HELP[shortname]
+
+        except BaseException:
+            name = f"userbot.modules.{shortname}"
+
+            for i in reversed(range(len(bot._event_builders))):
+                ev, cb = bot._event_builders[i]
+                if cb.__module__ == name:
+                    del bot._event_builders[i]
+    except BaseException:
+        raise ValueError
 
 
 def load_module(shortname):
@@ -85,7 +93,6 @@ async def _(event):
 @bot.on(man_cmd(outgoing=True, pattern=r"psend ([\s\S]*)"))
 async def send(event):
     reply_to_id = await reply_id(event)
-    thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
     input_str = event.pattern_match.group(1)
     the_plugin_file = f"./userbot/modules/{input_str}.py"
     if os.path.exists(the_plugin_file):
@@ -93,9 +100,9 @@ async def send(event):
             event.chat_id,
             the_plugin_file,
             force_document=True,
+            thumb="userbot/resources/logo.jpg",
             allow_cache=False,
             reply_to=reply_to_id,
-            thumb=thumb,
             caption=f"➠ **Nama Plugin:** `{input_str}`",
         )
         await event.delete()
@@ -103,12 +110,28 @@ async def send(event):
         await edit_or_reply(event, "**ERROR: Modules Tidak ditemukan**")
 
 
+@bot.on(man_cmd(outgoing=True, pattern=r"uninstall (?P<shortname>\w+)"))
+async def uninstall(event):
+    if event.fwd_from:
+        return
+    shortname = event.pattern_match["shortname"]
+    dir_path = f"./userbot/modules/{shortname}.py"
+    try:
+        remove_plugin(shortname)
+        os.remove(dir_path)
+        await event.edit(f"**Berhasil Menghapus Modules** `{shortname}`")
+    except OSError as e:
+        await event.edit("**ERROR:** `%s` : %s" % (dir_path, e.strerror))
+
+
 CMD_HELP.update(
     {
-        "core": f"**Plugin : **`core`\
-        \n\n  •  **Syntax :** `{cmd}install` <reply ke file module>\
-        \n  •  **Function : **Untuk Menginstall plugins userbot secara instan.\
-        \n\n  •  **Syntax :** `{cmd}psend` <nama module>\
+        "core": "**Plugin : **`core`\
+        \n\n  •  **Syntax :** `.install` <reply ke file module>\
+        \n  •  **Function : **Untuk Menginstall module userbot secara instan.\
+        \n\n  •  **Syntax :** `.uninstall` <nama module>\
+        \n  •  **Function : **Untuk Menguninstall / Menghapus module userbot secara instan.\
+        \n\n  •  **Syntax :** `.psend` <nama module>\
         \n  •  **Function : **Untuk Mengirim module userbot secara instan.\
     "
     }
