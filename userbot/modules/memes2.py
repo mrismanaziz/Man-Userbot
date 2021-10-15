@@ -1,18 +1,8 @@
-import os
-import urllib
-from asyncio import sleep
-from collections import deque
-from random import choice, getrandbits, randint
+from random import choice
 from re import sub
 
-import requests
-from cowpy import cow
-
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import bot
 from userbot.events import man_cmd, register
-from userbot.modules.admin import get_user_from_event
-from userbot.utils import edit_delete
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"gey$"))
