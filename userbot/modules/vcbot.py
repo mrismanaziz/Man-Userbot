@@ -112,14 +112,17 @@ async def resume_musik(event):
 @bot.on(man_cmd(outgoing=True, pattern="skip$"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cskip$")
 async def skip_musik(event):
+    global LAGI_MUTER, NAMA_GC
     chat_id = event.chat_id
     if not (LAGI_MUTER and NAMA_GC):
-        return await edit_or_reply(event, "**Tidak ada lagu yang sedang diputar!**")
+        await edit_or_reply(event, "**Tidak ada lagu yang sedang diputar!**")
     else:
         queues.task_done(chat_id)
         if queues.is_empty(chat_id):
+            LAGI_MUTER = False
+            NAMA_GC = ""
             await call_py.leave_group_call(chat_id)
-            await edit_or_reply(event, "**Memberhentikan lagu.**")
+            return await edit_or_reply(event, "**Memberhentikan lagu.**")
         else:
             await call_py.change_stream(
                 chat_id,
@@ -135,8 +138,8 @@ async def skip_musik(event):
 @bot.on(man_cmd(outgoing=True, pattern="end$"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cend$")
 async def stop_musik(event):
-    chat_id = event.chat_id
     global LAGI_MUTER, NAMA_GC
+    chat_id = event.chat_id
     if not (LAGI_MUTER and NAMA_GC):
         return await edit_or_reply(event, "**Tidak ada lagu yang sedang diputar!**")
     try:
