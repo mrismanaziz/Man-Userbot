@@ -4,7 +4,7 @@
   "logo": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
   "keywords": ["telegram", "userbot", "man-userbot", "modular", "python"],
   "repository": "https://github.com/mrismanaziz/Man-Userbot",
-  "telegram": "https://t.me/mrismanaziz",
+  "telegram": ["https://t.me/mrismanaziz", "https://t.me/tofik_dn"],
   "success_url": "https://t.me/Lunatic0de",
   "stack": "container",
   "env": {
@@ -72,6 +72,9 @@
   "buildpacks": [
     {
       "url": "heroku/python"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
     }
   ],
   "formation": {
