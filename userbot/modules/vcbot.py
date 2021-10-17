@@ -4,6 +4,7 @@
 # t.me/SharingUserbot & t.me/Lunatic0de
 
 from asyncio import QueueEmpty
+
 from pytgcalls.types import Update
 from pytgcalls.types.input_stream import InputAudioStream, InputStream
 from telethon.tl import types

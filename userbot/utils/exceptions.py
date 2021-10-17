@@ -16,7 +16,6 @@
 
 class CancelProcess(Exception):
     """Cancel Process"""
-    pass
 
 
 class FFmpegReturnCodeError(Exception):
