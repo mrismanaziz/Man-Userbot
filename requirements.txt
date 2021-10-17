@@ -1,6 +1,7 @@
 aiofiles
 aiohttp[speedups]
 async_generator
+asyncurban
 beautifulsoup4
 bitlyshortener
 bs4
@@ -42,10 +43,10 @@ nekos.py
 oauth2client
 opencv-python
 pendulum
-Pillow
+pillow
 psutil
-psycopg2
 psycopg2-binary
+py-tgcalls==0.8.1rc1
 pyaztro
 pybase64
 pyfiglet
@@ -82,6 +83,7 @@ wand
 wget
 wikipedia
 wordcloud
+yt-dlp
 youtube-dl
 youtube-search
 youtube-search-python
