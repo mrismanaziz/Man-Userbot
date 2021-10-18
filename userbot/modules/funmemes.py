@@ -4,18 +4,19 @@
 import asyncio
 from collections import deque
 
-from telethon import events
 from telethon.errors.rpcerrorlist import MessageIdInvalidError
 
-from userbot import ALIVE_NAME, CMD_HELP, bot
-from userbot.events import register
+from userbot import ALIVE_NAME
+from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -52,7 +53,7 @@ async def _(event):
             await event.edit(animation_chars[i % 103])
 
 
-@register(outgoing=True, pattern=r"^\.earth(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"earth(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -63,7 +64,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@bot.on(events.NewMessage(pattern=r"\.bombs", outgoing=True))
+@bot.on(man_cmd(pattern=r"bombs", outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -94,7 +95,7 @@ async def _(event):
 """Available Commands: .gift"""
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -138,7 +139,7 @@ async def _(event):
             await event.edit(animation_chars[i % 17])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -177,7 +178,7 @@ async def _(event):
             await event.edit(animation_chars[i % 12])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -212,7 +213,7 @@ async def _(event):
             await event.edit(animation_chars[i % 103])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -236,7 +237,7 @@ async def _(event):
             "`Loading Hackintosh... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
             "`Loading Hackintosh... 84%\n█████████████████████▒▒▒▒ `",
             "`Loading Hackintosh... 100%\n█████████████████████████ `",
-            "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Hackintosh`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
+            "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Hackintosh`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
         ]
 
         animation_interval = 0.5
@@ -250,7 +251,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -274,7 +275,7 @@ async def _(event):
             "`Loading Windows 10... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
             "`Loading Windows 10... 84%\n█████████████████████▒▒▒▒ `",
             "`Loading Windows 10... 100%\n█████████████████████████ `",
-            "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Windows 10`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
+            "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Windows 10`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
         ]
 
         animation_interval = 0.5
@@ -288,7 +289,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -312,7 +313,7 @@ async def _(event):
             "`Loading Linux... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
             "`Loading Linux... 84%\n█████████████████████▒▒▒▒ `",
             "`Loading Linux... 100%\n█████████████████████████ `",
-            "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Linux`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
+            "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Linux`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
         ]
 
         animation_interval = 0.5
@@ -326,7 +327,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -350,7 +351,7 @@ async def _(event):
             "`Loading Symbian OS... 52%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
             "`Loading Symbian OS... 84%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
             "`Loading Symbian OS... 100%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-            "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Symbian OS`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
+            "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Symbian OS`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
         ]
 
         animation_interval = 0.5
@@ -364,7 +365,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -398,7 +399,7 @@ async def _(event):
             await event.edit(animation_chars[i % 7])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -449,7 +450,7 @@ async def _(event):
             await event.edit(animation_chars[i % 24])
 
 
-@register(outgoing=True, pattern=r"^\.gangstar(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"gangstar(?: |$)(.*)"))
 async def _(event):
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
         await event.edit("EVERyBOdy")
@@ -469,7 +470,7 @@ async def _(event):
         await event.edit("EVERyBOdy wAs GanGeSTar UNtIL I ArRivEd 😎😎😎")
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -507,7 +508,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -549,7 +550,7 @@ async def _(event):
             await event.edit(animation_chars[i % 15])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -591,7 +592,7 @@ async def _(event):
             await event.edit(animation_chars[i % 15])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -752,7 +753,7 @@ async def _(event):
             await event.edit(animation_chars[i % 549755813888])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -790,7 +791,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -828,7 +829,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -866,7 +867,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@register(outgoing=True, pattern="^.plane(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"plane(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -889,7 +890,7 @@ async def _(event):
     await event.delete()
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -935,7 +936,7 @@ async def _(event):
             await event.edit(animation_chars[i % 19])
 
 
-@register(outgoing=True, pattern=r"^\.dump(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"dump(?: |$)(.*)"))
 async def _(message):
     try:
         obj = message.pattern_match.group(1)
@@ -974,7 +975,7 @@ async def _(message):
                 return
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1021,7 +1022,7 @@ async def _(event):
             await event.edit(animation_chars[i % 20])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1063,7 +1064,7 @@ async def _(event):
             await event.edit(animation_chars[i % 17])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1117,7 +1118,7 @@ async def _(event):
             await event.edit(animation_chars[i % 27])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -1171,7 +1172,7 @@ async def _(event):
             await event.edit(animation_chars[i % 72])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -1194,7 +1195,7 @@ async def _(event):
             await event.edit(animation_chars[i % 5])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1232,7 +1233,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1277,7 +1278,7 @@ async def _(event):
             await event.edit(animation_chars[i % 18])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1320,7 +1321,7 @@ async def _(event):
             await event.edit(animation_chars[i % 16])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1346,7 +1347,7 @@ async def _(event):
             await event.edit(animation_chars[i % 4])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1372,7 +1373,7 @@ async def _(event):
             await event.edit(animation_chars[i % 4])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1398,7 +1399,7 @@ async def _(event):
             await event.edit(animation_chars[i % 4])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1424,7 +1425,7 @@ async def _(event):
             await event.edit(animation_chars[i % 4])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1450,7 +1451,7 @@ async def _(event):
             await event.edit(animation_chars[i % 4])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1486,7 +1487,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1519,7 +1520,7 @@ async def _(event):
             await event.edit(animation_chars[i % 6])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1545,7 +1546,7 @@ async def _(event):
             await event.edit(animation_chars[i % 6])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1585,7 +1586,7 @@ async def _(event):
             await event.edit(animation_chars[i % 14])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1624,7 +1625,7 @@ async def _(event):
             await event.edit(animation_chars[i % 13])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1666,7 +1667,7 @@ async def _(event):
             await event.edit(animation_chars[i % 15])
 
 
-@bot.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
 
     if event.fwd_from:
@@ -1702,7 +1703,7 @@ async def _(event):
             await event.edit(animation_chars[i % 103])
 
 
-@register(outgoing=True, pattern="^.kiss(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"kiss(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -1715,65 +1716,65 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "memes": "`.eye`\
+        "memes": f"`{cmd}eye`\
 \nUsage: Lihat Sendiri.\
-\n\n`.earth`\
+\n\n`{cmd}earth`\
 \nusage: Memutar Bumi 🌎🌎\
-\n\n`.bombs`\
+\n\n`{cmd}bombs`\
 \nUsage: Bom Telegram🤣🤣\
-\n\n`.think`\
+\n\n`{cmd}think`\
 \nUsage: hmmm berpikir\
-\n\n`.gotm` atau `.gott`\
+\n\n`{cmd}gotm` atau `.gott`\
 \nUsage: dapatkan sucks🤣\
-\n\n`.snake`\
+\n\n`{cmd}snake`\
 \nUsage: Lihat Sendiri\
-\n\n`.call`\
+\n\n`{cmd}call`\
 \nUsage: Memanggil Owner Telegram \
-\n\n`.admeme`\
+\n\n`{cmd}admeme`\
 \nUsage: mememememe\
-\n\n`.qs`\
+\n\n`{cmd}qs`\
 \nUsage: Memulai Percakapan\
-\n\n`.wtf`\
+\n\n`{cmd}wtf`\
 \nUsage: Lihat Sendiri\
-\n\n`.load`,`.up`,`.square`,`.round`,`.heart`,`.monkey`,`.anim`,`.hand`,`.fnl`,`.cnt`,`.kiss`\
+\n\n`{cmd}load`,`{cmd}up`,`{cmd}square`,`{cmd}round`,`{cmd}heart`,`{cmd}monkey`,`{cmd}anim`,`{cmd}hand`,`{cmd}fnl`,`{cmd}cnt`,`{cmd}kiss`\
 \nUsage: Lihat Sendiri\
-\n\n`.human`\
+\n\n`{cmd}human`\
 \nUsage: Tidak Ada Yang Menarik\
-\n\n`.wupload`\
+\n\n`{cmd}wupload`\
 \nUsage: meh\
-\n\n`.music`\
+\n\n`{cmd}music`\
 \nUsage: music player\
-\n\n`.fleave`\
+\n\n`{cmd}fleave`\
 \nUsage: Keluar boong an\
-\n\n`.fadmin`\
+\n\n`{cmd}fadmin`\
 \nUsage: Jadi Admin Fake  🤣🤣\
-\n\n`.gift`\
+\n\n`{cmd}gift`\
 \nUsage: Memberi Hadiah Tapi Aku Tidak Mau Member Tau Apa Dalamnya!\
-\n\n`.police`\
+\n\n`{cmd}police`\
 \nUsage: Waktunya Ke Penjara.\
-\n\n`.kill`\
+\n\n`{cmd}kill`\
 \nUsage: Untuk Membunuh Musuh Secara Online:v\
-\n\n`.os`\
+\n\n`{cmd}os`\
 \nUsage: Lihat Sendiri.\
-\n\n`.isro`\
+\n\n`{cmd}isro`\
 \nUsage: Untuk Memanggil Alien 👽\
-\n\n`.gangstar`\
+\n\n`{cmd}gangstar`\
 \nUsage: Anda Menjadi Gangstar.\
-\n\n`.hack`\
+\n\n`{cmd}hack`\
 \nUsage: Untuk Hack Telegram:v\
-\n\n`.dump`\
+\n\n`{cmd}dump`\
 \nUsage: xD\
-\n\n`.hypno`\
+\n\n`{cmd}hypno`\
 \nUsage: Ah Sial Mataku 👀\
-\n\n`.whatsapp`\
+\n\n`{cmd}whatsapp`\
 \nUsage: Untuk Hack Whatsapp:v \
-\n\n`.solar`\
+\n\n`{cmd}solar`\
 \nUsage: System Solar Kita Yang Cantik 🌞🌞\
-\n\n`.quickheal` atau `.sqh` atau `.vquickheal`\
+\n\n`{cmd}quickheal` atau `{cmd}sqh` atau `{cmd}vquickheal`\
 \nUsage: Virus Ditemukan, Hapus Itu Menggunakan Ini:v\
-\n\n`.plane`\
+\n\n`{cmd}plane`\
 \nUsage: Untuk Berkeliling Di Satu Tempat✈️\
-\n\n`.jio`\
+\n\n`{cmd}jio`\
 \nUsage: Jaringan Mu Lambat?? Boost Menggunakan Ini\
 \n\n\n Selamat Bersenang-Senang Kawan:v"
     }

@@ -10,12 +10,13 @@ import time
 
 from telethon.tl.types import DocumentAttributeFilename
 
+from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import register
+from userbot.events import man_cmd
 from userbot.utils import progress
 
 
-@register(outgoing=True, pattern=r"^\.ssvideo(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ssvideo(?: |$)(.*)"))
 async def ssvideo(event):
     if not event.reply_to_msg_id:
         await event.edit("`Reply to any media..`")
@@ -71,8 +72,8 @@ async def ssvideo(event):
 
 CMD_HELP.update(
     {
-        "ssvideo": "**Plugin : **`ssvideo`\
-        \n\n  •  **Syntax :** `.ssvideo <frame>`\
+        "ssvideo": f"**Plugin : **`ssvideo`\
+        \n\n  •  **Syntax :** `{cmd}ssvideo <frame>`\
         \n  •  **Function : **Untuk Screenshot video dari frame per frame\
     "
     }

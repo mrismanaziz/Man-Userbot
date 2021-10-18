@@ -53,9 +53,9 @@ from youtube_dl.utils import (
 )
 from youtube_search import YoutubeSearch
 
+from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import CMD_HANDLER as cmd
 from userbot import (
-    BOTLOG,
-    BOTLOG_CHATID,
     CMD_HELP,
     LOGS,
     OCR_SPACE_API_KEY,
@@ -63,7 +63,7 @@ from userbot import (
     TEMP_DOWNLOAD_DIRECTORY,
     bot,
 )
-from userbot.events import register
+from userbot.events import man_cmd
 from userbot.utils import (
     chrome,
     edit_delete,
@@ -97,14 +97,14 @@ async def ocr_space_file(
     return r.json()
 
 
-@register(outgoing=True, pattern=r"^\.crblang (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"crblang (.*)"))
 async def setlang(prog):
     global CARBONLANG
     CARBONLANG = prog.pattern_match.group(1)
     await prog.edit(f"Bahasa untuk carbon.now.sh mulai {CARBONLANG}")
 
 
-@register(outgoing=True, pattern="^.carbon")
+@bot.on(man_cmd(outgoing=True, pattern="carbon"))
 async def carbon_api(e):
     """A Wrapper for carbon.now.sh"""
     await e.edit("`Processing..`")
@@ -168,7 +168,7 @@ async def carbon_api(e):
     await e.delete()  # Deleting msg
 
 
-@register(outgoing=True, pattern=r"^\.img (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"img (.*)"))
 async def img_sampler(event):
     """For .img command, search and return images matching the query."""
     await event.edit("`Sedang Mencari Gambar Yang Anda Cari...`")
@@ -200,7 +200,7 @@ async def img_sampler(event):
     await event.delete()
 
 
-@register(outgoing=True, pattern=r"^\.currency ([\d\.]+) ([a-zA-Z]+) ([a-zA-Z]+)")
+@bot.on(man_cmd(outgoing=True, pattern=r"currency ([\d\.]+) ([a-zA-Z]+) ([a-zA-Z]+)"))
 async def moni(event):
     c_from_val = float(event.pattern_match.group(1))
     c_from = (event.pattern_match.group(2)).upper()
@@ -222,7 +222,7 @@ async def moni(event):
     await event.edit(f"**{c_from_val} {c_from} = {c_to_val} {c_to}**")
 
 
-@register(outgoing=True, pattern=r"^\.google ([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"google ([\s\S]*)"))
 async def gsearch(q_event):
     man = await edit_or_reply(q_event, "`Processing...`")
     match = q_event.pattern_match.group(1)
@@ -278,7 +278,7 @@ async def gsearch(q_event):
     )
 
 
-@register(outgoing=True, pattern=r"^\.wiki (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"wiki (.*)"))
 async def wiki(wiki_q):
     """For .wiki command, fetch content from Wikipedia."""
     match = wiki_q.pattern_match.group(1)
@@ -307,7 +307,7 @@ async def wiki(wiki_q):
     await wiki_q.edit("**Search:**\n`" + match + "`\n\n**Result:**\n" + result)
 
 
-@register(outgoing=True, pattern=r"^\.ud (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"ud (.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -325,7 +325,7 @@ async def _(event):
         await event.edit("Tidak ada hasil untuk **" + word + "**")
 
 
-@register(outgoing=True, pattern=r"^\.tts(?: |$)([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"tts(?: |$)([\s\S]*)"))
 async def text_to_speech(query):
     """For .tts command, a wrapper for Google Text-to-Speech."""
     textx = await query.get_reply_message()
@@ -364,7 +364,7 @@ async def text_to_speech(query):
         await query.delete()
 
 
-@register(outgoing=True, pattern=r"^\.tr(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"tr(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -396,7 +396,7 @@ async def _(event):
         await event.edit(str(exc))
 
 
-@register(pattern=r"\.lang (tr|tts) (.*)", outgoing=True)
+@bot.on(man_cmd(pattern=r"\.lang (tr|tts) (.*)", outgoing=True))
 async def lang(value):
     """For .lang command, change the default langauge of userbot scrapers."""
     util = value.pattern_match.group(1).lower()
@@ -434,7 +434,7 @@ async def lang(value):
         )
 
 
-@register(outgoing=True, pattern=r"^\.yt (\d*) *(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"yt (\d*) *(.*)"))
 async def yt_search(video_q):
     """For .yt command, do a YouTube search from Telegram."""
     if video_q.pattern_match.group(1) != "":
@@ -474,7 +474,7 @@ async def yt_search(video_q):
     await video_q.edit(output, link_preview=False)
 
 
-@register(outgoing=True, pattern=r".yt(audio|video) (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r".yt(audio|video) (.*)"))
 async def download_video(v_url):
     """For .yt command, download media from YouTube and many other sites."""
     dl_type = v_url.pattern_match.group(1).lower()
@@ -645,7 +645,7 @@ def deEmojify(inputString):
     return get_emoji_regexp().sub("", inputString)
 
 
-@register(outgoing=True, pattern=r"^\.rbg(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"rbg(?: |$)(.*)"))
 async def kbg(remob):
     """For .rbg command, Remove Image Background."""
     if REM_BG_API_KEY is None:
@@ -734,7 +734,7 @@ async def ReTrieveURL(input_url):
     )
 
 
-@register(pattern=r"^\.ocr (.*)", outgoing=True)
+@bot.on(man_cmd(pattern=r"ocr (.*)", outgoing=True))
 async def ocr(event):
     if not OCR_SPACE_API_KEY:
         return await event.edit(
@@ -759,7 +759,7 @@ async def ocr(event):
     os.remove(downloaded_file_name)
 
 
-@register(pattern=r"^\.decode$", outgoing=True)
+@bot.on(man_cmd(pattern=r"decode$", outgoing=True))
 async def parseqr(qr_e):
     """For .decode command, get QR Code/BarCode content from the replied photo."""
     downloaded_file_name = await qr_e.client.download_media(
@@ -794,7 +794,7 @@ async def parseqr(qr_e):
     await qr_e.edit(qr_contents)
 
 
-@register(pattern=r"^\.barcode(?: |$)([\s\S]*)", outgoing=True)
+@bot.on(man_cmd(pattern=r"barcode(?: |$)([\s\S]*)", outgoing=True))
 async def bq(event):
     """For .barcode command, genrate a barcode containing the given content."""
     await event.edit("`Processing..`")
@@ -829,7 +829,7 @@ async def bq(event):
     await event.delete()
 
 
-@register(pattern=r"^\.makeqr(?: |$)([\s\S]*)", outgoing=True)
+@bot.on(man_cmd(pattern=r"makeqr(?: |$)([\s\S]*)", outgoing=True))
 async def make_qr(makeqr):
     """For .makeqr command, make a QR Code containing the given content."""
     input_str = makeqr.pattern_match.group(1)
@@ -867,7 +867,7 @@ async def make_qr(makeqr):
     await makeqr.delete()
 
 
-@register(pattern=r"^\.ss (.*)", outgoing=True)
+@bot.on(man_cmd(pattern=r"ss (.*)", outgoing=True))
 async def capture(url):
     """For .ss command, capture a website's screenshot and send the photo."""
     await url.edit("`Processing...`")
@@ -923,10 +923,10 @@ async def capture(url):
 
 CMD_HELP.update(
     {
-        "tts": "**Plugin : **`tts`\
-        \n\n  •  **Syntax :** `.tts` <text/reply>\
+        "tts": f"**Plugin : **`tts`\
+        \n\n  •  **Syntax :** `{cmd}tts` <text/reply>\
         \n  •  **Function : **Menerjemahkan teks ke ucapan untuk bahasa yang disetel. \
-        \n\n  •  **NOTE :** Gunakan .lang tts <kode bahasa> untuk menyetel bahasa untuk tr **(Bahasa Default adalah bahasa Indonesia)**\
+        \n\n  •  **NOTE :** Gunakan {cmd}lang tts <kode bahasa> untuk menyetel bahasa untuk tr **(Bahasa Default adalah bahasa Indonesia)**\
     "
     }
 )
@@ -934,10 +934,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "translate": "**Plugin : **`Terjemahan`\
-        \n\n  •  **Syntax :** `.tr` <text/reply>\
+        "translate": f"**Plugin : **`Terjemahan`\
+        \n\n  •  **Syntax :** `{cmd}tr` <text/reply>\
         \n  •  **Function : **Menerjemahkan teks ke bahasa yang disetel.\
-        \n\n  •  **NOTE :** Gunakan .lang tr <kode bahasa> untuk menyetel bahasa untuk tr **(Bahasa Default adalah bahasa Indonesia)**\
+        \n\n  •  **NOTE :** Gunakan {cmd}lang tr <kode bahasa> untuk menyetel bahasa untuk tr **(Bahasa Default adalah bahasa Indonesia)**\
     "
     }
 )
@@ -945,10 +945,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "carbon": "**Plugin : **`carbon`\
-        \n\n  •  **Syntax :** `.carbon` <text/reply>\
+        "carbon": f"**Plugin : **`carbon`\
+        \n\n  •  **Syntax :** `{cmd}carbon` <text/reply>\
         \n  •  **Function : **Percantik kode Anda menggunakan carbon.now.sh\
-        \n\n  •  **NOTE :** Gunakan .crblang <text> untuk menyetel bahasa kode Anda.\
+        \n\n  •  **NOTE :** Gunakan {cmd}crblang <text> untuk menyetel bahasa kode Anda.\
     "
     }
 )
@@ -957,7 +957,7 @@ CMD_HELP.update(
 CMD_HELP.update(
     {
         "removebg": "**Plugin : **`removebg`\
-        \n\n  •  **Syntax :** `.rbg` <Tautan ke Gambar> atau balas gambar apa pun (Peringatan: tidak berfungsi pada stiker.)\
+        \n\n  •  **Syntax :** `{cmd}rbg` <Tautan ke Gambar> atau balas gambar apa pun (Peringatan: tidak berfungsi pada stiker.)\
         \n  •  **Function : **Menghapus latar belakang gambar, menggunakan API remove.bg\
     "
     }
@@ -966,8 +966,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "ocr": "**Plugin : **`ocr`\
-        \n\n  •  **Syntax :** `.ocr` <kode bahasa>\
+        "ocr": f"**Plugin : **`ocr`\
+        \n\n  •  **Syntax :** `{cmd}ocr` <kode bahasa>\
         \n  •  **Function : **Balas gambar atau stiker untuk mengekstrak teks media tersebut.\
     "
     }
@@ -976,8 +976,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "youtube": "**Plugin : **`youtube`\
-        \n\n  •  **Syntax :** `.yt` <jumlah> <query>\
+        "youtube": f"**Plugin : **`youtube`\
+        \n\n  •  **Syntax :** `{cmd}yt` <jumlah> <query>\
         \n  •  **Function : **Melakukan Pencarian YouTube. Dapat menentukan jumlah hasil yang dibutuhkan (default adalah 5)\
     "
     }
@@ -986,11 +986,11 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "google": "**Plugin : **`google`\
-        \n\n  •  **Syntax :** `.google` <flags> <query>\
+        "google": f"**Plugin : **`google`\
+        \n\n  •  **Syntax :** `{cmd}google` <flags> <query>\
         \n  •  **Function : **Untuk Melakukan pencarian di google (default 5 hasil pencarian)\
         \n  •  **Flags :** `-l` **= Untuk jumlah hasil pencarian.**\
-        \n  •  **Example :** `.google -l4 mrismanaziz` atau `.google mrismanaziz`\
+        \n  •  **Example :** `{cmd}google -l4 mrismanaziz` atau `{cmd}google mrismanaziz`\
     "
     }
 )
@@ -998,8 +998,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "wiki": "**Plugin : **`wiki`\
-        \n\n  •  **Syntax :** `.wiki` <query>\
+        "wiki": f"**Plugin : **`wiki`\
+        \n\n  •  **Syntax :** `{cmd}wiki` <query>\
         \n  •  **Function : **Melakukan pencarian di Wikipedia.\
     "
     }
@@ -1008,14 +1008,14 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "barcode": "**Plugin : **`barcode`\
-        \n\n  •  **Syntax :** `.barcode` <content>\
+        "barcode": f"**Plugin : **`barcode`\
+        \n\n  •  **Syntax :** `{cmd}barcode` <content>\
         \n  •  **Function :** Buat Kode Batang dari konten yang diberikan.\
-        \n\n  •  **Example :** `.barcode www.google.com`\
-        \n\n  •  **Syntax :** `.makeqr` <content>\
+        \n\n  •  **Example :** `{cmd}barcode www.google.com`\
+        \n\n  •  **Syntax :** `{cmd}makeqr` <content>\
         \n  •  **Function :** Buat Kode QR dari konten yang diberikan.\
-        \n\n  •  **Example :** `.makeqr www.google.com`\
-        \n\n  •  **NOTE :** Gunakan .decode <reply to barcode / qrcode> untuk mendapatkan konten yang didekodekan.\
+        \n\n  •  **Example :** `{cmd}makeqr www.google.com`\
+        \n\n  •  **NOTE :** Gunakan {cmd}decode <reply to barcode / qrcode> untuk mendapatkan konten yang didekodekan.\
     "
     }
 )
@@ -1023,8 +1023,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "image_search": "**Plugin : **`image_search`\
-        \n\n  •  **Syntax :** `.img` <search_query>\
+        "image_search": f"**Plugin : **`image_search`\
+        \n\n  •  **Syntax :** `{cmd}img` <search_query>\
         \n  •  **Function : **Melakukan pencarian gambar di Google dan menampilkan 15 gambar.\
     "
     }
@@ -1033,10 +1033,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "ytdl": "**Plugin : **`ytdl`\
-        \n\n  •  **Syntax :** `.ytaudio` <url>\
+        "ytdl": f"**Plugin : **`ytdl`\
+        \n\n  •  **Syntax :** `{cmd}ytaudio` <url>\
         \n  •  **Function : **Untuk Mendownload lagu dari YouTube.\
-        \n\n  •  **Syntax :** `.ytvideo` <url>\
+        \n\n  •  **Syntax :** `{cmd}ytvideo` <url>\
         \n  •  **Function : **Untuk Mendownload video dari YouTube.\
     "
     }
@@ -1045,10 +1045,10 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "screenshot": "**Plugin : **`screenshot`\
-        \n\n  •  **Syntax :** `.ss` <url>\
+        "screenshot": f"**Plugin : **`screenshot`\
+        \n\n  •  **Syntax :** `{cmd}ss` <url>\
         \n  •  **Function : **Mengambil tangkapan layar dari situs web dan mengirimkan tangkapan layar.\
-        \n  •  **Example  : .ss http://www.google.com\
+        \n  •  **Example  : {cmd}ss http://www.google.com\
     "
     }
 )
@@ -1056,8 +1056,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "currency": "**Plugin : **`currency`\
-        \n\n  •  **Syntax :** `.currency` <amount> <from> <to>\
+        "currency": f"**Plugin : **`currency`\
+        \n\n  •  **Syntax :** `{cmd}currency` <amount> <from> <to>\
         \n  •  **Function : **Mengonversi berbagai mata uang untuk Anda.\
     "
     }
@@ -1066,8 +1066,8 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "ud": "**Plugin : **`Urban Dictionary`\
-        \n\n  •  **Syntax :** `.ud` <query>\
+        "ud": f"**Plugin : **`Urban Dictionary`\
+        \n\n  •  **Syntax :** `{cmd}ud` <query>\
         \n  •  **Function : **Melakukan pencarian di Urban Dictionary.\
     "
     }
