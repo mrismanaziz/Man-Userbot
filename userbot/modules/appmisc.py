@@ -23,6 +23,7 @@ from telethon.tl.types import (
     UserStatusOnline,
     UserStatusRecently,
 )
+
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.events import man_cmd
@@ -1043,33 +1044,7 @@ Jika Tidak Memberikan Level Otomatis Default Ke Level 2."
 )
 # imported from github.com/ravana69/PornHub to userbot by @heyworld
 # please don't nuke my credits 😓
-import asyncio
-import logging
-import os
-import time
-from datetime import datetime
-from urllib.parse import quote
 
-import bs4
-import requests
-from justwatch import JustWatch
-from telethon import *
-from telethon import events
-from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl import functions
-from telethon.tl.types import (
-    ChatBannedRights,
-    UserStatusEmpty,
-    UserStatusLastMonth,
-    UserStatusLastWeek,
-    UserStatusOffline,
-    UserStatusOnline,
-    UserStatusRecently,
-)
-
-from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import man_cmd
 
 normiefont = [
     "a",
