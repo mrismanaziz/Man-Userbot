@@ -188,7 +188,6 @@ async def gban(event):
         try:
             if reply:
                 await reply.forward_to(BOTLOG_CHATID)
-                await reply.delete()
         except BadRequestError:
             pass
 
