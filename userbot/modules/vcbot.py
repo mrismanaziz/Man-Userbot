@@ -12,7 +12,7 @@ from telethon.utils import get_display_name
 from youtube_search import YoutubeSearch
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEVS, bot, call_py
+from userbot import CMD_HELP, bot, call_py
 from userbot.events import man_cmd, register
 from userbot.utils import download_lagu, edit_or_reply, runcmd
 from userbot.utils.converter import convert
@@ -30,7 +30,6 @@ def vcmention(user):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"play(?:\s|$)([\s\S]*)"))
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cplay(?:\s|$)([\s\S]*)")
 async def play_musik(event):
     global LAGI_MUTER, NAMA_GC
     chat_id = event.chat_id
@@ -90,7 +89,6 @@ async def play_musik(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="pause$"))
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cpause$")
 async def pause_musik(event):
     chat_id = event.chat_id
     if not (LAGI_MUTER and NAMA_GC):
@@ -100,7 +98,6 @@ async def pause_musik(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="resume$"))
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cresume$")
 async def resume_musik(event):
     chat_id = event.chat_id
     if not (LAGI_MUTER and NAMA_GC):
@@ -110,7 +107,6 @@ async def resume_musik(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="skip$"))
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cskip$")
 async def skip_musik(event):
     global LAGI_MUTER, NAMA_GC
     chat_id = event.chat_id
@@ -136,7 +132,6 @@ async def skip_musik(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="end$"))
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cend$")
 async def stop_musik(event):
     global LAGI_MUTER, NAMA_GC
     chat_id = event.chat_id
