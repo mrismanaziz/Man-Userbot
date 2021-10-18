@@ -14,7 +14,7 @@ from youtube_search import YoutubeSearch
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, DEVS, bot, call_py
 from userbot.events import man_cmd, register
-from userbot.utils import download_lagu, edit_or_reply
+from userbot.utils import download_lagu, edit_or_reply, runcmd
 from userbot.utils.converter import convert
 from userbot.utils.queues import queues
 
@@ -122,7 +122,7 @@ async def skip_musik(event):
             LAGI_MUTER = False
             NAMA_GC = ""
             await call_py.leave_group_call(chat_id)
-            return await edit_or_reply(event, "**Memberhentikan lagu.**")
+            return await edit_or_reply(event, "**Memberhentikan Lagu.**")
         else:
             await call_py.change_stream(
                 chat_id,
@@ -152,6 +152,12 @@ async def stop_musik(event):
     await edit_or_reply(event, "**Memberhentikan lagu**")
 
 
+@bot.on(man_cmd(outgoing=True, pattern=r"delraw$"))
+async def _(event):
+    await runcmd("rm -rf ./raw_files/*.raw")
+    await edit_or_reply(event, "**Berhasil Menghapus File RAW**")
+
+
 @call_py.on_stream_end()
 async def stream_end_handler(c, u: Update):
     global LAGI_MUTER, NAMA_GC
@@ -176,7 +182,7 @@ async def stream_end_handler(c, u: Update):
 CMD_HELP.update(
     {
         "voiceplay": f"**Plugin : **`voiceplay`\
-        \n\n  •  **Syntax :** `{cmd}play` judul lagu\
+        \n\n  •  **Syntax :** `{cmd}play` <Judul Lagu/Link YT>\
         \n  •  **Function : **Untuk Memutar lagu di voice chat group dengan akun kamu\
         \n\n  •  **Syntax :** `{cmd}end`\
         \n  •  **Function : **Untuk Memberhentikan lagu yang di putar di voice chat group\
@@ -184,6 +190,8 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk memberhentikan lagu yang sedang diputar\
         \n\n  •  **Syntax :** `{cmd}resume`\
         \n  •  **Function : **Untuk melanjutkan pemutaran lagu yang sedang diputar\
+        \n\n  •  **Syntax :** `{cmd}delraw`\
+        \n  •  **Function : **Untuk menghapus file raw bekas play music (Rekomendasi sesudah `{cmd}delraw` ketik `{cmd}restart`)\
         \n\n  •  **NOTE :** Play Music hanya bisa di 1 Grup Chat saja, untuk memutar di GC lain ketik `{cmd}end` terlebih dahulu\
     "
     }
