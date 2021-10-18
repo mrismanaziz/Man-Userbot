@@ -2,7 +2,7 @@ import requests
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd, register
+from userbot.events import man_cmd
 from userbot.utils import edit_or_reply
 
 
