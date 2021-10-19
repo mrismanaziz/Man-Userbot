@@ -13,6 +13,7 @@
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
 from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
+from telethon.tl.functions.phone import EditGroupCallTitleRequest as settitle
 from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 
@@ -83,6 +84,26 @@ async def _(c):
     await c.edit(f"`{z}` **Orang Berhasil diundang ke VCG**")
 
 
+@bot.on(man_cmd(outgoing=True, pattern=r"vctitle(?: |$)(.*)"))
+async def change_title(e):
+    title = e.pattern_match.group(1).lower()
+    chat = await e.get_chat()
+    admin = chat.admin_rights
+    creator = chat.creator
+
+    if not title:
+        return await e.edit("**Silahkan Masukan Title Obrolan Suara Grup**")
+
+    if not admin and not creator:
+        await e.edit(f"**Maaf {ALIVE_NAME} Bukan Admin 👮**")
+        return
+    try:
+        await e.client(settitle(call=await get_call(e), title=title.strip()))
+        await e.edit(f"**Berhasil Mengubah Judul VCG Menjadi** `{title}`")
+    except Exception as ex:
+        await e.edit(f"**ERROR:** `{ex}`")
+
+
 CMD_HELP.update(
     {
         "vcg": f"**Plugin : **`vcg`\
@@ -90,6 +111,8 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk Memulai voice chat group\
         \n\n  •  **Syntax :** `{cmd}stopvc`\
         \n  •  **Function : **Untuk Memberhentikan voice chat group\
+        \n\n  •  **Syntax :** `{cmd}vctitle` <title vcg>\
+        \n  •  **Function : **Untuk Mengubah title/judul voice chat group\
         \n\n  •  **Syntax :** `{cmd}vcinvite`\
         \n  •  **Function : **Mengundang Member group ke voice chat group\
     "
