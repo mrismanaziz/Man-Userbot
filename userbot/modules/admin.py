@@ -213,14 +213,6 @@ async def ban(bon):
     except BadRequestError:
         return await bon.edit(NO_PERM)
     # Helps ban group join spammers more easily
-    try:
-        reply = await bon.get_reply_message()
-        if reply:
-            await reply.delete()
-    except BadRequestError:
-        return await bon.edit(
-            "**Saya Tidak Memiliki Hak Hapus Pesan Grup! Tapi tetap saja dia di banned!**"
-        )
     # Delete message and then tell that the command
     # is done gracefully
     # Shout out the ID, so that fedadmins can fban later
@@ -823,7 +815,7 @@ async def get_user_from_event(
             if not noedits:
                 await edit_delete(
                     manevent,
-                    "**Mohon Reply Pesan atau Berikan Username, User ID pengguna!**",
+                    "**Mohon Reply Pesan atau Berikan User ID/Username pengguna!**",
                     60,
                 )
             return None, None
@@ -831,7 +823,9 @@ async def get_user_from_event(
         LOGS.error(str(e))
     if not noedits:
         await edit_delete(
-            manevent, "**ERROR:** __Couldn't fetch user to proceed further.__", 30
+            manevent,
+            "**Mohon Reply Pesan atau Berikan User ID/Username pengguna!**",
+            30,
         )
     return None, None
 
