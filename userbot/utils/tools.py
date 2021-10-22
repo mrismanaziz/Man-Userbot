@@ -305,7 +305,7 @@ async def media_to_pic(event, reply):
         )
         return None
     media = await reply.download_media(file="./temp")
-    event = await edit_or_reply(event, f"`Transfiguration Time! Converting....`")
+    event = await edit_or_reply(event, "`Transfiguration Time! Converting....`")
     file = os.path.join("./temp/", "meme.png")
     if mediatype == "Sticker":
         if media.endswith(".tgs"):

@@ -48,7 +48,7 @@ async def _(event):
 
     async def aexec(code, event):
         exec(
-            f"async def __aexec(e, client): "
+            "async def __aexec(e, client): "
             + "\n message = event = e"
             + "\n reply = await event.get_reply_message()"
             + "\n chat = (await event.get_chat()).id"
