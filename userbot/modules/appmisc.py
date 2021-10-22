@@ -109,12 +109,15 @@ async def apk(e):
         soup = bs4.BeautifulSoup(page.content, "lxml", from_encoding="utf-8")
         results = soup.findAll("div", "ZmHEEd")
         app_name = (
-            results[0].findNext("div", "Vpfmgd").findNext("div", "WsMG1c nnK0zc").text
+            results[0].findNext("div", "Vpfmgd").findNext(
+                "div", "WsMG1c nnK0zc").text
         )
-        app_dev = results[0].findNext("div", "Vpfmgd").findNext("div", "KoLSrc").text
+        app_dev = results[0].findNext(
+            "div", "Vpfmgd").findNext("div", "KoLSrc").text
         app_dev_link = (
             "https://play.google.com"
-            + results[0].findNext("div", "Vpfmgd").findNext("a", "mnKHRc")["href"]
+            + results[0].findNext("div",
+                                  "Vpfmgd").findNext("a", "mnKHRc")["href"]
         )
         app_rating = (
             results[0]
@@ -208,7 +211,8 @@ async def _(event):
         else:
             xkcd_search_url = "https://relevantxkcd.appspot.com/process?"
             queryresult = requests.get(
-                xkcd_search_url, params={"action": "xkcd", "query": quote(input_str)}
+                xkcd_search_url, params={
+                    "action": "xkcd", "query": quote(input_str)}
             ).text
             xkcd_id = queryresult.split(" ")[2].lstrip("\n")
     if xkcd_id is None:
@@ -838,7 +842,8 @@ async def cursive2(cursivebolded):
     string = "".join(args).lower()
     for normiecharacter in string:
         if normiecharacter in normiefont:
-            cursiveboldcharacter = cursiveboldx[normiefont.index(normiecharacter)]
+            cursiveboldcharacter = cursiveboldx[normiefont.index(
+                normiecharacter)]
             string = string.replace(normiecharacter, cursiveboldcharacter)
     await cursivebolded.edit(string)
 
@@ -1119,12 +1124,15 @@ async def apk(e):
         soup = bs4.BeautifulSoup(page.content, "lxml", from_encoding="utf-8")
         results = soup.findAll("div", "ZmHEEd")
         app_name = (
-            results[0].findNext("div", "Vpfmgd").findNext("div", "WsMG1c nnK0zc").text
+            results[0].findNext("div", "Vpfmgd").findNext(
+                "div", "WsMG1c nnK0zc").text
         )
-        app_dev = results[0].findNext("div", "Vpfmgd").findNext("div", "KoLSrc").text
+        app_dev = results[0].findNext(
+            "div", "Vpfmgd").findNext("div", "KoLSrc").text
         app_dev_link = (
             "https://play.google.com"
-            + results[0].findNext("div", "Vpfmgd").findNext("a", "mnKHRc")["href"]
+            + results[0].findNext("div",
+                                  "Vpfmgd").findNext("a", "mnKHRc")["href"]
         )
         app_rating = (
             results[0]
@@ -1218,7 +1226,8 @@ async def _(event):
         else:
             xkcd_search_url = "https://relevantxkcd.appspot.com/process?"
             queryresult = requests.get(
-                xkcd_search_url, params={"action": "xkcd", "query": quote(input_str)}
+                xkcd_search_url, params={
+                    "action": "xkcd", "query": quote(input_str)}
             ).text
             xkcd_id = queryresult.split(" ")[2].lstrip("\n")
     if xkcd_id is None:
@@ -1292,8 +1301,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusLastMonth):
             m += 1
             if "m" in input_str:
@@ -1304,8 +1312,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusLastWeek):
             w += 1
             if "w" in input_str:
@@ -1316,8 +1323,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusOffline):
             o += 1
             if "o" in input_str:
@@ -1328,8 +1334,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusOnline):
             q += 1
             if "q" in input_str:
@@ -1340,8 +1345,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusRecently):
             r += 1
             if "r" in input_str:
@@ -1352,8 +1356,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if i.bot:
             b += 1
             if "b" in input_str:
@@ -1364,8 +1367,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         elif i.deleted:
             d += 1
             if "d" in input_str:
@@ -1855,7 +1857,8 @@ async def cursive2(cursivebolded):
     string = "".join(args).lower()
     for normiecharacter in string:
         if normiecharacter in normiefont:
-            cursiveboldcharacter = cursiveboldx[normiefont.index(normiecharacter)]
+            cursiveboldcharacter = cursiveboldx[normiefont.index(
+                normiecharacter)]
             string = string.replace(normiecharacter, cursiveboldcharacter)
     await cursivebolded.edit(string)
 
