@@ -30,8 +30,8 @@ async def _(event):
     if event.fwd_from:
         return
     tgbotusername = BOT_USERNAME
-    chat = "@Botfather"
     if tgbotusername is not None:
+        chat = "@Botfather"
         try:
             results = await event.client.inline_query(tgbotusername, "@SharingUserbot")
             await results[0].click(

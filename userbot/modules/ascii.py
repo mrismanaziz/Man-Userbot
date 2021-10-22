@@ -126,11 +126,10 @@ async def _(event):
     BG = event.pattern_match.group(1)
     if BG.isnumeric():
         return await event.edit("`Mohon Masukkan Warna Bukan Angka`")
-    if BG:
-        global bground
-        bground = BG
-    else:
+    if not BG:
         return await event.edit("`Mohon Masukkan Background Dari Ascii`")
+    global bground
+    bground = BG
     await event.edit(f"`Berhasil Setel Background Dari Ascii Ke` **{BG}**")
 
 
