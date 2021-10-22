@@ -334,7 +334,6 @@ async def _(event):
         return
     reply_message = await event.get_reply_message()
     chat = "@Stickers"
-    reply_message.sender
     if reply_message.sender.bot:
         await edit_or_reply(event, "**Mohon Reply ke Sticker.**")
         return
@@ -380,7 +379,6 @@ async def _(event):
     reply_message = await event.get_reply_message()
     emot = event.pattern_match.group(1)
     chat = "@Stickers"
-    reply_message.sender
     if reply_message.sender.bot:
         await edit_or_reply(event, "**Mohon Reply ke Sticker.**")
         return

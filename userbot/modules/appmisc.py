@@ -499,7 +499,6 @@ async def _(event):
         await event.edit("**Mohon Balas Ke Link.**")
         return
     chat = "@CheckRestrictionsBot"
-    reply_message.sender
     await event.edit("```Memproses....```")
     async with event.client.conversation(chat) as conv:
         try:
@@ -1517,7 +1516,6 @@ async def _(event):
         await event.edit("**Mohon Balas Ke Link.**")
         return
     chat = "@CheckRestrictionsBot"
-    reply_message.sender
     await event.edit("```Memproses....```")
     async with event.client.conversation(chat) as conv:
         try:

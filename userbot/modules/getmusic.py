@@ -59,9 +59,8 @@ async def getmusicvideo(cat):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"song (.*)"))
 async def _(event):
-    event.message.id
     if event.reply_to_msg_id:
-        event.reply_to_msg_id
+        pass
     reply = await event.get_reply_message()
     if event.pattern_match.group(1):
         query = event.pattern_match.group(1)
@@ -98,9 +97,8 @@ async def _(event):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"vsong(?: |$)(.*)"))
 async def _(event):
-    event.message.id
     if event.reply_to_msg_id:
-        event.reply_to_msg_id
+        pass
     reply = await event.get_reply_message()
     if event.pattern_match.group(1):
         query = event.pattern_match.group(1)

@@ -24,7 +24,6 @@ async def _(event):
         await event.edit("```Mohon Balas Ke Pesan Usernya...```")
         return
     chat = "@getidsbot"
-    reply_message.sender
     if reply_message.sender.bot:
         await event.edit("`Mohon Balas Ke Pesan Usernya...`")
         return
