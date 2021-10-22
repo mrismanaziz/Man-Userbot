@@ -42,14 +42,13 @@ def add_snip(keyword, reply, f_mesg_id):
         SESSION.add(adder)
         SESSION.commit()
         return True
-    else:
-        rem = SESSION.query(Snips).filter(Snips.snip == keyword)
-        SESSION.delete(rem)
-        SESSION.commit()
-        adder = Snips(keyword, reply, f_mesg_id)
-        SESSION.add(adder)
-        SESSION.commit()
-        return False
+    rem = SESSION.query(Snips).filter(Snips.snip == keyword)
+    SESSION.delete(rem)
+    SESSION.commit()
+    adder = Snips(keyword, reply, f_mesg_id)
+    SESSION.add(adder)
+    SESSION.commit()
+    return False
 
 
 def remove_snip(keyword):
