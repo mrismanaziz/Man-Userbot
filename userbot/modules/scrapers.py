@@ -20,7 +20,6 @@ import shutil
 import time
 from asyncio import sleep
 from re import findall, match
-from time import sleep
 from urllib.parse import quote_plus
 
 import asyncurban
