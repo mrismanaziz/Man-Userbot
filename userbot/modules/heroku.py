@@ -49,9 +49,8 @@ async def variable(var):
                 )
                 await var.edit("**Berhasil Mengirim Ke BOTLOG_CHATID**")
                 return True
-            else:
-                await var.edit("**Mohon Ubah Var** `BOTLOG` **Ke** `True`")
-                return False
+            await var.edit("**Mohon Ubah Var** `BOTLOG` **Ke** `True`")
+            return False
         elif variable in heroku_var:
             if BOTLOG:
                 await var.client.send_message(
@@ -62,9 +61,8 @@ async def variable(var):
                 )
                 await var.edit("**Berhasil Mengirim Ke BOTLOG_CHATID**")
                 return True
-            else:
-                await var.edit("**Mohon Ubah Var** `BOTLOG` **Ke** `True`")
-                return False
+            await var.edit("**Mohon Ubah Var** `BOTLOG` **Ke** `True`")
+            return False
         else:
             await var.edit("`Informasi Tidak Ditemukan...`")
             return True

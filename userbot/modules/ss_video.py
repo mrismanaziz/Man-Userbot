@@ -38,7 +38,7 @@ async def ssvideo(event):
         in reply_message.media.document.attributes
     ):
         return await event.edit("`Unsupported files..`")
-    elif (
+    if (
         DocumentAttributeFilename(file_name="sticker.webp")
         in reply_message.media.document.attributes
     ):

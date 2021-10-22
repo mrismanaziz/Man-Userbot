@@ -88,10 +88,9 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             await event.edit("**Build Gagal!** Dibatalkan karena ada beberapa error.`")
             await asyncio.sleep(5)
             return await event.delete()
-        else:
-            await event.edit(
-                "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
-            )
+        await event.edit(
+            "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
+        )
 
     else:
         await event.edit("**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_API_KEY`")
