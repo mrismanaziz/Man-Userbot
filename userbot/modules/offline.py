@@ -79,7 +79,8 @@ async def set_afk(afk_e):
         )
     else:
         await afk_e.client(
-            UpdateProfileRequest(first_name=user.first_name, last_name="【 OFF 】")
+            UpdateProfileRequest(
+                first_name=user.first_name, last_name="【 OFF 】")
         )
     if BOTLOG:
         await afk_e.client.send_message(

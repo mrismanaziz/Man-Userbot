@@ -56,7 +56,8 @@ async def last_fm(lastFM):
     username = f"https://www.last.fm/user/{LASTFM_USERNAME}"
     if playing is not None:
         try:
-            image = User(LASTFM_USERNAME, lastfm).get_now_playing().get_cover_image()
+            image = User(LASTFM_USERNAME,
+                         lastfm).get_now_playing().get_cover_image()
         except IndexError:
             image = None
         try:

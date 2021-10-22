@@ -37,7 +37,8 @@ async def _(event):
         \n\n**Details : **__{result.text.splitlines()[2]}__"
             await event.edit(namem)
             await event.client.delete_messages(
-                conv.chat_id, [start_msg.id, send_audio.id, check.id, result.id]
+                conv.chat_id, [start_msg.id,
+                               send_audio.id, check.id, result.id]
             )
     except TimeoutError:
         return await event.edit(

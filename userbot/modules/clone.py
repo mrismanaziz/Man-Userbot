@@ -83,7 +83,8 @@ async def updateProfile(userObj, restore=False):
         except BaseException:
             pass
     await bot(
-        UpdateProfileRequest(about=userAbout, first_name=firstName, last_name=lastName)
+        UpdateProfileRequest(
+            about=userAbout, first_name=firstName, last_name=lastName)
     )
 
 

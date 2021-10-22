@@ -35,7 +35,8 @@ async def deeznuts(event):
     except BaseException:
         return await event.edit("**Error: Invalid link provided.**")
 
-    quality = {"flac": "FLAC", "320": "MP3_320", "256": "MP3_256", "128": "MP3_128"}
+    quality = {"flac": "FLAC", "320": "MP3_320",
+               "256": "MP3_256", "128": "MP3_128"}
     quality = quality[event.pattern_match.group(2)]
 
     temp_dl_path = os.path.join(TEMP_DOWNLOAD_DIRECTORY, str(time()))

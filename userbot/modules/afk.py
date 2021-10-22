@@ -88,7 +88,8 @@ async def set_not_afk(event):
 
 
 @bot.on(
-    events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private))
+    events.NewMessage(incoming=True, func=lambda e: bool(
+        e.mentioned or e.is_private))
 )
 async def on_afk(event):
     if event.fwd_from:
@@ -164,7 +165,8 @@ async def _(event):
     pic = await event.client.download_media(reply) if reply else None
     if not USER_AFK:
         last_seen_status = await bot(
-            functions.account.GetPrivacyRequest(types.InputPrivacyKeyStatusTimestamp())
+            functions.account.GetPrivacyRequest(
+                types.InputPrivacyKeyStatusTimestamp())
         )
         if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
             afk_time = datetime.datetime.now()

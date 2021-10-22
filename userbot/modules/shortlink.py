@@ -47,7 +47,8 @@ async def _(event):
             await event.client.send_message(event.chat_id, url)
             await event.client.delete_messages(
                 conv.chat_id,
-                [msg_start.id, response.id, msg.id, bot_reply.id, sponser.id, url.id],
+                [msg_start.id, response.id, msg.id,
+                    bot_reply.id, sponser.id, url.id],
             )
             await event.delete()
     except TimeoutError:

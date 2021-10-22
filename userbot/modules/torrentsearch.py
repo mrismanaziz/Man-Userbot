@@ -49,7 +49,8 @@ async def gengkapak(e):
     fd = codecs.open(tsfileloc, "r", encoding="utf-8")
     data = fd.read()
     key = (
-        requests.post("https://nekobin.com/api/documents", json={"content": data})
+        requests.post("https://nekobin.com/api/documents",
+                      json={"content": data})
         .json()
         .get("result")
         .get("key")
@@ -145,7 +146,8 @@ async def tor_search(event):
         search_str = search_str.replace("+", " ")
     except BaseException:
         pass
-    msg = "**Torrent Search Query**\n`{}`".format(search_str) + "\n**Results**\n"
+    msg = "**Torrent Search Query**\n`{}`".format(
+        search_str) + "\n**Results**\n"
     counter = 0
     while counter != len(titles):
         msg = (

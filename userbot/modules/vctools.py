@@ -31,7 +31,7 @@ async def get_call(event):
 
 def user_list(l, n):
     for i in range(0, len(l), n):
-        yield l[i : i + n]
+        yield l[i: i + n]
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"startvc$"))

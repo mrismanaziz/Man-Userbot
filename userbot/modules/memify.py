@@ -33,7 +33,8 @@ async def memify(event):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
 
     input_file = await event.client.download_media(reply_msg, TEMP_DOWNLOAD_DIRECTORY)
-    input_file = os.path.join(TEMP_DOWNLOAD_DIRECTORY, os.path.basename(input_file))
+    input_file = os.path.join(TEMP_DOWNLOAD_DIRECTORY,
+                              os.path.basename(input_file))
 
     if input_file.endswith(".tgs"):
         await event.edit("**Mengekstrak Frame pertama...**")

@@ -129,7 +129,8 @@ async def carbon_api(e):
     chrome_options.add_argument("--disable-gpu")
     prefs = {"download.default_directory": "/root/userbot/.bin"}
     chrome_options.add_experimental_option("prefs", prefs)
-    driver = webdriver.Chrome(executable_path=CHROME_DRIVER, options=chrome_options)
+    driver = webdriver.Chrome(
+        executable_path=CHROME_DRIVER, options=chrome_options)
     driver.get(url)
     await e.edit("`Processing..\n50%`")
     download_path = "/root/userbot/.bin"
@@ -451,7 +452,8 @@ async def yt_search(video_q):
     await video_q.edit("`Processing...`")
 
     try:
-        results = json.loads(YoutubeSearch(query, max_results=counter).to_json())
+        results = json.loads(YoutubeSearch(
+            query, max_results=counter).to_json())
     except KeyError:
         return await video_q.edit(
             "`Pencarian Youtube menjadi lambat.\nTidak dapat mencari keyword ini!`"
@@ -819,7 +821,8 @@ async def bq(event):
 
     bar_code_type = "code128"
     try:
-        bar_code_mode_f = barcode.get(bar_code_type, message, writer=ImageWriter())
+        bar_code_mode_f = barcode.get(
+            bar_code_type, message, writer=ImageWriter())
         filename = bar_code_mode_f.save(bar_code_type)
         await event.client.send_file(event.chat_id, filename, reply_to=reply_msg_id)
         os.remove(filename)
@@ -844,7 +847,8 @@ async def make_qr(makeqr):
             m_list = None
             with open(downloaded_file_name, "rb") as file:
                 m_list = file.readlines()
-            message = "".join(media.decode("UTF-8") + "\r\n" for media in m_list)
+            message = "".join(media.decode("UTF-8") +
+                              "\r\n" for media in m_list)
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message

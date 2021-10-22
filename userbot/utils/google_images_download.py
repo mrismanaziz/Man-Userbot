@@ -1641,7 +1641,8 @@ class googleimagesdownload:
                         dir_name = ""
                     else:
                         dir_name = search_term + (
-                            "-" + arguments["color"] if arguments["color"] else ""
+                            "-" +
+                            arguments["color"] if arguments["color"] else ""
                         )  # sub-directory
 
                     if not arguments["no_download"]:

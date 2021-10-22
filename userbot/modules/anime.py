@@ -105,7 +105,8 @@ def get_anime_manga(mal_id, search_type, _user_id):
     if alternative_names:
         alternative_names_string = ", ".join(alternative_names)
         caption += f"\n<b>Also known as</b> : <code>{alternative_names_string}</code>\n"
-    genre_string = ", ".join(genre_info["name"] for genre_info in result["genres"])
+    genre_string = ", ".join(genre_info["name"]
+                             for genre_info in result["genres"])
     if result["synopsis"] is not None:
         synopsis = result["synopsis"].split(" ", 60)
         try:
@@ -158,7 +159,8 @@ def get_poster(query):
     soup = bs4.BeautifulSoup(page.content, "lxml")
     odds = soup.findAll("tr", "odd")
     # Fetching the first post from search
-    page_link = "http://www.imdb.com/" + odds[0].findNext("td").findNext("td").a["href"]
+    page_link = "http://www.imdb.com/" + \
+        odds[0].findNext("td").findNext("td").a["href"]
     page1 = requests.get(page_link)
     soup = bs4.BeautifulSoup(page1.content, "lxml")
     # Poster Link
@@ -201,7 +203,8 @@ async def callAPI(search_str):
     """
     variables = {"search": search_str}
     url = "https://graphql.anilist.co"
-    response = requests.post(url, json={"query": query, "variables": variables})
+    response = requests.post(
+        url, json={"query": query, "variables": variables})
     return response.text
 
 
@@ -253,7 +256,8 @@ async def search_anime(message):
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("anime", search_query)
     first_mal_id = search_result["results"][0]["mal_id"]
-    caption, image = get_anime_manga(first_mal_id, "anime_anime", message.chat_id)
+    caption, image = get_anime_manga(
+        first_mal_id, "anime_anime", message.chat_id)
     try:
         await message.delete()
         await message.client.send_file(
@@ -274,7 +278,8 @@ async def search_manga(message):
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("manga", search_query)
     first_mal_id = search_result["results"][0]["mal_id"]
-    caption, image = get_anime_manga(first_mal_id, "anime_manga", message.chat_id)
+    caption, image = get_anime_manga(
+        first_mal_id, "anime_manga", message.chat_id)
     await message.delete()
     await message.client.send_file(
         message.chat_id, file=image, caption=caption, parse_mode="HTML"

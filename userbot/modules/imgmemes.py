@@ -46,7 +46,8 @@ def deEmojify(inputString: str) -> str:
 
 
 async def threats(text):
-    r = requests.get(f"https://nekobot.xyz/api/imagegen?type=threats&url={text}").json()
+    r = requests.get(
+        f"https://nekobot.xyz/api/imagegen?type=threats&url={text}").json()
     sandy = r.get("message")
     caturl = url(sandy)
     if not caturl:
@@ -61,7 +62,8 @@ async def threats(text):
 
 
 async def trash(text):
-    r = requests.get(f"https://nekobot.xyz/api/imagegen?type=trash&url={text}").json()
+    r = requests.get(
+        f"https://nekobot.xyz/api/imagegen?type=trash&url={text}").json()
     sandy = r.get("message")
     caturl = url(sandy)
     if not caturl:
@@ -465,8 +467,10 @@ async def FakeGoogleSearch(event):
     drawing = ImageDraw.Draw(photo)
     blue = (0, 0, 255)
     black = (0, 0, 0)
-    font1 = ImageFont.truetype("userbot/utils/styles/ProductSans-BoldItalic.ttf", 20)
-    font2 = ImageFont.truetype("userbot/utils/styles/ProductSans-Light.ttf", 23)
+    font1 = ImageFont.truetype(
+        "userbot/utils/styles/ProductSans-BoldItalic.ttf", 20)
+    font2 = ImageFont.truetype(
+        "userbot/utils/styles/ProductSans-Light.ttf", 23)
     drawing.text((450, 258), result, fill=blue, font=font1)
     drawing.text((270, 37), search, fill=black, font=font2)
     photo.save("downloads/test.jpg")

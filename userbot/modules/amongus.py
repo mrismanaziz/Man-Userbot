@@ -54,7 +54,8 @@ async def f_load(message):
 
     if text == "colors":
         await message.edit(
-            ("Cores disponíveis:\n" + "\n".join(f"• `{i}`" for i in list(clrs.keys())))
+            ("Cores disponíveis:\n" +
+             "\n".join(f"• `{i}`" for i in list(clrs.keys())))
         )
 
         return

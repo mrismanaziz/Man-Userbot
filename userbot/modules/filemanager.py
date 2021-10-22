@@ -210,7 +210,8 @@ async def unzip_file(event):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
     input_str = event.pattern_match.group(1)
     file_name = basename(input_str)
-    output_path = TEMP_DOWNLOAD_DIRECTORY + re.split("(.zip|.rar|.tar)", file_name)[0]
+    output_path = TEMP_DOWNLOAD_DIRECTORY + \
+        re.split("(.zip|.rar|.tar)", file_name)[0]
     if exists(input_str):
         start_time = datetime.now()
         await event.edit("`Unzipping...`")
