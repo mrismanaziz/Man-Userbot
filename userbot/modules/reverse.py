@@ -59,8 +59,7 @@ async def okgoogle(img):
 
     # https://stackoverflow.com/questions/23270175/google-reverse-image-search-using-post-request#28792943
     searchUrl = "https://www.google.com/searchbyimage/upload"
-    multipart = {"encoded_image": (
-        name, open(name, "rb")), "image_content": ""}
+    multipart = {"encoded_image": (name, open(name, "rb")), "image_content": ""}
     response = requests.post(searchUrl, files=multipart, allow_redirects=False)
     fetchUrl = response.headers["Location"]
 

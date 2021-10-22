@@ -119,8 +119,7 @@ async def draw_meme_text(image_path, text):
     img = Image.open(image_path)
     os.remove(image_path)
     i_width, i_height = img.size
-    m_font = ImageFont.truetype(
-        "LordFont/FontLord.ttf", int((70 / 640) * i_width))
+    m_font = ImageFont.truetype("LordFont/FontLord.ttf", int((70 / 640) * i_width))
     if ";" in text:
         upper_text, lower_text = text.split(";")
     else:
@@ -133,29 +132,25 @@ async def draw_meme_text(image_path, text):
             u_width, u_height = draw.textsize(u_text, font=m_font)
 
             draw.text(
-                xy=(((i_width - u_width) / 2) - 1,
-                    int((current_h / 640) * i_width)),
+                xy=(((i_width - u_width) / 2) - 1, int((current_h / 640) * i_width)),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=(((i_width - u_width) / 2) + 1,
-                    int((current_h / 640) * i_width)),
+                xy=(((i_width - u_width) / 2) + 1, int((current_h / 640) * i_width)),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=((i_width - u_width) / 2,
-                    int(((current_h / 640) * i_width)) - 1),
+                xy=((i_width - u_width) / 2, int(((current_h / 640) * i_width)) - 1),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),
             )
             draw.text(
-                xy=(((i_width - u_width) / 2),
-                    int(((current_h / 640) * i_width)) + 1),
+                xy=(((i_width - u_width) / 2), int(((current_h / 640) * i_width)) + 1),
                 text=u_text,
                 font=m_font,
                 fill=(0, 0, 0),

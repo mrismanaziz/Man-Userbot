@@ -29,8 +29,7 @@ async def filter_incoming_handler(handler):
             if not filters:
                 return
             for trigger in filters:
-                pattern = r"( |^|[^\w])" + \
-                    escape(trigger.keyword) + r"( |$|[^\w])"
+                pattern = r"( |^|[^\w])" + escape(trigger.keyword) + r"( |$|[^\w])"
                 pro = search(pattern, name, flags=IGNORECASE)
                 if pro:
                     if trigger.f_mesg_id:
@@ -130,8 +129,7 @@ async def kick_marie_filter(event):
     await event.respond("**Berhasil Menghapus Semua Filter Bot!**")
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID, "Saya Membersihkan Semua Filter Bot Di " +
-            str(event.chat_id)
+            BOTLOG_CHATID, "Saya Membersihkan Semua Filter Bot Di " + str(event.chat_id)
         )
 
 

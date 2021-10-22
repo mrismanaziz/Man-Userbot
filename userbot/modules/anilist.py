@@ -175,8 +175,7 @@ async def callAPI(search_str):
     """
     variables = {"search": search_str}
     url = "https://graphql.anilist.co"
-    response = requests.post(
-        url, json={"query": query, "variables": variables})
+    response = requests.post(url, json={"query": query, "variables": variables})
     return response.text
 
 
@@ -221,8 +220,7 @@ async def anilist(event):
         reply_to_id = event.reply_to_msg_id
     variables = {"query": search}
     json = (
-        requests.post(
-            url, json={"query": character_query, "variables": variables})
+        requests.post(url, json={"query": character_query, "variables": variables})
         .json()["data"]
         .get("Character", None)
     )

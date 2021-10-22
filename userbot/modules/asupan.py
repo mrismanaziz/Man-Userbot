@@ -11,8 +11,7 @@ from userbot.events import man_cmd
 @bot.on(man_cmd(outgoing=True, pattern="asupan$"))
 async def _(event):
     try:
-        response = requests.get(
-            "https://api-tede.herokuapp.com/api/asupan/ptl").json()
+        response = requests.get("https://api-tede.herokuapp.com/api/asupan/ptl").json()
         await event.client.send_file(event.chat_id, response["url"])
         await event.delete()
     except Exception:
@@ -22,8 +21,7 @@ async def _(event):
 @bot.on(man_cmd(outgoing=True, pattern="wibu$"))
 async def _(event):
     try:
-        response = requests.get(
-            "https://api-tede.herokuapp.com/api/asupan/wibu").json()
+        response = requests.get("https://api-tede.herokuapp.com/api/asupan/wibu").json()
         await event.client.send_file(event.chat_id, response["url"])
         await event.delete()
     except Exception:
@@ -33,8 +31,7 @@ async def _(event):
 @bot.on(man_cmd(outgoing=True, pattern="chika$"))
 async def _(event):
     try:
-        response = requests.get(
-            "https://api-tede.herokuapp.com/api/chika").json()
+        response = requests.get("https://api-tede.herokuapp.com/api/chika").json()
         await event.client.send_file(event.chat_id, response["url"])
         await event.delete()
     except Exception:

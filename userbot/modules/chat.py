@@ -76,8 +76,7 @@ async def permalink(mention):
         await mention.edit(f"[{custom}](tg://user?id={user.id})")
     else:
         tag = (
-            user.first_name.replace(
-                "\u2060", "") if user.first_name else user.username
+            user.first_name.replace("\u2060", "") if user.first_name else user.username
         )
         await mention.edit(f"[{tag}](tg://user?id={user.id})")
 
@@ -265,8 +264,7 @@ async def fetch_info(chat, event):
     # chat.chats is a list so we use get_entity() to avoid IndexError
     chat_obj_info = await event.client.get_entity(chat.full_chat.id)
     broadcast = (
-        chat_obj_info.broadcast if hasattr(
-            chat_obj_info, "broadcast") else False
+        chat_obj_info.broadcast if hasattr(chat_obj_info, "broadcast") else False
     )
     chat_type = "Channel" if broadcast else "Group"
     chat_title = chat_obj_info.title
@@ -327,20 +325,16 @@ async def fetch_info(chat, event):
         else chat_obj_info.participants_count
     )
     admins = (
-        chat.full_chat.admins_count if hasattr(
-            chat.full_chat, "admins_count") else None
+        chat.full_chat.admins_count if hasattr(chat.full_chat, "admins_count") else None
     )
     banned_users = (
-        chat.full_chat.kicked_count if hasattr(
-            chat.full_chat, "kicked_count") else None
+        chat.full_chat.kicked_count if hasattr(chat.full_chat, "kicked_count") else None
     )
     restrcited_users = (
-        chat.full_chat.banned_count if hasattr(
-            chat.full_chat, "banned_count") else None
+        chat.full_chat.banned_count if hasattr(chat.full_chat, "banned_count") else None
     )
     members_online = (
-        chat.full_chat.online_count if hasattr(
-            chat.full_chat, "online_count") else 0
+        chat.full_chat.online_count if hasattr(chat.full_chat, "online_count") else 0
     )
     group_stickers = (
         chat.full_chat.stickerset.title
@@ -359,8 +353,7 @@ async def fetch_info(chat, event):
         else None
     )
     exp_count = chat.full_chat.pts if hasattr(chat.full_chat, "pts") else None
-    username = chat_obj_info.username if hasattr(
-        chat_obj_info, "username") else None
+    username = chat_obj_info.username if hasattr(chat_obj_info, "username") else None
     bots_list = chat.full_chat.bot_info  # this is a list
     bots = 0
     supergroup = (
@@ -389,8 +382,7 @@ async def fetch_info(chat, event):
         else "Tidak"
     )
     username = "@{}".format(username) if username else None
-    creator_username = "@{}".format(
-        creator_username) if creator_username else None
+    creator_username = "@{}".format(creator_username) if creator_username else None
     # end of spaghetti block
 
     if admins is None:

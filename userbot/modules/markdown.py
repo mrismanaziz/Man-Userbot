@@ -100,8 +100,7 @@ MATCHERS = [
     (get_tag_parser("--", MessageEntityUnderline)),
     (re.compile(r"\+\+(.+?)\+\+"), parse_aesthetics),
     (re.compile(r"([^/\w]|^)(/?(r/\w+))"), parse_subreddit),
-    (re.compile(r"(?<!\w)(~{2})(?!~~)(.+?)(?<!~)\1(?!\w)"),
-     parse_strikethrough),
+    (re.compile(r"(?<!\w)(~{2})(?!~~)(.+?)(?<!~)\1(?!\w)"), parse_strikethrough),
 ]
 
 
@@ -143,8 +142,7 @@ def parse(message, old_entities=None):
                     e.offset += shift
 
             # Replace whole match with text from parser
-            message = "".join(
-                (message[: match.start()], text, message[match.end():]))
+            message = "".join((message[: match.start()], text, message[match.end() :]))
 
             # Append entity if we got one
             if entity:

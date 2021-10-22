@@ -86,8 +86,7 @@ async def download(target_file):
                 LOGS.info(str(e))
         if downloader.isSuccessful():
             await target_file.edit(
-                "Downloaded to `{}` successfully !!".format(
-                    downloaded_file_name)
+                "Downloaded to `{}` successfully !!".format(downloaded_file_name)
             )
         else:
             await target_file.edit("Incorrect URL\n{}".format(url))
@@ -118,8 +117,7 @@ async def download(target_file):
                         location=file,
                         out=f,
                         progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                            progress(d, t, target_file, c_time,
-                                     "[DOWNLOAD]", input_str)
+                            progress(d, t, target_file, c_time, "[DOWNLOAD]", input_str)
                         ),
                     )
             else:
@@ -133,13 +131,11 @@ async def download(target_file):
         else:
             try:
                 await target_file.edit(
-                    "Downloaded to `{}` in `{}` seconds.".format(
-                        result.name, dl_time)
+                    "Downloaded to `{}` in `{}` seconds.".format(result.name, dl_time)
                 )
             except AttributeError:
                 await target_file.edit(
-                    "Downloaded to `{}` in `{}` seconds.".format(
-                        result, dl_time)
+                    "Downloaded to `{}` in `{}` seconds.".format(result, dl_time)
                 )
     else:
         await target_file.edit("See `.help download` for more info.")
@@ -147,8 +143,7 @@ async def download(target_file):
 
 async def get_video_thumb(file, output):
     """Get video thumbnail"""
-    command = ["ffmpeg", "-i", file, "-ss",
-               "00:00:01.000", "-vframes", "1", output]
+    command = ["ffmpeg", "-i", file, "-ss", "00:00:01.000", "-vframes", "1", output]
     t_resp, e_resp = await run_cmd(command)
     if os.path.lexists(output):
         return output
@@ -176,8 +171,7 @@ async def upload(event):
                     file=f,
                     name=file_name,
                     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        progress(d, t, event, c_time,
-                                 "[FILE - UPLOAD]", input_str)
+                        progress(d, t, event, c_time, "[FILE - UPLOAD]", input_str)
                     ),
                 )
             up_time = (datetime.now() - start_time).seconds
