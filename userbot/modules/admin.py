@@ -225,7 +225,7 @@ async def ban(bon):
         )
     else:
         await bon.edit(
-            f"\\\\**#Banned_User**//\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n**User ID:** `{user.id}`\n**Action:** `Banned User by {ALIVE_NAME}`"
+            f"\\**#Banned_User**//\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n**User ID:** `{user.id}`\n**Action:** `Banned User by {ALIVE_NAME}`"
         )
 
     # Announce to the logging group if we have banned the person
