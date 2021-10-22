@@ -51,7 +51,7 @@ async def variable(var):
                 return True
             await var.edit("**Mohon Ubah Var** `BOTLOG` **Ke** `True`")
             return False
-        elif variable in heroku_var:
+        if variable in heroku_var:
             if BOTLOG:
                 await var.client.send_message(
                     BOTLOG_CHATID,
@@ -63,9 +63,8 @@ async def variable(var):
                 return True
             await var.edit("**Mohon Ubah Var** `BOTLOG` **Ke** `True`")
             return False
-        else:
-            await var.edit("`Informasi Tidak Ditemukan...`")
-            return True
+        await var.edit("`Informasi Tidak Ditemukan...`")
+        return True
     elif exe == "del":
         await var.edit("`Menghapus Config Vars...`")
         variable = var.pattern_match.group(2)
@@ -166,7 +165,8 @@ async def dyno_usage(dyno):
             for apps in Apps:
                 if apps.get("app_uuid") == app.id:
                     AppQuotaUsed = apps.get("quota_used") / 60
-                    AppPercentage = math.floor(apps.get("quota_used") * 100 / quota)
+                    AppPercentage = math.floor(
+                        apps.get("quota_used") * 100 / quota)
                     break
             else:
                 AppQuotaUsed = 0
