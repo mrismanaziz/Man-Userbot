@@ -82,9 +82,7 @@ async def on_snip_save(event):
         add_snip(keyword, string, msg_id) is False
         or add_snip(keyword, string, msg_id) is not False
     ):
-        success = (
-            "**Costum {} disimpan. Gunakan** `.{}` **di mana saja untuk menggunakannya**"
-        )
+        success = "**Costum {} disimpan. Gunakan** `.{}` **di mana saja untuk menggunakannya**"
         await event.edit(success.format("Berhasil", keyword))
 
 

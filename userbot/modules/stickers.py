@@ -391,7 +391,7 @@ async def _(event):
                 response = conv.wait_event(
                     events.NewMessage(incoming=True, from_users=429000)
                 )
-                await conv.send_message('/editsticker')
+                await conv.send_message("/editsticker")
                 await conv.get_response()
                 await asyncio.sleep(2)
                 await bot.forward_messages(chat, reply_message)

@@ -42,7 +42,7 @@ async def insta(event):
             await event.client.send_file(
                 event.chat_id,
                 response.message.media,
-                caption='**Support** @sharinguserbot',
+                caption="**Support** @sharinguserbot",
             )
 
             await event.client.send_read_acknowledge(conv.chat_id)

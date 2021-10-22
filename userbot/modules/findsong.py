@@ -70,7 +70,7 @@ async def download_video(event):
         with YoutubeDL(opts) as rip:
             rip_data = rip.extract_info(url)
     except DownloadError as DE:
-        await event.edit(f'`{DE}`')
+        await event.edit(f"`{DE}`")
         return
     except ContentTooShortError:
         await event.edit("`Konten unduhan terlalu pendek.`")
@@ -96,7 +96,7 @@ async def download_video(event):
         await event.edit("`Terjadi kesalahan selama ekstraksi info.`")
         return
     except Exception as e:
-        await event.edit(f'{str(type(e)): {e}}')
+        await event.edit(f"{str(type(e)): {e}}")
         return
     try:
         sung = str(pybase64.b64decode("QFRlbGVCb3RIZWxw"))[2:14]

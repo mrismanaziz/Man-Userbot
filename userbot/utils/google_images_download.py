@@ -16,7 +16,7 @@ import ssl
 import sys
 import time  # Importing the time library to check the time of code execution
 import urllib.request
-from http.client import BadStatusLine, IncompleteRead
+from http.client import BadStatusLine
 from urllib.parse import quote
 from urllib.request import HTTPError, Request, URLError, urlopen
 
@@ -1160,7 +1160,8 @@ class googleimagesdownload:
     ):  # sourcery no-metrics
         if not silent_mode and (print_urls or no_download):
             print("Image URL: " + image_url)
-        if ignore_urls and any(url in image_url for url in ignore_urls.split(",")):
+        if ignore_urls and any(
+                url in image_url for url in ignore_urls.split(",")):
             return (
                 "fail",
                 "Image ignored due to 'ignore url' parameter",

@@ -83,7 +83,7 @@ async def gspide(rk):
         if not reason:
             reason = "Private"
     except BaseException:
-        return await rkp.edit('`Gagal Global Kick! Pengguna tidak dikenal.`')
+        return await rkp.edit("`Gagal Global Kick! Pengguna tidak dikenal.`")
     if user:
         if user.id == 844432220:
             return await rkp.edit(f"`{ALIVE_NAME} Jangan Ngadi Ngadi itu CODER aing`")

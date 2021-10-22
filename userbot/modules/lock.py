@@ -95,7 +95,7 @@ async def locks(event):
         await event.edit(f"`{ALIVE_NAME} Telah Mengunci {what} Untuk Obrolan Ini!!`")
     except BaseException as e:
         await event.edit(
-            f'`Apakah {ALIVE_NAME} Mempunyai Izin Melakukan Itu Disini?`\n**Kesalahan:** {e}'
+            f"`Apakah {ALIVE_NAME} Mempunyai Izin Melakukan Itu Disini?`\n**Kesalahan:** {e}"
         )
 
         return
@@ -189,7 +189,7 @@ async def rem_locks(event):
         )
     except BaseException as e:
         await event.edit(
-            f'`Apakah {ALIVE_NAME} Mempunyai Izin Melakukan Itu Disini?`\n**ERROR:** {e}'
+            f"`Apakah {ALIVE_NAME} Mempunyai Izin Melakukan Itu Disini?`\n**ERROR:** {e}"
         )
 
         return
