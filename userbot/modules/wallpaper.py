@@ -31,7 +31,7 @@ async def _(event):
                 return await event.reply("`Maaf Tidak Bisa`")
             if r1.text.startswith("No"):
                 return await event.edit(
-                    f"`Saya Tidak Menemukan Wallpaper Yang Anda Cari`"
+                    "`Saya Tidak Menemukan Wallpaper Yang Anda Cari`"
                 )
             img = await event.client.download_media(r1)
             img2 = await event.client.download_media(r2)
