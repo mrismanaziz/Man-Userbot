@@ -78,12 +78,13 @@ async def on_snip_save(event):
     elif event.reply_to_msg_id and not string:
         rep_msg = await event.get_reply_message()
         string = rep_msg.text
-    success = (
-        "**Costum {} disimpan. Gunakan** `.{}` **di mana saja untuk menggunakannya**"
-    )
-    if add_snip(keyword, string, msg_id) is False:
-        await event.edit(success.format("Berhasil", keyword))
-    else:
+    if (
+        add_snip(keyword, string, msg_id) is False
+        or add_snip(keyword, string, msg_id) is not False
+    ):
+        success = (
+            "**Costum {} disimpan. Gunakan** `.{}` **di mana saja untuk menggunakannya**"
+        )
         await event.edit(success.format("Berhasil", keyword))
 
 

@@ -549,13 +549,13 @@ async def get_users(event):
     async for user in bot.iter_participants(manuserbot.full_chat.id):
         try:
             await bot(InviteToChannelRequest(channel=chat, users=[user.id]))
-            s = s + 1
+            s += 1
             await man.edit(
                 f"**Terminal Running**\n\n• **Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**\n\n**× LastError:** `{error}`"
             )
         except Exception as e:
             error = str(e)
-            f = f + 1
+            f += 1
     return await man.edit(
         f"**Terminal Finished** \n\n• **Berhasil Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**"
     )

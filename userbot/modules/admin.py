@@ -225,11 +225,9 @@ async def ban(bon):
         )
     else:
         await bon.edit(
-            r"\\**#Banned_User**//"
-            f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
-            f"**User ID:** `{str(user.id)}`\n"
-            f"**Action:** `Banned User by {ALIVE_NAME}`"
+            f'\\\\**#Banned_User**//\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n**User ID:** `{user.id}`\n**Action:** `Banned User by {ALIVE_NAME}`'
         )
+
     # Announce to the logging group if we have banned the person
     # successfully!
     if BOTLOG:
@@ -696,7 +694,7 @@ async def kick(usr):
         await usr.client.kick_participant(usr.chat_id, user.id)
         await sleep(0.5)
     except Exception as e:
-        return await usr.edit(NO_PERM + f"\n{str(e)}")
+        return await usr.edit(NO_PERM + f'\n{e}')
 
     if reason:
         await usr.edit(

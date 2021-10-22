@@ -527,7 +527,7 @@ async def download_video(v_url):
         with YoutubeDL(opts) as rip:
             rip_data = rip.extract_info(url)
     except DownloadError as DE:
-        return await v_url.edit(f"`{str(DE)}`")
+        return await v_url.edit(f'`{DE}`')
     except ContentTooShortError:
         return await v_url.edit("`The download content was too short.`")
     except GeoRestrictedError:
@@ -546,7 +546,7 @@ async def download_video(v_url):
     except ExtractorError:
         return await v_url.edit("`There was an error during info extraction.`")
     except Exception as e:
-        return await v_url.edit(f"{str(type(e)): {str(e)}}")
+        return await v_url.edit(f'{str(type(e)): {e}}')
     c_time = time.time()
     if audio:
         await v_url.edit(
@@ -573,9 +573,7 @@ async def download_video(v_url):
         ]
         thumb_image = img_filenames[0]
         metadata = extractMetadata(createParser(f_name))
-        duration = 0
-        if metadata.has("duration"):
-            duration = metadata.get("duration").seconds
+        duration = metadata.get("duration").seconds if metadata.has("duration") else 0
         await v_url.client.send_file(
             v_url.chat_id,
             result,
@@ -611,15 +609,9 @@ async def download_video(v_url):
             )
         thumb_image = await get_video_thumb(f_name, "thumb.png")
         metadata = extractMetadata(createParser(f_name))
-        duration = 0
-        width = 0
-        height = 0
-        if metadata.has("duration"):
-            duration = metadata.get("duration").seconds
-        if metadata.has("width"):
-            width = metadata.get("width")
-        if metadata.has("height"):
-            height = metadata.get("height")
+        duration = metadata.get("duration").seconds if metadata.has("duration") else 0
+        width = metadata.get("width") if metadata.has("width") else 0
+        height = metadata.get("height") if metadata.has("height") else 0
         await v_url.client.send_file(
             v_url.chat_id,
             result,

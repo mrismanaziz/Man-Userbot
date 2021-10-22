@@ -112,8 +112,6 @@ def command(**args):
         async def wrapper(check):
             if check.edit_date and check.is_channel and not check.is_group:
                 return
-            if not LOGSPAMMER:
-                pass
             if not trigger_on_fwd and check.fwd_from:
                 return
 
@@ -169,8 +167,6 @@ def register(**args):
                 # Messages sent in channels can be edited by other users.
                 # Ignore edits that take place in channels.
                 return
-            if not LOGSPAMMER:
-                pass
             if not trigger_on_fwd and check.fwd_from:
                 return
 

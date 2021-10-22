@@ -49,8 +49,6 @@ async def gcast(event):
                 if chat not in GCAST_BLACKLIST:
                     await event.client.send_message(chat, msg)
                     done += 1
-                elif chat not in GCAST_BLACKLIST:
-                    pass
             except BaseException:
                 er += 1
     await kk.edit(

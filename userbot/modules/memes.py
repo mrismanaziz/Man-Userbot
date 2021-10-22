@@ -1008,7 +1008,7 @@ async def _(e):
 @bot.on(man_cmd(outgoing=True, pattern=r"(yes|no|maybe|decide)$"))
 async def _(event):
     decision = event.pattern_match.group(1).lower()
-    message_id = event.reply_to_msg_id if event.reply_to_msg_id else None
+    message_id = event.reply_to_msg_id or None
     if decision != "decide":
         r = requests.get(f"https://yesno.wtf/api?force={decision}").json()
     else:
@@ -1022,7 +1022,7 @@ async def _(event):
 @bot.on(man_cmd(outgoing=True, pattern=r";_;$"))
 async def _(idk):
     t = ";_;"
-    for j in range(10):
+    for _ in range(10):
         t = t[:-1] + "_;"
         await idk.edit(t)
 
@@ -1267,7 +1267,7 @@ async def _(e):
 async def _(moone):
     deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
     try:
-        for x in range(32):
+        for _ in range(32):
             await sleep(0.1)
             await moone.edit("".join(deq))
             deq.rotate(1)
@@ -1339,7 +1339,7 @@ async def _(event):
 async def _(event):
     deq = deque(list("🟥🟧🟨🟩🟦🟪🟫⬛⬜"))
     try:
-        for x in range(32):
+        for _ in range(32):
             await sleep(0.1)
             await event.edit("".join(deq))
             deq.rotate(1)
@@ -1351,7 +1351,7 @@ async def _(event):
 async def _(event):
     deq = deque(list("🤔🧐🤔🧐🤔🧐"))
     try:
-        for x in range(32):
+        for _ in range(32):
             await sleep(0.1)
             await event.edit("".join(deq))
             deq.rotate(1)
@@ -1363,7 +1363,7 @@ async def _(event):
 async def _(event):
     deq = deque(list("😂🤣😂🤣😂🤣"))
     try:
-        for x in range(32):
+        for _ in range(32):
             await sleep(0.1)
             await event.edit("".join(deq))
             deq.rotate(1)
@@ -1375,7 +1375,7 @@ async def _(event):
 async def _(event):
     deq = deque(list("!@#$%^&*()_+="))
     try:
-        for x in range(32):
+        for _ in range(32):
             await sleep(0.1)
             await event.edit("".join(deq))
             deq.rotate(1)
@@ -1552,7 +1552,7 @@ async def _(lmgtfy_q):
 async def _(sigh):
     """Ok..."""
     okay = "-_-"
-    for i in range(10):
+    for _ in range(10):
         okay = okay[:-1] + "_-"
         await sigh.edit(okay)
 
