@@ -86,7 +86,7 @@ async def _(c):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"vctitle(?: |$)(.*)"))
 async def change_title(e):
-    title = e.pattern_match.group(1).lower()
+    title = e.pattern_match.group(1)
     chat = await e.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
