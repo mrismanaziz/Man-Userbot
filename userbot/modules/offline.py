@@ -23,7 +23,7 @@ from userbot import (  # noqa pylint: disable=unused-import isort:skip
     ISAFK,
     USERS,
     PM_AUTO_BAN,
-    )
+)
 
 # ========================= CONSTANTS ============================
 AFKSTR = [
