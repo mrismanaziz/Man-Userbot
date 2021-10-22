@@ -485,7 +485,8 @@ class googleimagesdownload:
     def __init__(self):
         pass
 
-    def _extract_data_pack(self, page):
+    @staticmethod
+    def _extract_data_pack(page):
         start_line = page.find("AF_initDataCallback({key: \\'ds:1\\'") - 10
         start_object = page.find("[", start_line + 1)
         end_object = page.rfind(
@@ -494,7 +495,8 @@ class googleimagesdownload:
         object_raw = str(page[start_object:end_object])
         return bytes(object_raw, "utf-8").decode("unicode_escape")
 
-    def _extract_data_pack_extended(self, page):
+    @staticmethod
+    def _extract_data_pack_extended(page):
         start_line = page.find("AF_initDataCallback({key: 'ds:1'") - 10
         start_object = page.find("[", start_line + 1)
         end_object = page.rfind(
@@ -502,11 +504,13 @@ class googleimagesdownload:
                 "</script>", start_object + 1)) + 1
         return str(page[start_object:end_object])
 
-    def _extract_data_pack_ajax(self, data):
+    @staticmethod
+    def _extract_data_pack_ajax(data):
         lines = data.split("\n")
         return json.loads(lines[3])[0][2]
 
-    def _image_objects_from_pack(self, data):
+    @staticmethod
+    def _image_objects_from_pack(data):
         image_objects = json.loads(data)[31][-1][12][2]
         image_objects = [x for x in image_objects if x[0] == 1]
         return image_objects
@@ -623,7 +627,8 @@ class googleimagesdownload:
         return images, self.get_all_tabs(source)
 
     # Correcting the escape characters for python2
-    def replace_with_byte(self, match):
+    @staticmethod
+    def replace_with_byte(match):
         return chr(int(match.group(0)[1:], 8))
 
     def repair(self, brokenjson):
@@ -633,7 +638,8 @@ class googleimagesdownload:
         return invalid_escape.sub(self.replace_with_byte, brokenjson)
 
     # Finding 'Next Image' from the given raw page
-    def get_next_tab(self, s):
+    @staticmethod
+    def get_next_tab(s):
         start_line = s.find('class="dtviD"')
         if start_line == -1:  # If no links are found then give an error!
             return "no_tabs", "", 0
@@ -677,7 +683,8 @@ class googleimagesdownload:
         return tabs
 
     # Format the object in readable format
-    def format_object(self, object):
+    @staticmethod
+    def format_object(object):
         data = object[1]
         main = data[3]
         info = data[9]
@@ -701,7 +708,8 @@ class googleimagesdownload:
         return formatted_object
 
     # function to download single image
-    def single_image(self, image_url):
+    @staticmethod
+    def single_image(image_url):
         main_directory = "downloads"
         extensions = (".jpg", ".gif", ".png", ".bmp", ".svg", ".webp", ".ico")
         url = image_url
@@ -745,7 +753,8 @@ class googleimagesdownload:
             image_name.encode("raw_unicode_escape").decode("utf-8"))
         return
 
-    def similar_images(self, similar_images):
+    @staticmethod
+    def similar_images(similar_images):
         try:
             searchUrl = (
                 "https://www.google.com/searchbyimage?site=search&sa=X&image_url=" +
@@ -773,7 +782,8 @@ class googleimagesdownload:
             return "Cloud not connect to Google Images endpoint"
 
     # Building URL parameters
-    def build_url_parameters(self, arguments):
+    @staticmethod
+    def build_url_parameters(arguments):
         if arguments["language"]:
             lang = "&lr="
             lang_param = {
@@ -964,7 +974,8 @@ class googleimagesdownload:
         return url
 
     # measures the file size
-    def file_size(self, file_path):
+    @staticmethod
+    def file_size(file_path):
         if os.path.isfile(file_path):
             file_info = os.stat(file_path)
             size = file_info.st_size
@@ -975,7 +986,8 @@ class googleimagesdownload:
             return size
 
     # keywords from file
-    def keywords_from_file(self, file_name):
+    @staticmethod
+    def keywords_from_file(file_name):
         search_keyword = []
         with codecs.open(file_name, "r", encoding="utf-8-sig") as f:
             if ".csv" in file_name or ".txt" in file_name:
@@ -993,8 +1005,8 @@ class googleimagesdownload:
         return search_keyword
 
     # make directories
+    @staticmethod
     def create_directories(
-            self,
             main_directory,
             dir_name,
             thumbnail,
