@@ -49,10 +49,9 @@ async def variable(var):
                 )
                 await var.edit("**Berhasil Mengirim Ke BOTLOG_CHATID**")
                 return True
-            else:
-                await var.edit("**Mohon Ubah Var** `BOTLOG` **Ke** `True`")
-                return False
-        elif variable in heroku_var:
+            await var.edit("**Mohon Ubah Var** `BOTLOG` **Ke** `True`")
+            return False
+        if variable in heroku_var:
             if BOTLOG:
                 await var.client.send_message(
                     BOTLOG_CHATID,
@@ -62,12 +61,10 @@ async def variable(var):
                 )
                 await var.edit("**Berhasil Mengirim Ke BOTLOG_CHATID**")
                 return True
-            else:
-                await var.edit("**Mohon Ubah Var** `BOTLOG` **Ke** `True`")
-                return False
-        else:
-            await var.edit("`Informasi Tidak Ditemukan...`")
-            return True
+            await var.edit("**Mohon Ubah Var** `BOTLOG` **Ke** `True`")
+            return False
+        await var.edit("`Informasi Tidak Ditemukan...`")
+        return True
     elif exe == "del":
         await var.edit("`Menghapus Config Vars...`")
         variable = var.pattern_match.group(2)

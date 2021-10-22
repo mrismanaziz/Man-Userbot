@@ -140,7 +140,7 @@ async def show_welcome(event):
     cws = get_current_welcome_settings(event.chat_id)
     if not cws:
         return await event.edit("**Tidak Ada Pesan Welcome Yang Anda Simpan**")
-    elif cws.f_mesg_id:
+    if cws.f_mesg_id:
         msg_o = await event.client.get_messages(
             entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id)
         )

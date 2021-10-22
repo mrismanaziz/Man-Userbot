@@ -70,14 +70,13 @@ async def gspide(rk):
     me = await rk.client.get_me()
     await rkp.edit(f"`{ALIVE_NAME} Memproses Global Kick Jamet Goblok!`")
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
-    f"@{me.username}" if me.username else my_mention
     await rk.get_chat()
     a = b = 0
     if rk.is_private:
         user = rk.chat
         reason = rk.pattern_match.group(1)
     else:
-        rk.chat.title
+        pass
     try:
         user, reason = await get_user_from_event(rk)
     except BaseException:

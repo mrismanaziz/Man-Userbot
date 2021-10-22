@@ -282,8 +282,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusLastMonth):
             m += 1
             if "m" in input_str:
@@ -294,8 +293,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusLastWeek):
             w += 1
             if "w" in input_str:
@@ -306,8 +304,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusOffline):
             o += 1
             if "o" in input_str:
@@ -318,8 +315,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusOnline):
             q += 1
             if "q" in input_str:
@@ -330,8 +326,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusRecently):
             r += 1
             if "r" in input_str:
@@ -342,8 +337,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if i.bot:
             b += 1
             if "b" in input_str:
@@ -354,8 +348,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         elif i.deleted:
             d += 1
             if "d" in input_str:
@@ -499,7 +492,6 @@ async def _(event):
         await event.edit("**Mohon Balas Ke Link.**")
         return
     chat = "@CheckRestrictionsBot"
-    reply_message.sender
     await event.edit("```Memproses....```")
     async with event.client.conversation(chat) as conv:
         try:
@@ -1300,8 +1292,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusLastMonth):
             m += 1
             if "m" in input_str:
@@ -1312,8 +1303,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusLastWeek):
             w += 1
             if "w" in input_str:
@@ -1324,8 +1314,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusOffline):
             o += 1
             if "o" in input_str:
@@ -1336,8 +1325,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusOnline):
             q += 1
             if "q" in input_str:
@@ -1348,8 +1336,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if isinstance(i.status, UserStatusRecently):
             r += 1
             if "r" in input_str:
@@ -1360,8 +1347,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         if i.bot:
             b += 1
             if "b" in input_str:
@@ -1372,8 +1358,7 @@ async def _(event):
                     )
                     e.append(str(e))
                     break
-                else:
-                    c += 1
+                c += 1
         elif i.deleted:
             d += 1
             if "d" in input_str:
@@ -1517,7 +1502,6 @@ async def _(event):
         await event.edit("**Mohon Balas Ke Link.**")
         return
     chat = "@CheckRestrictionsBot"
-    reply_message.sender
     await event.edit("```Memproses....```")
     async with event.client.conversation(chat) as conv:
         try:

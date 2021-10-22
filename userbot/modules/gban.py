@@ -96,16 +96,15 @@ async def gben(userbot):
     else:
         dark = await dc.edit("`Memproses Global Banned Jamet..`")
     me = await userbot.client.get_me()
-    await dark.edit(f"`Global Banned Akan Segera Aktif..`")
+    await dark.edit("`Global Banned Akan Segera Aktif..`")
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
-    f"@{me.username}" if me.username else my_mention
     await userbot.get_chat()
     a = b = 0
     if userbot.is_private:
         user = userbot.chat
         reason = userbot.pattern_match.group(1)
     else:
-        userbot.chat.title
+        pass
     try:
         user, reason = await get_full_user(userbot)
     except BaseException:
@@ -175,14 +174,13 @@ async def gunben(userbot):
     me = await userbot.client.get_me()
     await dark.edit(f"`Membatalkan Perintah Global Banned`")
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
-    f"@{me.username}" if me.username else my_mention
     await userbot.get_chat()
     a = b = 0
     if userbot.is_private:
         user = userbot.chat
         reason = userbot.pattern_match.group(1)
     else:
-        userbot.chat.title
+        pass
     try:
         user, reason = await get_full_user(userbot)
     except BaseException:

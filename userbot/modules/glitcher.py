@@ -245,8 +245,7 @@ async def check_media(reply_message):
         return False
     if not data or data is None:
         return False
-    else:
-        return data
+    return data
 
 
 CMD_HELP.update(

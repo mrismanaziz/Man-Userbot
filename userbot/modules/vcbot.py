@@ -118,15 +118,14 @@ async def skip_musik(event):
             NAMA_GC = ""
             await call_py.leave_group_call(chat_id)
             return await edit_or_reply(event, "**Memberhentikan Lagu.**")
-        else:
-            await call_py.change_stream(
-                chat_id,
-                InputStream(
-                    InputAudioStream(
-                        queues.get(chat_id)["file"],
-                    ),
+        await call_py.change_stream(
+            chat_id,
+            InputStream(
+                InputAudioStream(
+                    queues.get(chat_id)["file"],
                 ),
-            )
+            ),
+        )
         await edit_or_reply(event, "**Melewati lagu saat ini.**")
 
 

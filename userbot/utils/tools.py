@@ -245,8 +245,7 @@ async def check_media(reply_message):
         return False
     if not data or data is None:
         return False
-    else:
-        return data
+    return data
 
 
 async def run_cmd(cmd: list) -> tuple[bytes, bytes]:
@@ -305,7 +304,7 @@ async def media_to_pic(event, reply):
         )
         return None
     media = await reply.download_media(file="./temp")
-    event = await edit_or_reply(event, f"`Transfiguration Time! Converting....`")
+    event = await edit_or_reply(event, "`Transfiguration Time! Converting....`")
     file = os.path.join("./temp/", "meme.png")
     if mediatype == "Sticker":
         if media.endswith(".tgs"):

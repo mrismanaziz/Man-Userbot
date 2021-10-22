@@ -41,8 +41,7 @@ async def remove_notes(clr):
         return await clr.edit(
             "**Tidak dapat menemukan catatan:** `{}`".format(notename)
         )
-    else:
-        return await clr.edit("**Berhasil Menghapus Catatan:** `{}`".format(notename))
+    return await clr.edit("**Berhasil Menghapus Catatan:** `{}`".format(notename))
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"save (\w*)"))
@@ -77,8 +76,7 @@ async def add_note(fltr):
     success = "**Catatan {} disimpan. Gunakan** `#{}` **untuk mengambilnya**"
     if add_note(str(fltr.chat_id), keyword, string, msg_id) is False:
         return await fltr.edit(success.format("Berhasil", keyword))
-    else:
-        return await fltr.edit(success.format("Berhasil", keyword))
+    return await fltr.edit(success.format("Berhasil", keyword))
 
 
 @register(pattern=r"#\w*", disable_edited=True, disable_errors=True, ignore_unsafe=True)

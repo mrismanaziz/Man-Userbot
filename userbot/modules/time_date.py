@@ -100,7 +100,7 @@ async def time_func(tdata):
         )
         return
 
-    elif COUNTRY:
+    if COUNTRY:
         await tdata.edit(
             f"**Sekarang Jam**  `{dtnow}`  **di {COUNTRY}" f"({time_zone} timezone).**"
         )
@@ -167,7 +167,7 @@ async def date_func(dat):
         )
         return
 
-    elif COUNTRY:
+    if COUNTRY:
         await dat.edit(
             f"**Sekarang Tanggal**  `{dtnow}`  **di {COUNTRY}"
             f"({time_zone} timezone).**"
