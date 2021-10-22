@@ -185,12 +185,15 @@ async def upstream(event):
 
     if conf == "now":
         for commit in changelog.splitlines():
-            if commit.startswith("- [NQ]"):
-                if HEROKU_APP_NAME is not None and HEROKU_API_KEY is not None:
-                    return await event.edit(
-                        "**Quick update telah dinonaktifkan untuk pembaruan ini; "
-                        "Gunakan** `.update deploy` **sebagai gantinya.**"
-                    )
+            if (
+                commit.startswith("- [NQ]")
+                and HEROKU_APP_NAME is not None
+                and HEROKU_API_KEY is not None
+            ):
+                return await event.edit(
+                    "**Quick update telah dinonaktifkan untuk pembaruan ini; "
+                    "Gunakan** `.update deploy` **sebagai gantinya.**"
+                )
         await event.edit("**Perfoming a quick update, please wait...**")
         await update(event, repo, ups_rem, ac_br)
 
