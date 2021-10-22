@@ -570,7 +570,6 @@ async def get_users(event):
 async def scrapmem(event):
     chat = event.chat_id
     await event.edit("`Processing...`")
-    event.client
     members = await event.client.get_participants(chat, aggressive=True)
 
     with open("members.csv", "w", encoding="UTF-8") as f:
@@ -585,7 +584,6 @@ async def scrapmem(event):
 async def admem(event):
     await event.edit("**Proses Menambahkan** `0` **Member**")
     chat = await event.get_chat()
-    event.client
     users = []
     with open("members.csv", encoding="UTF-8") as f:
         rows = csv.reader(f, delimiter=",", lineterminator="\n")

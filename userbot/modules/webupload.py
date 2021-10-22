@@ -28,7 +28,6 @@ async def _(event):
     else:
         reply = await event.get_reply_message()
         file_name = await bot.download_media(reply.media, TEMP_DOWNLOAD_DIRECTORY)
-    event.message.id
     CMD_WEB = {
         "anonfiles": 'curl -F "file=@{}" https://anonfiles.com/api/upload',
         "transfer": 'curl --upload-file "{}" https://transfer.sh/{os.path.basename(file_name)}',

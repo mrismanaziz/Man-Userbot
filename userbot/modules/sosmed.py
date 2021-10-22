@@ -21,7 +21,6 @@ async def insta(event):
         await event.edit("`Mohon Berikan Link yang ingin di download...`")
         return
     chat = "@SaveAsbot"
-    reply_message.sender
     if reply_message.sender.bot:
         await event.edit("`Processing...`")
         return
