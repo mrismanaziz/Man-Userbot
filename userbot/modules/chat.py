@@ -23,7 +23,6 @@ from telethon.errors.rpcerrorlist import (
     UserNotMutualContactError,
     UserPrivacyRestrictedError,
 )
-from telethon.tl import functions
 from telethon.tl.functions.channels import (
     GetFullChannelRequest,
     GetParticipantsRequest,
