@@ -49,9 +49,7 @@ def getsubitems(obj, itemkey, islast, maxlinelength, indent):
         # get the list of inner tokens
         for (i, k) in enumerate(keys):
             islast_ = i == len(obj) - 1
-            itemkey_ = ""
-            if isdict:
-                itemkey_ = basictype2str(k)
+            itemkey_ = basictype2str(k) if isdict else ""
             inner, is_inner_inline = getsubitems(
                 obj[k], itemkey_, islast_, maxlinelength - indent, indent)
             # inner can be a string or a list
@@ -126,9 +124,7 @@ def getsubitems(obj, itemkey, islast, maxlinelength, indent):
 
         # attempt to render the outer brackets + inner tokens in one line
         if is_inline:
-            item_text = ""
-            if subitems:
-                item_text = subitems[0]
+            item_text = subitems[0] if subitems else ""
             if len(opening) + len(item_text) + len(closing) <= maxlinelength:
                 items.append(opening + item_text + closing)
             else:

@@ -123,16 +123,9 @@ async def deeznuts(event):
 
 async def upload_track(track_location, message):
     metadata = extractMetadata(createParser(track_location))
-    duration = 0
-    title = ""
-    performer = ""
-    if metadata.has("duration"):
-        duration = metadata.get("duration").seconds
-    if metadata.has("title"):
-        title = metadata.get("title")
-    if metadata.has("artist"):
-        performer = metadata.get("artist")
-
+    duration = metadata.get("duration").seconds if metadata.has("duration") else 0
+    title = metadata.get("title") if metadata.has("title") else ""
+    performer = metadata.get("artist") if metadata.has("artist") else ""
     document_attributes = [
         DocumentAttributeAudio(
             duration=duration,

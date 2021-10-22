@@ -113,11 +113,7 @@ async def tor_search(event):
             title = title[20:]
             titles.append(title)
             urls.append("https://www.torrentdownloads.me" + div.p.a["href"])
-        except KeyError:
-            pass
-        except TypeError:
-            pass
-        except AttributeError:
+        except (KeyError, TypeError, AttributeError):
             pass
         if counter == 11:
             break
