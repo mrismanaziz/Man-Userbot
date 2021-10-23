@@ -145,10 +145,22 @@ async def stop_musik(event):
     await edit_or_reply(event, "**Memberhentikan lagu**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"delraw$"))
-async def _(event):
+@bot.on(man_cmd(outgoing=True, pattern="delraw$"))
+async def hapus_raw(event):
     await runcmd("rm -rf ./raw_files/*.raw")
     await edit_or_reply(event, "**Berhasil Menghapus File RAW**")
+
+
+@call_py.on_closed_voice_chat()
+async def on_closed_handler(_, chat_id: int):
+    global LAGI_MUTER, NAMA_GC
+    if LAGI_MUTER and NAMA_GC:
+        try:
+            queues.clear(chat_id)
+        except QueueEmpty:
+            pass
+        LAGI_MUTER = False
+        NAMA_GC = ""
 
 
 @call_py.on_stream_end()
