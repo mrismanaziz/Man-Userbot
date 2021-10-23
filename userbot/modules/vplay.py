@@ -53,7 +53,49 @@ async def video_c(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
     chat_id = event.chat_id
-        if not title:
+    if replied:
+        if replied.video or replied.document:
+            huehue = await replied.edit("`Downloading`")
+            dl = await replied.download_media()
+            if len(event.text.split()) > 1:
+                Q = 720
+            else:
+                pq = event.text.split(maxsplit=1)[1]
+                if pq == "720" or "480" or "360":
+                    Q = int(pq)
+                else:
+                    Q = 720
+                    await huehue.edit(
+                        "**Hanya Mengijinkan Resolusi** `720p`, `480p`, `360p`\n**Sekarang Streaming di 720p**"
+                    )
+
+            if replied.video:
+                songname = replied.video.file_name[:35] + "..."
+            elif replied.document:
+                songname = replied.document.file_name[:35] + "..."
+
+            if chat_id in QUEUE:
+                pos = add_to_queue(chat_id, songname, dl, "Video", Q)
+                await huehue.edit(f"**Ditambahkan Ke antrian Ke** `#{pos}`")
+            else:
+                if Q == 720:
+                    hmmm = HighQualityVideo()
+                elif Q == 480:
+                    hmmm = MediumQualityVideo()
+                elif Q == 360:
+                    hmmm = LowQualityVideo()
+                await call_py.join_group_call(
+                    chat_id,
+                    AudioVideoPiped(dl, HighQualityAudio(), hmmm),
+                    stream_type=StreamType().pulse_stream,
+                )
+                add_to_queue(chat_id, songname, dl, "Video", Q)
+                await huehue.edit(
+                    f"**Sedang Memutar Video ▶**\n**💬 Chat ID** : `{chat_id}`",
+                    link_preview=False,
+                )
+        else:
+            if not title:
                 return await event.edit("**Silahkan Masukan Judul Video**")
             else:
                 huehue = await event.reply("`Searching...`")
