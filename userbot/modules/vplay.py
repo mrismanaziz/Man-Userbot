@@ -53,21 +53,7 @@ async def video_c(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
     chat_id = event.chat_id
-    if replied:
-        if replied.video or replied.document:
-        msg = await event.reply("```Downloading from telegram...```")
-        file_source = await client.download_media(replied)
-        await msg.edit(f"**Sedang Memutar Video **")
-        try:
-            await call_py.join_group_call(
-                chat_id,
-                AudioVideoPiped(
-                    file_source
-                ),
-                stream_type=StreamType().live_stream
-            )
-        else:
-            if not title:
+        if not title:
                 return await event.edit("**Silahkan Masukan Judul Video**")
             else:
                 huehue = await event.reply("`Searching...`")
