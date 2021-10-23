@@ -70,9 +70,9 @@ async def video_c(event):
                     )
 
             if replied.video:
-                songname = replied.video.file_name[:35] + "..."
+                songname = "Telegram Video Player..."
             elif replied.document:
-                songname = replied.document.file_name[:35] + "..."
+                songname = "Telegram Video Player..."
 
             if chat_id in QUEUE:
                 pos = add_to_queue(chat_id, songname, dl, "Video", Q)
