@@ -56,8 +56,7 @@ async def video_c(event):
     if replied:
         if replied.video or replied.document:
             huehue = await replied.edit("`Downloading`")
-            dl = await replied.download_media()
-            link = replied.link
+            dl = await event.client.download_media(replied)
             if len(event.title) < 2:
                 Q = 720
             else:
@@ -76,7 +75,7 @@ async def video_c(event):
                 songname = replied.document.file_name[:35] + "..."
 
             if chat_id in QUEUE:
-                pos = add_to_queue(chat_id, songname, dl, link, "Video", Q)
+                pos = add_to_queue(chat_id, songname, dl, "Video", Q)
                 await huehue.edit(f"**Ditambahkan Ke antrian Ke** `#{pos}`")
             else:
                 if Q == 720:
@@ -90,9 +89,9 @@ async def video_c(event):
                     AudioVideoPiped(dl, HighQualityAudio(), hmmm),
                     stream_type=StreamType().pulse_stream,
                 )
-                add_to_queue(chat_id, songname, dl, link, "Video", Q)
+                add_to_queue(chat_id, songname, dl, "Video", Q)
                 await huehue.edit(
-                    f"**Memulai Memutar Video ▶** \n**🎧 Judul** : [{songname}]({link}) \n**💬 Chat ID** : `{chat_id}`",
+                    f"**Memulai Memutar Video ▶** \n**💬 Chat ID** : `{chat_id}`",
                     link_preview=False,
                 )
         else:
