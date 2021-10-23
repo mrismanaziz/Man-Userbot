@@ -34,6 +34,7 @@ Follow Channel [@Lunatic0de](https://t.me/Lunatic0de) untuk info Update bot dan 
 #### Thanks To [Everyone](https://github.com/mrismanaziz/Man-Userbot/graphs/contributors) Who Has Helped Make This Userbot Awesome!
 *   [AdekMaulana](https://github.com/adekmaulana) : ProjectBish
 *   [RaphielGang](https://github.com/RaphielGang) : Paperplane
+*   [TeamUltroid](https://github.com/TeamUltroid/Ultroid) :  UltroidUserbot
 *   [BianSepang](https://github.com/BianSepang/WeebProject) : WeebProject
 *   [Sandy1709](https://github.com/sandy1709/catuserbot) : CatUserbot
 *   [X_ImFine](https://github.com/ximfine) :  XBot-REMIX
