@@ -49,19 +49,19 @@ async def ytdl(link):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"vplay(?:\s|$)([\s\S]*)"))
-async def video_c(m):
-    title = m.pattern_match.group(1)
-    replied = await m.get_reply_message()
-    chat_id = m.chat_id
+async def video_c(event):
+    title = event.pattern_match.group(1)
+    replied = await event.get_reply_message()
+    chat_id = event.chat_id
     if replied:
         if replied.video or replied.document:
             huehue = await replied.edit("`Downloading`")
             dl = await replied.download_media()
             link = replied.link
-            if len(m.title) < 2:
+            if len(event.title) < 2:
                 Q = 720
             else:
-                pq = m.text.split(maxsplit=1)[1]
+                pq = events.text.split(maxsplit=1)[1]
                 if pq == "720" or "480" or "360":
                     Q = int(pq)
                 else:
@@ -97,10 +97,10 @@ async def video_c(m):
                 )
         else:
             if not title:
-                return await m.edit("**Silahkan Masukan Judul Video**")
+                return await event.edit("**Silahkan Masukan Judul Video**")
             else:
-                huehue = await m.reply("`Searching...`")
-                query = m.text.split(maxsplit=1)[1]
+                huehue = await event.reply("`Searching...`")
+                query = event.text.split(maxsplit=1)[1]
                 search = ytsearch(query)
                 Q = 720
                 hmmm = HighQualityVideo()
@@ -137,10 +137,10 @@ async def video_c(m):
 
     else:
         if not title:
-            return await m.edit("**Silahkan Masukan Judul Video**")
+            return await event.edit("**Silahkan Masukan Judul Video**")
         else:
-            huehue = await m.edit("`Searching...`")
-            query = m.text.split(maxsplit=1)[1]
+            huehue = await event.edit("`Searching...`")
+            query = event.text.split(maxsplit=1)[1]
             search = ytsearch(query)
             Q = 720
             hmmm = HighQualityVideo()
@@ -175,40 +175,40 @@ async def video_c(m):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="vend$"))
-async def vend(m):
-    chat_id = m.chat.id
+async def vend(event):
+    chat_id = event.chat.id
     if chat_id in QUEUE:
         try:
             await call_py.leave_group_call(chat_id)
             clear_queue(chat_id)
-            await m.edit("**Menghentikan Streaming**")
+            await event.edit("**Menghentikan Streaming**")
         except Exception as e:
-            await m.edit(f"**ERROR**\n`{e}`")
+            await event.edit(f"**ERROR**\n`{e}`")
     else:
-        await m.edit("**Tidak Sedang Memutar Streaming**")
+        await event.edit("**Tidak Sedang Memutar Streaming**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern="vpause$"))
-async def vpause(m):
-    chat_id = m.chat.id
+async def vpause(event):
+    chat_id = event.chat.id
     if chat_id in QUEUE:
         try:
             await call_py.pause_stream(chat_id)
-            await m.edit("**Paused Streaming**")
+            await event.edit("**Paused Streaming**")
         except Exception as e:
-            await m.edit(f"**ERROR**\n`{e}`")
+            await event.edit(f"**ERROR**\n`{e}`")
     else:
-        await m.edit("**Tidak Sedang Memutar Streaming**")
+        await event.edit("**Tidak Sedang Memutar Streaming**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern="vresume$"))
-async def vresume(m):
-    chat_id = m.chat.id
+async def vresume(event):
+    chat_id = event.chat.id
     if chat_id in QUEUE:
         try:
             await call_py.resume_stream(chat_id)
-            await m.edit("**Resumed Streaming ▶**")
+            await event.edit("**Resumed Streaming ▶**")
         except Exception as e:
-            await m.edit(f"**ERROR**\n`{e}`")
+            await event.edit(f"**ERROR**\n`{e}`")
     else:
-        await m.edit("**Tidak Sedang Memutar Streaming**")
+        await event.edit("**Tidak Sedang Memutar Streaming**")
