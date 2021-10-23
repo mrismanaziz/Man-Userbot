@@ -12,23 +12,23 @@ from youtubesearchpython import VideosSearch
 
 from userbot import call_py
 from userbot.events import man_cmd
-from userbot.utils.queues.vqueues import add_to_queue, clear_queue, QUEUE
+from userbot.utils.queues.vqueues import QUEUE, add_to_queue, clear_queue
 
 
 def ytsearch(query):
-   try:
-      search = VideosSearch(query, limit=1)
-      for r in search.result()["result"]:
-         ytid = r['id']
-         if len(r['title']) > 34:
-            songname = r['title'][:35] + "..."
-         else:
-            songname = r['title']
-         url = f"https://www.youtube.com/watch?v={ytid}"
-      return [songname, url]
-   except Exception as e:
-      print(e)
-      return 0
+    try:
+        search = VideosSearch(query, limit=1)
+        for r in search.result()["result"]:
+            ytid = r["id"]
+            if len(r["title"]) > 34:
+                songname = r["title"][:35] + "..."
+            else:
+                songname = r["title"]
+            url = f"https://www.youtube.com/watch?v={ytid}"
+        return [songname, url]
+    except Exception as e:
+        print(e)
+        return 0
 
 
 async def ytdl(link):
@@ -105,7 +105,9 @@ async def video_c(m):
                 Q = 720
                 hmmm = HighQualityVideo()
                 if search == 0:
-                    await huehue.edit("**Tidak Menemukan Video untuk Keyword yang Diberikan**")
+                    await huehue.edit(
+                        "**Tidak Menemukan Video untuk Keyword yang Diberikan**"
+                    )
                 else:
                     songname = search[0]
                     url = search[1]
@@ -143,7 +145,9 @@ async def video_c(m):
             Q = 720
             hmmm = HighQualityVideo()
             if search == 0:
-                await huehue.edit("**Tidak Menemukan Video untuk Keyword yang Diberikan**")
+                await huehue.edit(
+                    "**Tidak Menemukan Video untuk Keyword yang Diberikan**"
+                )
             else:
                 songname = search[0]
                 url = search[1]
@@ -172,39 +176,39 @@ async def video_c(m):
 
 @bot.on(man_cmd(outgoing=True, pattern="vend$"))
 async def vend(m):
-   chat_id = m.chat.id
-   if chat_id in QUEUE:
-      try:
-         await call_py.leave_group_call(chat_id)
-         clear_queue(chat_id)
-         await m.edit("**Menghentikan Streaming**")
-      except Exception as e:
-         await m.edit(f"**ERROR**\n`{e}`")
-   else:
-      await m.edit("**Tidak Sedang Memutar Streaming**")
+    chat_id = m.chat.id
+    if chat_id in QUEUE:
+        try:
+            await call_py.leave_group_call(chat_id)
+            clear_queue(chat_id)
+            await m.edit("**Menghentikan Streaming**")
+        except Exception as e:
+            await m.edit(f"**ERROR**\n`{e}`")
+    else:
+        await m.edit("**Tidak Sedang Memutar Streaming**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern="vpause$"))
 async def vpause(m):
-   chat_id = m.chat.id
-   if chat_id in QUEUE:
-      try:
-         await call_py.pause_stream(chat_id)
-         await m.edit("**Paused Streaming**")
-      except Exception as e:
-         await m.edit(f"**ERROR**\n`{e}`")
-   else:
-      await m.edit("**Tidak Sedang Memutar Streaming**")
+    chat_id = m.chat.id
+    if chat_id in QUEUE:
+        try:
+            await call_py.pause_stream(chat_id)
+            await m.edit("**Paused Streaming**")
+        except Exception as e:
+            await m.edit(f"**ERROR**\n`{e}`")
+    else:
+        await m.edit("**Tidak Sedang Memutar Streaming**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern="vresume$"))
 async def vresume(m):
-   chat_id = m.chat.id
-   if chat_id in QUEUE:
-      try:
-         await call_py.resume_stream(chat_id)
-         await m.edit("**Resumed Streaming ▶**")
-      except Exception as e:
-         await m.edit(f"**ERROR**\n`{e}`")
-   else:
-      await m.edit("**Tidak Sedang Memutar Streaming**")
+    chat_id = m.chat.id
+    if chat_id in QUEUE:
+        try:
+            await call_py.resume_stream(chat_id)
+            await m.edit("**Resumed Streaming ▶**")
+        except Exception as e:
+            await m.edit(f"**ERROR**\n`{e}`")
+    else:
+        await m.edit("**Tidak Sedang Memutar Streaming**")
