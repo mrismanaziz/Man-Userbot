@@ -56,7 +56,7 @@ async def video_c(m):
     if replied:
         if replied.video or replied.document:
             huehue = await replied.edit("`Downloading`")
-            dl = await replied.download()
+            dl = await replied.download_media()
             link = replied.link
             if len(m.title) < 2:
                 Q = 720
