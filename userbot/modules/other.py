@@ -168,10 +168,49 @@ async def _(event):
         await event.edit(f"~ {response.message.message}")
 
 
+@bot.on(man_cmd(outgoing=True, pattern="view"))
+async def _(event):
+    reply_message = await event.get_reply_message()
+    if not reply_message:
+        await edit_or_reply(event, "**Mohon Reply ke Link**")
+        return
+    if not reply_message.text:
+        await edit_or_reply(event, "**Mohon Reply ke Link**")
+        return
+    chat = "@chotamreaderbot"
+    xx = await edit_or_reply(event, "`Processing...`")
+    async with event.client.conversation(chat) as conv:
+        try:
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=272572121)
+            )
+            await event.client.forward_messages(chat, reply_message)
+            response = await response
+            await event.client.send_read_acknowledge(conv.chat_id)
+        except YouBlockedUserError:
+            await xx.edit("**Silahkan unblock @chotamreaderbot dan coba lagi**")
+            return
+        if response.text.startswith(""):
+            await xx.edit("Am I Dumb Or Am I Dumb?")
+        else:
+            await xx.delete()
+            await event.client.send_message(event.chat_id, response.message)
+
+
+CMD_HELP.update(
+    {
+        "view": f"**Plugin : **`view`\
+        \n\n  •  **Syntax :** `{cmd}view` <reply ke link>\
+        \n  •  **Function : **Untuk Melihat isi web dengan instan view telegraph.\
+    "
+    }
+)
+
+
 CMD_HELP.update(
     {
         "open": f"**Plugin : **`open`\
-        \n\n  •  **Syntax :** `{cmd}open`\
+        \n\n  •  **Syntax :** `{cmd}open` <reply ke file>\
         \n  •  **Function : **Untuk Melihat isi File Menjadi Text yang dikirim menjadi pesan telegram.\
     "
     }
