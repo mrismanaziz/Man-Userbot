@@ -57,7 +57,7 @@ async def video_c(event):
         if replied.video or replied.document:
             huehue = await replied.edit("`Downloading`")
             dl = await replied.download_media()
-            if len(event.text.split()) > 1:
+            if len(event.text.split()) < 2:
                 Q = 720
             else:
                 pq = event.text.split(maxsplit=1)[1]
