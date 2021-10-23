@@ -188,9 +188,7 @@ async def _(event):
             response = await response
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await xx.edit(
-                "**Silahkan unblock @chotamreaderbot dan coba lagi**"
-            )
+            await xx.edit("**Silahkan unblock @chotamreaderbot dan coba lagi**")
             return
         if response.text.startswith(""):
             await xx.edit("Am I Dumb Or Am I Dumb?")
