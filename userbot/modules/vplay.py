@@ -176,7 +176,7 @@ async def video_c(event):
 
 @bot.on(man_cmd(outgoing=True, pattern="vend$"))
 async def vend(event):
-    chat_id = event.chat.id
+    chat_id = event.chat_id
     if chat_id in QUEUE:
         try:
             await call_py.leave_group_call(chat_id)
@@ -190,7 +190,7 @@ async def vend(event):
 
 @bot.on(man_cmd(outgoing=True, pattern="vpause$"))
 async def vpause(event):
-    chat_id = event.chat.id
+    chat_id = event.chat_id
     if chat_id in QUEUE:
         try:
             await call_py.pause_stream(chat_id)
@@ -203,7 +203,7 @@ async def vpause(event):
 
 @bot.on(man_cmd(outgoing=True, pattern="vresume$"))
 async def vresume(event):
-    chat_id = event.chat.id
+    chat_id = event.chat_id
     if chat_id in QUEUE:
         try:
             await call_py.resume_stream(chat_id)
