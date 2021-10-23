@@ -202,7 +202,7 @@ async def _(event):
 CMD_HELP.update(
     {
         "view": f"**Plugin : **`view`\
-        \n\n  •  **Syntax :** `{cmd}view` <link>\
+        \n\n  •  **Syntax :** `{cmd}view` <reply ke link>\
         \n  •  **Function : **Untuk Melihat isi web dengan instan view telegraph.\
     "
     }
