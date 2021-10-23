@@ -192,6 +192,8 @@ async def _(event):
             return
         if response.text.startswith(""):
             await xx.edit("Am I Dumb Or Am I Dumb?")
+        elif response.text.startswith("Такой тип файлов не поддерживается Вопросы/Предложения? Пишите в чат"):
+            await xx.edit("**Maaf Jenis file ini tidak didukung.**")
         else:
             await xx.delete()
             await event.client.send_message(event.chat_id, response.message)
