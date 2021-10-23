@@ -10,7 +10,7 @@ from pytgcalls.types.input_stream.quality import (
 )
 from youtubesearchpython import VideosSearch
 
-from userbot import call_py
+from userbot import bot, call_py
 from userbot.events import man_cmd
 from userbot.utils.queues.vqueues import QUEUE, add_to_queue, clear_queue
 
