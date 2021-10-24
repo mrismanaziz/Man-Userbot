@@ -249,7 +249,7 @@ async def vend(event):
 @bot.on(man_cmd(outgoing=True, pattern="vskip$"))
 async def skip(event):
     chat_id = event.chat_id
-    if len(event.text) < 2:
+    if len(event.text.split()) < 2:
         op = await skip_current_song(chat_id)
         if op == 0:
             await event.edit("**Tidak Sedang Memutar Streaming**")
@@ -261,7 +261,7 @@ async def skip(event):
                 link_preview=False,
             )
     else:
-        skip = event.text.split()[1]
+        skip = event.text.split(maxsplit=1)[1]
         OP = "**Menghapus Video Berikut Dari Antrian:**"
         if chat_id in QUEUE:
             items = [int(x) for x in skip.split(" ") if x.isdigit()]
