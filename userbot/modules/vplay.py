@@ -261,7 +261,7 @@ async def skip(event):
                 link_preview=False,
             )
     else:
-        skip = event.text.split(None, 1)[1]
+        skip = event.text.split()[1]
         OP = "**Menghapus Video Berikut Dari Antrian:**"
         if chat_id in QUEUE:
             items = [int(x) for x in skip.split(" ") if x.isdigit()]
