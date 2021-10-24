@@ -329,7 +329,7 @@ async def playlist(event):
 
 @call_py.on_stream_end()
 async def on_end_handler(_, u: Update):
-    if isinstance(update, StreamAudioEnded):
+    if isinstance(u, StreamAudioEnded):
         chat_id = u.chat_id
         print(chat_id)
         op = await skip_current_song(chat_id)
