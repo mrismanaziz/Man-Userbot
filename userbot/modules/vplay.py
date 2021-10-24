@@ -12,7 +12,7 @@ from youtubesearchpython import VideosSearch
 
 from userbot import bot, call_py
 from userbot.events import man_cmd
-from userbot.utils.queues.vqueues import QUEUE, add_to_queue, clear_queue
+from userbot.utils.queues.vqueues import QUEUE, add_to_queue, clear_queue, get_queue
 
 
 def ytsearch(query):
@@ -209,5 +209,28 @@ async def vresume(event):
             await event.edit("**Resumed Streaming ▶**")
         except Exception as e:
             await event.edit(f"**ERROR**\n`{e}`")
+    else:
+        await event.edit("**Tidak Sedang Memutar Streaming**")
+
+
+@bot.on(man_cmd(outgoing=True, pattern="vplaylist$"))
+async def playlist(event):
+    chat_id = event.chat_id
+    if chat_id in QUEUE:
+        chat_queue = get_queue(chat_id)
+        if len(chat_queue) == 1:
+            await event.edit(
+                f"**🎧 SEDANG DIMAINKAN:** \n[{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}`",
+                link_preview=False,
+            )
+        else:
+            QUE = f"**🎧 SEDANG DIMAINKAN:** \n[{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}` \n\n**⏯ PLAYLIST:**"
+            l = len(chat_queue)
+            for x in range(1, l):
+                hmm = chat_queue[x][0]
+                hmmm = chat_queue[x][2]
+                hmmmm = chat_queue[x][3]
+                QUE = QUE + "\n" + f"**#{x}** - [{hmm}]({hmmm}) | `{hmmmm}`"
+            await event.edit(QUE, link_preview=False)
     else:
         await event.edit("**Tidak Sedang Memutar Streaming**")
