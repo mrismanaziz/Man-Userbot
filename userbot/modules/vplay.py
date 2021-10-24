@@ -1,18 +1,26 @@
 import asyncio
 
 from pytgcalls import StreamType
-from pytgcalls.types.input_stream import AudioVideoPiped
+from pytgcalls.types import Update
+from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
 from pytgcalls.types.input_stream.quality import (
     HighQualityAudio,
     HighQualityVideo,
     LowQualityVideo,
     MediumQualityVideo,
 )
+from pytgcalls.types.stream import StreamAudioEnded
 from youtubesearchpython import VideosSearch
 
 from userbot import bot, call_py
 from userbot.events import man_cmd
-from userbot.utils.queues.vqueues import QUEUE, add_to_queue, clear_queue, get_queue
+from userbot.utils.queues.vqueues import (
+    QUEUE,
+    add_to_queue,
+    clear_queue,
+    get_queue,
+    pop_an_item,
+)
 
 
 def ytsearch(query):
@@ -46,6 +54,57 @@ async def ytdl(link):
         return 1, stdout.decode().split("\n")[0]
     else:
         return 0, stderr.decode()
+
+
+async def skip_item(chat_id, h):
+    if chat_id in QUEUE:
+        chat_queue = get_queue(chat_id)
+        try:
+            x = int(h)
+            songname = chat_queue[x][0]
+            chat_queue.pop(x)
+            return songname
+        except Exception as e:
+            print(e)
+            return 0
+    else:
+        return 0
+
+
+async def skip_current_song(chat_id):
+    if chat_id in QUEUE:
+        chat_queue = get_queue(chat_id)
+        if len(chat_queue) == 1:
+            await call_py.leave_group_call(chat_id)
+            clear_queue(chat_id)
+            return 1
+        else:
+            songname = chat_queue[1][0]
+            url = chat_queue[1][1]
+            link = chat_queue[1][2]
+            type = chat_queue[1][3]
+            Q = chat_queue[1][4]
+            if type == "Audio":
+                await call_py.change_stream(
+                    chat_id,
+                    AudioPiped(
+                        url,
+                    ),
+                )
+            elif type == "Video":
+                if Q == 720:
+                    hm = HighQualityVideo()
+                elif Q == 480:
+                    hm = MediumQualityVideo()
+                elif Q == 360:
+                    hm = LowQualityVideo()
+                await call_py.change_stream(
+                    chat_id, AudioVideoPiped(url, HighQualityAudio(), hm)
+                )
+            pop_an_item(chat_id)
+            return [songname, link, type]
+    else:
+        return 0
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"vplay(?:\s|$)([\s\S]*)"))
@@ -187,6 +246,38 @@ async def vend(event):
         await event.edit("**Tidak Sedang Memutar Streaming**")
 
 
+@bot.on(man_cmd(outgoing=True, pattern="vskip$"))
+async def skip(event):
+    chat_id = event.chat_id
+    if len(event.text) < 2:
+        op = await skip_current_song(chat_id)
+        if op == 0:
+            await event.edit("**Tidak Sedang Memutar Streaming**")
+        elif op == 1:
+            await event.edit("`Antrian Kosong, Meninggalkan Obrolan Suara...`")
+        else:
+            await event.edit(
+                f"**⏭ Melewati Video** \n**🎧 Sekarang Memutar** - [{op[0]}]({op[1]}) | `{op[2]}`",
+                link_preview=False,
+            )
+    else:
+        skip = event.text.split(maxsplit=1)[1]
+        OP = "**Menghapus Video Berikut Dari Antrian:**"
+        if chat_id in QUEUE:
+            items = [int(x) for x in skip.split(" ") if x.isdigit()]
+            items.sort(reverse=True)
+            for x in items:
+                if x == 0:
+                    pass
+                else:
+                    hm = await skip_item(chat_id, x)
+                    if hm == 0:
+                        pass
+                    else:
+                        OP = OP + "\n" + f"**#{x}** - {hm}"
+            await event.edit(OP)
+
+
 @bot.on(man_cmd(outgoing=True, pattern="vpause$"))
 async def vpause(event):
     chat_id = event.chat_id
@@ -220,11 +311,11 @@ async def playlist(event):
         chat_queue = get_queue(chat_id)
         if len(chat_queue) == 1:
             await event.edit(
-                f"**🎧 SEDANG DIMAINKAN:** \n[{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}`",
+                f"**🎧 SEDANG MEMUTAR:**\n[{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}`",
                 link_preview=False,
             )
         else:
-            QUE = f"**🎧 SEDANG DIMAINKAN:** \n[{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}` \n\n**⏯ PLAYLIST:**"
+            QUE = f"**🎧 SEDANG MEMUTAR:**\n[{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}` \n\n**⏯ PLAYLIST:**"
             l = len(chat_queue)
             for x in range(1, l):
                 hmm = chat_queue[x][0]
@@ -234,3 +325,23 @@ async def playlist(event):
             await event.edit(QUE, link_preview=False)
     else:
         await event.edit("**Tidak Sedang Memutar Streaming**")
+
+
+@call_py.on_stream_end()
+async def on_end_handler(_, u: Update):
+    if isinstance(update, StreamAudioEnded):
+        chat_id = u.chat_id
+        print(chat_id)
+        op = await skip_current_song(chat_id)
+        if op == 1:
+            await bot.send_message(
+                chat_id, "`Antrian Kosong, Meninggalkan Obrolan Suara...`"
+            )
+        else:
+            await bot.send_message(
+                chat_id,
+                f"**🎧 Sedang Memutar** \n[{op[0]}]({op[1]}) | `{op[2]}`",
+                link_preview=False,
+            )
+    else:
+        pass
