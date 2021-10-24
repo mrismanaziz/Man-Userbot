@@ -28,10 +28,7 @@ def ytsearch(query):
         search = VideosSearch(query, limit=1)
         for r in search.result()["result"]:
             ytid = r["id"]
-            if len(r["title"]) > 34:
-                songname = r["title"][:35] + "..."
-            else:
-                songname = r["title"]
+            songname = r["title"][:35] + "..." if len(r["title"]) > 34 else r["title"]
             url = f"https://www.youtube.com/watch?v={ytid}"
         return [songname, url]
     except Exception as e:
@@ -57,54 +54,52 @@ async def ytdl(link):
 
 
 async def skip_item(chat_id, h):
-    if chat_id in QUEUE:
-        chat_queue = get_queue(chat_id)
-        try:
-            x = int(h)
-            songname = chat_queue[x][0]
-            chat_queue.pop(x)
-            return songname
-        except Exception as e:
-            print(e)
-            return 0
-    else:
+    if chat_id not in QUEUE:
+        return 0
+    chat_queue = get_queue(chat_id)
+    try:
+        x = int(h)
+        songname = chat_queue[x][0]
+        chat_queue.pop(x)
+        return songname
+    except Exception as e:
+        print(e)
         return 0
 
 
 async def skip_current_song(chat_id):
-    if chat_id in QUEUE:
-        chat_queue = get_queue(chat_id)
-        if len(chat_queue) == 1:
-            await call_py.leave_group_call(chat_id)
-            clear_queue(chat_id)
-            return 1
-        else:
-            songname = chat_queue[1][0]
-            url = chat_queue[1][1]
-            link = chat_queue[1][2]
-            type = chat_queue[1][3]
-            Q = chat_queue[1][4]
-            if type == "Audio":
-                await call_py.change_stream(
-                    chat_id,
-                    AudioPiped(
-                        url,
-                    ),
-                )
-            elif type == "Video":
-                if Q == 720:
-                    hm = HighQualityVideo()
-                elif Q == 480:
-                    hm = MediumQualityVideo()
-                elif Q == 360:
-                    hm = LowQualityVideo()
-                await call_py.change_stream(
-                    chat_id, AudioVideoPiped(url, HighQualityAudio(), hm)
-                )
-            pop_an_item(chat_id)
-            return [songname, link, type]
-    else:
+    if chat_id not in QUEUE:
         return 0
+    chat_queue = get_queue(chat_id)
+    if len(chat_queue) == 1:
+        await call_py.leave_group_call(chat_id)
+        clear_queue(chat_id)
+        return 1
+    else:
+        songname = chat_queue[1][0]
+        url = chat_queue[1][1]
+        link = chat_queue[1][2]
+        type = chat_queue[1][3]
+        Q = chat_queue[1][4]
+        if type == "Audio":
+            await call_py.change_stream(
+                chat_id,
+                AudioPiped(
+                    url,
+                ),
+            )
+        elif type == "Video":
+            if Q == 720:
+                hm = HighQualityVideo()
+            elif Q == 480:
+                hm = MediumQualityVideo()
+            elif Q == 360:
+                hm = LowQualityVideo()
+            await call_py.change_stream(
+                chat_id, AudioVideoPiped(url, HighQualityAudio(), hm)
+            )
+        pop_an_item(chat_id)
+        return [songname, link, type]
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"vplay(?:\s|$)([\s\S]*)"))
@@ -112,124 +107,114 @@ async def video_c(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
     chat_id = event.chat_id
-    if replied:
-        if replied.video or replied.document:
-            huehue = await replied.edit("`Downloading`")
-            dl = await replied.download_media()
-            if len(event.text.split()) < 2:
-                Q = 720
-            else:
-                pq = event.text.split(maxsplit=1)[1]
-                if pq == "720" or "480" or "360":
-                    Q = int(pq)
-                else:
-                    Q = 720
-                    await huehue.edit(
-                        "**Hanya Mengijinkan Resolusi** `720p`, `480p`, `360p`\n**Sekarang Streaming di 720p**"
-                    )
-
-            if replied.video:
-                songname = "Telegram Video Player..."
-            elif replied.document:
-                songname = "Telegram Video Player..."
-
-            if chat_id in QUEUE:
-                pos = add_to_queue(chat_id, songname, dl, "Video", Q)
+    if (
+        replied
+        and not replied.video
+        and not replied.document
+        and not title
+        or not replied
+        and not title
+    ):
+        return await event.edit("**Silahkan Masukan Judul Video**")
+    elif replied and not replied.video and not replied.document:
+        huehue = await event.reply("`Searching...`")
+        query = event.text.split(maxsplit=1)[1]
+        search = ytsearch(query)
+        Q = 720
+        hmmm = HighQualityVideo()
+        if search == 0:
+            await huehue.edit(
+                "**Tidak Menemukan Video untuk Keyword yang Diberikan**"
+            )
+        else:
+            songname = search[0]
+            url = search[1]
+            hm, ytlink = await ytdl(url)
+            if hm == 0:
+                await huehue.edit(f"**ERROR YTDL**\n\n`{ytlink}`")
+            elif chat_id in QUEUE:
+                pos = add_to_queue(
+                    chat_id, songname, ytlink, url, "Video", Q
+                )
                 await huehue.edit(f"**Ditambahkan Ke antrian Ke** `#{pos}`")
             else:
-                if Q == 720:
-                    hmmm = HighQualityVideo()
-                elif Q == 480:
-                    hmmm = MediumQualityVideo()
-                elif Q == 360:
-                    hmmm = LowQualityVideo()
-                await call_py.join_group_call(
-                    chat_id,
-                    AudioVideoPiped(dl, HighQualityAudio(), hmmm),
-                    stream_type=StreamType().pulse_stream,
-                )
-                add_to_queue(chat_id, songname, dl, "Video", Q)
-                await huehue.edit(
-                    f"**Sedang Memutar Video ▶**\n**💬 Chat ID** : `{chat_id}`",
-                    link_preview=False,
-                )
-        else:
-            if not title:
-                return await event.edit("**Silahkan Masukan Judul Video**")
-            else:
-                huehue = await event.reply("`Searching...`")
-                query = event.text.split(maxsplit=1)[1]
-                search = ytsearch(query)
-                Q = 720
-                hmmm = HighQualityVideo()
-                if search == 0:
-                    await huehue.edit(
-                        "**Tidak Menemukan Video untuk Keyword yang Diberikan**"
+                try:
+                    await call_py.join_group_call(
+                        chat_id,
+                        AudioVideoPiped(ytlink, HighQualityAudio(), hmmm),
+                        stream_type=StreamType().pulse_stream,
                     )
-                else:
-                    songname = search[0]
-                    url = search[1]
-                    hm, ytlink = await ytdl(url)
-                    if hm == 0:
-                        await huehue.edit(f"**ERROR YTDL**\n\n`{ytlink}`")
-                    else:
-                        if chat_id in QUEUE:
-                            pos = add_to_queue(
-                                chat_id, songname, ytlink, url, "Video", Q
-                            )
-                            await huehue.edit(f"**Ditambahkan Ke antrian Ke** `#{pos}`")
-                        else:
-                            try:
-                                await call_py.join_group_call(
-                                    chat_id,
-                                    AudioVideoPiped(ytlink, HighQualityAudio(), hmmm),
-                                    stream_type=StreamType().pulse_stream,
-                                )
-                                add_to_queue(chat_id, songname, ytlink, url, "Video", Q)
-                                await huehue.edit(
-                                    f"**Memulai Memutar Video ▶** \n**🎧 Judul** : [{songname}]({url}) \n**💬 Chat ID** : `{chat_id}`",
-                                    link_preview=False,
-                                )
-                            except Exception as ep:
-                                await huehue.edit(f"`{ep}`")
+                    add_to_queue(chat_id, songname, ytlink, url, "Video", Q)
+                    await huehue.edit(
+                        f"**Memulai Memutar Video ▶** \n**🎧 Judul** : [{songname}]({url}) \n**💬 Chat ID** : `{chat_id}`",
+                        link_preview=False,
+                    )
+                except Exception as ep:
+                    await huehue.edit(f"`{ep}`")
 
-    else:
-        if not title:
-            return await event.edit("**Silahkan Masukan Judul Video**")
-        else:
-            huehue = await event.edit("`Searching...`")
-            query = event.text.split(maxsplit=1)[1]
-            search = ytsearch(query)
+    elif replied:
+        huehue = await replied.edit("`Downloading`")
+        dl = await replied.download_media()
+        if len(event.text.split()) < 2:
             Q = 720
-            hmmm = HighQualityVideo()
-            if search == 0:
-                await huehue.edit(
-                    "**Tidak Menemukan Video untuk Keyword yang Diberikan**"
-                )
+        else:
+            pq = event.text.split(maxsplit=1)[1]
+            Q = int(pq)
+        if replied.video or replied.document:
+            songname = "Telegram Video Player..."
+        if chat_id in QUEUE:
+            pos = add_to_queue(chat_id, songname, dl, "Video", Q)
+            await huehue.edit(f"**Ditambahkan Ke antrian Ke** `#{pos}`")
+        else:
+            if Q == 360:
+                hmmm = LowQualityVideo()
+            elif Q == 480:
+                hmmm = MediumQualityVideo()
+            elif Q == 720:
+                hmmm = HighQualityVideo()
+            await call_py.join_group_call(
+                chat_id,
+                AudioVideoPiped(dl, HighQualityAudio(), hmmm),
+                stream_type=StreamType().pulse_stream,
+            )
+            add_to_queue(chat_id, songname, dl, "Video", Q)
+            await huehue.edit(
+                f"**Sedang Memutar Video ▶**\n**💬 Chat ID** : `{chat_id}`",
+                link_preview=False,
+            )
+    else:
+        huehue = await event.edit("`Searching...`")
+        query = event.text.split(maxsplit=1)[1]
+        search = ytsearch(query)
+        Q = 720
+        hmmm = HighQualityVideo()
+        if search == 0:
+            await huehue.edit(
+                "**Tidak Menemukan Video untuk Keyword yang Diberikan**"
+            )
+        else:
+            songname = search[0]
+            url = search[1]
+            hm, ytlink = await ytdl(url)
+            if hm == 0:
+                await huehue.edit(f"**ERROR YTDL**\n\n`{ytlink}`")
+            elif chat_id in QUEUE:
+                pos = add_to_queue(chat_id, songname, ytlink, url, "Video", Q)
+                await huehue.edit(f"**Ditambahkan Ke antrian Ke** `#{pos}`")
             else:
-                songname = search[0]
-                url = search[1]
-                hm, ytlink = await ytdl(url)
-                if hm == 0:
-                    await huehue.edit(f"**ERROR YTDL**\n\n`{ytlink}`")
-                else:
-                    if chat_id in QUEUE:
-                        pos = add_to_queue(chat_id, songname, ytlink, url, "Video", Q)
-                        await huehue.edit(f"**Ditambahkan Ke antrian Ke** `#{pos}`")
-                    else:
-                        try:
-                            await call_py.join_group_call(
-                                chat_id,
-                                AudioVideoPiped(ytlink, HighQualityAudio(), hmmm),
-                                stream_type=StreamType().pulse_stream,
-                            )
-                            add_to_queue(chat_id, songname, ytlink, url, "Video", Q)
-                            await huehue.edit(
-                                f"**Memulai Memutar Video ▶** \n**🎧 Judul** : [{songname}]({url}) \n**💬 Chat ID** : `{chat_id}`",
-                                link_preview=False,
-                            )
-                        except Exception as ep:
-                            await huehue.edit(f"`{ep}`")
+                try:
+                    await call_py.join_group_call(
+                        chat_id,
+                        AudioVideoPiped(ytlink, HighQualityAudio(), hmmm),
+                        stream_type=StreamType().pulse_stream,
+                    )
+                    add_to_queue(chat_id, songname, ytlink, url, "Video", Q)
+                    await huehue.edit(
+                        f"**Memulai Memutar Video ▶** \n**🎧 Judul** : [{songname}]({url}) \n**💬 Chat ID** : `{chat_id}`",
+                        link_preview=False,
+                    )
+                except Exception as ep:
+                    await huehue.edit(f"`{ep}`")
 
 
 @bot.on(man_cmd(outgoing=True, pattern="vend$"))
@@ -267,13 +252,9 @@ async def skip(event):
             items = [int(x) for x in skip.split(" ") if x.isdigit()]
             items.sort(reverse=True)
             for x in items:
-                if x == 0:
-                    pass
-                else:
+                if x != 0:
                     hm = await skip_item(chat_id, x)
-                    if hm == 0:
-                        pass
-                    else:
+                    if hm != 0:
                         OP = OP + "\n" + f"**#{x}** - {hm}"
             await event.edit(OP)
 
@@ -343,5 +324,3 @@ async def on_end_handler(_, u: Update):
                 f"**🎧 Sedang Memutar** \n[{op[0]}]({op[1]}) | `{op[2]}`",
                 link_preview=False,
             )
-    else:
-        pass
