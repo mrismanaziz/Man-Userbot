@@ -3,6 +3,7 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
+import os
 from asyncio import QueueEmpty
 
 from pytgcalls.types import Update
@@ -14,7 +15,7 @@ from youtube_search import YoutubeSearch
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot, call_py
 from userbot.events import man_cmd
-from userbot.utils import download_lagu, edit_or_reply, runcmd
+from userbot.utils import download_lagu, edit_or_reply
 from userbot.utils.converter import convert
 from userbot.utils.queues import queues
 
@@ -156,13 +157,9 @@ async def stop_musik(event):
     LAGI_MUTER = False
     NAMA_GC = ""
     await call_py.leave_group_call(chat_id)
+    os.system("rm ./raw_files/*.raw")
+    os.system("rm ./downloads/*.m4a")
     await edit_or_reply(event, "**Memberhentikan lagu**")
-
-
-@bot.on(man_cmd(outgoing=True, pattern="delraw$"))
-async def hapus_raw(event):
-    await runcmd("rm -rf ./raw_files/*.raw")
-    await edit_or_reply(event, "**Berhasil Menghapus File RAW**")
 
 
 @call_py.on_closed_voice_chat()
@@ -196,6 +193,8 @@ async def stream_end_handler(_, u: Update):
                 ),
             ),
         )
+    os.system("rm ./raw_files/*.raw")
+    os.system("rm ./downloads/*.m4a")
 
 
 CMD_HELP.update(
@@ -209,8 +208,6 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk memberhentikan lagu yang sedang diputar\
         \n\n  •  **Syntax :** `{cmd}resume`\
         \n  •  **Function : **Untuk melanjutkan pemutaran lagu yang sedang diputar\
-        \n\n  •  **Syntax :** `{cmd}delraw`\
-        \n  •  **Function : **Untuk menghapus file raw bekas play music (Rekomendasi sesudah `{cmd}delraw` ketik `{cmd}restart`)\
         \n\n  •  **NOTE :** Play Music hanya bisa di 1 Grup Chat saja, untuk memutar di GC lain ketik `{cmd}end` terlebih dahulu\
     "
     }
