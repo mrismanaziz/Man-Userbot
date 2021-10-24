@@ -92,7 +92,12 @@ async def pause_musik(event):
     chat_id = event.chat_id
     if not (LAGI_MUTER and NAMA_GC):
         return await edit_or_reply(event, "**Tidak ada lagu yang sedang diputar!**")
-    await call_py.pause_stream(chat_id)
+    if NAMA_GC != event.chat.title:
+        return await edit_or_reply(event, "**Sedang tidak memutar lagu di grup ini!**")
+    try:
+        await call_py.pause_stream(chat_id)
+    except Exception as e:
+        return await edit_or_reply(event, str(e))
     await edit_or_reply(event, "**Paused**")
 
 
@@ -101,7 +106,12 @@ async def resume_musik(event):
     chat_id = event.chat_id
     if not (LAGI_MUTER and NAMA_GC):
         return await edit_or_reply(event, "**Tidak ada lagu yang sedang dijeda!**")
-    await call_py.resume_stream(chat_id)
+    if NAMA_GC != event.chat.title:
+        return await edit_or_reply(event, "**Sedang tidak memutar lagu di grup ini!**")
+    try:
+        await call_py.resume_stream(chat_id)
+    except Exception as e:
+        return await edit_or_reply(event, str(e))
     await edit_or_reply(event, "**Resumed**")
 
 
@@ -111,6 +121,8 @@ async def skip_musik(event):
     chat_id = event.chat_id
     if not (LAGI_MUTER and NAMA_GC):
         await edit_or_reply(event, "**Tidak ada lagu yang sedang diputar!**")
+    if NAMA_GC != event.chat.title:
+        return await edit_or_reply(event, "**Sedang tidak memutar lagu di grup ini!**")
     else:
         queues.task_done(chat_id)
         if queues.is_empty(chat_id):
@@ -135,6 +147,8 @@ async def stop_musik(event):
     chat_id = event.chat_id
     if not (LAGI_MUTER and NAMA_GC):
         return await edit_or_reply(event, "**Tidak ada lagu yang sedang diputar!**")
+    if NAMA_GC != event.chat.title:
+        return await edit_or_reply(event, "**Sedang tidak memutar lagu di grup ini!**")
     try:
         queues.clear(chat_id)
     except QueueEmpty:
@@ -164,7 +178,7 @@ async def on_closed_handler(_, chat_id: int):
 
 
 @call_py.on_stream_end()
-async def stream_end_handler(c, u: Update):
+async def stream_end_handler(_, u: Update):
     global LAGI_MUTER, NAMA_GC
     queues.task_done(u.chat_id)
     if queues.is_empty(u.chat_id):
