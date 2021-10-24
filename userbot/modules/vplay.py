@@ -12,7 +12,7 @@ from youtubesearchpython import VideosSearch
 
 from userbot import bot, call_py
 from userbot.events import man_cmd
-from userbot.utils.queues.vqueues import QUEUE, clear_queue
+from userbot.utils.queues.vqueues import QUEUE, add_to_queue, clear_queue
 
 
 def ytsearch(query):
@@ -74,6 +74,9 @@ async def video_c(event):
             elif replied.document:
                 songname = "Telegram Video Player..."
 
+            if chat_id in QUEUE:
+                pos = add_to_queue(chat_id, songname, dl, "Video", Q)
+                await huehue.edit(f"**Ditambahkan Ke antrian Ke** `#{pos}`")
             else:
                 if Q == 720:
                     hmmm = HighQualityVideo()
@@ -86,6 +89,7 @@ async def video_c(event):
                     AudioVideoPiped(dl, HighQualityAudio(), hmmm),
                     stream_type=StreamType().pulse_stream,
                 )
+                add_to_queue(chat_id, songname, dl, "Video", Q)
                 await huehue.edit(
                     f"**Sedang Memutar Video ▶**\n**💬 Chat ID** : `{chat_id}`",
                     link_preview=False,
@@ -111,12 +115,18 @@ async def video_c(event):
                         await huehue.edit(f"**ERROR YTDL**\n\n`{ytlink}`")
                     else:
                         if chat_id in QUEUE:
+                            pos = add_to_queue(
+                                chat_id, songname, ytlink, url, "Video", Q
+                            )
+                            await huehue.edit(f"**Ditambahkan Ke antrian Ke** `#{pos}`")
+                        else:
                             try:
                                 await call_py.join_group_call(
                                     chat_id,
                                     AudioVideoPiped(ytlink, HighQualityAudio(), hmmm),
                                     stream_type=StreamType().pulse_stream,
                                 )
+                                add_to_queue(chat_id, songname, ytlink, url, "Video", Q)
                                 await huehue.edit(
                                     f"**Memulai Memutar Video ▶** \n**🎧 Judul** : [{songname}]({url}) \n**💬 Chat ID** : `{chat_id}`",
                                     link_preview=False,
@@ -145,12 +155,16 @@ async def video_c(event):
                     await huehue.edit(f"**ERROR YTDL**\n\n`{ytlink}`")
                 else:
                     if chat_id in QUEUE:
+                        pos = add_to_queue(chat_id, songname, ytlink, url, "Video", Q)
+                        await huehue.edit(f"**Ditambahkan Ke antrian Ke** `#{pos}`")
+                    else:
                         try:
                             await call_py.join_group_call(
                                 chat_id,
                                 AudioVideoPiped(ytlink, HighQualityAudio(), hmmm),
                                 stream_type=StreamType().pulse_stream,
                             )
+                            add_to_queue(chat_id, songname, ytlink, url, "Video", Q)
                             await huehue.edit(
                                 f"**Memulai Memutar Video ▶** \n**🎧 Judul** : [{songname}]({url}) \n**💬 Chat ID** : `{chat_id}`",
                                 link_preview=False,
