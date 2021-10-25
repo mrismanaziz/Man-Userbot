@@ -5,24 +5,21 @@ from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r".sadboy(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
+@bot.on(man_cmd(outgoing=True, pattern=r"sadboy(?: |$)(.*)"))
+async def _(event):
+    await event.edit("`Pertama-tama kamu cantik`")
     sleep(2)
-    await typew.edit("`Pertama-tama kamu cantik`")
-    sleep(2)
-    await typew.edit("`Kedua kamu manis`")
+    await event.edit("`Kedua kamu manis`")
     sleep(1)
-    await typew.edit("`Dan yang terakhir adalah kamu bukan jodohku`")
+    await event.edit("`Dan yang terakhir adalah kamu bukan jodohku`")
 
 
 # Create by myself @localheart
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r".punten(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    await typew.edit(
+@bot.on(man_cmd(outgoing=True, pattern=r"punten(?: |$)(.*)"))
+async def _(event):
+    await event.edit(
         "`\n┻┳|―-∩`"
         "`\n┳┻|     ヽ`"
         "`\n┻┳|    ● |`"
@@ -34,10 +31,9 @@ async def typewriter(typew):
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r".pantau(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    await typew.edit(
+@bot.on(man_cmd(outgoing=True, pattern=r"pantau(?: |$)(.*)"))
+async def _(event):
+    await event.edit(
         "`\n┻┳|―-∩`"
         "`\n┳┻|     ヽ`"
         "`\n┻┳|    ● |`"
@@ -45,7 +41,7 @@ async def typewriter(typew):
         "`\n┻┳|￣  )`"
         "`\n┳ﾐ(￣ ／`"
         "`\n┻┳T￣|`"
-        "\n**Masih Ku Pantau**"
+        "\n**Masih Gua Pantau**"
     )
 
 
