@@ -88,7 +88,7 @@ if CONFIG_CHECK:
     sys.exit(1)
 
 # KALO NGEFORK ID DEVS SAMA ID BLACKLIST_CHAT NYA GA USAH DI HAPUS YA GOBLOK 😡
-DEVS = 844432220, 1906014306, 1382636419, 1712874582, 1738637033,
+DEVS = (844432220, 1906014306, 1382636419, 1712874582, 1738637033,)
 SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
 
 # For Blacklist Group Support
@@ -217,7 +217,7 @@ BITLY_TOKEN = os.environ.get("BITLY_TOKEN", None)
 TERM_ALIAS = os.environ.get("TERM_ALIAS", "Man-Userbot")
 
 # Bot version
-BOT_VER = os.environ.get("BOT_VER", "1.6.9")
+BOT_VER = os.environ.get("BOT_VER", "1.7.2")
 
 # Default .alive username
 ALIVE_USERNAME = os.environ.get("ALIVE_USERNAME", None)
