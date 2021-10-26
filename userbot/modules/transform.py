@@ -2,156 +2,27 @@
 # Ported from Userge by Alfiananda P.A
 
 import os
-import random
 
-import numpy as np
-from colour import Color
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image, ImageOps
 from telethon.tl.types import DocumentAttributeFilename
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
-
-bground = "black"
-
-
-@bot.on(man_cmd(outgoing=True, pattern=r"(ascii|asciis)$"))
-async def ascii(event):
-    if not event.reply_to_msg_id:
-        await event.edit("`Reply to Any media..`")
-        return
-    reply_message = await event.get_reply_message()
-    if not reply_message.media:
-        await event.edit("`reply to a image/sticker/video`")
-        return
-    await event.edit("`Downloading Media..`")
-    if reply_message.photo:
-        IMG = await bot.download_media(
-            reply_message,
-            "ascii.png",
-        )
-    elif (
-        DocumentAttributeFilename(file_name="AnimatedSticker.tgs")
-        in reply_message.media.document.attributes
-    ):
-        await bot.download_media(
-            reply_message,
-            "ASCII.tgs",
-        )
-        os.system("lottie_convert.py ASCII.tgs ascii.png")
-        IMG = "ascii.png"
-    elif reply_message.video:
-        video = await bot.download_media(
-            reply_message,
-            "ascii.mp4",
-        )
-        extractMetadata(createParser(video))
-        os.system("ffmpeg -i ascii.mp4 -vframes 1 -an -s 480x360 -ss 1 ascii.png")
-        IMG = "ascii.png"
-    else:
-        IMG = await bot.download_media(
-            reply_message,
-            "ascii.png",
-        )
-    try:
-        await event.edit("`Processing..`")
-        list = await random_color()
-        color1 = list[0]
-        color2 = list[1]
-        bgcolor = bground
-        await asciiart(IMG, color1, color2, bgcolor)
-        cmd = event.pattern_match.group(1)
-        if cmd == "asciis":
-            os.system("cp ascii.png ascii.webp")
-            ascii_file = "ascii.webp"
-        else:
-            ascii_file = "ascii.png"
-        await event.client.send_file(
-            event.chat_id,
-            ascii_file,
-            force_document=False,
-            reply_to=event.reply_to_msg_id,
-        )
-        await event.delete()
-        os.system("rm *.png")
-        os.system("rm *.webp")
-        os.system("rm *.mp4")
-        os.system("rm *.tgs")
-    except BaseException as e:
-        os.system("rm *.png")
-        os.system("rm *.webp")
-        os.system("rm *.mp4")
-        os.system("rm *.tgs")
-        return await event.edit(str(e))
-
-
-async def asciiart(IMG, color1, color2, bgcolor):
-    chars = np.asarray(list(" .,:irs?@9B&#"))
-    font = ImageFont.load_default()
-    letter_width = font.getsize("x")[0]
-    letter_height = font.getsize("x")[1]
-    WCF = letter_height / letter_width
-    img = Image.open(IMG)
-    widthByLetter = round(img.size[0] * 0.15 * WCF)
-    heightByLetter = round(img.size[1] * 0.15)
-    S = (widthByLetter, heightByLetter)
-    img = img.resize(S)
-    img = np.sum(np.asarray(img), axis=2)
-    img -= img.min()
-    img = (1.0 - img / img.max()) ** 2.2 * (chars.size - 1)
-    lines = ("\n".join(("".join(r) for r in chars[img.astype(int)]))).split("\n")
-    nbins = len(lines)
-    colorRange = list(Color(color1).range_to(Color(color2), nbins))
-    newImg_width = letter_width * widthByLetter
-    newImg_height = letter_height * heightByLetter
-    newImg = Image.new("RGBA", (newImg_width, newImg_height), bgcolor)
-    draw = ImageDraw.Draw(newImg)
-    leftpadding = 0
-    y = 0
-    for lineIdx, line in enumerate(lines):
-        color = colorRange[lineIdx]
-        draw.text((leftpadding, y), line, color.hex, font=font)
-        y += letter_height
-    IMG = newImg.save("ascii.png")
-    return IMG
-
-
-# this is from userge
-async def random_color():
-    return [
-        "#" + "".join(random.choice("0123456789ABCDEF") for k in range(6))
-        for i in range(2)
-    ]
-
-
-@bot.on(man_cmd(outgoing=True, pattern=r"asciibg(?: |$)(.*)"))
-async def _(event):
-    BG = event.pattern_match.group(1)
-    if BG.isnumeric():
-        return await event.edit("`Please input a color not a number!`")
-    if not BG:
-        return await event.edit("`please insert bg of ascii`")
-    global bground
-    bground = BG
-    await event.edit(f"`Successfully set bg of ascii to` **{BG}**")
-
-
-Converted = TEMP_DOWNLOAD_DIRECTORY + "sticker.webp"
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"(mirror|flip|ghost|bw|poster)$"))
 async def transform(event):
     if not event.reply_to_msg_id:
-        await event.edit("`Reply to Any media..`")
+        await event.edit("**Mohon Reply ke Media atau Sticker**")
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        await event.edit("`reply to a image/sticker`")
+        await event.edit("**Mohon Reply ke Media atau Sticker**")
         return
-    await event.edit("`Downloading Media..`")
+    await event.edit("`Downloading Media...`")
     if reply_message.photo:
         transform = await bot.download_media(
             reply_message,
@@ -212,13 +83,13 @@ async def transform(event):
 @bot.on(man_cmd(outgoing=True, pattern=r"rotate(?: |$)(.*)"))
 async def rotate(event):
     if not event.reply_to_msg_id:
-        await event.edit("`Reply to any media..`")
+        await event.edit("**Mohon Reply ke Media atau Sticker**")
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        await event.edit("`reply to a image/sticker`")
+        await event.edit("**Mohon Reply ke Media atau Sticker**")
         return
-    await event.edit("`Downloading Media..`")
+    await event.edit("`Downloading Media...`")
     if reply_message.photo:
         rotate = await bot.download_media(
             reply_message,
@@ -255,7 +126,7 @@ async def rotate(event):
             raise ValueError
     except ValueError:
         value = 90
-    await event.edit("`Rotating your media..`")
+    await event.edit("`Rotating your media...`")
     im = Image.open(rotate).convert("RGB")
     IMG = im.rotate(value, expand=1)
     IMG.save(Converted, quality=95)
@@ -274,12 +145,6 @@ CMD_HELP.update(
         "transform": f"**Plugin : **`transform`\
         \n\n  •  **Syntax :** `{cmd}ghost`\
         \n  •  **Function : **Enchance your image to become a ghost!.\
-        \n\n  •  **Syntax :** `{cmd}ascii`\
-        \n  •  **Function : **Buat seni ascii dari media.\
-        \n\n  •  **Syntax :** `{cmd}asciis`\
-        \n  •  **Function : **Sama tetapi hasil unggah sebagai stiker.\
-        \n\n  •  **Syntax :** `{cmd}asciibg <color>`\
-        \n  •  **Function : **Sekarang untuk menggunakan modul ASCII ubah dulu warna latar belakang.\
         \n\n  •  **Syntax :** `{cmd}flip`\
         \n  •  **Function : **Untuk membalikan gambar Anda.\
         \n\n  •  **Syntax :** `{cmd}mirror`\
