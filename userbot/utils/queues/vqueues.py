@@ -6,15 +6,13 @@ def add_to_queue(chat_id, songname, link, ref, type, quality):
         chat_queue = QUEUE[chat_id]
         chat_queue.append([songname, link, ref, type, quality])
         return int(len(chat_queue) - 1)
-    else:
-        QUEUE[chat_id] = [[songname, link, ref, type, quality]]
+    QUEUE[chat_id] = [[songname, link, ref, type, quality]]
 
 
 def get_queue(chat_id):
     if chat_id in QUEUE:
         return QUEUE[chat_id]
-    else:
-        return 0
+    return 0
 
 
 def pop_an_item(chat_id):

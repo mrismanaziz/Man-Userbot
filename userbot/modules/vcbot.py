@@ -124,22 +124,21 @@ async def skip_musik(event):
         await edit_or_reply(event, "**Tidak ada lagu yang sedang diputar!**")
     if NAMA_GC != event.chat.title:
         return await edit_or_reply(event, "**Sedang tidak memutar lagu di grup ini!**")
-    else:
-        queues.task_done(chat_id)
-        if queues.is_empty(chat_id):
-            LAGI_MUTER = False
-            NAMA_GC = ""
-            await call_py.leave_group_call(chat_id)
-            return await edit_or_reply(event, "**Memberhentikan Lagu.**")
-        await call_py.change_stream(
-            chat_id,
-            InputStream(
-                InputAudioStream(
-                    queues.get(chat_id)["file"],
-                ),
+    queues.task_done(chat_id)
+    if queues.is_empty(chat_id):
+        LAGI_MUTER = False
+        NAMA_GC = ""
+        await call_py.leave_group_call(chat_id)
+        return await edit_or_reply(event, "**Memberhentikan Lagu.**")
+    await call_py.change_stream(
+        chat_id,
+        InputStream(
+            InputAudioStream(
+                queues.get(chat_id)["file"],
             ),
-        )
-        await edit_or_reply(event, "**Melewati lagu saat ini.**")
+        ),
+    )
+    await edit_or_reply(event, "**Melewati lagu saat ini.**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern="end$"))

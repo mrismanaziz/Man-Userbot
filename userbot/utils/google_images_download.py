@@ -746,12 +746,9 @@ class googleimagesdownload:
                 output_file.write(data)
         except IOError as e:
             raise e
-        except OSError as e:
-            raise e
         print(
             "completed ====> " +
             image_name.encode("raw_unicode_escape").decode("utf-8"))
-        return
 
     @staticmethod
     def similar_images(similar_images):
@@ -1030,7 +1027,6 @@ class googleimagesdownload:
         except OSError as e:
             if e.errno != 17:
                 raise
-        return
 
     # Download Image thumbnails
     def download_image_thumbnail(
@@ -1085,10 +1081,6 @@ class googleimagesdownload:
                     download_status = "fail"
                     download_message = (
                         "OSError on an image...trying next one..." + " Error: " + str(e))
-                except IOError as e:
-                    download_status = "fail"
-                    download_message = (
-                        "IOError on an image...trying next one..." + " Error: " + str(e))
 
                 download_status = "success"
                 download_message = (

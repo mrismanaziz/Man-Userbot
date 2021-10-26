@@ -25,12 +25,6 @@ from userbot import (  # noqa pylint: disable=unused-import isort:skip
     bot,
 )
 
-global USER_AFK
-global afk_time
-global last_afk_message
-global last_afk_msg
-global afk_start
-global afk_end
 USER_AFK = {}
 afk_time = None
 last_afk_message = {}

@@ -57,8 +57,7 @@ async def ytdl(link):
     stdout, stderr = await proc.communicate()
     if stdout:
         return 1, stdout.decode().split("\n")[0]
-    else:
-        return 0, stderr.decode()
+    return 0, stderr.decode()
 
 
 async def skip_item(chat_id, h):
@@ -83,35 +82,34 @@ async def skip_current_song(chat_id):
         await call_py.leave_group_call(chat_id)
         clear_queue(chat_id)
         return 1
-    else:
-        songname = chat_queue[1][0]
-        url = chat_queue[1][1]
-        link = chat_queue[1][2]
-        type = chat_queue[1][3]
-        RESOLUSI = chat_queue[1][4]
-        if type == "Audio":
-            await call_py.change_stream(
-                chat_id,
-                AudioPiped(
-                    url,
-                ),
-            )
-        elif type == "Video":
-            if RESOLUSI == 720:
-                hm = HighQualityVideo()
-            elif RESOLUSI == 480:
-                hm = MediumQualityVideo()
-            elif RESOLUSI == 360:
-                hm = LowQualityVideo()
-            await call_py.change_stream(
-                chat_id, AudioVideoPiped(url, HighQualityAudio(), hm)
-            )
-        pop_an_item(chat_id)
-        return [songname, link, type]
+    songname = chat_queue[1][0]
+    url = chat_queue[1][1]
+    link = chat_queue[1][2]
+    type = chat_queue[1][3]
+    RESOLUSI = chat_queue[1][4]
+    if type == "Audio":
+        await call_py.change_stream(
+            chat_id,
+            AudioPiped(
+                url,
+            ),
+        )
+    elif type == "Video":
+        if RESOLUSI == 720:
+            hm = HighQualityVideo()
+        elif RESOLUSI == 480:
+            hm = MediumQualityVideo()
+        elif RESOLUSI == 360:
+            hm = LowQualityVideo()
+        await call_py.change_stream(
+            chat_id, AudioVideoPiped(url, HighQualityAudio(), hm)
+        )
+    pop_an_item(chat_id)
+    return [songname, link, type]
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"vplay(?:\s|$)([\s\S]*)"))
-async def video_c(event):
+async def vplay(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
     chat_id = event.chat_id
@@ -125,7 +123,7 @@ async def video_c(event):
         and not title
     ):
         return await edit_or_reply(event, "**Silahkan Masukan Judul Video**")
-    elif replied and not replied.video and not replied.document:
+    if replied and not replied.video and not replied.document:
         xnxx = await edit_or_reply(event, "`Searching...`")
         query = event.text.split(maxsplit=1)[1]
         search = ytsearch(query)
@@ -241,7 +239,7 @@ async def vend(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="vskip$"))
-async def skip(event):
+async def vskip(event):
     chat_id = event.chat_id
     if len(event.text.split()) < 2:
         op = await skip_current_song(chat_id)
@@ -298,7 +296,7 @@ async def vresume(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="vplaylist$"))
-async def playlist(event):
+async def vplaylist(event):
     chat_id = event.chat_id
     if chat_id in QUEUE:
         chat_queue = get_queue(chat_id)

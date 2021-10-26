@@ -32,12 +32,6 @@ AFKSTR = [
     f"**{ALIVE_NAME} Sedang OFF Tunggulah Sampai Online**",
     f"**Maaf {ALIVE_NAME} Sedang OFF!**",
 ]
-
-
-global USER_AFK  # pylint:disable=E0602
-global afk_time  # pylint:disable=E0602
-global afk_start
-global afk_end
 USER_AFK = {}
 afk_time = None
 afk_start = {}
@@ -48,15 +42,14 @@ afk_start = {}
 @bot.on(man_cmd(outgoing=True, pattern=r"off(?: |$)(.*)"))
 async def set_afk(afk_e):
     """For .afk command, allows you to inform people that you are afk when they message you"""
-    message = afk_e.text  # pylint:disable=E0602
     string = afk_e.pattern_match.group(1)
     global ISAFK
     global AFKREASON
-    global USER_AFK  # pylint:disable=E0602
-    global afk_time  # pylint:disable=E0602
+    global USER_AFK
+    global afk_time
     global afk_start
     global afk_end
-    user = await bot.get_me()  # pylint:disable=E0602
+    user = await bot.get_me()
     global reason
     USER_AFK = {}
     afk_time = None
@@ -86,7 +79,7 @@ async def set_afk(afk_e):
             BOTLOG_CHATID, f"#OFF\n**{ALIVE_NAME} Telah OFF!**"
         )
     ISAFK = True
-    afk_time = datetime.now()  # pylint:disable=E0602
+    afk_time = datetime.now()
     raise StopPropagation
 
 
@@ -97,11 +90,11 @@ async def type_afk_is_not_true(notafk):
     global COUNT_MSG
     global USERS
     global AFKREASON
-    global USER_AFK  # pylint:disable=E0602
-    global afk_time  # pylint:disable=E0602
+    global USER_AFK
+    global afk_time
     global afk_start
     global afk_end
-    user = await bot.get_me()  # pylint:disable=E0602
+    user = await bot.get_me()
     last = user.last_name
     if last and last.endswith("【 OFF 】"):
         last1 = last[:-12]
@@ -152,8 +145,8 @@ async def mention_afk(mention):
     global COUNT_MSG
     global USERS
     global ISAFK
-    global USER_AFK  # pylint:disable=E0602
-    global afk_time  # pylint:disable=E0602
+    global USER_AFK
+    global afk_time
     global afk_start
     global afk_end
     user = await bot.get_me()  # pylint:disable=E0602
@@ -162,7 +155,7 @@ async def mention_afk(mention):
     afk_since = "**Terakhir Online**"
     if mention.message.mentioned and not (await mention.get_sender()).bot and ISAFK:
         now = datetime.now()
-        datime_since_afk = now - afk_time  # pylint:disable=E0602
+        datime_since_afk = now - afk_time
         time = float(datime_since_afk.seconds)
         days = time // (24 * 3600)
         time %= 24 * 3600
@@ -219,11 +212,10 @@ async def afk_on_pm(sender):
     global COUNT_MSG
     global USERS
     global ISAFK
-    global USER_AFK  # pylint:disable=E0602
-    global afk_time  # pylint:disable=E0602
+    global USER_AFK
+    global afk_time
     global afk_start
     global afk_end
-    user = await bot.get_me()  # pylint:disable=E0602
     back_alivee = datetime.now()
     afk_end = back_alivee.replace(microsecond=0)
     afk_since = "**Belum Lama**"
