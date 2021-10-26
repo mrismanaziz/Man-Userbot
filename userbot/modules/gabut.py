@@ -40,7 +40,7 @@ async def get_readable_time(seconds: int) -> str:
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"keping$"))
-async def pingme(pong):
+async def _(pong):
     """For .ping command, ping the userbot from any chat."""
     await get_readable_time((time.time() - StartTime))
     start = datetime.now()
@@ -59,7 +59,7 @@ async def pingme(pong):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"kping$"))
-async def pingme(pong):
+async def _(pong):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
@@ -90,45 +90,37 @@ async def pingme(pong):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"a(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    sleep(1)
-    await typew.edit(f"**Haii Salken Saya {DEFAULTUSER}**")
+async def _(event):
+    await event.edit(f"**Haii Salken Saya {DEFAULTUSER}**")
     sleep(2)
-    await typew.edit("**Assalamualaikum**")
+    await event.edit("**Assalamualaikum**")
 
 
 # Owner @Si_Dian
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"j(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    sleep(1)
-    await typew.edit("**JAKA SEMBUNG BAWA GOLOK**")
+async def _(event):
+    await event.edit("**JAKA SEMBUNG BAWA GOLOK**")
     sleep(3)
-    await typew.edit("**NIMBRUNG GOBLOKK!!!🔥**")
+    await event.edit("**NIMBRUNG GOBLOKK!!!🔥**")
 
 
 # Owner @Si_Dian
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"k(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    sleep(1)
-    await typew.edit(f"**Hallo KIMAAKK SAYA {DEFAULTUSER}**")
+async def _(event):
+    await event.edit(f"**Hallo KIMAAKK SAYA {DEFAULTUSER}**")
     sleep(2)
-    await typew.edit("**LU SEMUA NGENTOT 🔥**")
+    await event.edit("**LU SEMUA NGENTOT 🔥**")
 
 
 # Owner @Si_Dian
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"ass(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    sleep(1)
-    await typew.edit("**Salam Dulu Biar Sopan**")
+async def _(event):
+    await event.edit("**Salam Dulu Biar Sopan**")
     sleep(2)
-    await typew.edit("**السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ**")
+    await event.edit("**السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ**")

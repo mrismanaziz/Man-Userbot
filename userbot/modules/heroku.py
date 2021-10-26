@@ -65,7 +65,7 @@ async def variable(var):
             return False
         await var.edit("`Informasi Tidak Ditemukan...`")
         return True
-    elif exe == "del":
+    if exe == "del":
         await var.edit("`Menghapus Config Vars...`")
         variable = var.pattern_match.group(2)
         if variable == "":

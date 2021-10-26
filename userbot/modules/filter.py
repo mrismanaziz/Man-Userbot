@@ -43,7 +43,7 @@ async def filter_incoming_handler(handler):
         pass
 
 
-@register(outgoing=True, pattern="^.filter (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"filter (.*)"))
 async def add_new_filter(new_handler):
     """For .filter command, allows adding new filters in a chat"""
     if new_handler.chat_id in BLACKLIST_CHAT:
@@ -154,7 +154,7 @@ CMD_HELP.update(
         "filter": f"**Plugin : **`filter`\
         \n\n  •  **Syntax :** `{cmd}filters`\
         \n  •  **Function : **Melihat filter userbot yang aktif di obrolan.\
-        \n\n  •  **Syntax :** `.filter` <keyword> <balasan> atau balas ke pesan ketik `.filter` <keyword>\
+        \n\n  •  **Syntax :** `{cmd}filter` <keyword> <balasan> atau balas ke pesan ketik `.filter` <keyword>\
         \n  •  **Function : **Membuat filter di obrolan, Bot Akan Membalas Jika Ada Yang Menyebut 'keyword' yang dibuat. Bisa dipakai ke media/sticker/vn/file.\
         \n\n  •  **Syntax :** `{cmd}stop` <keyword>\
         \n  •  **Function : **Untuk Nonaktifkan Filter.\

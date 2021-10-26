@@ -73,12 +73,12 @@ def getsubitems(obj, itemkey, islast, maxlinelength, indent):
 
             # this logic may need to be customized based on visualization
             # requirements:
-            if (isdict):
+            if isdict:
                 multiline = False
-            if (islist):
+            if islist:
                 multiline = True
 
-            if (multiline):
+            if multiline:
                 lines = []
                 current_line = ""
 
@@ -92,7 +92,7 @@ def getsubitems(obj, itemkey, islast, maxlinelength, indent):
                     else:
                         try_inline = item_text
 
-                    if (len(try_inline) > maxlinelength):
+                    if len(try_inline) > maxlinelength:
                         # push the current line to the list if maxlinelength is
                         # reached
                         if len(current_line) > 0:
@@ -105,7 +105,7 @@ def getsubitems(obj, itemkey, islast, maxlinelength, indent):
 
                     # Push the remainder of the content if end of list is
                     # reached
-                    if (i == len(subitems) - 1):
+                    if i == len(subitems) - 1:
                         lines.append(current_line)
 
                 subitems = lines
@@ -115,7 +115,7 @@ def getsubitems(obj, itemkey, islast, maxlinelength, indent):
                 totallength = len(subitems) - 1   # spaces between items
                 for item in subitems:
                     totallength += len(item)
-                if (totallength <= maxlinelength):
+                if totallength <= maxlinelength:
                     str = "".join(item + " " for item in subitems)
                     # wrap concatenated content in a new list
                     subitems = [str.strip()]

@@ -63,7 +63,7 @@ async def tiny_pic_spam(e):
         )
 
 
-@register(outgoing=True, pattern="^.delayspam (.*)")
+@bot.on(man_cmd(outgoing=True, pattern=r"delayspam (.*)"))
 async def spammer(e):
     spamDelay = float(e.pattern_match.group(1).split(" ", 2)[0])
     counter = int(e.pattern_match.group(1).split(" ", 2)[1])
@@ -89,7 +89,7 @@ CMD_HELP.update(
         \n  •  **Function : **Spam kata teks demi kata. \
         \n\n  •  **Syntax :** `{cmd}picspam` <jumlah spam> <link image/gif>\
         \n  •  **Function : **Spam Foto Seolah-olah spam teks tidak cukup !! \
-        \n\n  •  **Syntax :** `.delayspam` <detik> <jumlah spam> <text>\
+        \n\n  •  **Syntax :** `{cmd}delayspam` <detik> <jumlah spam> <text>\
         \n  •  **Function : **Spam surat teks dengan huruf. \
         \n\n  •  **NOTE : Spam dengan Risiko Anda sendiri**\
     "
