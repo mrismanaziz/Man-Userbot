@@ -109,7 +109,7 @@ async def skip_current_song(chat_id):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"vplay(?:\s|$)([\s\S]*)"))
-async def video_c(event):
+async def vplay(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
     chat_id = event.chat_id
@@ -239,7 +239,7 @@ async def vend(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="vskip$"))
-async def skip(event):
+async def vskip(event):
     chat_id = event.chat_id
     if len(event.text.split()) < 2:
         op = await skip_current_song(chat_id)
@@ -296,7 +296,7 @@ async def vresume(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="vplaylist$"))
-async def playlist(event):
+async def vplaylist(event):
     chat_id = event.chat_id
     if chat_id in QUEUE:
         chat_queue = get_queue(chat_id)
