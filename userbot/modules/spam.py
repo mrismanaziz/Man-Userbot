@@ -9,7 +9,7 @@ from asyncio import sleep
 from userbot import BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd, register
+from userbot.events import man_cmd
 
 
 @bot.on(man_cmd(outgoing=True, pattern="cspam (.+)"))

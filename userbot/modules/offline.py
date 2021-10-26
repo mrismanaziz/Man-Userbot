@@ -42,7 +42,7 @@ afk_start = {}
 @bot.on(man_cmd(outgoing=True, pattern=r"off(?: |$)(.*)"))
 async def set_afk(afk_e):
     """For .afk command, allows you to inform people that you are afk when they message you"""
-    message = afk_e.text
+    afk_e.text
     string = afk_e.pattern_match.group(1)
     global ISAFK
     global AFKREASON
@@ -217,7 +217,7 @@ async def afk_on_pm(sender):
     global afk_time
     global afk_start
     global afk_end
-    user = await bot.get_me()
+    await bot.get_me()
     back_alivee = datetime.now()
     afk_end = back_alivee.replace(microsecond=0)
     afk_since = "**Belum Lama**"

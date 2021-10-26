@@ -948,7 +948,8 @@ async def _(message):
     u, t, g, o, s, n = inp.split(), "🗑", "<(^_^ <)", "(> ^_^)>", "⠀ ", "\n"
     h = [(u[0], u[1], u[2]), (u[0], u[1], ""), (u[0], "", "")]
     for something in reversed(
-        list((
+        list(
+            (
                 [
                     "".join(x)
                     for x in (
@@ -962,7 +963,8 @@ async def _(message):
                     )
                 ]
                 for i, f in enumerate(reversed(h))
-            ))
+            )
+        )
     ):
         for something_else in something:
             await asyncio.sleep(0.3)
