@@ -1,42 +1,32 @@
-from asyncio import Queue
-from asyncio import QueueEmpty as Empty
-from typing import Dict
-
-queues: Dict[int, Queue] = {}
+QUEUE = {}
 
 
-async def put(chat_id: int, **kwargs) -> int:
-    if chat_id not in queues:
-        queues[chat_id] = Queue()
-    await queues[chat_id].put({**kwargs})
-    return queues[chat_id].qsize()
+def add_to_queue(chat_id, songname, link, ref, type, quality):
+    if chat_id in QUEUE:
+        chat_queue = QUEUE[chat_id]
+        chat_queue.append([songname, link, ref, type, quality])
+        return int(len(chat_queue) - 1)
+    QUEUE[chat_id] = [[songname, link, ref, type, quality]]
 
 
-def get(chat_id: int) -> Dict[str, str]:
-    if chat_id in queues:
-        try:
-            return queues[chat_id].get_nowait()
-        except Empty:
-            return None
+def get_queue(chat_id):
+    if chat_id in QUEUE:
+        return QUEUE[chat_id]
+    return 0
 
 
-def is_empty(chat_id: int) -> bool:
-    if chat_id in queues:
-        return queues[chat_id].empty()
-    return True
+def pop_an_item(chat_id):
+    if chat_id not in QUEUE:
+        return 0
+
+    chat_queue = QUEUE[chat_id]
+    chat_queue.pop(0)
+    return 1
 
 
-def task_done(chat_id: int):
-    if chat_id in queues:
-        try:
-            queues[chat_id].task_done()
-        except ValueError:
-            pass
+def clear_queue(chat_id: int):
+    if chat_id not in QUEUE:
+        return 0
 
-
-def clear(chat_id: int):
-    if chat_id in queues:
-        if queues[chat_id].empty():
-            raise Empty
-        queues[chat_id].queue = []
-    raise Empty
+    QUEUE.pop(chat_id)
+    return 1

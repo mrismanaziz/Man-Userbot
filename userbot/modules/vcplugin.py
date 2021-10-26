@@ -1,4 +1,5 @@
 # Credits: @mrismanaziz
+# Thanks To @tofik_dn || https://github.com/tofikdn
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
@@ -14,13 +15,15 @@ from pytgcalls.types.input_stream.quality import (
     MediumQualityVideo,
 )
 from pytgcalls.types.stream import StreamAudioEnded
+from telethon.tl import types
+from telethon.utils import get_display_name
 from youtubesearchpython import VideosSearch
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot, call_py
 from userbot.events import man_cmd
 from userbot.utils import edit_or_reply
-from userbot.utils.queues.vqueues import (
+from userbot.utils.queues.queues import (
     QUEUE,
     add_to_queue,
     clear_queue,
@@ -28,7 +31,12 @@ from userbot.utils.queues.vqueues import (
     pop_an_item,
 )
 
-from .vcbot import vcmention
+
+def vcmention(user):
+    full_name = get_display_name(user)
+    if not isinstance(user, types.User):
+        return full_name
+    return f"[{full_name}](tg://user?id={user.id})"
 
 
 def ytsearch(query):
@@ -46,10 +54,26 @@ def ytsearch(query):
 
 async def ytdl(link):
     proc = await asyncio.create_subprocess_exec(
-        "youtube-dl",
+        "yt-dlp",
         "-g",
         "-f",
         "best[height<=?720][width<=?1280]",
+        f"{link}",
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+    )
+    stdout, stderr = await proc.communicate()
+    if stdout:
+        return 1, stdout.decode().split("\n")[0]
+    return 0, stderr.decode()
+
+
+async def ytdlaudio(link):
+    proc = await asyncio.create_subprocess_exec(
+        "yt-dlp",
+        "-g",
+        "-f",
+        "bestaudio",
         f"{link}",
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
@@ -87,7 +111,7 @@ async def skip_current_song(chat_id):
     link = chat_queue[1][2]
     type = chat_queue[1][3]
     RESOLUSI = chat_queue[1][4]
-    if type == "Audio":
+    if type == "Lagu":
         await call_py.change_stream(
             chat_id,
             AudioPiped(
@@ -106,6 +130,85 @@ async def skip_current_song(chat_id):
         )
     pop_an_item(chat_id)
     return [songname, link, type]
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"play(?:\s|$)([\s\S]*)"))
+async def play(event):
+    title = event.pattern_match.group(1)
+    replied = await event.get_reply_message()
+    chat_id = event.chat_id
+    from_user = vcmention(event.sender)
+    if (
+        replied
+        and not replied.audio
+        and not replied.voice
+        and not title
+        or not replied
+        and not title
+    ):
+        await edit_or_reply(event, "**Silahkan Masukan Judul Lagu**")
+    elif replied and not replied.audio and not replied.voice or not replied:
+        botman = await edit_or_reply(event, "`Searching...`")
+        query = event.text.split(maxsplit=1)[1]
+        search = ytsearch(query)
+        if search == 0:
+            await botman.edit(
+                "**Tidak Dapat Menemukan Lagu** Coba cari dengan Judul yang Lebih Spesifik"
+            )
+        else:
+            songname = search[0]
+            url = search[1]
+            hm, ytlink = await ytdlaudio(url)
+            if hm == 0:
+                await botman.edit(f"`{ytlink}`")
+            elif chat_id in QUEUE:
+                pos = add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
+                await botman.edit(
+                    f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
+                )
+            else:
+                try:
+                    await call_py.join_group_call(
+                        chat_id,
+                        AudioPiped(
+                            ytlink,
+                        ),
+                        stream_type=StreamType().pulse_stream,
+                    )
+                    add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
+                    await botman.edit(
+                        f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar`\n🎧 **Atas permintaan:** {from_user}",
+                        link_preview=False,
+                    )
+                except Exception as ep:
+                    await botman.edit(f"`{ep}`")
+
+    else:
+        botman = await edit_or_reply(replied, "`Downloading`")
+        dl = await replied.download_media()
+        link = replied.link
+        if replied.audio:
+            songname = "Telegram Music Player..."
+        elif replied.voice:
+            songname = "Voice Note"
+        if chat_id in QUEUE:
+            pos = add_to_queue(chat_id, songname, dl, link, "Audio", 0)
+            await botman.edit(
+                f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
+            )
+        else:
+            await call_py.join_group_call(
+                chat_id,
+                AudioPiped(
+                    dl,
+                ),
+                stream_type=StreamType().pulse_stream,
+            )
+            add_to_queue(chat_id, songname, dl, link, "Audio", 0)
+            await botman.edit(
+                f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar`\n🎧 **Atas permintaan:** {from_user}",
+                link_preview=False,
+            )
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"vplay(?:\s|$)([\s\S]*)"))
@@ -130,7 +233,9 @@ async def vplay(event):
         RESOLUSI = 720
         hmmm = HighQualityVideo()
         if search == 0:
-            await xnxx.edit("**Tidak Menemukan Video untuk Keyword yang Diberikan**")
+            await xnxx.edit(
+                "**Tidak Dapat Menemukan Video** Coba cari dengan Judul yang Lebih Spesifik"
+            )
         else:
             songname = search[0]
             url = search[1]
@@ -160,6 +265,7 @@ async def vplay(event):
     elif replied:
         xnxx = await edit_or_reply(replied, "`Downloading`")
         dl = await replied.download_media()
+        link = replied.link
         if len(event.text.split()) < 2:
             RESOLUSI = 720
         else:
@@ -168,7 +274,7 @@ async def vplay(event):
         if replied.video or replied.document:
             songname = "Telegram Video Player..."
         if chat_id in QUEUE:
-            pos = add_to_queue(chat_id, songname, dl, "Video", RESOLUSI)
+            pos = add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
             await xnxx.edit(
                 f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
             )
@@ -184,7 +290,7 @@ async def vplay(event):
                 AudioVideoPiped(dl, HighQualityAudio(), hmmm),
                 stream_type=StreamType().pulse_stream,
             )
-            add_to_queue(chat_id, songname, dl, "Video", RESOLUSI)
+            add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
             await xnxx.edit(
                 f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}",
                 link_preview=False,
@@ -224,8 +330,8 @@ async def vplay(event):
                     await xnxx.edit(f"`{ep}`")
 
 
-@bot.on(man_cmd(outgoing=True, pattern="vend$"))
-async def vend(event):
+@bot.on(man_cmd(outgoing=True, pattern="end$"))
+async def end(event):
     chat_id = event.chat_id
     if chat_id in QUEUE:
         try:
@@ -238,8 +344,8 @@ async def vend(event):
         await edit_or_reply(event, "**Tidak Sedang Memutar Streaming**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern="vskip$"))
-async def vskip(event):
+@bot.on(man_cmd(outgoing=True, pattern="skip$"))
+async def skip(event):
     chat_id = event.chat_id
     if len(event.text.split()) < 2:
         op = await skip_current_song(chat_id)
@@ -252,12 +358,12 @@ async def vskip(event):
         else:
             await edit_or_reply(
                 event,
-                f"**⏭ Melewati Video**\n**🎧 Sekarang Memutar** - [{op[0]}]({op[1]})",
+                f"**⏭ Melewati Lagu**\n**🎧 Sekarang Memutar** - [{op[0]}]({op[1]})",
                 link_preview=False,
             )
     else:
         skip = event.text.split(maxsplit=1)[1]
-        DELQUE = "**Menghapus Video Berikut Dari Antrian:**"
+        DELQUE = "**Menghapus Lagu Berikut Dari Antrian:**"
         if chat_id in QUEUE:
             items = [int(x) for x in skip.split(" ") if x.isdigit()]
             items.sort(reverse=True)
@@ -269,8 +375,8 @@ async def vskip(event):
             await event.edit(DELQUE)
 
 
-@bot.on(man_cmd(outgoing=True, pattern="vpause$"))
-async def vpause(event):
+@bot.on(man_cmd(outgoing=True, pattern="pause$"))
+async def pause(event):
     chat_id = event.chat_id
     if chat_id in QUEUE:
         try:
@@ -295,8 +401,8 @@ async def vresume(event):
         await edit_or_reply(event, "**Tidak Sedang Memutar Streaming**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern="vplaylist$"))
-async def vplaylist(event):
+@bot.on(man_cmd(outgoing=True, pattern="playlist$"))
+async def playlist(event):
     chat_id = event.chat_id
     if chat_id in QUEUE:
         chat_queue = get_queue(chat_id)
@@ -307,7 +413,7 @@ async def vplaylist(event):
                 link_preview=False,
             )
         else:
-            PLAYLIST = f"**🎧 Sedang Memutar:**\n• [{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}` \n\n**• Daftaf Putar:**"
+            PLAYLIST = f"**🎧 Sedang Memutar:**\n**• [{chat_queue[0][0]}]({chat_queue[0][2]})** | `{chat_queue[0][3]}` \n\n**• Daftaf Putar:**"
             l = len(chat_queue)
             for x in range(1, l):
                 hmm = chat_queue[x][0]
@@ -324,35 +430,26 @@ async def on_end_handler(_, u: Update):
     if isinstance(u, StreamAudioEnded):
         chat_id = u.chat_id
         print(chat_id)
-        op = await skip_current_song(chat_id)
-        if op == 1:
-            await bot.send_message(
-                chat_id, "`Antrian Kosong, Meninggalkan Obrolan Suara...`"
-            )
-        else:
-            await bot.send_message(
-                chat_id,
-                f"**🎧 Sedang Memutar** \n[{op[0]}]({op[1]}) | `{op[2]}`",
-                link_preview=False,
-            )
+        await skip_current_song(chat_id)
 
 
 CMD_HELP.update(
     {
-        "videoplay": f"**Plugin : **`videoplay`\
-        \n\n  •  **Syntax :** `{cmd}vplay` <Judul video/Link YT>\
+        "vcplugin": f"**Plugin : **`vcplugin`\
+        \n\n  •  **Syntax :** `{cmd}play` <Judul Lagu/Link YT>\
+        \n  •  **Function : **Untuk Memutar Lagu di voice chat group dengan akun kamu\
+        \n\n  •  **Syntax :** `{cmd}vplay` <Judul Video/Link YT>\
         \n  •  **Function : **Untuk Memutar Video di voice chat group dengan akun kamu\
-        \n\n  •  **Syntax :** `{cmd}vend`\
-        \n  •  **Function : **Untuk Memberhentikan video yang di putar di voice chat group\
-        \n\n  •  **Syntax :** `{cmd}vskip`\
-        \n  •  **Function : **Untuk Melewati video yang sedang di putar di voice chat group\
-        \n\n  •  **Syntax :** `{cmd}vpause`\
-        \n  •  **Function : **Untuk memberhentikan video yang sedang diputar\
-        \n\n  •  **Syntax :** `{cmd}vresume`\
-        \n  •  **Function : **Untuk melanjutkan pemutaran video yang sedang diputar\
-        \n\n  •  **Syntax :** `{cmd}vplaylist`\
-        \n  •  **Function : **Untuk menampilkan daftar putar video akan di putar\
-        \n\n  •  **NOTE :** Bila Video Sudah masuk ke ANTRIAN tapi tidak ngeplay silahkan ketik `{cmd}vend` atau `{cmd}vskip`\
+        \n\n  •  **Syntax :** `{cmd}end`\
+        \n  •  **Function : **Untuk Memberhentikan video/lagu yang sedang putar di voice chat group\
+        \n\n  •  **Syntax :** `{cmd}skip`\
+        \n  •  **Function : **Untuk Melewati video/lagu yang sedang di putar\
+        \n\n  •  **Syntax :** `{cmd}pause`\
+        \n  •  **Function : **Untuk memberhentikan video/lagu yang sedang diputar\
+        \n\n  •  **Syntax :** `{cmd}resume`\
+        \n  •  **Function : **Untuk melanjutkan pemutaran video/lagu yang sedang diputar\
+        \n\n  •  **Syntax :** `{cmd}playlist`\
+        \n  •  **Function : **Untuk menampilkan daftar putar Lagu/Video\
     "
     }
 )
