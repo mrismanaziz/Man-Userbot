@@ -52,28 +52,12 @@ def ytsearch(query):
         return 0
 
 
-async def ytdl(link):
+async def ytdl(format, link):
     proc = await asyncio.create_subprocess_exec(
         "yt-dlp",
         "-g",
         "-f",
-        "best[height<=?720][width<=?1280]",
-        f"{link}",
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-    stdout, stderr = await proc.communicate()
-    if stdout:
-        return 1, stdout.decode().split("\n")[0]
-    return 0, stderr.decode()
-
-
-async def ytdlaudio(link):
-    proc = await asyncio.create_subprocess_exec(
-        "yt-dlp",
-        "-g",
-        "-f",
-        "bestaudio",
+        f"{format}",
         f"{link}",
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
@@ -158,7 +142,8 @@ async def play(event):
         else:
             songname = search[0]
             url = search[1]
-            hm, ytlink = await ytdlaudio(url)
+            format = "bestaudio"
+            hm, ytlink = await ytdl(format, url)
             if hm == 0:
                 await botman.edit(f"`{ytlink}`")
             elif chat_id in QUEUE:
@@ -239,7 +224,8 @@ async def vplay(event):
         else:
             songname = search[0]
             url = search[1]
-            hm, ytlink = await ytdl(url)
+            format = "best[height<=?720][width<=?1280]"
+            hm, ytlink = await ytdl(format, url)
             if hm == 0:
                 await xnxx.edit(f"`{ytlink}`")
             elif chat_id in QUEUE:
@@ -306,7 +292,8 @@ async def vplay(event):
         else:
             songname = search[0]
             url = search[1]
-            hm, ytlink = await ytdl(url)
+            format = "best[height<=?720][width<=?1280]"
+            hm, ytlink = await ytdl(format, url)
             if hm == 0:
                 await xnxx.edit(f"`{ytlink}`")
             elif chat_id in QUEUE:
@@ -388,8 +375,8 @@ async def pause(event):
         await edit_or_reply(event, "**Tidak Sedang Memutar Streaming**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern="vresume$"))
-async def vresume(event):
+@bot.on(man_cmd(outgoing=True, pattern="resume$"))
+async def resume(event):
     chat_id = event.chat_id
     if chat_id in QUEUE:
         try:
