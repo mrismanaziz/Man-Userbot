@@ -1,11 +1,11 @@
 {
-  "name": "Man-Userbot",
-  "description": "[Man-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
-  "logo": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
-  "keywords": ["telegram", "userbot", "man-userbot", "modular", "python"],
+  "name": "Mes-Userbot",
+  "description": "[mes-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
+  "logo": "https://telegra.ph/file/6956b6ea1c9543630f93f.jpg",
+  "keywords": ["telegram", "userbot", "mes-userbot", "modular", "python"],
   "repository": "https://github.com/mrismanaziz/Man-Userbot",
-  "telegram": ["https://t.me/mrismanaziz", "https://t.me/tofik_dn"],
-  "success_url": "https://t.me/Lunatic0de",
+  "telegram": ["https://t.me/iamhermess", "https://t.me/thefatherofgod_18"],
+  "success_url": "https://t.me/Gprojectubot",
   "stack": "container",
   "env": {
     "API_KEY": {
@@ -44,7 +44,7 @@
     },
     "ALIVE_LOGO": {
       "description": "Gambar dalam module .alive",
-      "value": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
+      "value": "https://telegra.ph/file/6956b6ea1c9543630f93f.jpg",
       "required": false
     },
     "ALIVE_TEKS_CUSTOM": {
