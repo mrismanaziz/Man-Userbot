@@ -14,7 +14,6 @@ from pytgcalls.types.input_stream.quality import (
     LowQualityVideo,
     MediumQualityVideo,
 )
-from pytgcalls.types.stream import StreamAudioEnded
 from telethon.tl import types
 from telethon.utils import get_display_name
 from youtubesearchpython import VideosSearch
@@ -95,7 +94,7 @@ async def skip_current_song(chat_id):
     link = chat_queue[1][2]
     type = chat_queue[1][3]
     RESOLUSI = chat_queue[1][4]
-    if type == "Lagu":
+    if type == "Audio":
         await call_py.change_stream(
             chat_id,
             AudioPiped(
@@ -117,7 +116,7 @@ async def skip_current_song(chat_id):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"play(?:\s|$)([\s\S]*)"))
-async def play(event):
+async def vc_play(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
     chat_id = event.chat_id
@@ -197,7 +196,7 @@ async def play(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"vplay(?:\s|$)([\s\S]*)"))
-async def vplay(event):
+async def vc_vplay(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
     chat_id = event.chat_id
@@ -318,7 +317,7 @@ async def vplay(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="end$"))
-async def end(event):
+async def vc_end(event):
     chat_id = event.chat_id
     if chat_id in QUEUE:
         try:
@@ -331,8 +330,8 @@ async def end(event):
         await edit_or_reply(event, "**Tidak Sedang Memutar Streaming**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern="skip$"))
-async def skip(event):
+@bot.on(man_cmd(outgoing=True, pattern=r"skip(?:\s|$)([\s\S]*)"))
+async def vc_skip(event):
     chat_id = event.chat_id
     if len(event.text.split()) < 2:
         op = await skip_current_song(chat_id)
@@ -363,7 +362,7 @@ async def skip(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="pause$"))
-async def pause(event):
+async def vc_pause(event):
     chat_id = event.chat_id
     if chat_id in QUEUE:
         try:
@@ -376,7 +375,7 @@ async def pause(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="resume$"))
-async def resume(event):
+async def vc_resume(event):
     chat_id = event.chat_id
     if chat_id in QUEUE:
         try:
@@ -389,7 +388,7 @@ async def resume(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="playlist$"))
-async def playlist(event):
+async def vc_playlist(event):
     chat_id = event.chat_id
     if chat_id in QUEUE:
         chat_queue = get_queue(chat_id)
@@ -413,11 +412,10 @@ async def playlist(event):
 
 
 @call_py.on_stream_end()
-async def on_end_handler(_, u: Update):
-    if isinstance(u, StreamAudioEnded):
-        chat_id = u.chat_id
-        print(chat_id)
-        await skip_current_song(chat_id)
+async def stream_end_handler(_, u: Update):
+    chat_id = u.chat_id
+    print(chat_id)
+    await skip_current_song(chat_id)
 
 
 CMD_HELP.update(
