@@ -74,7 +74,7 @@ def command(**args):
     file_test = Path(previous_stack_frame.filename)
     file_test = file_test.stem.replace(".py", "")
 
-    pattern = args.get("pattern", None)
+    pattern = args.get("pattern")
     allow_edited_updates = args.get("allow_edited_updates", False)
     args["incoming"] = args.get("incoming", False)
     args["outgoing"] = True
@@ -127,7 +127,7 @@ def command(**args):
 
 def register(**args):
     """ Register a new event. """
-    pattern = args.get('pattern', None)
+    pattern = args.get('pattern')
     disable_edited = args.get('disable_edited', False)
     ignore_unsafe = args.get('ignore_unsafe', False)
     unsafe_pattern = r'^[^/!#@\$A-Za-z]'
