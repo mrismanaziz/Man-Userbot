@@ -140,7 +140,9 @@ async def dyno_usage(dyno):
         "Accept": "application/vnd.heroku+json; version=3.account-quotas",
     }
     path = "/accounts/" + user_id + "/actions/get-quota"
-    async with aiohttp.ClientSession() as session, session.get(heroku_api + path, headers=headers) as r:
+    async with aiohttp.ClientSession() as session, session.get(
+        heroku_api + path, headers=headers
+    ) as r:
         if r.status != 200:
             await dyno.client.send_message(
                 dyno.chat_id, f"`{r.reason}`", reply_to=dyno.id
