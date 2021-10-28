@@ -5,16 +5,14 @@ import requests
 from googletrans import Translator
 from telethon import events
 from telethon.tl.types import User
-
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, LOGS, bot
 from userbot.events import man_cmd
+from userbot.modules.sql_helper.tede_chatbot_sql import is_tede, rem_tede, set_tede
 from userbot.utils import edit_or_reply
 
 translator = Translator()
 LANGUAGE = "id"
-
-aktifnya_chat_bot = []
 
 url = "https://api-tede.herokuapp.com/api/chatbot?message={message}"
 
@@ -30,17 +28,17 @@ async def ngapain_rep(message):
         LOGS.info(str(e))
 
 
-async def chat_bot_toggle(db, event):
+async def chat_bot_toggle(event):
     status = event.pattern_match.group(1).lower()
     chat_id = event.chat_id
     if status == "on":
-        if chat_id not in db:
-            db.append(chat_id)
+        if not is_tede(chat_id):
+            set_tede(chat_id)
             return await edit_or_reply(event, "ChatBot Diaktifkan!")
         await edit_or_reply(event, "ChatBot Sudah Diaktifkan.")
     elif status == "off":
-        if chat_id in db:
-            db.remove(chat_id)
+        if is_tede(chat_id):
+            rem_tede(chat_id)
             return await edit_or_reply(event, "ChatBot Dinonaktifkan!")
         await edit_or_reply(event, "ChatBot Sudah Dinonaktifkan.")
     else:
@@ -49,7 +47,7 @@ async def chat_bot_toggle(db, event):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"chatbot(?: |$)(.*)"))
 async def on_apa_off(event):
-    await chat_bot_toggle(aktifnya_chat_bot, event)
+    await chat_bot_toggle(event)
 
 
 @bot.on(
@@ -60,7 +58,7 @@ async def on_apa_off(event):
 )
 async def tede_chatbot(event):
     sender = await event.get_sender()
-    if event.chat_id not in aktifnya_chat_bot:
+    if not is_tede(event.chat_id):
         return
     if not isinstance(sender, User):
         return
