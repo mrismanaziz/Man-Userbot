@@ -50,7 +50,6 @@ async def set_afk(afk_e):
     global afk_start
     global afk_end
     user = await bot.get_me()
-    global reason
     USER_AFK = {}
     afk_time = None
     afk_end = {}
