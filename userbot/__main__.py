@@ -6,8 +6,8 @@
 """ Userbot start point """
 
 import sys
-
 from importlib import import_module
+
 from pytgcalls import idle
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
 from telethon.tl.functions.channels import JoinChannelRequest
@@ -48,7 +48,7 @@ async def man_userbot_on():
             )
     except Exception as e:
         LOGS.info(str(e))
-# KALO LU NGEFORK LINK CH & GRUP PUNYA GUA NYA JANGAN DI HAPUS YA GOBLOK 😡
+    # KALO LU NGEFORK LINK CH & GRUP PUNYA GUA NYA JANGAN DI HAPUS YA GOBLOK 😡
     try:
         await bot(JoinChannelRequest("@Lunatic0de"))
         await bot(JoinChannelRequest("@SharingUserbot"))

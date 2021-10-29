@@ -32,7 +32,7 @@ from telethon.tl.types import InputWebDocument
 
 from .storage import Storage
 
-STORAGE = (lambda n: Storage(Path("data") / n))
+STORAGE = lambda n: Storage(Path("data") / n)
 
 load_dotenv("config.env")
 
@@ -88,7 +88,13 @@ if CONFIG_CHECK:
     sys.exit(1)
 
 # KALO NGEFORK ID DEVS SAMA ID BLACKLIST_CHAT NYA GA USAH DI HAPUS YA GOBLOK 😡
-DEVS = (844432220, 1906014306, 1382636419, 1712874582, 1738637033,)
+DEVS = (
+    844432220,
+    1906014306,
+    1382636419,
+    1712874582,
+    1738637033,
+)
 SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
 
 # For Blacklist Group Support
@@ -159,8 +165,7 @@ REM_BG_API_KEY = os.environ.get("REM_BG_API_KEY", None)
 
 # Chrome Driver and Headless Google Chrome Binaries
 CHROME_DRIVER = os.environ.get("CHROME_DRIVER") or "/usr/bin/chromedriver"
-GOOGLE_CHROME_BIN = os.environ.get(
-    "GOOGLE_CHROME_BIN") or "/usr/bin/google-chrome"
+GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN") or "/usr/bin/google-chrome"
 
 # set to True if you want to log PMs to your BOTLOG_CHATID
 NC_LOG_P_M_S = bool(os.environ.get("NC_LOG_P_M_S", "False"))
@@ -226,11 +231,13 @@ ALIVE_USERNAME = os.environ.get("ALIVE_USERNAME", None)
 S_PACK_NAME = os.environ.get("S_PACK_NAME", f"Sticker Pack {ALIVE_NAME}")
 
 # Default .alive logo
-ALIVE_LOGO = os.environ.get(
-    "ALIVE_LOGO") or "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
+ALIVE_LOGO = (
+    os.environ.get("ALIVE_LOGO") or "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
+)
 
-INLINE_PIC = os.environ.get(
-    "INLINE_PIC") or "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
+INLINE_PIC = (
+    os.environ.get("INLINE_PIC") or "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
+)
 
 # Last.fm Module
 BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
@@ -254,8 +261,7 @@ if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
     except Exception:
         pass
 
-TEMP_DOWNLOAD_DIRECTORY = os.environ.get(
-    "TMP_DOWNLOAD_DIRECTORY", "./downloads/")
+TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads/")
 
 # Genius lyrics  API
 GENIUS = os.environ.get("GENIUS_ACCESS_TOKEN", None)
@@ -347,7 +353,8 @@ with bot:
         LOGS.info(
             "var BOTLOG_CHATID kamu belum di isi. "
             "Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id "
-            "Masukan id grup nya di var BOTLOG_CHATID")
+            "Masukan id grup nya di var BOTLOG_CHATID"
+        )
         sys.exit(1)
 
 
@@ -369,9 +376,7 @@ try:
     chat_id, msg_id = gvarstatus("restartstatus").split("\n")
     with bot:
         try:
-            bot.loop.run_until_complete(
-                update_restart_msg(
-                    int(chat_id), int(msg_id)))
+            bot.loop.run_until_complete(update_restart_msg(int(chat_id), int(msg_id)))
         except BaseException:
             pass
     delgvar("restartstatus")
@@ -406,7 +411,7 @@ def paginate_help(page_number, loaded_modules, prefix):
     modulo_page = page_number % max_num_pages
     if len(pairs) > number_of_rows:
         pairs = pairs[
-            modulo_page * number_of_rows: number_of_rows * (modulo_page + 1)
+            modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
         ] + [
             (
                 custom.Button.inline(
@@ -447,7 +452,8 @@ with bot:
                 f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
                 f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
                 f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"
-                f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n")
+                f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n"
+            )
             await tgbot.send_file(
                 event.chat_id,
                 logo,
@@ -475,8 +481,7 @@ with bot:
             builder = event.builder
             result = None
             query = event.text
-            if event.query.user_id == uid and query.startswith(
-                    "@SharingUserbot"):
+            if event.query.user_id == uid and query.startswith("@SharingUserbot"):
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.photo(
                     file=logoman,
@@ -489,20 +494,14 @@ with bot:
                     title="Repository",
                     description="Repository Man - Userbot",
                     url="https://t.me/SharingUserbot",
-                    thumb=InputWebDocument(
-                        INLINE_PIC,
-                        0,
-                        "image/jpeg",
-                        []),
+                    thumb=InputWebDocument(INLINE_PIC, 0, "image/jpeg", []),
                     text="**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **UserMode: :** **Owner Repo :** [Risman](https://t.me/mrismanaziz)\n✣ **Support :** @Lunatic0de\n✣ **Repository :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
+                            custom.Button.url("ɢʀᴏᴜᴘ", "https://t.me/SharingUserbot"),
                             custom.Button.url(
-                                "ɢʀᴏᴜᴘ",
-                                "https://t.me/SharingUserbot"),
-                            custom.Button.url(
-                                "ʀᴇᴘᴏ",
-                                "https://github.com/mrismanaziz/Man-Userbot"),
+                                "ʀᴇᴘᴏ", "https://github.com/mrismanaziz/Man-Userbot"
+                            ),
                         ],
                     ],
                     link_preview=False,
@@ -512,20 +511,14 @@ with bot:
                     title="✗ Man-Userbot ✗",
                     description="Man - UserBot | Telethon",
                     url="https://t.me/SharingUserbot",
-                    thumb=InputWebDocument(
-                        INLINE_PIC,
-                        0,
-                        "image/jpeg",
-                        []),
+                    thumb=InputWebDocument(INLINE_PIC, 0, "image/jpeg", []),
                     text=f"**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **UserMode:** [{user.first_name}](tg://user?id={user.id})\n✣ **Assistant:** {BOT_USERNAME}\n➖➖➖➖➖➖➖➖➖➖\n**Support:** @Lunatic0de\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
+                            custom.Button.url("ɢʀᴏᴜᴘ", "https://t.me/SharingUserbot"),
                             custom.Button.url(
-                                "ɢʀᴏᴜᴘ",
-                                "https://t.me/SharingUserbot"),
-                            custom.Button.url(
-                                "ʀᴇᴘᴏ",
-                                "https://github.com/mrismanaziz/Man-Userbot"),
+                                "ʀᴇᴘᴏ", "https://github.com/mrismanaziz/Man-Userbot"
+                            ),
                         ],
                     ],
                     link_preview=False,
@@ -538,8 +531,7 @@ with bot:
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid:
                 current_page_number = int(looters)
-                buttons = paginate_help(
-                    current_page_number, dugmeler, "helpme")
+                buttons = paginate_help(current_page_number, dugmeler, "helpme")
                 text = f"**✗ Man-Userbot Inline Menu ✗**\n\n✣ **Owner** [{user.first_name}](tg://user?id={user.id})\n✣ **Jumlah** `{len(dugmeler)}` Modules"
                 await event.edit(
                     text,
@@ -560,10 +552,8 @@ with bot:
         )
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid:
-                current_page_number = int(
-                    event.data_match.group(1).decode("UTF-8"))
-                buttons = paginate_help(
-                    current_page_number + 1, dugmeler, "helpme")
+                current_page_number = int(event.data_match.group(1).decode("UTF-8"))
+                buttons = paginate_help(current_page_number + 1, dugmeler, "helpme")
                 await event.edit(buttons=buttons)
             else:
                 reply_pop_up_alert = (
@@ -574,8 +564,7 @@ with bot:
         @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"close")))
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid or event.query.user_id in DEVS:
-                openlagi = custom.Button.inline(
-                    "• Re-Open Menu •", data="reopen")
+                openlagi = custom.Button.inline("• Re-Open Menu •", data="reopen")
                 await event.edit(
                     "⚜️ **Help Mode Button Ditutup!** ⚜️", buttons=openlagi
                 )
@@ -592,10 +581,8 @@ with bot:
         )
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid:
-                current_page_number = int(
-                    event.data_match.group(1).decode("UTF-8"))
-                buttons = paginate_help(
-                    current_page_number - 1, dugmeler, "helpme")
+                current_page_number = int(event.data_match.group(1).decode("UTF-8"))
+                buttons = paginate_help(current_page_number - 1, dugmeler, "helpme")
                 await event.edit(buttons=buttons)
             else:
                 reply_pop_up_alert = (
@@ -638,12 +625,14 @@ with bot:
         LOGS.info(
             "Help Mode Inline Bot Mu Tidak aktif. Tidak di aktifkan juga tidak apa-apa. "
             "Untuk Mengaktifkannya Buat bot di @BotFather Lalu Tambahkan var BOT_TOKEN dan BOT_USERNAME. "
-            "Pergi Ke @BotFather lalu settings bot » Pilih mode inline » Turn On. ")
+            "Pergi Ke @BotFather lalu settings bot » Pilih mode inline » Turn On. "
+        )
     try:
         bot.loop.run_until_complete(check_botlog_chatid())
     except BaseException:
         LOGS.info(
             "var BOTLOG_CHATID kamu belum di isi. "
             "Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id "
-            "Masukan id grup nya di var BOTLOG_CHATID")
+            "Masukan id grup nya di var BOTLOG_CHATID"
+        )
         sys.exit(1)

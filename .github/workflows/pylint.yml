@@ -1,8 +1,5 @@
-name: PEP8
-on:
-  push:
-    branches: [ '*' ]
-
+name: PyLint
+on: push
 jobs:
   PEP8:
     runs-on: ubuntu-latest
@@ -12,20 +9,19 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.9
-
       - name: Install Python lint libraries
-        run: |
-          pip install autopep8 autoflake isort black
-          
+        run: pip install autopep8 autoflake isort black
       - name: Check for showstoppers
         run: |
           autopep8 --verbose --in-place --recursive --aggressive --aggressive . *.py
       - name: Remove unused imports and variables
         run: |
-          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports .
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports . *.py
       - name: lint with isort and black
         run: |
+          isort userbot/*.py
           isort userbot/modules/*.py
+          black userbot/*.py
           black userbot/modules/*.py
       - name: Import GPG key
         id: import_gpg
@@ -36,8 +32,6 @@ jobs:
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
-
-      # commit changes
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'Man-Userbot: auto fixes'
