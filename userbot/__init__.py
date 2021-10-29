@@ -32,7 +32,10 @@ from telethon.tl.types import InputWebDocument
 
 from .storage import Storage
 
-STORAGE = lambda n: Storage(Path("data") / n)
+
+def STORAGE(n):
+    return Storage(Path("data") / n)
+
 
 load_dotenv("config.env")
 
