@@ -26,6 +26,7 @@ import os
 import os.path
 import re
 import shlex
+import time
 from os.path import basename
 from typing import Optional, Union
 
@@ -90,12 +91,41 @@ def time_formatter(seconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = (
-        ((str(days) + " day(s), ") if days else "")
-        + ((str(hours) + " hour(s), ") if hours else "")
-        + ((str(minutes) + " minute(s), ") if minutes else "")
-        + ((str(seconds) + " second(s), ") if seconds else "")
+        ((str(days) + " hari, ") if days else "")
+        + ((str(hours) + " jam, ") if hours else "")
+        + ((str(minutes) + " menit, ") if minutes else "")
+        + ((str(seconds) + " detik, ") if seconds else "")
     )
     return tmp[:-2]
+
+
+async def extract_time(man, time_val):
+    if any(time_val.endswith(unit) for unit in ("s", "m", "h", "d", "w")):
+        unit = time_val[-1]
+        time_num = time_val[:-1]
+        if not time_num.isdigit():
+            await man.edit("Jumlah waktu yang ditentukan tidak valid.")
+            return None
+        if unit == "s":
+            bantime = int(time.time() + int(time_num) * 1)
+        elif unit == "m":
+            bantime = int(time.time() + int(time_num) * 60)
+        elif unit == "h":
+            bantime = int(time.time() + int(time_num) * 60 * 60)
+        elif unit == "d":
+            bantime = int(time.time() + int(time_num) * 24 * 60 * 60)
+        elif unit == "w":
+            bantime = int(time.time() + int(time_num) * 7 * 24 * 60 * 60)
+        else:
+            await man.edit(
+                f"**Jenis waktu yang dimasukan tidak valid. Harap masukan** s, m , h , d atau w tapi punya: `{time_val[-1]}`"
+            )
+            return None
+        return bantime
+    await man.edit(
+        f"**Jenis waktu yang dimasukan tidak valid. Harap Masukan** s, m , h , d atau w tapi punya: `{time_val[-1]}`"
+    )
+    return None
 
 
 def human_to_bytes(size: str) -> int:
