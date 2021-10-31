@@ -15,7 +15,7 @@ from telethon.tl.functions.messages import ImportChatInviteRequest
 from telethon.tl.types import Channel, ChatBannedRights, MessageEntityMentionName
 
 import userbot.modules.sql_helper.gban_sql as gban_sql
-from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, DEVS, bot
 from userbot.events import man_cmd, register
@@ -162,35 +162,6 @@ async def gban(event):
             f"**GBanned** [{user.first_name}](tg://user?id={user.id}) **in** `{count}` **groups in** `{timetaken}` **seconds**!!\n**Added to gbanlist.**"
         )
 
-    if BOTLOG and count != 0:
-        reply = await event.get_reply_message()
-        if reason:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"#GBAN\
-                \nGlobal Ban\
-                \n**User : **[{user.first_name}](tg://user?id={user.id})\
-                \n**ID : **`{user.id}`\
-                \n**Reason :** `{reason}`\
-                \n__Banned in {count} groups__\
-                \n**Time taken : **`{timetaken} seconds`",
-            )
-        else:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"#GBAN\
-                \nGlobal Ban\
-                \n**User : **[{user.first_name}](tg://user?id={user.id})\
-                \n**ID : **`{user.id}`\
-                \n__Banned in {count} groups__\
-                \n**Time taken : **`{timetaken} seconds`",
-            )
-        try:
-            if reply:
-                await reply.forward_to(BOTLOG_CHATID)
-        except BadRequestError:
-            pass
-
 
 @bot.on(man_cmd(outgoing=True, pattern=r"ungban(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cungban(?: |$)(.*)")
@@ -239,29 +210,6 @@ async def ungban(event):
         await ungbun.edit(
             f"**Ungbanned** [{user.first_name}](tg://user?id={user.id}) **in** `{count}` **groups in** `{timetaken}` **seconds**!!\n**Removed from gbanlist**"
         )
-
-    if BOTLOG and count != 0:
-        if reason:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"#UNGBAN\
-                \nGlobal Unban\
-                \n**User : **[{user.first_name}](tg://user?id={user.id})\
-                \n**ID : **`{user.id}`\
-                \n**Reason :** `{reason}`\
-                \n__Unbanned in {count} groups__\
-                \n**Time taken : **`{timetaken} seconds`",
-            )
-        else:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"#UNGBAN\
-                \nGlobal Unban\
-                \n**User : **[{user.first_name}](tg://user?id={user.id})\
-                \n**ID : **`{user.id}`\
-                \n__Unbanned in {count} groups__\
-                \n**Time taken : **`{timetaken} seconds`",
-            )
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"listgban$"))
