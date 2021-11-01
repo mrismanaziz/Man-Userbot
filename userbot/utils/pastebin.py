@@ -1,3 +1,5 @@
+import re
+
 import aiohttp
 from aiohttp.client_exceptions import ClientConnectorError
 
@@ -43,6 +45,17 @@ class PasteBin:
             await self._post_katbin()
         else:
             raise KeyError(f"Unknown service input: {service}")
+
+    async def _get_katbin_token(self):
+        token = None
+        async with self.http.get(self.KATBIN_URL) as req:
+            if req.status != 200:
+                return token
+            content = await req.text()
+            for i in re.finditer(r'name="_csrf_token".+value="(.+)"', content):
+                token = i.group(1)
+                break
+        return token
 
     async def _post_dogbin(self):
         if self._dkey:
@@ -92,15 +105,18 @@ class PasteBin:
     async def _post_katbin(self):
         if self._kkey:
             return
+        token = await self._get_katbin_token()
+        if not token:
+            return
         try:
             async with self.http.post(
-                "https://api.katb.in/api/paste", json={"content": self.data}
+                self.KATBIN_URL,
+                data={"_csrf_token": token, "paste[content]": self.data}
             ) as req:
-                if req.status == 201:
-                    res = await req.json()
-                    self._kkey = res["paste_id"]
-                else:
+                if req.status != 200:
                     self.retry = "dogbin"
+                else:
+                    self._kkey = str(req.url).split(self.KATBIN_URL)[-1]
         except ClientConnectorError:
             self.retry = "dogbin"
 
