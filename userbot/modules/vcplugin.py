@@ -18,10 +18,11 @@ from telethon.tl import types
 from telethon.utils import get_display_name
 from youtubesearchpython import VideosSearch
 
+from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot, call_py
 from userbot.events import man_cmd
-from userbot.utils import edit_or_reply
+from userbot.utils import edit_delete, edit_or_reply
 from userbot.utils.queues.queues import (
     QUEUE,
     add_to_queue,
@@ -325,9 +326,9 @@ async def vc_end(event):
             clear_queue(chat_id)
             await edit_or_reply(event, "**Menghentikan Streaming**")
         except Exception as e:
-            await edit_or_reply(event, f"**ERROR:** `{e}`")
+            await edit_delete(event, f"**ERROR:** `{e}`", 15)
     else:
-        await edit_or_reply(event, "**Tidak Sedang Memutar Streaming**")
+        await edit_delete(event, "**Tidak Sedang Memutar Streaming**", 15)
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"skip(?:\s|$)([\s\S]*)"))
@@ -336,11 +337,9 @@ async def vc_skip(event):
     if len(event.text.split()) < 2:
         op = await skip_current_song(chat_id)
         if op == 0:
-            await edit_or_reply(event, "**Tidak Sedang Memutar Streaming**")
+            await edit_delete(event, "**Tidak Sedang Memutar Streaming**", 15)
         elif op == 1:
-            await edit_or_reply(
-                event, "`Antrian Kosong, Meninggalkan Obrolan Suara...`"
-            )
+            await edit_delete(event, "antrian kosong, meninggalkan obrolan suara", 10)
         else:
             await edit_or_reply(
                 event,
@@ -369,9 +368,9 @@ async def vc_pause(event):
             await call_py.pause_stream(chat_id)
             await edit_or_reply(event, "**Streaming Dijeda**")
         except Exception as e:
-            await edit_or_reply(event, f"**ERROR:** `{e}`")
+            await edit_delete(event, f"**ERROR:** `{e}`", 15)
     else:
-        await edit_or_reply(event, "**Tidak Sedang Memutar Streaming**")
+        await edit_delete(event, "**Tidak Sedang Memutar Streaming**", 15)
 
 
 @bot.on(man_cmd(outgoing=True, pattern="resume$"))
@@ -384,7 +383,30 @@ async def vc_resume(event):
         except Exception as e:
             await edit_or_reply(event, f"**ERROR:** `{e}`")
     else:
-        await edit_or_reply(event, "**Tidak Sedang Memutar Streaming**")
+        await edit_delete(event, "**Tidak Sedang Memutar Streaming**", 15)
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"volume(?: |$)(.*)"))
+async def vc_volume(event):
+    query = event.pattern_match.group(1)
+    chat = await event.get_chat()
+    admin = chat.admin_rights
+    creator = chat.creator
+    chat_id = event.chat_id
+
+    if not admin and not creator:
+        return await edit_delete(event, f"**Maaf {ALIVE_NAME} Bukan Admin 👮**", 15)
+
+    if chat_id in QUEUE:
+        try:
+            await call_py.change_volume_call(chat_id, volume=int(query))
+            await edit_or_reply(
+                event, f"**Berhasil Mengubah Volume Menjadi** `{query}%`"
+            )
+        except Exception as e:
+            await edit_delete(event, f"**ERROR:** `{e}`", 15)
+    else:
+        await edit_delete(event, "**Tidak Sedang Memutar Streaming**", 15)
 
 
 @bot.on(man_cmd(outgoing=True, pattern="playlist$"))
@@ -408,7 +430,7 @@ async def vc_playlist(event):
                 PLAYLIST = PLAYLIST + "\n" + f"**#{x}** - [{hmm}]({hmmm}) | `{hmmmm}`"
             await edit_or_reply(event, PLAYLIST, link_preview=False)
     else:
-        await edit_or_reply(event, "**Tidak Sedang Memutar Streaming**")
+        await edit_delete(event, "**Tidak Sedang Memutar Streaming**", 15)
 
 
 @call_py.on_stream_end()
@@ -433,6 +455,8 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk memberhentikan video/lagu yang sedang diputar\
         \n\n  •  **Syntax :** `{cmd}resume`\
         \n  •  **Function : **Untuk melanjutkan pemutaran video/lagu yang sedang diputar\
+        \n\n  •  **Syntax :** `{cmd}volume` 1-200\
+        \n  •  **Function : **Untuk mengubah volume (Membutuhkan Hak admin)\
         \n\n  •  **Syntax :** `{cmd}playlist`\
         \n  •  **Function : **Untuk menampilkan daftar putar Lagu/Video\
     "
