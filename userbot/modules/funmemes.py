@@ -1713,7 +1713,7 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "memes": f"`{cmd}eye`\
+        "funmemes": f"`{cmd}eye`\
 \nUsage: Lihat Sendiri.\
 \n\n`{cmd}earth`\
 \nusage: Memutar Bumi 🌎🌎\
