@@ -40,9 +40,10 @@ from telethon.tl.types import (
     ChannelParticipantCreator,
     DocumentAttributeFilename,
 )
+from yt_dlp import YoutubeDL
+
 from userbot import LOGS, SUDO_USERS, bot
 from userbot.utils.format import md_to_text, paste_message
-from yt_dlp import YoutubeDL
 
 
 async def md5(fname: str) -> str:
@@ -178,8 +179,7 @@ async def take_screen_shot(
         duration,
     )
     ttl = duration // 2
-    thumb_image_path = path or os.path.join(
-        "./temp/", f"{basename(video_file)}.jpg")
+    thumb_image_path = path or os.path.join("./temp/", f"{basename(video_file)}.jpg")
     command = f"ffmpeg -ss {ttl} -i '{video_file}' -vframes 1 '{thumb_image_path}'"
     err = (await runcmd(command))[1]
     if err:

@@ -11,11 +11,7 @@ class PasteBin:
     NEKOBIN_URL = "https://nekobin.com/"
     KATBIN_URL = "https://katb.in/"
     _dkey = _hkey = _nkey = _kkey = retry = None
-    service_match = {
-        "-d": "dogbin",
-        "-n": "nekobin",
-        "-h": "hastebin",
-        "-k": "katbin"}
+    service_match = {"-d": "dogbin", "-n": "nekobin", "-h": "hastebin", "-k": "katbin"}
 
     def __init__(self, data: str = None):
         self.http = aiohttp.ClientSession()
@@ -111,7 +107,7 @@ class PasteBin:
         try:
             async with self.http.post(
                 self.KATBIN_URL,
-                data={"_csrf_token": token, "paste[content]": self.data}
+                data={"_csrf_token": token, "paste[content]": self.data},
             ) as req:
                 if req.status != 200:
                     self.retry = "dogbin"

@@ -1,9 +1,11 @@
 import datetime
+
 from bs4 import BeautifulSoup
 from markdown import markdown
 from telethon.tl.tlobject import TLObject
 from telethon.tl.types import MessageEntityPre
 from telethon.utils import add_surrogate
+
 from .paste import pastetext
 
 
@@ -31,15 +33,7 @@ def htmlmentionuser(name, userid):
 
 
 def reformattext(text):
-    return text.replace(
-        "~",
-        "").replace(
-        "_",
-        "").replace(
-            "*",
-            "").replace(
-                "`",
-        "")
+    return text.replace("~", "").replace("_", "").replace("*", "").replace("`", "")
 
 
 # kanged from uniborg @spechide
@@ -47,15 +41,7 @@ def reformattext(text):
 
 
 def reformattext(text):
-    return text.replace(
-        "~",
-        "").replace(
-        "_",
-        "").replace(
-            "*",
-            "").replace(
-                "`",
-        "")
+    return text.replace("~", "").replace("_", "").replace("*", "").replace("`", "")
 
 
 def replacetext(text):
@@ -82,10 +68,9 @@ def replacetext(text):
 def parse_pre(text):
     text = text.strip()
     return (
-        text, [
-            MessageEntityPre(
-                offset=0, length=len(
-                    add_surrogate(text)), language="")], )
+        text,
+        [MessageEntityPre(offset=0, length=len(add_surrogate(text)), language="")],
+    )
 
 
 def yaml_format(obj, indent=0, max_str_len=256, max_byte_len=64):
@@ -134,8 +119,7 @@ def yaml_format(obj, indent=0, max_str_len=256, max_byte_len=64):
         # repr() bytes if it's printable, hex like "FF EE BB" otherwise
         if all(0x20 <= c < 0x7F for c in obj):
             return repr(obj)
-        return "<…>" if len(obj) > max_byte_len else " ".join(
-            f"{b:02X}" for b in obj)
+        return "<…>" if len(obj) > max_byte_len else " ".join(f"{b:02X}" for b in obj)
     elif isinstance(obj, datetime.datetime):
         # ISO-8601 without timezone offset (telethon dates are always UTC)
         return utc_to_local(obj).strftime("%Y-%m-%d %H:%M:%S")
