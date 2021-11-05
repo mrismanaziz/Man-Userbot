@@ -21,9 +21,11 @@ jobs:
         run: |
           isort userbot/*.py
           isort userbot/modules/*.py
+          isort userbot/modules/sql_helper/*.py
           isort userbot/utils/*.py
           black userbot/*.py
           black userbot/modules/*.py
+          black userbot/modules/sql_helper/*.py
           black userbot/utils/*.py
       - name: Import GPG key
         id: import_gpg
