@@ -40,9 +40,9 @@ jobs:
       # commit changes
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: 'Man-Userbot: auto fixes'
+          commit_message: 'Pis-Userbot: auto fixes'
           commit_options: '--no-verify --signoff'
           repository: .
-          commit_user_name: mrismanaziz
-          commit_user_email: mrismanaziz@gmail.com
-          commit_author: mrismanaziz <mrismanaziz@gmail.com>
+          commit_user_name: apisesad
+          commit_user_email: hapidqiyas@gmail.com
+          commit_author: apisesad <hapidqiyas@gmail.com>
