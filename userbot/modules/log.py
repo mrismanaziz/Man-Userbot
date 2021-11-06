@@ -13,6 +13,7 @@ from userbot import CMD_HELP, LOGS, bot
 from userbot.events import man_cmd
 from userbot.modules.sql_helper import no_log_pms_sql
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
+from userbot.modules.vcplugin import vcmention
 from userbot.utils import _format, edit_delete
 from userbot.utils.logger import logging
 from userbot.utils.tools import media_type
@@ -28,6 +29,26 @@ class LOG_CHATS:
 
 
 LOG_CHATS_ = LOG_CHATS()
+
+
+@bot.on(events.ChatAction)
+async def logaddjoin(event):
+    user = await event.get_user()
+    chat = await event.get_chat()
+    if not (user and user.is_self):
+        return
+    if hasattr(chat, "username") and chat.username:
+        chat = f"[{chat.title}](https://t.me/{chat.username}/{event.action_message.id})"
+    else:
+        chat = f"[{chat.title}](https://t.me/c/{chat.id}/{event.action_message.id})"
+    if event.user_added:
+        tmp = event.added_by
+        text = f"📩 **#ADD_LOG\n •** {vcmention(tmp)} **Menambahkan** {vcmention(user)}\n **• Ke Group** {chat}"
+    elif event.user_joined:
+        text = f"📨 **#JOIN_LOG\n •** [{user.first_name}](tg://user?id={user.id}) **Bergabung\n • Ke Group** {chat}"
+    else:
+        return
+    await event.client.send_message(BOTLOG_CHATID, text)
 
 
 @bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
