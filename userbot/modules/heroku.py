@@ -222,8 +222,6 @@ async def getsql(event):
         return await xxnx.edit(
             f"**Invalid Syntax !!** \n\nKetik `{cmd}getsql NAMA_VARIABLE`"
         )
-    if var_ not in heroku_var:
-        return await xxnx.edit("**Tidak Dapat Menemukan Config Var**")
     try:
         sql_v = gvarstatus(var_)
         os_v = os.environ.get(var_) or "None"
@@ -249,8 +247,6 @@ async def setsql(event):
         return await xxnx.edit(
             f"**Invalid Syntax !!**\n\n**Ketik** `{cmd}setsql VARIABLE_NAME value`"
         )
-    if var_ not in heroku_var:
-        return await xxnx.edit("**Tidak Dapat Menemukan Config Var**")
     try:
         addgvar(var_, valu)
     except Exception as e:
@@ -266,8 +262,6 @@ async def delsql(event):
         return await xxnx.edit(
             f"**Invalid Syntax !!**\n\n**Ketik** `{cmd}delsql VARIABLE_NAME`"
         )
-    if var_ not in heroku_var:
-        return await xxnx.edit("**Tidak Dapat Menemukan Config Var**")
     try:
         delgvar(var_)
     except Exception as e:
