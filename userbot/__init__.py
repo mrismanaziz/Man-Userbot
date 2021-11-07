@@ -318,10 +318,10 @@ try:
         auto_reconnect=True,
         connection_retries=None,
     )
+    call_py = PyTgCalls(bot)
 except Exception as e:
     print(f"STRING_SESSION - {e}")
     sys.exit()
-call_py = PyTgCalls(bot)
 
 
 async def check_botlog_chatid():
@@ -431,6 +431,8 @@ def paginate_help(page_number, loaded_modules, prefix):
 
 with bot:
     try:
+        from userbot.modules.sql_helper.globals import gvarstatus
+
         tgbot = TelegramClient(
             "TG_BOT_TOKEN",
             api_id=API_KEY,
@@ -438,7 +440,7 @@ with bot:
             connection=ConnectionTcpAbridged,
             auto_reconnect=True,
             connection_retries=None,
-        ).start(bot_token=BOT_TOKEN)
+        ).start(bot_token=gvarstatus("BOT_TOKEN"))
 
         dugmeler = CMD_HELP
         user = bot.get_me()

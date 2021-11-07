@@ -23,13 +23,14 @@ from userbot import BOT_USERNAME
 from userbot import CMD_HANDLER as cmd
 from userbot import bot
 from userbot.events import man_cmd
+from userbot.modules.sql_helper.globals import gvarstatus
 
 
 @bot.on(man_cmd(pattern="helpme", outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
-    tgbotusername = BOT_USERNAME
+    tgbotusername = gvarstatus("BOT_USERNAME") or BOT_USERNAME
     if tgbotusername is not None:
         chat = "@Botfather"
         try:
@@ -62,5 +63,5 @@ async def _(event):
             )
     else:
         await event.edit(
-            "**ERROR:** Silahkan Cek Ulang `BOT_TOKEN` & `BOT_USERNAME` di Heroku."
+            f"**ERROR:** Silahkan Tambahkan SQL `BOT_TOKEN` & `BOT_USERNAME` Ketik `{cmd}help sql`"
         )
