@@ -26,12 +26,14 @@ async def _(event):
     b = await event.client.download_media(await event.get_reply_message())
     with open(b, "r") as a:
         c = a.read()
-    a = await edit_or_reply(event, "**Berhasil Membaca Berkas**")
+    await edit_or_reply(event, "**Berhasil Membaca Berkas**")
     if len(c) > 4095:
-        await a.edit("**File Terlalu Panjang Untuk dibaca**")
+        await edit_or_reply(
+            event, c, deflink=True, linktext="**Berhasil Membaca Berkas Lihat**"
+        )
     else:
         await event.client.send_message(event.chat_id, f"`{c}`")
-        await a.delete()
+        await event.delete()
     os.remove(b)
 
 
