@@ -440,6 +440,21 @@ async def stream_end_handler(_, u: Update):
     await skip_current_song(chat_id)
 
 
+@call_py.on_closed_voice_chat()
+async def closedvc(_, chat_id: int):
+    clear_queue(chat_id)
+
+
+@call_py.on_left()
+async def leftvc(_, chat_id: int):
+    clear_queue(chat_id)
+
+
+@call_py.on_kicked()
+async def kickedvc(_, chat_id: int):
+    clear_queue(chat_id)
+
+
 CMD_HELP.update(
     {
         "vcplugin": f"**Plugin : **`vcplugin`\
