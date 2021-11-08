@@ -3,6 +3,7 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
+import ast
 import json
 import re
 import urllib.parse
@@ -128,9 +129,9 @@ def zippy_share(url: str) -> str:
             math = re.search(
                 r"= (?P<url>\".+\" \+ (?P<math>\(.+\)) .+);", script.text
             ).group("math")
-            dl_url = url_raw.replace(math, '"' + str(eval(math)) + '"')
+            dl_url = url_raw.replace(math, '"' + str(ast.literal_eval(math)) + '"')
             break
-    dl_url = base_url + eval(dl_url)
+    dl_url = base_url + ast.literal_eval(dl_url)
     name = urllib.parse.unquote(dl_url.split("/")[-1])
     reply += f"[{name}]({dl_url})\n"
     return reply

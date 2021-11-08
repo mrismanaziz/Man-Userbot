@@ -71,8 +71,6 @@ async def _(event):
             REPLY += "\n🔍 **Some Repos** : " + " | ".join(repos)
         downloader = SmartDL(photo, ppath, progress_bar=False)
         downloader.start(blocking=False)
-        while not downloader.isFinished():
-            pass
         await event.client.send_file(
             event.chat_id,
             ppath,

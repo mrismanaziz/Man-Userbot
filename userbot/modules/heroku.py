@@ -256,11 +256,7 @@ async def setsql(event):
     val_ = hel_.split(" ")[1:]
     valu = " ".join(val_)
     xxnx = await edit_or_reply(event, f"**Setting variable** `{var_}` **as** `{valu}`")
-    if var_ == "":
-        return await xxnx.edit(
-            f"**Invalid Syntax !!**\n\n**Ketik** `{cmd}setsql VARIABLE_NAME value`"
-        )
-    elif valu == "":
+    if "" in (var_, valu):
         return await xxnx.edit(
             f"**Invalid Syntax !!**\n\n**Ketik** `{cmd}setsql VARIABLE_NAME value`"
         )
