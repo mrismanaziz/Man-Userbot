@@ -24,7 +24,7 @@ async def _(event):
         result = f"{respond['data']}"
         await xxnx.edit(result)
     except Exception:
-        await xxnx.edit(f"**Lirik lagu tidak ditemukan.**")
+        await xxnx.edit('**Lirik lagu tidak ditemukan.**')
 
 
 CMD_HELP.update(
