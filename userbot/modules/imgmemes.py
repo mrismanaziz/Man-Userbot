@@ -498,7 +498,6 @@ async def phcomment(event):
                 name = user.first_name + " " + user.last_name
             else:
                 name = user.first_name
-            text = text
         else:
             return await event.edit("`Give text..`")
         try:
