@@ -440,7 +440,7 @@ with bot:
             connection=ConnectionTcpAbridged,
             auto_reconnect=True,
             connection_retries=None,
-        ).start(bot_token=gvarstatus("BOT_TOKEN"))
+        ).start(bot_token=BOT_TOKEN or gvarstatus("BOT_TOKEN"))
 
         dugmeler = CMD_HELP
         user = bot.get_me()

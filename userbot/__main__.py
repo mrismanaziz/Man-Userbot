@@ -17,7 +17,7 @@ from random import randint
 
 from pytgcalls import idle
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
-from telethon.tl.functions.channels import JoinChannelRequest
+from telethon.tl.functions.channels import InviteToChannelRequest, JoinChannelRequest
 from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import ALIVE_NAME, BOT_TOKEN, BOT_VER, BOTLOG_CHATID
@@ -54,13 +54,15 @@ async def autobot():
     if BOT_TOKEN:
         return addgvar("BOT_TOKEN", BOT_TOKEN)
     await bot.start()
-    LOGS.info("SEDANG MEMBUAT BOT TELEGRAM UNTUK ANDA DI @BotFather")
+    await bot.send_message(
+        BOTLOG_CHATID, "**SEDANG MEMBUAT BOT TELEGRAM UNTUK ANDA DI @BotFather**"
+    )
     who = await bot.get_me()
     name = who.first_name + " Assistant Bot"
     if who.username:
-        username = who.username + "_bot"
+        username = who.username + "_ubot"
     else:
-        username = "man" + (str(who.id))[5:] + "_userbot"
+        username = "man" + (str(who.id))[5:] + "ubot"
     bf = "@BotFather"
     await bot(UnblockRequest(bf))
     await bot.send_message(bf, "/cancel")
@@ -93,7 +95,7 @@ async def autobot():
     await bot.send_read_acknowledge("botfather")
     if isdone.startswith("Sorry,"):
         ran = randint(1, 100)
-        username = "man" + (str(who.id))[6:] + str(ran) + "_userbot"
+        username = "man" + (str(who.id))[6:] + str(ran) + "ubot"
         await bot.send_message(bf, username)
         await asyncio.sleep(1)
         nowdone = (await bot.get_messages(bf, limit=1))[0].text
@@ -106,7 +108,31 @@ async def autobot():
             await bot.send_message(bf, f"@{username}")
             await asyncio.sleep(1)
             await bot.send_message(bf, "Search")
-            LOGS.info(f"BERHASIL MEMBUAT BOT TELEGRAM DENGAN USERNAME @{username}")
+            await asyncio.sleep(3)
+            await bot.send_message(bf, "/setuserpic")
+            await asyncio.sleep(1)
+            await bot.send_message(bf, f"@{username}")
+            await asyncio.sleep(1)
+            await bot.send_file(bf, "userbot/resources/logo.jpg")
+            await asyncio.sleep(3)
+            await bot.send_message(bf, "/setabouttext")
+            await asyncio.sleep(1)
+            await bot.send_message(bf, f"@{username}")
+            await asyncio.sleep(1)
+            await bot.send_message(bf, f"Managed With ☕️ By {who.first_name}")
+            await asyncio.sleep(3)
+            await bot.send_message(bf, "/setdescription")
+            await asyncio.sleep(1)
+            await bot.send_message(bf, f"@{username}")
+            await asyncio.sleep(1)
+            await bot.send_message(
+                bf, f"✨ Owner ~ {who.first_name} ✨\n\n✨ Powered By ~ @Lunatic0de ✨"
+            )
+            await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [username]))
+            await bot.send_message(
+                BOTLOG_CHATID,
+                f"**BERHASIL MEMBUAT BOT TELEGRAM DENGAN USERNAME @{username}**",
+            )
         else:
             LOGS.info(
                 "Silakan Hapus Beberapa Bot Telegram Anda di @Botfather atau Set Var BOT_TOKEN dengan token bot"
@@ -121,7 +147,31 @@ async def autobot():
         await bot.send_message(bf, f"@{username}")
         await asyncio.sleep(1)
         await bot.send_message(bf, "Search")
-        LOGS.info(f"BERHASIL MEMBUAT BOT TELEGRAM DENGAN USERNAME @{username}")
+        await asyncio.sleep(3)
+        await bot.send_message(bf, "/setuserpic")
+        await asyncio.sleep(1)
+        await bot.send_message(bf, f"@{username}")
+        await asyncio.sleep(1)
+        await bot.send_file(bf, "userbot/resources/logo.jpg")
+        await asyncio.sleep(3)
+        await bot.send_message(bf, "/setabouttext")
+        await asyncio.sleep(1)
+        await bot.send_message(bf, f"@{username}")
+        await asyncio.sleep(1)
+        await bot.send_message(bf, f"Managed With ☕️ By {who.first_name}")
+        await asyncio.sleep(3)
+        await bot.send_message(bf, "/setdescription")
+        await asyncio.sleep(1)
+        await bot.send_message(bf, f"@{username}")
+        await asyncio.sleep(1)
+        await bot.send_message(
+            bf, f"✨ Owner ~ {who.first_name} ✨\n\n✨ Powered By ~ @Lunatic0de ✨"
+        )
+        await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [username]))
+        await bot.send_message(
+            BOTLOG_CHATID,
+            f"**BERHASIL MEMBUAT BOT TELEGRAM DENGAN USERNAME @{username}**",
+        )
     else:
         LOGS.info(
             "Silakan Hapus Beberapa Bot Telegram Anda di @Botfather atau Set Var BOT_TOKEN dengan token bot"

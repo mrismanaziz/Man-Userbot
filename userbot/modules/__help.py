@@ -30,7 +30,7 @@ from userbot.modules.sql_helper.globals import gvarstatus
 async def _(event):
     if event.fwd_from:
         return
-    tgbotusername = gvarstatus("BOT_USERNAME") or BOT_USERNAME
+    tgbotusername = BOT_USERNAME or gvarstatus("BOT_USERNAME")
     if tgbotusername is not None:
         chat = "@Botfather"
         try:
