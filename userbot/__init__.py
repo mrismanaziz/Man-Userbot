@@ -447,6 +447,7 @@ with bot:
         uid = user.id
         logo = ALIVE_LOGO
         logoman = INLINE_PIC
+        tgbotusername = BOT_USERNAME or gvarstatus("BOT_USERNAME")
 
         @tgbot.on(events.NewMessage(pattern="/start"))
         async def handler(event):
@@ -517,7 +518,7 @@ with bot:
                     description="Man - UserBot | Telethon",
                     url="https://t.me/SharingUserbot",
                     thumb=InputWebDocument(INLINE_PIC, 0, "image/jpeg", []),
-                    text=f"**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **UserMode:** [{user.first_name}](tg://user?id={user.id})\n✣ **Assistant:** {BOT_USERNAME}\n➖➖➖➖➖➖➖➖➖➖\n**Support:** @Lunatic0de\n➖➖➖➖➖➖➖➖➖➖",
+                    text=f"**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **UserMode:** [{user.first_name}](tg://user?id={user.id})\n✣ **Assistant:** {tgbotusername}\n➖➖➖➖➖➖➖➖➖➖\n**Support:** @Lunatic0de\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url("ɢʀᴏᴜᴘ", "https://t.me/SharingUserbot"),
