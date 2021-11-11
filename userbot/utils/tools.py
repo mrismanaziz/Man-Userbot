@@ -225,9 +225,9 @@ async def edit_or_reply(
     if not noformat:
         text = md_to_text(text)
     if aslink or deflink:
-        linktext = linktext or "Pesan Terlalu Besar Jadi Paste ke Bin"
+        linktext = linktext or "**Pesan Terlalu Panjang**"
         response = await paste_message(text, pastetype="s")
-        text = linktext + f" [Disini]({response})"
+        text = linktext + f" [Lihat Disini]({response})"
         if event.sender_id in SUDO_USERS:
             if reply_to:
                 return await reply_to.reply(text, link_preview=link_preview)
@@ -307,7 +307,7 @@ def post_to_telegraph(title, html_format_content):
 async def edit_delete(event, text, time=None, parse_mode=None, link_preview=None):
     parse_mode = parse_mode or "md"
     link_preview = link_preview or False
-    time = time or 5
+    time = time or 15
     if event.sender_id in SUDO_USERS:
         reply_to = await event.get_reply_message()
         newevent = (
