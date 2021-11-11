@@ -215,20 +215,12 @@ async def fake_dyno(event):
 @bot.on(man_cmd(outgoing=True, pattern=r"logs"))
 async def _(dyno):
     if app is None:
-        return await dyno.edit(
-            "**Wajib Mengisi Var** `HEROKU_APP_NAME` **dan** `HEROKU_API_KEY`"
+        return await edit_or_reply(
+            dyno, "**Wajib Mengisi Var** `HEROKU_APP_NAME` **dan** `HEROKU_API_KEY`"
         )
-    await dyno.edit("**Sedang Mengambil Logs Heroku**")
-    with open("Logs.txt", "w") as log:
-        log.write(app.get_log())
-    await dyno.client.send_file(
-        entity=dyno.chat_id,
-        file="Logs.txt",
-        thumb="userbot/resources/logo.jpg",
-        caption="**Ini Logs Heroku anda**",
-    )
-    await dyno.delete()
-    return os.remove("Logs.txt")
+    xx = await edit_or_reply(dyno, "**Sedang Mengambil Logs Heroku**")
+    data = app.get_log()
+    await edit_or_reply(xx, data, deflink=True, linktext="**✣ Ini Logs Heroku Anda :**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"getdb ?(.*)"))
