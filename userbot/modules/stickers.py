@@ -421,31 +421,21 @@ async def _(event):
 @bot.on(man_cmd(outgoing=True, pattern=r"getsticker$"))
 async def sticker_to_png(sticker):
     if not sticker.is_reply:
-        await sticker.edit("`NULL information to fetch...`")
+        await sticker.edit("**Harap balas ke stiker**")
         return False
-
     img = await sticker.get_reply_message()
     if not img.document:
-        await sticker.edit("`Mohon Balas Ke Sticker`")
+        await sticker.edit("**Maaf , Ini Bukan Sticker**")
         return False
-
-    try:
-        img.document.attributes[1]
-    except Exception:
-        await sticker.edit("`Maaf , Ini Bukanlah Sticker`")
-        return
-
-    with io.BytesIO() as image:
-        await sticker.client.download_media(img, image)
-        image.name = "sticker.png"
-        image.seek(0)
-        try:
-            await img.reply(file=image, force_document=True)
-        except Exception:
-            await sticker.edit("`Tidak Dapat Mengirim File...`")
-        else:
-            await sticker.delete()
-    return
+    await sticker.edit("`Berhasil Mengambil Sticker!`")
+    image = io.BytesIO()
+    await sticker.client.download_media(img, image)
+    image.name = "sticker.png"
+    image.seek(0)
+    await sticker.client.send_file(
+        sticker.chat_id, image, reply_to=img.id, force_document=True
+    )
+    await sticker.delete()
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"stickers ?([\s\S]*)"))
@@ -466,6 +456,59 @@ async def cb_sticker(event):
             packlink = (pack.a).get("href")
             reply += f" •  [{packtitle}]({packlink})\n"
     await event.edit(reply)
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"itos$"))
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("sir this is not a image message reply to image message")
+        return
+    reply_message = await event.get_reply_message()
+    if not reply_message.media:
+        await event.edit("sir, This is not a image ")
+        return
+    chat = "@buildstickerbot"
+    await event.edit("Membuat Sticker..")
+    async with event.client.conversation(chat) as conv:
+        try:
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=164977173)
+            )
+            msg = await event.client.forward_messages(chat, reply_message)
+            response = await response
+        except YouBlockedUserError:
+            await event.reply("unblock me (@buildstickerbot) and try again")
+            return
+        if response.text.startswith("Hi!"):
+            await event.edit(
+                "Can you kindly disable your forward privacy settings for good?"
+            )
+        else:
+            await event.delete()
+            await bot.send_read_acknowledge(conv.chat_id)
+            await event.client.send_message(event.chat_id, response.message)
+            await event.client.delete_message(event.chat_id, [msg.id, response.id])
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"get$"))
+async def _(event):
+    rep_msg = await event.get_reply_message()
+    if not event.is_reply or not rep_msg.sticker:
+        return await event.edit("**Harap balas ke stiker**")
+    await event.edit("`Mengconvert ke foto...`")
+    foto = io.BytesIO()
+    foto = await event.client.download_media(rep_msg.sticker, foto)
+    im = Image.open(foto).convert("RGB")
+    im.save("sticker.png", "png")
+    await event.client.send_file(
+        event.chat_id,
+        "sticker.png",
+        reply_to=rep_msg,
+    )
+    await event.delete()
+    remove("sticker.png")
 
 
 CMD_HELP.update(
@@ -496,11 +539,9 @@ CMD_HELP.update(
         \n\n  •  **Syntax :** `{cmd}getsticker`\
         \n  •  **Function : **Balas Ke Stcker Untuk Mendapatkan File 'PNG' Sticker.\
         \n\n  •  **Syntax :** `{cmd}get`\
-        \n  •  **Function : **Balas ke sticker untuk mendapatkan file 'PNG' sticker\
-        \n\n  •  **Syntax :** `{cmd}stoi`\
-        \n  •  **Function : **Balas Ke Stcker Untuk Mendapatkan File 'PNG' Sticker.\
+        \n  •  **Function : **Balas ke sticker untuk mendapatkan foto sticker\
         \n\n  •  **Syntax :** `{cmd}itos`\
-        \n  •  **Function : **Balas ke sticker atau gambar .itos untuk mengambil sticker bukan ke pack\
+        \n  •  **Function : **Balas ke foto untuk membuat foto menjadi sticker\
     "
     }
 )
