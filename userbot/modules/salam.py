@@ -1,10 +1,9 @@
 from time import sleep
 
+from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot, user
+from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
-
-OWNER = user.first_name
 
 
 @bot.on(man_cmd(outgoing=True, pattern="p(?: |$)(.*)"))
@@ -19,7 +18,7 @@ async def _(event):
 
 @bot.on(man_cmd(outgoing=True, pattern="P(?: |$)(.*)"))
 async def _(event):
-    await event.edit(f"**Haii Salken Saya {OWNER}**")
+    await event.edit(f"**Haii Salken Saya {ALIVE_NAME}**")
     sleep(2)
     await event.edit("**Assalamualaikum...**")
 
@@ -31,7 +30,7 @@ async def _(event):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"a(?: |$)(.*)"))
 async def _(event):
-    await event.edit(f"**Haii Salken Saya {OWNER}**")
+    await event.edit(f"**Haii Salken Saya {ALIVE_NAME}**")
     sleep(2)
     await event.edit("**Assalamualaikum**")
 
@@ -45,7 +44,7 @@ async def _(event):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"k(?: |$)(.*)"))
 async def _(event):
-    await event.edit(f"**Hallo KIMAAKK SAYA {DEFAULTUSER}**")
+    await event.edit(f"**Hallo KIMAAKK SAYA {ALIVE_NAME}**")
     sleep(2)
     await event.edit("**LU SEMUA NGENTOT 🔥**")
 
