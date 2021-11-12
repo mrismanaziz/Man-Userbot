@@ -1,40 +1,60 @@
-from platform import uname
+from time import sleep
 
-from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP, bot, user
 from userbot.events import man_cmd
 
-# ================= CONSTANT =================
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-# ============================================
+OWNER = user.first_name
 
 
 @bot.on(man_cmd(outgoing=True, pattern="p(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    await typew.edit("**Assalamualaikum Dulu Biar Sopan**")
+async def _(event):
+    await event.edit("**Assalamualaikum Dulu Biar Sopan**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"pe(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    await typew.edit("**Assalamualaikum Warahmatullahi Wabarakatuh**")
+async def _(event):
+    await event.edit("**Assalamualaikum Warahmatullahi Wabarakatuh**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern="P(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    sleep(1)
-    await typew.edit(f"**Haii Salken Saya {DEFAULTUSER}**")
+async def _(event):
+    await event.edit(f"**Haii Salken Saya {OWNER}**")
     sleep(2)
-    await typew.edit("**Assalamualaikum...**")
+    await event.edit("**Assalamualaikum...**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"l(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    await typew.edit("**Wa'alaikumsalam**")
+async def _(event):
+    await event.edit("**Wa'alaikumsalam**")
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"a(?: |$)(.*)"))
+async def _(event):
+    await event.edit(f"**Haii Salken Saya {OWNER}**")
+    sleep(2)
+    await event.edit("**Assalamualaikum**")
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"j(?: |$)(.*)"))
+async def _(event):
+    await event.edit("**JAKA SEMBUNG BAWA GOLOK**")
+    sleep(3)
+    await event.edit("**NIMBRUNG GOBLOKK!!!🔥**")
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"k(?: |$)(.*)"))
+async def _(event):
+    await event.edit(f"**Hallo KIMAAKK SAYA {DEFAULTUSER}**")
+    sleep(2)
+    await event.edit("**LU SEMUA NGENTOT 🔥**")
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"ass(?: |$)(.*)"))
+async def _(event):
+    await event.edit("**Salam Dulu Biar Sopan**")
+    sleep(2)
+    await event.edit("**السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ**")
 
 
 CMD_HELP.update(

@@ -13,55 +13,23 @@ import time
 from asyncio import create_subprocess_exec as asyncrunapp
 from asyncio.subprocess import PIPE as asyncPIPE
 from datetime import datetime
-from platform import python_version, uname
+from platform import python_version
 from shutil import which
 
 import psutil
+from pytgcalls import __version__ as pytgcalls
 from telethon import __version__, version
 
-from userbot import (
-    ALIVE_EMOJI,
-    ALIVE_LOGO,
-    ALIVE_NAME,
-    ALIVE_TEKS_CUSTOM,
-    BOT_VER,
-    CHANNEL,
-)
+from userbot import ALIVE_EMOJI, ALIVE_LOGO, ALIVE_TEKS_CUSTOM, BOT_VER, CHANNEL
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, GROUP, StartTime, bot
 from userbot.events import man_cmd
 
-# ================= CONSTANT =================
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-# ============================================
-
+from .ping import get_readable_time
 
 modules = CMD_HELP
-
-
-async def get_readable_time(seconds: int) -> str:
-    count = 0
-    up_time = ""
-    time_list = []
-    time_suffix_list = ["s", "m", "Jam", "Hari"]
-
-    while count < 4:
-        count += 1
-        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
-        if seconds == 0 and remainder == 0:
-            break
-        time_list.append(int(result))
-        seconds = int(remainder)
-
-    for x in range(len(time_list)):
-        time_list[x] = str(time_list[x]) + time_suffix_list[x]
-    if len(time_list) == 4:
-        up_time += time_list.pop() + ", "
-
-    time_list.reverse()
-    up_time += ":".join(time_list)
-
-    return up_time
+emoji = ALIVE_EMOJI
+alive_text = ALIVE_TEKS_CUSTOM
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"spc"))
@@ -179,13 +147,14 @@ async def amireallyalive(alive):
     uptime = await get_readable_time((time.time() - StartTime))
     output = (
         f"**[Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) is Up and Running.**\n\n"
-        f"**{ALIVE_TEKS_CUSTOM}**\n\n"
-        f"{ALIVE_EMOJI} **Master :** [{DEFAULTUSER}](tg://user?id={user.id}) \n"
-        f"{ALIVE_EMOJI} **Modules :** `{len(modules)} Modules` \n"
-        f"{ALIVE_EMOJI} **Bot Version :** `{BOT_VER}` \n"
-        f"{ALIVE_EMOJI} **Python Version :** `{python_version()}` \n"
-        f"{ALIVE_EMOJI} **Telethon Version :** `{version.__version__}` \n"
-        f"{ALIVE_EMOJI} **Bot Uptime :** `{uptime}` \n\n"
+        f"**{alive_text}**\n\n"
+        f"{emoji} **Master :** [{user.first_name}](tg://user?id={user.id}) \n"
+        f"{emoji} **Modules :** `{len(modules)} Modules` \n"
+        f"{emoji} **Bot Version :** `{BOT_VER}` \n"
+        f"{emoji} **Python Version :** `{python_version()}` \n"
+        f"{emoji} **Pytgcalls Version :** `{pytgcalls.__version__}` \n"
+        f"{emoji} **Telethon Version :** `{version.__version__}` \n"
+        f"{emoji} **Bot Uptime :** `{uptime}` \n\n"
         f"    **[𝗦𝘂𝗽𝗽𝗼𝗿𝘁](https://t.me/{GROUP})** | **[𝗖𝗵𝗮𝗻𝗻𝗲𝗹](https://t.me/{CHANNEL})** | **[𝗢𝘄𝗻𝗲𝗿](tg://user?id={user.id})**"
     )
     if ALIVE_LOGO:
@@ -224,7 +193,7 @@ CMD_HELP.update(
 
 CMD_HELP.update(
     {
-        "alive": "**Plugin : **`alive`\
+        "alive": f"**Plugin : **`alive`\
         \n\n  •  **Syntax :** `{cmd}alive` atau `{cmd}on`\
         \n  •  **Function : **Untuk melihat apakah bot Anda berfungsi atau tidak.\
     "

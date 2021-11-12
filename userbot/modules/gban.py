@@ -2,7 +2,6 @@
 # Lord Userbot
 
 from telethon.events import ChatAction
-from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.types import MessageEntityMentionName
 
 from userbot import ALIVE_NAME, DEVS, bot
@@ -38,17 +37,6 @@ async def get_full_user(event):
                 "`Terjadi Kesalahan... Mohon Lapor Ke ` @mrismanaziz", str(err)
             )
     return user_obj, extra
-
-
-async def get_user_from_id(user, event):
-    if isinstance(user, str):
-        user = int(user)
-    try:
-        user_obj = await event.client.get_entity(user)
-    except (TypeError, ValueError) as err:
-        await event.edit(str(err))
-        return None
-    return user_obj
 
 
 # Ported For Lord-Userbot by liualvinas/Alvin
@@ -117,10 +105,6 @@ async def gben(userbot):
             return await dark.edit("**Gagal Global Banned, Dia Adalah Pembuat Saya 🤪**")
         try:
             from userbot.modules.sql_helper.gmute_sql import gmute
-        except BaseException:
-            pass
-        try:
-            await userbot.client(BlockRequest(user))
         except BaseException:
             pass
         testuserbot = [
@@ -192,10 +176,6 @@ async def gunben(userbot):
             )
         try:
             from userbot.modules.sql_helper.gmute_sql import ungmute
-        except BaseException:
-            pass
-        try:
-            await userbot.client(UnblockRequest(user))
         except BaseException:
             pass
         testuserbot = [

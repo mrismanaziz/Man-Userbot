@@ -150,18 +150,68 @@ async def _(f):
     )
 
 
+@bot.on(man_cmd(outgoing=True, pattern=r"keping$"))
+async def _(pong):
+    await get_readable_time((time.time() - StartTime))
+    start = datetime.now()
+    await pong.edit("**『⍟𝐊𝐎𝐍𝐓𝐎𝐋』**")
+    await pong.edit("**◆◈𝐊𝐀𝐌𝐏𝐀𝐍𝐆◈◆**")
+    await pong.edit("**𝐏𝐄𝐂𝐀𝐇𝐊𝐀𝐍 𝐁𝐈𝐉𝐈 𝐊𝐀𝐔 𝐀𝐒𝐔**")
+    await pong.edit("**☬𝐒𝐈𝐀𝐏 𝐊𝐀𝐌𝐏𝐀𝐍𝐆 𝐌𝐄𝐍𝐔𝐌𝐁𝐔𝐊 𝐀𝐒𝐔☬**")
+    end = datetime.now()
+    duration = (end - start).microseconds / 1000
+    user = await bot.get_me()
+    await pong.edit(
+        f"**✲ 𝙺𝙾𝙽𝚃𝙾𝙻 𝙼𝙴𝙻𝙴𝙳𝚄𝙶** "
+        f"\n ⫸ ᴷᵒⁿᵗᵒˡ `%sms` \n"
+        f"**✲ 𝙱𝙸𝙹𝙸 𝙿𝙴𝙻𝙴𝚁** "
+        f"\n ⫸ ᴷᵃᵐᵖᵃⁿᵍ『[{user.first_name}](tg://user?id={user.id})』 \n" % (duration)
+    )
+
+
+# .keping & kping Coded by Koala
+
+
+@bot.on(man_cmd(outgoing=True, pattern=r"kping$"))
+async def _(pong):
+    uptime = await get_readable_time((time.time() - StartTime))
+    start = datetime.now()
+    await pong.edit("8✊===D")
+    await pong.edit("8=✊==D")
+    await pong.edit("8==✊=D")
+    await pong.edit("8===✊D")
+    await pong.edit("8==✊=D")
+    await pong.edit("8=✊==D")
+    await pong.edit("8✊===D")
+    await pong.edit("8=✊==D")
+    await pong.edit("8==✊=D")
+    await pong.edit("8===✊D")
+    await pong.edit("8==✊=D")
+    await pong.edit("8=✊==D")
+    await pong.edit("8✊===D")
+    await pong.edit("8=✊==D")
+    await pong.edit("8==✊=D")
+    await pong.edit("8===✊D")
+    await pong.edit("8===✊D💦")
+    await pong.edit("8====D💦💦")
+    await pong.edit("**CROOTTTT PINGGGG!**")
+    end = datetime.now()
+    duration = (end - start).microseconds / 1000
+    await pong.edit(
+        f"**NGENTOT!! 🐨**\n**KAMPANG** : %sms\n**Bot Uptime** : {uptime}🕛" % (duration)
+    )
+
+
 @bot.on(man_cmd(outgoing=True, pattern=r"speedtest$"))
 async def _(speed):
     """For .speedtest command, use SpeedTest to check server speeds."""
     await speed.edit("`Running speed test...`")
-
     test = Speedtest()
     test.get_best_server()
     test.download()
     test.upload()
     test.results.share()
     result = test.results.dict()
-
     msg = (
         f"**Started at {result['timestamp']}**\n\n"
         "**Client**\n"
@@ -175,7 +225,6 @@ async def _(speed):
         f"**Upload :** `{humanbytes(result['upload'])}/s`\n"
         f"**Download :** `{humanbytes(result['download'])}/s`"
     )
-
     await speed.delete()
     await speed.client.send_file(
         speed.chat_id,
@@ -203,28 +252,6 @@ async def risman(ganteng):
 
 # JANGAN DI HAPUS GOBLOK 😡 LU COPY AJA TINGGAL TAMBAHIN
 # DI HAPUS GUA GBAN YA 🥴 GUA TANDAIN LU AKUN TELENYA 😡
-
-
-@bot.on(man_cmd(outgoing=True, pattern=r"usange(?: |$)(.*)"))
-async def _(e):
-    user = await bot.get_me()
-    sleep(1)
-    await e.edit("`Getting Information...`")
-    sleep(1)
-    await e.edit(
-        "**Informasi Dyno Usage ★**:\n╭━━━━━━━━━━━━━━━━━━━━╮\n"
-        f"-> `Penggunaan Dyno` **{user.first_name}**:\n"
-        f" ❉ **10 Jam - "
-        f"51 Menit - 0%**"
-        "\n ◐━─━─━─━─━──━─━─━─━─━◐\n"
-        "-> `Sisa Dyno Bulan Ini`:\n"
-        f" ❉ **9989 Jam - 9948 Menit "
-        f"- 99%**\n"
-        "╰━━━━━━━━━━━━━━━━━━━━╯"
-    )
-
-
-# @mixiologist
 
 
 CMD_HELP.update(

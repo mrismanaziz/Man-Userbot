@@ -35,7 +35,7 @@ from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, DEVS, bot
 from userbot.events import man_cmd, register
-from userbot.utils import _format, edit_delete, edit_or_reply
+from userbot.utils import _format, edit_delete, edit_or_reply, media_type
 
 # =================== CONSTANT ===================
 PP_TOO_SMOL = "**Gambar Terlalu Kecil**"
@@ -373,25 +373,20 @@ async def ungmoot(un_gmute):
     chat = await un_gmute.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
-
     # If not admin and not creator, return
     if not admin and not creator:
         return await un_gmute.edit(NO_ADMIN)
-
     # Check if the function running under SQL mode
     try:
         from userbot.modules.sql_helper.gmute_sql import ungmute
     except AttributeError:
         return await un_gmute.edit(NO_SQL)
-
     user = await get_user_from_event(un_gmute)
     user = user[0]
     if not user:
         return
-
     # If pass, inform and start ungmuting
     await un_gmute.edit("`Membuka Global Mute Pengguna...`")
-
     if ungmute(user.id) is False:
         await un_gmute.edit("**ERROR!** Pengguna Sedang Tidak Di Gmute.")
     else:
@@ -406,29 +401,22 @@ async def gspider(gspdr):
     chat = await gspdr.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
-
     # If not admin and not creator, return
     if not admin and not creator:
         return await gspdr.edit(NO_ADMIN)
-
     # Check if the function running under SQL mode
     try:
         from userbot.modules.sql_helper.gmute_sql import gmute
     except AttributeError:
         return await gspdr.edit(NO_SQL)
-
     user, reason = await get_user_from_event(gspdr)
     if not user:
         return
-
     self_user = await gspdr.client.get_me()
-
     if user.id == self_user.id:
         return await gspdr.edit("**Tidak Bisa Membisukan Diri Sendiri..（>﹏<）**")
-
     if user.id in DEVS:
         return await gspdr.edit("**Gagal Global Mute, Dia Adalah Pembuat Saya 🤪**")
-
     # If pass, inform and start gmuting
     await gspdr.edit("**Berhasil Membisukan Pengguna!**")
     if gmute(user.id) is False:
@@ -452,11 +440,9 @@ async def gspider(gspdr):
 
 @bot.on(man_cmd(outgoing=True, pattern="zombies(?: |$)(.*)"))
 async def rm_deletedacc(show):
-
     con = show.pattern_match.group(1).lower()
     del_u = 0
     del_status = "**Grup Bersih, Tidak Menemukan Akun Terhapus.**"
-
     if con != "clean":
         await show.edit("`Mencari Akun Depresi...`")
         async for user in show.client.iter_participants(show.chat_id):
@@ -470,20 +456,16 @@ async def rm_deletedacc(show):
                 "\nBersihkan Itu Menggunakan Perintah** `.zombies clean`"
             )
         return await show.edit(del_status)
-
     # Here laying the sanity check
     chat = await show.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
-
     # Well
     if not admin and not creator:
         return await show.edit("**Maaf Kamu Bukan Admin!**")
-
     await show.edit("`Menghapus Akun Depresi...`")
     del_u = 0
     del_a = 0
-
     async for user in show.client.iter_participants(show.chat_id):
         if user.deleted:
             try:
@@ -497,10 +479,8 @@ async def rm_deletedacc(show):
                 del_a += 1
             await show.client(EditBannedRequest(show.chat_id, user.id, UNBAN_RIGHTS))
             del_u += 1
-
     if del_u > 0:
         del_status = f"**Membersihkan** `{del_u}` **Akun Terhapus**"
-
     if del_a > 0:
         del_status = (
             f"**Membersihkan** `{del_u}` **Akun Terhapus** "
@@ -509,7 +489,6 @@ async def rm_deletedacc(show):
     await show.edit(del_status)
     await sleep(2)
     await show.delete()
-
     if BOTLOG:
         await show.client.send_message(
             BOTLOG_CHATID,
@@ -591,23 +570,18 @@ async def kick(usr):
     chat = await usr.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
-
     # If not admin and not creator, return
     if not admin and not creator:
         return await usr.edit(NO_ADMIN)
-
     user, reason = await get_user_from_event(usr)
     if not user:
         return await usr.edit("**Tidak Dapat Menemukan Pengguna.**")
-
     await usr.edit("`Processing...`")
-
     try:
         await usr.client.kick_participant(usr.chat_id, user.id)
         await sleep(0.5)
     except Exception as e:
         return await usr.edit(NO_PERM + f"\n{e}")
-
     if reason:
         await usr.edit(
             f"[{user.first_name}](tg://user?id={user.id}) **Telah Dikick Dari Grup**\n**Alasan:** `{reason}`"
@@ -729,83 +703,6 @@ async def get_user_from_event(
             30,
         )
     return None, None
-
-
-async def get_user_from_id(user, event):
-    if isinstance(user, str):
-        user = int(user)
-
-    try:
-        user_obj = await event.client.get_entity(user)
-    except (TypeError, ValueError) as err:
-        return await event.edit(str(err))
-
-    return user_obj
-
-
-async def get_userdel_from_event(event):
-    args = event.pattern_match.group(1).split(" ", 1)
-    extra = None
-    if event.reply_to_msg_id and len(args) != 2:
-        previous_message = await event.get_reply_message()
-        user_obj = await event.client.get_entity(previous_message.from_id)
-        extra = event.pattern_match.group(1)
-    elif args:
-        user = args[0]
-        if len(args) == 2:
-            extra = args[1]
-
-        if user.isnumeric():
-            user = int(user)
-
-        if not user:
-            return await event.edit("`Ketik username Atau Balas Ke Pesan Pengguna!`")
-
-        if event.message.entities is not None:
-            probable_user_mention_entity = event.message.entities[0]
-
-            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
-                user_id = probable_user_mention_entity.user_id
-                user_obj = await event.client.get_entity(user_id)
-                return user_obj
-        try:
-            user_obj = await event.client.get_entity(user)
-        except (TypeError, ValueError) as err:
-            return await event.edit(str(err))
-
-    return user_obj, extra
-
-
-async def get_userdel_from_id(user, event):
-    if isinstance(user, str):
-        user = int(user)
-
-    try:
-        user_obj = await event.client.get_entity(user)
-    except (TypeError, ValueError) as err:
-        return await event.edit(str(err))
-
-    return user_obj
-
-
-def media_type(message):
-    if message and message.photo:
-        return "Photo"
-    if message and message.audio:
-        return "Audio"
-    if message and message.voice:
-        return "Voice"
-    if message and message.video_note:
-        return "Round Video"
-    if message and message.gif:
-        return "Gif"
-    if message and message.sticker:
-        return "Sticker"
-    if message and message.video:
-        return "Video"
-    if message and message.document:
-        return "Document"
-    return None
 
 
 CMD_HELP.update(

