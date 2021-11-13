@@ -4,17 +4,15 @@
 # FROM Man-Userbot
 # t.me/SharingUserbot
 
-import asyncio
 import os
-import shlex
 import textwrap
-from typing import Optional
 
 from PIL import Image, ImageDraw, ImageFont
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.events import man_cmd
+from userbot.utils import runcmd, take_screen_shot
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"mmf (.*)"))
@@ -124,34 +122,6 @@ async def add_text_img(image_path, text):
     final_image = os.path.join(TEMP_DOWNLOAD_DIRECTORY, "memify.webp")
     img.save(final_image, **img_info)
     return final_image
-
-
-async def runcmd(cmd: str) -> tuple[str, str, int, int]:
-    """run command in terminal"""
-    args = shlex.split(cmd)
-    process = await asyncio.create_subprocess_exec(
-        *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-    )
-    stdout, stderr = await process.communicate()
-    return (
-        stdout.decode("utf-8", "replace").strip(),
-        stderr.decode("utf-8", "replace").strip(),
-        process.returncode,
-        process.pid,
-    )
-
-
-async def take_screen_shot(
-    video_file: str, duration: int, path: str = ""
-) -> Optional[str]:
-    """take a screenshot"""
-    ttl = duration // 2
-    thumb_image_path = path or os.path.join(
-        TEMP_DOWNLOAD_DIRECTORY, f"{os.path.basename(video_file)}.png"
-    )
-    command = f'''ffmpeg -ss {ttl} -i "{video_file}" -vframes 1 "{thumb_image_path}"'''
-    err = (await runcmd(command))[1]
-    return thumb_image_path if os.path.exists(thumb_image_path) else err
 
 
 CMD_HELP.update(

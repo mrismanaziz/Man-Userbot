@@ -9,7 +9,6 @@
 #
 
 import pyfiglet
-from emoji import get_emoji_regexp
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
@@ -46,11 +45,6 @@ async def figlet(event):
     result = pyfiglet.figlet_format(deEmojify(text), font=font)
     await event.respond(f"‌‌‎`{result}`")
     await event.delete()
-
-
-def deEmojify(inputString):
-    """Hapus emoji dan karakter tidak aman lainnya dari string"""
-    return get_emoji_regexp().sub("", inputString)
 
 
 CMD_HELP.update(

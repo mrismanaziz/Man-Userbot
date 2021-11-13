@@ -6,10 +6,12 @@
 
 """Count the Number of Dialogs you have in your Telegram Account
 Syntax: .stats & .ustat"""
-
 import time
 
+from telethon.events import NewMessage
 from telethon.tl.custom import Dialog
+from telethon.tl.functions.contacts import GetBlockedRequest
+from telethon.tl.functions.messages import GetAllStickersRequest
 from telethon.tl.types import Channel, Chat, User
 
 from userbot import CMD_HANDLER as cmd
@@ -33,32 +35,11 @@ def inline_mention(user):
     return f"[{full_name}](tg://user?id={user.id})"
 
 
-async def get_entity(msg):
-    bold = {0: 0}
-    italic = {0: 0}
-    mono = {0: 0}
-    link = {0: 0}
-    if not msg.entities:
-        return bold, mono, italic, link
-    for entity in msg.entities:
-        if isinstance(entity, types.MessageEntityBold):
-            bold[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityItalic):
-            italic[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityCode):
-            mono[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityUrl):
-            link[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityTextUrl):
-            link[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityMention):
-            link[entity.offset] = entity.offset + entity.length
-    return bold, mono, italic, link
-
-
 @bot.on(man_cmd(outgoing=True, pattern=r"stats$"))
-async def stats(event):
-    stat = await edit_or_reply(event, STAT_INDICATION)
+async def stats(
+    event: NewMessage.Event,
+) -> None:
+    stat = await edit_or_reply(event, "`Collecting stats...`")
     start_time = time.time()
     private_chats = 0
     bots = 0
@@ -98,24 +79,33 @@ async def stats(event):
         unread_mentions += dialog.unread_mentions_count
         unread += dialog.unread_count
     stop_time = time.time() - start_time
+    try:
+        ct = (await event.client(GetBlockedRequest(1, 0))).count
+    except AttributeError:
+        ct = 0
+    try:
+        sp = await bot(GetAllStickersRequest(0))
+        sp_count = len(sp.sets)
+    except BaseException:
+        sp_count = 0
     full_name = inline_mention(await event.client.get_me())
     response = f"📊 **Stats for {full_name}** \n\n"
     response += f"**Private Chats:** {private_chats} \n"
-    response += f"   • `Users: {private_chats - bots}` \n"
-    response += f"   • `Bots: {bots}` \n"
+    response += f"**  •• **`Users: {private_chats - bots}` \n"
+    response += f"**  •• **`Bots: {bots}` \n"
     response += f"**Groups:** {groups} \n"
     response += f"**Channels:** {broadcast_channels} \n"
     response += f"**Admin in Groups:** {admin_in_groups} \n"
-    response += f"   • `Creator: {creator_in_groups}` \n"
-    response += f"   • `Admin Rights: {admin_in_groups - creator_in_groups}` \n"
+    response += f"**  •• **`Creator: {creator_in_groups}` \n"
+    response += f"**  •• **`Admin Rights: {admin_in_groups - creator_in_groups}` \n"
     response += f"**Admin in Channels:** {admin_in_broadcast_channels} \n"
-    response += f"   • `Creator: {creator_in_channels}` \n"
-    response += (
-        f"   • `Admin Rights: {admin_in_broadcast_channels - creator_in_channels}` \n"
-    )
+    response += f"**  •• **`Creator: {creator_in_channels}` \n"
+    response += f"**  •• **`Admin Rights: {admin_in_broadcast_channels - creator_in_channels}` \n"
     response += f"**Unread:** {unread} \n"
-    response += f"**Unread Mentions:** {unread_mentions} \n\n"
-    response += f"⏱ __It Took:__ {stop_time:.02f}s \n"
+    response += f"**Unread Mentions:** {unread_mentions} \n"
+    response += f"**Blocked Users:** {ct}\n"
+    response += f"**Total Stickers Pack Installed :** `{sp_count}`\n\n"
+    response += f"⏱ **__It Took:__** {stop_time:.02f}s \n"
     await stat.edit(response)
 
 

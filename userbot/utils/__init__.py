@@ -20,6 +20,7 @@ from .google_images_download import googleimagesdownload
 from .progress import CancelProcess, progress
 from .tools import (
     check_media,
+    deEmojify,
     download_lagu,
     edit_delete,
     edit_or_reply,

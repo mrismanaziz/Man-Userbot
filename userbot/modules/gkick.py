@@ -2,60 +2,13 @@
 # Recode by @mrismanaziz
 
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
-from telethon.tl.types import MessageEntityMentionName
 
 from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
 
-
-async def get_user_from_event(event):
-    args = event.pattern_match.group(1).split(":", 1)
-    extra = None
-    if event.reply_to_msg_id and len(args) != 2:
-        previous_message = await event.get_reply_message()
-        user_obj = await event.client.get_entity(previous_message.from_id)
-        extra = event.pattern_match.group(1)
-    elif len(args[0]) > 0:
-        user = args[0]
-        if len(args) == 2:
-            extra = args[1]
-        if user.isnumeric():
-            user = int(user)
-        if not user:
-            await event.edit(
-                f"`{ALIVE_NAME} Berikan username,user id, atau reply chat penggunanya goblok!`"
-            )
-            return
-        if event.message.entities is not None:
-            probable_user_mention_entity = event.message.entities[0]
-            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
-                user_id = probable_user_mention_entity.user_id
-                user_obj = await event.client.get_entity(user_id)
-                return user_obj
-        try:
-            user_obj = await event.client.get_entity(user)
-        except Exception as err:
-            return await event.edit("Failed \n **Error**\n", str(err))
-    return user_obj, extra
-
-
-async def get_user_from_id(user, event):
-    if isinstance(user, str):
-        user = int(user)
-    try:
-        user_obj = await event.client.get_entity(user)
-    except (TypeError, ValueError) as err:
-        await event.edit(str(err))
-        return None
-    return user_obj
-
-
-try:
-    from userbot import client2, client3
-except BaseException:
-    client2 = client3 = None
+from .admin import get_user_from_event
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"gkick(?: |$)(.*)"))

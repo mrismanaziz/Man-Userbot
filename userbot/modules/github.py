@@ -10,19 +10,9 @@ import requests
 from pySmartDL import SmartDL
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEVS, bot
+from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
-from userbot.utils import edit_delete, edit_or_reply
-
-
-async def reply_id(event):
-    reply_to_id = None
-    if event.sender_id in DEVS:
-        reply_to_id = event.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
-    return reply_to_id
-
+from userbot.utils import edit_delete, edit_or_reply, reply_id
 
 ppath = os.path.join(os.getcwd(), "temp", "githubuser.jpg")
 

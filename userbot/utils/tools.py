@@ -30,6 +30,7 @@ import time
 from os.path import basename
 from typing import Optional, Union
 
+from emoji import get_emoji_regexp
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from html_telegraph_poster import TelegraphPoster
@@ -44,6 +45,10 @@ from yt_dlp import YoutubeDL
 
 from userbot import LOGS, SUDO_USERS, bot
 from userbot.utils.format import md_to_text, paste_message
+
+
+def deEmojify(inputString):
+    return get_emoji_regexp().sub("", inputString)
 
 
 async def md5(fname: str) -> str:
