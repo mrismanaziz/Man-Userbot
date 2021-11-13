@@ -10,25 +10,15 @@ jobs:
         with:
           python-version: 3.9
       - name: Install Python lint libraries
-        run: pip install autopep8 autoflake isort black
-      - name: Check for showstoppers
         run: |
-          autopep8 --verbose --in-place --recursive --aggressive --aggressive . *.py
+          pip install autoflake isort black
       - name: Remove unused imports and variables
         run: |
-          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports . *.py
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports .
       - name: lint with isort and black
         run: |
-          isort userbot/*.py
-          isort userbot/core/*.py
-          isort userbot/modules/*.py
-          isort userbot/modules/sql_helper/*.py
-          isort userbot/utils/*.py
-          black userbot/*.py
-          black userbot/core/*.py
-          black userbot/modules/*.py
-          black userbot/modules/sql_helper/*.py
-          black userbot/utils/*.py
+          isort .
+          black .
       - name: Import GPG key
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@v2
