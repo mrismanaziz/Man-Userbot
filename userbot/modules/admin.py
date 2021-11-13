@@ -421,21 +421,20 @@ async def gspider(gspdr):
     await gspdr.edit("**Berhasil Membisukan Pengguna!**")
     if gmute(user.id) is False:
         await gspdr.edit("**ERROR! Pengguna Sudah Dibisukan.**")
+    elif reason:
+        await gspdr.edit(
+            r"\\**#GMuted_User**//"
+            f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
+            f"**User ID:** `{user.id}`\n"
+            f"**Reason:** `{reason}`"
+        )
     else:
-        if reason:
-            await gspdr.edit(
-                r"\\**#GMuted_User**//"
-                f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**User ID:** `{user.id}`\n"
-                f"**Reason:** `{reason}`"
-            )
-        else:
-            await gspdr.edit(
-                r"\\**#GMuted_User**//"
-                f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**User ID:** `{user.id}`\n"
-                f"**Action:** `Global Muted by {ALIVE_NAME}`"
-            )
+        await gspdr.edit(
+            r"\\**#GMuted_User**//"
+            f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
+            f"**User ID:** `{user.id}`\n"
+            f"**Action:** `Global Muted by {ALIVE_NAME}`"
+        )
 
 
 @bot.on(man_cmd(outgoing=True, pattern="zombies(?: |$)(.*)"))
