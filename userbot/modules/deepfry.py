@@ -40,6 +40,7 @@ from telethon.tl.types import DocumentAttributeFilename
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
+from userbot.utils import check_media
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"deepfry(?: |$)(.*)"))
@@ -119,33 +120,6 @@ async def deepfry(img: Image) -> Image:
     img = ImageEnhance.Sharpness(img).enhance(randint(5, 300))
 
     return img
-
-
-async def check_media(reply_message):
-    if not reply_message or not reply_message.media:
-        return False
-
-    if reply_message.photo:
-        data = reply_message.photo
-    elif reply_message.document:
-        if (
-            DocumentAttributeFilename(file_name="AnimatedSticker.tgs")
-            in reply_message.media.document.attributes
-        ):
-            return False
-        if (
-            reply_message.gif
-            or reply_message.video
-            or reply_message.audio
-            or reply_message.voice
-        ):
-            return False
-        data = reply_message.media.document
-    else:
-        return False
-    if not data or data is None:
-        return False
-    return data
 
 
 CMD_HELP.update(

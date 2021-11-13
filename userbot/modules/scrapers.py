@@ -592,11 +592,6 @@ async def download_video(v_url):
         await v_url.delete()
 
 
-def deEmojify(inputString):
-    """Remove emojis and other non-safe characters from string"""
-    return get_emoji_regexp().sub("", inputString)
-
-
 @bot.on(man_cmd(outgoing=True, pattern=r"rbg(?: |$)(.*)"))
 async def kbg(remob):
     """For .rbg command, Remove Image Background."""

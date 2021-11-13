@@ -33,29 +33,6 @@ def inline_mention(user):
     return f"[{full_name}](tg://user?id={user.id})"
 
 
-async def get_entity(msg):
-    bold = {0: 0}
-    italic = {0: 0}
-    mono = {0: 0}
-    link = {0: 0}
-    if not msg.entities:
-        return bold, mono, italic, link
-    for entity in msg.entities:
-        if isinstance(entity, types.MessageEntityBold):
-            bold[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityItalic):
-            italic[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityCode):
-            mono[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityUrl):
-            link[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityTextUrl):
-            link[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityMention):
-            link[entity.offset] = entity.offset + entity.length
-    return bold, mono, italic, link
-
-
 @bot.on(man_cmd(outgoing=True, pattern=r"stats$"))
 async def stats(event):
     stat = await edit_or_reply(event, STAT_INDICATION)

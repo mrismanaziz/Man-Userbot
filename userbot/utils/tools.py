@@ -27,6 +27,7 @@ import os.path
 import re
 import shlex
 import time
+from emoji import get_emoji_regexp
 from os.path import basename
 from typing import Optional, Union
 
@@ -44,6 +45,10 @@ from yt_dlp import YoutubeDL
 
 from userbot import LOGS, SUDO_USERS, bot
 from userbot.utils.format import md_to_text, paste_message
+
+
+def deEmojify(inputString):
+    return get_emoji_regexp().sub("", inputString)
 
 
 async def md5(fname: str) -> str:
