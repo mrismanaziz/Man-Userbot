@@ -3,7 +3,6 @@
 # Improve by @aidilaryanto
 import os
 import random
-import re
 from asyncio import sleep
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError

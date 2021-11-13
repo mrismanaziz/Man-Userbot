@@ -35,7 +35,6 @@ import io
 from random import randint, uniform
 
 from PIL import Image, ImageEnhance, ImageOps
-from telethon.tl.types import DocumentAttributeFilename
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot

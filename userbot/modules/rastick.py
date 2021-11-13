@@ -1,5 +1,4 @@
 import random
-import re
 from asyncio import sleep
 
 from userbot import CMD_HANDLER as cmd

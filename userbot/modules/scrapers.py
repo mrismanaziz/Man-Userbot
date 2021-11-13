@@ -29,7 +29,6 @@ import qrcode
 import requests
 from barcode.writer import ImageWriter
 from bs4 import BeautifulSoup
-from emoji import get_emoji_regexp
 from googletrans import LANGUAGES, Translator
 from gtts import gTTS
 from gtts.lang import tts_langs

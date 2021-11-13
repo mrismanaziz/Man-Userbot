@@ -4,11 +4,8 @@
 # FROM Man-Userbot
 # t.me/SharingUserbot
 
-import asyncio
 import os
-import shlex
 import textwrap
-from typing import Optional
 
 from PIL import Image, ImageDraw, ImageFont
 
