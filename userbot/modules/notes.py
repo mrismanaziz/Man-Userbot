@@ -13,7 +13,7 @@ from userbot import CMD_HELP, bot
 from userbot.events import man_cmd, register
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r".notes$"))
+@bot.on(man_cmd(outgoing=True, pattern=r"notes$"))
 async def notes_active(svd):
     """For .notes command, list all of the notes saved in a chat."""
     try:
