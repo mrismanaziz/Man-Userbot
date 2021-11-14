@@ -13,6 +13,7 @@ import pyfiglet
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
+from userbot.utils import deEmojify
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"figlet (\w+) (.+)"))

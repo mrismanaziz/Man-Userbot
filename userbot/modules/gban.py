@@ -130,7 +130,7 @@ async def gunben(userbot):
         user = userbot.chat
         reason = userbot.pattern_match.group(1)
     try:
-        user, reason = await get_full_user(userbot)
+        user, reason = await get_user_from_event(userbot)
     except BaseException:
         pass
     try:

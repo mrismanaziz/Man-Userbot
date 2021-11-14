@@ -3,10 +3,7 @@
 # Recode by @mrismanaziz
 # @SharingUserbot
 
-import base64
 from asyncio import sleep
-
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
 from userbot import BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
@@ -26,14 +23,12 @@ async def catbroadcast_send(event):
             "**Ke kategori mana saya harus mengirim pesan ini?**", parse_mode=parse_pre
         )
     reply = await event.get_reply_message()
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not reply:
         return await event.edit(
             "**apa yang harus saya kirim ke kategori ini?**", parse_mode=parse_pre
         )
     keyword = catinput_str.lower()
     no_of_chats = sql.num_broadcastlist_chat(keyword)
-    group_ = Get(cat)
     if no_of_chats == 0:
         return await event.edit(
             f"**Tidak ada kategori dengan nama** `{keyword}` **Check** `.bclistall`",
@@ -44,10 +39,6 @@ async def catbroadcast_send(event):
         "**mengirim pesan ini ke semua grup dalam kategori**",
         parse_mode=parse_pre,
     )
-    try:
-        await event.client(group_)
-    except BaseException:
-        pass
     i = 0
     for chat in chats:
         try:
@@ -78,14 +69,12 @@ async def catbroadcast_send(event):
             "**Ke kategori mana saya harus mengirim pesan ini?**", parse_mode=parse_pre
         )
     reply = await event.get_reply_message()
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not reply:
         return await event.edit(
             "**apa yang harus saya kirim ke kategori ini?**", parse_mode=parse_pre
         )
     keyword = catinput_str.lower()
     no_of_chats = sql.num_broadcastlist_chat(keyword)
-    group_ = Get(cat)
     if no_of_chats == 0:
         return await event.edit(
             f"**Tidak ada kategori dengan nama** `{keyword}` **Check** '.bclistall'",
@@ -96,10 +85,6 @@ async def catbroadcast_send(event):
         "**mengirim pesan ini ke semua grup dalam kategori**",
         parse_mode=parse_pre,
     )
-    try:
-        await event.client(group_)
-    except BaseException:
-        pass
     i = 0
     for chat in chats:
         try:

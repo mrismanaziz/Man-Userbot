@@ -29,7 +29,7 @@ async def _(event):
     await edit_or_reply(event, "**Berhasil Membaca Berkas**")
     if len(c) > 4095:
         await edit_or_reply(
-            event, c, deflink=True, linktext="**Berhasil Membaca Berkas Lihat**"
+            event, c, deflink=True, linktext="**Berhasil Membaca Berkas**"
         )
     else:
         await event.client.send_message(event.chat_id, f"`{c}`")
