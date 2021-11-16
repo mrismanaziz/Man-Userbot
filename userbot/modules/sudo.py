@@ -22,7 +22,7 @@ async def sudo(event):
             f"🔮 **Sudo:** `Enabled`\n\n📚 ** List Sudo Users:**\n» `{users}`\n\n**SUDO_HANDLER:** `{SUDO_HANDLER}`",
         )
     else:
-        await edit_delete(event, f"🔮 **Sudo:** `Disabled`")
+        await edit_delete(event, '🔮 **Sudo:** `Disabled`')
 
 
 @man_cmd(pattern="addsudo(?:\s|$)([\s\S]*)")
@@ -67,7 +67,6 @@ async def add(event):
 async def _(event):
     suu = event.text[8:]
     xxx = await edit_or_reply(event, "`Processing...`")
-    bot = "SUDO_USERS"
     reply = await event.get_reply_message()
     if not suu and not reply:
         return await edit_delete(
@@ -96,6 +95,7 @@ async def _(event):
         await xxx.edit(
             f"**Berhasil Menghapus** `{target}` **dari Pengguna Sudo.**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan."
         )
+        bot = "SUDO_USERS"
         heroku_Config[bot] = newsudo
     else:
         await edit_delete(
@@ -114,8 +114,7 @@ async def get_user(event):
             replied_user = await event.client(
                 GetFullUserRequest(previous_message.sender_id)
             )
-    target = replied_user.user.id
-    return target
+    return replied_user.user.id
 
 
 CMD_HELP.update(
