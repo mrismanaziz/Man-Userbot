@@ -297,6 +297,7 @@ async def run_cmd(cmd: list) -> tuple[bytes, bytes]:
 
 # https://github.com/TeamUltroid/pyUltroid/blob/31c271cf4d35ab700e5880e952e54c82046812c2/pyUltroid/functions/helper.py#L154
 
+
 async def bash(cmd):
     process = await asyncio.create_subprocess_shell(
         cmd,
