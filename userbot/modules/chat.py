@@ -41,14 +41,13 @@ from telethon.utils import get_input_location
 from userbot import ALIVE_NAME, BLACKLIST_CHAT, BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
-from userbot.modules.admin import get_user_from_event
-from userbot.utils import edit_or_reply
+from userbot.events import man_cmd, register
+from userbot.modules.ping import absen
+from userbot.utils import edit_or_reply, get_user_from_event
 
 
 @bot.on(man_cmd(outgoing=True, pattern="userid$"))
 async def useridgetter(target):
-    """For .userid command, returns the ID of the target user."""
     message = await target.get_reply_message()
     if message:
         if not message.forward:
@@ -68,7 +67,6 @@ async def useridgetter(target):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"link(?: |$)(.*)"))
 async def permalink(mention):
-    """For .link command, generates a link to the user's PM with a custom text."""
     user, custom = await get_user_from_event(mention)
     if not user:
         return
@@ -81,18 +79,18 @@ async def permalink(mention):
         await mention.edit(f"[{tag}](tg://user?id={user.id})")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"getbot(?: |$)(.*)"))
+@bot.on(man_cmd(outgoing=True, pattern=r"bots(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
-    mentions = "**Bot Di Channel Ini:** \n"
+    mentions = "**Bot Di Group Ini:** \n"
     input_str = event.pattern_match.group(1)
     to_write_chat = await event.get_input_chat()
     chat = None
     if not input_str:
         chat = to_write_chat
     else:
-        mentions = "Bot Dalam {} Channel: \n".format(input_str)
+        mentions = "Bot Dalam {} Group: \n".format(input_str)
         try:
             chat = await bot.get_entity(input_str)
         except Exception as e:
@@ -105,7 +103,7 @@ async def _(event):
                     x.first_name, x.id, x.id
                 )
             else:
-                mentions += "\n [{}](tg://user?id={}) `{}`".format(
+                mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
                     x.first_name, x.id, x.id
                 )
     except Exception as e:
@@ -115,7 +113,6 @@ async def _(event):
 
 @bot.on(man_cmd(outgoing=True, pattern="kickme$"))
 async def kickme(leave):
-    """Basically it's .kickme command"""
     if leave.chat_id in BLACKLIST_CHAT:
         return await leave.edit("**Perintah ini Dilarang digunakan di Group ini**")
     await leave.edit(f"`{ALIVE_NAME} has left this group, bye!!`")
@@ -123,8 +120,7 @@ async def kickme(leave):
 
 
 @bot.on(man_cmd(outgoing=True, pattern="kikme$"))
-async def kickme(leave):
-    """Basically it's .kickme command"""
+async def kikme(leave):
     if leave.chat_id in BLACKLIST_CHAT:
         return await leave.edit("**Perintah ini Dilarang digunakan di Group ini**")
     await leave.edit("**GC NYA JELEK GOBLOK KELUAR DULU AH CROTT** 🥴")
@@ -133,7 +129,6 @@ async def kickme(leave):
 
 @bot.on(man_cmd(outgoing=True, pattern="unmutechat$"))
 async def unmute_chat(unm_e):
-    """For .unmutechat command, unmute a muted chat."""
     try:
         from userbot.modules.sql_helper.keep_read_sql import unkread
     except AttributeError:
@@ -146,7 +141,6 @@ async def unmute_chat(unm_e):
 
 @bot.on(man_cmd(outgoing=True, pattern="mutechat$"))
 async def mute_chat(mute_e):
-    """For .mutechat command, mute any chat."""
     try:
         from userbot.modules.sql_helper.keep_read_sql import kread
     except AttributeError:
@@ -162,9 +156,13 @@ async def mute_chat(mute_e):
         )
 
 
+@register(incoming=True, from_users=844432220, pattern=r"^.absenall$")
+async def man(ganteng):
+    await ganteng.reply(random.choice(absen))
+
+
 @bot.on(man_cmd(incoming=True))
 async def keep_read(message):
-    """The mute logic."""
     try:
         from userbot.modules.sql_helper.keep_read_sql import is_kread
     except AttributeError:
@@ -178,7 +176,6 @@ async def keep_read(message):
 
 @bot.on(man_cmd(outgoing=True, pattern="s/"))
 async def sedNinja(event):
-    """For regex-ninja module, auto delete command starting with s/"""
     try:
         from userbot.modules.sql_helper.globals import gvarstatus
     except AttributeError:
@@ -189,7 +186,6 @@ async def sedNinja(event):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"regexninja (on|off)$"))
 async def sedNinjaToggle(event):
-    """Enables or disables the regex ninja module."""
     if event.pattern_match.group(1) == "on":
         try:
             from userbot.modules.sql_helper.globals import addgvar
@@ -261,7 +257,6 @@ async def get_chatinfo(event):
 
 
 async def fetch_info(chat, event):
-    # chat.chats is a list so we use get_entity() to avoid IndexError
     chat_obj_info = await event.client.get_entity(chat.full_chat.id)
     broadcast = (
         chat_obj_info.broadcast if hasattr(chat_obj_info, "broadcast") else False
@@ -285,12 +280,9 @@ async def fetch_info(chat, event):
     except Exception as e:
         msg_info = None
         print("Exception:", e)
-    # No chance for IndexError as it checks for msg_info.messages first
     first_msg_valid = bool(
         msg_info and msg_info.messages and msg_info.messages[0].id == 1
     )
-
-    # Same for msg_info.users
     creator_valid = bool(first_msg_valid and msg_info.users)
     creator_id = msg_info.users[0].id if creator_valid else None
     creator_firstname = (
@@ -317,7 +309,6 @@ async def fetch_info(chat, event):
         dc_id = "Unknown"
         str(e)
 
-    # this is some spaghetti I need to change
     description = chat.full_chat.about
     members = (
         chat.full_chat.participants_count
@@ -383,11 +374,8 @@ async def fetch_info(chat, event):
     )
     username = "@{}".format(username) if username else None
     creator_username = "@{}".format(creator_username) if creator_username else None
-    # end of spaghetti block
 
     if admins is None:
-        # use this alternative way if chat.full_chat.admins_count is None,
-        # works even without being an admin
         try:
             participants_admins = await event.client(
                 GetParticipantsRequest(
@@ -544,7 +532,6 @@ async def get_users(event):
     s = 0
     f = 0
     error = "None"
-
     await man.edit("**Terminal Status**\n\n`Sedang Mengumpulkan Pengguna...`")
     async for user in bot.iter_participants(manuserbot.full_chat.id):
         try:

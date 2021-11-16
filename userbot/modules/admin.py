@@ -27,7 +27,6 @@ from telethon.tl.types import (
     ChatAdminRights,
     ChatBannedRights,
     InputChatPhotoEmpty,
-    MessageEntityMentionName,
     MessageMediaPhoto,
 )
 
@@ -35,7 +34,13 @@ from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, DEVS, bot
 from userbot.events import man_cmd, register
-from userbot.utils import _format, edit_delete, edit_or_reply, media_type
+from userbot.utils import (
+    _format,
+    edit_delete,
+    edit_or_reply,
+    get_user_from_event,
+    media_type,
+)
 
 # =================== CONSTANT ===================
 PP_TOO_SMOL = "**Gambar Terlalu Kecil**"
@@ -169,30 +174,19 @@ async def demote(event):
 @bot.on(man_cmd(outgoing=True, pattern=r"ban(?:\s|$)([\s\S]*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cban(?:\s|$)([\s\S]*)")
 async def ban(bon):
-    # Here laying the sanity check
     chat = await bon.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
-
-    # Well
     if not admin and not creator:
         return await edit_or_reply(bon, NO_ADMIN)
-
     user, reason = await get_user_from_event(bon)
     if not user:
         return
-
-    # Announce that we're going to whack the pest
     await edit_or_reply(bon, "`Processing Banned...`")
-
     try:
         await bon.client(EditBannedRequest(bon.chat_id, user.id, BANNED_RIGHTS))
     except BadRequestError:
         return await edit_or_reply(bon, NO_PERM)
-    # Helps ban group join spammers more easily
-    # Delete message and then tell that the command
-    # is done gracefully
-    # Shout out the ID, so that fedadmins can fban later
     if reason:
         await edit_or_reply(
             bon,
@@ -211,23 +205,16 @@ async def ban(bon):
 @bot.on(man_cmd(outgoing=True, pattern=r"unban(?:\s|$)([\s\S]*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cunban(?:\s|$)([\s\S]*)")
 async def nothanos(unbon):
-    # Here laying the sanity check
     chat = await unbon.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
-
-    # Well
     if not admin and not creator:
         return await unbon.edit(NO_ADMIN)
-
-    # If everything goes well...
     await edit_or_reply(unbon, "`Processing...`")
-
     user = await get_user_from_event(unbon)
     user = user[0]
     if not user:
         return
-
     try:
         await unbon.client(EditBannedRequest(unbon.chat_id, user.id, UNBAN_RIGHTS))
         await edit_delete(unbon, "`Unban Berhasil Dilakukan!`")
@@ -238,36 +225,25 @@ async def nothanos(unbon):
 @bot.on(man_cmd(outgoing=True, pattern="mute(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cmute(?: |$)(.*)")
 async def spider(spdr):
-    # Check if the function running under SQL mode
     try:
         from userbot.modules.sql_helper.spam_mute_sql import mute
     except AttributeError:
         return await edit_or_reply(spdr, NO_SQL)
-
-    # Admin or creator check
     chat = await spdr.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
-
-    # If not admin and not creator, return
     if not admin and not creator:
         return await edit_or_reply(spdr, NO_ADMIN)
-
     user, reason = await get_user_from_event(spdr)
     if not user:
         return
-
     self_user = await spdr.client.get_me()
-
     if user.id == self_user.id:
         return await edit_or_reply(
             spdr, "**Tidak Bisa Membisukan Diri Sendiri..（>﹏<）**"
         )
-
     if user.id in DEVS:
         return await edit_or_reply(spdr, "**Gagal Mute, Dia Adalah Pembuat Saya 🤪**")
-
-    # If everything goes well, do announcing and mute
     await edit_or_reply(
         spdr,
         r"\\**#Muted_User**//"
@@ -279,8 +255,6 @@ async def spider(spdr):
         return await edit_delete(spdr, "**ERROR:** `Pengguna Sudah Dibisukan.`")
     try:
         await spdr.client(EditBannedRequest(spdr.chat_id, user.id, MUTE_RIGHTS))
-
-        # Announce that the function is done
         if reason:
             await edit_or_reply(
                 spdr,
@@ -304,28 +278,20 @@ async def spider(spdr):
 @bot.on(man_cmd(outgoing=True, pattern="unmute(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cunmute(?: |$)(.*)")
 async def unmoot(unmot):
-    # Admin or creator check
     chat = await unmot.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
-
-    # If not admin and not creator, return
     if not admin and not creator:
         return await unmot.edit(NO_ADMIN)
-
-    # Check if the function running under SQL mode
     try:
         from userbot.modules.sql_helper.spam_mute_sql import unmute
     except AttributeError:
         return await unmot.edit(NO_SQL)
-
-    # If admin or creator, inform the user and start unmuting
     await unmot.edit("`Processing...`")
     user = await get_user_from_event(unmot)
     user = user[0]
     if not user:
         return
-
     if unmute(unmot.chat_id, user.id) is False:
         return await unmot.edit("**ERROR! Pengguna Sudah Tidak Dibisukan.**")
     try:
@@ -369,14 +335,11 @@ async def muter(moot):
 @bot.on(man_cmd(outgoing=True, pattern="ungmute(?: |$)(.*)"))
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cungmute(?: |$)(.*)")
 async def ungmoot(un_gmute):
-    # Admin or creator check
     chat = await un_gmute.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
-    # If not admin and not creator, return
     if not admin and not creator:
         return await un_gmute.edit(NO_ADMIN)
-    # Check if the function running under SQL mode
     try:
         from userbot.modules.sql_helper.gmute_sql import ungmute
     except AttributeError:
@@ -385,12 +348,10 @@ async def ungmoot(un_gmute):
     user = user[0]
     if not user:
         return
-    # If pass, inform and start ungmuting
     await un_gmute.edit("`Membuka Global Mute Pengguna...`")
     if ungmute(user.id) is False:
         await un_gmute.edit("**ERROR!** Pengguna Sedang Tidak Di Gmute.")
     else:
-        # Inform about success
         await edit_delete(un_gmute, "**Berhasil! Pengguna Sudah Tidak Dibisukan**")
 
 
@@ -401,10 +362,8 @@ async def gspider(gspdr):
     chat = await gspdr.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
-    # If not admin and not creator, return
     if not admin and not creator:
         return await gspdr.edit(NO_ADMIN)
-    # Check if the function running under SQL mode
     try:
         from userbot.modules.sql_helper.gmute_sql import gmute
     except AttributeError:
@@ -417,7 +376,6 @@ async def gspider(gspdr):
         return await gspdr.edit("**Tidak Bisa Membisukan Diri Sendiri..（>﹏<）**")
     if user.id in DEVS:
         return await gspdr.edit("**Gagal Global Mute, Dia Adalah Pembuat Saya 🤪**")
-    # If pass, inform and start gmuting
     await gspdr.edit("**Berhasil Membisukan Pengguna!**")
     if gmute(user.id) is False:
         await gspdr.edit("**ERROR! Pengguna Sudah Dibisukan.**")
@@ -635,73 +593,6 @@ async def _iundlt(event):
                     f"{msg.old.message}\n**Dikirim oleh** {_format.mentionuser(ruser.first_name ,ruser.id)}",
                     file=msg.old.media,
                 )
-
-
-async def get_user_from_event(
-    event, manevent=None, secondgroup=None, nogroup=False, noedits=False
-):
-    if manevent is None:
-        manevent = event
-    if nogroup is False:
-        if secondgroup:
-            args = event.pattern_match.group(2).split(" ", 1)
-        else:
-            args = event.pattern_match.group(1).split(" ", 1)
-    extra = None
-    try:
-        if args:
-            user = args[0]
-            if len(args) > 1:
-                extra = "".join(args[1:])
-            if user.isnumeric() or (user.startswith("-") and user[1:].isnumeric()):
-                user = int(user)
-            if event.message.entities:
-                probable_user_mention_entity = event.message.entities[0]
-                if isinstance(probable_user_mention_entity, MessageEntityMentionName):
-                    user_id = probable_user_mention_entity.user_id
-                    user_obj = await event.client.get_entity(user_id)
-                    return user_obj, extra
-            if isinstance(user, int) or user.startswith("@"):
-                user_obj = await event.client.get_entity(user)
-                return user_obj, extra
-    except Exception as e:
-        LOGS.error(str(e))
-    try:
-        if nogroup is False:
-            if secondgroup:
-                extra = event.pattern_match.group(2)
-            else:
-                extra = event.pattern_match.group(1)
-        if event.is_private:
-            user_obj = await event.get_chat()
-            return user_obj, extra
-        if event.reply_to_msg_id:
-            previous_message = await event.get_reply_message()
-            if previous_message.from_id is None:
-                if not noedits:
-                    await edit_delete(
-                        manevent, "**ERROR: Dia adalah anonymous admin!**", 60
-                    )
-                return None, None
-            user_obj = await event.client.get_entity(previous_message.sender_id)
-            return user_obj, extra
-        if not args:
-            if not noedits:
-                await edit_delete(
-                    manevent,
-                    "**Mohon Reply Pesan atau Berikan User ID/Username pengguna!**",
-                    60,
-                )
-            return None, None
-    except Exception as e:
-        LOGS.error(str(e))
-    if not noedits:
-        await edit_delete(
-            manevent,
-            "**Mohon Reply Pesan atau Berikan User ID/Username pengguna!**",
-            30,
-        )
-    return None, None
 
 
 CMD_HELP.update(

@@ -7,8 +7,7 @@ from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
-
-from .admin import get_user_from_event
+from userbot.utils import get_user_from_event
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"gkick(?: |$)(.*)"))

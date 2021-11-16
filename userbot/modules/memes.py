@@ -17,8 +17,7 @@ from cowpy import cow
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
-from userbot.modules.admin import get_user_from_event
-from userbot.utils import edit_delete
+from userbot.utils import edit_delete, get_user_from_event
 
 # ================= CONSTANT =================
 METOOSTR = [

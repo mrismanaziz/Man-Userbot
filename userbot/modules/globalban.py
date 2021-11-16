@@ -17,9 +17,9 @@ from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, DEVS, bot
 from userbot.events import man_cmd, register
-from userbot.utils import edit_or_reply
+from userbot.utils import edit_or_reply, get_user_from_event
 
-from .admin import BANNED_RIGHTS, UNBAN_RIGHTS, get_user_from_event
+from .admin import BANNED_RIGHTS, UNBAN_RIGHTS
 
 
 async def admin_groups(grp):
