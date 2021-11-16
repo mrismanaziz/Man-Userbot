@@ -27,7 +27,6 @@ from telethon.tl.types import (
     ChatAdminRights,
     ChatBannedRights,
     InputChatPhotoEmpty,
-    MessageEntityMentionName,
     MessageMediaPhoto,
 )
 
