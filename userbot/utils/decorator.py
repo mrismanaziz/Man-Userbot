@@ -10,7 +10,7 @@ from pathlib import Path
 from telethon import events
 
 from userbot import (
-    BLACKLIST_CHAT,
+    BL_CHAT,
     CMD_HANDLER,
     CMD_LIST,
     LOAD_PLUG,
@@ -38,7 +38,7 @@ def man_cmd(
         del args["disable_edited"]
 
     args["blacklist_chats"] = True
-    black_list_chats = list(BLACKLIST_CHAT)
+    black_list_chats = list(BL_CHAT)
     if len(black_list_chats) > 0:
         args["chats"] = black_list_chats
 
