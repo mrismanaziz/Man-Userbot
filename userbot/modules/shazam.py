@@ -5,11 +5,11 @@
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"shazam(?: |$)(.*)"))
+@man_cmd(pattern="shazam(?: |$)(.*)")
 async def _(event):
     if not event.reply_to_msg_id:
         return await event.edit("**Mohon balas ke pesan audio**")

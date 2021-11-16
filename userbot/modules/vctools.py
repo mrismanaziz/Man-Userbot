@@ -19,8 +19,9 @@ from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 
 from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.events import man_cmd
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
 async def get_call(event):
@@ -34,41 +35,41 @@ def user_list(l, n):
         yield l[i : i + n]
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"startvc$"))
+@man_cmd(pattern="startvc$")
 async def start_voice(c):
     chat = await c.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
 
     if not admin and not creator:
-        await c.edit(f"**Maaf {ALIVE_NAME} Bukan Admin 👮**")
+        await edit_delete(c, f"**Maaf {ALIVE_NAME} Bukan Admin 👮**")
         return
     try:
         await c.client(startvc(c.chat_id))
-        await c.edit("`Voice Chat Started...`")
+        await edit_or_reply(c, "`Voice Chat Started...`")
     except Exception as ex:
-        await c.edit(f"**ERROR:** `{ex}`")
+        await edit_delete(c, f"**ERROR:** `{ex}`")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"stopvc$"))
+@man_cmd(pattern="stopvc$")
 async def stop_voice(c):
     chat = await c.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
 
     if not admin and not creator:
-        await c.edit(f"**Maaf {ALIVE_NAME} Bukan Admin 👮**")
+        await edit_delete(c, f"**Maaf {ALIVE_NAME} Bukan Admin 👮**")
         return
     try:
         await c.client(stopvc(await get_call(c)))
-        await c.edit("`Voice Chat Stopped...`")
+        await edit_or_reply(c, "`Voice Chat Stopped...`")
     except Exception as ex:
-        await c.edit(f"**ERROR:** `{ex}`")
+        await edit_delete(c, f"**ERROR:** `{ex}`")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"vcinvite"))
+@man_cmd(pattern="vcinvite")
 async def _(c):
-    await c.edit("`Inviting Members to Voice Chat...`")
+    xxnx = await edit_or_reply(e, "`Inviting Members to Voice Chat...`")
     users = []
     z = 0
     async for x in c.client.iter_participants(c.chat_id):
@@ -81,10 +82,10 @@ async def _(c):
             z += 6
         except BaseException:
             pass
-    await c.edit(f"`{z}` **Orang Berhasil diundang ke VCG**")
+    await xxnx.edit(f"`{z}` **Orang Berhasil diundang ke VCG**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"vctitle(?: |$)(.*)"))
+@man_cmd(pattern="vctitle(?: |$)(.*)")
 async def change_title(e):
     title = e.pattern_match.group(1)
     chat = await e.get_chat()
@@ -92,16 +93,16 @@ async def change_title(e):
     creator = chat.creator
 
     if not title:
-        return await e.edit("**Silahkan Masukan Title Obrolan Suara Grup**")
+        return await edit_delete(e, "**Silahkan Masukan Title Obrolan Suara Grup**")
 
     if not admin and not creator:
-        await e.edit(f"**Maaf {ALIVE_NAME} Bukan Admin 👮**")
+        await edit_delete(e, f"**Maaf {ALIVE_NAME} Bukan Admin 👮**")
         return
     try:
         await e.client(settitle(call=await get_call(e), title=title.strip()))
-        await e.edit(f"**Berhasil Mengubah Judul VCG Menjadi** `{title}`")
+        await edit_or_reply(e, f"**Berhasil Mengubah Judul VCG Menjadi** `{title}`")
     except Exception as ex:
-        await e.edit(f"**ERROR:** `{ex}`")
+        await edit_delete(e, f"**ERROR:** `{ex}`")
 
 
 CMD_HELP.update(

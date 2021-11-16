@@ -9,10 +9,10 @@ from PIL import Image
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.utils import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"tiny(?: |$)(.*)"))
+@man_cmd(pattern="tiny(?: |$)(.*)")
 async def ultiny(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):

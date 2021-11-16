@@ -13,10 +13,10 @@ from telethon.utils import get_display_name
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.utils import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern="tag(on|off|all|bots|rec|admins|owner)?(.*)"))
+@man_cmd(pattern="tag(on|off|all|bots|rec|admins|owner)?(.*)")
 async def _(e):
     okk = e.text
     lll = e.pattern_match.group(2)

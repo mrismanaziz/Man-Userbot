@@ -4,11 +4,11 @@
 import requests
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern="asupan$"))
+@man_cmd(pattern="asupan$")
 async def _(event):
     try:
         response = requests.get("https://api-tede.herokuapp.com/api/asupan/ptl").json()
@@ -18,7 +18,7 @@ async def _(event):
         await event.edit("**Tidak bisa menemukan video asupan.**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern="wibu$"))
+@man_cmd(pattern="wibu$")
 async def _(event):
     try:
         response = requests.get("https://api-tede.herokuapp.com/api/asupan/wibu").json()
@@ -28,7 +28,7 @@ async def _(event):
         await event.edit("**Tidak bisa menemukan video wibu.**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern="chika$"))
+@man_cmd(pattern="chika$")
 async def _(event):
     try:
         response = requests.get("https://api-tede.herokuapp.com/api/chika").json()

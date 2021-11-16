@@ -16,8 +16,8 @@ import userbot.modules.sql_helper.gban_sql as gban_sql
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, DEVS, bot
-from userbot.events import man_cmd, register
-from userbot.utils import edit_or_reply, get_user_from_event
+from userbot.events import register
+from userbot.utils import edit_or_reply, get_user_from_event, man_cmd
 
 from .admin import BANNED_RIGHTS, UNBAN_RIGHTS
 
@@ -39,7 +39,7 @@ def mentionuser(name, userid):
     return f"[{name}](tg://user?id={userid})"
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"gban(?: |$)(.*)"))
+@man_cmd(pattern="gban(?: |$)(.*)")
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cgban(?: |$)(.*)")
 async def gban(event):
     if event.fwd_from:
@@ -93,7 +93,7 @@ async def gban(event):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"ungban(?: |$)(.*)"))
+@man_cmd(pattern="ungban(?: |$)(.*)")
 @register(incoming=True, from_users=DEVS, pattern=r"^\.cungban(?: |$)(.*)")
 async def ungban(event):
     if event.fwd_from:
@@ -142,7 +142,7 @@ async def ungban(event):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"listgban$"))
+@man_cmd(pattern="listgban$")
 async def gablist(event):
     if event.fwd_from:
         return

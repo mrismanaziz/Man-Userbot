@@ -6,16 +6,15 @@
 import requests
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
-from userbot.utils import edit_or_reply
+from userbot import CMD_HELP
+from userbot.utils import edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"lyrics(?:\s|$)([\s\S]*)"))
+@man_cmd(pattern="lyrics(?:\s|$)([\s\S]*)")
 async def _(event):
     query = event.pattern_match.group(1)
     if not query:
-        return await event.edit("**Silahkan Masukan Judul Lagu**")
+        return await edit_or_reply(event, "**Silahkan Masukan Judul Lagu**")
     try:
         xxnx = await edit_or_reply(event, "`Searching Lyrics...`")
         respond = requests.get(

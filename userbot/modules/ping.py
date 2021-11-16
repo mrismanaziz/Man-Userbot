@@ -15,8 +15,8 @@ from speedtest import Speedtest
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, StartTime, bot
-from userbot.events import man_cmd, register
-from userbot.utils import humanbytes
+from userbot.events import register
+from userbot.utils import edit_or_reply, humanbytes, man_cmd
 
 absen = [
     "**Hadir bang** 😁",
@@ -53,19 +53,19 @@ async def get_readable_time(seconds: int) -> str:
     return up_time
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"ping$"))
+@man_cmd(pattern="ping$")
 async def _(ping):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    await ping.edit("**✣**")
-    await ping.edit("**✣✣**")
-    await ping.edit("**✣✣✣**")
-    await ping.edit("**✣✣✣✣**")
+    xx = await edit_or_reply(ping, "**✣**")
+    await xx.edit("**✣✣**")
+    await xx.edit("**✣✣✣**")
+    await xx.edit("**✣✣✣✣**")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
     user = await bot.get_me()
-    await ping.edit(
+    await xx.edit(
         f"**PONG!!🏓**\n"
         f"✣ **Pinger** - `%sms`\n"
         f"✣ **Uptime -** `{uptime}` \n"
@@ -73,33 +73,33 @@ async def _(ping):
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"xping$"))
+@man_cmd(pattern=r"xping$")
 async def _(ping):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    await ping.edit("`Pinging....`")
+    xping = await edit_or_reply(ping, "`Pinging....`")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
-    await ping.edit(
+    await xping.edit(
         f"**PONG!! 🍭**\n**Pinger** : %sms\n**Bot Uptime** : {uptime}🕛" % (duration)
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"lping$"))
+@man_cmd(pattern=r"lping$")
 async def _(ping):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    await ping.edit("**★ PING ★**")
-    await ping.edit("**★★ PING ★★**")
-    await ping.edit("**★★★ PING ★★★**")
-    await ping.edit("**★★★★ PING ★★★★**")
-    await ping.edit("**✦҈͜͡➳ PONG!**")
+    lping = await edit_or_reply(ping, "**★ PING ★**")
+    await lping.edit("**★★ PING ★★**")
+    await lping.edit("**★★★ PING ★★★**")
+    await lping.edit("**★★★★ PING ★★★★**")
+    await lping.edit("**✦҈͜͡➳ PONG!**")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
     user = await bot.get_me()
-    await ping.edit(
+    await lping.edit(
         f"❃ **Ping !!** "
         f"`%sms` \n"
         f"❃ **Uptime -** "
@@ -108,60 +108,18 @@ async def _(ping):
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"fping$"))
-async def _(f):
-    """For .ping command, ping the userbot from any chat."""
-    await get_readable_time((time.time() - StartTime))
-    start = datetime.now()
-    await f.edit(".                       /¯ )")
-    await f.edit(".                       /¯ )\n                      /¯  /")
-    await f.edit(
-        ".                       /¯ )\n                      /¯  /\n                    /    /"
-    )
-    await f.edit(
-        ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸"
-    )
-    await f.edit(
-        ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸\n          /'/   /    /       /¨¯\\ "
-    )
-    await f.edit(
-        ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸\n          /'/   /    /       /¨¯\\ \n        ('(   (   (   (  ¯~/'  ')"
-    )
-    await f.edit(
-        ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸\n          /'/   /    /       /¨¯\\ \n        ('(   (   (   (  ¯~/'  ')\n         \\                        /"
-    )
-    await f.edit(
-        ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸\n          /'/   /    /       /¨¯\\ \n        ('(   (   (   (  ¯~/'  ')\n         \\                        /\n          \\                _.•´"
-    )
-    await f.edit(
-        ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸\n          /'/   /    /       /¨¯\\ \n        ('(   (   (   (  ¯~/'  ')\n         \\                        /\n          \\                _.•´\n            \\              ("
-    )
-    await f.edit(
-        ".                       /¯ )\n                      /¯  /\n                    /    /\n              /´¯/'   '/´¯¯`•¸\n          /'/   /    /       /¨¯\\ \n        ('(   (   (   (  ¯~/'  ')\n         \\                        /\n          \\                _.•´\n            \\              (\n              \\  "
-    )
-    end = datetime.now()
-    duration = (end - start).microseconds / 1000
-    user = await bot.get_me()
-    await f.edit(
-        f"**PONG!!🏓**\n"
-        f"✣ **Pinger** - `%sms`\n"
-        f"✣ **Uptime -** `{uptime}` \n"
-        f"**✦҈͜͡Owner :** [{user.first_name}](tg://user?id={user.id})" % (duration)
-    )
-
-
-@bot.on(man_cmd(outgoing=True, pattern=r"keping$"))
+@man_cmd(pattern=r"keping$")
 async def _(pong):
     await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    await pong.edit("**『⍟𝐊𝐎𝐍𝐓𝐎𝐋』**")
-    await pong.edit("**◆◈𝐊𝐀𝐌𝐏𝐀𝐍𝐆◈◆**")
-    await pong.edit("**𝐏𝐄𝐂𝐀𝐇𝐊𝐀𝐍 𝐁𝐈𝐉𝐈 𝐊𝐀𝐔 𝐀𝐒𝐔**")
-    await pong.edit("**☬𝐒𝐈𝐀𝐏 𝐊𝐀𝐌𝐏𝐀𝐍𝐆 𝐌𝐄𝐍𝐔𝐌𝐁𝐔𝐊 𝐀𝐒𝐔☬**")
+    kopong = await edit_or_reply(pong, "**『⍟𝐊𝐎𝐍𝐓𝐎𝐋』**")
+    await kopong.edit("**◆◈𝐊𝐀𝐌𝐏𝐀𝐍𝐆◈◆**")
+    await kopong.edit("**𝐏𝐄𝐂𝐀𝐇𝐊𝐀𝐍 𝐁𝐈𝐉𝐈 𝐊𝐀𝐔 𝐀𝐒𝐔**")
+    await kopong.edit("**☬𝐒𝐈𝐀𝐏 𝐊𝐀𝐌𝐏𝐀𝐍𝐆 𝐌𝐄𝐍𝐔𝐌𝐁𝐔𝐊 𝐀𝐒𝐔☬**")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
     user = await bot.get_me()
-    await pong.edit(
+    await kopong.edit(
         f"**✲ 𝙺𝙾𝙽𝚃𝙾𝙻 𝙼𝙴𝙻𝙴𝙳𝚄𝙶** "
         f"\n ⫸ ᴷᵒⁿᵗᵒˡ `%sms` \n"
         f"**✲ 𝙱𝙸𝙹𝙸 𝙿𝙴𝙻𝙴𝚁** "
@@ -172,40 +130,40 @@ async def _(pong):
 # .keping & kping Coded by Koala
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"kping$"))
+@man_cmd(pattern=r"kping$")
 async def _(pong):
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    await pong.edit("8✊===D")
-    await pong.edit("8=✊==D")
-    await pong.edit("8==✊=D")
-    await pong.edit("8===✊D")
-    await pong.edit("8==✊=D")
-    await pong.edit("8=✊==D")
-    await pong.edit("8✊===D")
-    await pong.edit("8=✊==D")
-    await pong.edit("8==✊=D")
-    await pong.edit("8===✊D")
-    await pong.edit("8==✊=D")
-    await pong.edit("8=✊==D")
-    await pong.edit("8✊===D")
-    await pong.edit("8=✊==D")
-    await pong.edit("8==✊=D")
-    await pong.edit("8===✊D")
-    await pong.edit("8===✊D💦")
-    await pong.edit("8====D💦💦")
-    await pong.edit("**CROOTTTT PINGGGG!**")
+    kping = await edit_or_reply(pong, "8✊===D")
+    await kping.edit("8=✊==D")
+    await kping.edit("8==✊=D")
+    await kping.edit("8===✊D")
+    await kping.edit("8==✊=D")
+    await kping.edit("8=✊==D")
+    await kping.edit("8✊===D")
+    await kping.edit("8=✊==D")
+    await kping.edit("8==✊=D")
+    await kping.edit("8===✊D")
+    await kping.edit("8==✊=D")
+    await kping.edit("8=✊==D")
+    await kping.edit("8✊===D")
+    await kping.edit("8=✊==D")
+    await kping.edit("8==✊=D")
+    await kping.edit("8===✊D")
+    await kping.edit("8===✊D💦")
+    await kping.edit("8====D💦💦")
+    await kping.edit("**CROOTTTT PINGGGG!**")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
-    await pong.edit(
+    await kping.edit(
         f"**NGENTOT!! 🐨**\n**KAMPANG** : %sms\n**Bot Uptime** : {uptime}🕛" % (duration)
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"speedtest$"))
+@man_cmd(pattern="speedtest$")
 async def _(speed):
     """For .speedtest command, use SpeedTest to check server speeds."""
-    await speed.edit("`Running speed test...`")
+    xxnx = await edit_or_reply(speed, "`Running speed test...`")
     test = Speedtest()
     test.get_best_server()
     test.download()
@@ -225,7 +183,7 @@ async def _(speed):
         f"**Upload :** `{humanbytes(result['upload'])}/s`\n"
         f"**Download :** `{humanbytes(result['download'])}/s`"
     )
-    await speed.delete()
+    await xxnx.delete()
     await speed.client.send_file(
         speed.chat_id,
         result["share"],
@@ -234,14 +192,14 @@ async def _(speed):
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"pong$"))
+@man_cmd(pattern="pong$")
 async def _(pong):
     """For .ping command, ping the userbot from any chat."""
     start = datetime.now()
-    await pong.edit("`Sepong.....🏓`")
+    xx = await edit_or_reply(pong, "`Sepong.....🏓`")
     end = datetime.now()
     duration = (end - start).microseconds / 9000
-    await pong.edit("🏓 **Ping!**\n`%sms`" % (duration))
+    await xx.edit("🏓 **Ping!**\n`%sms`" % (duration))
 
 
 # KALO NGEFORK absen ini GA USAH DI HAPUS YA GOBLOK 😡
@@ -257,7 +215,7 @@ async def risman(ganteng):
 CMD_HELP.update(
     {
         "ping": f"**Plugin : **`ping`\
-        \n\n  •  **Syntax :** `{cmd}ping` ; `{cmd}lping` ; `{cmd}xping` ; `{cmd}kping` ; `{cmd}fping`\
+        \n\n  •  **Syntax :** `{cmd}ping` ; `{cmd}lping` ; `{cmd}xping` ; `{cmd}kping`\
         \n  •  **Function : **Untuk menunjukkan ping userbot.\
         \n\n  •  **Syntax :** `{cmd}pong`\
         \n  •  **Function : **Sama seperti perintah ping\
