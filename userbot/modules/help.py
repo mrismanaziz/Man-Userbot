@@ -36,7 +36,6 @@ async def help(event):
             f"{ICON_HELP}   {string}"
             f"\n\nSupport @{CHANNEL}",
         )
-        await edit_or_reply(
-            event,
-            f"\n**Contoh Ketik** `{cmd}help afk` **Untuk Melihat Informasi Module**",
+        await event.reply(
+            f"\n**Contoh Ketik** `{cmd}help afk` **Untuk Melihat Informasi Module**"
         )
