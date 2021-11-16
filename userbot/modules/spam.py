@@ -8,11 +8,11 @@ from asyncio import sleep
 
 from userbot import BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern="cspam (.+)"))
+@man_cmd(pattern="cspam (.+)")
 async def tmeme(e):
     cspam = str(e.pattern_match.group(1))
     message = cspam.replace(" ", "")
@@ -25,7 +25,7 @@ async def tmeme(e):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"wspam (.+)"))
+@man_cmd(pattern="wspam (.+)")
 async def t_meme(e):
     wspam = str(e.pattern_match.group(1))
     message = wspam.split()
@@ -38,7 +38,7 @@ async def t_meme(e):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"spam (\d+) (.+)"))
+@man_cmd(pattern="spam (\d+) (.+)")
 async def spammer(e):
     counter = int(e.pattern_match.group(1))
     spam_message = str(e.pattern_match.group(2))
@@ -50,7 +50,7 @@ async def spammer(e):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"picspam (\d+) (.+)"))
+@man_cmd(pattern="picspam (\d+) (.+)")
 async def tiny_pic_spam(e):
     counter = int(e.pattern_match.group(1))
     link = str(e.pattern_match.group(2))
@@ -63,7 +63,7 @@ async def tiny_pic_spam(e):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"delayspam (.*)"))
+@man_cmd(pattern="delayspam (.*)")
 async def spammer(e):
     spamDelay = float(e.pattern_match.group(1).split(" ", 2)[0])
     counter = int(e.pattern_match.group(1).split(" ", 2)[1])

@@ -1,17 +1,15 @@
 from telethon.utils import pack_bot_file_id
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, bot
-from userbot.events import man_cmd
-from userbot.utils import edit_delete, edit_or_reply
+from userbot import CMD_HELP, LOGS
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 from userbot.utils.logger import logging
 
 LOGS = logging.getLogger(__name__)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"^\.(get_id|id)(?:\s|$)([\s\S]*)"))
+@man_cmd(pattern="(get_id|id)(?:\s|$)([\s\S]*)")
 async def _(event):
-    "To get id of the group or user."
     input_str = event.pattern_match.group(2)
     if input_str:
         try:
