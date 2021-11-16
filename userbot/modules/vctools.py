@@ -20,7 +20,6 @@ from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
-from userbot.events import man_cmd
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
@@ -69,7 +68,7 @@ async def stop_voice(c):
 
 @man_cmd(pattern="vcinvite")
 async def _(c):
-    xxnx = await edit_or_reply(e, "`Inviting Members to Voice Chat...`")
+    xxnx = await edit_or_reply(c, "`Inviting Members to Voice Chat...`")
     users = []
     z = 0
     async for x in c.client.iter_participants(c.chat_id):
