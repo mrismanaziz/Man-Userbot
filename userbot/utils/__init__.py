@@ -21,6 +21,7 @@ from .format import parse_pre
 from .google_images_download import googleimagesdownload
 from .progress import CancelProcess, progress
 from .tools import (
+    bash,
     check_media,
     deEmojify,
     download_lagu,
