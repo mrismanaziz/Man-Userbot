@@ -11,8 +11,8 @@
 # t.me/SharingUserbot & t.me/Lunatic0de
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 GCAST_BLACKLIST = [
     -1001473548283,  # SharingUserbot
@@ -29,7 +29,7 @@ GCAST_BLACKLIST = [
 ]
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"gcast(?: |$)(.*)"))
+@man_cmd(pattern="gcast(?: |$)(.*)")
 async def gcast(event):
     xx = event.pattern_match.group(1)
     if xx:
@@ -37,9 +37,9 @@ async def gcast(event):
     elif event.is_reply:
         msg = await event.get_reply_message()
     else:
-        await event.edit("**Berikan Sebuah Pesan atau Reply**")
+        await edit_delete(event, "**Berikan Sebuah Pesan atau Reply**")
         return
-    kk = await event.edit("`Globally Broadcasting Msg...`")
+    kk = await edit_or_reply(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
     async for x in event.client.iter_dialogs():
@@ -56,7 +56,7 @@ async def gcast(event):
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"gucast(?: |$)(.*)"))
+@man_cmd(pattern="gucast(?: |$)(.*)")
 async def gucast(event):
     xx = event.pattern_match.group(1)
     if xx:
@@ -64,9 +64,9 @@ async def gucast(event):
     elif event.is_reply:
         msg = await event.get_reply_message()
     else:
-        await event.edit("**Berikan Sebuah Pesan atau Reply**")
+        await edit_delete(event, "**Berikan Sebuah Pesan atau Reply**")
         return
-    kk = await event.edit("`Globally Broadcasting Msg...`")
+    kk = await edit_or_reply(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
     async for x in event.client.iter_dialogs():

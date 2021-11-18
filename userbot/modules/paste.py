@@ -8,12 +8,12 @@
 import os
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 from userbot.utils.pastebin import PasteBin
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"paste(?: (-d|-n|-h|-k)|$)?(?: ([\s\S]+)|$)"))
+@man_cmd(pattern="paste(?: (-d|-n|-h|-k)|$)?(?: ([\s\S]+)|$)")
 async def paste(pstl):
     """For .paste command, pastes the text directly to a pastebin."""
     service = pstl.pattern_match.group(1)
@@ -21,7 +21,7 @@ async def paste(pstl):
     reply_id = pstl.reply_to_msg_id
 
     if not (match or reply_id):
-        return await pstl.edit("`Elon Musk said I cannot paste void.`")
+        return await edit_delete(pstl, "`Elon Musk said I cannot paste void.`")
 
     if match:
         message = match.strip()
@@ -40,12 +40,12 @@ async def paste(pstl):
         else:
             message = message.message
 
-    await pstl.edit("`Pasting text . . .`")
+    xxnx = await edit_or_reply(pstl, "`Pasting text . . .`")
     async with PasteBin(message) as client:
         if service:
             service = service.strip()
             if service not in ["-d", "-n", "-h", "-k"]:
-                return await pstl.edit("Invalid flag")
+                return await xxnx.edit("Invalid flag")
             await client(client.service_match[service])
         else:
             await client.post()
@@ -59,7 +59,7 @@ async def paste(pstl):
         else:
             reply_text = "**Failed to reach Pastebin Service**"
 
-    await pstl.edit(reply_text, link_preview=False)
+    await xxnx.edit(reply_text, link_preview=False)
 
 
 CMD_HELP.update(
