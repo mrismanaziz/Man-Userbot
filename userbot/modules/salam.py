@@ -8,7 +8,7 @@ from userbot.events import man_cmd
 
 @bot.on(man_cmd(outgoing=True, pattern="p(?: |$)(.*)"))
 async def _(event):
-    await event.edit("**Assalamualaikum Dulu Biar Sopan**")
+    await event.edit("**Assalamualaikum Maniez👈👉**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"pe(?: |$)(.*)"))
@@ -39,14 +39,14 @@ async def _(event):
 async def _(event):
     await event.edit("**JAKA SEMBUNG BAWA GOLOK**")
     sleep(3)
-    await event.edit("**NIMBRUNG GOBLOKK!!!🔥**")
+    await event.edit("**NIMBRUNG GOBLOKK!!!🥴**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"k(?: |$)(.*)"))
 async def _(event):
-    await event.edit(f"**Hallo KIMAAKK SAYA {ALIVE_NAME}**")
+    await event.edit(f"**HALLO PUKIE GUE {ALIVE_NAME}**")
     sleep(2)
-    await event.edit("**LU SEMUA NGENTOT 🔥**")
+    await event.edit("**LU SEMUA KONTOL 🥴**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"ass(?: |$)(.*)"))
