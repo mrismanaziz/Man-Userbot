@@ -65,7 +65,7 @@ async def _(ping):
     await xx.edit("**60% ██████▒▒▒▒**")
     await xx.edit("**80% ████████▒▒**")
     await xx.edit("**100% ██████████**")
-    await pong.edit("🔥")
+    await xx.edit("🔥")
     await asyncio.sleep(3)
     end = datetime.now()
     duration = (end - start).microseconds / 1000
