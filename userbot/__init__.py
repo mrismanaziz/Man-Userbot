@@ -236,11 +236,11 @@ S_PACK_NAME = os.environ.get("S_PACK_NAME", f"Sticker Pack {ALIVE_NAME}")
 
 # Default .alive logo
 ALIVE_LOGO = (
-    os.environ.get("ALIVE_LOGO") or "https://telegra.ph/file/28be6a714fc432773a032.jpg"
+    os.environ.get("ALIVE_LOGO") or "https://telegra.ph/file/af0a1016fd7130a4fa23d.jpg"
 )
 
 INLINE_PIC = (
-    os.environ.get("INLINE_PIC") or "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
+    os.environ.get("INLINE_PIC") or "https://telegra.ph/file/af0a1016fd7130a4fa23d.jpg"
 )
 
 # Last.fm Module
