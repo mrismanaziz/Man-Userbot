@@ -117,10 +117,10 @@ async def repo_is_here(wannasee):
         f"**Hey**, __I am using__ 🔥 **Sonic-Userbot** 🔥\n\n"
         f"      __Thanks For Using me__\n\n"
         f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
-        f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
-        f"✣ **Channel Man :** [Lunatic0de](t.me/Lunatic0de)\n"
-        f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"
-        f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n"
+        f"✣ **Group Support :** [Icipiyey](t.me/Icipiyeywongkono)\n"
+        f"✣ **Channel Man :** [Cavendish](t.me/Strywang)\n"
+        f"✣ **Owner Repo :** [Cavendish](t.me/Badboicartii)\n"
+        f"✣ **Repo :** [Sonic-Userbot](https://github.com/SonicXsap/Man-Userbot)\n"
     )
 
 
