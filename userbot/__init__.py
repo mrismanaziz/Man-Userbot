@@ -502,12 +502,12 @@ with bot:
                     description="Repository Sonic - Userbot",
                     url="https://t.me/Icipiyeywongkono",
                     thumb=InputWebDocument(INLINE_PIC, 0, "image/jpeg", []),
-                    text="**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **Owner Repo :** [Risman](https://t.me/mrismanaziz)\n✣ **Support :** @Lunatic0de\n✣ **Repository :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
+                    text="**Sonic - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **Owner Repo :** [Cavendish](https://t.me/Badboicartii)\n✣ **Support :** @Icipiyeywongkono\n✣ **Repository :** [Sonic-Userbot](https://github.com/SonicXsap/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url("ɢʀᴏᴜᴘ", "https://t.me/Icipiyeywongkono"),
                             custom.Button.url(
-                                "ʀᴇᴘᴏ", "https://github.com/SonicXsap/Man-Userbot"
+                                "ʀᴇᴘᴏ", "https://github.com/SonicXsap/Sonic-Userbot"
                             ),
                         ],
                     ],
