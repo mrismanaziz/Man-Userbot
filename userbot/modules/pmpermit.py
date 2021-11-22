@@ -24,7 +24,7 @@ DEF_UNAPPROVED_MSG = (
     "╔════════════════════╗\n"
     "     ⚛ 𝗔𝗧𝗧𝗘𝗡𝗧𝗜𝗢𝗡 𝗣𝗟𝗘𝗔𝗦𝗘 ⚛\n"
     "╚════════════════════╝\n"
-    "• Saya belum menyetujui kamu untuk PM.\n"
+    "• Saya belum menyetujui anda untuk PM.\n"
     "• Tunggu sampai saya menyetujui PM anda.\n"
     "• Jangan Spam Chat atau anda akan otomatis diblokir.\n"
     "╔════════════════════╗\n"
