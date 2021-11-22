@@ -123,7 +123,7 @@ async def kickme(leave):
 async def kikme(leave):
     if leave.chat_id in BLACKLIST_CHAT:
         return await leave.edit("**Perintah ini Dilarang digunakan di Group ini**")
-    await leave.edit("**GC NYA JELEK GOBLOK KELUAR DULU AH CROTT** 🥴")
+    await leave.edit("**ɢᴄ ʟᴏ ᴀᴍᴘᴀs ʙᴀɴʏᴀᴋ ᴊᴀᴍᴇᴛ sᴀᴍᴀ ʟᴀᴄᴜʀ, ᴋᴜᴀʀ ᴅᴜʟᴜ ᴀʜ ʙʏᴇ ᴋᴏɴᴛᴏʟ ** 🥴")
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
