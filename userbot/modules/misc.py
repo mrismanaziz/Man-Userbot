@@ -63,9 +63,9 @@ async def killdabot(event):
         await event.client.send_message(
             BOTLOG_CHATID,
             "**#SHUTDOWN** \n"
-            "**Man-Userbot** telah di matikan!\nJika ingin menghidupkan kembali silahkan buka heroku",
+            "**Sonic-Userbot** telah di matikan!\nJika ingin menghidupkan kembali silahkan buka heroku",
         )
-    await event.edit("`Man-Userbot Berhasil di matikan!`")
+    await event.edit("`Sonic-Userbot Berhasil di matikan!`")
     if HEROKU_APP is not None:
         HEROKU_APP.process_formation()["worker"].scale(0)
     else:
@@ -77,7 +77,7 @@ async def killdabot(event):
     await event.edit("**Man-Userbot Berhasil di Restart**")
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID, "#RESTART \n" "**Man-Userbot Berhasil Di Restart**"
+            BOTLOG_CHATID, "#RESTART \n" "**Sonic-Userbot Berhasil Di Restart**"
         )
     # Spin a new instance of bot
     args = [sys.executable, "-m", "userbot"]
@@ -88,7 +88,7 @@ async def killdabot(event):
 async def reedme(e):
     await e.edit(
         "**Berikut sesuatu untuk kamu baca:**\n"
-        "\n✣ [Userbot Repo](https://github.com/mrismanaziz/Man-Userbot/blob/Man-Userbot/README.md)"
+        "\n✣ [Userbot Repo](https://github.com/SonicXsap/Sonic-Userbot/blob/Sonic-Userbot/README.md)"
         "\n✣ [Video Tutorial](https://youtu.be/tTDaPKsGC1I)"
         "\n✣ [List Variabel Heroku untuk Man-Userbot](https://telegra.ph/List-Variabel-Heroku-untuk-Man-Userbot-09-22)"
         "\n✣ [Setup Guide - Basic](https://mrismanaziz.medium.com/cara-memasang-userbot-telegram-repo-man-userbot-deploy-di-heroku-c56d1f8b5537)"
