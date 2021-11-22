@@ -454,12 +454,12 @@ with bot:
         async def handler(event):
             await event.message.get_sender()
             text = (
-                f"**Hey**, __I am using__ 🔥 **Man-Userbot** 🔥\n\n"
+                f"**Hey**, __I am using__ 🔥 **Sonic-Userbot** 🔥\n\n"
                 f"       __Thanks For Using me__\n\n"
-                f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
-                f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
-                f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"
-                f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n"
+                f"☣️ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
+                f"☣️ **Group Support :** [Icipiyey](t.me/Icipiyeywongkono)\n"
+                f"☣️ **Owner Repo :** [Cavendish](t.me/Badboicartii)\n"
+                f"☣️ **Repo :** [Man-Userbot](https://github.com/SonicXsap/Man-Userbot)\n"
             )
             await tgbot.send_file(
                 event.chat_id,
@@ -468,16 +468,16 @@ with bot:
                 buttons=[
                     [
                         custom.Button.url(
-                            text="⛑ REPO MAN-USERBOT ⛑",
-                            url="https://github.com/mrismanaziz/Man-Userbot",
+                            text="⛑ REPO SONIC-USERBOT ⛑",
+                            url="https://github.com/SonicXsap/Man-Userbot",
                         )
                     ],
                     [
                         custom.Button.url(
-                            text="GROUP", url="https://t.me/SharingUserbot"
+                            text="GROUP", url="https://t.me/Icipiyeywongkono"
                         ),
                         custom.Button.url(
-                            text="CHANNEL", url="https://t.me/Lunatic0de"
+                            text="CHANNEL", url="https://t.me/Strywang"
                         ),
                     ],
                 ],
@@ -493,14 +493,14 @@ with bot:
                 result = builder.photo(
                     file=logoman,
                     link_preview=False,
-                    text=f"**✗ Man-Userbot Inline Menu ✗**\n\n✣ **Owner** [{user.first_name}](tg://user?id={user.id})\n✣ **Jumlah** `{len(dugmeler)}` Modules",
+                    text=f"**✗ Sonic-Userbot Inline Menu ✗**\n\n✣ **Owner** [{user.first_name}](tg://user?id={user.id})\n✣ **Jumlah** `{len(dugmeler)}` Modules",
                     buttons=buttons,
                 )
             elif query.startswith("repo"):
                 result = builder.article(
                     title="Repository",
-                    description="Repository Man - Userbot",
-                    url="https://t.me/SharingUserbot",
+                    description="Repository Sonic - Userbot",
+                    url="https://t.me/Icipiyeywongkono",
                     thumb=InputWebDocument(INLINE_PIC, 0, "image/jpeg", []),
                     text="**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **Owner Repo :** [Risman](https://t.me/mrismanaziz)\n✣ **Support :** @Lunatic0de\n✣ **Repository :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
