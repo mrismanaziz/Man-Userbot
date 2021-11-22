@@ -70,6 +70,8 @@ CMD_HELP.update(
         \n  •  **Function : **salam Kenal dan salam\
         \n\n  •  **Syntax :** `{cmd}l`\
         \n  •  **Function : **Untuk Menjawab salam\
+        \n\n  •  **Syntax :** `{cmd}le`\
+        \n  •  **Function : **Untuk Menjawab salam wanita\
         \n\n  •  **Syntax :** `{cmd}ass`\
         \n  •  **Function : **Salam Bahas arab\
         \n\n  •  **Syntax :** `{cmd}semangat`\
