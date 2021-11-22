@@ -13,7 +13,7 @@ async def _(event):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"pe(?: |$)(.*)"))
 async def _(event):
-    await event.edit("**Assalamualaikum Warahmatullahi Wabarakatuh**")
+    await event.edit("**Assalamualaikum Men**")
 
 
 @bot.on(man_cmd(outgoing=True, pattern="P(?: |$)(.*)"))
