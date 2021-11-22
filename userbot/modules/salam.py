@@ -28,6 +28,11 @@ async def _(event):
     await event.edit("**Wa'alaikumsalam**")
 
 
+@bot.on(man_cmd(outgoing=True, pattern=r"le(?: |$)(.*)"))
+async def _(event):
+    await event.edit("**Wa'alaikumsalam Cantik**")
+
+
 @bot.on(man_cmd(outgoing=True, pattern=r"a(?: |$)(.*)"))
 async def _(event):
     await event.edit(f"**Haii Salken Saya {ALIVE_NAME}**")
