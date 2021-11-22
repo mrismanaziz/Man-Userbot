@@ -195,7 +195,7 @@ ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
 YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
 
 # untuk perintah teks costum .alive
-ALIVE_TEKS_CUSTOM = os.environ.get("ALIVE_TEKS_CUSTOM", "Hey, I am alive.")
+ALIVE_TEKS_CUSTOM = os.environ.get("ALIVE_TEKS_CUSTOM", "ʜᴇʏ, ɪ ᴀᴍ ᴀʟɪᴠᴇ.​")
 
 # Default .alive name
 ALIVE_NAME = os.environ.get("ALIVE_NAME", "Sonic")
