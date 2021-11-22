@@ -170,15 +170,15 @@ async def amireallyalive(alive):
     user = await bot.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
     output = (
-        f"**[Sonic-Userbot](https://github.com/SonicXsap/Man-Userbot) is Up and Running.**\n\n"
+        f"**[sᴏɴɪᴄ-ᴜsᴇʀʙᴏᴛ​](https://github.com/SonicXsap/Man-Userbot) ɪs ᴜᴘ ᴀɴ ʀᴜɴɴɪɴɢ.​**\n\n"
         f"**{alive_text}**\n\n"
-        f"{emoji} **Master :** [{user.first_name}](tg://user?id={user.id}) \n"
-        f"{emoji} **Modules :** `{len(modules)} Modules` \n"
-        f"{emoji} **Bot Version :** `{BOT_VER}` \n"
-        f"{emoji} **Python Version :** `{python_version()}` \n"
-        f"{emoji} **Pytgcalls Version :** `{pytgcalls.__version__}` \n"
-        f"{emoji} **Telethon Version :** `{version.__version__}` \n"
-        f"{emoji} **Bot Uptime :** `{uptime}` \n\n"
+        f"{emoji} **ᴍᴀsᴛᴇʀ​ :** [{user.first_name}](tg://user?id={user.id}) \n"
+        f"{emoji} **ᴍᴏᴅᴜʟᴇs​ :** `{len(modules)} Modules` \n"
+        f"{emoji} **ʙᴏᴛ ᴠᴇʀsɪᴏɴ​ :** `{BOT_VER}` \n"
+        f"{emoji} **ᴘʏᴛʜᴏɴ ᴠᴇʀsɪᴏɴ​ :** `{python_version()}` \n"
+        f"{emoji} **ᴘʏᴛɢᴄᴀʟʟs  ᴠᴇʀsɪᴏɴ​ :** `{pytgcalls.__version__}` \n"
+        f"{emoji} **ᴛᴇʟᴇᴛʜᴏɴ ᴠᴇʀsɪᴏɴ​ :** `{version.__version__}` \n"
+        f"{emoji} **ʙᴏᴛ ᴜᴘᴛɪᴍᴇ​ :** `{uptime}` \n\n"
         f"    **[𝗦𝘂𝗽𝗽𝗼𝗿𝘁](https://t.me/{GROUP})** | **[𝗖𝗵𝗮𝗻𝗻𝗲𝗹](https://t.me/{CHANNEL})** | **[𝗜𝗻𝘀𝘁𝗮𝗴𝗿𝗮𝗺​](https://instagram.com/OneXxp_)**"
     )
     if ALIVE_LOGO:
