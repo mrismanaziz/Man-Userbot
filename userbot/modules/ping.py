@@ -7,6 +7,7 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
+import asyncio
 import random
 import time
 from datetime import datetime
@@ -58,10 +59,14 @@ async def _(ping):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    xx = await edit_or_reply(ping, "**☣**")
-    await xx.edit("**☣☣**")
-    await xx.edit("**☣☣☣**")
-    await xx.edit("**☣☣☣☣**")
+    xx = await edit_or_reply(ping, "**0% ▒▒▒▒▒▒▒▒▒▒**")
+    await xx.edit("**20% ██▒▒▒▒▒▒▒▒**")
+    await xx.edit("**40% ████▒▒▒▒▒▒**")
+    await xx.edit("**60% ██████▒▒▒▒**")
+    await xx.edit("**80% ████████▒▒**")
+    await xx.edit("**100% ██████████**")
+    await pong.edit("🔥")
+    await asyncio.sleep(3)
     end = datetime.now()
     duration = (end - start).microseconds / 1000
     user = await bot.get_me()
