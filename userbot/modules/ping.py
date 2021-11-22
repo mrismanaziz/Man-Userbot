@@ -72,8 +72,8 @@ async def _(ping):
     user = await bot.get_me()
     await xx.edit(
         f"**🔥Sonic - Userbot🔥**\n"
-        f"☣ **Pinger** - `%sms`\n"
-        f"☣ **Uptime -** `{uptime}` \n"
+        f"🔸 **Pinger** - `%sms`\n"
+        f"🔸 **Uptime -** `{uptime}` \n"
         f"**✦Owner :** [{user.first_name}](tg://user?id={user.id})" % (duration)
     )
 
