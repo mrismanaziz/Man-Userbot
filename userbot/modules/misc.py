@@ -117,8 +117,8 @@ async def repo_is_here(wannasee):
         f"**ʜᴇʏ**, __ɪ ᴀᴍ ᴜsɪɴɢ​__ 🔥 **sᴏɴɪᴄ-ᴜsᴇʀʙᴏᴛ​** 🔥\n\n"
         f"      __𝐓𝐡𝐚𝐧𝐤𝐬 𝐅𝐨𝐫 𝐔𝐬𝐢𝐧𝐠 𝐌𝐞​__\n\n"
         f"➤ **ᴜsᴇʀʙᴏᴛ ᴠᴇʀsɪᴏɴ​ :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
-        f"➤ **ɢʀᴏᴜᴘ sᴜᴘᴘᴏʀᴛ​ :** [ɪᴄɪᴘɪʏᴇʏ​](t.me/Icipiyeywongkono)\n"
-        f"➤ **ᴄʜᴀɴɴᴇʟ sᴏɴɪᴄ​ :** [ᴄᴀᴠᴇɴᴅɪsʜ​](t.me/Strywang)\n"
+        f"➤ **ɢʀᴏᴜᴘ sᴜᴘᴘᴏʀᴛ​ :** [sᴏɴɪᴄ sᴜᴘᴘᴏʀᴛ​​](t.me/SonicSupport)\n"
+        f"➤ **ᴄʜᴀɴɴᴇʟ sᴏɴɪᴄ​ :** [sᴏɴɪᴄ ᴜᴘᴅᴀᴛᴇ​​](t.me/SonicUpdatee)\n"
         f"➤ **ᴏᴡɴᴇʀ ʀᴇᴘᴏ​ :** [ᴄᴀᴠᴇɴᴅɪsʜ​](t.me/Badboicartii)\n"
         f"➤ **ʀᴇᴘᴏ​ :** [sᴏɴɪᴄ-ᴜsᴇʀʙᴏᴛ​](https://github.com/SonicXsap/Man-Userbot)\n"
     )
