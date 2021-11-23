@@ -114,13 +114,13 @@ async def repeat(rep):
 async def repo_is_here(wannasee):
     """For .repo command, just returns the repo URL."""
     await wannasee.edit(
-        f"**Hey**, __I am using__ 🔥 **Sonic-Userbot** 🔥\n\n"
-        f"      __Thanks For Using me__\n\n"
-        f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
-        f"✣ **Group Support :** [Icipiyey](t.me/Icipiyeywongkono)\n"
-        f"✣ **Channel Man :** [Cavendish](t.me/Strywang)\n"
-        f"✣ **Owner Repo :** [Cavendish](t.me/Badboicartii)\n"
-        f"✣ **Repo :** [Sonic-Userbot](https://github.com/SonicXsap/Man-Userbot)\n"
+        f"**ʜᴇʏ**, __ɪ ᴀᴍ ᴜsɪɴɢ​__ 🔥 **sᴏɴɪᴄ-ᴜsᴇʀʙᴏᴛ​** 🔥\n\n"
+        f"      __𝐓𝐡𝐚𝐧𝐤𝐬 𝐅𝐨𝐫 𝐔𝐬𝐢𝐧𝐠 𝐌𝐞​__\n\n"
+        f"➤ **ᴜsᴇʀʙᴏᴛ ᴠᴇʀsɪᴏɴ​ :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
+        f"➤ **ɢʀᴏᴜᴘ sᴜᴘᴘᴏʀᴛ​ :** [ɪᴄɪᴘɪʏᴇʏ​](t.me/Icipiyeywongkono)\n"
+        f"➤ **ᴄʜᴀɴɴᴇʟ sᴏɴɪᴄ​ :** [ᴄᴀᴠᴇɴᴅɪsʜ​](t.me/Strywang)\n"
+        f"➤ **ᴏᴡɴᴇʀ ʀᴇᴘᴏ​ :** [ᴄᴀᴠᴇɴᴅɪsʜ​](t.me/Badboicartii)\n"
+        f"➤ **ʀᴇᴘᴏ​ :** [sᴏɴɪᴄ-ᴜsᴇʀʙᴏᴛ​](https://github.com/SonicXsap/Man-Userbot)\n"
     )
 
 
