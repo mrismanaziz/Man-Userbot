@@ -180,17 +180,17 @@ async def dyno_usage(dyno):
         AppMinutes = math.floor(AppQuotaUsed % 60)
 
         await dyno.edit(
-            "✥ **Informasi Dyno Heroku :**"
+            "🔯 **ɪɴꜰᴏʀᴍᴀsɪ ᴅʏɴᴏ ʜᴇʀᴏᴋᴜ​ :**"
             "\n╔════════════════════╗\n"
-            f" ➠ **Penggunaan Dyno** `{app.name}` :\n"
+            f" ➤ **ᴘᴇɴɢɢᴜɴᴀᴀɴ ᴅʏɴᴏ​** `{app.name}` :\n"
             f"     •  `{AppHours}`**Jam**  `{AppMinutes}`**Menit**  "
             f"**|**  [`{AppPercentage}`**%**]"
             "\n◖════════════════════◗\n"
-            " ➠ **Sisa kuota dyno bulan ini** :\n"
+            " ➤ **sɪsᴀ ᴋᴜᴏᴛᴀ ᴅʏɴᴏ ʙᴜʟᴀɴ ɪɴɪ​** :\n"
             f"     •  `{hours}`**Jam**  `{minutes}`**Menit**  "
             f"**|**  [`{percentage}`**%**]"
             "\n╚════════════════════╝\n"
-            f"✥ **Sisa Dyno Heroku** `{day}` **Hari Lagi**"
+            f"🔯 **sɪsᴀ ᴅʏɴᴏ ʜᴇʀᴏᴋᴜ​** `{day}` **Hari Lagi**"
         )
         return True
 
@@ -199,13 +199,13 @@ async def dyno_usage(dyno):
 async def fake_dyno(event):
     await event.edit("`Processing...`")
     await event.edit(
-        "✥ **Informasi Dyno Heroku :**"
+        "🔯 **ɪɴꜰᴏʀᴍᴀsɪ ᴅʏɴᴏ ʜᴇʀᴏᴋᴜ​ :**"
         "\n╔════════════════════╗\n"
-        f" ➠ **Penggunaan Dyno** `{app.name}` :\n"
+        f" ➤ **ᴘᴇɴɢɢᴜɴᴀᴀɴ ᴅʏɴᴏ​** `{app.name}` :\n"
         f"     •  `0`**Jam**  `0`**Menit**  "
         f"**|**  [`0`**%**]"
         "\n◖════════════════════◗\n"
-        " ➠ **Sisa kuota dyno bulan ini** :\n"
+        " ➤ **sɪsᴀ ᴋᴜᴏᴛᴀ ᴅʏɴᴏ ʙᴜʟᴀɴ ɪɴɪ​** :\n"
         f"     •  `1000`**Jam**  `0`**Menit**  "
         f"**|**  [`100`**%**]"
         "\n╚════════════════════╝\n"
