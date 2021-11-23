@@ -1,8 +1,8 @@
 {
-  "name": "Man-Userbot",
-  "description": "[Man-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
-  "logo": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
-  "keywords": ["telegram", "userbot", "man-userbot", "modular", "python"],
+  "name": "Sonic-Userbot",
+  "description": "[sᴏɴɪᴄ-ᴜsᴇʀʙᴏᴛ​] userbot Telegram modular yang berjalan pada Python 3.9+",
+  "logo": "https://telegra.ph/file/be3b0c7d31bb1c35b6cb3.jpg",
+  "keywords": ["telegram", "userbot", "Sonic-userbot", "modular", "python"],
   "repository": "https://github.com/SonicXsap/Sonic-Userbot",
   "telegram": ["https://t.me/mrismanaziz", "https://t.me/tofik_dn"],
   "success_url": "https://t.me/Lunatic0de",
@@ -44,7 +44,7 @@
     },
     "ALIVE_LOGO": {
       "description": "Gambar dalam module .alive",
-      "value": "https://telegra.ph/file/af0a1016fd7130a4fa23d.jpg",
+      "value": "https://telegra.ph/file/49188beb25384dbf8017c.jpg",
       "required": false
     },
     "ALIVE_TEKS_CUSTOM": {
