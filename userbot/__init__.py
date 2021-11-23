@@ -135,8 +135,8 @@ SUDO_HANDLER = os.environ.get("SUDO_HANDLER", r"$")
 OWNER_ID = int(os.environ.get("OWNER_ID") or 0)
 
 # Support
-GROUP = os.environ.get("GROUP", "Icipiyeywongkono")
-CHANNEL = os.environ.get("CHANNEL", "Strywang")
+GROUP = os.environ.get("GROUP", "SonicSupport")
+CHANNEL = os.environ.get("CHANNEL", "SonicUpdatee")
 
 # Heroku Credentials for updater.
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
@@ -236,11 +236,11 @@ S_PACK_NAME = os.environ.get("S_PACK_NAME", f"Sticker Pack {ALIVE_NAME}")
 
 # Default .alive logo
 ALIVE_LOGO = (
-    os.environ.get("ALIVE_LOGO") or "https://telegra.ph/file/af0a1016fd7130a4fa23d.jpg"
+    os.environ.get("ALIVE_LOGO") or "https://telegra.ph/file/49188beb25384dbf8017c.jpg"
 )
 
 INLINE_PIC = (
-    os.environ.get("INLINE_PIC") or "https://telegra.ph/file/af0a1016fd7130a4fa23d.jpg"
+    os.environ.get("INLINE_PIC") or "https://telegra.ph/file/be3b0c7d31bb1c35b6cb3.jpg"
 )
 
 # Last.fm Module
@@ -454,12 +454,12 @@ with bot:
         async def handler(event):
             await event.message.get_sender()
             text = (
-                f"**Hey**, __I am using__ 🔥 **Sonic-Userbot** 🔥\n\n"
-                f"       __Thanks For Using me__\n\n"
-                f"☣️ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
-                f"☣️ **Group Support :** [Icipiyey](t.me/Icipiyeywongkono)\n"
-                f"☣️ **Owner Repo :** [Cavendish](t.me/Badboicartii)\n"
-                f"☣️ **Repo :** [Man-Userbot](https://github.com/SonicXsap/Man-Userbot)\n"
+                f"**ʜᴇʏ**, __ɪ ᴀᴍ ᴜsɪɴɢ​ 🔥 **sᴏɴɪᴄ-ᴜsᴇʀʙᴏᴛ​** 🔥\n\n"
+                f"       __𝐓𝐡𝐚𝐧𝐤𝐬 𝐅𝐨𝐫 𝐔𝐬𝐢𝐧𝐠 𝐌𝐞​__\n\n"
+                f"➤ **ᴜsᴇʀʙᴏᴛ ᴠᴇʀsɪᴏɴ :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
+                f"➤ **ɢʀᴏᴜᴘ sᴜᴘᴘᴏʀᴛ :** [sᴏɴɪᴄ sᴜᴘᴘᴏʀᴛ​](t.me/SonicSupport)\n"
+                f"➤ **ᴏᴡɴᴇʀ ʀᴇᴘᴏ​ :** [ᴄᴀᴠᴇɴᴅɪsʜ](t.me/Badboicartii)\n"
+                f"➤ **ʀᴇᴘᴏ :** [sᴏɴɪᴄ-ᴜsᴇʀʙᴏᴛ​](https://github.com/SonicXsap/Man-Userbot)\n"
             )
             await tgbot.send_file(
                 event.chat_id,
@@ -493,7 +493,7 @@ with bot:
                 result = builder.photo(
                     file=logoman,
                     link_preview=False,
-                    text=f"**☣️ Sonic-Userbot Inline Menu ☣️**\n\n☣️ **Owner** [{user.first_name}](tg://user?id={user.id})\n☣️ **Jumlah** `{len(dugmeler)}` Modules",
+                    text=f"**🔯 Sonic-Userbot Inline Menu 🔯**\n\n🔯 **Owner** [{user.first_name}](tg://user?id={user.id})\n🔯 **Jumlah** `{len(dugmeler)}` Modules",
                     buttons=buttons,
                 )
             elif query.startswith("repo"):
@@ -515,11 +515,11 @@ with bot:
                 )
             else:
                 result = builder.article(
-                    title="☣️ Sonic-Userbot ☣️",
+                    title="🔯 Sonic-Userbot 🔯",
                     description="Sonic - UserBot | Telethon",
                     url="https://t.me/Icipiyeywongkono",
                     thumb=InputWebDocument(INLINE_PIC, 0, "image/jpeg", []),
-                    text=f"**Sonic - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n☣️ **UserMode:** [{user.first_name}](tg://user?id={user.id})\n☣️ **Assistant:** {tgbotusername}\n➖➖➖➖➖➖➖➖➖➖\n**Support:** @Strywang\n➖➖➖➖➖➖➖➖➖➖",
+                    text=f"**Sonic - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n🔯 **UserMode:** [{user.first_name}](tg://user?id={user.id})\n🔯 **Assistant:** {tgbotusername}\n➖➖➖➖➖➖➖➖➖➖\n**Support:** @SonicUpdatee\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url("ɢʀᴏᴜᴘ", "https://t.me/Icipiyeywongkono"),
@@ -539,7 +539,7 @@ with bot:
             if event.query.user_id == uid:
                 current_page_number = int(looters)
                 buttons = paginate_help(current_page_number, dugmeler, "helpme")
-                text = f"**☣️ Sonic-Userbot Inline Menu ☣️**\n\n☣️ **Owner** [{user.first_name}](tg://user?id={user.id})\n☣️ **Jumlah** `{len(dugmeler)}` Modules"
+                text = f"**🔯 Sonic-Userbot Inline Menu 🔯**\n\n🔯 **Owner** [{user.first_name}](tg://user?id={user.id})\n🔯 **Jumlah** `{len(dugmeler)}` Modules"
                 await event.edit(
                     text,
                     file=logoman,
