@@ -13,10 +13,10 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 async def usit(e):
     await e.edit(
         f"**Hai {DEFAULTUSER} Kalo Anda Tidak Tau Perintah Untuk Memerintah Ku Ketik** `.help` Atau Bisa Minta Bantuan Ke:\n"
-        f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
-        f"✣ **Channel Man :** [Lunatic0de](t.me/Lunatic0de)\n"
-        f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"
-        f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n"
+        f"➤ **ɢʀᴏᴜᴘ sᴜᴘᴘᴏʀᴛ :** [sᴏɴɪᴄ sᴜᴘᴘᴏʀᴛ​](t.me/SonicSupport)\n"
+        f"➤ **ᴄʜᴀɴɴᴇʟ sᴏɴɪᴄ :** [sᴏɴɪᴄ ᴜᴘᴅᴀᴛᴇ​](t.me/SonicUpdatee)\n"
+        f"➤ **ᴏᴡɴᴇʀ ʀᴇᴘᴏ  :** [ᴄᴀᴠᴇɴᴅɪsʜ](t.me/Badboicartii)\n"
+        f"➤ **ʀᴇᴘᴏ :** [sᴏɴɪᴄ-ᴜsᴇʀʙᴏᴛ](https://github.com/SonicXsap/Man-Userbot)\n"
     )
 
 
