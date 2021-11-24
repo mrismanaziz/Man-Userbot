@@ -3,7 +3,6 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
-import asyncio
 
 from pytgcalls import StreamType
 from pytgcalls.types import Update
@@ -21,7 +20,7 @@ from youtubesearchpython import VideosSearch
 from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, call_py
-from userbot.utils import edit_delete, edit_or_reply, man_cmd
+from userbot.utils import bash, edit_delete, edit_or_reply, man_cmd
 from userbot.utils.queues.queues import (
     QUEUE,
     add_to_queue,
@@ -38,41 +37,30 @@ def vcmention(user):
     return f"[{full_name}](tg://user?id={user.id})"
 
 
-def ytsearch(query):
+def ytsearch(query: str):
     try:
-        search = VideosSearch(query, limit=1)
-        for r in search.result()["result"]:
-            ytid = r["id"]
-            songname = r["title"]
-            url = f"https://www.youtube.com/watch?v={ytid}"
+        search = VideosSearch(query, limit=1).result()
+        data = search["result"][0]
+        songname = data["title"]
+        url = data["link"]
         return [songname, url]
     except Exception as e:
         print(e)
         return 0
 
 
-async def ytdl(format, link):
-    proc = await asyncio.create_subprocess_exec(
-        "yt-dlp",
-        "-g",
-        "-f",
-        f"{format}",
-        f"{link}",
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-    stdout, stderr = await proc.communicate()
+async def ytdl(format: str, link: str):
+    stdout, stderr = await bash(f'yt-dlp -g -f "{format}" {link}')
     if stdout:
-        return 1, stdout.decode().split("\n")[0]
-    return 0, stderr.decode()
+        return 1, stdout.split("\n")[0]
+    return 0, stderr
 
 
-async def skip_item(chat_id, h):
+async def skip_item(chat_id: int, x: int):
     if chat_id not in QUEUE:
         return 0
     chat_queue = get_queue(chat_id)
     try:
-        x = int(h)
         songname = chat_queue[x][0]
         chat_queue.pop(x)
         return songname
@@ -81,7 +69,7 @@ async def skip_item(chat_id, h):
         return 0
 
 
-async def skip_current_song(chat_id):
+async def skip_current_song(chat_id: int):
     if chat_id not in QUEUE:
         return 0
     chat_queue = get_queue(chat_id)
@@ -129,7 +117,7 @@ async def vc_play(event):
         or not replied
         and not title
     ):
-        await edit_or_reply(event, "**Silahkan Masukan Judul Lagu**")
+        return await edit_or_reply(event, "**Silahkan Masukan Judul Lagu**")
     elif replied and not replied.audio and not replied.voice or not replied:
         botman = await edit_or_reply(event, "`Searching...`")
         query = event.text.split(maxsplit=1)[1]
@@ -165,6 +153,7 @@ async def vc_play(event):
                         link_preview=False,
                     )
                 except Exception as ep:
+                    clear_queue(chat_id)
                     await botman.edit(f"`{ep}`")
 
     else:
@@ -181,18 +170,22 @@ async def vc_play(event):
                 f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
             )
         else:
-            await call_py.join_group_call(
-                chat_id,
-                AudioPiped(
-                    dl,
-                ),
-                stream_type=StreamType().pulse_stream,
-            )
-            add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-            await botman.edit(
-                f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar`\n🎧 **Atas permintaan:** {from_user}",
-                link_preview=False,
-            )
+            try:
+                await call_py.join_group_call(
+                    chat_id,
+                    AudioPiped(
+                        dl,
+                    ),
+                    stream_type=StreamType().pulse_stream,
+                )
+                add_to_queue(chat_id, songname, dl, link, "Audio", 0)
+                await botman.edit(
+                    f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar`\n🎧 **Atas permintaan:** {from_user}",
+                    link_preview=False,
+                )
+            except Exception as ep:
+                clear_queue(chat_id)
+                await botman.edit(f"`{ep}`")
 
 
 @man_cmd(pattern="vplay(?:\s|$)([\s\S]*)")
@@ -245,6 +238,7 @@ async def vc_vplay(event):
                         link_preview=False,
                     )
                 except Exception as ep:
+                    clear_queue(chat_id)
                     await xnxx.edit(f"`{ep}`")
 
     elif replied:
@@ -270,16 +264,20 @@ async def vc_vplay(event):
                 hmmm = MediumQualityVideo()
             elif RESOLUSI == 720:
                 hmmm = HighQualityVideo()
-            await call_py.join_group_call(
-                chat_id,
-                AudioVideoPiped(dl, HighQualityAudio(), hmmm),
-                stream_type=StreamType().pulse_stream,
-            )
-            add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
-            await xnxx.edit(
-                f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}",
-                link_preview=False,
-            )
+            try:
+                await call_py.join_group_call(
+                    chat_id,
+                    AudioVideoPiped(dl, HighQualityAudio(), hmmm),
+                    stream_type=StreamType().pulse_stream,
+                )
+                add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
+                await xnxx.edit(
+                    f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}",
+                    link_preview=False,
+                )
+            except Exception as ep:
+                clear_queue(chat_id)
+                await xnxx.edit(f"`{ep}`")
     else:
         xnxx = await edit_or_reply(event, "`Searching...`")
         query = event.text.split(maxsplit=1)[1]
@@ -313,6 +311,7 @@ async def vc_vplay(event):
                         link_preview=False,
                     )
                 except Exception as ep:
+                    clear_queue(chat_id)
                     await xnxx.edit(f"`{ep}`")
 
 
@@ -441,17 +440,20 @@ async def stream_end_handler(_, u: Update):
 
 @call_py.on_closed_voice_chat()
 async def closedvc(_, chat_id: int):
-    clear_queue(chat_id)
+    if chat_id in QUEUE:
+        clear_queue(chat_id)
 
 
 @call_py.on_left()
 async def leftvc(_, chat_id: int):
-    clear_queue(chat_id)
+    if chat_id in QUEUE:
+        clear_queue(chat_id)
 
 
 @call_py.on_kicked()
 async def kickedvc(_, chat_id: int):
-    clear_queue(chat_id)
+    if chat_id in QUEUE:
+        clear_queue(chat_id)
 
 
 CMD_HELP.update(
