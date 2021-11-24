@@ -22,32 +22,31 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from userbot import BOT_USERNAME
 from userbot import CMD_HANDLER as cmd
 from userbot import bot
-from userbot.events import man_cmd
-from userbot.modules.sql_helper.globals import gvarstatus
+from userbot.utils import edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(pattern="helpme", outgoing=True))
+@man_cmd(pattern="helpme")
 async def _(event):
     if event.fwd_from:
         return
-    tgbotusername = BOT_USERNAME or gvarstatus("BOT_USERNAME")
-    if tgbotusername is not None:
+    if BOT_USERNAME is not None:
         chat = "@Botfather"
         try:
-            results = await event.client.inline_query(tgbotusername, "@SharingUserbot")
+            results = await event.client.inline_query(BOT_USERNAME, "@SharingUserbot")
             await results[0].click(
                 event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True
             )
             await event.delete()
         except noinline:
-            xx = await event.edit(
-                "**Inline Mode Tidak aktif.**\n__Sedang Menyalakannya, Harap Tunggu Sebentar...__"
+            xx = await edit_or_reply(
+                event,
+                "**Inline Mode Tidak aktif.**\n__Sedang Menyalakannya, Harap Tunggu Sebentar...__",
             )
             async with bot.conversation(chat) as conv:
                 try:
                     first = await conv.send_message("/setinline")
                     second = await conv.get_response()
-                    third = await conv.send_message(tgbotusername)
+                    third = await conv.send_message(BOT_USERNAME)
                     fourth = await conv.get_response()
                     fifth = await conv.send_message("Search")
                     sixth = await conv.get_response()
@@ -62,6 +61,6 @@ async def _(event):
                 [first.id, second.id, third.id, fourth.id, fifth.id, sixth.id],
             )
     else:
-        await event.edit(
-            f"**ERROR:** Silahkan Tambahkan SQL `BOT_TOKEN` & `BOT_USERNAME` Ketik `{cmd}help sql`"
+        await edit_or_reply(
+            event, f"**ERROR:** Silahkan Tambahkan Var `BOT_TOKEN` & `BOT_USERNAME`"
         )
