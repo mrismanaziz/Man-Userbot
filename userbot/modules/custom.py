@@ -7,8 +7,8 @@
 # FROM Man-Userbot
 # t.me/SharingUserbot
 #
-""" Userbot module containing commands for keeping custom global notes. """
 
+import io
 
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
@@ -98,7 +98,7 @@ async def add_snip(event):
 async def _(event):
     input_str = (event.pattern_match.group(1)).lower()
     if not input_str:
-        return await edit_delete(e, "**Berikan nama custom untuk dihapus**")
+        return await edit_delete(event, "**Berikan nama custom untuk dihapus**")
     if input_str.startswith("#"):
         input_str = input_str.replace("#", "")
     try:
