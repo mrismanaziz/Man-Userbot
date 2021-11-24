@@ -31,13 +31,17 @@ async def add(event):
     if f"{cmd}add " in event.text:
         return
     xxnx = await edit_or_reply(event, "`Processing...`")
-    bot = "SUDO_USERS"
+    var = "SUDO_USERS"
     reply = await event.get_reply_message()
     if not suu and not reply:
         return await edit_delete(
             xxnx,
             "Balas ke pengguna atau berikan user id untuk menambahkannya ke daftar pengguna sudo anda.",
             45,
+        )
+    if suu and not suu.isnumeric():
+        return await edit_delete(
+            xxnx, "Berikan User ID atau reply ke pesan penggunanya.", 45
         )
     if HEROKU_APP_NAME is not None:
         app = Heroku.app(HEROKU_APP_NAME)
@@ -60,7 +64,7 @@ async def add(event):
     await xxnx.edit(
         f"**Berhasil Menambahkan** `{target}` **ke Pengguna Sudo.**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan."
     )
-    heroku_Config[bot] = newsudo
+    heroku_Config[var] = newsudo
 
 
 @man_cmd(pattern="delsudo(?:\s|$)([\s\S]*)")
@@ -73,6 +77,10 @@ async def _(event):
             xxx,
             "Balas ke pengguna atau berikan user id untuk menghapusnya dari daftar pengguna sudo Anda.",
             45,
+        )
+    if suu and not suu.isnumeric():
+        return await edit_delete(
+            xxx, "Berikan User ID atau reply ke pesan penggunanya.", 45
         )
     if HEROKU_APP_NAME is not None:
         app = Heroku.app(HEROKU_APP_NAME)
@@ -95,8 +103,8 @@ async def _(event):
         await xxx.edit(
             f"**Berhasil Menghapus** `{target}` **dari Pengguna Sudo.**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan."
         )
-        bot = "SUDO_USERS"
-        heroku_Config[bot] = newsudo
+        var = "SUDO_USERS"
+        heroku_Config[var] = newsudo
     else:
         await edit_delete(
             xxx, "**Pengguna ini tidak ada dalam Daftar Pengguna Sudo anda.**", 45
