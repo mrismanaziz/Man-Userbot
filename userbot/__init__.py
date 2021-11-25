@@ -394,7 +394,7 @@ except AttributeError:
     pass
 
 
-if not BOT_TOKEN is None:
+if BOT_TOKEN is not None:
     tgbot = TelegramClient(
         "TG_BOT_TOKEN",
         api_id=API_KEY,
