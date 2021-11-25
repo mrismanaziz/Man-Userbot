@@ -461,15 +461,14 @@ with bot:
         logo = ALIVE_LOGO
         logoman = INLINE_PIC
         tgbotusername = BOT_USERNAME
-        OWNER_ID = uid
 
         @tgbot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
         async def bot_pms(event):
             chat = await event.get_chat()
             if check_is_black_list(chat.id):
                 return
-            if chat.id != OWNER_ID:
-                msg = await event.forward_to(OWNER_ID)
+            if chat.id != uid:
+                msg = await event.forward_to(uid)
                 try:
                     add_user_to_db(
                         msg.id, get_display_name(chat), chat.id, event.id, 0, 0
