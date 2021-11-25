@@ -25,10 +25,12 @@ from pylast import LastFMNetwork, md5
 from pySmartDL import SmartDL
 from pytgcalls import PyTgCalls
 from requests import get
+from telethon.errors import UserIsBlockedError
 from telethon.network.connection.tcpabridged import ConnectionTcpAbridged
 from telethon.sessions import StringSession
 from telethon.sync import TelegramClient, custom, events
 from telethon.tl.types import InputWebDocument
+from telethon.utils import get_display_name
 
 from .storage import Storage
 
@@ -91,13 +93,13 @@ if CONFIG_CHECK:
     sys.exit(1)
 
 # KALO NGEFORK ID DEVS SAMA ID BLACKLIST_CHAT NYA GA USAH DI HAPUS YA GOBLOK 😡
-DEVS = (
+DEVS = [
     844432220,
     1906014306,
     1382636419,
     1712874582,
     1738637033,
-)
+]
 SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
 BL_CHAT = {int(x) for x in os.environ.get("BL_CHAT", "").split()}
 
@@ -230,7 +232,7 @@ BITLY_TOKEN = os.environ.get("BITLY_TOKEN", None)
 TERM_ALIAS = os.environ.get("TERM_ALIAS", "Man-Userbot")
 
 # Bot version
-BOT_VER = os.environ.get("BOT_VER", "1.8.6")
+BOT_VER = os.environ.get("BOT_VER", "1.9.3")
 
 # Default .alive username
 ALIVE_USERNAME = os.environ.get("ALIVE_USERNAME", None)
@@ -392,7 +394,7 @@ except AttributeError:
     pass
 
 
-if not BOT_TOKEN is None:
+if BOT_TOKEN is not None:
     tgbot = TelegramClient(
         "TG_BOT_TOKEN",
         api_id=API_KEY,
@@ -449,6 +451,9 @@ def paginate_help(page_number, loaded_modules, prefix):
 
 with bot:
     try:
+        from userbot.modules.sql_helper.bot_blacklists import check_is_black_list
+        from userbot.modules.sql_helper.bot_pms_sql import add_user_to_db, get_user_id
+        from userbot.utils import reply_id
 
         dugmeler = CMD_HELP
         user = bot.get_me()
@@ -457,38 +462,71 @@ with bot:
         logoman = INLINE_PIC
         tgbotusername = BOT_USERNAME
 
-        @tgbot.on(events.NewMessage(pattern="/start"))
-        async def handler(event):
-            await event.message.get_sender()
-            text = (
-                f"**Hey**, __I am using__ 🔥 **Man-Userbot** 🔥\n\n"
-                f"       __Thanks For Using me__\n\n"
-                f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
-                f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
-                f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"
-                f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n"
-            )
-            await tgbot.send_file(
-                event.chat_id,
-                logo,
-                caption=text,
-                buttons=[
-                    [
-                        custom.Button.url(
-                            text="⛑ REPO MAN-USERBOT ⛑",
-                            url="https://github.com/mrismanaziz/Man-Userbot",
+        @tgbot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
+        async def bot_pms(event):
+            chat = await event.get_chat()
+            if check_is_black_list(chat.id):
+                return
+            if chat.id != uid:
+                msg = await event.forward_to(uid)
+                try:
+                    add_user_to_db(
+                        msg.id, get_display_name(chat), chat.id, event.id, 0, 0
+                    )
+                except Exception as e:
+                    LOGS.error(str(e))
+                    if BOTLOG:
+                        await event.client.send_message(
+                            BOTLOG_CHATID,
+                            f"**ERROR:** Saat menyimpan detail pesan di database\n`{str(e)}`",
                         )
-                    ],
-                    [
-                        custom.Button.url(
-                            text="GROUP", url="https://t.me/SharingUserbot"
-                        ),
-                        custom.Button.url(
-                            text="CHANNEL", url="https://t.me/Lunatic0de"
-                        ),
-                    ],
-                ],
-            )
+            else:
+                if event.text.startswith("/"):
+                    return
+                reply_to = await reply_id(event)
+                if reply_to is None:
+                    return
+                users = get_user_id(reply_to)
+                if users is None:
+                    return
+                for usr in users:
+                    user_id = int(usr.chat_id)
+                    reply_msg = usr.reply_id
+                    user_name = usr.first_name
+                    break
+                if user_id is not None:
+                    try:
+                        if event.media:
+                            msg = await event.client.send_file(
+                                user_id,
+                                event.media,
+                                caption=event.text,
+                                reply_to=reply_msg,
+                            )
+                        else:
+                            msg = await event.client.send_message(
+                                user_id,
+                                event.text,
+                                reply_to=reply_msg,
+                                link_preview=False,
+                            )
+                    except UserIsBlockedError:
+                        return await event.reply(
+                            "❌ **Bot ini diblokir oleh pengguna.**"
+                        )
+                    except Exception as e:
+                        return await event.reply(f"**ERROR:** `{e}`")
+                    try:
+                        add_user_to_db(
+                            reply_to, user_name, user_id, reply_msg, event.id, msg.id
+                        )
+                    except Exception as e:
+                        LOGS.error(str(e))
+                        if BOTLOG:
+                            await event.client.send_message(
+                                BOTLOG_CHATID,
+                                f"**ERROR:** Saat menyimpan detail pesan di database\n`{e}`",
+                            )
 
         @tgbot.on(events.InlineQuery)
         async def inline_handler(event):
