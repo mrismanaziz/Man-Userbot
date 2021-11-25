@@ -32,7 +32,10 @@ try:
     bot.start()
     call_py.start()
 except PhoneNumberInvalidError:
-    print(INVALID_PH)
+    LOGS.info(INVALID_PH)
+    sys.exit(1)
+except Exception as e:
+    LOGS.info(str(e), exc_info=True)
     sys.exit(1)
 
 for module_name in ALL_MODULES:
@@ -61,9 +64,9 @@ async def man_userbot_on():
         pass
 
 
-bot.loop.create_task(checking())
-bot.loop.create_task(man_userbot_on())
-bot.loop.create_task(autobot())
+bot.loop.run_until_complete(checking())
+bot.loop.run_until_complete(man_userbot_on())
+bot.loop.run_until_complete(autobot())
 idle()
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
