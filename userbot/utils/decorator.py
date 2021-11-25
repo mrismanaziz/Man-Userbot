@@ -124,7 +124,8 @@ def asst_cmd(**args):
     args["pattern"] = pattern.replace("^/", r_pattern, 1)
 
     def decorator(func):
-        tgbot.add_event_handler(func, events.NewMessage(**args))
+        if tgbot:
+            tgbot.add_event_handler(func, events.NewMessage(**args))
         return func
 
     return decorator
