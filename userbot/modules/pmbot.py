@@ -218,7 +218,7 @@ async def bot_broadcast(event):
 
 
 @man_cmd(pattern="botuser$")
-async def ban_starters(event):
+async def bot_user(event):
     "To get list of users who started bot."
     ulist = get_all_starters()
     if len(ulist) == 0:
@@ -266,7 +266,7 @@ async def ban_botpms(event):
 
 
 @asst_cmd(pattern="^/unban(?:\\s|$)([\\s\\S]*)", from_users=OWNER_ID)
-async def ban_botpms(event):
+async def unban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
     if not user_id:
@@ -292,7 +292,7 @@ async def ban_botpms(event):
 
 
 @man_cmd(pattern="bblist$")
-async def ban_starters(event):
+async def listban_bot(event):
     "To get list of users who are banned in bot."
     ulist = get_all_bl_users()
     if len(ulist) == 0:
@@ -377,7 +377,7 @@ async def bot_start(event):
 
 
 @asst_cmd(pattern="^/uinfo$", from_users=OWNER_ID)
-async def bot_start(event):
+async def bot_uinfo(event):
     reply_to = await reply_id(event)
     if not reply_to:
         return await event.reply(
