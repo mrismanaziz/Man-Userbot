@@ -129,3 +129,14 @@ def asst_cmd(**args):
         return func
 
     return decorator
+
+
+def callback(**args):
+    """Assistant's callback decorator"""
+
+    def decorator(func):
+        if tgbot:
+            tgbot.add_event_handler(func, events.CallbackQuery(**args))
+        return func
+
+    return decorator
