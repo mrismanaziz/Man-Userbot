@@ -15,9 +15,9 @@ from importlib import import_module
 
 from pytgcalls import idle
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
-from telethon.tl.functions.channels import JoinChannelRequest
+from telethon.tl.functions.channels import InviteToChannelRequest, JoinChannelRequest
 
-from userbot import ALIVE_NAME, BOT_VER, BOTLOG_CHATID
+from userbot import ALIVE_NAME, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import LOGS, UPSTREAM_REPO_BRANCH, bot, call_py
 from userbot.modules import ALL_MODULES
@@ -59,7 +59,10 @@ async def man_userbot_on():
         LOGS.info(str(e))
     try:
         await bot(JoinChannelRequest("@Lunatic0de"))
-        await bot(JoinChannelRequest("@SharingUserbot"))
+    except BaseException:
+        pass
+    try:
+        await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
     except BaseException:
         pass
 
