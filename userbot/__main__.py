@@ -17,7 +17,7 @@ from pytgcalls import idle
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
 from telethon.tl.functions.channels import InviteToChannelRequest, JoinChannelRequest
 
-from userbot import ALIVE_NAME, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
+from userbot import ALIVE_NAME, BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import LOGS, UPSTREAM_REPO_BRANCH, bot, call_py
 from userbot.modules import ALL_MODULES
@@ -69,7 +69,8 @@ async def man_userbot_on():
 
 bot.loop.run_until_complete(checking())
 bot.loop.run_until_complete(man_userbot_on())
-bot.loop.run_until_complete(autobot())
+if not BOT_TOKEN:
+    bot.loop.run_until_complete(autobot())
 idle()
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
