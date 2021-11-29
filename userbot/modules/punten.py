@@ -41,7 +41,7 @@ async def _(event):
         "`\n┻┳|￣  )`"
         "`\n┳ﾐ(￣ ／`"
         "`\n┻┳T￣|`"
-        "\n**Masih Gua Pantau**"
+        "\n**Masih Gua Pantau Belum Gua Gigit**"
     )
 
 
@@ -55,6 +55,8 @@ CMD_HELP.update(
         \n  •  **Function : **Arts Beruang kek lagi mantau.\
         \n\n  •  **Syntax :** `{cmd}sadboy`\
         \n  •  **Function : **ya sadboy coba aja.\
-    "
+        \n\n  •  **Syntax :** `{cmd}galau`\
+        \n  •  **Function : **saya galau pengan makan.`\
+     "
     }
 )
