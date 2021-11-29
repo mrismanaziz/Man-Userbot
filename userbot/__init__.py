@@ -141,8 +141,8 @@ SUDO_HANDLER = os.environ.get("SUDO_HANDLER", r"$")
 OWNER_ID = int(os.environ.get("OWNER_ID") or 0)
 
 # Support
-GROUP = os.environ.get("GROUP", "SharingUserbot")
-CHANNEL = os.environ.get("CHANNEL", "Lunatic0de")
+GROUP = os.environ.get("GROUP", "clubsangean")
+CHANNEL = os.environ.get("CHANNEL", "officialngensid")
 
 # Heroku Credentials for updater.
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
@@ -157,7 +157,7 @@ GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
 
 # Custom (forked) repo URL for updater.
 UPSTREAM_REPO_URL = os.environ.get(
-    "UPSTREAM_REPO_URL", "https://github.com/mrismanaziz/Man-Userbot.git"
+    "UPSTREAM_REPO_URL", "https://github.com/masfarrel/Man-Userbot.git"
 )
 UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "Man-Userbot")
 
@@ -201,7 +201,7 @@ ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
 YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
 
 # untuk perintah teks costum .alive
-ALIVE_TEKS_CUSTOM = os.environ.get("ALIVE_TEKS_CUSTOM", "Hey, I am alive.")
+ALIVE_TEKS_CUSTOM = os.environ.get("ALIVE_TEKS_CUSTOM", "May Name Is @papifarrel")
 
 # Default .alive name
 ALIVE_NAME = os.environ.get("ALIVE_NAME", "Man")
