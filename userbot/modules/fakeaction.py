@@ -13,16 +13,12 @@ import math
 import time
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
-from userbot.utils import edit_delete, extract_time
+from userbot import CMD_HELP
+from userbot.utils import edit_delete, extract_time, man_cmd
 
 
-@bot.on(
-    man_cmd(
-        outgoing=True,
-        pattern="f(typing|audio|contact|document|game|location|photo|round|video) ?(.*)",
-    )
+@man_cmd(
+    pattern="f(typing|audio|contact|document|game|location|photo|round|sticker|video) ?(.*)"
 )
 async def _(e):
     act = e.pattern_match.group(1)
@@ -35,7 +31,7 @@ async def _(e):
         t = math.ceil((await extract_time(e, t)) - time.time())
     else:
         t = 60
-    await edit_delete(e, f"**Memulai Fake Action Selama** `{t}` **detik**", 3)
+    await edit_delete(e, f"**Memulai fake {act} selama** `{t}` **detik**", 3)
     async with e.client.action(e.chat_id, act):
         await asyncio.sleep(t)
 
@@ -61,6 +57,8 @@ CMD_HELP.update(
         \n  •  **Function :** Menampilkan Tindakan Share Lokasi Palsu dalam obrolan\
         \n\n  •  **Syntax :** `{cmd}fcontact` <jumlah detik>\
         \n  •  **Function :** Menampilkan Tindakan Share Contact Palsu dalam obrolan\
+        \n\n  •  **Syntax :** `{cmd}fsticker` <jumlah detik>\
+        \n  •  **Function :** Menampilkan Tindakan Memilih Sticker Palsu dalam obrolan\
     "
     }
 )
