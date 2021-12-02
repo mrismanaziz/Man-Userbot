@@ -10,8 +10,12 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
+import asyncio
+
+from telethon.errors import FloodWaitError
+
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP
+from userbot import CMD_HELP, DEVS
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 GCAST_BLACKLIST = [
@@ -26,6 +30,9 @@ GCAST_BLACKLIST = [
     -1001481357570,  # UsergeOnTopic
     -1001459701099,  # CatUserbotSupport
     -1001109837870,  # TelegramBotIndonesia
+    -1001485393652,  # Programmers Hub
+    -1001354786862,  # DaisyXSupport
+    -1001109500936,  # Telethon Chat
 ]
 
 
@@ -37,8 +44,7 @@ async def gcast(event):
     elif event.is_reply:
         msg = await event.get_reply_message()
     else:
-        await edit_delete(event, "**Berikan Sebuah Pesan atau Reply**")
-        return
+        return await edit_delete(event, "**Berikan Sebuah Pesan atau Reply**")
     kk = await edit_or_reply(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
@@ -47,6 +53,11 @@ async def gcast(event):
             chat = x.id
             try:
                 if chat not in GCAST_BLACKLIST:
+                    await event.client.send_message(chat, msg)
+                    done += 1
+            except FloodWaitError as e:
+                if chat not in GCAST_BLACKLIST:
+                    await asyncio.sleep(e.x)
                     await event.client.send_message(chat, msg)
                     done += 1
             except BaseException:
@@ -64,8 +75,7 @@ async def gucast(event):
     elif event.is_reply:
         msg = await event.get_reply_message()
     else:
-        await edit_delete(event, "**Berikan Sebuah Pesan atau Reply**")
-        return
+        return await edit_delete(event, "**Berikan Sebuah Pesan atau Reply**")
     kk = await edit_or_reply(event, "`Globally Broadcasting Msg...`")
     er = 0
     done = 0
@@ -73,12 +83,18 @@ async def gucast(event):
         if x.is_user and not x.entity.bot:
             chat = x.id
             try:
-                done += 1
-                await event.client.send_message(chat, msg)
+                if chat not in DEVS:
+                    await event.client.send_message(chat, msg)
+                    done += 1
+            except FloodWaitError as e:
+                if chat not in DEVS:
+                    await asyncio.sleep(e.x)
+                    await event.client.send_message(chat, msg)
+                    done += 1
             except BaseException:
                 er += 1
     await kk.edit(
-        f"**Berhasil Mengirim Pesan Ke** `{done}` **chats, Gagal Mengirim Pesan Ke** `{er}` **chats**"
+        f"**Berhasil Mengirim Pesan Ke** `{done}` **chat, Gagal Mengirim Pesan Ke** `{er}` **chat**"
     )
 
 
