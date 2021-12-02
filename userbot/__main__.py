@@ -21,7 +21,8 @@ from userbot import ALIVE_NAME, BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import LOGS, UPSTREAM_REPO_BRANCH, bot, call_py
 from userbot.modules import ALL_MODULES
-from userbot.utils.utils import autobot, checking
+from userbot.utils import checking
+from userbot.utils.utils import autobot
 
 INVALID_PH = (
     "\nERROR: Nomor Telepon yang kamu masukkan SALAH."
