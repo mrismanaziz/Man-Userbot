@@ -25,7 +25,7 @@ from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 async def get_call(event):
     mm = await event.client(getchat(event.chat_id))
-    xx = await event.client(getvc(mm.full_chat.call))
+    xx = await event.client(getvc(mm.full_chat.call, limit=1))
     return xx.call
 
 
