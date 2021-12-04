@@ -43,7 +43,9 @@ def ytsearch(query: str):
         data = search["result"][0]
         songname = data["title"]
         url = data["link"]
-        return [songname, url]
+        duration = data["duration"]
+        thumbnail = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
+        return [songname, url, duration, thumbnail]
     except Exception as e:
         print(e)
         return 0
@@ -129,15 +131,17 @@ async def vc_play(event):
         else:
             songname = search[0]
             url = search[1]
+            duration = search[2]
+            thumbnail = search[3]
             format = "bestaudio"
             hm, ytlink = await ytdl(format, url)
             if hm == 0:
                 await botman.edit(f"`{ytlink}`")
             elif chat_id in QUEUE:
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
-                await botman.edit(
-                    f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
-                )
+                caption = f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n🎧 **Atas permintaan:** {from_user}"
+                await botman.delete()
+                await event.client.send_file(chat_id, thumbnail, caption=caption)
             else:
                 try:
                     await call_py.join_group_call(
@@ -148,20 +152,19 @@ async def vc_play(event):
                         stream_type=StreamType().pulse_stream,
                     )
                     add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
-                    await botman.edit(
-                        f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar`\n🎧 **Atas permintaan:** {from_user}",
-                        link_preview=False,
-                    )
+                    caption = f"🏷 **Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n💡 **Status:** `Sedang Memutar`\n🎧 **Atas permintaan:** {from_user}"
+                    await botman.delete()
+                    await event.client.send_file(chat_id, thumbnail, caption=caption)
                 except Exception as ep:
                     clear_queue(chat_id)
                     await botman.edit(f"`{ep}`")
 
     else:
-        botman = await edit_or_reply(replied, "`Downloading`")
+        botman = await event.edit("`Downloading`")
         dl = await replied.download_media()
         link = replied.link
         if replied.audio:
-            songname = "Telegram Music Player..."
+            songname = "Telegram Music Player"
         elif replied.voice:
             songname = "Voice Note"
         if chat_id in QUEUE:
@@ -216,15 +219,17 @@ async def vc_vplay(event):
         else:
             songname = search[0]
             url = search[1]
+            duration = search[2]
+            thumbnail = search[3]
             format = "best[height<=?720][width<=?1280]"
             hm, ytlink = await ytdl(format, url)
             if hm == 0:
                 await xnxx.edit(f"`{ytlink}`")
             elif chat_id in QUEUE:
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Video", RESOLUSI)
-                await xnxx.edit(
-                    f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
-                )
+                caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n🎧 **Atas permintaan:** {from_user}"
+                await xnxx.delete()
+                await event.client.send_file(chat_id, thumbnail, caption=caption)
             else:
                 try:
                     await call_py.join_group_call(
@@ -234,7 +239,7 @@ async def vc_vplay(event):
                     )
                     add_to_queue(chat_id, songname, ytlink, url, "Video", RESOLUSI)
                     await xnxx.edit(
-                        f"**🏷 Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}",
+                        f"**🏷 Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}",
                         link_preview=False,
                     )
                 except Exception as ep:
@@ -242,7 +247,7 @@ async def vc_vplay(event):
                     await xnxx.edit(f"`{ep}`")
 
     elif replied:
-        xnxx = await edit_or_reply(replied, "`Downloading`")
+        xnxx = await event.edit("`Downloading`")
         dl = await replied.download_media()
         link = replied.link
         if len(event.text.split()) < 2:
@@ -251,12 +256,12 @@ async def vc_vplay(event):
             pq = event.text.split(maxsplit=1)[1]
             RESOLUSI = int(pq)
         if replied.video or replied.document:
-            songname = "Telegram Video Player..."
+            songname = "Telegram Video Player"
         if chat_id in QUEUE:
             pos = add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
-            await xnxx.edit(
-                f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
-            )
+            caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
+            await event.delete()
+            await event.client.send_file(chat_id, thumbnail, caption=caption)
         else:
             if RESOLUSI == 360:
                 hmmm = LowQualityVideo()
@@ -271,10 +276,9 @@ async def vc_vplay(event):
                     stream_type=StreamType().pulse_stream,
                 )
                 add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
-                await xnxx.edit(
-                    f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}",
-                    link_preview=False,
-                )
+                caption = f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}"
+                await xnxx.delete()
+                await event.client.send_file(chat_id, thumbnail, caption=caption)
             except Exception as ep:
                 clear_queue(chat_id)
                 await xnxx.edit(f"`{ep}`")
@@ -289,15 +293,17 @@ async def vc_vplay(event):
         else:
             songname = search[0]
             url = search[1]
+            duration = search[2]
+            thumbnail = search[3]
             format = "best[height<=?720][width<=?1280]"
             hm, ytlink = await ytdl(format, url)
             if hm == 0:
                 await xnxx.edit(f"`{ytlink}`")
             elif chat_id in QUEUE:
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Video", RESOLUSI)
-                await xnxx.edit(
-                    f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
-                )
+                caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n🏷 **Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n🎧 **Atas permintaan:** {from_user}"
+                await xnxx.delete()
+                await event.client.send_file(chat_id, thumbnail, caption=caption)
             else:
                 try:
                     await call_py.join_group_call(
@@ -306,10 +312,9 @@ async def vc_vplay(event):
                         stream_type=StreamType().pulse_stream,
                     )
                     add_to_queue(chat_id, songname, ytlink, url, "Video", RESOLUSI)
-                    await xnxx.edit(
-                        f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}",
-                        link_preview=False,
-                    )
+                    caption = f"🏷 **Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}"
+                    await xnxx.delete()
+                    await event.client.send_file(chat_id, thumbnail, caption=caption)
                 except Exception as ep:
                     clear_queue(chat_id)
                     await xnxx.edit(f"`{ep}`")
@@ -324,9 +329,9 @@ async def vc_end(event):
             clear_queue(chat_id)
             await edit_or_reply(event, "**Menghentikan Streaming**")
         except Exception as e:
-            await edit_delete(event, f"**ERROR:** `{e}`", 15)
+            await edit_delete(event, f"**ERROR:** `{e}`")
     else:
-        await edit_delete(event, "**Tidak Sedang Memutar Streaming**", 15)
+        await edit_delete(event, "**Tidak Sedang Memutar Streaming**")
 
 
 @man_cmd(pattern="skip(?:\s|$)([\s\S]*)")
@@ -335,7 +340,7 @@ async def vc_skip(event):
     if len(event.text.split()) < 2:
         op = await skip_current_song(chat_id)
         if op == 0:
-            await edit_delete(event, "**Tidak Sedang Memutar Streaming**", 15)
+            await edit_delete(event, "**Tidak Sedang Memutar Streaming**")
         elif op == 1:
             await edit_delete(event, "antrian kosong, meninggalkan obrolan suara", 10)
         else:
@@ -366,9 +371,9 @@ async def vc_pause(event):
             await call_py.pause_stream(chat_id)
             await edit_or_reply(event, "**Streaming Dijeda**")
         except Exception as e:
-            await edit_delete(event, f"**ERROR:** `{e}`", 15)
+            await edit_delete(event, f"**ERROR:** `{e}`")
     else:
-        await edit_delete(event, "**Tidak Sedang Memutar Streaming**", 15)
+        await edit_delete(event, "**Tidak Sedang Memutar Streaming**")
 
 
 @man_cmd(pattern="resume$")
@@ -381,7 +386,7 @@ async def vc_resume(event):
         except Exception as e:
             await edit_or_reply(event, f"**ERROR:** `{e}`")
     else:
-        await edit_delete(event, "**Tidak Sedang Memutar Streaming**", 15)
+        await edit_delete(event, "**Tidak Sedang Memutar Streaming**")
 
 
 @man_cmd(pattern=r"volume(?: |$)(.*)")
@@ -393,7 +398,7 @@ async def vc_volume(event):
     chat_id = event.chat_id
 
     if not admin and not creator:
-        return await edit_delete(event, f"**Maaf {ALIVE_NAME} Bukan Admin 👮**", 15)
+        return await edit_delete(event, f"**Maaf {ALIVE_NAME} Bukan Admin 👮**", 30)
 
     if chat_id in QUEUE:
         try:
@@ -402,9 +407,9 @@ async def vc_volume(event):
                 event, f"**Berhasil Mengubah Volume Menjadi** `{query}%`"
             )
         except Exception as e:
-            await edit_delete(event, f"**ERROR:** `{e}`", 15)
+            await edit_delete(event, f"**ERROR:** `{e}`", 30)
     else:
-        await edit_delete(event, "**Tidak Sedang Memutar Streaming**", 15)
+        await edit_delete(event, "**Tidak Sedang Memutar Streaming**")
 
 
 @man_cmd(pattern="playlist$")
@@ -419,7 +424,7 @@ async def vc_playlist(event):
                 link_preview=False,
             )
         else:
-            PLAYLIST = f"**🎧 Sedang Memutar:**\n**• [{chat_queue[0][0]}]({chat_queue[0][2]})** | `{chat_queue[0][3]}` \n\n**• Daftaf Putar:**"
+            PLAYLIST = f"**🎧 Sedang Memutar:**\n**• [{chat_queue[0][0]}]({chat_queue[0][2]})** | `{chat_queue[0][3]}` \n\n**• Daftar Putar:**"
             l = len(chat_queue)
             for x in range(1, l):
                 hmm = chat_queue[x][0]
@@ -428,7 +433,7 @@ async def vc_playlist(event):
                 PLAYLIST = PLAYLIST + "\n" + f"**#{x}** - [{hmm}]({hmmm}) | `{hmmmm}`"
             await edit_or_reply(event, PLAYLIST, link_preview=False)
     else:
-        await edit_delete(event, "**Tidak Sedang Memutar Streaming**", 15)
+        await edit_delete(event, "**Tidak Sedang Memutar Streaming**")
 
 
 @call_py.on_stream_end()
