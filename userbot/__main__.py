@@ -13,8 +13,8 @@
 import sys
 from importlib import import_module
 
+import requests
 from pytgcalls import idle
-from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
 from telethon.tl.functions.channels import InviteToChannelRequest, JoinChannelRequest
 
 from userbot import ALIVE_NAME, BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
@@ -23,17 +23,18 @@ from userbot import LOGS, UPSTREAM_REPO_BRANCH, bot, call_py
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
 
-INVALID_PH = (
-    "\nERROR: Nomor Telepon yang kamu masukkan SALAH."
-    "\nTips: Gunakan Kode Negara beserta nomornya atau periksa nomor telepon Anda dan coba lagi."
-)
-
 try:
     bot.start()
     call_py.start()
-except PhoneNumberInvalidError:
-    LOGS.info(INVALID_PH)
-    sys.exit(1)
+    user_id = bot.get_me().id
+    blacklistman = requests.get(
+        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json"
+    ).json()
+    if user_id in blacklistman:
+        LOGS.warning(
+            "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOTnya GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
+        )
+        sys.exit(1)
 except Exception as e:
     LOGS.info(str(e), exc_info=True)
     sys.exit(1)
