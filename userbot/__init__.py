@@ -339,14 +339,6 @@ async def check_botlog_chatid() -> None:
         sys.exit(1)
 
 
-with bot:
-    try:
-        bot.loop.run_until_complete(check_botlog_chatid())
-    except Exception as e:
-        LOGS.exception(f"[BOTLOG] - {e}")
-        sys.exit(1)
-
-
 async def update_restart_msg(chat_id, msg_id):
     DEFAULTUSER = ALIVE_NAME or "Set `ALIVE_NAME` ConfigVar!"
     message = (
@@ -658,4 +650,8 @@ with bot:
             "Untuk Mengaktifkannya Buat bot di @BotFather Lalu Tambahkan var BOT_TOKEN dan BOT_USERNAME. "
             "Pergi Ke @BotFather lalu settings bot » Pilih mode inline » Turn On. "
         )
+    try:
+        bot.loop.run_until_complete(check_botlog_chatid())
+    except BaseException as e:
+        LOGS.exception(f"[BOTLOG] - {e}")
         sys.exit(1)
