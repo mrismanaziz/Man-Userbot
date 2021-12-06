@@ -13,7 +13,7 @@
 import asyncio
 
 from requests import get
-from telethon.errors import FloodWaitError
+from telethon.errors.rpcerrorlist import FloodWaitError
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, DEVS
@@ -39,17 +39,15 @@ async def gcast(event):
     async for x in event.client.iter_dialogs():
         if x.is_group:
             chat = x.id
-            try:
-                if chat not in GCAST_BLACKLIST:
+            if chat not in GCAST_BLACKLIST:
+                try:
                     await event.client.send_message(chat, msg)
+                    await asyncio.sleep(0.1)
                     done += 1
-            except FloodWaitError as e:
-                if chat not in GCAST_BLACKLIST:
-                    await asyncio.sleep(e.x)
-                    await event.client.send_message(chat, msg)
-                    done += 1
-            except BaseException:
-                er += 1
+                except FloodWaitError as anj:
+                    await asyncio.sleep(int(anj.seconds))
+                except BaseException:
+                    er += 1
     await kk.edit(
         f"**Berhasil Mengirim Pesan Ke** `{done}` **Grup, Gagal Mengirim Pesan Ke** `{er}` **Grup**"
     )
@@ -70,17 +68,15 @@ async def gucast(event):
     async for x in event.client.iter_dialogs():
         if x.is_user and not x.entity.bot:
             chat = x.id
-            try:
-                if chat not in DEVS:
+            if chat not in DEVS:
+                try:
                     await event.client.send_message(chat, msg)
+                    await asyncio.sleep(0.1)
                     done += 1
-            except FloodWaitError as e:
-                if chat not in DEVS:
-                    await asyncio.sleep(e.x)
-                    await event.client.send_message(chat, msg)
-                    done += 1
-            except BaseException:
-                er += 1
+                except FloodWaitError as anj:
+                    await asyncio.sleep(int(anj.seconds))
+                except BaseException:
+                    er += 1
     await kk.edit(
         f"**Berhasil Mengirim Pesan Ke** `{done}` **chat, Gagal Mengirim Pesan Ke** `{er}` **chat**"
     )
