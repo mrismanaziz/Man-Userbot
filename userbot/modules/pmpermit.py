@@ -217,7 +217,9 @@ async def approvepm(apprvpm):
             return await edit_delete(apprvpm, "**Invalid username/ID.**")
 
         if not isinstance(user, User):
-            return await edit_delete(apprvpm, "**Mohon Reply Pesan User Yang ingin diterima.**")
+            return await edit_delete(
+                apprvpm, "**Mohon Reply Pesan User Yang ingin diterima.**"
+            )
 
         uid = user.id
         name0 = str(user.first_name)
@@ -225,7 +227,9 @@ async def approvepm(apprvpm):
     else:
         aname = await apprvpm.client.get_entity(apprvpm.chat_id)
         if not isinstance(aname, User):
-            return await edit_delete(apprvpm, "**Mohon Reply Pesan User Yang ingin diterima.**")
+            return await edit_delete(
+                apprvpm, "**Mohon Reply Pesan User Yang ingin diterima.**"
+            )
         name0 = str(aname.first_name)
         uid = apprvpm.chat_id
 
@@ -242,7 +246,9 @@ async def approvepm(apprvpm):
     except IntegrityError:
         return await edit_delete(apprvpm, "**Pesan Anda Sudah Diterima**")
 
-    await edit_delete(apprvpm, f"**Menerima Pesan Dari** [{name0}](tg://user?id={uid})", 5)
+    await edit_delete(
+        apprvpm, f"**Menerima Pesan Dari** [{name0}](tg://user?id={uid})", 5
+    )
 
     if BOTLOG:
         await apprvpm.client.send_message(
@@ -276,13 +282,13 @@ async def disapprovepm(disapprvpm):
         try:
             user = await disapprvpm.client.get_entity(inputArgs)
         except BaseException:
-            return await edit_delete(disapprvpm,
-                "**Mohon Reply Pesan User Yang ingin ditolak.**"
+            return await edit_delete(
+                disapprvpm, "**Mohon Reply Pesan User Yang ingin ditolak.**"
             )
 
         if not isinstance(user, User):
-            return await edit_delete(disapprvpm,
-                "**Mohon Reply Pesan User Yang ingin ditolak.**"
+            return await edit_delete(
+                disapprvpm, "**Mohon Reply Pesan User Yang ingin ditolak.**"
             )
 
         aname = user.id
@@ -293,12 +299,15 @@ async def disapprovepm(disapprvpm):
         dissprove(disapprvpm.chat_id)
         aname = await disapprvpm.client.get_entity(disapprvpm.chat_id)
         if not isinstance(aname, User):
-            return await edit_delete(disapprvpm, "**This can be done only with users.**")
+            return await edit_delete(
+                disapprvpm, "**This can be done only with users.**"
+            )
         name0 = str(aname.first_name)
         aname = aname.id
 
-    await edit_or_reply(disapprvpm,
-        f" **Maaf Pesan** [{name0}](tg://user?id={aname}) **Telah Ditolak, Mohon Jangan Melakukan Spam Ke Room Chat!**"
+    await edit_or_reply(
+        disapprvpm,
+        f" **Maaf Pesan** [{name0}](tg://user?id={aname}) **Telah Ditolak, Mohon Jangan Melakukan Spam Ke Room Chat!**",
     )
 
     if BOTLOG:

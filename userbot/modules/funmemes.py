@@ -6,9 +6,8 @@ from collections import deque
 
 from telethon.errors.rpcerrorlist import MessageIdInvalidError
 
-from userbot import owner
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP, bot, owner
 from userbot.events import man_cmd
 
 # ================= CONSTANT =================

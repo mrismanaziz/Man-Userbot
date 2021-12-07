@@ -5,7 +5,7 @@ import asyncio
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot, owner
+from userbot import CMD_HELP, owner
 from userbot.events import man_cmd
 
 
@@ -27,8 +27,8 @@ async def _(event):
             logo = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await edit_or_reply(event, 
-                "**Error: Mohon Buka Blokir** @tdtapibot **Dan Coba Lagi!**"
+            await edit_or_reply(
+                event, "**Error: Mohon Buka Blokir** @tdtapibot **Dan Coba Lagi!**"
             )
             return
         await asyncio.sleep(0.5)

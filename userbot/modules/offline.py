@@ -11,20 +11,8 @@ from random import choice, randint
 from telethon.events import StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from userbot import bot
+from userbot import AFKREASON, BOTLOG, BOTLOG_CHATID, PM_AUTO_BAN, bot, owner
 from userbot.events import man_cmd, register
-
-from userbot import (
-    AFKREASON,
-    BOTLOG,
-    BOTLOG_CHATID,
-    owner,
-    COUNT_MSG,
-    ISAFK,
-    USERS,
-    PM_AUTO_BAN,
-    owner,
-)
 
 # ========================= CONSTANTS ============================
 AFKSTR = [
@@ -75,9 +63,7 @@ async def set_afk(afk_e):
             UpdateProfileRequest(first_name=user.first_name, last_name="【 OFF 】")
         )
     if BOTLOG:
-        await afk_e.client.send_message(
-            BOTLOG_CHATID, f"#OFF\n**{owner} Telah OFF!**"
-        )
+        await afk_e.client.send_message(BOTLOG_CHATID, f"#OFF\n**{owner} Telah OFF!**")
     ISAFK = True
     afk_time = datetime.now()
     raise StopPropagation

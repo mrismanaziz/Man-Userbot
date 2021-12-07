@@ -8,7 +8,7 @@ from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEVS, bot, owner
+from userbot import CMD_HELP, DEVS, owner
 from userbot.events import man_cmd, register
 
 
@@ -73,7 +73,9 @@ async def locks(event):
         if not input_str:
             await edit_or_reply(event, "**Apa Yang Harus Saya Kunci?**")
         else:
-            await edit_or_reply(event, f"**Jenis Yang Mau Anda Kunci Tidak Valid** `{input_str}`")
+            await edit_or_reply(
+                event, f"**Jenis Yang Mau Anda Kunci Tidak Valid** `{input_str}`"
+            )
         return
     lock_rights = ChatBannedRights(
         until_date=None,
@@ -92,7 +94,9 @@ async def locks(event):
         await event.client(
             EditChatDefaultBannedRightsRequest(peer=peer_id, banned_rights=lock_rights)
         )
-        await edit_or_reply(event, f"**{owner} Telah Mengunci {what} Untuk Obrolan Ini!!**")
+        await edit_or_reply(
+            event, f"**{owner} Telah Mengunci {what} Untuk Obrolan Ini!!**"
+        )
     except BaseException as e:
         await edit_or_reply(event, f"**ERROR:** {e}")
 
@@ -160,8 +164,8 @@ async def rem_locks(event):
         if not input_str:
             await edit_or_reply(event, "**Apa Yang Harus Saya Buka?**")
         else:
-            await edit_or_reply(event, 
-                f"**Jenis Kunci Yang Mau Anda Buka Tidak Valid** `{input_str}`"
+            await edit_or_reply(
+                event, f"**Jenis Kunci Yang Mau Anda Buka Tidak Valid** `{input_str}`"
             )
         return
     unlock_rights = ChatBannedRights(
@@ -183,8 +187,8 @@ async def rem_locks(event):
                 peer=peer_id, banned_rights=unlock_rights
             )
         )
-        await edit_or_reply(event, 
-            f"**{owner} Telah Membuka Kunci {what} Untuk Obrolan Ini!!**"
+        await edit_or_reply(
+            event, f"**{owner} Telah Membuka Kunci {what} Untuk Obrolan Ini!!**"
         )
     except BaseException as e:
         await edit_or_reply(event, f"**ERROR:** {e}")

@@ -186,9 +186,7 @@ async def _(event):
             try:
                 if pic.endswith((".tgs", ".webp")):
                     await bot.send_message(event.chat_id, file=pic)
-                    await bot.send_message(
-                        event.chat_id, f"**✘ {owner} Telah AFK ✘**"
-                    )
+                    await bot.send_message(event.chat_id, f"**✘ {owner} Telah AFK ✘**")
                 else:
                     await bot.send_message(
                         event.chat_id,
@@ -230,9 +228,7 @@ async def _(event):
                         file=pic,
                     )
             else:
-                await bot.send_message(
-                    BOTLOG_CHATID, f"\n**✘ {owner} Sedang AFK ✘**"
-                )
+                await bot.send_message(BOTLOG_CHATID, f"\n**✘ {owner} Sedang AFK ✘**")
         except Exception as e:
             BOTLOG_CHATIDger.warn(str(e))
 

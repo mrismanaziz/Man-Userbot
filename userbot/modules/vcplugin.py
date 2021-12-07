@@ -17,9 +17,8 @@ from telethon.tl import types
 from telethon.utils import get_display_name
 from youtubesearchpython import VideosSearch
 
-from userbot import owner
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, call_py
+from userbot import CMD_HELP, call_py, owner
 from userbot.utils import bash, edit_delete, edit_or_reply, man_cmd
 from userbot.utils.queues.queues import (
     QUEUE,
