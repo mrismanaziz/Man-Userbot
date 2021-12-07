@@ -5,24 +5,19 @@ import asyncio
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import ChannelParticipantsAdmins
 
-from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
-
-# ================= CONSTANT =================
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-# ============================================
+from userbot import CMD_HELP, bot, owner
+from userbot.utils import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"fgban(?: |$)(.*)"))
+@man_cmd(pattern="fgban(?: |$)(.*)")
 async def gbun(event):
     if event.fwd_from:
         return
     gbunVar = event.text
     gbunVar = gbunVar[6:]
-    mentions = f"**Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By** {DEFAULTUSER}\n"
-    await event.edit("**Summoning out the mighty gban hammer ☠️**")
+    mentions = f"**Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By** {owner}\n"
+    await edit_or_reply(event, "**Summoning out the mighty gban hammer ☠️**")
     asyncio.sleep(3.5)
     chat = await event.get_input_chat()
     async for _ in bot.iter_participants(chat, filter=ChannelParticipantsAdmins):
@@ -43,7 +38,7 @@ async def gbun(event):
             jnl = (
                 "**Warning!!**"
                 "[{}](tg://user?id={})"
-                f"** 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By** {DEFAULTUSER}\n\n"
+                f"** 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By** {owner}\n\n"
                 "**Name: ** __{}__\n"
                 "**ID : ** `{}`\n"
             ).format(firstname, idd, firstname, idd)
@@ -60,7 +55,7 @@ async def gbun(event):
                 jnl += no_reason
             await reply_message.reply(jnl)
     else:
-        mention = f"**Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By** {DEFAULTUSER} \n**Reason:** `Jamet` "
+        mention = f"**Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By** {owner} \n**Reason:** `Jamet` "
         await event.reply(mention)
     await event.delete()
 

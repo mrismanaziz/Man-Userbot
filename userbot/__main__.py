@@ -17,9 +17,9 @@ import requests
 from pytgcalls import idle
 from telethon.tl.functions.channels import InviteToChannelRequest, JoinChannelRequest
 
-from userbot import ALIVE_NAME, BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
+from userbot import BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import LOGS, UPSTREAM_REPO_BRANCH, bot, call_py
+from userbot import LOGS, UPSTREAM_REPO_BRANCH, bot, call_py, owner
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
 
@@ -43,7 +43,7 @@ for module_name in ALL_MODULES:
     imported_module = import_module("userbot.modules." + module_name)
 
 LOGS.info(
-    f"Jika {ALIVE_NAME} Membutuhkan Bantuan, Silahkan Tanyakan di Grup https://t.me/SharingUserbot"
+    f"Jika {owner} Membutuhkan Bantuan, Silahkan Tanyakan di Grup https://t.me/SharingUserbot"
 )
 
 LOGS.info(f"Man-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")

@@ -1,59 +1,58 @@
 from time import sleep
 
-from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP, owner
+from userbot.events import edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern="p(?: |$)(.*)"))
+@man_cmd(pattern="p(?: |$)(.*)")
 async def _(event):
-    await event.edit("**Assalamualaikum Dulu Biar Sopan**")
+    await edit_or_reply(event, "**Assalamualaikum Dulu Biar Sopan**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"pe(?: |$)(.*)"))
+@man_cmd(pattern="pe(?: |$)(.*)")
 async def _(event):
-    await event.edit("**Assalamualaikum Warahmatullahi Wabarakatuh**")
+    await edit_or_reply(event, "**Assalamualaikum Warahmatullahi Wabarakatuh**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern="P(?: |$)(.*)"))
+@man_cmd(pattern="P(?: |$)(.*)")
 async def _(event):
-    await event.edit(f"**Haii Salken Saya {ALIVE_NAME}**")
+    xx = await edit_or_reply(event, f"**Haii Salken Saya {owner}**")
     sleep(2)
-    await event.edit("**Assalamualaikum...**")
+    await xx.edit("**Assalamualaikum...**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"l(?: |$)(.*)"))
+@man_cmd(pattern="l(?: |$)(.*)")
 async def _(event):
-    await event.edit("**Wa'alaikumsalam**")
+    await edit_or_reply(event, "**Wa'alaikumsalam**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"a(?: |$)(.*)"))
+@man_cmd(pattern="a(?: |$)(.*)")
 async def _(event):
-    await event.edit(f"**Haii Salken Saya {ALIVE_NAME}**")
+    xx = await edit_or_reply(event, f"**Haii Salken Saya {owner}**")
     sleep(2)
-    await event.edit("**Assalamualaikum**")
+    await xx.edit("**Assalamualaikum**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"j(?: |$)(.*)"))
+@man_cmd(pattern="j(?: |$)(.*)")
 async def _(event):
-    await event.edit("**JAKA SEMBUNG BAWA GOLOK**")
+    xx = await edit_or_reply(event, "**JAKA SEMBUNG BAWA GOLOK**")
     sleep(3)
-    await event.edit("**NIMBRUNG GOBLOKK!!!🔥**")
+    await xx.edit("**NIMBRUNG GOBLOKK!!!🔥**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"k(?: |$)(.*)"))
+@man_cmd(pattern="k(?: |$)(.*)")
 async def _(event):
-    await event.edit(f"**Hallo KIMAAKK SAYA {ALIVE_NAME}**")
+    xx = await edit_or_reply(event, f"**Hallo KIMAAKK SAYA {owner}**")
     sleep(2)
-    await event.edit("**LU SEMUA NGENTOT 🔥**")
+    await xx.edit("**LU SEMUA NGENTOT 🔥**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"ass(?: |$)(.*)"))
+@man_cmd(pattern="ass(?: |$)(.*)")
 async def _(event):
-    await event.edit("**Salam Dulu Biar Sopan**")
+    xx = await edit_or_reply(event, "**Salam Dulu Biar Sopan**")
     sleep(2)
-    await event.edit("**السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ**")
+    await xx.edit("**السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ**")
 
 
 CMD_HELP.update(
