@@ -30,7 +30,6 @@ from telethon.tl.functions.channels import (
 )
 from telethon.tl.functions.messages import GetFullChatRequest, GetHistoryRequest
 from telethon.tl.types import (
-    ChannelParticipantAdmin,
     ChannelParticipantsAdmins,
     ChannelParticipantsBots,
     InputPeerUser,
