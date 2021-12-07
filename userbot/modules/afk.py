@@ -14,7 +14,6 @@ from userbot.events import man_cmd
 
 from userbot import (  # noqa pylint: disable=unused-import isort:skip
     AFKREASON,
-    ALIVE_NAME,
     BOTLOG,
     BOTLOG_CHATID,
     CMD_HELP,
@@ -23,6 +22,7 @@ from userbot import (  # noqa pylint: disable=unused-import isort:skip
     PM_AUTO_BAN,
     USERS,
     bot,
+    owner,
 )
 
 USER_AFK = {}
@@ -51,18 +51,18 @@ async def set_not_afk(event):
                 shite = await bot.send_message(event.chat_id, file=pic)
                 shites = await bot.send_message(
                     event.chat_id,
-                    f"**{ALIVE_NAME} Kembali Online Untuk Parming**\n**Dari AFK :** `{total_afk_time}` **Yang Lalu**",
+                    f"**{owner} Kembali Online Untuk Parming**\n**Dari AFK :** `{total_afk_time}` **Yang Lalu**",
                 )
             else:
                 shite = await bot.send_message(
                     event.chat_id,
-                    f"**{ALIVE_NAME} Pengangguran sok Sibuk Balik Lagi!**\n**Dari AFK :** `{total_afk_time}` **Yang Lalu**",
+                    f"**{owner} Pengangguran sok Sibuk Balik Lagi!**\n**Dari AFK :** `{total_afk_time}` **Yang Lalu**",
                     file=pic,
                 )
         except BaseException:
             shite = await bot.send_message(
                 event.chat_id,
-                f"**{ALIVE_NAME} Kembali Online**\n**Dari AFK :** `{total_afk_time}` **Yang Lalu**",
+                f"**{owner} Kembali Online**\n**Dari AFK :** `{total_afk_time}` **Yang Lalu**",
             )
 
         await asyncio.sleep(6)
@@ -103,12 +103,12 @@ async def on_afk(event):
         msg = None
         if reason:
             message_to_reply = (
-                f"**✘ {ALIVE_NAME} Sedang AFK** `{total_afk_time}` **Yang Lalu ✘**\n"
+                f"**✘ {owner} Sedang AFK** `{total_afk_time}` **Yang Lalu ✘**\n"
                 + f"**✦҈͜͡➳ Karena :** `{reason}`"
             )
         else:
             message_to_reply = (
-                f"**✘ Maaf {ALIVE_NAME} Sedang AFK** `{total_afk_time}` **Yang Lalu ✘**"
+                f"**✘ Maaf {owner} Sedang AFK** `{total_afk_time}` **Yang Lalu ✘**"
             )
         try:
             if pic.endswith((".tgs", ".webp")):
@@ -169,34 +169,34 @@ async def _(event):
                     await bot.send_message(event.chat_id, file=pic)
                     await bot.send_message(
                         event.chat_id,
-                        f"\n**✘ {ALIVE_NAME} Telah AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
+                        f"\n**✘ {owner} Telah AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                     )
                 else:
                     await bot.send_message(
                         event.chat_id,
-                        f"\n**✘ {ALIVE_NAME} Telah AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
+                        f"\n**✘ {owner} Telah AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                         file=pic,
                     )
             except BaseException:
                 await bot.send_message(
                     event.chat_id,
-                    f"\n**✘ {ALIVE_NAME} Telah AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
+                    f"\n**✘ {owner} Telah AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                 )
         else:
             try:
                 if pic.endswith((".tgs", ".webp")):
                     await bot.send_message(event.chat_id, file=pic)
                     await bot.send_message(
-                        event.chat_id, f"**✘ {ALIVE_NAME} Telah AFK ✘**"
+                        event.chat_id, f"**✘ {owner} Telah AFK ✘**"
                     )
                 else:
                     await bot.send_message(
                         event.chat_id,
-                        f"**✘ {ALIVE_NAME} Telah AFK ✘**",
+                        f"**✘ {owner} Telah AFK ✘**",
                         file=pic,
                     )
             except BaseException:
-                await bot.send_message(event.chat_id, f"**✘ {ALIVE_NAME} Telah AFK ✘**")
+                await bot.send_message(event.chat_id, f"**✘ {owner} Telah AFK ✘**")
         await event.delete()
         try:
             if reason and pic:
@@ -204,34 +204,34 @@ async def _(event):
                     await bot.send_message(BOTLOG_CHATID, file=pic)
                     await bot.send_message(
                         BOTLOG_CHATID,
-                        f"\n**✘ {ALIVE_NAME} Sedang AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
+                        f"\n**✘ {owner} Sedang AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                     )
                 else:
                     await bot.send_message(
                         BOTLOG_CHATID,
-                        f"\n**✘ {ALIVE_NAME} Sedang AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
+                        f"\n**✘ {owner} Sedang AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                         file=pic,
                     )
             elif reason:
                 await bot.send_message(
                     BOTLOG_CHATID,
-                    f"\n**✘ {ALIVE_NAME} Sedang AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
+                    f"\n**✘ {owner} Sedang AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                 )
             elif pic:
                 if pic.endswith((".tgs", ".webp")):
                     await bot.send_message(BOTLOG_CHATID, file=pic)
                     await bot.send_message(
-                        BOTLOG_CHATID, f"\n**✘ {ALIVE_NAME} Sedang AFK ✘**"
+                        BOTLOG_CHATID, f"\n**✘ {owner} Sedang AFK ✘**"
                     )
                 else:
                     await bot.send_message(
                         BOTLOG_CHATID,
-                        f"\n**✘ {ALIVE_NAME} Sedang AFK ✘**",
+                        f"\n**✘ {owner} Sedang AFK ✘**",
                         file=pic,
                     )
             else:
                 await bot.send_message(
-                    BOTLOG_CHATID, f"\n**✘ {ALIVE_NAME} Sedang AFK ✘**"
+                    BOTLOG_CHATID, f"\n**✘ {owner} Sedang AFK ✘**"
                 )
         except Exception as e:
             BOTLOG_CHATIDger.warn(str(e))

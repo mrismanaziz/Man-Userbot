@@ -3,7 +3,7 @@
 
 from telethon.events import ChatAction
 
-from userbot import ALIVE_NAME, DEVS, bot
+from userbot import owner, DEVS, bot
 from userbot.events import man_cmd, register
 from userbot.utils import get_user_from_event
 
@@ -106,7 +106,7 @@ async def gben(userbot):
         r"\\**#GBanned_User**//"
         f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
         f"**User ID:** `{user.id}`\n"
-        f"**Action:** `Global Banned by {ALIVE_NAME}`"
+        f"**Action:** `Global Banned by {owner}`"
     )
 
 
@@ -169,5 +169,5 @@ async def gunben(userbot):
         r"\\**#UnGbanned_User**//"
         f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
         f"**User ID:** `{user.id}`\n"
-        f"**Action:** `UnGBanned by {ALIVE_NAME}`"
+        f"**Action:** `UnGBanned by {owner}`"
     )

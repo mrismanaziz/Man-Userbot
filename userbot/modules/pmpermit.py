@@ -12,13 +12,11 @@ from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.tl.types import User
 
-from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID
+from userbot import BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, COUNT_PM, LASTMSG, LOGS, PM_AUTO_BAN, PM_LIMIT, bot
 from userbot.events import man_cmd, register
-
-# ========================= CONSTANTS ============================
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
+from userbot.utils import edit_delete
 
 DEF_UNAPPROVED_MSG = (
     "╔════════════════════╗\n"
@@ -31,7 +29,6 @@ DEF_UNAPPROVED_MSG = (
     "    𝗣𝗲𝘀𝗮𝗻 𝗢𝘁𝗼𝗺𝗮𝘁𝗶𝘀 𝗕𝘆 -𝗨𝘀𝗲𝗿𝗕𝗼𝘁\n"
     "╚════════════════════╝\n"
 )
-# =================================================================
 
 
 @register(incoming=True, disable_edited=True, disable_errors=True)
@@ -198,7 +195,7 @@ async def approvepm(apprvpm):
         from userbot.modules.sql_helper.globals import gvarstatus
         from userbot.modules.sql_helper.pm_permit_sql import approve
     except AttributeError:
-        return await apprvpm.edit("`Running on Non-SQL mode!`")
+        return await edit_delete(apprvpm, "`Running on Non-SQL mode!`")
 
     if apprvpm.reply_to_msg_id:
         reply = await apprvpm.get_reply_message()
@@ -217,10 +214,10 @@ async def approvepm(apprvpm):
         try:
             user = await apprvpm.client.get_entity(inputArgs)
         except BaseException:
-            return await apprvpm.edit("**Invalid username/ID.**")
+            return await edit_delete(apprvpm, "**Invalid username/ID.**")
 
         if not isinstance(user, User):
-            return await apprvpm.edit("**Mohon Reply Pesan User Yang ingin diterima.**")
+            return await edit_delete(apprvpm, "**Mohon Reply Pesan User Yang ingin diterima.**")
 
         uid = user.id
         name0 = str(user.first_name)
@@ -228,7 +225,7 @@ async def approvepm(apprvpm):
     else:
         aname = await apprvpm.client.get_entity(apprvpm.chat_id)
         if not isinstance(aname, User):
-            return await apprvpm.edit("**Mohon Reply Pesan User Yang ingin diterima.**")
+            return await edit_delete(apprvpm, "**Mohon Reply Pesan User Yang ingin diterima.**")
         name0 = str(aname.first_name)
         uid = apprvpm.chat_id
 
@@ -243,9 +240,9 @@ async def approvepm(apprvpm):
     try:
         approve(uid)
     except IntegrityError:
-        return await apprvpm.edit("**Pesan Anda Sudah Diterima**")
+        return await edit_delete(apprvpm, "**Pesan Anda Sudah Diterima**")
 
-    await apprvpm.edit(f"**Menerima Pesan Dari** [{name0}](tg://user?id={uid})")
+    await edit_delete(apprvpm, f"**Menerima Pesan Dari** [{name0}](tg://user?id={uid})", 5)
 
     if BOTLOG:
         await apprvpm.client.send_message(
@@ -259,7 +256,7 @@ async def disapprovepm(disapprvpm):
     try:
         from userbot.modules.sql_helper.pm_permit_sql import dissprove
     except BaseException:
-        return await disapprvpm.edit("`Running on Non-SQL mode!`")
+        return await edit_delete(disapprvpm, "`Running on Non-SQL mode!`")
 
     if disapprvpm.reply_to_msg_id:
         reply = await disapprvpm.get_reply_message()
@@ -279,12 +276,12 @@ async def disapprovepm(disapprvpm):
         try:
             user = await disapprvpm.client.get_entity(inputArgs)
         except BaseException:
-            return await disapprvpm.edit(
+            return await edit_delete(disapprvpm,
                 "**Mohon Reply Pesan User Yang ingin ditolak.**"
             )
 
         if not isinstance(user, User):
-            return await disapprvpm.edit(
+            return await edit_delete(disapprvpm,
                 "**Mohon Reply Pesan User Yang ingin ditolak.**"
             )
 
@@ -296,11 +293,11 @@ async def disapprovepm(disapprvpm):
         dissprove(disapprvpm.chat_id)
         aname = await disapprvpm.client.get_entity(disapprvpm.chat_id)
         if not isinstance(aname, User):
-            return await disapprvpm.edit("**This can be done only with users.**")
+            return await edit_delete(disapprvpm, "**This can be done only with users.**")
         name0 = str(aname.first_name)
         aname = aname.id
 
-    await disapprvpm.edit(
+    await edit_or_reply(disapprvpm,
         f" **Maaf Pesan** [{name0}](tg://user?id={aname}) **Telah Ditolak, Mohon Jangan Melakukan Spam Ke Room Chat!**"
     )
 

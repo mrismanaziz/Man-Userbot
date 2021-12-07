@@ -1,18 +1,13 @@
 """ Userbot module for other small commands. """
-from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
-
-# ================= CONSTANT =================
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-# ============================================
+from userbot import CMD_HELP, bot, owner
+from userbot.utils import edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"ihelp$"))
-async def usit(e):
-    await e.edit(
-        f"**Hai {DEFAULTUSER} Kalo Anda Tidak Tau Perintah Untuk Memerintah Ku Ketik** `.help` Atau Bisa Minta Bantuan Ke:\n"
+@man_cmd(pattern="ihelp$")
+async def usit(event):
+    await edit_or_reply(event,
+        f"**Hai {owner} Kalo Anda Tidak Tau Perintah Untuk Memerintah Ku Ketik** `.help` Atau Bisa Minta Bantuan Ke:\n"
         f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
         f"✣ **Channel Man :** [Lunatic0de](t.me/Lunatic0de)\n"
         f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"
@@ -20,11 +15,10 @@ async def usit(e):
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"listvar$"))
-async def var(m):
-    await m.edit(
-        f"**Disini Daftar Vars Dari {DEFAULTUSER}:**\n"
-        "\n[DAFTAR VARS](https://telegra.ph/List-Variabel-Heroku-untuk-Man-Userbot-09-22)"
+@man_cmd(pattern="listvar$")
+async def var(event):
+    await edit_or_reply(event,
+        f"**Disini Daftar Vars Dari Man-Userbot:** [DAFTAR VARS](https://telegra.ph/List-Variabel-Heroku-untuk-Man-Userbot-09-22)"
     )
 
 

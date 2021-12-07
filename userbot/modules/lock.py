@@ -7,13 +7,13 @@
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
-from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP, DEVS, bot, owner
+from userbot.events import man_cmd, register
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"lock ?(.*)"))
+@man_cmd(pattern="lock ?(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.mlock ?(.*)")
 async def locks(event):
     input_str = event.pattern_match.group(1).lower()
     peer_id = event.chat_id
@@ -71,9 +71,9 @@ async def locks(event):
         what = "Semuanya"
     else:
         if not input_str:
-            await event.edit("`Mohon Maaf, Apa Yang Harus Saya Kunci?`")
+            await edit_or_reply(event, "**Apa Yang Harus Saya Kunci?**")
         else:
-            await event.edit(f"`Jenis Yang Mau Anda Kunci Tidak Valid` `{input_str}`")
+            await edit_or_reply(event, f"**Jenis Yang Mau Anda Kunci Tidak Valid** `{input_str}`")
         return
     lock_rights = ChatBannedRights(
         until_date=None,
@@ -92,16 +92,15 @@ async def locks(event):
         await event.client(
             EditChatDefaultBannedRightsRequest(peer=peer_id, banned_rights=lock_rights)
         )
-        await event.edit(f"`{ALIVE_NAME} Telah Mengunci {what} Untuk Obrolan Ini!!`")
+        await edit_or_reply(event, f"**{owner} Telah Mengunci {what} Untuk Obrolan Ini!!**")
     except BaseException as e:
-        await event.edit(
-            f"`Apakah {ALIVE_NAME} Mempunyai Izin Melakukan Itu Disini?`\n**Kesalahan:** {e}"
-        )
+        await edit_or_reply(event, f"**ERROR:** {e}")
 
         return
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"unlock ?(.*)"))
+@man_cmd(pattern="unlock ?(.*)")
+@register(incoming=True, from_users=DEVS, pattern=r"^\.munlock ?(.*)")
 async def rem_locks(event):
     input_str = event.pattern_match.group(1).lower()
     peer_id = event.chat_id
@@ -159,10 +158,10 @@ async def rem_locks(event):
         what = "Semuanya"
     else:
         if not input_str:
-            await event.edit("`Apa Yang Harus Saya Buka?`")
+            await edit_or_reply(event, "**Apa Yang Harus Saya Buka?**")
         else:
-            await event.edit(
-                f"`Jenis Kunci Yang Mau Anda Buka Tidak Valid` `{input_str}`"
+            await edit_or_reply(event, 
+                f"**Jenis Kunci Yang Mau Anda Buka Tidak Valid** `{input_str}`"
             )
         return
     unlock_rights = ChatBannedRights(
@@ -184,13 +183,11 @@ async def rem_locks(event):
                 peer=peer_id, banned_rights=unlock_rights
             )
         )
-        await event.edit(
-            f"`{ALIVE_NAME} Telah Membuka Kunci {what} Untuk Obrolan Ini!!`"
+        await edit_or_reply(event, 
+            f"**{owner} Telah Membuka Kunci {what} Untuk Obrolan Ini!!**"
         )
     except BaseException as e:
-        await event.edit(
-            f"`Apakah {ALIVE_NAME} Mempunyai Izin Melakukan Itu Disini?`\n**ERROR:** {e}"
-        )
+        await edit_or_reply(event, f"**ERROR:** {e}")
 
         return
 

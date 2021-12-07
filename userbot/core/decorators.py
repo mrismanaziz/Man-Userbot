@@ -3,7 +3,7 @@ import asyncio
 from telethon.errors import FloodWaitError, MessageNotModifiedError
 from telethon.events import CallbackQuery
 
-from userbot import ALIVE_NAME, SUDO_USERS, bot
+from userbot import SUDO_USERS, bot, owner
 from userbot.modules.sql_helper.globals import gvarstatus
 
 
@@ -23,7 +23,7 @@ def check_owner(func):
         else:
             HELP_TEXT = (
                 gvarstatus("HELP_TEXT")
-                or f"Hanya {ALIVE_NAME} yang dapat Mengakses Ini!!\nSilahkan Buat UserBot Anda sendiri."
+                or f"Hanya {owner} yang dapat Mengakses Ini!!\nSilahkan Buat UserBot Anda sendiri."
             )
             await c_q.answer(
                 HELP_TEXT,
