@@ -2,7 +2,7 @@ from time import sleep
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, owner
-from userbot.events import edit_or_reply, man_cmd
+from userbot.utils import edit_or_reply, man_cmd
 
 
 @man_cmd(pattern="p(?: |$)(.*)")
