@@ -9,7 +9,7 @@
 import os
 
 from telethon import events
-from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.errors.rpcerrorlist import ChatAdminRequiredError, YouBlockedUserError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import ChannelParticipantsKicked
 from telethon.utils import get_display_name
