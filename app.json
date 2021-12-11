@@ -4,20 +4,26 @@
   "logo": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
   "keywords": ["telegram", "userbot", "man-userbot", "modular", "python"],
   "repository": "https://github.com/mrismanaziz/Man-Userbot",
-  "telegram": ["https://t.me/mrismanaziz", "https://t.me/tofik_dn"],
-  "success_url": "https://t.me/Lunatic0de",
   "stack": "container",
   "env": {
     "API_KEY": {
-      "description": "Dapatkan API KEY di web my.telegram.org. Masukan yg APP ID Telegram",
+      "description": "Dapatkan API KEY di web my.telegram.org Masukan yg APP ID Telegram",
       "required": true
     },
     "API_HASH": {
-      "description": "Dapatkan Api hash di web my.telegram.org.",
+      "description": "Dapatkan API Hash di web my.telegram.org",
       "required": true
     },
+    "BOT_TOKEN": {
+      "description": "Buat Bot di t.me/botfather Masukan BOT tokennya disini",
+      "required": false
+    },
+    "BOT_USERNAME": {
+      "description": "Buat Bot di t.me/botfather Masukan BOT Usernamenya pake @",
+      "required": false
+    },
      "STRING_SESSION": {
-      "description": "Dapatkan String Session di Grup » https://t.me/sharinguserbot » Lalu ketik #string",
+      "description": "Dapatkan String Session di Grup » https://t.me/SharingUserbot » Lalu ketik #string",
       "required": true
     },
     "HEROKU_APP_NAME": {
@@ -29,35 +35,13 @@
       "required": true
     },
     "BOTLOG_CHATID": {
-      "description": "Buatlah sebuah grup dan masukan bot @MissRose_bot lalu ketik /id, masukan id grup nya disini. ex: '-123456'",
+      "description": "Buatlah grup telegram publik lalu masukan @MissRose_bot ketik /id, masukan id grup nya disini. contoh: -1001473548xxx",
       "value": "Isi id grup mu wajib dengan awalan -100",
       "required": true
     },
     "PM_AUTO_BAN": {
-      "description": "PM Auto-Ban adalah module untuk bot welcome otomatis ketika ada orang ngePC kamu,jika Mau di aktifkan ubah ke True",
-      "value": "False",
-      "required": false
-    },
-    "ALIVE_NAME": {
-      "description": "Masukan Nama untuk menunjukan pesan di perintah .alive / .afk / .ping dan lain lain",
-      "required": true
-    },
-    "ALIVE_LOGO": {
-      "description": "Gambar dalam module .alive",
-      "value": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
-      "required": false
-    },
-    "ALIVE_TEKS_CUSTOM": {
-      "description": "Pesan Text Kustom Alive Mu Untuk Perintah .alive (Isi Terserah)",
-      "required": false
-    },
-    "S_PACK_NAME": {
-      "description": "Costum Nama Sticker Pack Mu",
-      "required": false
-    },
-    "WEATHER_DEFCITY": {
-      "description": "isi kota kamu tinggal untuk default module .weather / cuaca",
-      "value": "Jakarta",
+      "description": "PM Auto-Ban adalah module untuk bot welcome otomatis ketika ada orang ngePC kamu, jika Mau di matikan ubah ke False",
+      "value": "True",
       "required": false
     }
   },
