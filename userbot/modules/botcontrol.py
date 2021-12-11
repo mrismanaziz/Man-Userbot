@@ -364,7 +364,7 @@ async def alvch(event):
         else:
             await setit(event, var, themssg)
             await conv.send_message(
-                f"**ALIVE_EMOJI Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+                f"**Link CHANNEL Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
                 buttons=get_back_button("alivemenu"),
             )
 
