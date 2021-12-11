@@ -65,7 +65,6 @@ logging.basicConfig(
 )
 logging.getLogger("asyncio").setLevel(logging.ERROR)
 logging.getLogger("pytgcalls").setLevel(logging.ERROR)
-logging.getLogger("Telethon").setLevel(logging.ERROR)
 logging.getLogger("telethon.network.mtprotosender").setLevel(logging.ERROR)
 LOGS = getLogger(__name__)
 
@@ -155,7 +154,7 @@ GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
 UPSTREAM_REPO_URL = os.environ.get(
     "UPSTREAM_REPO_URL", "https://github.com/mrismanaziz/Man-Userbot.git"
 )
-UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "alpha")
+UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "Man-Userbot")
 
 # SQL Database URI
 DB_URI = os.environ.get("DATABASE_URL", None)
