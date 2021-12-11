@@ -3,14 +3,12 @@
 
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 
-from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
-from userbot.utils import get_user_from_event
+from userbot import CMD_HELP, owner
+from userbot.utils import get_user_from_event, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"gkick(?: |$)(.*)"))
+@man_cmd(pattern="gkick(?: |$)(.*)")
 async def gspide(rk):
     lazy = rk
     sender = await lazy.get_sender()
@@ -20,7 +18,7 @@ async def gspide(rk):
     else:
         rkp = await lazy.edit("`Processing...`")
     me = await rk.client.get_me()
-    await rkp.edit(f"`{ALIVE_NAME} Memproses Global Kick Jamet Goblok!`")
+    await rkp.edit(f"`{owner} Memproses Global Kick Jamet Goblok!`")
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     await rk.get_chat()
     a = b = 0
@@ -38,7 +36,7 @@ async def gspide(rk):
         return await rkp.edit("`Gagal Global Kick! Pengguna tidak dikenal.`")
     if user:
         if user.id == 844432220:
-            return await rkp.edit(f"`{ALIVE_NAME} Jangan Ngadi Ngadi itu CODER aing`")
+            return await rkp.edit(f"`{owner} Jangan Ngadi Ngadi itu CODER aing`")
         try:
             await rk.client(BlockRequest(user))
             await rk.client(UnblockRequest(user))
@@ -55,13 +53,13 @@ async def gspide(rk):
                 await rk.client.edit_permissions(i, user, send_messages=True)
                 a += 1
                 await rkp.edit(
-                    f"`{ALIVE_NAME} Memproses Global Kick Jamet Goblok! Gkicked di {a} Group Chats..`"
+                    f"`{owner} Memproses Global Kick Jamet Goblok! Gkicked di {a} Group Chats..`"
                 )
 
             except BaseException:
                 b += 1
     else:
-        await rkp.edit(f"`{ALIVE_NAME} Reply ke Chat Penggunanya Goblok!!`")
+        await rkp.edit(f"`{owner} Reply ke Chat Penggunanya Goblok!!`")
 
     return await rkp.edit(
         f"`Berhasil GKicked` [{user.first_name}](tg://user?id={user.id}) `di {a} Group Chats..`"

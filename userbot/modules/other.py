@@ -9,14 +9,13 @@
 import os
 
 from telethon import events
-from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.errors.rpcerrorlist import ChatAdminRequiredError, YouBlockedUserError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import ChannelParticipantsKicked
 from telethon.utils import get_display_name
 
-from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP, bot, owner
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
@@ -131,7 +130,7 @@ async def _(event):
             ExportChatInviteRequest(event.chat_id),
         )
     except ChatAdminRequiredError:
-        return await bot.send_message(f"**Maaf {ALIVE_NAME} Bukan Admin 👮**")
+        return await bot.send_message(f"**Maaf {owner} Bukan Admin 👮**")
     await edit_or_reply(event, f"**Link Invite GC**: {e.link}")
 
 

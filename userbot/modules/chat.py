@@ -38,9 +38,9 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_input_location
 
-from userbot import ALIVE_NAME, BLACKLIST_CHAT, BOTLOG, BOTLOG_CHATID
+from userbot import BLACKLIST_CHAT, BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP, bot, owner
 from userbot.events import man_cmd, register
 from userbot.modules.ping import absen
 from userbot.utils import edit_or_reply, get_user_from_event
@@ -99,7 +99,7 @@ async def _(event):
     try:
         async for x in bot.iter_participants(chat, filter=ChannelParticipantsBots):
             if isinstance(x.participant, ChannelParticipantAdmin):
-                mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
+                mentions += "\n 👑 [{}](tg://user?id={}) `{}`".format(
                     x.first_name, x.id, x.id
                 )
             else:
@@ -115,7 +115,7 @@ async def _(event):
 async def kickme(leave):
     if leave.chat_id in BLACKLIST_CHAT:
         return await leave.edit("**Perintah ini Dilarang digunakan di Group ini**")
-    await leave.edit(f"`{ALIVE_NAME} has left this group, bye!!`")
+    await leave.edit(f"`{owner} has left this group, bye!!`")
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
@@ -147,7 +147,7 @@ async def mute_chat(mute_e):
         return await mute_e.edit("**Running on Non-SQL mode!**")
     await mute_e.edit(str(mute_e.chat_id))
     kread(str(mute_e.chat_id))
-    await mute_e.edit(f"**{ALIVE_NAME} Telah Membisukan Obrolan!**")
+    await mute_e.edit(f"**{owner} Telah Membisukan Obrolan!**")
     await sleep(2)
     await mute_e.delete()
     if BOTLOG:

@@ -6,13 +6,12 @@ from collections import deque
 
 from telethon.errors.rpcerrorlist import MessageIdInvalidError
 
-from userbot import ALIVE_NAME
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP, bot, owner
 from userbot.events import man_cmd
 
 # ================= CONSTANT =================
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
+DEFAULTUSER = owner
 # ============================================
 
 

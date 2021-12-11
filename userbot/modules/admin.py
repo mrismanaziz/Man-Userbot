@@ -15,7 +15,11 @@ from telethon.errors import (
     ImageProcessFailedError,
     PhotoCropSizeSmallError,
 )
-from telethon.errors.rpcerrorlist import UserAdminInvalidError, UserIdInvalidError
+from telethon.errors.rpcerrorlist import (
+    ChatAdminRequiredError,
+    UserAdminInvalidError,
+    UserIdInvalidError,
+)
 from telethon.tl.functions.channels import (
     EditAdminRequest,
     EditBannedRequest,
@@ -30,9 +34,9 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from userbot import ALIVE_NAME, BOTLOG, BOTLOG_CHATID
+from userbot import BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEVS
+from userbot import CMD_HELP, DEVS, owner
 from userbot.events import register
 from userbot.utils import (
     _format,
@@ -201,7 +205,7 @@ async def ban(bon):
     else:
         await edit_or_reply(
             bon,
-            f"\\\\**#Banned_User**//\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n**User ID:** `{user.id}`\n**Action:** `Banned User by {ALIVE_NAME}`",
+            f"\\\\**#Banned_User**//\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n**User ID:** `{user.id}`\n**Action:** `Banned User by {owner}`",
         )
 
 
@@ -252,7 +256,7 @@ async def spider(spdr):
         r"\\**#Muted_User**//"
         f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
         f"**User ID:** `{user.id}`\n"
-        f"**Action:** `Mute by {ALIVE_NAME}`",
+        f"**Action:** `Mute by {owner}`",
     )
     if mute(spdr.chat_id, user.id) is False:
         return await edit_delete(spdr, "**ERROR:** `Pengguna Sudah Dibisukan.`")
@@ -272,7 +276,7 @@ async def spider(spdr):
                 r"\\**#DMute_User**//"
                 f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**User ID:** `{user.id}`\n"
-                f"**Action:** `DMute by {ALIVE_NAME}`",
+                f"**Action:** `DMute by {owner}`",
             )
     except UserIdInvalidError:
         return await edit_delete(spdr, "**Terjadi ERROR!**")
@@ -400,7 +404,7 @@ async def gspider(gspdr):
             r"\\**#GMuted_User**//"
             f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
             f"**User ID:** `{user.id}`\n"
-            f"**Action:** `Global Muted by {ALIVE_NAME}`",
+            f"**Action:** `Global Muted by {owner}`",
         )
 
 
