@@ -15,7 +15,11 @@ from telethon.errors import (
     ImageProcessFailedError,
     PhotoCropSizeSmallError,
 )
-from telethon.errors.rpcerrorlist import ChatAdminRequiredError, UserAdminInvalidError, UserIdInvalidError
+from telethon.errors.rpcerrorlist import (
+    ChatAdminRequiredError,
+    UserAdminInvalidError,
+    UserIdInvalidError,
+)
 from telethon.tl.functions.channels import (
     EditAdminRequest,
     EditBannedRequest,
