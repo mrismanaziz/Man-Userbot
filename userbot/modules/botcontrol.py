@@ -60,8 +60,7 @@ async def setit(event, name, value):
 
 
 def get_back_button(name):
-    button = [Button.inline("ʙᴀᴄᴋ", data=f"{name}")]
-    return button
+    return [Button.inline("ʙᴀᴄᴋ", data=f"{name}")]
 
 
 async def check_bot_started_users(user, event):
@@ -146,8 +145,6 @@ async def users(event):
                     )
                 ],
             )
-    else:
-        pass
 
 
 @callback(data=re.compile(b"settings"))
@@ -261,12 +258,11 @@ async def alvname(event):
                 "Membatalkan Proses Settings VAR!",
                 buttons=get_back_button("alivemenu"),
             )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"**ALIVE_NAME Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-                buttons=get_back_button("alivemenu"),
-            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**ALIVE_NAME Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("alivemenu"),
+        )
 
 
 @callback(data=re.compile(b"alvlogo"))
@@ -286,12 +282,11 @@ async def alvlogo(event):
                 "Membatalkan Proses Settings VAR!",
                 buttons=get_back_button("alivemenu"),
             )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"**ALIVE_LOGO Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-                buttons=get_back_button("alivemenu"),
-            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**ALIVE_LOGO Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("alivemenu"),
+        )
 
 
 @callback(data=re.compile(b"alvmoji"))
@@ -311,12 +306,11 @@ async def alvmoji(event):
                 "Membatalkan Proses Settings VAR!",
                 buttons=get_back_button("alivemenu"),
             )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"**ALIVE_EMOJI Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-                buttons=get_back_button("alivemenu"),
-            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**ALIVE_EMOJI Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("alivemenu"),
+        )
 
 
 @callback(data=re.compile(b"alvteks"))
@@ -336,12 +330,11 @@ async def alvteks(event):
                 "Membatalkan Proses Settings VAR!",
                 buttons=get_back_button("alivemenu"),
             )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"**ALIVE_TEKS_CUSTOM Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-                buttons=get_back_button("alivemenu"),
-            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**ALIVE_TEKS_CUSTOM Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("alivemenu"),
+        )
 
 
 @callback(data=re.compile(b"alvch"))
@@ -361,12 +354,11 @@ async def alvch(event):
                 "Membatalkan Proses Settings VAR!",
                 buttons=get_back_button("alivemenu"),
             )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"**Link CHANNEL Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-                buttons=get_back_button("alivemenu"),
-            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**Link CHANNEL Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("alivemenu"),
+        )
 
 
 @callback(data=re.compile(b"alvgc"))
@@ -386,12 +378,11 @@ async def alvgc(event):
                 "Membatalkan Proses Settings VAR!",
                 buttons=get_back_button("alivemenu"),
             )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"**GROUP Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-                buttons=get_back_button("alivemenu"),
-            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**GROUP Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("alivemenu"),
+        )
 
 
 @callback(data=re.compile(b"inmoji"))
@@ -411,12 +402,11 @@ async def inmoji(event):
                 "Membatalkan Proses Settings VAR!",
                 buttons=get_back_button("inlinemenu"),
             )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"**INLINE_EMOJI Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-                buttons=get_back_button("inlinemenu"),
-            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**INLINE_EMOJI Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("inlinemenu"),
+        )
 
 
 @callback(data=re.compile(b"inpics"))
@@ -436,12 +426,11 @@ async def inpics(event):
                 "Membatalkan Proses Settings VAR!",
                 buttons=get_back_button("inlinemenu"),
             )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"**INLINE_PIC Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-                buttons=get_back_button("inlinemenu"),
-            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**INLINE_PIC Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("inlinemenu"),
+        )
 
 
 @callback(data=re.compile(b"cmdhndlr"))
@@ -534,12 +523,11 @@ async def rmbgapi(event):
                 "Membatalkan Proses Settings VAR!",
                 buttons=get_back_button("apiset"),
             )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"{name} **Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-                buttons=get_back_button("apiset"),
-            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"{name} **Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apiset"),
+        )
 
 
 @callback(data=re.compile(b"dapi"))
@@ -559,12 +547,11 @@ async def deepai(event):
                 "Membatalkan Proses Settings VAR!",
                 buttons=get_back_button("apiset"),
             )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"**API DEEP AI Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-                buttons=get_back_button("apiset"),
-            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**API DEEP AI Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apiset"),
+        )
 
 
 @callback(data=re.compile(b"ocrapi"))
@@ -584,12 +571,11 @@ async def ocrapi(event):
                 "Membatalkan Proses Settings VAR!",
                 buttons=get_back_button("apiset"),
             )
-        else:
-            await setit(event, var, themssg)
-            await conv.send_message(
-                f"**OCR API Key Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-                buttons=get_back_button("apiset"),
-            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**OCR API Key Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apiset"),
+        )
 
 
 @callback(data=re.compile(b"pingbot"))
@@ -719,7 +705,4 @@ async def _(event):
     start = datetime.now()
     end = datetime.now()
     duration = (end - start).microseconds / 1000
-    await tgbot.send_message(
-        event.chat_id,
-        f"🏓**Pong!**\n`%sms`" % (duration),
-    )
+    await tgbot.send_message(event.chat_id, '🏓**Pong!**\n`%sms`' % duration)
