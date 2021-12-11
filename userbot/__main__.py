@@ -19,18 +19,18 @@ from telethon.tl.functions.channels import InviteToChannelRequest, JoinChannelRe
 
 from userbot import BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import LOGS, UPSTREAM_REPO_BRANCH, bot, call_py, owner
+from userbot import LOGS, UPSTREAM_REPO_BRANCH, bot, call_py
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
 
 try:
     bot.start()
     call_py.start()
-    user_id = bot.get_me().id
+    user = bot.get_me()
     blacklistman = requests.get(
         "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json"
     ).json()
-    if user_id in blacklistman:
+    if user.id in blacklistman:
         LOGS.warning(
             "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOTnya GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
         )
@@ -43,7 +43,7 @@ for module_name in ALL_MODULES:
     imported_module = import_module("userbot.modules." + module_name)
 
 LOGS.info(
-    f"Jika {owner} Membutuhkan Bantuan, Silahkan Tanyakan di Grup https://t.me/SharingUserbot"
+    f"Jika {user.first_name} Membutuhkan Bantuan, Silahkan Tanyakan di Grup https://t.me/SharingUserbot"
 )
 
 LOGS.info(f"Man-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
