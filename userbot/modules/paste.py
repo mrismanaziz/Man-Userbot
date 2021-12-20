@@ -13,7 +13,7 @@ from userbot.utils import edit_delete, edit_or_reply, man_cmd
 from userbot.utils.pastebin import PasteBin
 
 
-@man_cmd(pattern="paste(?: (-d|-n|-h|-k)|$)?(?: ([\s\S]+)|$)")
+@man_cmd(pattern="paste(?: (-d|-n|-h|-k|-s)|$)?(?: ([\s\S]+)|$)")
 async def paste(pstl):
     """For .paste command, pastes the text directly to a pastebin."""
     service = pstl.pattern_match.group(1)
@@ -44,7 +44,7 @@ async def paste(pstl):
     async with PasteBin(message) as client:
         if service:
             service = service.strip()
-            if service not in ["-d", "-n", "-h", "-k"]:
+            if service not in ["-d", "-n", "-k", "-s", "-h"]:
                 return await xxnx.edit("Invalid flag")
             await client(client.service_match[service])
         else:
@@ -66,8 +66,8 @@ CMD_HELP.update(
     {
         "paste": f"**Plugin : **`paste`\
         \n\n  •  **Syntax :** `{cmd}paste` <text/reply>\
-        \n  •  **Function : **Untuk Menyimpan text ke ke layanan pastebin gunakan flags [`-d`, `-n`, `-h`]\
-        \n\n  •  **NOTE :** `-d` = **Dogbin** atau `-n` = **Nekobin** atau `-h` = **Hastebin** atau `-k` = **katbin**\
+        \n  •  **Function : **Untuk Menyimpan text ke ke layanan pastebin gunakan flags [`-d`, `-n`, `-h`, `-s`, `-k`]\
+        \n\n  •  **NOTE :** `-d` = **Dogbin** atau `-n` = **Nekobin** atau `-h` = **Hastebin** atau `-k` = **katbin** atau `-s` = **spacebin**\
     "
     }
 )
