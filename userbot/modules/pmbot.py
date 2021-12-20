@@ -166,7 +166,7 @@ async def bot_broadcast(event):
                     await asyncio.sleep(e.seconds)
     end_ = datetime.now()
     b_info = f"🔊 <b>Berhasil Mengirim Broadcast Pesan Ke</b> ➜ <code>{count}</code> <b>Users.</b>"
-    if len(blocked_users) != 0:
+    if blocked_users:
         b_info += f"\n🚫 <code>{len(blocked_users)}</code> <b>user memblokir bot Anda baru-baru ini, jadi telah dihapus.</b>"
     b_info += f"\n⏳ <b>Dalam Waktu</b>  <code>{time_formatter((end_ - start_).seconds)}</code>."
     await br_cast.edit(b_info, parse_mode="html")

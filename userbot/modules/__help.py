@@ -62,5 +62,6 @@ async def _(event):
             )
     else:
         await edit_or_reply(
-            event, f"**ERROR:** Silahkan Tambahkan Var `BOT_TOKEN` & `BOT_USERNAME`"
+            event,
+            '**ERROR:** Silahkan Tambahkan Var `BOT_TOKEN` & `BOT_USERNAME`',
         )

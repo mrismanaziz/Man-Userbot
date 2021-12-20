@@ -903,7 +903,7 @@ class googleimagesdownload:
                 },
             ],
         }
-        for key, value in params.items():
+        for value in params.values():
             if value[0] is not None:
                 ext_param = value[1][value[0]]
                 # counter will tell if it is first param added or not

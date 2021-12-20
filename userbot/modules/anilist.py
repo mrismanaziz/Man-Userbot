@@ -18,7 +18,7 @@ from userbot.utils import time_formatter
 def shorten(description, info="anilist.co"):
     msg = ""
     if len(description) > 700:
-        description = description[0:200] + "....."
+        description = description[:200] + "....."
         msg += f"\n**Description**:\n{description} [Read More]({info})"
     else:
         msg += f"\n**Description**: \n   {description}"

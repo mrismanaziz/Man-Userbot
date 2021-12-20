@@ -25,7 +25,7 @@ async def paste(pstl):
 
     if match:
         message = match.strip()
-    elif reply_id:
+    else:
         message = await pstl.get_reply_message()
         if message.media:
             downloaded_file_name = await pstl.client.download_media(

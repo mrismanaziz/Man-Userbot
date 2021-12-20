@@ -302,16 +302,13 @@ async def _(event):
     bot_un = bot_.replace("@", "")
     user = await event.client.get_me()
     un = f"@{user.username}" if user.username else user.first_name
-    un_ = user.username if user.username else OWNER_ID
+    un_ = user.username or OWNER_ID
     if not reply:
         return await edit_delete(
             xnxx, "**Mohon Balas sticker untuk mencuri semua Sticker Pack itu.**"
         )
-    if query == "":
-        pname = f"{un} Sticker Pack"
-    else:
-        pname = query
-    if reply and reply.media and reply.media.document.mime_type == "image/webp":
+    pname = f"{un} Sticker Pack" if query == "" else query
+    if reply.media and reply.media.document.mime_type == "image/webp":
         tikel_id = reply.media.document.attributes[1].stickerset.id
         tikel_hash = reply.media.document.attributes[1].stickerset.access_hash
         got_stcr = await event.client(
