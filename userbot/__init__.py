@@ -18,7 +18,6 @@ from distutils.util import strtobool as sb
 from logging import DEBUG, INFO, basicConfig, getLogger
 from math import ceil
 from pathlib import Path
-from requests import get
 from sys import version_info
 
 from dotenv import load_dotenv
@@ -90,7 +89,9 @@ if CONFIG_CHECK:
 
 
 while 0 < 6:
-    _DEVS = get('https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/DEVS.json')
+    _DEVS = get(
+        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/DEVS.json"
+    )
     if _DEVS.status_code != 200:
         if 0 != 5:
             continue
