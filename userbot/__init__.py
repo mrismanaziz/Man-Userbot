@@ -18,6 +18,7 @@ from distutils.util import strtobool as sb
 from logging import DEBUG, INFO, basicConfig, getLogger
 from math import ceil
 from pathlib import Path
+from requests import get
 from sys import version_info
 
 from dotenv import load_dotenv
@@ -87,14 +88,21 @@ if CONFIG_CHECK:
     )
     sys.exit(1)
 
-# KALO NGEFORK ID DEVS SAMA ID BLACKLIST_CHAT NYA GA USAH DI HAPUS YA GOBLOK 😡
-DEVS = [
-    844432220,
-    1906014306,
-    1382636419,
-    1712874582,
-    1738637033,
-]
+
+while 0 < 6:
+    _DEVS = get('https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/DEVS.json')
+    if _DEVS.status_code != 200:
+        if 0 != 5:
+            continue
+        else:
+            DEVS = [844432220]
+            break
+    DEVS = _DEVS.json()
+    break
+
+
+del _DEVS
+
 SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
 BL_CHAT = {int(x) for x in os.environ.get("BL_CHAT", "").split()}
 
