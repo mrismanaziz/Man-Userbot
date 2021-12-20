@@ -91,7 +91,7 @@ def getsubitems(obj, itemkey, islast, maxlinelength, indent):
                     if i < len(inner) - 1:
                         item_text = item + ","
 
-                    if current_line != '':
+                    if current_line != "":
                         try_inline = current_line + " " + item_text
                     else:
                         try_inline = item_text
@@ -99,7 +99,7 @@ def getsubitems(obj, itemkey, islast, maxlinelength, indent):
                     if len(try_inline) > maxlinelength:
                         # push the current line to the list if maxlinelength is
                         # reached
-                        if current_line != '':
+                        if current_line != "":
                             lines.append(current_line)
                         current_line = item_text
                     else:
