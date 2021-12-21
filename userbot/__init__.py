@@ -419,6 +419,16 @@ def paginate_help(page_number, loaded_modules, prefix):
     return pairs
 
 
+def ibuild_keyboard(buttons):
+    keyb = []
+    for btn in buttons:
+        if btn[2] and keyb:
+            keyb[-1].append(Button.url(btn[0], btn[1]))
+        else:
+            keyb.append([Button.url(btn[0], btn[1])])
+    return keyb
+
+
 with bot:
     try:
         from userbot.modules.sql_helper.bot_blacklists import check_is_black_list
