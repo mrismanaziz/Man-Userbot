@@ -575,7 +575,6 @@ with bot:
                     buttons=tl_ib_buttons,
                     link_preview=False,
                 )
-                await event.answer([result] if result else None)
             else:
                 result = builder.article(
                     title="✗ Man-Userbot ✗",
