@@ -396,7 +396,6 @@ def paginate_help(page_number, loaded_modules, prefix):
         zip(
             modules[::number_of_cols],
             modules[1::number_of_cols],
-            modules[2::number_of_cols],
         )
     )
     if len(modules) % number_of_cols == 1:
