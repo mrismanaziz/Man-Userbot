@@ -1,10 +1,12 @@
-import random
 import os
+import random
+
 import aiofiles
 import aiohttp
 from PIL import Image, ImageDraw, ImageFont
 
 themes = ["rrc", "hejo"]
+
 
 def changeImageSize(maxWidth, maxHeight, image):
     widthRatio = maxWidth / image.size[0]
