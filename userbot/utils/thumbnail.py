@@ -32,24 +32,10 @@ async def gen_thumb(thumbnail, title, userid, ctitle):
     Image.alpha_composite(image5, image6).save(f"userbot/resources/temp{userid}.png")
     img = Image.open(f"userbot/resources/temp{userid}.png")
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("userbot/resources/Roboto-Light.ttf", 55)
-    font2 = ImageFont.truetype("userbot/resources/finalfont.ttf", 65)
-    draw.text(
-        (20, 630),
-        f"{title[:25]}...",
-        fill="White",
-        stroke_width=1,
-        stroke_fill="black",
-        font=font2,
-    )
-    draw.text(
-        (20, 550),
-        f"Playing on: {ctitle[:15]}...",
-        fill="White",
-        stroke_width=1,
-        stroke_fill="black",
-        font=font,
-    )
+    font = ImageFont.truetype("userbot/resources/Roboto-Light.ttf", 52)
+    font2 = ImageFont.truetype("userbot/resources/Roboto-Medium.ttf", 76)
+    draw.text((27, 538), f"Playing on {ctitle[:13]}..", (0, 0, 0), font=font)
+    draw.text((27, 612), f"{title[:18]}...", (0, 0, 0), font=font2)
     img.save(f"userbot/resources/final{userid}.png")
     os.remove(f"userbot/resources/temp{userid}.png")
     os.remove(f"userbot/resources/thumb{userid}.png")
