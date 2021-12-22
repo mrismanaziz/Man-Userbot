@@ -13,7 +13,7 @@ from wget import download
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.events import man_cmd
-from userbot.utils import deEmojify
+from userbot.utils import bash, deEmojify
 
 
 def convert_toimage(image):
@@ -171,7 +171,7 @@ async def get_user_from_event(event):
 
 async def purge():
     try:
-        os.system("rm -rf *.png *.webp")
+        await bash("rm -rf *.png *.webp")
     except OSError:
         pass
 

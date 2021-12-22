@@ -5,7 +5,6 @@ import asyncio
 import glob
 import os
 import shutil
-import subprocess
 import time
 
 import deezloader
@@ -25,8 +24,7 @@ from userbot import (
     bot,
     lastfm,
 )
-from userbot.events import man_cmd
-from userbot.utils import chrome, progress
+from userbot.utils import bash, chrome, edit_or_reply, man_cmd, progress
 from userbot.utils.FastTelethon import upload_file
 
 
@@ -40,7 +38,7 @@ async def getmusic(cat):
         video_link = i.get_attribute("href")
         break
     command = f"yt-dlp -x --add-metadata --embed-thumbnail --no-progress --audio-format mp3 {video_link}"
-    os.system(command)
+    await bash(command)
     return video_link
 
 
@@ -57,25 +55,25 @@ async def getmusicvideo(cat):
         'yt-dlp -f "[filesize<50M]" --no-progress --merge-output-format mp4 '
         + video_link
     )
-    os.system(command)
+    await bash(command)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"song (.*)"))
+@man_cmd(pattern="song (.*)")
 async def _(event):
     reply = await event.get_reply_message()
     if event.pattern_match.group(1):
         query = event.pattern_match.group(1)
-        await event.edit("`Processing..`")
+        xx = await edit_or_reply(event, "`Processing..`")
     elif reply.message:
         query = reply.message
-        await event.edit("`Tunggu..! Saya menemukan lagu Anda..`")
+        await xx.edit("`Tunggu..! Saya menemukan lagu Anda..`")
     else:
-        await event.edit("`Apa yang seharusnya saya temukan?`")
+        await xx.edit("`Apa yang seharusnya saya temukan?`")
         return
 
     await getmusic(str(query))
     loa = glob.glob("*.mp3")[0]
-    await event.edit("`Yeah.. Mengupload lagu Anda..`")
+    await xx.edit("`Yeah.. Mengupload lagu Anda..`")
     c_time = time.time()
     with open(loa, "rb") as f:
         result = await upload_file(
@@ -92,29 +90,28 @@ async def _(event):
         allow_cache=False,
     )
     await event.delete()
-    os.system("rm -rf *.mp3")
-    subprocess.check_output("rm -rf *.mp3", shell=True)
+    await bash("rm -rf *.mp3")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"vsong(?: |$)(.*)"))
+@man_cmd(pattern="vsong(?: |$)(.*)")
 async def _(event):
     reply = await event.get_reply_message()
     if event.pattern_match.group(1):
         query = event.pattern_match.group(1)
-        await event.edit("`Processing..`")
+        xx = await edit_or_reply(event, "`Processing..`")
     elif reply:
         query = str(reply.message)
-        await event.edit("`Tunggu..! Saya menemukan lagu video Anda..`")
+        await xx.edit("**Tunggu..! Saya menemukan lagu video Anda..**")
     else:
-        await event.edit("`Apa yang seharusnya saya temukan?`")
+        await xx.edit("**Apa yang seharusnya saya temukan?**")
         return
     await getmusicvideo(query)
     l = glob.glob(("*.mp4")) + glob.glob(("*.mkv")) + glob.glob(("*.webm"))
     if l:
-        await event.edit("`Ya..! aku menemukan sesuatu..`")
+        await xx.edit("**Ya..! aku menemukan sesuatu..**")
     else:
-        await event.edit(
-            f"`Maaf..! saya tidak dapat menemukan apa pun dengan` **{query}**"
+        await xx.edit(
+            f"**Maaf..! saya tidak dapat menemukan apa pun dengan** `{query}`"
         )
         return
     try:
@@ -123,8 +120,8 @@ async def _(event):
         duration = metadata.get("duration").seconds if metadata.has("duration") else 0
         width = metadata.get("width") if metadata.has("width") else 0
         height = metadata.get("height") if metadata.has("height") else 0
-        os.system("cp *mp4 thumb.mp4")
-        os.system("ffmpeg -i thumb.mp4 -vframes 1 -an -s 480x360 -ss 5 thumb.jpg")
+        await bash("cp *mp4 thumb.mp4")
+        await bash("ffmpeg -i thumb.mp4 -vframes 1 -an -s 480x360 -ss 5 thumb.jpg")
         thumb_image = "thumb.jpg"
         c_time = time.time()
         with open(loa, "rb") as f:
@@ -154,16 +151,16 @@ async def _(event):
                 )
             ],
         )
-        await event.edit(f"**{query}** `Berhasil Diupload..!`")
+        await xx.edit(f"**{query} Berhasil Diupload..!**")
         os.remove(thumb_image)
-        os.system("rm *.mkv *.mp4 *.webm")
+        await bash("rm *.mkv *.mp4 *.webm")
     except BaseException:
         os.remove(thumb_image)
-        os.system("rm *.mkv *.mp4 *.webm")
+        await bash("rm *.mkv *.mp4 *.webm")
         return
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"smd (?:(now)|(.*) - (.*))"))
+@man_cmd(pattern="smd (?:(now)|(.*) - (.*))")
 async def _(event):
     if event.fwd_from:
         return
@@ -210,7 +207,7 @@ async def _(event):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"net (?:(now)|(.*) - (.*))"))
+@man_cmd(pattern="net (?:(now)|(.*) - (.*))")
 async def _(event):
     if event.fwd_from:
         return
@@ -254,7 +251,7 @@ async def _(event):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"mhb(?: |$)(.*)"))
+@man_cmd(pattern="mhb(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -287,9 +284,7 @@ async def _(event):
         )
 
 
-@bot.on(
-    man_cmd(outgoing=True, pattern=r"deez (.+?|) (FLAC|MP3\_320|MP3\_256|MP3\_128)")
-)
+@man_cmd(pattern="deez (.+?|) (FLAC|MP3\_320|MP3\_256|MP3\_128)")
 async def _(event):
     """DeezLoader by @An0nimia. Ported for UniBorg by @SpEcHlDe"""
     if event.fwd_from:

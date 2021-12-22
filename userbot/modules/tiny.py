@@ -1,3 +1,10 @@
+# Ultroid - UserBot
+# Copyright (C) 2021 TeamUltroid
+#
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
+# PLease read the GNU Affero General Public License in
+# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+#
 # yang hapus credit anak babi , cape lah aku port
 # frm ultroid plugs thanks
 # Port by: Koala @manusiarakitan
@@ -8,8 +15,8 @@ import cv2
 from PIL import Image
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.utils import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import bash, man_cmd
 
 
 @man_cmd(pattern="tiny(?: |$)(.*)")
@@ -19,16 +26,16 @@ async def ultiny(event):
         await event.edit("`Balas Ke Pesan Sticker !`")
         return
     xx = await event.edit("`Processing tiny...`")
-    ik = await bot.download_media(reply)
+    ik = await event.client.download_media(reply)
     im1 = Image.open("userbot/resources/man_blank.png")
     if ik.endswith(".tgs"):
         await event.client.download_media(reply, "ult.tgs")
-        os.system("lottie_convert.py ult.tgs json.json")
-        with open("json.json", "r") as json:
+        await bash("lottie_convert.py ult.tgs json.json")
+        with open("json.json") as json:
             jsn = json.read()
         jsn = jsn.replace("512", "2000")
         open("json.json", "w").write(jsn)
-        os.system("lottie_convert.py json.json ult.tgs")
+        await bash("lottie_convert.py json.json ult.tgs")
         file = "ult.tgs"
         os.remove("json.json")
     elif ik.endswith((".gif", ".mp4")):

@@ -12,7 +12,7 @@ import PIL
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
-from userbot.utils import progress
+from userbot.utils import bash, progress
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"honka(?: |$)(.*)"))
@@ -67,11 +67,11 @@ async def _(event):
         ),
     )
     await event.delete()
-    os.system("rm -f downloads/*.jpg")
-    os.system("rm -f downloads/*.png")
-    os.system("rm -f downloads/*.webp")
-    os.system("rm -f *.jpg")
-    os.system("rm -f *.png")
+    await bash("rm -f downloads/*.jpg")
+    await bash("rm -f downloads/*.png")
+    await bash("rm -f downloads/*.webp")
+    await bash("rm -f *.jpg")
+    await bash("rm -f *.png")
     os.remove("danish.mp4")
 
 

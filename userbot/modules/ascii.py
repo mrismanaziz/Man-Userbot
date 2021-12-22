@@ -1,7 +1,6 @@
 # based on https://gist.github.com/wshanshan/c825efca4501a491447056849dd207d6
 # Ported for ProjectAlf by Alfiananda P.A
 
-import os
 import random
 
 import numpy as np
@@ -14,20 +13,21 @@ from telethon.tl.types import DocumentAttributeFilename
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
+from userbot.utils import bash, edit_delete, edit_or_reply
 
 bground = "black"
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"(ascii|asciis)$"))
-async def ascii(event):
+@man_cmd(pattern="(ascii|asciis)$")
+async def _(event):
     if not event.reply_to_msg_id:
-        await event.edit("**Mohon Balas Ke Media..**")
+        await edit_delete(event, "**Mohon Balas Ke Media..**")
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        await event.edit("`Balas Ke Gambar/Sticker/Video`")
+        await edit_delete(event, "`Balas Ke Gambar/Sticker/Video`")
         return
-    await event.edit("`Sedang Mendownload Media..`")
+    xx = await edit_or_reply(event, "`Sedang Mendownload Media..`")
     if reply_message.photo:
         IMG = await bot.download_media(
             reply_message,
@@ -41,7 +41,7 @@ async def ascii(event):
             reply_message,
             "ASCII.tgs",
         )
-        os.system("lottie_convert.py ASCII.tgs ascii.png")
+        await bash("lottie_convert.py ASCII.tgs ascii.png")
         IMG = "ascii.png"
     elif reply_message.video:
         video = await bot.download_media(
@@ -49,7 +49,7 @@ async def ascii(event):
             "ascii.mp4",
         )
         extractMetadata(createParser(video))
-        os.system("ffmpeg -i ascii.mp4 -vframes 1 -an -s 480x360 -ss 1 ascii.png")
+        await bash("ffmpeg -i ascii.mp4 -vframes 1 -an -s 480x360 -ss 1 ascii.png")
         IMG = "ascii.png"
     else:
         IMG = await bot.download_media(
@@ -57,7 +57,7 @@ async def ascii(event):
             "ascii.png",
         )
     try:
-        await event.edit("`Sedang Dalam Proses..`")
+        await xx.edit("`Sedang Dalam Proses..`")
         list = await random_color()
         color1 = list[0]
         color2 = list[1]
@@ -65,7 +65,7 @@ async def ascii(event):
         await asciiart(IMG, color1, color2, bgcolor)
         cmd = event.pattern_match.group(1)
         if cmd == "asciis":
-            os.system("cp ascii.png ascii.webp")
+            await bash("cp ascii.png ascii.webp")
             ascii_file = "ascii.webp"
         else:
             ascii_file = "ascii.png"
@@ -76,10 +76,10 @@ async def ascii(event):
             reply_to=event.reply_to_msg_id,
         )
         await event.delete()
-        os.system("rm *.png *.webp *.mp4 *.tgs")
+        await bash("rm *.png *.webp *.mp4 *.tgs")
     except BaseException as e:
-        os.system("rm *.png *.webp *.mp4 *.png")
-        return await event.edit(str(e))
+        await bash("rm *.png *.webp *.mp4 *.png")
+        return await edit_or_reply(event, f"{e}")
 
 
 async def asciiart(IMG, color1, color2, bgcolor):
@@ -121,16 +121,16 @@ async def random_color():
     ]
 
 
-@bot.on(man_cmd(outgoing=True, pattern="asciibg(?: |$)(.*)"))
+@man_cmd(pattern="asciibg(?: |$)(.*)")
 async def _(event):
     BG = event.pattern_match.group(1)
     if BG.isnumeric():
-        return await event.edit("`Mohon Masukkan Warna Bukan Angka`")
+        return await edit_or_reply(event, "`Mohon Masukkan Warna Bukan Angka`")
     if not BG:
-        return await event.edit("`Mohon Masukkan Background Dari Ascii`")
+        return await edit_or_reply(event, "`Mohon Masukkan Background Dari Ascii`")
     global bground
     bground = BG
-    await event.edit(f"`Berhasil Setel Background Dari Ascii Ke` **{BG}**")
+    await edit_or_reply(event, f"`Berhasil Setel Background Dari Ascii Ke` **{BG}**")
 
 
 CMD_HELP.update(
