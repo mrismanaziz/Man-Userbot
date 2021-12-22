@@ -129,7 +129,8 @@ async def vc_play(event):
                 "**Tidak Dapat Menemukan Lagu** Coba cari dengan Judul yang Lebih Spesifik"
             )
         else:
-            title, songname = search[0]
+            songname = search[0]
+            title = search[0]
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
