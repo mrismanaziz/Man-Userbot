@@ -109,6 +109,7 @@ async def skip_current_song(chat_id: int):
 async def vc_play(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
+    chat = await event.get_chat()
     chat_id = event.chat_id
     from_user = vcmention(event.sender)
     if (
@@ -134,8 +135,8 @@ async def vc_play(event):
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
-            userid = from_user.id
-            titlegc = event.chat.title
+            userid = replied.sender_id
+            titlegc = chat.title
             ctitle = await CHAT_TITLE(titlegc)
             thumb = await gen_thumb(thumbnail, title, userid, ctitle)
             format = "bestaudio"
