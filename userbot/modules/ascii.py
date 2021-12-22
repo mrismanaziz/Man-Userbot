@@ -12,8 +12,7 @@ from telethon.tl.types import DocumentAttributeFilename
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
-from userbot.utils import bash, edit_delete, edit_or_reply
+from userbot.utils import bash, edit_delete, edit_or_reply, man_cmd
 
 bground = "black"
 
