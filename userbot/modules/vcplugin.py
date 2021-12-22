@@ -3,7 +3,6 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
-
 from pytgcalls import StreamType
 from pytgcalls.types import Update
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
@@ -20,6 +19,8 @@ from youtubesearchpython import VideosSearch
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, call_py, owner
 from userbot.utils import bash, edit_delete, edit_or_reply, man_cmd
+from userbot.utils.chattitle import CHAT_TITLE
+from userbot.utils.thumbnail import gen_thumb
 from userbot.utils.queues.queues import (
     QUEUE,
     add_to_queue,
@@ -128,10 +129,14 @@ async def vc_play(event):
                 "**Tidak Dapat Menemukan Lagu** Coba cari dengan Judul yang Lebih Spesifik"
             )
         else:
-            songname = search[0]
+            title, songname = search[0]
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
+            userid = event.from_user.id
+            titlegc = event.chat.title
+            ctitle = await CHAT_TITLE(titlegc)
+            thumb = await gen_thumb(thumbnail, title, userid, ctitle)
             format = "bestaudio"
             hm, ytlink = await ytdl(format, url)
             if hm == 0:
@@ -140,7 +145,7 @@ async def vc_play(event):
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
                 caption = f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n🎧 **Atas permintaan:** {from_user}"
                 await botman.delete()
-                await event.client.send_file(chat_id, thumbnail, caption=caption)
+                await event.client.send_file(chat_id, thumb, caption=caption)
             else:
                 try:
                     await call_py.join_group_call(
