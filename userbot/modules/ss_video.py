@@ -5,7 +5,6 @@
 #
 
 import asyncio
-import os
 import time
 
 from telethon.tl.types import DocumentAttributeFilename
