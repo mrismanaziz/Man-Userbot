@@ -161,7 +161,7 @@ async def vc_play(event):
                     add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
                     caption = f"🏷 **Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n💡 **Status:** `Sedang Memutar`\n🎧 **Atas permintaan:** {from_user}"
                     await botman.delete()
-                    await event.client.send_file(chat_id, thumbnail, caption=caption)
+                    await event.client.send_file(chat_id, thumb, caption=caption)
                 except Exception as ep:
                     clear_queue(chat_id)
                     await botman.edit(f"`{ep}`")
