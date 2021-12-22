@@ -16,21 +16,21 @@ from wordcloud import ImageColorGenerator, WordCloud
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.utils import bash, edit_delete, edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"(wc)$"))
+@man_cmd(pattern="(wc)$")
 async def _(event):
     if not event.reply_to_msg_id:
-        await event.edit("`Mohon Balas Ke Media Apapun`")
+        await edit_delete(event, "`Mohon Balas Ke Media Apapun`")
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        await event.edit("`Mohon Balas Ke Gambar/Sticker/Video`")
+        await edit_delete(event, "`Mohon Balas Ke Gambar/Sticker/Video`")
         return
-    await event.edit("`Mendownload Media.....`")
+    xx = await edit_or_reply(event, "`Mendownload Media.....`")
     if reply_message.photo:
-        await bot.download_media(
+        await event.client.download_media(
             reply_message,
             "wc.png",
         )
@@ -38,25 +38,25 @@ async def _(event):
         DocumentAttributeFilename(file_name="AnimatedSticker.tgs")
         in reply_message.media.document.attributes
     ):
-        await bot.download_media(
+        await event.client.download_media(
             reply_message,
             "wc.tgs",
         )
-        os.system("lottie_convert.py wc.tgs wc.png")
+        await bash("lottie_convert.py wc.tgs wc.png")
     elif reply_message.video:
-        video = await bot.download_media(
+        video = await event.client.download_media(
             reply_message,
             "wc.mp4",
         )
         extractMetadata(createParser(video))
-        os.system("ffmpeg -i wc.mp4 -vframes 1 -an -s 480x360 -ss 1 wc.png")
+        await bash("ffmpeg -i wc.mp4 -vframes 1 -an -s 480x360 -ss 1 wc.png")
     else:
-        await bot.download_media(
+        await event.client.download_media(
             reply_message,
             "wc.png",
         )
     try:
-        await event.edit("`Sedang Memproses....`")
+        await xx.edit("`Sedang Memproses....`")
         text = open("userbot/utils/styles/alice.txt", encoding="utf-8").read()
         image_color = np.array(Image.open("wc.png"))
         image_color = image_color[::1, ::1]
@@ -87,9 +87,9 @@ async def _(event):
             reply_to=event.reply_to_msg_id,
         )
         await event.delete()
-        os.system("rm *.png *.mp4 *.tgs *.webp")
+        await bash("rm *.png *.mp4 *.tgs *.webp")
     except BaseException as e:
-        os.system("rm *.png *.mp4 *.tgs *.webp")
+        await bash("rm *.png *.mp4 *.tgs *.webp")
         return await event.edit(str(e))
 
 
