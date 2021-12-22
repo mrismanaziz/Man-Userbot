@@ -134,7 +134,7 @@ async def vc_play(event):
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
-            userid = event.from_user.id
+            userid = from_user.id
             titlegc = event.chat.title
             ctitle = await CHAT_TITLE(titlegc)
             thumb = await gen_thumb(thumbnail, title, userid, ctitle)
