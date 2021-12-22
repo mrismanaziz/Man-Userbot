@@ -140,7 +140,7 @@ async def vc_play(event):
             titlegc = chat.title
             ctitle = await CHAT_TITLE(titlegc)
             thumb = await gen_thumb(thumbnail, title, userid, ctitle)
-            format = "bestaudio[ext=m4a]"
+            format = "best*[vcodec=none]"
             hm, ytlink = await ytdl(format, url)
             if hm == 0:
                 await botman.edit(f"`{ytlink}`")
