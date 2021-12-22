@@ -3,28 +3,16 @@
 # Recode by @mrismanaziz
 
 import asyncio
-import os
 from datetime import datetime
 
 from telethon import events
 from telethon.tl import functions, types
 
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
+from userbot import CMD_HELP, bot, owner
 from userbot.events import man_cmd
 from userbot.utils import bash
-
-from userbot import (
-    AFKREASON,
-    BOTLOG,
-    BOTLOG_CHATID,
-    CMD_HELP,
-    COUNT_MSG,
-    ISAFK,
-    PM_AUTO_BAN,
-    USERS,
-    bot,
-    owner,
-)
 
 USER_AFK = {}
 afk_time = None
@@ -187,7 +175,9 @@ async def _(event):
             try:
                 if pic.endswith((".tgs", ".webp")):
                     await event.client.send_message(event.chat_id, file=pic)
-                    await event.client.send_message(event.chat_id, f"**✘ {owner} Telah AFK ✘**")
+                    await event.client.send_message(
+                        event.chat_id, f"**✘ {owner} Telah AFK ✘**"
+                    )
                 else:
                     await event.client.send_message(
                         event.chat_id,
@@ -195,7 +185,9 @@ async def _(event):
                         file=pic,
                     )
             except BaseException:
-                await event.client.send_message(event.chat_id, f"**✘ {owner} Telah AFK ✘**")
+                await event.client.send_message(
+                    event.chat_id, f"**✘ {owner} Telah AFK ✘**"
+                )
         await event.delete()
         try:
             if reason and pic:
@@ -229,7 +221,9 @@ async def _(event):
                         file=pic,
                     )
             else:
-                await event.client.send_message(BOTLOG_CHATID, f"\n**✘ {owner} Sedang AFK ✘**")
+                await event.client.send_message(
+                    BOTLOG_CHATID, f"\n**✘ {owner} Sedang AFK ✘**"
+                )
         except Exception as e:
             BOTLOG_CHATIDger.warn(str(e))
 
