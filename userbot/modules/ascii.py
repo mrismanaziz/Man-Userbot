@@ -20,7 +20,7 @@ bground = "black"
 
 
 @man_cmd(pattern="(ascii|asciis)$")
-async def ascii(event):
+async def _(event):
     if not event.reply_to_msg_id:
         await edit_delete(event, "**Mohon Balas Ke Media..**")
         return
