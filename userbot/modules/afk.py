@@ -11,8 +11,9 @@ from telethon.tl import functions, types
 
 from userbot import CMD_HANDLER as cmd
 from userbot.events import man_cmd
+from userbot.utils import bash
 
-from userbot import (  # noqa pylint: disable=unused-import isort:skip
+from userbot import (
     AFKREASON,
     BOTLOG,
     BOTLOG_CHATID,
@@ -48,19 +49,19 @@ async def set_not_afk(event):
     if "afk" not in current_message and "yes" in USER_AFK:
         try:
             if pic.endswith((".tgs", ".webp")):
-                shite = await bot.send_message(event.chat_id, file=pic)
-                shites = await bot.send_message(
+                shite = await event.client.send_message(event.chat_id, file=pic)
+                shites = await event.client.send_message(
                     event.chat_id,
                     f"**{owner} Kembali Online Untuk Parming**\n**Dari AFK :** `{total_afk_time}` **Yang Lalu**",
                 )
             else:
-                shite = await bot.send_message(
+                shite = await event.client.send_message(
                     event.chat_id,
                     f"**{owner} Pengangguran sok Sibuk Balik Lagi!**\n**Dari AFK :** `{total_afk_time}` **Yang Lalu**",
                     file=pic,
                 )
         except BaseException:
-            shite = await bot.send_message(
+            shite = await event.client.send_message(
                 event.chat_id,
                 f"**{owner} Kembali Online**\n**Dari AFK :** `{total_afk_time}` **Yang Lalu**",
             )
@@ -74,11 +75,11 @@ async def set_not_afk(event):
         USER_AFK = {}
         afk_time = None
 
-        os.system("rm -rf *.webp")
-        os.system("rm -rf *.mp4")
-        os.system("rm -rf *.tgs")
-        os.system("rm -rf *.png")
-        os.system("rm -rf *.jpg")
+        await bash("rm -rf *.webp")
+        await bash("rm -rf *.mp4")
+        await bash("rm -rf *.tgs")
+        await bash("rm -rf *.png")
+        await bash("rm -rf *.jpg")
 
 
 @bot.on(
@@ -166,69 +167,69 @@ async def _(event):
         if reason:
             try:
                 if pic.endswith((".tgs", ".webp")):
-                    await bot.send_message(event.chat_id, file=pic)
-                    await bot.send_message(
+                    await event.client.send_message(event.chat_id, file=pic)
+                    await event.client.send_message(
                         event.chat_id,
                         f"\n**✘ {owner} Telah AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                     )
                 else:
-                    await bot.send_message(
+                    await event.client.send_message(
                         event.chat_id,
                         f"\n**✘ {owner} Telah AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                         file=pic,
                     )
             except BaseException:
-                await bot.send_message(
+                await event.client.send_message(
                     event.chat_id,
                     f"\n**✘ {owner} Telah AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                 )
         else:
             try:
                 if pic.endswith((".tgs", ".webp")):
-                    await bot.send_message(event.chat_id, file=pic)
-                    await bot.send_message(event.chat_id, f"**✘ {owner} Telah AFK ✘**")
+                    await event.client.send_message(event.chat_id, file=pic)
+                    await event.client.send_message(event.chat_id, f"**✘ {owner} Telah AFK ✘**")
                 else:
-                    await bot.send_message(
+                    await event.client.send_message(
                         event.chat_id,
                         f"**✘ {owner} Telah AFK ✘**",
                         file=pic,
                     )
             except BaseException:
-                await bot.send_message(event.chat_id, f"**✘ {owner} Telah AFK ✘**")
+                await event.client.send_message(event.chat_id, f"**✘ {owner} Telah AFK ✘**")
         await event.delete()
         try:
             if reason and pic:
                 if pic.endswith((".tgs", ".webp")):
-                    await bot.send_message(BOTLOG_CHATID, file=pic)
-                    await bot.send_message(
+                    await event.client.send_message(BOTLOG_CHATID, file=pic)
+                    await event.client.send_message(
                         BOTLOG_CHATID,
                         f"\n**✘ {owner} Sedang AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                     )
                 else:
-                    await bot.send_message(
+                    await event.client.send_message(
                         BOTLOG_CHATID,
                         f"\n**✘ {owner} Sedang AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                         file=pic,
                     )
             elif reason:
-                await bot.send_message(
+                await event.client.send_message(
                     BOTLOG_CHATID,
                     f"\n**✘ {owner} Sedang AFK ✘**\n**✦҈͜͡➳ Karena :** `{reason}`",
                 )
             elif pic:
                 if pic.endswith((".tgs", ".webp")):
-                    await bot.send_message(BOTLOG_CHATID, file=pic)
-                    await bot.send_message(
+                    await event.client.send_message(BOTLOG_CHATID, file=pic)
+                    await event.client.send_message(
                         BOTLOG_CHATID, f"\n**✘ {owner} Sedang AFK ✘**"
                     )
                 else:
-                    await bot.send_message(
+                    await event.client.send_message(
                         BOTLOG_CHATID,
                         f"\n**✘ {owner} Sedang AFK ✘**",
                         file=pic,
                     )
             else:
-                await bot.send_message(BOTLOG_CHATID, f"\n**✘ {owner} Sedang AFK ✘**")
+                await event.client.send_message(BOTLOG_CHATID, f"\n**✘ {owner} Sedang AFK ✘**")
         except Exception as e:
             BOTLOG_CHATIDger.warn(str(e))
 
