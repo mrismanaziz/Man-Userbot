@@ -20,7 +20,6 @@ from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, call_py, owner
 from userbot.utils import bash, edit_delete, edit_or_reply, man_cmd
 from userbot.utils.chattitle import CHAT_TITLE
-from userbot.utils.thumbnail import gen_thumb
 from userbot.utils.queues.queues import (
     QUEUE,
     add_to_queue,
@@ -28,6 +27,7 @@ from userbot.utils.queues.queues import (
     get_queue,
     pop_an_item,
 )
+from userbot.utils.thumbnail import gen_thumb
 
 
 def vcmention(user):
