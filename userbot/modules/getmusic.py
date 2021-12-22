@@ -59,7 +59,7 @@ async def getmusicvideo(cat):
     await bash(command)
 
 
-@man_cmd(pattern=r"song (.*)")
+@man_cmd(pattern="song (.*)")
 async def _(event):
     reply = await event.get_reply_message()
     if event.pattern_match.group(1):
@@ -92,7 +92,6 @@ async def _(event):
     )
     await event.delete()
     await bash("rm -rf *.mp3")
-    subprocess.check_output("rm -rf *.mp3", shell=True)
 
 
 @man_cmd(pattern="vsong(?: |$)(.*)")
