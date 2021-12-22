@@ -1,9 +1,10 @@
+import random
 import os
-
 import aiofiles
 import aiohttp
 from PIL import Image, ImageDraw, ImageFont
 
+themes = ["rrc", "hejo"]
 
 def changeImageSize(maxWidth, maxHeight, image):
     widthRatio = maxWidth / image.size[0]
@@ -23,8 +24,9 @@ async def gen_thumb(thumbnail, title, userid, ctitle):
                 )
                 await f.write(await resp.read())
                 await f.close()
+    theme = random.choice(themes)
     image1 = Image.open(f"userbot/resources/thumb{userid}.png")
-    image2 = Image.open(f"userbot/resources/rrc.png")
+    image2 = Image.open(f"userbot/resources/{theme}.png")
     image3 = changeImageSize(1280, 720, image1)
     image4 = changeImageSize(1280, 720, image2)
     image5 = image3.convert("RGBA")
