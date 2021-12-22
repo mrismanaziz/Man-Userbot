@@ -1,7 +1,6 @@
 # based on https://gist.github.com/wshanshan/c825efca4501a491447056849dd207d6
 # Ported for ProjectAlf by Alfiananda P.A
 
-import os
 import random
 
 import numpy as np
