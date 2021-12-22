@@ -3,7 +3,6 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
-
 from pytgcalls import StreamType
 from pytgcalls.types import Update
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
@@ -20,6 +19,7 @@ from youtubesearchpython import VideosSearch
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, call_py, owner
 from userbot.utils import bash, edit_delete, edit_or_reply, man_cmd
+from userbot.utils.chattitle import CHAT_TITLE
 from userbot.utils.queues.queues import (
     QUEUE,
     add_to_queue,
@@ -27,6 +27,7 @@ from userbot.utils.queues.queues import (
     get_queue,
     pop_an_item,
 )
+from userbot.utils.thumbnail import gen_thumb
 
 
 def vcmention(user):
@@ -108,6 +109,8 @@ async def skip_current_song(chat_id: int):
 async def vc_play(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
+    sender = await event.get_sender()
+    chat = await event.get_chat()
     chat_id = event.chat_id
     from_user = vcmention(event.sender)
     if (
@@ -129,10 +132,15 @@ async def vc_play(event):
             )
         else:
             songname = search[0]
+            title = search[0]
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
-            format = "bestaudio"
+            userid = sender.id
+            titlegc = chat.title
+            ctitle = await CHAT_TITLE(titlegc)
+            thumb = await gen_thumb(thumbnail, title, userid, ctitle)
+            format = "best[height<=?720][width<=?1280]"
             hm, ytlink = await ytdl(format, url)
             if hm == 0:
                 await botman.edit(f"`{ytlink}`")
@@ -140,7 +148,7 @@ async def vc_play(event):
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
                 caption = f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n🎧 **Atas permintaan:** {from_user}"
                 await botman.delete()
-                await event.client.send_file(chat_id, thumbnail, caption=caption)
+                await event.client.send_file(chat_id, thumb, caption=caption)
             else:
                 try:
                     await call_py.join_group_call(
@@ -153,7 +161,7 @@ async def vc_play(event):
                     add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
                     caption = f"🏷 **Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n💡 **Status:** `Sedang Memutar`\n🎧 **Atas permintaan:** {from_user}"
                     await botman.delete()
-                    await event.client.send_file(chat_id, thumbnail, caption=caption)
+                    await event.client.send_file(chat_id, thumb, caption=caption)
                 except Exception as ep:
                     clear_queue(chat_id)
                     await botman.edit(f"`{ep}`")
@@ -194,6 +202,8 @@ async def vc_play(event):
 async def vc_vplay(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
+    sender = await event.get_sender()
+    chat = await event.get_chat()
     chat_id = event.chat_id
     from_user = vcmention(event.sender)
     if (
@@ -217,9 +227,14 @@ async def vc_vplay(event):
             )
         else:
             songname = search[0]
+            title = search[0]
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
+            userid = sender.id
+            titlegc = chat.title
+            ctitle = await CHAT_TITLE(titlegc)
+            thumb = await gen_thumb(thumbnail, title, userid, ctitle)
             format = "best[height<=?720][width<=?1280]"
             hm, ytlink = await ytdl(format, url)
             if hm == 0:
@@ -228,7 +243,7 @@ async def vc_vplay(event):
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Video", RESOLUSI)
                 caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n🎧 **Atas permintaan:** {from_user}"
                 await xnxx.delete()
-                await event.client.send_file(chat_id, thumbnail, caption=caption)
+                await event.client.send_file(chat_id, thumb, caption=caption)
             else:
                 try:
                     await call_py.join_group_call(
@@ -260,7 +275,7 @@ async def vc_vplay(event):
             pos = add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
             caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
             await event.delete()
-            await event.client.send_file(chat_id, thumbnail, caption=caption)
+            await event.client.send_file(chat_id, thumb, caption=caption)
         else:
             if RESOLUSI == 360:
                 hmmm = LowQualityVideo()
@@ -291,9 +306,14 @@ async def vc_vplay(event):
             await xnxx.edit("**Tidak Menemukan Video untuk Keyword yang Diberikan**")
         else:
             songname = search[0]
+            title = search[0]
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
+            userid = sender.id
+            titlegc = chat.title
+            ctitle = await CHAT_TITLE(titlegc)
+            thumb = await gen_thumb(thumbnail, title, userid, ctitle)
             format = "best[height<=?720][width<=?1280]"
             hm, ytlink = await ytdl(format, url)
             if hm == 0:
@@ -302,7 +322,7 @@ async def vc_vplay(event):
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Video", RESOLUSI)
                 caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n🏷 **Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n🎧 **Atas permintaan:** {from_user}"
                 await xnxx.delete()
-                await event.client.send_file(chat_id, thumbnail, caption=caption)
+                await event.client.send_file(chat_id, thumb, caption=caption)
             else:
                 try:
                     await call_py.join_group_call(
@@ -313,7 +333,7 @@ async def vc_vplay(event):
                     add_to_queue(chat_id, songname, ytlink, url, "Video", RESOLUSI)
                     caption = f"🏷 **Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}"
                     await xnxx.delete()
-                    await event.client.send_file(chat_id, thumbnail, caption=caption)
+                    await event.client.send_file(chat_id, thumb, caption=caption)
                 except Exception as ep:
                     clear_queue(chat_id)
                     await xnxx.edit(f"`{ep}`")
