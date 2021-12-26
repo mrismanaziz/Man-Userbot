@@ -14,7 +14,7 @@ from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
-@man_cmd(pattern=r"kamuii(:? |$)([1-8])?")
+@man_cmd(pattern="kamuii(:? |$)([1-8])?")
 async def _(fry):
     xx = await edit_or_reply(fry, "`Mengaktifkan Kekuatan Supersaya...`")
     level = fry.pattern_match.group(2)
