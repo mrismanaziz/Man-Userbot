@@ -35,7 +35,7 @@ from userbot import BOT_USERNAME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot import S_PACK_NAME as custompack
-from userbot import bot, tgbot, user
+from userbot import tgbot, user
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
@@ -354,7 +354,9 @@ async def get_pack_info(event):
 
     rep_msg = await event.get_reply_message()
     if not rep_msg.document:
-        return await edit_delete(event, "**Balas ke sticker untuk melihat detail pack**")
+        return await edit_delete(
+            event, "**Balas ke sticker untuk melihat detail pack**"
+        )
 
     try:
         stickerset_attr = rep_msg.document.attributes[1]
@@ -425,9 +427,7 @@ async def _(event):
         if response.text.startswith(
             "Sorry, I can't do this, it seems that you are not the owner of the relevant pack."
         ):
-            await xx.edit(
-                "**Maaf, Sepertinya Anda bukan Pemilik Sticker pack ini.**"
-            )
+            await xx.edit("**Maaf, Sepertinya Anda bukan Pemilik Sticker pack ini.**")
         elif response.text.startswith(
             "You don't have any sticker packs yet. You can create one using the /newpack command."
         ):
@@ -542,7 +542,9 @@ async def _(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await edit_delete(event, "sir this is not a image message reply to image message")
+        await edit_delete(
+            event, "sir this is not a image message reply to image message"
+        )
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:

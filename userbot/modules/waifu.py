@@ -1,14 +1,10 @@
 # imported from ppe-remix by @heyworld & @DeletedUser420
 # Based Code by @adekmaulana
 # Improve by @aidilaryanto
-import os
 import random
-from asyncio import sleep
-
-from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot import CMD_HELP
 from userbot.utils import deEmojify, edit_delete, man_cmd
 
 
@@ -35,7 +31,8 @@ async def waifu(animu):
 
     except Exception:
         return await edit_delete(
-           animu, "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`"
+            animu,
+            "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`",
         )
 
 
