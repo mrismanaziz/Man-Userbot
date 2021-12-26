@@ -13,7 +13,7 @@ from userbot import CMD_HELP
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
-@man_cmd(pattern="sosmed ?(.*)")
+@man_cmd(pattern="sosmed(?: |$)(.*)")
 async def insta(event):
     xxnx = event.pattern_match.group(1)
     if xxnx:
