@@ -18,7 +18,9 @@ async def insta(event):
         return await edit_delete(event, "`Balas Ke Link Untuk Download.`")
     reply_message = await event.get_reply_message()
     if not reply_message.text:
-        return await edit_delete(event, "`Mohon Berikan Link yang ingin di download...`")
+        return await edit_delete(
+            event, "`Mohon Berikan Link yang ingin di download...`"
+        )
     chat = "@SaveAsbot"
     if reply_message.sender.bot:
         return await edit_or_reply(event, "`Processing...`")
