@@ -10,6 +10,7 @@ import os
 
 from telethon import events
 from telethon.errors.rpcerrorlist import ChatAdminRequiredError, YouBlockedUserError
+from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import ChannelParticipantsKicked
 from telethon.utils import get_display_name
@@ -35,7 +36,7 @@ async def _(event):
     os.remove(b)
 
 
-@man_cmd(pattern=r"sendbot (.*)")
+@man_cmd(pattern="sendbot (.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -46,29 +47,32 @@ async def _(event):
 
     botid = await event.client.get_entity(chat)
     await edit_or_reply(event, "`Processing...`")
-    async with bot.conversation(chat) as conv:
+    async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=botid)
             )
             msg = await bot.send_message(chat, link)
             response = await response
-            await bot.send_read_acknowledge(conv.chat_id)
+            await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await edit_delete(
-                event, f"**Unblock Terlebih dahulu {chat} dan coba lagi.**", 10
+            await event.client(UnblockRequest(chat))
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=botid)
             )
-            return
+            msg = await bot.send_message(chat, link)
+            response = await response
+            await event.client.send_read_acknowledge(conv.chat_id)
         except BaseException:
             await edit_delete(event, "**Tidak dapat menemukan bot itu 🥺**", 10)
 
         await edit_or_reply(event, f"**Pesan Terkirim:** `{link}`\n**Kepada: {chat}**")
-        await bot.send_message(event.chat_id, response.message)
-        await bot.send_read_acknowledge(event.chat_id)
+        await event.client.send_message(event.chat_id, response.message)
+        await event.client.send_read_acknowledge(event.chat_id)
         await event.client.delete_messages(conv.chat_id, [msg.id, response.id])
 
 
-@man_cmd(pattern=r"unbanall$")
+@man_cmd(pattern="unbanall$")
 async def _(event):
     await edit_or_reply(event, "`Searching Participant Lists...`")
     p = 0
@@ -130,7 +134,7 @@ async def _(event):
             ExportChatInviteRequest(event.chat_id),
         )
     except ChatAdminRequiredError:
-        return await bot.send_message(f"**Maaf {owner} Bukan Admin 👮**")
+        return await event.client.send_message(f"**Maaf {owner} Bukan Admin 👮**")
     await edit_or_reply(event, f"**Link Invite GC**: {e.link}")
 
 
@@ -138,14 +142,14 @@ async def _(event):
 async def _(event):
     k = await event.get_reply_message()
     if k:
-        a = await bot.get_messages(event.chat_id, 0, from_user=k.sender_id)
+        a = await event.client.get_messages(event.chat_id, 0, from_user=k.sender_id)
         return await event.edit(
             f"**Total ada** `{a.total}` **Chat Yang dikirim Oleh** {u} **di Grup Chat ini**"
         )
     u = event.pattern_match.group(1)
     if not u:
         u = "me"
-    a = await bot.get_messages(event.chat_id, 0, from_user=u)
+    a = await event.client.get_messages(event.chat_id, 0, from_user=u)
     await edit_or_reply(
         event, f"**Total ada `{a.total}` Chat Yang dikirim Oleh saya di Grup Chat ini**"
     )
@@ -154,41 +158,23 @@ async def _(event):
 @man_cmd(pattern="limit(?: |$)(.*)")
 async def _(event):
     await edit_or_reply(event, "`Processing...`")
-    async with bot.conversation("@SpamBot") as conv:
+    async with event.client.conversation("@SpamBot") as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=178220800)
             )
             await conv.send_message("/start")
             response = await response
-            await bot.send_read_acknowledge(conv.chat_id)
+            await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await edit_or_reply(event, "**Mohon Unblock @SpamBot dan coba lagi**")
-            return
+            await event.client(UnblockRequest("@SpamBot"))
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=178220800)
+            )
+            await conv.send_message("/start")
+            response = await response
+            await event.client.send_read_acknowledge(conv.chat_id)
         await edit_or_reply(event, f"~ {response.message.message}")
-
-
-@man_cmd(pattern="limited ?(.*)")
-async def _(e):
-    match = e.pattern_match.group(1)
-    msg = await edit_or_reply(e, "`Processing...`")
-    if match:
-        lel = match
-    elif e.reply_to_msg_id:
-        reply = await e.get_reply_message()
-        lel = reply.sender_id
-    else:
-        lel = "me"
-    manbot = await e.client.get_entity(lel)
-    rest = manbot.restriction_reason
-    if rest:
-        xx = f"**Restriction on** {get_display_name(manbot)}\n".join(
-            f"\n• `{a}`" for a in rest
-        )
-        return await msg.edit(xx)
-    return await msg.edit(
-        "~ Kabar baik, akun Anda tidak dibatasi. Anda bebas, sebebas burung yang terbang lepas."
-    )
 
 
 @man_cmd(pattern="view")
@@ -211,8 +197,13 @@ async def _(event):
             response = await response
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await xx.edit("**Silahkan unblock @chotamreaderbot dan coba lagi**")
-            return
+            await event.client(UnblockRequest(chat))
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=272572121)
+            )
+            await event.client.forward_messages(chat, reply_message)
+            response = await response
+            await event.client.send_read_acknowledge(conv.chat_id)
         if response.text.startswith(""):
             await xx.edit("Am I Dumb Or Am I Dumb?")
         else:
@@ -296,8 +287,6 @@ CMD_HELP.update(
         "limit": f"**Plugin : **`limit`\
         \n\n  •  **Syntax :** `{cmd}limit`\
         \n  •  **Function : **Untuk Mengecek akun anda sedang terkena limit atau tidak dengan menggunakan @spambot.\
-        \n\n  •  **Syntax :** `{cmd}limited` <sambil reply>\
-        \n  •  **Function : **Untuk Mengecek akun anda atau orang lain sedang terkena limit atau tidak.\
     "
     }
 )
