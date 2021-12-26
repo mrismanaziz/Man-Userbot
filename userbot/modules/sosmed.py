@@ -4,7 +4,7 @@
 # t.me/SharingUserbot & t.me/Lunatic0de
 # Nyenyenye bacot
 
-from telethon import events
+from telethon import events, functions
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest
 
