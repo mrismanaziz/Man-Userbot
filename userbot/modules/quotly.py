@@ -6,14 +6,14 @@ import asyncio
 
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
-from userbot.utils import edit_delete, edit_or_reply
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"q ?(.*)"))
+@man_cmd(pattern="q ?(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -24,7 +24,7 @@ async def _(event):
     warna = event.pattern_match.group(1)
     chat = "@QuotLyBot"
     await edit_or_reply(event, "`Processing...`")
-    async with bot.conversation(chat) as conv:
+    async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1031952739)
@@ -32,19 +32,26 @@ async def _(event):
             first = await conv.send_message(f"/qcolor {warna}")
             ok = await conv.get_response()
             await asyncio.sleep(2)
-            second = await bot.forward_messages(chat, reply_message)
+            second = await event.client.forward_messages(chat, reply_message)
             response = await response
         except YouBlockedUserError:
-            await event.reply("**Silahkan Unblock @QuotLyBot dan coba lagi!!**")
-            return
+            await event.client(UnblockRequest(chat))
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=1031952739)
+            )
+            first = await conv.send_message(f"/qcolor {warna}")
+            ok = await conv.get_response()
+            await asyncio.sleep(2)
+            second = await event.client.forward_messages(chat, reply_message)
+            response = await response
         if response.text.startswith("Hi!"):
             await edit_or_reply(
                 event, "**Mohon Menonaktifkan Pengaturan Privasi Forward Anda**"
             )
         else:
             await event.delete()
-            await bot.forward_messages(event.chat_id, response.message)
-    await bot.delete_messages(conv.chat_id, [first.id, ok.id, second.id, response.id])
+            await event.client.forward_messages(event.chat_id, response.message)
+    await event.client.delete_messages(conv.chat_id, [first.id, ok.id, second.id, response.id])
 
 
 CMD_HELP.update(
