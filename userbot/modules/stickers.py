@@ -286,11 +286,8 @@ async def _(event):
         return await edit_delete(
             xnxx, "**Mohon Balas sticker untuk mencuri semua Sticker Pack itu.**"
         )
-    if query == "":
-        pname = f"{un} Sticker Pack"
-    else:
-        pname = query
-    if reply and reply.media and reply.media.document.mime_type == "image/webp":
+    pname = f"{un} Sticker Pack" if query == "" else query
+    if reply.media and reply.media.document.mime_type == "image/webp":
         tikel_id = reply.media.document.attributes[1].stickerset.id
         tikel_hash = reply.media.document.attributes[1].stickerset.access_hash
         got_stcr = await event.client(
