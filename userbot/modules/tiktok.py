@@ -32,14 +32,14 @@ async def _(event):
     chat = "@thisvidbot"
     async with event.client.conversation(chat) as conv:
         try:
-            msg_start = await conv.send_message("/start")
-            msg = await conv.send_message(d_link)
+            await conv.send_message("/start")
+            await conv.send_message(d_link)
             video = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            msg_start = await conv.send_message("/start")
-            msg = await conv.send_message(d_link)
+            await conv.send_message("/start")
+            await conv.send_message(d_link)
             video = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
         await event.client.send_file(event.chat_id, video)
