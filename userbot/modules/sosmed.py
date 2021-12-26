@@ -6,7 +6,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
@@ -49,7 +49,9 @@ async def insta(event):
                 response.message.media,
             )
             await event.client.send_read_acknowledge(conv.chat_id)
-            await event.client(functions.messages.DeleteHistoryRequest(peer=chat, max_id=0))
+            await event.client(
+                functions.messages.DeleteHistoryRequest(peer=chat, max_id=0)
+            )
             await event.delete()
 
 
@@ -59,7 +61,9 @@ async def DeezLoader(event):
         return
     dlink = event.pattern_match.group(1)
     if ".com" not in dlink:
-        await edit_delete(event, "`Mohon Berikan Link Deezloader yang ingin di download`")
+        await edit_delete(
+            event, "`Mohon Berikan Link Deezloader yang ingin di download`"
+        )
     else:
         await edit_or_reply(event, "`Sedang Mendownload Lagu...`")
     chat = "@DeezLoadBot"
