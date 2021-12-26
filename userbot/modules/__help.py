@@ -70,5 +70,6 @@ async def _(event):
             )
     else:
         await edit_or_reply(
-            event, "**Silahkan Buat BOT di @BotFather dan Tambahkan Var** `BOT_TOKEN` & `BOT_USERNAME`"
+            event,
+            "**Silahkan Buat BOT di @BotFather dan Tambahkan Var** `BOT_TOKEN` & `BOT_USERNAME`",
         )
