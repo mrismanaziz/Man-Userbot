@@ -1,65 +1,70 @@
 # Port by Koala 🐨/@manuskarakitann
+# Recode by @mrismanaziz
+# FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot/>
+# t.me/SharingUserbot & t.me/Lunatic0de
 # Nyenyenye bacot
 
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl.functions.contacts import UnblockRequest
+from telethon.tl.functions.messages import DeleteHistoryRequest
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern="sosmed ?(.*)"))
+@man_cmd(pattern="sosmed(?: |$)(.*)")
 async def insta(event):
-    if event.fwd_from:
-        return
-    if not event.reply_to_msg_id:
-        await event.edit("`Balas Ke Link Untuk Download.`")
-        return
-    reply_message = await event.get_reply_message()
-    if not reply_message.text:
-        await event.edit("`Mohon Berikan Link yang ingin di download...`")
-        return
+    xxnx = event.pattern_match.group(1)
+    if xxnx:
+        link = xxnx
+    elif event.is_reply:
+        link = await event.get_reply_message()
+    else:
+        return await edit_delete(
+            event,
+            "**Berikan Link Sosmed atau Reply Link Sosmed Untuk di Download**",
+        )
+    xx = await edit_or_reply(event, "`Processing Download...`")
     chat = "@SaveAsbot"
-    if reply_message.sender.bot:
-        await event.edit("`Processing...`")
-        return
-    await event.edit("`Processing Download...`")
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=523131145)
             )
-            await event.client.send_message(chat, reply_message)
+            await event.client.send_message(chat, link)
             response = await response
         except YouBlockedUserError:
-            await event.edit("`Mohon Unblock dulu` @SaveAsbot'u ")
-            return
+            await event.client(UnblockRequest(chat))
+            await event.client.send_message(chat, link)
+            response = await response
         if response.text.startswith("Forward"):
-            await event.edit("Forward Private .")
+            await xx.edit("Forward Private .")
         else:
-            await event.delete()
+            await xx.delete()
             await event.client.send_file(
                 event.chat_id,
                 response.message.media,
             )
-
             await event.client.send_read_acknowledge(conv.chat_id)
-            await bot(functions.messages.DeleteHistoryRequest(peer=chat, max_id=0))
-            await event.delete()
+            await event.client(DeleteHistoryRequest(peer=chat, max_id=0))
+            await xx.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern="dez(?: |$)(.*)"))
+@man_cmd(pattern="dez(?: |$)(.*)")
 async def DeezLoader(event):
     if event.fwd_from:
         return
     dlink = event.pattern_match.group(1)
     if ".com" not in dlink:
-        await event.edit("`Mohon Berikan Link Deezloader yang ingin di download`")
+        await edit_delete(
+            event, "`Mohon Berikan Link Deezloader yang ingin di download`"
+        )
     else:
-        await event.edit("`Sedang Mendownload Lagu...`")
+        await edit_or_reply(event, "`Sedang Mendownload Lagu...`")
     chat = "@DeezLoadBot"
-    async with bot.conversation(chat) as conv:
+    async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("/start")
             await conv.get_response()
@@ -67,11 +72,18 @@ async def DeezLoader(event):
             await conv.send_message(dlink)
             details = await conv.get_response()
             song = await conv.get_response()
-            await bot.send_read_acknowledge(conv.chat_id)
+            await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await event.edit("@DeezLoadBot'Unblok Dulu La Asu.")
-            return
-        await bot.send_file(event.chat_id, song, caption=details.text)
+            await event.client(UnblockRequest(chat))
+            await conv.send_message("/start")
+            await conv.get_response()
+            await conv.get_response()
+            await conv.send_message(dlink)
+            details = await conv.get_response()
+            song = await conv.get_response()
+            await event.client.send_read_acknowledge(conv.chat_id)
+        await event.client.send_file(event.chat_id, song, caption=details.text)
+        await event.delete()
 
 
 CMD_HELP.update(

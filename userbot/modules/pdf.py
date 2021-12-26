@@ -6,19 +6,20 @@
 from asyncio.exceptions import TimeoutError
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.utils import edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"pdf(?: |$)(.*)"))
+@man_cmd(pattern="pdf(?: |$)(.*)")
 async def _(event):
     if not event.reply_to_msg_id:
-        return await event.edit("**Mohon Reply ke teks apa pun**")
+        return await edit_or_reply(event, "**Mohon Reply ke teks apa pun**")
     reply_message = await event.get_reply_message()
     chat = "@office2pdf_bot"
-    await event.edit("`Mengubah menjadi PDF...`")
+    xx = await edit_or_reply(event, "`Mengubah menjadi PDF...`")
     try:
         async with bot.conversation(chat) as conv:
             try:
@@ -32,11 +33,12 @@ async def _(event):
                 filename = await conv.send_message("Man-Userbot")
                 started = await conv.get_response()
                 pdf = await conv.get_response()
-                """- jangan spam notif -"""
                 await bot.send_read_acknowledge(conv.chat_id)
             except YouBlockedUserError:
-                await event.edit("**Unblock @office2pdf_bot dan coba lagi**")
-                return
+                await event.client(UnblockRequest(chat))
+                return await xx.edit(
+                    "**Silahkan Unblock @office2pdf_bot dan coba lagi**"
+                )
             await event.client.send_message(event.chat_id, pdf)
             await event.client.delete_messages(
                 conv.chat_id,
@@ -53,9 +55,9 @@ async def _(event):
                     convert.id,
                 ],
             )
-            await event.delete()
+            await xx.delete()
     except TimeoutError:
-        return await event.edit(
+        return await xx.edit(
             "**ERROR: @office2pdf_bot tidak merespon, coba lagi nanti**"
         )
 

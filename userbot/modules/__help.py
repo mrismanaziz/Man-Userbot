@@ -18,6 +18,7 @@
 
 from telethon.errors.rpcerrorlist import BotInlineDisabledError as noinline
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import BOT_USERNAME
 from userbot import CMD_HANDLER as cmd
@@ -52,7 +53,14 @@ async def _(event):
                     sixth = await conv.get_response()
                     await bot.send_read_acknowledge(conv.chat_id)
                 except YouBlockedUserError:
-                    return await xx.edit("Unblock @Botfather first.")
+                    await event.client(UnblockRequest(chat))
+                    first = await conv.send_message("/setinline")
+                    second = await conv.get_response()
+                    third = await conv.send_message(BOT_USERNAME)
+                    fourth = await conv.get_response()
+                    fifth = await conv.send_message("Search")
+                    sixth = await conv.get_response()
+                    await bot.send_read_acknowledge(conv.chat_id)
                 await xx.edit(
                     f"**Berhasil Menyalakan Mode Inline**\n\n**Ketik** `{cmd}helpme` **lagi untuk membuka menu bantuan.**"
                 )
@@ -62,5 +70,6 @@ async def _(event):
             )
     else:
         await edit_or_reply(
-            event, f"**ERROR:** Silahkan Tambahkan Var `BOT_TOKEN` & `BOT_USERNAME`"
+            event,
+            "**Silahkan Buat BOT di @BotFather dan Tambahkan Var** `BOT_TOKEN` & `BOT_USERNAME`",
         )

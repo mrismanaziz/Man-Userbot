@@ -14,6 +14,7 @@ from telethon import *
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl import functions
+from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.types import (
     ChatBannedRights,
     UserStatusEmpty,
@@ -87,13 +88,9 @@ weebyfont = [
 
 
 logger = logging.getLogger(__name__)
-
 thumb_image_path = TEMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
-
-
-if 1 == 1:
-    name = "Profile Photos"
-    client = bot
+name = "Profile Photos"
+client = bot
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"app(?: |$)(.*)"))
@@ -499,8 +496,9 @@ async def _(event):
             await event.client.forward_messages(chat, reply_message)
             response = await response
         except YouBlockedUserError:
-            await event.reply("**Mohon Jangan Memblokir** @CheckRestrictionsBot")
-            return
+            await event.client(UnblockRequest(chat))
+            await event.client.forward_messages(chat, reply_message)
+            response = await response
         if response.text.startswith(""):
             await event.edit("**Terjadi Error**")
         else:
