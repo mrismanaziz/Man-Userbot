@@ -20,7 +20,6 @@ from userbot.utils import (
 
 @man_cmd(pattern="sg(u)?(?:\s|$)([\s\S]*)")
 async def _(event):
-    "To get name/username history."
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply_message = await event.get_reply_message()
     if not input_str and not reply_message:
@@ -35,9 +34,8 @@ async def _(event):
         try:
             await conv.send_message(f"/search_id {uid}")
         except YouBlockedUserError:
-            await edit_delete(
-                manevent, "**Unblock** @sangmatainfo_bot **Dan Coba Lagi**", 120
-            )
+            await event.client(UnblockRequest(chat))
+            await conv.send_message(f"/search_id {uid}")
         responses = []
         while True:
             try:
