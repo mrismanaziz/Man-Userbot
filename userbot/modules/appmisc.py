@@ -501,9 +501,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=894227130)
-            )
             await event.client.forward_messages(chat, reply_message)
             response = await response
         if response.text.startswith(""):
