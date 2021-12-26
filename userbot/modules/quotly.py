@@ -9,7 +9,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
@@ -51,7 +51,9 @@ async def _(event):
         else:
             await event.delete()
             await event.client.forward_messages(event.chat_id, response.message)
-    await event.client.delete_messages(conv.chat_id, [first.id, ok.id, second.id, response.id])
+    await event.client.delete_messages(
+        conv.chat_id, [first.id, ok.id, second.id, response.id]
+    )
 
 
 CMD_HELP.update(
