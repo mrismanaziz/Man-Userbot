@@ -12,29 +12,28 @@ from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 @man_cmd(pattern="sosmed ?(.*)")
 async def insta(event):
-    if event.fwd_from:
-        return
-    if not event.reply_to_msg_id:
-        return await edit_delete(event, "`Balas Ke Link Untuk Download.`")
-    reply_message = await event.get_reply_message()
-    if not reply_message.text:
+    xxnx = event.pattern_match.group(1)
+    if xxnx:
+        link = xxnx
+    elif event.is_reply:
+        link = await event.get_reply_message()
+    else:
         return await edit_delete(
-            event, "`Mohon Berikan Link yang ingin di download...`"
+            event,
+            "**Berikan Link Sosmed atau Reply Link Sosmed Untuk di Download**",
         )
-    chat = "@SaveAsbot"
-    if reply_message.sender.bot:
-        return await edit_or_reply(event, "`Processing...`")
     xx = await edit_or_reply(event, "`Processing Download...`")
+    chat = "@SaveAsbot"
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=523131145)
             )
-            await event.client.send_message(chat, reply_message)
+            await event.client.send_message(chat, link)
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            await event.client.send_message(chat, reply_message)
+            await event.client.send_message(chat, link)
             response = await response
         if response.text.startswith("Forward"):
             await xx.edit("Forward Private .")
