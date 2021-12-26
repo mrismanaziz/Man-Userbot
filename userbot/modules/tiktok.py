@@ -7,6 +7,7 @@
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest
+from telethon.tl.functions.messages import DeleteHistoryRequest
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
@@ -32,25 +33,17 @@ async def _(event):
     async with event.client.conversation(chat) as conv:
         try:
             msg_start = await conv.send_message("/start")
-            r = await conv.get_response()
             msg = await conv.send_message(d_link)
-            details = await conv.get_response()
             video = await conv.get_response()
-            text = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
             msg_start = await conv.send_message("/start")
-            r = await conv.get_response()
             msg = await conv.send_message(d_link)
-            details = await conv.get_response()
             video = await conv.get_response()
-            text = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
         await event.client.send_file(event.chat_id, video)
-        await event.client.delete_messages(
-            conv.chat_id, [msg_start.id, r.id, msg.id, details.id, video.id, text.id]
-        )
+        await event.client(DeleteHistoryRequest(peer=chat, max_id=0))
         await xx.delete()
 
 
