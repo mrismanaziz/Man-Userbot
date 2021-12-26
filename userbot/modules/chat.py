@@ -7,7 +7,6 @@
 import asyncio
 import csv
 import random
-from asyncio import sleep
 from datetime import datetime
 from math import sqrt
 
@@ -38,15 +37,15 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_input_location
 
-from userbot import BLACKLIST_CHAT, BOTLOG, BOTLOG_CHATID
+from userbot import BLACKLIST_CHAT
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot, owner
-from userbot.events import man_cmd, register
+from userbot import CMD_HELP, owner
+from userbot.events import register
 from userbot.modules.ping import absen
-from userbot.utils import edit_or_reply, get_user_from_event
+from userbot.utils import edit_or_reply, get_user_from_event, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern="userid$"))
+@man_cmd(pattern="userid$")
 async def useridgetter(target):
     message = await target.get_reply_message()
     if message:
@@ -62,24 +61,24 @@ async def useridgetter(target):
                 name = "@" + message.forward.sender.username
             else:
                 name = "*" + message.forward.sender.first_name + "*"
-        await target.edit(f"**Username:** {name} \n**User ID:** `{user_id}`")
+        await edit_or_reply(target, f"**Username:** {name} \n**User ID:** `{user_id}`")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"link(?: |$)(.*)"))
+@man_cmd(pattern="link(?: |$)(.*)")
 async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
     if custom:
-        await mention.edit(f"[{custom}](tg://user?id={user.id})")
+        await edit_or_reply(mention, f"[{custom}](tg://user?id={user.id})")
     else:
         tag = (
             user.first_name.replace("\u2060", "") if user.first_name else user.username
         )
-        await mention.edit(f"[{tag}](tg://user?id={user.id})")
+        await edit_or_reply(mention, f"[{tag}](tg://user?id={user.id})")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"bots(?: |$)(.*)"))
+@man_cmd(pattern="bots(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -92,12 +91,14 @@ async def _(event):
     else:
         mentions = "Bot Dalam {} Group: \n".format(input_str)
         try:
-            chat = await bot.get_entity(input_str)
+            chat = await event.client.get_entity(input_str)
         except Exception as e:
-            await event.edit(str(e))
+            await edit_or_reply(event, str(e))
             return None
     try:
-        async for x in bot.iter_participants(chat, filter=ChannelParticipantsBots):
+        async for x in event.client.iter_participants(
+            chat, filter=ChannelParticipantsBots
+        ):
             if isinstance(x.participant, ChannelParticipantAdmin):
                 mentions += "\n 👑 [{}](tg://user?id={}) `{}`".format(
                     x.first_name, x.id, x.id
@@ -108,52 +109,27 @@ async def _(event):
                 )
     except Exception as e:
         mentions += " " + str(e) + "\n"
-    await event.edit(mentions)
+    await edit_or_reply(event, mentions)
 
 
-@bot.on(man_cmd(outgoing=True, pattern="kickme$"))
+@man_cmd(pattern="kickme$")
 async def kickme(leave):
     if leave.chat_id in BLACKLIST_CHAT:
-        return await leave.edit("**Perintah ini Dilarang digunakan di Group ini**")
-    await leave.edit(f"`{owner} has left this group, bye!!`")
+        return await edit_or_reply(
+            leave, "**Perintah ini Dilarang digunakan di Group ini**"
+        )
+    await edit_or_reply(leave, f"`{owner} has left this group, bye!!`")
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
-@bot.on(man_cmd(outgoing=True, pattern="kikme$"))
+@man_cmd(pattern="kikme$")
 async def kikme(leave):
     if leave.chat_id in BLACKLIST_CHAT:
-        return await leave.edit("**Perintah ini Dilarang digunakan di Group ini**")
-    await leave.edit("**GC NYA JELEK GOBLOK KELUAR DULU AH CROTT** 🥴")
-    await leave.client.kick_participant(leave.chat_id, "me")
-
-
-@bot.on(man_cmd(outgoing=True, pattern="unmutechat$"))
-async def unmute_chat(unm_e):
-    try:
-        from userbot.modules.sql_helper.keep_read_sql import unkread
-    except AttributeError:
-        return await unm_e.edit("**Running on Non-SQL Mode!**")
-    unkread(str(unm_e.chat_id))
-    await unm_e.edit("**Berhasil Dibuka, Obrolan Tidak Lagi Dibisukan!**")
-    await sleep(2)
-    await unm_e.delete()
-
-
-@bot.on(man_cmd(outgoing=True, pattern="mutechat$"))
-async def mute_chat(mute_e):
-    try:
-        from userbot.modules.sql_helper.keep_read_sql import kread
-    except AttributeError:
-        return await mute_e.edit("**Running on Non-SQL mode!**")
-    await mute_e.edit(str(mute_e.chat_id))
-    kread(str(mute_e.chat_id))
-    await mute_e.edit(f"**{owner} Telah Membisukan Obrolan!**")
-    await sleep(2)
-    await mute_e.delete()
-    if BOTLOG:
-        await mute_e.client.send_message(
-            BOTLOG_CHATID, str(mute_e.chat_id) + " Telah Dibisukan."
+        return await edit_or_reply(
+            leave, "**Perintah ini Dilarang digunakan di Group ini**"
         )
+    await edit_or_reply(leave, "**GC NYA JELEK GOBLOK KELUAR DULU AH CROTT** 🥴")
+    await leave.client.kick_participant(leave.chat_id, "me")
 
 
 @register(incoming=True, from_users=844432220, pattern=r"^.absenall$")
@@ -161,61 +137,16 @@ async def man(ganteng):
     await ganteng.reply(random.choice(absen))
 
 
-@bot.on(man_cmd(incoming=True))
-async def keep_read(message):
-    try:
-        from userbot.modules.sql_helper.keep_read_sql import is_kread
-    except AttributeError:
-        return
-    kread = is_kread()
-    if kread:
-        for i in kread:
-            if i.groupid == str(message.chat_id):
-                await message.client.send_read_acknowledge(message.chat_id)
-
-
-@bot.on(man_cmd(outgoing=True, pattern="s/"))
-async def sedNinja(event):
-    try:
-        from userbot.modules.sql_helper.globals import gvarstatus
-    except AttributeError:
-        return await event.edit("**Running on Non-SQL mode!**")
-    if gvarstatus("regexNinja"):
-        await event.delete()
-
-
-@bot.on(man_cmd(outgoing=True, pattern=r"regexninja (on|off)$"))
-async def sedNinjaToggle(event):
-    if event.pattern_match.group(1) == "on":
-        try:
-            from userbot.modules.sql_helper.globals import addgvar
-        except AttributeError:
-            return await event.edit("**Running on Non-SQL mode!**")
-        addgvar("regexNinja", True)
-        await event.edit("**Berhasil Mengaktifkan Mode Regez Ninja.**")
-        await sleep(1)
-        await event.delete()
-    elif event.pattern_match.group(1) == "off":
-        try:
-            from userbot.modules.sql_helper.globals import delgvar
-        except AttributeError:
-            return await event.edit("**Running on Non-SQL mode!**")
-        delgvar("regexNinja")
-        await event.edit("**Berhasil Menonaktifkan Mode Regez Ninja.**")
-        await sleep(1)
-        await event.delete()
-
-
-@bot.on(man_cmd(outgoing=True, pattern=r"chatinfo(?: |$)(.*)"))
+@man_cmd(pattern="chatinfo(?: |$)(.*)")
 async def info(event):
-    await event.edit("`Menganalisis Obrolan Ini...`")
+    xx = await edit_or_reply(event, "`Menganalisis Obrolan Ini...`")
     chat = await get_chatinfo(event)
     caption = await fetch_info(chat, event)
     try:
-        await event.edit(caption, parse_mode="html")
+        await xx.edit(caption, parse_mode="html")
     except Exception as e:
         print("Exception:", e)
-        await event.edit("**Terjadi Kesalah Yang Tidak Terduga.**")
+        await xx.edit("**Terjadi Kesalah Yang Tidak Terduga.**")
     return
 
 
@@ -235,23 +166,23 @@ async def get_chatinfo(event):
         else:
             chat = event.chat_id
     try:
-        chat_info = await bot(GetFullChatRequest(chat))
+        chat_info = await event.client(GetFullChatRequest(chat))
     except BaseException:
         try:
-            chat_info = await bot(GetFullChannelRequest(chat))
+            chat_info = await event.client(GetFullChannelRequest(chat))
         except ChannelInvalidError:
-            await event.reply("`Invalid channel/group`")
+            await edit_or_reply(event, "`Invalid channel/group`")
             return None
         except ChannelPrivateError:
-            await event.reply(
-                "`This is a private channel/group or I am banned from there`"
+            await edit_or_reply(
+                event, "`This is a private channel/group or I am banned from there`"
             )
             return None
         except ChannelPublicGroupNaError:
-            await event.reply("`Channel or supergroup doesn't exist`")
+            await edit_or_reply(event, "`Channel or supergroup doesn't exist`")
             return None
         except (TypeError, ValueError):
-            await event.reply("`Invalid channel/group`")
+            await edit_or_reply(event, "`Invalid channel/group`")
             return None
     return chat_info
 
@@ -466,13 +397,15 @@ async def fetch_info(chat, event):
     return caption
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"invite(?: |$)(.*)"))
+@man_cmd(pattern="invite(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
     to_add_users = event.pattern_match.group(1)
     if event.is_private:
-        await event.edit("`.invite` users to a chat, not to a Private Message")
+        await edit_or_reply(
+            event, "`.invite` pengguna ke grup chat, bukan ke Pesan Pribadi"
+        )
     else:
         if not event.is_channel and event.is_group:
             # https://lonamiwebs.github.io/Telethon/methods/messages/add_chat_user.html
@@ -486,7 +419,7 @@ async def _(event):
                         )
                     )
                 except Exception as e:
-                    return await event.edit(str(e))
+                    return await edit_or_reply(event, str(e))
         else:
             # https://lonamiwebs.github.io/Telethon/methods/channels/invite_to_channel.html
             for user_id in to_add_users.split():
@@ -499,11 +432,9 @@ async def _(event):
                         )
                     )
                 except Exception as e:
-                    return await event.edit(str(e))
+                    return await edit_or_reply(event, str(e))
 
-        await event.edit("`Invited Successfully`")
-        await sleep(3)
-        await event.delete()
+        await edit_delete(event, "`Invited Successfully`")
 
 
 # inviteall Ported By @VckyouuBitch
@@ -511,18 +442,22 @@ async def _(event):
 # Copyright © Team Geez - Project
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"inviteall ?(.*)"))
+@man_cmd(pattern="inviteall ?(.*)")
 async def get_users(event):
     man_ = event.text[11:]
     chat_man = man_.lower()
     restricted = ["@SharingUserbot", "@sharinguserbot"]
-    man = await edit_or_reply(event, f"**Mengundang Member Dari Group {man_}**")
     if chat_man in restricted:
-        await man.edit("**Anda tidak dapat Mengundang Anggota dari sana.**")
-        await bot.send_message(
+        await edit_or_reply(event, "**Anda tidak dapat Mengundang Anggota dari sana.**")
+        await event.client.send_message(
             -1001473548283, "**Maaf Telah Mencuri Member dari Sini.**"
         )
         return
+    if not man_:
+        return await edit_or_reply(
+            event, "**Berikan Link Grup Chat untuk menculik membernya**"
+        )
+    man = await edit_or_reply(event, f"**Mengundang Member Dari Group {man_}**")
     manuserbot = await get_chatinfo(event)
     chat = await event.get_chat()
     if event.is_private:
@@ -533,9 +468,9 @@ async def get_users(event):
     f = 0
     error = "None"
     await man.edit("**Terminal Status**\n\n`Sedang Mengumpulkan Pengguna...`")
-    async for user in bot.iter_participants(manuserbot.full_chat.id):
+    async for user in event.client.iter_participants(manuserbot.full_chat.id):
         try:
-            await bot(InviteToChannelRequest(channel=chat, users=[user.id]))
+            await event.client(InviteToChannelRequest(channel=chat, users=[user.id]))
             s += 1
             await man.edit(
                 f"**Terminal Running**\n\n• **Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**\n\n**× LastError:** `{error}`"
@@ -552,10 +487,10 @@ async def get_users(event):
 # Coded By Abdul <https://github.com/DoellBarr>
 
 
-@bot.on(man_cmd(outgoing=True, pattern="getmember$"))
+@man_cmd(pattern="getmember$")
 async def scrapmem(event):
     chat = event.chat_id
-    await event.edit("`Processing...`")
+    xx = await edit_or_reply(event, "`Processing...`")
     members = await event.client.get_participants(chat, aggressive=True)
 
     with open("members.csv", "w", encoding="UTF-8") as f:
@@ -563,12 +498,12 @@ async def scrapmem(event):
         writer.writerow(["user_id", "hash"])
         for member in members:
             writer.writerow([member.id, member.access_hash])
-    await event.edit("**Berhasil Mengumpulkan Member**")
+    await xx.edit("**Berhasil Mengumpulkan Member**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern="addmember$"))
+@man_cmd(pattern="addmember$")
 async def admem(event):
-    await event.edit("**Proses Menambahkan** `0` **Member**")
+    xx = await edit_or_reply(event, "**Proses Menambahkan** `0` **Member**")
     chat = await event.get_chat()
     users = []
     with open("members.csv", encoding="UTF-8") as f:
@@ -581,7 +516,7 @@ async def admem(event):
     for user in users:
         n += 1
         if n % 30 == 0:
-            await event.edit(
+            await xx.edit(
                 f"**Sudah Mencapai 30 anggota, Tunggu Selama** `{900/60}` **menit**"
             )
             await asyncio.sleep(900)
@@ -589,7 +524,7 @@ async def admem(event):
             userin = InputPeerUser(user["id"], user["hash"])
             await event.client(InviteToChannelRequest(chat, [userin]))
             await asyncio.sleep(random.randrange(5, 7))
-            await event.edit(f"**Proses Menambahkan** `{n}` **Member**")
+            await xx.edit(f"**Proses Menambahkan** `{n}` **Member**")
         except TypeError:
             n -= 1
             continue
@@ -656,19 +591,6 @@ CMD_HELP.update(
         \n\n  •  **Syntax :** `{cmd}link` <username/userid> <opsional teks> (atau) Reply pesan .link <teks opsional>\
         \n  •  **Function : **Membuat link permanen ke profil pengguna dengan teks ubahsuaian opsional.\
         \n  •  **Contoh : **{cmd}link @mrismanaziz Ganteng\
-    "
-    }
-)
-
-
-CMD_HELP.update(
-    {
-        "regexninja": f"**Plugin : **`regexninja`\
-        \n\n  •  **Syntax :** `{cmd}regexninja on`\
-        \n  •  **Function : **Mengaktifkan modul ninja regex secara global. \
-        \n\n  •  **Syntax :** `{cmd}regexninja off`)\
-        \n  •  **Function : **Menonaktifkan modul ninja regex secara global. \
-        \n\n  •  **NOTE :** Modul Regex Ninja dapat membantu menghapus pesan pemicu bot regex.\
     "
     }
 )
