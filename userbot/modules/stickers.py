@@ -63,10 +63,10 @@ async def kang(args):
     emoji = None
 
     if not message or not message.media:
-        return await args.edit("`Maaf , Saya Gagal Mengambil Sticker Ini!`")
+        return await edit_delete(args, "`Maaf , Saya Gagal Mengambil Sticker Ini!`")
 
     if isinstance(message.media, MessageMediaPhoto):
-        await args.edit(f"`{random.choice(KANGING_STR)}`")
+        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = io.BytesIO()
         photo = await args.client.download_media(message.photo, photo)
     elif "image" in message.media.document.mime_type.split("/"):
@@ -81,7 +81,7 @@ async def kang(args):
             if emoji != "✨":
                 emojibypass = True
     elif "tgsticker" in message.media.document.mime_type:
-        await args.edit(f"`{random.choice(KANGING_STR)}`")
+        await xx.edit(f"`{random.choice(KANGING_STR)}`")
         await args.client.download_file(message.media.document, "AnimatedSticker.tgs")
 
         attributes = message.media.document.attributes
@@ -93,7 +93,7 @@ async def kang(args):
         is_anim = True
         photo = 1
     else:
-        return await args.edit("`File Tidak Didukung !`")
+        return await xx.edit("`File Tidak Didukung !`")
     if photo:
         splat = args.text.split()
         if not emojibypass:
@@ -144,7 +144,7 @@ async def kang(args):
                     pack += 1
                     packname = f"Sticker_u{u_id}_Ke{pack}"
                     packnick = f"{custom_packnick}"
-                    await args.edit(
+                    await xx.edit(
                         "`Membuat Sticker Pack Baru "
                         + str(pack)
                         + " Karena Sticker Pack Sudah Penuh`"
@@ -181,7 +181,7 @@ async def kang(args):
                         await args.client.send_read_acknowledge(conv.chat_id)
                         await conv.get_response()
                         await args.client.send_read_acknowledge(conv.chat_id)
-                        return await args.edit(
+                        return await xx.edit(
                             "`Sticker ditambahkan ke pack yang berbeda !"
                             "\nIni pack yang baru saja dibuat!"
                             f"\nTekan [Sticker Pack](t.me/addstickers/{packname}) Untuk Melihat Sticker Pack",
@@ -195,7 +195,7 @@ async def kang(args):
                     await conv.send_file(file, force_document=True)
                 rsp = await conv.get_response()
                 if "Sorry, the file type is invalid." in rsp.text:
-                    return await args.edit(
+                    return await xx.edit(
                         "**Gagal Menambahkan Sticker, Gunakan @Stickers Bot Untuk Menambahkan Sticker Anda.**"
                     )
                 await conv.send_message(emoji)
@@ -205,7 +205,7 @@ async def kang(args):
                 await conv.get_response()
                 await args.client.send_read_acknowledge(conv.chat_id)
         else:
-            await args.edit("`Membuat Sticker Pack Baru`")
+            await xx.edit("`Membuat Sticker Pack Baru`")
             async with args.client.conversation("Stickers") as conv:
                 await conv.send_message(cmd)
                 await conv.get_response()
@@ -221,7 +221,7 @@ async def kang(args):
                     await conv.send_file(file, force_document=True)
                 rsp = await conv.get_response()
                 if "Sorry, the file type is invalid." in rsp.text:
-                    return await args.edit(
+                    return await xx.edit(
                         "**Gagal Menambahkan Sticker, Gunakan @Stickers Bot Untuk Menambahkan Sticker.**"
                     )
                 await conv.send_message(emoji)
@@ -241,7 +241,7 @@ async def kang(args):
                 await conv.get_response()
                 await args.client.send_read_acknowledge(conv.chat_id)
 
-        await args.edit(
+        await xx.edit(
             "** Sticker Berhasil Ditambahkan!**"
             f"\n        👻 **[KLIK DISINI](t.me/addstickers/{packname})** 👻\n**Untuk Menggunakan Stickers**",
             parse_mode="md",
@@ -440,7 +440,7 @@ async def _(event):
             await xx.edit("**Berhasil Menghapus Stiker.**")
 
 
-@man_cmd(pattern="editsticker ?(.*)"))
+@man_cmd(pattern="editsticker ?(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -497,7 +497,7 @@ async def _(event):
                 )
 
 
-@man_cmd(pattern="getsticker$"))
+@man_cmd(pattern="getsticker$")
 async def sticker_to_png(sticker):
     if not sticker.is_reply:
         await edit_delete(sticker, "**Harap balas ke stiker**")
