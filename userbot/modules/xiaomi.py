@@ -26,9 +26,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=774181428)
-            )
             await conv.send_message(f"/{firmware} {link}")
             response = await response
         else:
@@ -53,9 +50,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=774181428)
-            )
             await conv.send_message(f"/{fboot} {link}")
             response = await response
         else:
@@ -80,9 +74,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=774181428)
-            )
             await conv.send_message(f"/{recovery} {link}")
             response = await response
         else:
@@ -107,9 +98,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=774181428)
-            )
             await conv.send_message(f"/{pitch} {link}")
             response = await response
         else:
@@ -134,9 +122,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=774181428)
-            )
             await conv.send_message(f"/{ofox} {link}")
             response = await response
         else:
@@ -161,9 +146,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=774181428)
-            )
             await conv.send_message(f"/{eu} {link}")
             response = await response
         else:
@@ -171,7 +153,7 @@ async def _(event):
             await event.client.forward_messages(event.chat_id, response.message)
 
 
-@man_cmd(pattern=r"vendor(?: |$)(.*)")
+@man_cmd(pattern="vendor(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -188,9 +170,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=774181428)
-            )
             await conv.send_message(f"/{vendor} {link}")
             response = await response
         else:
@@ -215,9 +194,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=774181428)
-            )
             await conv.send_message(f"/{specs} {link}")
             response = await response
         else:
