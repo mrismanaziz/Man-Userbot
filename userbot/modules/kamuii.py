@@ -42,7 +42,7 @@ async def _(fry):
             response = await conv.get_response()
             await fry.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await event.client(UnblockRequest(chat))
+            await fry.client(UnblockRequest(chat))
             msg = await conv.send_message(reply_message)
             if level:
                 m = f"/deepfry {level}"

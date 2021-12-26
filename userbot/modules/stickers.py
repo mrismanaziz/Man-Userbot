@@ -63,14 +63,16 @@ async def kang(args):
     emoji = None
 
     if not message or not message.media:
-        return await edit_delete(args, "`Maaf , Saya Gagal Mengambil Sticker Ini!`")
+        return await edit_delete(
+            args, "**Silahkan Reply Ke Pesan Media Untuk Mencuri Sticker itu!**"
+        )
 
     if isinstance(message.media, MessageMediaPhoto):
         xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = io.BytesIO()
         photo = await args.client.download_media(message.photo, photo)
     elif "image" in message.media.document.mime_type.split("/"):
-        await args.edit(f"`{random.choice(KANGING_STR)}`")
+        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = io.BytesIO()
         await args.client.download_file(message.media.document, photo)
         if (
@@ -81,7 +83,7 @@ async def kang(args):
             if emoji != "✨":
                 emojibypass = True
     elif "tgsticker" in message.media.document.mime_type:
-        await xx.edit(f"`{random.choice(KANGING_STR)}`")
+        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         await args.client.download_file(message.media.document, "AnimatedSticker.tgs")
 
         attributes = message.media.document.attributes
@@ -93,7 +95,7 @@ async def kang(args):
         is_anim = True
         photo = 1
     else:
-        return await xx.edit("`File Tidak Didukung !`")
+        return await xx.edit("**File Tidak Didukung, Silahkan Reply ke Media Foto !**")
     if photo:
         splat = args.text.split()
         if not emojibypass:
@@ -134,7 +136,7 @@ async def kang(args):
             "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
             not in htmlstr
         ):
-            async with args.client.conversation("Stickers") as conv:
+            async with args.client.conversation("@Stickers") as conv:
                 await conv.send_message("/addsticker")
                 await conv.get_response()
                 await args.client.send_read_acknowledge(conv.chat_id)
@@ -206,7 +208,7 @@ async def kang(args):
                 await args.client.send_read_acknowledge(conv.chat_id)
         else:
             await xx.edit("`Membuat Sticker Pack Baru`")
-            async with args.client.conversation("Stickers") as conv:
+            async with args.client.conversation("@Stickers") as conv:
                 await conv.send_message(cmd)
                 await conv.get_response()
                 await args.client.send_read_acknowledge(conv.chat_id)
@@ -497,7 +499,7 @@ async def sticker_to_png(sticker):
     if not img.document:
         await edit_delete(sticker, "**Maaf , Ini Bukan Sticker**")
         return False
-    await edit_or_reply(sticker, "`Berhasil Mengambil Sticker!`")
+    xx = await edit_or_reply(sticker, "`Berhasil Mengambil Sticker!`")
     image = io.BytesIO()
     await sticker.client.download_media(img, image)
     image.name = "sticker.png"
@@ -505,7 +507,7 @@ async def sticker_to_png(sticker):
     await sticker.client.send_file(
         sticker.chat_id, image, reply_to=img.id, force_document=True
     )
-    await sticker.delete()
+    await xx.delete()
 
 
 @man_cmd(pattern="stickers ?([\s\S]*)")
@@ -570,7 +572,7 @@ async def _(event):
     rep_msg = await event.get_reply_message()
     if not event.is_reply or not rep_msg.sticker:
         return await edit_delete(event, "**Harap balas ke stiker**")
-    await edit_or_reply(event, "`Mengconvert ke foto...`")
+    xx = await edit_or_reply(event, "`Mengconvert ke foto...`")
     foto = io.BytesIO()
     foto = await event.client.download_media(rep_msg.sticker, foto)
     im = Image.open(foto).convert("RGB")
@@ -580,7 +582,7 @@ async def _(event):
         "sticker.png",
         reply_to=rep_msg,
     )
-    await event.delete()
+    await xx.delete()
     remove("sticker.png")
 
 

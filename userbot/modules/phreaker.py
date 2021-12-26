@@ -85,7 +85,6 @@ async def _(event):
         return
     link = event.pattern_match.group(1)
     chat = "@Carol5_bot"
-    bin = "bin"
     xx = await edit_or_reply(event, "Processing....")
     async with event.client.conversation(chat) as conv:
         try:
