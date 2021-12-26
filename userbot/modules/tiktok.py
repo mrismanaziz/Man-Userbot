@@ -17,15 +17,14 @@ from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 @man_cmd(pattern="tiktok(?: |$)(.*)")
 async def _(event):
-    if event.fwd_from:
-        return
-    d_link = event.pattern_match.group(1)
-    if ".com" not in d_link:
-        await edit_delete(
-            event, "**Berikan Link Video Tiktok Untuk Download Video Tiktok**"
-        )
+    xxnx = event.pattern_match.group(1)
+    if xx:
+        d_link = xxnx
+    elif event.is_reply:
+        d_link = await event.get_reply_message()
     else:
-        xx = await edit_or_reply(event, "`Video Sedang Diproses...`")
+        return await edit_delete(event, "**Berikan Sebuah Pesan atau Reply**")
+    xx = await edit_or_reply(event, "`Video Sedang Diproses...`")
     chat = "@thisvidbot"
     async with event.client.conversation(chat) as conv:
         try:
