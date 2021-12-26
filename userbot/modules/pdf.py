@@ -55,7 +55,7 @@ async def _(event):
                     convert.id,
                 ],
             )
-            await event.delete()
+            await xx.delete()
     except TimeoutError:
         return await xx.edit(
             "**ERROR: @office2pdf_bot tidak merespon, coba lagi nanti**"
