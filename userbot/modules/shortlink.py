@@ -6,28 +6,28 @@
 from asyncio.exceptions import TimeoutError
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"short(?: |$)(.*)"))
+@man_cmd(pattern="short(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
     msg_link = await event.get_reply_message()
     d_link = event.pattern_match.group(1)
-
     if msg_link:
         d_link = msg_link.text
-        await event.edit("`Shortening replied link...`")
+        xx = await edit_or_reply(event, "`Shortening replied link...`")
     elif "https" not in d_link:
-        await event.edit(
+        await edit_or_reply(event, 
             "**Masukkan link, pastikan dimulai dengan** `http://` **atau** `https://`"
         )
     else:
-        await event.edit("`Shortening link...`")
+        xx = await edit_or_reply(event, "`Shortening link...`")
     chat = "@ShortUrlBot"
     try:
         async with event.client.conversation(chat) as conv:
@@ -38,12 +38,11 @@ async def _(event):
                 response = await conv.get_response()
                 url = await conv.get_response()
                 sponser = await conv.get_response()
-                """- jangan spam notif -"""
-                await bot.send_read_acknowledge(conv.chat_id)
+                await event.client.send_read_acknowledge(conv.chat_id)
                 await event.edit(response.text)
             except YouBlockedUserError:
-                await event.edit("**Unblock @ShortUrlBot dan coba lagi**")
-                return
+                await event.client(UnblockRequest(chat))
+                return await xx.edit("**Silahkan Unblock @ShortUrlBot dan coba lagi**")
             await event.client.send_message(event.chat_id, url)
             await event.client.delete_messages(
                 conv.chat_id,
@@ -51,7 +50,7 @@ async def _(event):
             )
             await event.delete()
     except TimeoutError:
-        return await event.edit(
+        return await xx.edit(
             "**ERROR: @ShortUrlBot tidak merespon silahkan coba lagi nanti**"
         )
 
