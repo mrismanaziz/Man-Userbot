@@ -14,6 +14,7 @@ from telethon import *
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl import functions
+from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.types import (
     ChatBannedRights,
     UserStatusEmpty,
@@ -499,8 +500,12 @@ async def _(event):
             await event.client.forward_messages(chat, reply_message)
             response = await response
         except YouBlockedUserError:
-            await event.reply("**Mohon Jangan Memblokir** @CheckRestrictionsBot")
-            return
+            await event.client(UnblockRequest(chat))
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=894227130)
+            )
+            await event.client.forward_messages(chat, reply_message)
+            response = await response
         if response.text.startswith(""):
             await event.edit("**Terjadi Error**")
         else:
