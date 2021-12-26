@@ -562,7 +562,7 @@ async def _(event):
                 "Can you kindly disable your forward privacy settings for good?"
             )
         else:
-            await event.delete()
+            await xx.delete()
             await event.client.send_read_acknowledge(conv.chat_id)
             await event.client.send_message(event.chat_id, response.message)
             await event.client.delete_message(event.chat_id, [msg.id, response.id])
