@@ -9,7 +9,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 # Alvin Gans
@@ -21,7 +21,9 @@ async def _(event):
         return
     d_link = event.pattern_match.group(1)
     if ".com" not in d_link:
-        await edit_delete(event, "**Berikan Link Video Tiktok Untuk Download Video Tiktok**")
+        await edit_delete(
+            event, "**Berikan Link Video Tiktok Untuk Download Video Tiktok**"
+        )
     else:
         await edit_or_reply(event, "`Video Sedang Diproses...`")
     chat = "@ttsavebot"
