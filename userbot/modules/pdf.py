@@ -36,7 +36,9 @@ async def _(event):
                 await bot.send_read_acknowledge(conv.chat_id)
             except YouBlockedUserError:
                 await event.client(UnblockRequest(chat))
-                return await xx.edit("**Silahkan Unblock @office2pdf_bot dan coba lagi**")
+                return await xx.edit(
+                    "**Silahkan Unblock @office2pdf_bot dan coba lagi**"
+                )
             await event.client.send_message(event.chat_id, pdf)
             await event.client.delete_messages(
                 conv.chat_id,
