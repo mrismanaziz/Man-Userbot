@@ -4,9 +4,10 @@
 # t.me/SharingUserbot & t.me/Lunatic0de
 # Nyenyenye bacot
 
-from telethon import events, functions
+from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest
+from telethon.tl.functions.messages import DeleteHistoryRequest
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
@@ -47,9 +48,7 @@ async def insta(event):
                 response.message.media,
             )
             await event.client.send_read_acknowledge(conv.chat_id)
-            await event.client(
-                functions.messages.DeleteHistoryRequest(peer=chat, max_id=0)
-            )
+            await event.client(DeleteHistoryRequest(peer=chat, max_id=0))
             await xx.delete()
 
 
