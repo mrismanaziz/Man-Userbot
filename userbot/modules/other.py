@@ -13,7 +13,6 @@ from telethon.errors.rpcerrorlist import ChatAdminRequiredError, YouBlockedUserE
 from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import ChannelParticipantsKicked
-from telethon.utils import get_display_name
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot, owner
