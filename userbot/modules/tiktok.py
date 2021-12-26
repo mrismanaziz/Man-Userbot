@@ -18,7 +18,7 @@ from userbot.utils import edit_delete, edit_or_reply, man_cmd
 @man_cmd(pattern="tiktok(?: |$)(.*)")
 async def _(event):
     xxnx = event.pattern_match.group(1)
-    if xx:
+    if xxnx:
         d_link = xxnx
     elif event.is_reply:
         d_link = await event.get_reply_message()
