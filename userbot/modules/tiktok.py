@@ -25,7 +25,7 @@ async def _(event):
             event, "**Berikan Link Video Tiktok Untuk Download Video Tiktok**"
         )
     else:
-        await edit_or_reply(event, "`Video Sedang Diproses...`")
+        xx = await edit_or_reply(event, "`Video Sedang Diproses...`")
     chat = "@thisvidbot"
     async with event.client.conversation(chat) as conv:
         try:
@@ -45,11 +45,11 @@ async def _(event):
             video = await conv.get_response()
             text = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
-        await event.delete()
         await event.client.send_file(event.chat_id, video)
         await event.client.delete_messages(
             conv.chat_id, [msg_start.id, r.id, msg.id, details.id, video.id, text.id]
         )
+        await xx.delete()
 
 
 CMD_HELP.update(
