@@ -1,20 +1,21 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.utils import edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"nmap(?: |$)(.*)"))
+@man_cmd(pattern="nmap(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
     link = event.pattern_match.group(1)
-    chat = "@scriptkiddies_bot"  # pylint:disable=E0602
-    nmap = "nmap"  # pylint:disable=E0602
-    await event.edit("Processing....")
-    async with bot.conversation("@scriptkiddies_bot") as conv:
+    chat = "@scriptkiddies_bot"
+    nmap = "nmap"
+    xx = await edit_or_reply(event, "Processing....")
+    async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=510263282)
@@ -22,22 +23,26 @@ async def _(event):
             await conv.send_message(f"/{nmap} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("Unblock @ scriptkiddies_bot dulu Goblok!!")
-            return
+            await event.client(UnblockRequest(chat))
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=510263282)
+            )
+            await conv.send_message(f"/{nmap} {link}")
+            response = await response
         else:
-            await event.edit(f"{response.message.message}")
+            await xx.edit(f"{response.message.message}")
             await event.client.delete_messages(response.message.message)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"subd(?: |$)(.*)"))
+@man_cmd(pattern="subd(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
     link = event.pattern_match.group(1)
-    chat = "@scriptkiddies_bot"  # pylint:disable=E0602
-    subdomain = "subdomain"  # pylint:disable=E0602
-    await event.edit("Processing....")
-    async with bot.conversation("@scriptkiddies_bot") as conv:
+    subdomain = "subdomain"
+    chat = "@scriptkiddies_bot"
+    xx = await edit_or_reply(event, "Processing....")
+    async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=510263282)
@@ -45,22 +50,26 @@ async def _(event):
             await conv.send_message(f"/{subdomain} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("Unblock @ scriptkiddies_bot dulu Goblok!!")
-            return
+            await event.client(UnblockRequest(chat))
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=510263282)
+            )
+            await conv.send_message(f"/{subdomain} {link}")
+            response = await response
         else:
-            await event.edit(f"{response.message.message}")
+            await xx.edit(f"{response.message.message}")
             await event.client.delete_messages(response.message.message)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"cek(?: |$)(.*)"))
+@man_cmd(pattern="cek(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
     link = event.pattern_match.group(1)
-    chat = "@scriptkiddies_bot"  # pylint:disable=E0602
-    httpheader = "httpheader"  # pylint:disable=E0602
-    await event.edit("Processing....")
-    async with bot.conversation("@scriptkiddies_bot") as conv:
+    chat = "@scriptkiddies_bot"
+    httpheader = "httpheader"
+    xx = await edit_or_reply(event, "Processing....")
+    async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=510263282)
@@ -68,22 +77,26 @@ async def _(event):
             await conv.send_message(f"/{httpheader} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("Unblock @ scriptkiddies_bot dulu Goblok!!")
-            return
+            await event.client(UnblockRequest(chat))
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=510263282)
+            )
+            await conv.send_message(f"/{httpheader} {link}")
+            response = await response
         else:
-            await event.edit(f"{response.message.message}")
+            await xx.edit(f"{response.message.message}")
             await event.client.delete_messages(httpheader, response.message.message)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"bin(?: |$)(.*)"))
+@man_cmd(pattern="bin(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
     link = event.pattern_match.group(1)
-    chat = "@Carol5_bot"  # pylint:disable=E0602
-    bin = "bin"  # pylint:disable=E0602
-    await event.edit("Processing....")
-    async with bot.conversation("@Carol5_bot") as conv:
+    chat = "@Carol5_bot"
+    bin = "bin"
+    xx = await edit_or_reply(event, "Processing....")
+    async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1247032902)
@@ -91,22 +104,26 @@ async def _(event):
             await conv.send_message(f"/{bin} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("Unblock @Carol5_bot dulu Goblok!!")
-            return
+            await event.client(UnblockRequest(chat))
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=1247032902)
+            )
+            await conv.send_message(f"/{bin} {link}")
+            response = await response
         else:
-            await event.edit(f"{response.message.message}")
+            await xx.edit(f"{response.message.message}")
             await event.client.delete_messages(response.message.message)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"cc(?: |$)(.*)"))
+@man_cmd(pattern="cc(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
     link = event.pattern_match.group(1)
-    chat = "@Carol5_bot"  # pylint:disable=E0602
-    ss = "ss"  # pylint:disable=E0602
-    await event.edit("Processing....")
-    async with bot.conversation("@Carol5_bot") as conv:
+    chat = "@Carol5_bot"
+    ss = "ss"
+    xx = await edit_or_reply(event, "Processing....")
+    async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1247032902)
@@ -114,10 +131,14 @@ async def _(event):
             await conv.send_message(f"/{ss} {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("Unblock @Carol5_bot dulu Goblok!!")
-            return
+            await event.client(UnblockRequest(chat))
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=1247032902)
+            )
+            await conv.send_message(f"/{ss} {link}")
+            response = await response
         else:
-            await event.edit(f"{response.message.message}")
+            await xx.edit(f"{response.message.message}")
             await event.client.delete_messages(response.message.message)
 
 
