@@ -34,6 +34,7 @@ async def _(event):
             msg = await conv.send_message(d_link)
             details = await conv.get_response()
             video = await conv.get_response()
+            text = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
@@ -42,12 +43,13 @@ async def _(event):
             msg = await conv.send_message(d_link)
             details = await conv.get_response()
             video = await conv.get_response()
+            text = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
+        await event.delete()
         await event.client.send_file(event.chat_id, video)
         await event.client.delete_messages(
-            conv.chat_id, [msg_start.id, r.id, msg.id, details.id, video.id]
+            conv.chat_id, [msg_start.id, r.id, msg.id, details.id, video.id, text.id]
         )
-        await event.delete()
 
 
 CMD_HELP.update(
