@@ -39,7 +39,7 @@ async def insta(event):
         if response.text.startswith("Forward"):
             await xx.edit("Forward Private .")
         else:
-            await event.delete()
+            await xx.delete()
             await event.client.send_file(
                 event.chat_id,
                 response.message.media,
@@ -48,7 +48,7 @@ async def insta(event):
             await event.client(
                 functions.messages.DeleteHistoryRequest(peer=chat, max_id=0)
             )
-            await event.delete()
+            await xx.delete()
 
 
 @man_cmd(pattern="dez(?: |$)(.*)")
