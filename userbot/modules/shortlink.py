@@ -9,8 +9,8 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.utils import edit_delete, edit_or_reply, man_cmd
+from userbot import CMD_HELP
+from userbot.utils import edit_or_reply, man_cmd
 
 
 @man_cmd(pattern="short(?: |$)(.*)")
@@ -23,8 +23,9 @@ async def _(event):
         d_link = msg_link.text
         xx = await edit_or_reply(event, "`Shortening replied link...`")
     elif "https" not in d_link:
-        await edit_or_reply(event, 
-            "**Masukkan link, pastikan dimulai dengan** `http://` **atau** `https://`"
+        await edit_or_reply(
+            event,
+            "**Masukkan link, pastikan dimulai dengan** `http://` **atau** `https://`",
         )
     else:
         xx = await edit_or_reply(event, "`Shortening link...`")
