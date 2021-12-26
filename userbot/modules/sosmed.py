@@ -15,16 +15,13 @@ async def insta(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await edit_delete(event, "`Balas Ke Link Untuk Download.`")
-        return
+        return await edit_delete(event, "`Balas Ke Link Untuk Download.`")
     reply_message = await event.get_reply_message()
     if not reply_message.text:
-        await edit_delete(event, "`Mohon Berikan Link yang ingin di download...`")
-        return
+        return await edit_delete(event, "`Mohon Berikan Link yang ingin di download...`")
     chat = "@SaveAsbot"
     if reply_message.sender.bot:
-        await edit_or_reply(event, "`Processing...`")
-        return
+        return await edit_or_reply(event, "`Processing...`")
     xx = await edit_or_reply(event, "`Processing Download...`")
     async with event.client.conversation(chat) as conv:
         try:
@@ -35,9 +32,6 @@ async def insta(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=523131145)
-            )
             await event.client.send_message(chat, reply_message)
             response = await response
         if response.text.startswith("Forward"):
