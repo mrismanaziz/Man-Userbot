@@ -171,7 +171,7 @@ async def _(event):
             await event.client.forward_messages(event.chat_id, response.message)
 
 
-@man_cmd(pattern=r"vendor(?: |$)(.*)"))
+@man_cmd(pattern=r"vendor(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
