@@ -24,9 +24,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=510263282)
-            )
             await conv.send_message(f"/{nmap} {link}")
             response = await response
         else:
@@ -51,9 +48,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=510263282)
-            )
             await conv.send_message(f"/{subdomain} {link}")
             response = await response
         else:
@@ -78,9 +72,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=510263282)
-            )
             await conv.send_message(f"/{httpheader} {link}")
             response = await response
         else:
@@ -105,9 +96,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=1247032902)
-            )
             await conv.send_message(f"/{bin} {link}")
             response = await response
         else:
@@ -132,9 +120,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=1247032902)
-            )
             await conv.send_message(f"/{ss} {link}")
             response = await response
         else:
