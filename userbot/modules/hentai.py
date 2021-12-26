@@ -30,9 +30,6 @@ async def _(event):
             response = await response
         except YouBlockedUserError:
             await event.client(UnblockRequest(chat))
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=424466890)
-            )
             await event.client.send_message(chat, link)
             response = await response
         if response.text.startswith("**Sorry I couldn't get manga from**"):
