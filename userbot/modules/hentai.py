@@ -35,7 +35,7 @@ async def _(event):
         if response.text.startswith("**Sorry I couldn't get manga from**"):
             await xx.edit("**Saya pikir ini bukan link yang benar**")
         else:
-            await event.delete()
+            await xx.delete()
             await event.client.send_message(event.chat_id, response.message)
 
 
