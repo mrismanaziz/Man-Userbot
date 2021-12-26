@@ -41,9 +41,7 @@ async def _(event):
             second = await event.client.forward_messages(chat, reply_message)
             response = await response
         if response.text.startswith("Hi!"):
-            await xx.edit(
-                "**Mohon Menonaktifkan Pengaturan Privasi Forward Anda**"
-            )
+            await xx.edit("**Mohon Menonaktifkan Pengaturan Privasi Forward Anda**")
         else:
             await event.delete()
             await event.client.forward_messages(event.chat_id, response.message)
