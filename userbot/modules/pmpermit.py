@@ -127,7 +127,7 @@ Don't spam my inbox. say reason and wait until my response.__"""
     addgvar("pmpermit_text", USER_BOT_NO_WARN)
     PM_WARNS[str(chat.id)] += 1
     try:
-        PM_PIC = gvarstatus("pmpermit_pic")
+        PM_PIC = gvarstatus("PMPERMIT_PIC")
         if PM_PIC:
             CAT = [x for x in PM_PIC.split()]
             PIC = list(CAT)
