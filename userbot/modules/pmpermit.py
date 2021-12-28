@@ -4,7 +4,7 @@ from datetime import datetime
 from telethon import events, functions
 from telethon.utils import get_display_name
 
-from userbot import CMD_HANDLER, bot, user
+from userbot import BOTLOG_CHATID, CMD_HANDLER, bot, user
 from userbot.modules.sql_helper import global_collectionjson as sql
 from userbot.modules.sql_helper import global_list as sqllist
 from userbot.modules.sql_helper import pmpermit_sql
@@ -406,7 +406,7 @@ async def on_new_private_message(event):
     await do_pm_permit_action(event, chat)
 
 
-@man_cmd(func=lambda e: e.is_private, edited=False, forword=None)
+@man_cmd(func=lambda e: e.is_private, disable_edited=False, forword=None)
 async def you_dm_other(event):
     if gvarstatus("pmpermit") is None:
         return
