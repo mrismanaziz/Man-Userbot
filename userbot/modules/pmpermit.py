@@ -406,7 +406,7 @@ async def on_new_private_message(event):
     await do_pm_permit_action(event, chat)
 
 
-@man_cmd(outgoing=True, func=lambda e: e.is_private, edited=False, forword=None)
+@man_cmd(func=lambda e: e.is_private, edited=False, forword=None)
 async def you_dm_other(event):
     if gvarstatus("pmpermit") is None:
         return
