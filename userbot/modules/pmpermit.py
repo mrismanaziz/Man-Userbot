@@ -4,7 +4,7 @@ from datetime import datetime
 from telethon import events, functions
 from telethon.utils import get_display_name
 
-from userbot import CMD_HANDLER, bot
+from userbot import CMD_HANDLER, bot, user
 from userbot.modules.sql_helper import global_collectionjson as sql
 from userbot.modules.sql_helper import global_list as sqllist
 from userbot.modules.sql_helper import pmpermit_sql
@@ -16,7 +16,6 @@ from userbot.utils import (
     get_user_from_event,
     man_cmd,
     reply_id,
-    user,
 )
 from userbot.utils.logger import logging
 
