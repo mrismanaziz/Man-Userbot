@@ -21,6 +21,7 @@ from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
+from git import Repo
 from heroku3 import from_key
 from PIL import Image
 
@@ -42,6 +43,9 @@ HEROKU_APP = from_key(HEROKU_API_KEY).apps()[HEROKU_APP_NAME]
 opener = urllib.request.build_opener()
 useragent = "Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.70 Mobile Safari/537.36"
 opener.addheaders = [("User-agent", useragent)]
+try:
+    repo = Repo()
+    branch = repo.active_branch.name
 
 
 @man_cmd(pattern="sleep ([0-9]+)$")
@@ -126,7 +130,7 @@ async def repo_is_here(event):
     await xx.edit(
         f"**Hey**, __I am using__ 🔥 **Man-Userbot** 🔥\n\n"
         f"      __Thanks For Using me__\n\n"
-        f"✣ **Userbot Version :** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n"
+        f"✣ **Userbot Version :** `{BOT_VER}@{branch}`\n"
         f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
         f"✣ **Channel Man :** [Lunatic0de](t.me/Lunatic0de)\n"
         f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"
