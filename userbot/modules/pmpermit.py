@@ -636,9 +636,7 @@ async def pmpermit_on(event):
             event, "Pmpermit Menu has been enabled for your account successfully"
         )
     else:
-        await edit_delete(
-            event, "Pmpermit Menu is already enabled for your account"
-        )
+        await edit_delete(event, "Pmpermit Menu is already enabled for your account")
 
 
 @man_cmd(pattern="(a|approve)(?:\s|$)([\s\S]*)")
@@ -727,9 +725,7 @@ async def disapprove_p_m(event):
                 return
     if reason == "all":
         pmpermit_sql.disapprove_all()
-        return await edit_delete(
-            event, "Ok! I have disapproved everyone successfully."
-        )
+        return await edit_delete(event, "Ok! I have disapproved everyone successfully.")
     if not reason:
         reason = "Not Mentioned."
     if pmpermit_sql.is_approved(user.id):
