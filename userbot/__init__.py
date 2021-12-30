@@ -575,7 +575,7 @@ with bot:
                     buttons=tl_ib_buttons,
                     link_preview=False,
                 )
-            elif string == "pmpermit":
+            elif query.startswith("pmpermit"):
                 buttons = [
                     Button.inline(text="Show Options.", data="show_pmpermit_options"),
                 ]
