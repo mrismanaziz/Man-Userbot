@@ -430,6 +430,7 @@ with bot:
     try:
         from userbot.modules.sql_helper.bot_blacklists import check_is_black_list
         from userbot.modules.sql_helper.bot_pms_sql import add_user_to_db, get_user_id
+        from userbot.modules.sql_helper.globals import gvarstatus
         from userbot.utils import reply_id
 
         dugmeler = CMD_HELP
@@ -572,6 +573,31 @@ with bot:
                     buttons=tl_ib_buttons,
                     link_preview=False,
                 )
+            elif string == "pmpermit":
+                buttons = [
+                    Button.inline(text="Show Options.", data="show_pmpermit_options"),
+                ]
+                PM_PIC = gvarstatus("pmpermit_pic")
+                if PM_PIC:
+                    PMAN = [x for x in PM_PIC.split()]
+                    PIC = list(PMAN)
+                    MAN_IMG = random.choice(PIC)
+                else:
+                    MAN_IMG = None
+                query = gvarstatus("pmpermit_text")
+                if MAN_IMG and MAN_IMG.endswith((".jpg", ".jpeg", ".png")):
+                    result = builder.photo(
+                        MAN_IMG,
+                        text=query,
+                        buttons=buttons,
+                    )
+                elif MAN_IMG:
+                    result = builder.document(
+                        MAN_IMG,
+                        title="Man Alive",
+                        text=query,
+                        buttons=buttons,
+                    )
             else:
                 result = builder.article(
                     title="✗ Man-Userbot ✗",
