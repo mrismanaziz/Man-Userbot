@@ -24,6 +24,7 @@ from userbot.utils.logger import logging
 LOGS = logging.getLogger(__name__)
 cmdhd = CMD_HANDLER
 mention = f"[{user.first_name}](tg://user?id={user.id})"
+uid = user.id
 
 
 async def do_pm_permit_action(event, chat):  # sourcery no-metrics
@@ -469,7 +470,7 @@ async def you_dm_other(event):
 
 @callback(data=re.compile(rb"show_pmpermit_options"))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == event.client.uid:
+    if event.query.user_id == uid:
         text = "Idoit these options are for users who messages you, not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = f"""Ok, Now you are accessing the availabe menu of my master, {mention}.
@@ -500,7 +501,7 @@ __Let's make this smooth and let me know why you are here.__
 
 @callback(data=re.compile(rb"to_enquire_something"))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == event.client.uid:
+    if event.query.user_id == uid:
         text = "Idoit this options for user who messages you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Okay. Your request has been registered. Do not spam my master's inbox now. \
@@ -521,7 +522,7 @@ Then we can extend this conversation more but not right now.__"""
 
 @callback(data=re.compile(rb"to_request_something"))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == event.client.uid:
+    if event.query.user_id == uid:
         text = "Idoit this options for user who messages you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Okay. I have notified my master about this. When he/she comes comes online\
@@ -542,7 +543,7 @@ async def on_plug_in_callback_query_handler(event):
 
 @callback(data=re.compile(rb"to_chat_with_my_master"))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == event.client.uid:
+    if event.query.user_id == uid:
         text = "Idoit these options are for users who message you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Yaa sure we can have a friendly chat but not right now. we can have this\
@@ -562,7 +563,7 @@ some other time. Right now I am a little busy. when I come online and if I am fr
 
 @callback(data=re.compile(rb"to_spam_my_master_inbox"))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == event.client.uid:
+    if event.query.user_id == uid:
         text = "Idoit these options are for users who message you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = "`███████▄▄███████████▄\
