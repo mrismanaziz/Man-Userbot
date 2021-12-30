@@ -1,16 +1,18 @@
 import random
+import re
 from datetime import datetime
 
-from telethon import events, functions
+from telethon import Button, events, functions
 from telethon.utils import get_display_name
 
-from userbot import BOTLOG_CHATID, CMD_HANDLER, bot, user
+from userbot import BOT_USERNAME, BOTLOG_CHATID, CMD_HANDLER, bot, user
 from userbot.modules.sql_helper import global_collectionjson as sql
 from userbot.modules.sql_helper import global_list as sqllist
 from userbot.modules.sql_helper import pmpermit_sql
 from userbot.modules.sql_helper.globals import addgvar, delgvar, gvarstatus
 from userbot.utils import (
     _format,
+    callback,
     edit_delete,
     edit_or_reply,
     get_user_from_event,
@@ -19,7 +21,6 @@ from userbot.utils import (
 )
 from userbot.utils.logger import logging
 
-plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
 cmdhd = CMD_HANDLER
 mention = f"[{user.first_name}](tg://user?id={user.id})"
@@ -120,32 +121,40 @@ async def do_pm_permit_action(event, chat):  # sourcery no-metrics
             warns=warns,
             remwarns=remwarns,
         )
+    elif gvarstatus("pmmenu") is None:
+        USER_BOT_NO_WARN = f"""__Hi__ {mention}__, I haven't approved you yet to personal message me. 
+You have {warns}/{totalwarns} warns until you get blocked by the ManUserbot.
+Choose an option from below to specify the reason of your message and wait for me to check it. __⬇️"""
     else:
         USER_BOT_NO_WARN = f"""__Hi__ {mention}__, I haven't approved you yet to personal message me.
-You have {warns}/{totalwarns} warns until you get blocked by the CatUserbot.
+You have {warns}/{totalwarns} warns until you get blocked by the ManUserbot.
 Don't spam my inbox. say reason and wait until my response.__"""
     addgvar("pmpermit_text", USER_BOT_NO_WARN)
     PM_WARNS[str(chat.id)] += 1
     try:
-        PM_PIC = gvarstatus("PMPERMIT_PIC")
-        if PM_PIC:
-            CAT = [x for x in PM_PIC.split()]
-            PIC = list(CAT)
-            CAT_IMG = random.choice(PIC)
+        if gvarstatus("pmmenu") is None:
+            results = await event.client.inline_query(BOT_USERNAME, "pmpermit")
+            msg = await results[0].click(chat.id, reply_to=reply_to_id, hide_via=True)
         else:
-            CAT_IMG = None
-        if CAT_IMG is not None:
-            msg = await event.client.send_file(
-                chat.id,
-                CAT_IMG,
-                caption=USER_BOT_NO_WARN,
-                reply_to=reply_to_id,
-                force_document=False,
-            )
-        else:
-            msg = await event.client.send_message(
-                chat.id, USER_BOT_NO_WARN, reply_to=reply_to_id
-            )
+            PM_PIC = gvarstatus("pmpermit_pic")
+            if PM_PIC:
+                PMAN = [x for x in PM_PIC.split()]
+                PIC = list(PMAN)
+                MAN_IMG = random.choice(PIC)
+            else:
+                MAN_IMG = None
+            if MAN_IMG is not None:
+                msg = await event.client.send_file(
+                    chat.id,
+                    MAN_IMG,
+                    caption=USER_BOT_NO_WARN,
+                    reply_to=reply_to_id,
+                    force_document=False,
+                )
+            else:
+                msg = await event.client.send_message(
+                    chat.id, USER_BOT_NO_WARN, reply_to=reply_to_id
+                )
     except Exception as e:
         LOGS.error(e)
         msg = await event.reply(USER_BOT_NO_WARN)
@@ -458,6 +467,132 @@ async def you_dm_other(event):
         sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
 
 
+@callback(data=re.compile(rb"show_pmpermit_options"))
+async def on_plug_in_callback_query_handler(event):
+    if event.query.user_id == event.client.uid:
+        text = "Idoit these options are for users who messages you, not for you"
+        return await event.answer(text, cache_time=0, alert=True)
+    text = f"""Ok, Now you are accessing the availabe menu of my master, {mention}.
+__Let's make this smooth and let me know why you are here.__
+**Choose one of the following reasons why you are here:**"""
+    buttons = [
+        (Button.inline(text="To enquire something.", data="to_enquire_something"),),
+        (Button.inline(text="To request something.", data="to_request_something"),),
+        (Button.inline(text="To chat with my master.", data="to_chat_with_my_master"),),
+        (
+            Button.inline(
+                text="To spam my master's inbox.",
+                data="to_spam_my_master_inbox",
+            ),
+        ),
+    ]
+    sqllist.add_to_list("pmoptions", event.query.user_id)
+    try:
+        PM_WARNS = sql.get_collection("pmwarns").json
+    except AttributeError:
+        PM_WARNS = {}
+    if str(event.query.user_id) in PM_WARNS:
+        del PM_WARNS[str(event.query.user_id)]
+        sql.del_collection("pmwarns")
+        sql.add_collection("pmwarns", PM_WARNS, {})
+    await event.edit(text, buttons=buttons)
+
+
+@callback(data=re.compile(rb"to_enquire_something"))
+async def on_plug_in_callback_query_handler(event):
+    if event.query.user_id == event.client.uid:
+        text = "Idoit this options for user who messages you. not for you"
+        return await event.answer(text, cache_time=0, alert=True)
+    text = """__Okay. Your request has been registered. Do not spam my master's inbox now. \
+My master is busy right now, When My master comes online he/she will check your message and ping you. \
+Then we can extend this conversation more but not right now.__"""
+    sqllist.add_to_list("pmenquire", event.query.user_id)
+    try:
+        PM_WARNS = sql.get_collection("pmwarns").json
+    except AttributeError:
+        PM_WARNS = {}
+    if str(event.query.user_id) in PM_WARNS:
+        del PM_WARNS[str(event.query.user_id)]
+        sql.del_collection("pmwarns")
+        sql.add_collection("pmwarns", PM_WARNS, {})
+    sqllist.rm_from_list("pmoptions", event.query.user_id)
+    await event.edit(text)
+
+
+@callback(data=re.compile(rb"to_request_something"))
+async def on_plug_in_callback_query_handler(event):
+    if event.query.user_id == event.client.uid:
+        text = "Idoit this options for user who messages you. not for you"
+        return await event.answer(text, cache_time=0, alert=True)
+    text = """__Okay. I have notified my master about this. When he/she comes comes online\
+ or when my master is free he/she will look into this chat and will ping you so we can have a friendly chat.__\
+**But right now please do not spam unless you wish to get blocked.**"""
+    sqllist.add_to_list("pmrequest", event.query.user_id)
+    try:
+        PM_WARNS = sql.get_collection("pmwarns").json
+    except AttributeError:
+        PM_WARNS = {}
+    if str(event.query.user_id) in PM_WARNS:
+        del PM_WARNS[str(event.query.user_id)]
+        sql.del_collection("pmwarns")
+        sql.add_collection("pmwarns", PM_WARNS, {})
+    sqllist.rm_from_list("pmoptions", event.query.user_id)
+    await event.edit(text)
+
+
+@callback(data=re.compile(rb"to_chat_with_my_master"))
+async def on_plug_in_callback_query_handler(event):
+    if event.query.user_id == event.client.uid:
+        text = "Idoit these options are for users who message you. not for you"
+        return await event.answer(text, cache_time=0, alert=True)
+    text = """__Yaa sure we can have a friendly chat but not right now. we can have this\
+some other time. Right now I am a little busy. when I come online and if I am free. I will ping you ,this is Damm sure.__"""
+    sqllist.add_to_list("pmchat", event.query.user_id)
+    try:
+        PM_WARNS = sql.get_collection("pmwarns").json
+    except AttributeError:
+        PM_WARNS = {}
+    if str(event.query.user_id) in PM_WARNS:
+        del PM_WARNS[str(event.query.user_id)]
+        sql.del_collection("pmwarns")
+        sql.add_collection("pmwarns", PM_WARNS, {})
+    sqllist.rm_from_list("pmoptions", event.query.user_id)
+    await event.edit(text)
+
+
+@callback(data=re.compile(rb"to_spam_my_master_inbox"))
+async def on_plug_in_callback_query_handler(event):
+    if event.query.user_id == event.client.uid:
+        text = "Idoit these options are for users who message you. not for you"
+        return await event.answer(text, cache_time=0, alert=True)
+    text = "`███████▄▄███████████▄\
+         \n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\
+         \n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\
+         \n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\
+         \n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\
+         \n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\
+         \n▓▓▓▓▓▓███░░░░░░░░░░░░█\
+         \n██████▀▀▀█░░░░██████▀ \
+         \n░░░░░░░░░█░░░░█\
+         \n░░░░░░░░░░█░░░█\
+         \n░░░░░░░░░░░█░░█\
+         \n░░░░░░░░░░░█░░█\
+         \n░░░░░░░░░░░░▀▀`\
+         \n**So uncool, this is not your home. Go bother somewhere else.\
+         \n\nAnd this is your last warning if you send one more message you will be blocked automatically.**"
+    sqllist.add_to_list("pmspam", event.query.user_id)
+    try:
+        PM_WARNS = sql.get_collection("pmspam").json
+    except AttributeError:
+        PM_WARNS = {}
+    if str(event.query.user_id) in PM_WARNS:
+        del PM_WARNS[str(event.query.user_id)]
+        sql.del_collection("pmwarns")
+        sql.add_collection("pmwarns", PM_WARNS, {})
+    sqllist.rm_from_list("pmoptions", event.query.user_id)
+    await event.edit(text)
+
+
 @man_cmd(pattern="pmpermit (on|off)$")
 async def pmpermit_on(event):
     "Turn on/off pmpermit."
@@ -479,7 +614,33 @@ async def pmpermit_on(event):
         await edit_delete(event, "__Pmpermit is already disabled for your account__")
 
 
-@man_cmd(pattern="(a|approve)(?:\\s|$)([\\s\\S]*)")
+@man_cmd(pattern="pmmenu (on|off)$")
+async def pmpermit_on(event):
+    "Turn on/off pmmenu."
+    input_str = event.pattern_match.group(1)
+    if input_str == "off":
+        if gvarstatus("pmmenu") is None:
+            addgvar("pmmenu", "false")
+            await edit_delete(
+                event,
+                "__Pmpermit Menu has been disabled for your account successfully.__",
+            )
+        else:
+            await edit_delete(
+                event, "__Pmpermit Menu is already disabled for your account__"
+            )
+    elif gvarstatus("pmmenu") is not None:
+        delgvar("pmmenu")
+        await edit_delete(
+            event, "__Pmpermit Menu has been enabled for your account successfully__"
+        )
+    else:
+        await edit_delete(
+            event, "__Pmpermit Menu is already enabled for your account__"
+        )
+
+
+@man_cmd(pattern="(a|approve)(?:\s|$)([\s\S]*)")
 async def approve_p_m(event):  # sourcery no-metrics
     "To approve user to pm"
     if gvarstatus("pmpermit") is None:
@@ -545,7 +706,7 @@ async def approve_p_m(event):  # sourcery no-metrics
         )
 
 
-@man_cmd(pattern="(da|disapprove)(?:\\s|$)([\\s\\S]*)")
+@man_cmd(pattern="(da|disapprove)(?:\s|$)([\s\S]*)")
 async def disapprove_p_m(event):
     "To disapprove user to direct message you."
     if gvarstatus("pmpermit") is None:
@@ -583,7 +744,7 @@ async def disapprove_p_m(event):
         )
 
 
-@man_cmd(pattern="block(?:\\s|$)([\\s\\S]*)")
+@man_cmd(pattern="block(?:\s|$)([\s\S]*)")
 async def block_p_m(event):
     "To block user to direct message you."
     if gvarstatus("pmpermit") is None:
@@ -629,7 +790,7 @@ async def block_p_m(event):
     )
 
 
-@man_cmd(pattern="unblock(?:\\s|$)([\\s\\S]*)")
+@man_cmd(pattern="unblock(?:\s|$)([\s\S]*)")
 async def unblock_pm(event):
     "To unblock a user."
     if gvarstatus("pmpermit") is None:
