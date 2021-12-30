@@ -6,6 +6,7 @@ from telethon import Button, events, functions
 from telethon.utils import get_display_name
 
 from userbot import BOT_USERNAME, BOTLOG_CHATID, CMD_HANDLER, bot, user
+from userbot import CMD_HANDLER as cmd
 from userbot.modules.sql_helper import global_collectionjson as sql
 from userbot.modules.sql_helper import global_list as sqllist
 from userbot.modules.sql_helper import pmpermit_sql
@@ -22,7 +23,6 @@ from userbot.utils import (
 from userbot.utils.logger import logging
 
 LOGS = logging.getLogger(__name__)
-cmdhd = CMD_HANDLER
 mention = f"[{user.first_name}](tg://user?id={user.id})"
 uid = user.id
 
@@ -435,11 +435,11 @@ async def you_dm_other(event):
         return
     if event.text and event.text.startswith(
         (
-            f"{cmdhd}block",
-            f"{cmdhd}disapprove",
-            f"{cmdhd}a",
-            f"{cmdhd}da",
-            f"{cmdhd}approve",
+            f"{cmd}block",
+            f"{cmd}disapprove",
+            f"{cmd}a",
+            f"{cmd}da",
+            f"{cmd}approve",
         )
     ):
         return
@@ -645,7 +645,7 @@ async def approve_p_m(event):  # sourcery no-metrics
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"Turn on pmpermit by doing `{cmdhd}pmpermit on` for working of this plugin",
+            f"Turn on pmpermit by doing `{cmd}pmpermit on` for working of this plugin",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -711,7 +711,7 @@ async def disapprove_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"Turn on pmpermit by doing `{cmdhd}pmpermit on` for working of this plugin",
+            f"Turn on pmpermit by doing `{cmd}pmpermit on` for working of this plugin",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -747,7 +747,7 @@ async def block_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"Turn on pmpermit by doing `{cmdhd}pmpermit on` for working of this plugin",
+            f"Turn on pmpermit by doing `{cmd}pmpermit on` for working of this plugin",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -793,7 +793,7 @@ async def unblock_pm(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"Turn on pmpermit by doing `{cmdhd}pmpermit on` for working of this plugin",
+            f"Turn on pmpermit by doing `{cmd}pmpermit on` for working of this plugin",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -816,7 +816,7 @@ async def approve_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"Turn on pmpermit by doing `{cmdhd}pmpermit on` to work this plugin",
+            f"Turn on pmpermit by doing `{cmd}pmpermit on` to work this plugin",
         )
     approved_users = pmpermit_sql.get_all_approved()
     APPROVED_PMs = "**Current Approved PMs**\n\n"
