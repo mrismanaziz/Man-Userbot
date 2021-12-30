@@ -27,13 +27,7 @@ from PIL import Image
 
 from userbot import BOT_VER, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import (
-    CMD_HELP,
-    HEROKU_API_KEY,
-    HEROKU_APP_NAME,
-    SUDO_USERS,
-    UPSTREAM_REPO_BRANCH,
-)
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, SUDO_USERS
 from userbot.utils import edit_or_reply, man_cmd, time_formatter
 
 # ================= CONSTANT =================
