@@ -24,10 +24,16 @@ from bs4 import BeautifulSoup
 from heroku3 import from_key
 from PIL import Image
 
-from userbot import BOT_VER, BOTLOG, BOTLOG_CHATID
+from userbot import BOT_VER, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, UPSTREAM_REPO_BRANCH, SUDO_USERS, bot
-from userbot.utils import edit_or_reply, time_formatter, man_cmd
+from userbot import (
+    CMD_HELP,
+    HEROKU_API_KEY,
+    HEROKU_APP_NAME,
+    SUDO_USERS,
+    UPSTREAM_REPO_BRANCH,
+)
+from userbot.utils import edit_or_reply, man_cmd, time_formatter
 
 # ================= CONSTANT =================
 HEROKU_APP = from_key(HEROKU_API_KEY).apps()[HEROKU_APP_NAME]
@@ -89,13 +95,14 @@ async def killdabot(event):
 
 @man_cmd(pattern="readme$")
 async def reedme(event):
-    await edit_or_reply(event, 
+    await edit_or_reply(
+        event,
         "**Berikut sesuatu untuk kamu baca:**\n"
         "\n✣ [Userbot Repo](https://github.com/mrismanaziz/Man-Userbot/blob/Man-Userbot/README.md)"
         "\n✣ [Video Tutorial](https://youtu.be/tTDaPKsGC1I)"
         "\n✣ [List Variabel Heroku untuk Man-Userbot](https://telegra.ph/List-Variabel-Heroku-untuk-Man-Userbot-09-22)"
         "\n✣ [Setup Guide - Basic](https://mrismanaziz.medium.com/cara-memasang-userbot-telegram-repo-man-userbot-deploy-di-heroku-c56d1f8b5537)"
-        "\n✣ [Setup Guide - LastFM Module](https://telegra.ph/How-to-set-up-LastFM-module-for-Paperplane-userbot-11-02)"
+        "\n✣ [Setup Guide - LastFM Module](https://telegra.ph/How-to-set-up-LastFM-module-for-Paperplane-userbot-11-02)",
     )
 
 
@@ -130,7 +137,8 @@ async def repo_is_here(event):
 @man_cmd(pattern="string$")
 async def string_is_here(event):
     await edit_or_reply(
-        event, "✥ **GET STRING SESSION TELEGRAM :** [KLIK DISINI](https://repl.it/@mrismanaziz/stringenSession?lite=1&outputonly=1)\n"
+        event,
+        "✥ **GET STRING SESSION TELEGRAM :** [KLIK DISINI](https://repl.it/@mrismanaziz/stringenSession?lite=1&outputonly=1)\n",
     )
 
 
@@ -147,7 +155,9 @@ async def raw(event):
         reply_to_id = event.message.id
     with io.BytesIO(str.encode(the_real_message)) as out_file:
         out_file.name = "raw_message_data.txt"
-        await edit_or_reply(event, "`Check the userbot log for the decoded message data !!`")
+        await edit_or_reply(
+            event, "`Check the userbot log for the decoded message data !!`"
+        )
         await event.client.send_file(
             BOTLOG_CHATID,
             out_file,
@@ -256,7 +266,9 @@ async def scam(results, lim):
 @man_cmd(pattern="send (.*)")
 async def send(event):
     if not event.is_reply:
-        return await edit_or_reply(event, "**Mohon Balas ke pesan yang ingin dikirim!**")
+        return await edit_or_reply(
+            event, "**Mohon Balas ke pesan yang ingin dikirim!**"
+        )
     chat = event.pattern_match.group(1)
     xx = await edit_or_reply(event, "**Berhasil Mengirim pesan ini**")
     try:
