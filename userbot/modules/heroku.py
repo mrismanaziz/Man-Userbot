@@ -13,7 +13,7 @@ import urllib3
 
 from userbot import BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, bot
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME
 from userbot.modules.sql_helper.globals import addgvar, delgvar, gvarstatus
 from userbot.utils import edit_or_reply, man_cmd
 
@@ -36,7 +36,9 @@ else:
 async def variable(var):
     exe = var.pattern_match.group(1)
     if app is None:
-        await edit_or_reply(var, "**Silahkan Tambahkan Var** `HEROKU_APP_NAME` **di Heroku**")
+        await edit_or_reply(
+            var, "**Silahkan Tambahkan Var** `HEROKU_APP_NAME` **di Heroku**"
+        )
         return False
     if exe == "get":
         xx = await edit_or_reply(var, "`Mendapatkan Informasi...`")
@@ -92,8 +94,8 @@ async def variable(var):
 @man_cmd(pattern="set var (\w*) ([\s\S]*)")
 async def set_var(var):
     if app is None:
-        return await edit_or_reply(var ,
-            "**Silahkan Tambahkan Var** `HEROKU_APP_NAME` **dan** `HEROKU_API_KEY`"
+        return await edit_or_reply(
+            var, "**Silahkan Tambahkan Var** `HEROKU_APP_NAME` **dan** `HEROKU_API_KEY`"
         )
     xx = await edit_or_reply(var, "`Processing...`")
     variable = var.pattern_match.group(1)
