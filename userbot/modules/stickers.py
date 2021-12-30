@@ -294,7 +294,8 @@ async def _(event):
         tikel_hash = reply.media.document.attributes[1].stickerset.access_hash
         got_stcr = await event.client(
             functions.messages.GetStickerSetRequest(
-                stickerset=types.InputStickerSetID(id=tikel_id, access_hash=tikel_hash)
+                stickerset=types.InputStickerSetID(id=tikel_id, access_hash=tikel_hash),
+                hash=0,
             )
         )
         stcrs = []
@@ -371,7 +372,8 @@ async def get_pack_info(event):
             InputStickerSetID(
                 id=stickerset_attr.stickerset.id,
                 access_hash=stickerset_attr.stickerset.access_hash,
-            )
+            ),
+            hash=0,
         )
     )
     pack_emojis = []
