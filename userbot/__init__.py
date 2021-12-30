@@ -518,7 +518,6 @@ with bot:
             query = event.text
             string = query.lower()
             query.split(" ", 2)
-            query.split(" ", 1)
             string.split()
             query_user_id = event.query.user_id
             if query_user_id == uid and query.startswith("@SharingUserbot"):
