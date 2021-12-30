@@ -1,3 +1,7 @@
+# Credits: @mrismanaziz
+# FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
+# t.me/SharingUserbot & t.me/Lunatic0de
+
 import os
 
 import heroku3
@@ -29,6 +33,8 @@ async def sudo(event):
 async def add(event):
     suu = event.text[9:]
     if f"{cmd}add " in event.text:
+        return
+    if event.sender_id in SUDO_USERS:
         return
     xxnx = await edit_or_reply(event, "`Processing...`")
     var = "SUDO_USERS"
@@ -69,6 +75,8 @@ async def add(event):
 
 @man_cmd(pattern="delsudo(?:\s|$)([\s\S]*)")
 async def _(event):
+    if event.sender_id in SUDO_USERS:
+        return
     suu = event.text[8:]
     xxx = await edit_or_reply(event, "`Processing...`")
     reply = await event.get_reply_message()

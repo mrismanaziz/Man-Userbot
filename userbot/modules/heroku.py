@@ -16,7 +16,7 @@ import urllib3
 
 from userbot import BOTLOG, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, SUDO_USERS
 from userbot.modules.sql_helper.globals import addgvar, delgvar, gvarstatus
 from userbot.utils import edit_or_reply, man_cmd
 
@@ -43,6 +43,8 @@ async def variable(var):
             var, "**Silahkan Tambahkan Var** `HEROKU_APP_NAME` **di Heroku**"
         )
         return False
+    if var.sender_id in SUDO_USERS:
+        return
     if exe == "get":
         xx = await edit_or_reply(var, "`Mendapatkan Informasi...`")
         variable = var.pattern_match.group(2)
@@ -100,6 +102,8 @@ async def set_var(var):
         return await edit_or_reply(
             var, "**Silahkan Tambahkan Var** `HEROKU_APP_NAME` **dan** `HEROKU_API_KEY`"
         )
+    if var.sender_id in SUDO_USERS:
+        return
     xx = await edit_or_reply(var, "`Processing...`")
     variable = var.pattern_match.group(1)
     value = var.pattern_match.group(2)
@@ -229,6 +233,8 @@ async def _(dyno):
 
 @man_cmd(pattern="getdb ?(.*)")
 async def getsql(event):
+    if event.sender_id in SUDO_USERS:
+        return
     var_ = event.pattern_match.group(1)
     xxnx = await edit_or_reply(event, f"**Getting variable** `{var_}`")
     if var_ == "":
@@ -247,6 +253,8 @@ async def getsql(event):
 
 @man_cmd(pattern="setdb ?(.*)")
 async def setsql(event):
+    if event.sender_id in SUDO_USERS:
+        return
     hel_ = event.pattern_match.group(1)
     var_ = hel_.split(" ")[0]
     val_ = hel_.split(" ")[1:]
@@ -265,6 +273,8 @@ async def setsql(event):
 
 @man_cmd(pattern="deldb ?(.*)")
 async def delsql(event):
+    if event.sender_id in SUDO_USERS:
+        return
     var_ = event.pattern_match.group(1)
     xxnx = await edit_or_reply(event, f"**Deleting Variable** `{var_}`")
     if var_ == "":
