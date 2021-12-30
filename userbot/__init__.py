@@ -600,6 +600,13 @@ with bot:
                         text=query,
                         buttons=buttons,
                     )
+                else:
+                    result = builder.article(
+                        title="Man Alive",
+                        text=query,
+                        buttons=buttons,
+                    )
+                await event.answer([result] if result else None)
             else:
                 result = builder.article(
                     title="✗ Man-Userbot ✗",
