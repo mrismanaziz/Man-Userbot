@@ -9,7 +9,6 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 #
-""" Userbot module for other small commands. """
 
 import io
 import os
@@ -43,7 +42,6 @@ branch = repo.active_branch.name
 
 @man_cmd(pattern="sleep ([0-9]+)$")
 async def sleepybot(time):
-    """For .sleep command, let the userbot snooze for a few second."""
     if event.sender_id in SUDO_USERS:
         return
     counter = int(time.pattern_match.group(1))
@@ -167,7 +165,6 @@ async def raw(event):
 
 @man_cmd(pattern="reverse(?: |$)(\d*)")
 async def okgoogle(img):
-    """For .reverse command, Google search images and stickers."""
     if os.path.isfile("okgoogle.png"):
         os.remove("okgoogle.png")
     message = await img.get_reply_message()
@@ -227,7 +224,6 @@ async def okgoogle(img):
 
 
 async def ParseSauce(googleurl):
-    """Parse/Scrape the HTML code for the info we want."""
     source = opener.open(googleurl).read()
     soup = BeautifulSoup(source, "html.parser")
     results = {"similar_images": "", "best_guess": ""}
