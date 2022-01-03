@@ -9,7 +9,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP
+from userbot import CMD_HELP, DEVS
 from userbot.utils import (
     _format,
     edit_delete,
