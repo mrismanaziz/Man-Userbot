@@ -258,6 +258,9 @@ async def vc_vplay(event):
         link = f"https://t.me/c/{chat.id}/{event.message.id}"
         fotoplay = "https://telegra.ph/file/6213d2673486beca02967.png"
         ngantri = "https://telegra.ph/file/d6f92c979ad96b2031cba.png"
+        ctitle = await CHAT_TITLE(titlegc)
+        ngeplay = await gen_thumb(fotoplay, title, userid, ctitle)
+        antrian = await gen_thumb(ngantri, title, userid, ctitle)
         if len(event.text.split()) < 2:
             RESOLUSI = 720
         else:
@@ -269,7 +272,7 @@ async def vc_vplay(event):
             pos = add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
             caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
             await event.delete()
-            await event.client.send_file(chat_id, ngantri, caption=caption)
+            await event.client.send_file(chat_id, antrian, caption=caption)
         else:
             if RESOLUSI == 360:
                 hmmm = LowQualityVideo()
@@ -286,7 +289,7 @@ async def vc_vplay(event):
                 add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
                 caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}"
                 await xnxx.delete()
-                await event.client.send_file(chat_id, fotoplay, caption=caption)
+                await event.client.send_file(chat_id, ngeplay, caption=caption)
             except Exception as ep:
                 clear_queue(chat_id)
                 await xnxx.edit(f"`{ep}`")
