@@ -113,7 +113,14 @@ async def vc_play(event):
     chat = await event.get_chat()
     chat_id = event.chat_id
     from_user = vcmention(event.sender)
-    if replied and not replied.audio and not replied.voice and not title or not replied:
+    if (
+        replied
+        and not replied.audio
+        and not replied.voice
+        and not title
+        or not replied
+        and not title
+    ):
         return await edit_or_reply(event, "**Silahkan Masukan Judul Lagu**")
     elif replied and not replied.audio and not replied.voice or not replied:
         botman = await edit_or_reply(event, "`Searching...`")
