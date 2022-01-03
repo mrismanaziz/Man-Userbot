@@ -25,9 +25,7 @@ async def impostor(event):
     if "restore" in inputArgs:
         xx = await edit_or_reply(event, "**Kembali ke identitas asli...**")
         if not STORAGE.userObj:
-            return await xx.edit(
-                "**Anda harus mengclone orang dulu sebelum kembali!**"
-            )
+            return await xx.edit("**Anda harus mengclone orang dulu sebelum kembali!**")
         await updateProfile(STORAGE.userObj, restore=True)
         return await xx.edit("**Berhasil Mengembalikan Akun Anda dari clone**")
     if inputArgs:
@@ -41,10 +39,14 @@ async def impostor(event):
         if replyMessage.sender_id in DEVS:
             return await edit_or_reply(event, "**Hayooo Mau Ngapain**")
         if replyMessage.sender_id is None:
-            return await edit_or_reply(event, "**Tidak dapat menyamar sebagai admin anonim 🥺**")
+            return await edit_or_reply(
+                event, "**Tidak dapat menyamar sebagai admin anonim 🥺**"
+            )
         userObj = await event.client(GetFullUserRequest(replyMessage.sender_id))
     else:
-        return await edit_or_reply(event, "**Silahkan Ketik** `.help clone` **bila butuh bantuan.**")
+        return await edit_or_reply(
+            event, "**Silahkan Ketik** `.help clone` **bila butuh bantuan.**"
+        )
 
     if not STORAGE.userObj:
         STORAGE.userObj = await event.client(GetFullUserRequest(event.sender_id))
