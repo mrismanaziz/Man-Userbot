@@ -9,47 +9,51 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import InputPhoto
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, STORAGE, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP, DEVS, LOGS, STORAGE, SUDO_USERS, bot
+from userbot.utils import edit_or_reply, man_cmd
 
 if not hasattr(STORAGE, "userObj"):
     STORAGE.userObj = False
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"clone ?(.*)"))
+@man_cmd(pattern="clone ?(.*)")
 async def impostor(event):
+    if event.sender_id in SUDO_USERS:
+        return
     inputArgs = event.pattern_match.group(1)
 
     if "restore" in inputArgs:
-        await event.edit("**Kembali ke identitas asli...**")
+        xx = await edit_or_reply(event, "**Kembali ke identitas asli...**")
         if not STORAGE.userObj:
-            return await event.edit(
+            return await xx.edit(
                 "**Anda harus mengclone orang dulu sebelum kembali!**"
             )
         await updateProfile(STORAGE.userObj, restore=True)
-        return await event.edit("**Berhasil Mengembalikan Akun Anda dari clone**")
+        return await xx.edit("**Berhasil Mengembalikan Akun Anda dari clone**")
     if inputArgs:
         try:
             user = await event.client.get_entity(inputArgs)
         except BaseException:
-            return await event.edit("**Username/ID tidak valid.**")
+            return await edit_or_reply(event, "**Username/ID tidak valid.**")
         userObj = await event.client(GetFullUserRequest(user))
     elif event.reply_to_msg_id:
         replyMessage = await event.get_reply_message()
+        if replyMessage.sender_id in DEVS:
+            return await edit_or_reply(event, "**Hayooo Mau Ngapain**")
         if replyMessage.sender_id is None:
-            return await event.edit("**Tidak dapat menyamar sebagai admin anonim 🥺**")
+            return await edit_or_reply(event, "**Tidak dapat menyamar sebagai admin anonim 🥺**")
         userObj = await event.client(GetFullUserRequest(replyMessage.sender_id))
     else:
-        return await event.edit("**Ketik** `.help impostor` **bila butuh bantuan.**")
+        return await edit_or_reply(event, "**Silahkan Ketik** `.help clone` **bila butuh bantuan.**")
 
     if not STORAGE.userObj:
         STORAGE.userObj = await event.client(GetFullUserRequest(event.sender_id))
 
     LOGS.info(STORAGE.userObj)
 
-    await event.edit("**Mencuri identitas orang ini...**")
+    xx = await edit_or_reply(event, "**Mencuri identitas orang ini...**")
     await updateProfile(userObj)
-    await event.edit("**Aku adalah kamu dan kamu adalah aku. asekk 🥴**")
+    await xx.edit("**Aku adalah kamu dan kamu adalah aku. asekk 🥴**")
 
 
 async def updateProfile(userObj, restore=False):
