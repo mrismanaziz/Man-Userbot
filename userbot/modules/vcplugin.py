@@ -196,8 +196,10 @@ async def vc_vplay(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
     sender = await event.get_sender()
+    userid = sender.id
     chat = await event.get_chat()
-    chat_id = event.chat_id
+    titlegc = chat.title
+    chat_id = event.chat_id  
     from_user = vcmention(event.sender)
     if (
         replied
@@ -223,8 +225,6 @@ async def vc_vplay(event):
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
-            userid = sender.id
-            titlegc = chat.title
             ctitle = await CHAT_TITLE(titlegc)
             thumb = await gen_thumb(thumbnail, title, userid, ctitle)
             format = "best[height<=?720][width<=?1280]"
@@ -307,8 +307,6 @@ async def vc_vplay(event):
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
-            userid = sender.id
-            titlegc = chat.title
             ctitle = await CHAT_TITLE(titlegc)
             thumb = await gen_thumb(thumbnail, title, userid, ctitle)
             format = "best[height<=?720][width<=?1280]"
