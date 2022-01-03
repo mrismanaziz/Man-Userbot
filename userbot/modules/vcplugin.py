@@ -119,7 +119,6 @@ async def vc_play(event):
         and not replied.voice
         and not title
         or not replied
-        and not title
     ):
         return await edit_or_reply(event, "**Silahkan Masukan Judul Lagu**")
     elif replied and not replied.audio and not replied.voice or not replied:
@@ -212,7 +211,6 @@ async def vc_vplay(event):
         and not replied.document
         and not title
         or not replied
-        and not title
     ):
         return await edit_or_reply(event, "**Silahkan Masukan Judul Video**")
     if replied and not replied.video and not replied.document:
@@ -263,7 +261,9 @@ async def vc_vplay(event):
     elif replied:
         xnxx = await event.edit("`Downloading`")
         dl = await replied.download_media()
-        link = replied.link
+        link = f"https://t.me/c/{chat.id}/{event.message.id}"
+        fotoplay = "https://telegra.ph/file/6213d2673486beca02967.png"
+        ngantri = "https://telegra.ph/file/d6f92c979ad96b2031cba.png"
         if len(event.text.split()) < 2:
             RESOLUSI = 720
         else:
@@ -273,9 +273,9 @@ async def vc_vplay(event):
             songname = "Telegram Video Player"
         if chat_id in QUEUE:
             pos = add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
-            caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
+            caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
             await event.delete()
-            await event.client.send_file(chat_id, thumb, caption=caption)
+            await event.client.send_file(chat_id, ngantri, caption=caption)
         else:
             if RESOLUSI == 360:
                 hmmm = LowQualityVideo()
@@ -290,9 +290,9 @@ async def vc_vplay(event):
                     stream_type=StreamType().pulse_stream,
                 )
                 add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
-                caption = f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}"
+                caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}"
                 await xnxx.delete()
-                await event.client.send_file(chat_id, thumbnail, caption=caption)
+                await event.client.send_file(chat_id, fotoplay, caption=caption)
             except Exception as ep:
                 clear_queue(chat_id)
                 await xnxx.edit(f"`{ep}`")
