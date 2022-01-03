@@ -23,7 +23,7 @@ async def impostor(event):
     restricted = ["@mrismanaziz"]
     inputArgs = event.pattern_match.group(1)
     if inputArgs in DEVS and restricted:
-       return await edit_delete(event, "**Hayooo Mau Ngapain**", 30)
+        return await edit_delete(event, "**Hayooo Mau Ngapain**", 30)
 
     if "restore" in inputArgs:
         xx = await edit_or_reply(event, "**Kembali ke identitas asli...**")
