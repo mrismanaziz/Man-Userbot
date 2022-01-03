@@ -169,7 +169,7 @@ async def vc_play(event):
     else:
         botman = await event.edit("`Downloading`")
         dl = await replied.download_media()
-        link = replied.link
+        link = f"https://t.me/c/{chat.id}/{event.message.id}"
         if replied.audio:
             songname = "Telegram Music Player"
         elif replied.voice:
