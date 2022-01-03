@@ -25,6 +25,8 @@ async def _(event):
     reply_message = await event.get_reply_message()
     if not input_str and not reply_message:
         await edit_delete(event, "**Mohon Reply Ke Pesan Pengguna.**", 90)
+    if reply_message.sender_id in DEVS:
+        return await edit_delete(event, "**Hayooo Mau Ngapain**")
     user, rank = await get_user_from_event(event, secondgroup=True)
     if not user:
         return
