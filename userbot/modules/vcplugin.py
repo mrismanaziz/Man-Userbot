@@ -260,7 +260,7 @@ async def vc_vplay(event):
         ngantri = "https://telegra.ph/file/d6f92c979ad96b2031cba.png"
         ctitle = await CHAT_TITLE(titlegc)
         ngeplay = await gen_thumb(fotoplay, title, userid, ctitle)
-        antrian = await gen_thumb(ngantri, title, userid, ctitle)
+        dieue = await gen_thumb(ngantri, title, userid, ctitle)
         if len(event.text.split()) < 2:
             RESOLUSI = 720
         else:
@@ -272,7 +272,7 @@ async def vc_vplay(event):
             pos = add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
             caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
             await event.delete()
-            await event.client.send_file(chat_id, antrian, caption=caption)
+            await event.client.send_file(chat_id, dieue, caption=caption)
         else:
             if RESOLUSI == 360:
                 hmmm = LowQualityVideo()
