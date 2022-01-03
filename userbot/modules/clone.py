@@ -10,7 +10,7 @@ from telethon.tl.types import InputPhoto
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, DEVS, LOGS, STORAGE, SUDO_USERS, bot
-from userbot.utils import edit_or_reply, man_cmd
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 if not hasattr(STORAGE, "userObj"):
     STORAGE.userObj = False
@@ -20,7 +20,10 @@ if not hasattr(STORAGE, "userObj"):
 async def impostor(event):
     if event.sender_id in SUDO_USERS:
         return
+    restricted = ["@mrismanaziz"]
     inputArgs = event.pattern_match.group(1)
+    if inputArgs in DEVS and restricted:
+       return await edit_delete(event, "**Hayooo Mau Ngapain**", 30)
 
     if "restore" in inputArgs:
         xx = await edit_or_reply(event, "**Kembali ke identitas asli...**")
