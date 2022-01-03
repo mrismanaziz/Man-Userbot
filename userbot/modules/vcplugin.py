@@ -199,7 +199,7 @@ async def vc_vplay(event):
     userid = sender.id
     chat = await event.get_chat()
     titlegc = chat.title
-    chat_id = event.chat_id  
+    chat_id = event.chat_id
     from_user = vcmention(event.sender)
     if (
         replied
