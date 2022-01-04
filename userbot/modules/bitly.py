@@ -9,7 +9,7 @@ from re import match
 
 from bitlyshortener import Shortener
 
-from userbot import BITLY_TOKEN, BOTLOG, BOTLOG_CHATID, bot
+from userbot import BITLY_TOKEN, BOTLOG_CHATID
 from userbot.utils import man_cmd
 
 
