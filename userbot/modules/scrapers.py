@@ -360,7 +360,7 @@ async def lang(value):
     await value.edit(
         f"**Bahasa untuk** `{scraper}` **diganti menjadi** `{LANG.title()}`"
     )
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await value.client.send_message(
             BOTLOG_CHATID,
             f"**Bahasa untuk** `{scraper}` **diganti menjadi** `{LANG.title()}`",
