@@ -19,7 +19,7 @@ async def tmeme(e):
     await e.delete()
     for letter in message:
         await e.respond(letter)
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await e.client.send_message(
             BOTLOG_CHATID, "#CSPAM\n" "TSpam was executed successfully"
         )
@@ -32,7 +32,7 @@ async def t_meme(e):
     await e.delete()
     for word in message:
         await e.respond(word)
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await e.client.send_message(
             BOTLOG_CHATID, "#WSPAM\n" "WSpam was executed successfully"
         )
@@ -44,7 +44,7 @@ async def spammer(e):
     spam_message = str(e.pattern_match.group(2))
     await e.delete()
     await asyncio.wait([e.respond(spam_message) for i in range(counter)])
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await e.client.send_message(
             BOTLOG_CHATID, "#SPAM\n" "Spam was executed successfully"
         )
@@ -57,7 +57,7 @@ async def tiny_pic_spam(e):
     await e.delete()
     for _ in range(1, counter):
         await e.client.send_file(e.chat_id, link)
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await e.client.send_message(
             BOTLOG_CHATID, "#PICSPAM\n" "PicSpam was executed successfully"
         )
@@ -72,7 +72,7 @@ async def spammer(e):
     for _ in range(1, counter):
         await e.respond(spam_message)
         await sleep(spamDelay)
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await e.client.send_message(
             BOTLOG_CHATID, "#DelaySPAM\n" "DelaySpam was executed successfully"
         )
