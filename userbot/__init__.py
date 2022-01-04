@@ -431,6 +431,11 @@ with bot:
             r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)"
         )
         S_PACK_NAME = os.environ.get("S_PACK_NAME", f"Sticker Pack {owner}")
+        PMBOTLOG = os.environ.get("PMBOT_CHATID", None)
+        if not PMBOTLOG:
+            PMBOT_CHATID = uid
+        else:
+            PMBOT_CHATID = int(PMBOTLOG)
 
         @tgbot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
         async def bot_pms(event):
@@ -438,7 +443,7 @@ with bot:
             if check_is_black_list(chat.id):
                 return
             if chat.id != uid:
-                msg = await event.forward_to(uid)
+                msg = await event.forward_to(PMBOTLOG)
                 try:
                     add_user_to_db(
                         msg.id, get_display_name(chat), chat.id, event.id, 0, 0
