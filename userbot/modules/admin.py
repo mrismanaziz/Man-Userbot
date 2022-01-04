@@ -34,7 +34,7 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, DEVS, owner
 from userbot.events import register
@@ -456,7 +456,7 @@ async def rm_deletedacc(show):
     await show.edit(del_status)
     await sleep(2)
     await show.delete()
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await show.client.send_message(
             BOTLOG_CHATID,
             "**#ZOMBIES**\n"

@@ -5,7 +5,7 @@
 
 from asyncio import sleep
 
-from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, LOGS, bot
 from userbot.events import man_cmd
@@ -51,7 +51,7 @@ async def catbroadcast_send(event):
         await sleep(0.5)
     resultext = f"**Pesan dikirim ke** `{i}` **obrolan keluar** `{no_of_chats}` **obrolan dalam kategori** `{keyword}`"
     await catevent.edit(resultext)
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await event.client.send_message(
             BOTLOG_CHATID,
             f"**Sebuah pesan dikirim ke** `{i}` **obrolan keluar** `{no_of_chats}` **obrolan dalam kategori** `{keyword}`",
@@ -97,7 +97,7 @@ async def catbroadcast_send(event):
         await sleep(0.5)
     resultext = f"**Pesan dikirim ke** {i} **obrolan keluar** {no_of_chats} **obrolan dalam kategori** `{keyword}`"
     await catevent.edit(resultext)
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await event.client.send_message(
             BOTLOG_CHATID,
             f"**Sebuah pesan diteruskan ke** `{i}` **obrolan keluar** `{no_of_chats}` **obrolan dalam kategori** `{keyword}`",
@@ -126,7 +126,7 @@ async def catbroadcast_add(event):
         f"Obrolan ini Sekarang ditambahkan ke kategori {keyword}", parse_mode=parse_pre
     )
     chat = await event.get_chat()
-    if BOTLOG:
+    if BOTLOG_CHATID:
         try:
             await event.client.send_message(
                 BOTLOG_CHATID,
@@ -162,7 +162,7 @@ async def catbroadcast_remove(event):
         parse_mode=parse_pre,
     )
     chat = await event.get_chat()
-    if BOTLOG:
+    if BOTLOG_CHATID:
         try:
             await event.client.send_message(
                 BOTLOG_CHATID,
@@ -275,7 +275,7 @@ async def catbroadcast_remove(event):
         parse_mode=parse_pre,
     )
     chat = await event.get_chat()
-    if BOTLOG:
+    if BOTLOG_CHATID:
         try:
             await event.client.send_message(
                 BOTLOG_CHATID,

@@ -11,7 +11,7 @@ from random import choice, randint
 from telethon.events import StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from userbot import AFKREASON, BOTLOG, BOTLOG_CHATID, PM_AUTO_BAN, bot, owner
+from userbot import AFKREASON, BOTLOG_CHATID, PM_AUTO_BAN, bot, owner
 from userbot.events import man_cmd, register
 
 # ========================= CONSTANTS ============================
@@ -62,7 +62,7 @@ async def set_afk(afk_e):
         await afk_e.client(
             UpdateProfileRequest(first_name=user.first_name, last_name="【 OFF 】")
         )
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await afk_e.client.send_message(BOTLOG_CHATID, f"#OFF\n**{owner} Telah OFF!**")
     ISAFK = True
     afk_time = datetime.now()
@@ -96,7 +96,7 @@ async def type_afk_is_not_true(notafk):
         await notafk.client(
             UpdateProfileRequest(first_name=user.first_name, last_name=last1)
         )
-        if BOTLOG:
+        if BOTLOG_CHATID:
             await notafk.client.send_message(
                 BOTLOG_CHATID,
                 "Anda Mendapatkan "

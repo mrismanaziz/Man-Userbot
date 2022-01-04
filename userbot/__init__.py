@@ -97,9 +97,8 @@ while 0 < 6:
     if _DEVS.status_code != 200:
         if 0 != 5:
             continue
-        else:
-            DEVS = [844432220, 1906014306, 1382636419, 1738637033]
-            break
+        DEVS = [844432220, 1906014306, 1382636419, 1738637033]
+        break
     DEVS = _DEVS.json()
     break
 
@@ -123,10 +122,6 @@ STRING_SESSION = os.environ.get("STRING_SESSION", None)
 # Logging channel/group ID configuration.
 BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID") or 0)
 
-# Userbot logging feature switch.
-BOTLOG = sb(os.environ.get("BOTLOG", "True"))
-LOGSPAMMER = sb(os.environ.get("LOGSPAMMER", "True"))
-
 # Load or No Load modules
 LOAD = os.environ.get("LOAD", "").split()
 NO_LOAD = os.environ.get("NO_LOAD", "").split()
@@ -139,9 +134,6 @@ PM_LIMIT = int(os.environ.get("PM_LIMIT", 6))
 CMD_HANDLER = os.environ.get("CMD_HANDLER") or "."
 
 SUDO_HANDLER = os.environ.get("SUDO_HANDLER", r"$")
-
-# Owner ID
-OWNER_ID = int(os.environ.get("OWNER_ID") or 0)
 
 # Support
 GROUP = os.environ.get("GROUP", "SharingUserbot")
@@ -176,28 +168,16 @@ REM_BG_API_KEY = os.environ.get("REM_BG_API_KEY", None)
 CHROME_DRIVER = os.environ.get("CHROME_DRIVER") or "/usr/bin/chromedriver"
 GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN") or "/usr/bin/google-chrome"
 
-# set to True if you want to log PMs to your BOTLOG_CHATID
-NC_LOG_P_M_S = bool(os.environ.get("NC_LOG_P_M_S", "False"))
-
 # OpenWeatherMap API Key
 OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
 WEATHER_DEFCITY = os.environ.get("WEATHER_DEFCITY", "Jakarta")
 
-# Lydia API
-LYDIA_API_KEY = os.environ.get("LYDIA_API_KEY", None)
-
 # For MONGO based DataBase
 MONGO_URI = os.environ.get("MONGO_URI", None)
-
-# set blacklist_chats where you do not want userbot's features
-UB_BLACK_LIST_CHAT = os.environ.get("UB_BLACK_LIST_CHAT", None)
 
 # Anti Spambot Config
 ANTI_SPAMBOT = sb(os.environ.get("ANTI_SPAMBOT", "False"))
 ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
-
-# Youtube API key
-YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
 
 # untuk perintah teks costum .alive
 ALIVE_TEKS_CUSTOM = os.environ.get("ALIVE_TEKS_CUSTOM", "Hey, I am alive.")
@@ -227,14 +207,8 @@ ZIP_DOWNLOAD_DIRECTORY = os.environ.get("ZIP_DOWNLOAD_DIRECTORY", "./zips")
 # bit.ly module
 BITLY_TOKEN = os.environ.get("BITLY_TOKEN", None)
 
-# Bot Name
-TERM_ALIAS = os.environ.get("TERM_ALIAS", "Man-Userbot")
-
 # Bot version
 BOT_VER = os.environ.get("BOT_VER", "2.1.2")
-
-# Default .alive username
-ALIVE_USERNAME = os.environ.get("ALIVE_USERNAME", None)
 
 # Default .alive logo
 ALIVE_LOGO = (
@@ -269,9 +243,6 @@ if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
 
 TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads/")
 
-# Genius lyrics  API
-GENIUS = os.environ.get("GENIUS_ACCESS_TOKEN", None)
-
 # Quotes API Token
 QUOTES_API_TOKEN = os.environ.get("QUOTES_API_TOKEN", None)
 
@@ -280,10 +251,6 @@ DEEZER_ARL_TOKEN = os.environ.get("DEEZER_ARL_TOKEN", None)
 
 # NSFW Detect DEEP AI
 DEEP_AI = os.environ.get("DEEP_AI", None)
-
-# Photo Chat - Get this value from http://antiddos.systems
-API_TOKEN = os.environ.get("API_TOKEN", None)
-API_URL = os.environ.get("API_URL", "http://antiddos.systems")
 
 # Inline bot helper
 BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
@@ -328,7 +295,7 @@ except Exception as e:
 
 
 async def check_botlog_chatid() -> None:
-    if not BOTLOG_CHATID and BOTLOG:
+    if not BOTLOG_CHATID:
         LOGS.warning(
             "var BOTLOG_CHATID kamu belum di isi. Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id Masukan id grup nya di var BOTLOG_CHATID"
         )

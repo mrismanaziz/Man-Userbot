@@ -7,7 +7,7 @@
 
 from asyncio import sleep
 
-from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd, register
@@ -131,7 +131,7 @@ async def kick_marie_notes(kick):
             await kick.reply("/clear %s" % (i.strip()))
         await sleep(0.3)
     await kick.respond("```Successfully purged bots notes yaay!```\n Gimme cookies!")
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await kick.client.send_message(
             BOTLOG_CHATID, "I cleaned all Notes at " + str(kick.chat_id)
         )

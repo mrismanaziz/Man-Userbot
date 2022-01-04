@@ -12,7 +12,7 @@ from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.tl.types import User
 
-from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, COUNT_PM, LASTMSG, LOGS, PM_AUTO_BAN, PM_LIMIT, bot
 from userbot.events import man_cmd, register
@@ -90,7 +90,7 @@ async def permitpm(event):
                     del COUNT_PM[event.chat_id]
                     del LASTMSG[event.chat_id]
                 except KeyError:
-                    if BOTLOG:
+                    if BOTLOG_CHATID:
                         await event.client.send_message(
                             BOTLOG_CHATID,
                             "**Terjadi Error Saat Menghitung Private Message, Mohon Restart Bot!**",
@@ -100,7 +100,7 @@ async def permitpm(event):
                 await event.client(BlockRequest(event.chat_id))
                 await event.client(ReportSpamRequest(peer=event.chat_id))
 
-                if BOTLOG:
+                if BOTLOG_CHATID:
                     name = await event.client.get_entity(event.chat_id)
                     name0 = str(name.first_name)
                     await event.client.send_message(
@@ -153,7 +153,7 @@ async def auto_accept(event):
                     except IntegrityError:
                         return
 
-                if is_approved(event.chat_id) and BOTLOG:
+                if is_approved(event.chat_id) and BOTLOG_CHATID:
                     await event.client.send_message(
                         BOTLOG_CHATID,
                         "**#AUTO_APPROVED**\n"
@@ -250,12 +250,6 @@ async def approvepm(apprvpm):
         apprvpm, f"**Menerima Pesan Dari** [{name0}](tg://user?id={uid})", 5
     )
 
-    if BOTLOG:
-        await apprvpm.client.send_message(
-            BOTLOG_CHATID,
-            "**#APPROVED**\n" + "**👤 User:** " + f"[{name0}](tg://user?id={uid})",
-        )
-
 
 @bot.on(man_cmd(outgoing=True, pattern=r"(?:tolak|nopm)\s?(.)?"))
 async def disapprovepm(disapprvpm):
@@ -310,12 +304,6 @@ async def disapprovepm(disapprvpm):
         f" **Maaf Pesan** [{name0}](tg://user?id={aname}) **Telah Ditolak, Mohon Jangan Melakukan Spam Ke Room Chat!**",
     )
 
-    if BOTLOG:
-        await disapprvpm.client.send_message(
-            BOTLOG_CHATID,
-            f"[{name0}](tg://user?id={aname})" "** Berhasil Ditolak**",
-        )
-
 
 @bot.on(man_cmd(outgoing=True, pattern=r"block$"))
 async def blockpm(block):
@@ -324,7 +312,6 @@ async def blockpm(block):
         reply = await block.get_reply_message()
         replied_user = await block.client.get_entity(reply.sender_id)
         aname = replied_user.id
-        name0 = str(replied_user.first_name)
         await block.client(BlockRequest(aname))
         await block.edit("**Anda Telah Diblokir!**")
         uid = replied_user.id
@@ -334,7 +321,6 @@ async def blockpm(block):
         if not isinstance(aname, User):
             return await block.edit("**This can be done only with users.**")
         await block.edit("**Kamu Telah Diblokir!**")
-        name0 = str(aname.first_name)
         uid = block.chat_id
 
     try:
@@ -344,12 +330,6 @@ async def blockpm(block):
     except AttributeError:
         pass
 
-    if BOTLOG:
-        await block.client.send_message(
-            BOTLOG_CHATID,
-            "**#BLOCKED**\n" + "👤 **User:** " + f"[{name0}](tg://user?id={uid})",
-        )
-
 
 @bot.on(man_cmd(outgoing=True, pattern=r"unblock$"))
 async def unblockpm(unblock):
@@ -357,15 +337,8 @@ async def unblockpm(unblock):
     if unblock.reply_to_msg_id:
         reply = await unblock.get_reply_message()
         replied_user = await unblock.client.get_entity(reply.sender_id)
-        name0 = str(replied_user.first_name)
         await unblock.client(UnblockRequest(replied_user.id))
         await unblock.edit("**Anda Sudah Tidak Diblokir Lagi.**")
-
-    if BOTLOG:
-        await unblock.client.send_message(
-            BOTLOG_CHATID,
-            f"[{name0}](tg://user?id={replied_user.id})" " **Berhasil di Unblock!.**",
-        )
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"(set|get|reset) pmpermit(?: |$)(\w*)"))
@@ -405,7 +378,7 @@ async def add_pmsg(cust_msg):
         sql.addgvar("unapproved_msg", msg)
         await cust_msg.edit("**Pesan Berhasil Disimpan Ke Room Chat**")
 
-        if BOTLOG:
+        if BOTLOG_CHATID:
             await cust_msg.client.send_message(
                 BOTLOG_CHATID,
                 f"**{status} PMPERMIT Yang Tersimpan:** \n\n{msg}",

@@ -8,7 +8,7 @@
 from asyncio import sleep
 from re import IGNORECASE, escape, search
 
-from userbot import BLACKLIST_CHAT, BOTLOG, BOTLOG_CHATID
+from userbot import BLACKLIST_CHAT, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd, register
@@ -127,7 +127,7 @@ async def kick_marie_filter(event):
             await event.reply("/stop %s" % (i.strip()))
         await sleep(0.3)
     await event.respond("**Berhasil Menghapus Semua Filter Bot!**")
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await event.client.send_message(
             BOTLOG_CHATID, "Saya Membersihkan Semua Filter Bot Di " + str(event.chat_id)
         )

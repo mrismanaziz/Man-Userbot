@@ -57,7 +57,7 @@ from yt_dlp.utils import (
     XAttrMetadataError,
 )
 
-from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import (
     CMD_HELP,
@@ -360,7 +360,7 @@ async def lang(value):
     await value.edit(
         f"**Bahasa untuk** `{scraper}` **diganti menjadi** `{LANG.title()}`"
     )
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await value.client.send_message(
             BOTLOG_CHATID,
             f"**Bahasa untuk** `{scraper}` **diganti menjadi** `{LANG.title()}`",
