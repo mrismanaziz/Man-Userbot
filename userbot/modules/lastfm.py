@@ -20,10 +20,9 @@ from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
-from userbot import BOTLOG_CHATID
+from userbot import BIO_PREFIX, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import (
-    BIO_PREFIX,
     CMD_HELP,
     DEFAULT_BIO,
     LASTFM_API,
