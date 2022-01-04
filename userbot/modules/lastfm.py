@@ -23,12 +23,14 @@ from telethon.tl.functions.users import GetFullUserRequest
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import (
+    BIO_PREFIX,
     CMD_HELP,
     DEFAULT_BIO,
     LASTFM_API,
     LASTFM_PASSWORD_PLAIN,
     LASTFM_SECRET,
     LASTFM_USERNAME,
+    LOGS,
     bot,
     lastfm,
 )
