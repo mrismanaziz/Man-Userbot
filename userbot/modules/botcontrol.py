@@ -15,7 +15,6 @@ from telethon.utils import get_display_name, pack_bot_file_id
 
 from userbot import (
     BOT_USERNAME,
-    BOTLOG,
     BOTLOG_CHATID,
     CHANNEL,
     CMD_HANDLER,
