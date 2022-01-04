@@ -147,7 +147,7 @@ async def get_curr_track(lfmbio):
                 else:
                     lfmbio = f"🎧: {ARTIST} - {SONG}"
                 try:
-                    if BOTLOG and LastLog:
+                    if BOTLOG_CHATID and LastLog:
                         await bot.send_message(
                             BOTLOG_CHATID, f"**Attempted to change bio to**\n{lfmbio}"
                         )
@@ -156,7 +156,7 @@ async def get_curr_track(lfmbio):
                     try:
                         SONG = sub(r"\[.*\]", "", SONG)
                         lfmbio = f"🎧: {ARTIST} - {SONG}"
-                        if BOTLOG and LastLog:
+                        if BOTLOG_CHATID and LastLog:
                             await bot.send_message(
                                 BOTLOG_CHATID,
                                 f"**Attempted to change bio to**\n{lfmbio}",
@@ -166,7 +166,7 @@ async def get_curr_track(lfmbio):
                         try:
                             SONG = sub(r"\(.*\)", "", SONG)
                             lfmbio = f"🎧: {ARTIST} - {SONG}"
-                            if BOTLOG and LastLog:
+                            if BOTLOG_CHATID and LastLog:
                                 await bot.send_message(
                                     BOTLOG_CHATID,
                                     f"**Attempted to change bio to**\n{lfmbio}",
@@ -183,7 +183,7 @@ async def get_curr_track(lfmbio):
             if playing is None and user_info.about != DEFAULT_BIO:
                 await sleep(6)
                 await bot(UpdateProfileRequest(about=DEFAULT_BIO))
-                if BOTLOG and LastLog:
+                if BOTLOG_CHATID and LastLog:
                     await bot.send_message(
                         BOTLOG_CHATID, f"**Reset bio back to**\n{DEFAULT_BIO}"
                     )
@@ -192,20 +192,20 @@ async def get_curr_track(lfmbio):
                 if user_info.about != DEFAULT_BIO:
                     await sleep(6)
                     await bot(UpdateProfileRequest(about=DEFAULT_BIO))
-                    if BOTLOG and LastLog:
+                    if BOTLOG_CHATID and LastLog:
                         await bot.send_message(
                             BOTLOG_CHATID, f"**Reset bio back to**\n{DEFAULT_BIO}"
                         )
             except FloodWaitError as err:
-                if BOTLOG and LastLog:
+                if BOTLOG_CHATID and LastLog:
                     await bot.send_message(
                         BOTLOG_CHATID, f"**Error changing bio:**\n{err}"
                     )
         except FloodWaitError as err:
-            if BOTLOG and LastLog:
+            if BOTLOG_CHATID and LastLog:
                 await bot.send_message(BOTLOG_CHATID, f"**Error changing bio:**\n{err}")
         except (WSError, MalformedResponseError, AboutTooLongError) as err:
-            if BOTLOG and LastLog:
+            if BOTLOG_CHATID and LastLog:
                 await bot.send_message(BOTLOG_CHATID, f"**Error changing bio:**\n{err}")
         await sleep(10)
     RUNNING = False
