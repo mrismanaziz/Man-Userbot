@@ -92,7 +92,7 @@ async def ban_user_from_bot(user, reason, reply_to=None):
             \n**First Name:** {_format.mentionuser(get_display_name(user) , user.id)}\
             \n**User ID:** `{user.id}`\
             \n**Reason:** `{reason}`"
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await bot.send_message(BOTLOG_CHATID, info)
     return info
 
@@ -110,7 +110,7 @@ async def unban_user_from_bot(user, reason, reply_to=None):
     info = f"**#Unbanned_Bot_PM_User**\
             \n**First Name:** {_format.mentionuser(get_display_name(user) , user.id)}\
             \n**User ID:** `{user.id}`"
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await bot.send_message(BOTLOG_CHATID, info)
     return info
 
@@ -143,7 +143,7 @@ async def bot_broadcast(event):
             del_starter_from_db(int(user.user_id))
         except Exception as e:
             LOGS.error(str(e))
-            if BOTLOG:
+            if BOTLOG_CHATID:
                 await event.client.send_message(
                     BOTLOG_CHATID, f"**Terjadi Error Saat Broadcast**\n`{e}`"
                 )
@@ -310,7 +310,7 @@ async def setpmbot(event):
         msg = message.message
         sql.addgvar("START_TEXT", msg)
         await xnxx.edit("**Berhasil Mengcustom Pesan Start BOT**")
-        if BOTLOG:
+        if BOTLOG_CHATID:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"**{status} PMBOT Yang Tersimpan:** \n\n{msg}",
