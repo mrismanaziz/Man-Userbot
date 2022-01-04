@@ -34,7 +34,7 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, DEVS, owner
 from userbot.events import register
