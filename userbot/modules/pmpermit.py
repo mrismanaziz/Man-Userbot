@@ -312,7 +312,6 @@ async def blockpm(block):
         reply = await block.get_reply_message()
         replied_user = await block.client.get_entity(reply.sender_id)
         aname = replied_user.id
-        str(replied_user.first_name)
         await block.client(BlockRequest(aname))
         await block.edit("**Anda Telah Diblokir!**")
         uid = replied_user.id
@@ -322,7 +321,6 @@ async def blockpm(block):
         if not isinstance(aname, User):
             return await block.edit("**This can be done only with users.**")
         await block.edit("**Kamu Telah Diblokir!**")
-        str(aname.first_name)
         uid = block.chat_id
 
     try:
@@ -339,7 +337,6 @@ async def unblockpm(unblock):
     if unblock.reply_to_msg_id:
         reply = await unblock.get_reply_message()
         replied_user = await unblock.client.get_entity(reply.sender_id)
-        str(replied_user.first_name)
         await unblock.client(UnblockRequest(replied_user.id))
         await unblock.edit("**Anda Sudah Tidak Diblokir Lagi.**")
 
