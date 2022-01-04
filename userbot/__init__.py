@@ -611,7 +611,6 @@ with bot:
                         text=query,
                         buttons=buttons,
                     )
-                await event.answer([result] if result else None)
             else:
                 result = builder.article(
                     title="✗ Man-Userbot ✗",
