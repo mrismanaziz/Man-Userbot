@@ -456,7 +456,7 @@ async def rm_deletedacc(show):
     await show.edit(del_status)
     await sleep(2)
     await show.delete()
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await show.client.send_message(
             BOTLOG_CHATID,
             "**#ZOMBIES**\n"
