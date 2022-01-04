@@ -81,7 +81,7 @@ async def check_bot_started_users(user, event):
         add_starter_to_db(user.id, get_display_name(user), start_date, user.username)
     except Exception as e:
         LOGS.error(str(e))
-    if BOTLOG:
+    if BOTLOG_CHATID:
         await event.client.send_message(BOTLOG_CHATID, notification)
 
 
@@ -664,7 +664,7 @@ async def bot_start(event):
             reply_to=reply_to,
         )
     except Exception as e:
-        if BOTLOG:
+        if BOTLOG_CHATID:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"**ERROR:** Saat Pengguna memulai Bot anda.\n`{e}`",
