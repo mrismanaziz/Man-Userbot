@@ -20,7 +20,7 @@ from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
-from userbot import BOTLOG_CHATID
+from userbot import BIO_PREFIX, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import (
     CMD_HELP,
@@ -29,6 +29,7 @@ from userbot import (
     LASTFM_PASSWORD_PLAIN,
     LASTFM_SECRET,
     LASTFM_USERNAME,
+    LOGS,
     bot,
     lastfm,
 )
