@@ -10,10 +10,10 @@ from re import match
 from bitlyshortener import Shortener
 
 from userbot import BITLY_TOKEN, BOTLOG, BOTLOG_CHATID, bot
-from userbot.events import man_cmd
+from userbot.utils import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"bitly(?: |$)(.*)"))
+@man_cmd(pattern=r"bitly(?: |$)(.*)"))
 async def shortener(short):
     """
     Shorten link using bit.ly API
@@ -43,7 +43,7 @@ async def shortener(short):
         await short.edit(
             f"`Your link shortened successfully!`\nHere is your link {output}"
         )
-        if BOTLOG:
+        if BOTLOG_CHATID:
             await short.client.send_message(
                 BOTLOG_CHATID, f"`#SHORTLINK \nThis Your Link!`\n {output}"
             )
