@@ -8,7 +8,7 @@
 from asyncio import sleep
 from re import IGNORECASE, escape, search
 
-from userbot import BLACKLIST_CHAT, BOTLOG, BOTLOG_CHATID
+from userbot import BLACKLIST_CHAT, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd, register
