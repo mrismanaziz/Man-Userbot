@@ -456,7 +456,7 @@ with bot:
             if check_is_black_list(chat.id):
                 return
             if chat.id != uid:
-                msg = await event.forward_to(PMBOTLOG)
+                msg = await event.forward_to(int(PMBOTLOG))
                 try:
                     add_user_to_db(
                         msg.id, get_display_name(chat), chat.id, event.id, 0, 0
