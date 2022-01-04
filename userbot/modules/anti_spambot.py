@@ -173,7 +173,7 @@ async def ANTI_SPAMBOTS(welcm):
                     )
                     kicked = False
                     reported = True
-                if BOTLOG and (kicked or reported):
+                if BOTLOG_CHATID and (kicked or reported):
                     await welcm.client.send_message(
                         BOTLOG_CHATID,
                         "#ANTI_SPAMBOT REPORT\n"
