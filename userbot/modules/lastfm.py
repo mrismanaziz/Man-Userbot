@@ -20,9 +20,18 @@ from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
-from userbot import BOTLOG_CHATID, DEFAULT_BIO
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEFAULT_BIO, LASTFM_API, LASTFM_USERNAME, LASTFM_SECRET, LASTFM_PASSWORD_PLAIN, bot, lastfm
+from userbot import (
+    CMD_HELP,
+    DEFAULT_BIO,
+    LASTFM_API,
+    LASTFM_PASSWORD_PLAIN,
+    LASTFM_SECRET,
+    LASTFM_USERNAME,
+    bot,
+    lastfm,
+)
 from userbot.utils import man_cmd
 
 LASTFM_PASS = md5(LASTFM_PASSWORD_PLAIN)
@@ -147,7 +156,9 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
             AboutTooLongError,
         ) as err:
             if BOTLOG_CHATID and LASTFM_.LastLog:
-                await lfmbio.client.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
+                await lfmbio.client.send_message(
+                    BOTLOG_CHATID, f"Error changing bio:\n{err}"
+                )
         await sleep(2)
     LASTFM_.RUNNING = False
 
