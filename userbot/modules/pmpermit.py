@@ -12,7 +12,7 @@ from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.tl.functions.messages import ReportSpamRequest
 from telethon.tl.types import User
 
-from userbot import BOTLOG, BOTLOG_CHATID
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, COUNT_PM, LASTMSG, LOGS, PM_AUTO_BAN, PM_LIMIT, bot
 from userbot.events import man_cmd, register
@@ -312,7 +312,7 @@ async def blockpm(block):
         reply = await block.get_reply_message()
         replied_user = await block.client.get_entity(reply.sender_id)
         aname = replied_user.id
-        name0 = str(replied_user.first_name)
+        str(replied_user.first_name)
         await block.client(BlockRequest(aname))
         await block.edit("**Anda Telah Diblokir!**")
         uid = replied_user.id
@@ -322,7 +322,7 @@ async def blockpm(block):
         if not isinstance(aname, User):
             return await block.edit("**This can be done only with users.**")
         await block.edit("**Kamu Telah Diblokir!**")
-        name0 = str(aname.first_name)
+        str(aname.first_name)
         uid = block.chat_id
 
     try:
@@ -339,7 +339,7 @@ async def unblockpm(unblock):
     if unblock.reply_to_msg_id:
         reply = await unblock.get_reply_message()
         replied_user = await unblock.client.get_entity(reply.sender_id)
-        name0 = str(replied_user.first_name)
+        str(replied_user.first_name)
         await unblock.client(UnblockRequest(replied_user.id))
         await unblock.edit("**Anda Sudah Tidak Diblokir Lagi.**")
 
