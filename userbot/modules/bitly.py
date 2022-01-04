@@ -13,7 +13,7 @@ from userbot import BITLY_TOKEN, BOTLOG, BOTLOG_CHATID, bot
 from userbot.utils import man_cmd
 
 
-@man_cmd(pattern=r"bitly(?: |$)(.*)"))
+@man_cmd(pattern="bitly(?: |$)(.*)")
 async def shortener(short):
     """
     Shorten link using bit.ly API
