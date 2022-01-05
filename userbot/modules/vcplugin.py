@@ -181,7 +181,7 @@ async def vc_play(event):
             pos = add_to_queue(chat_id, songname, dl, link, "Audio", 0)
             caption = f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
             await botman.delete()
-            await event.client.send_file(chat_id, dieue, caption=caption)
+            await event.client.send_file(chat_id, ngantri, caption=caption)
         else:
             try:
                 await call_py.join_group_call(
@@ -194,7 +194,7 @@ async def vc_play(event):
                 add_to_queue(chat_id, songname, dl, link, "Audio", 0)
                 caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Lagu`\n🎧 **Atas permintaan:** {from_user}"
                 await botman.delete()
-                await event.client.send_file(chat_id, ngeplay, caption=caption)
+                await event.client.send_file(chat_id, fotoplay, caption=caption)
             except Exception as ep:
                 clear_queue(chat_id)
                 await botman.edit(f"`{ep}`")
@@ -265,9 +265,6 @@ async def vc_vplay(event):
         xnxx = await event.edit("`Downloading`")
         dl = await replied.download_media()
         link = f"https://t.me/c/{chat.id}/{event.message.id}"
-        ctitle = await CHAT_TITLE(titlegc)
-        ngeplay = await gen_thumb(fotoplay, title, userid, ctitle)
-        dieue = await gen_thumb(ngantri, title, userid, ctitle)
         if len(event.text.split()) < 2:
             RESOLUSI = 720
         else:
@@ -279,7 +276,7 @@ async def vc_vplay(event):
             pos = add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
             caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
             await event.delete()
-            await event.client.send_file(chat_id, dieue, caption=caption)
+            await event.client.send_file(chat_id, ngantri, caption=caption)
         else:
             if RESOLUSI == 360:
                 hmmm = LowQualityVideo()
@@ -296,7 +293,7 @@ async def vc_vplay(event):
                 add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
                 caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}"
                 await xnxx.delete()
-                await event.client.send_file(chat_id, ngeplay, caption=caption)
+                await event.client.send_file(chat_id, fotoplay, caption=caption)
             except Exception as ep:
                 clear_queue(chat_id)
                 await xnxx.edit(f"`{ep}`")
