@@ -255,6 +255,7 @@ async def edit_or_reply(
     await event.delete()
     os.remove(file_name)
 
+
 eor = edit_or_reply
 
 
@@ -346,7 +347,9 @@ async def edit_delete(event, text, time=None, parse_mode=None, link_preview=None
     await asyncio.sleep(time)
     return await newevent.delete()
 
+
 eod = edit_delete
+
 
 async def media_to_pic(event, reply):
     mediatype = media_type(reply)
