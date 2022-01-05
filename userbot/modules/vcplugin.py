@@ -29,6 +29,9 @@ from userbot.utils.queues.queues import (
 )
 from userbot.utils.thumbnail import gen_thumb
 
+fotoplay = "https://telegra.ph/file/6213d2673486beca02967.png"
+ngantri = "https://telegra.ph/file/d6f92c979ad96b2031cba.png"
+
 
 def vcmention(user):
     full_name = get_display_name(user)
@@ -176,9 +179,9 @@ async def vc_play(event):
             songname = "Voice Note"
         if chat_id in QUEUE:
             pos = add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-            await botman.edit(
-                f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
-            )
+            caption = f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
+            await botman.delete()
+            await event.client.send_file(chat_id, dieue, caption=caption)
         else:
             try:
                 await call_py.join_group_call(
@@ -189,10 +192,9 @@ async def vc_play(event):
                     stream_type=StreamType().pulse_stream,
                 )
                 add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-                await botman.edit(
-                    f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar`\n🎧 **Atas permintaan:** {from_user}",
-                    link_preview=False,
-                )
+                caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Lagu`\n🎧 **Atas permintaan:** {from_user}"
+                await botman.delete()
+                await event.client.send_file(chat_id, ngeplay, caption=caption)
             except Exception as ep:
                 clear_queue(chat_id)
                 await botman.edit(f"`{ep}`")
@@ -263,8 +265,6 @@ async def vc_vplay(event):
         xnxx = await event.edit("`Downloading`")
         dl = await replied.download_media()
         link = f"https://t.me/c/{chat.id}/{event.message.id}"
-        fotoplay = "https://telegra.ph/file/6213d2673486beca02967.png"
-        ngantri = "https://telegra.ph/file/d6f92c979ad96b2031cba.png"
         ctitle = await CHAT_TITLE(titlegc)
         ngeplay = await gen_thumb(fotoplay, title, userid, ctitle)
         dieue = await gen_thumb(ngantri, title, userid, ctitle)
