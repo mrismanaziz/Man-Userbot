@@ -38,11 +38,6 @@
       "description": "Buatlah grup telegram publik lalu masukan @MissRose_bot ketik /id, masukan id grup nya disini. contoh: -1001473548xxx",
       "value": "Isi id grup mu wajib dengan awalan -100",
       "required": true
-    },
-    "PM_AUTO_BAN": {
-      "description": "PM Auto-Ban adalah module untuk bot welcome otomatis ketika ada orang ngePC kamu, jika Mau di matikan ubah ke False",
-      "value": "True",
-      "required": false
     }
   },
   "addons": [
