@@ -66,9 +66,9 @@ async def shutdown_bot(event):
         await event.client.send_message(
             BOTLOG_CHATID,
             "**#SHUTDOWN** \n"
-            "**Man-Userbot** telah di matikan!\nJika ingin menghidupkan kembali silahkan buka heroku",
+            "**Joo-Ubot** telah di matikan!\nJika ingin menghidupkan kembali silahkan buka heroku",
         )
-    await edit_or_reply(event, "**Man-Userbot Berhasil di matikan!**")
+    await edit_or_reply(event, "**Joo-Userbot Berhasil di matikan!**")
     if HEROKU_APP is not None:
         HEROKU_APP.process_formation()["worker"].scale(0)
     else:
@@ -79,10 +79,10 @@ async def shutdown_bot(event):
 async def restart_bot(event):
     if event.sender_id in SUDO_USERS:
         return
-    await edit_or_reply(event, "**Man-Userbot Berhasil di Restart**")
+    await edit_or_reply(event, "**Joo-Ubot Berhasil di Restart**")
     if BOTLOG_CHATID:
         await event.client.send_message(
-            BOTLOG_CHATID, "#RESTART \n" "**Man-Userbot Berhasil Di Restart**"
+            BOTLOG_CHATID, "#RESTART \n" "**Joo-Ubot Berhasil Di Restart**"
         )
     args = [sys.executable, "-m", "userbot"]
     execle(sys.executable, *args, environ)
@@ -93,7 +93,7 @@ async def reedme(event):
     await edit_or_reply(
         event,
         "**Berikut sesuatu untuk kamu baca:**\n"
-        "\n✣ [Userbot Repo](https://github.com/mrismanaziz/Man-Userbot/blob/Man-Userbot/README.md)"
+        "\n✣ [Userbot Repo](https://github.com/jookalem/Joo-Ubot/blob/Joo-Ubot/README.md)"
         "\n✣ [Video Tutorial](https://youtu.be/tTDaPKsGC1I)"
         "\n✣ [List Variabel Heroku untuk Man-Userbot](https://telegra.ph/List-Variabel-Heroku-untuk-Man-Userbot-09-22)"
         "\n✣ [Setup Guide - Basic](https://mrismanaziz.medium.com/cara-memasang-userbot-telegram-repo-man-userbot-deploy-di-heroku-c56d1f8b5537)"
@@ -119,13 +119,12 @@ async def repeat(event):
 async def repo_is_here(event):
     xx = await edit_or_reply(event, "`Processing...`")
     await xx.edit(
-        f"**Hey**, __I am using__ 🔥 **Man-Userbot** 🔥\n\n"
-        f"      __Thanks For Using me__\n\n"
-        f"✣ **Userbot Version :** `{BOT_VER}@{branch}`\n"
-        f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
-        f"✣ **Channel Man :** [Lunatic0de](t.me/Lunatic0de)\n"
-        f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"
-        f"✣ **Repo :** [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)\n"
+        f"**HAI PELER**, __GUA PAKE REPO__ ⚡ **𝗝𝗼𝗼-𝗨𝗯𝗼𝘁** ⚡\n\n"
+        f"✣ **𝚄𝚂𝙴𝚁𝙱𝙾𝚃 𝚅𝙴𝚁𝚂𝙸𝙾𝙽 :** `{BOT_VER}@{branch}`\n"
+        f"✣ **𝙶𝚁𝙾𝚄𝙿 𝚂𝚄𝙿𝙿𝙾𝚁𝚃 :** [Sharing Userbot](t.me/skyzusupport)\n"
+        f"✣ **𝙲𝙷𝙰𝙽𝙽𝙴𝙻 𝙹𝙾𝙾 :** [JOO](t.me/gbtnyajo)\n"
+        f"✣ **𝚁𝙴𝙿𝙾 𝙾𝚆𝙽𝙴𝚁 :** [JOO](t.me/jooneverdie)\n"
+        f"✣ **𝚁𝙴𝙿𝙾 :** [JOO-UBOT](https://github.com/jookalem/Joo-Ubot)\n"
     )
 
 
