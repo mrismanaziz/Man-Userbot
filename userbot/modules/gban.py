@@ -88,7 +88,7 @@ async def gben(userbot):
                     r"\\**#GBanned_User**//"
                     f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
                     f"**User ID:** `{user.id}`\n"
-                    f"**Action:** `Global Banned Anak Anjing`"
+                    f"**Action:** `Global Banned"
                 )
             except BaseException:
                 b += 1
