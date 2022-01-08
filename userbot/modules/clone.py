@@ -47,9 +47,9 @@ async def impostor(event):
 
     LOGS.info(STORAGE.userObj)
 
-    await event.edit("**Mencuri identitas orang ini...**")
+    await event.edit("**TUNGGU SEDANG MENCURI IDENTITAS SI GEMBEL**")
     await updateProfile(userObj)
-    await event.edit("**Aku adalah kamu dan kamu adalah aku. asekk 🥴**")
+    await event.edit("**MAMPUS LU GUA CLONE BANGSAT**")
 
 
 async def updateProfile(userObj, restore=False):
