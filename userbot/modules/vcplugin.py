@@ -183,17 +183,21 @@ async def vc_play(event):
             await event.client.send_file(chat_id, ngantri, caption=caption)
             await botman.delete()
         else:
-            await call_py.join_group_call(
-                chat_id,
-                AudioPiped(
-                    dl,
-                ),
-                stream_type=StreamType().pulse_stream,
-            )
-            add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-            caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Lagu`\n🎧 **Atas permintaan:** {from_user}"
-            await event.client.send_file(chat_id, fotoplay, caption=caption)
-            await botman.delete()
+            try:
+                await call_py.join_group_call(
+                    chat_id,
+                    AudioPiped(
+                        dl,
+                    ),
+                    stream_type=StreamType().pulse_stream,
+                )
+                add_to_queue(chat_id, songname, dl, link, "Audio", 0)
+                caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Lagu`\n🎧 **Atas permintaan:** {from_user}"
+                await event.client.send_file(chat_id, fotoplay, caption=caption)
+                await botman.delete()
+            except Exception as ep:
+                clear_queue(chat_id)
+                await botman.edit(f"`{ep}`")
 
 
 @man_cmd(pattern="vplay(?:\s|$)([\s\S]*)")
