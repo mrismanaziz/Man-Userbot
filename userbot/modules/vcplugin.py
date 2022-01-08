@@ -17,7 +17,10 @@ from telethon.utils import get_display_name
 from youtubesearchpython import VideosSearch
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, call_py, owner
+from userbot import CMD_HELP
+from userbot import PLAY_PIC as fotoplay
+from userbot import QUEUE_PIC as ngantri
+from userbot import call_py, owner
 from userbot.utils import bash, edit_delete, edit_or_reply, man_cmd
 from userbot.utils.chattitle import CHAT_TITLE
 from userbot.utils.queues.queues import (
@@ -167,18 +170,18 @@ async def vc_play(event):
                     await botman.edit(f"`{ep}`")
 
     else:
-        botman = await event.edit("`Downloading`")
+        botman = await edit_or_reply(event, "📥 **Sedang Mendownload**")
         dl = await replied.download_media()
-        link = replied.link
+        link = f"https://t.me/c/{chat.id}/{event.reply_to_msg_id}"
         if replied.audio:
             songname = "Telegram Music Player"
         elif replied.voice:
             songname = "Voice Note"
         if chat_id in QUEUE:
             pos = add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-            await botman.edit(
-                f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
-            )
+            caption = f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
+            await event.client.send_file(chat_id, ngantri, caption=caption)
+            await botman.delete()
         else:
             try:
                 await call_py.join_group_call(
@@ -189,10 +192,9 @@ async def vc_play(event):
                     stream_type=StreamType().pulse_stream,
                 )
                 add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-                await botman.edit(
-                    f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar`\n🎧 **Atas permintaan:** {from_user}",
-                    link_preview=False,
-                )
+                caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Lagu`\n🎧 **Atas permintaan:** {from_user}"
+                await event.client.send_file(chat_id, fotoplay, caption=caption)
+                await botman.delete()
             except Exception as ep:
                 clear_queue(chat_id)
                 await botman.edit(f"`{ep}`")
@@ -203,7 +205,9 @@ async def vc_vplay(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
     sender = await event.get_sender()
+    userid = sender.id
     chat = await event.get_chat()
+    titlegc = chat.title
     chat_id = event.chat_id
     from_user = vcmention(event.sender)
     if (
@@ -212,7 +216,6 @@ async def vc_vplay(event):
         and not replied.document
         and not title
         or not replied
-        and not title
     ):
         return await edit_or_reply(event, "**Silahkan Masukan Judul Video**")
     if replied and not replied.video and not replied.document:
@@ -231,8 +234,6 @@ async def vc_vplay(event):
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
-            userid = sender.id
-            titlegc = chat.title
             ctitle = await CHAT_TITLE(titlegc)
             thumb = await gen_thumb(thumbnail, title, userid, ctitle)
             format = "best[height<=?720][width<=?1280]"
@@ -261,9 +262,9 @@ async def vc_vplay(event):
                     await xnxx.edit(f"`{ep}`")
 
     elif replied:
-        xnxx = await event.edit("`Downloading`")
+        xnxx = await edit_or_reply(event, "📥 **Sedang Mendownload**")
         dl = await replied.download_media()
-        link = replied.link
+        link = f"https://t.me/c/{chat.id}/{event.reply_to_msg_id}"
         if len(event.text.split()) < 2:
             RESOLUSI = 720
         else:
@@ -273,9 +274,9 @@ async def vc_vplay(event):
             songname = "Telegram Video Player"
         if chat_id in QUEUE:
             pos = add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
-            caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
-            await event.delete()
-            await event.client.send_file(chat_id, thumb, caption=caption)
+            caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
+            await event.client.send_file(chat_id, ngantri, caption=caption)
+            await xnxx.delete()
         else:
             if RESOLUSI == 360:
                 hmmm = LowQualityVideo()
@@ -290,9 +291,9 @@ async def vc_vplay(event):
                     stream_type=StreamType().pulse_stream,
                 )
                 add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
-                caption = f"🏷 **Judul:** [{songname}]({url})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}"
+                caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}"
                 await xnxx.delete()
-                await event.client.send_file(chat_id, thumbnail, caption=caption)
+                await event.client.send_file(chat_id, fotoplay, caption=caption)
             except Exception as ep:
                 clear_queue(chat_id)
                 await xnxx.edit(f"`{ep}`")
@@ -310,8 +311,6 @@ async def vc_vplay(event):
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
-            userid = sender.id
-            titlegc = chat.title
             ctitle = await CHAT_TITLE(titlegc)
             thumb = await gen_thumb(thumbnail, title, userid, ctitle)
             format = "best[height<=?720][width<=?1280]"
