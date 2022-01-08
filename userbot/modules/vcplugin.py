@@ -32,7 +32,6 @@ from userbot.utils.thumbnail import gen_thumb
 fotoplay = "https://telegra.ph/file/6213d2673486beca02967.png"
 ngantri = "https://telegra.ph/file/d6f92c979ad96b2031cba.png"
 
-
 def vcmention(user):
     full_name = get_display_name(user)
     if not isinstance(user, types.User):
