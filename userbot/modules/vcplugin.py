@@ -169,7 +169,7 @@ async def vc_play(event):
                     await botman.edit(f"`{ep}`")
 
     else:
-        botman = await event.edit("`Downloading`")
+        botman = await event.reply("`Downloading`")
         dl = await replied.download_media()
         link = f"https://t.me/c/{chat.id}/{event.reply_to_msg_id}"
         if replied.audio:
@@ -179,23 +179,20 @@ async def vc_play(event):
         if chat_id in QUEUE:
             pos = add_to_queue(chat_id, songname, dl, link, "Audio", 0)
             caption = f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
-            await botman.delete()
             await event.client.send_file(chat_id, ngantri, caption=caption)
+            await botman.delete()
         else:
-            try:
-                await call_py.join_group_call(
-                    chat_id,
-                    AudioPiped(
-                        dl,
-                    ),
-                    stream_type=StreamType().pulse_stream,
-                )
-                add_to_queue(chat_id, songname, dl, link, "Audio", 0)
-                caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Lagu`\n🎧 **Atas permintaan:** {from_user}"
-                await botman.delete()
-                await event.client.send_file(chat_id, fotoplay, caption=caption)
-            except Exception as ep:
-                await botman.edit(f"`{ep}`")
+            await call_py.join_group_call(
+                chat_id,
+                AudioPiped(
+                    dl,
+                ),
+                stream_type=StreamType().pulse_stream,
+            )
+            add_to_queue(chat_id, songname, dl, link, "Audio", 0)
+            caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Lagu`\n🎧 **Atas permintaan:** {from_user}"
+            await event.client.send_file(chat_id, fotoplay, caption=caption)
+            await botman.delete()
 
 
 @man_cmd(pattern="vplay(?:\s|$)([\s\S]*)")
