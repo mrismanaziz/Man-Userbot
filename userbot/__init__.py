@@ -208,7 +208,7 @@ ZIP_DOWNLOAD_DIRECTORY = os.environ.get("ZIP_DOWNLOAD_DIRECTORY", "./zips")
 BITLY_TOKEN = os.environ.get("BITLY_TOKEN", None)
 
 # Bot version
-BOT_VER = os.environ.get("BOT_VER", "2.1.2")
+BOT_VER = os.environ.get("BOT_VER", "2.3.4")
 
 # Default .alive logo
 ALIVE_LOGO = (
@@ -282,7 +282,6 @@ for binary, path in binaries.items():
     os.chmod(path, 0o755)
 
 # Jangan di hapus Nanti ERROR
-DEVS.add(844432220)
 
 # 'bot' variable
 if STRING_SESSION:
