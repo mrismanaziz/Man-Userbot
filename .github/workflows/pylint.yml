@@ -33,6 +33,6 @@ jobs:
           commit_message: 'Man-Userbot: auto fixes'
           commit_options: '--no-verify --signoff'
           repository: .
-          commit_user_name: mrismanaziz
-          commit_user_email: mrismanaziz@gmail.com
-          commit_author: mrismanaziz <mrismanaziz@gmail.com>
+          commit_user_name : jookalem
+          commit_user_email: mhmmdikhsan180505@gmail.com@gmail.com
+          commit_author: jookalem <mhmmdikhsan180505@gmail.com>
