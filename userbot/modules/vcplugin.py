@@ -166,7 +166,6 @@ async def vc_play(event):
                     await botman.delete()
                     await event.client.send_file(chat_id, thumb, caption=caption)
                 except Exception as ep:
-                    clear_queue(chat_id)
                     await botman.edit(f"`{ep}`")
 
     else:
@@ -196,7 +195,6 @@ async def vc_play(event):
                 await botman.delete()
                 await event.client.send_file(chat_id, fotoplay, caption=caption)
             except Exception as ep:
-                clear_queue(chat_id)
                 await botman.edit(f"`{ep}`")
 
 
@@ -258,7 +256,6 @@ async def vc_vplay(event):
                         link_preview=False,
                     )
                 except Exception as ep:
-                    clear_queue(chat_id)
                     await xnxx.edit(f"`{ep}`")
 
     elif replied:
@@ -295,7 +292,6 @@ async def vc_vplay(event):
                 await xnxx.delete()
                 await event.client.send_file(chat_id, fotoplay, caption=caption)
             except Exception as ep:
-                clear_queue(chat_id)
                 await xnxx.edit(f"`{ep}`")
     else:
         xnxx = await edit_or_reply(event, "`Searching...`")
@@ -334,7 +330,6 @@ async def vc_vplay(event):
                     await xnxx.delete()
                     await event.client.send_file(chat_id, thumb, caption=caption)
                 except Exception as ep:
-                    clear_queue(chat_id)
                     await xnxx.edit(f"`{ep}`")
 
 
