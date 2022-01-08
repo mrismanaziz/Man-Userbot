@@ -5,13 +5,13 @@ from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"sadboy(?: |$)(.*)"))
+@bot.on(man_cmd(outgoing=True, pattern=r"joo(?: |$)(.*)"))
 async def _(event):
-    await event.edit("`Pertama-tama kamu cantik`")
+    await event.edit("`Woy Kenalin Gw Joo Orang Paling Ganteng`")
     sleep(2)
-    await event.edit("`Kedua kamu manis`")
+    await event.edit("`Apa Lu? Sirik Sama Gw? Haha Goblok Babu`")
     sleep(1)
-    await event.edit("`Dan yang terakhir adalah kamu bukan jodohku`")
+    await event.edit("`Makanya Ganteng Tolol Haha,Anak Stell Kalem Nih Boss🔥🔥`")
 
 
 # Create by myself @localheart
