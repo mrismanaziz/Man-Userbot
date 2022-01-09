@@ -1,9 +1,9 @@
 {
-  "name": "Man-Userbot",
-  "description": "[Man-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
+  "name": "Kyura-Userbot",
+  "description": "[Kyura-Userbot] userbot Telegram modular yang berjalan pada Python 3.9+",
   "logo": "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg",
   "keywords": ["telegram", "userbot", "man-userbot", "modular", "python"],
-  "repository": "https://github.com/mrismanaziz/Man-Userbot",
+  "repository": "https://github.com/Kyuraxp/Man-Userbot",
   "stack": "container",
   "env": {
     "API_KEY": {
@@ -36,7 +36,7 @@
     },
     "BOTLOG_CHATID": {
       "description": "Buatlah grup telegram publik lalu masukan @MissRose_bot ketik /id, masukan id grup nya disini. contoh: -1001473548xxx",
-      "value": "Isi id grup mu wajib dengan awalan -100",
+      "value": "Isi id grup mu wajib dengan awalan ",
       "required": true
     }
   },
