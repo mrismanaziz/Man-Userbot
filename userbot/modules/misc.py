@@ -121,10 +121,10 @@ async def repo_is_here(event):
     await xx.edit(
         f"**Hey**, __I am using__ 💎 **Kyura-Userbot** 💎\n\n"
         f"      __Thanks For Using me__\n\n"
-        f"❄️ **Userbot Version :** `{BOT_VER}@{branch}`\n"
+        f"❄️ **Userbot Version :** `{BOT_VER}@{main}`\n"
         f"❄️ **Group Support :** [KYURA SUPPORT](t.me/kyurasupport)\n"
         f"❄️ **Channel Kyura :** [KYURA PROJECTS](t.me/kyuraprojects)\n"
-        f"❄️ **Owner Repo :** [KYURA🗿](t.me/mrismanaziz)\n"
+        f"❄️ **Owner Repo :** [KYURA🗿](t.me/kyuraonly)\n"
         f"❄️ **Repo :** [Kyura-Userbot](https://www.xnxx.com)\n"
     )
 
