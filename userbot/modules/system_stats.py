@@ -157,7 +157,7 @@ async def bot_ver(event):
 
         await edit_or_reply(
             event,
-            "✥ **Userbot Versi :** " f"`{verout}`" "\n✥ **Revisi :** " f"`{revout}`",
+            "❄️ **Userbot Versi :** " f"`{verout}`" "\n❄️ **Revisi :** " f"`{revout}`",
         )
     else:
         await edit_or_reply(
@@ -170,7 +170,7 @@ async def amireallyalive(alive):
     user = await bot.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
     output = (
-        f"**[Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) is Up and Running.**\n\n"
+        f"**[Kyura-Userbot](https://www.xnxx.com) is Up and Running.**\n\n"
         f"**{alive_text}**\n\n"
         f"{emoji} **Master :** [{user.first_name}](tg://user?id={user.id}) \n"
         f"{emoji} **Modules :** `{len(modules)} Modules` \n"
