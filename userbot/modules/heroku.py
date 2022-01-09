@@ -188,7 +188,7 @@ async def dyno_usage(dyno):
         AppMinutes = math.floor(AppQuotaUsed % 60)
 
         await xx.edit(
-            "✥ **Informasi Dyno Heroku :**"
+            "❄️ **Informasi Dyno Heroku :**"
             "\n╔════════════════════╗\n"
             f" ➠ **Penggunaan Dyno** `{app.name}` :\n"
             f"     •  `{AppHours}`**Jam**  `{AppMinutes}`**Menit**  "
@@ -198,7 +198,7 @@ async def dyno_usage(dyno):
             f"     •  `{hours}`**Jam**  `{minutes}`**Menit**  "
             f"**|**  [`{percentage}`**%**]"
             "\n╚════════════════════╝\n"
-            f"✥ **Sisa Dyno Heroku** `{day}` **Hari Lagi**"
+            f"❄️ **Sisa Dyno Heroku** `{day}` **Hari Lagi**"
         )
         return True
 
@@ -207,14 +207,14 @@ async def dyno_usage(dyno):
 async def fake_dyno(event):
     xx = await edit_or_reply(event, "`Processing...`")
     await xx.edit(
-        "✥ **Informasi Dyno Heroku :**"
+        "❄️ **Informasi Dyno Heroku :**"
         "\n╔════════════════════╗\n"
         f" ➠ **Penggunaan Dyno** `{app.name}` :\n"
         f"     •  `0`**Jam**  `0`**Menit**  "
         f"**|**  [`0`**%**]"
         "\n◖════════════════════◗\n"
         " ➠ **Sisa kuota dyno bulan ini** :\n"
-        f"     •  `1000`**Jam**  `0`**Menit**  "
+        f"     •  `9999`**Jam**  `0`**Menit**  "
         f"**|**  [`100`**%**]"
         "\n╚════════════════════╝\n"
     )
@@ -228,7 +228,7 @@ async def _(dyno):
         )
     xx = await edit_or_reply(dyno, "**Sedang Mengambil Logs Heroku**")
     data = app.get_log()
-    await edit_or_reply(xx, data, deflink=True, linktext="**✣ Ini Logs Heroku Anda :**")
+    await edit_or_reply(xx, data, deflink=True, linktext="**❄️ Ini Logs Heroku Anda :**")
 
 
 @man_cmd(pattern="getdb ?(.*)")
