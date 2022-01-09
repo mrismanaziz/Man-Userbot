@@ -168,11 +168,10 @@ async def okgoogle(img):
     if os.path.isfile("okgoogle.png"):
         os.remove("okgoogle.png")
     message = await img.get_reply_message()
-    if message and message.media:
-        photo = io.BytesIO()
-        await img.client.download_media(message, photo)
-    else:
+    if not message or not message.media:
         return await edit_or_reply(img, "**Harap Balas ke Gambar**")
+    photo = io.BytesIO()
+    await img.client.download_media(message, photo)
     if photo:
         xx = await edit_or_reply(img, "`Processing...`")
         try:
