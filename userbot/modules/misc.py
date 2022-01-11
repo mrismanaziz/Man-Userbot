@@ -120,8 +120,7 @@ async def repo_is_here(event):
     xx = await edit_or_reply(event, "`Processing...`")
     await xx.edit(
         f"**HAI PELER**, __GUA PAKE REPO__ ⚡ **𝗝𝗼𝗼-𝗨𝗯𝗼𝘁** ⚡\n\n"
-        f"✣ **𝚄𝚂𝙴𝚁𝙱𝙾𝚃 𝚅𝙴𝚁𝚂𝙸𝙾𝙽 :** `{BOT_VER}@{branch}`\n"
-        f"✣ **𝙶𝚁𝙾𝚄𝙿 𝚂𝚄𝙿𝙿𝙾𝚁𝚃 :** [Sharing Userbot](t.me/skyzusupport)\n"
+        f"✣ **𝙶𝚁𝙾𝚄𝙿 𝚂𝚄𝙿𝙿𝙾𝚁𝚃 :** [Kyura](t.me/kyurasupport)\n"
         f"✣ **𝙲𝙷𝙰𝙽𝙽𝙴𝙻 𝙹𝙾𝙾 :** [JOO](t.me/gbtnyajo)\n"
         f"✣ **𝚁𝙴𝙿𝙾 𝙾𝚆𝙽𝙴𝚁 :** [JOO](t.me/jooneverdie)\n"
         f"✣ **𝚁𝙴𝙿𝙾 :** [JOO-UBOT](https://github.com/jookalem/Joo-Ubot)\n"
