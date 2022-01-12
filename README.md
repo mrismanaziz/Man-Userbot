@@ -1,4 +1,5 @@
-# Joo-Userbot
+<h1 align="center"><img src="./resources/extras/geez.gif" width="35px">JOO USERBOT<img src="./resources/extras/geez.gif" width="35px"></h1>
+
 
 **JOO-UBOT ADALAH BOT PALING OP SETELEGRAM**
 
