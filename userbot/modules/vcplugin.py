@@ -216,6 +216,7 @@ async def vc_vplay(event):
         and not replied.document
         and not title
         or not replied
+        and not title
     ):
         return await edit_or_reply(event, "**Silahkan Masukan Judul Video**")
     if replied and not replied.video and not replied.document:
