@@ -43,7 +43,7 @@ async def _(event):
 
 @man_cmd(pattern="k(?: |$)(.*)")
 async def _(event):
-    xx = await edit_or_reply(event, f"**HALLO YATIM PIATU {owner}**")
+    xx = await edit_or_reply(event, f"**HALLO YATIM PIATU GUA{owner}**")
     sleep(2)
     await xx.edit("**LU SEMUA GOBLOK ANJING 🔥**")
 
