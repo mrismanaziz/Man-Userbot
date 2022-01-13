@@ -30,7 +30,7 @@ async def _(event):
         return
     uid = user.id
     chat = "@SangMataInfo_bot"
-    manevent = await edit_or_reply(event, "`Processing...`")
+    manevent = await edit_or_reply(event, "`Mohon Tunggu Tuan...`")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message(f"/search_id {uid}")
