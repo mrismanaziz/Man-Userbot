@@ -16,7 +16,7 @@ from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 @man_cmd(pattern="kamuii(:? |$)([1-8])?")
 async def _(fry):
-    xx = await edit_or_reply(fry, "`Mengaktifkan Kekuatan Supersaya...`")
+    xx = await edit_or_reply(fry, "Muka Jelek, Gua Bikin Jelek Lagi...`")
     level = fry.pattern_match.group(2)
     if fry.fwd_from:
         return
