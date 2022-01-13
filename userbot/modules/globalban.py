@@ -44,7 +44,7 @@ def mentionuser(name, userid):
 async def gban(event):
     if event.fwd_from:
         return
-    gbun = await edit_or_reply(event, "`Gbanning...`")
+    gbun = await edit_or_reply(event, "`Gbanning Bocah Kampung`")
     start = datetime.now()
     user, reason = await get_user_from_event(event, gbun)
     if not user:
@@ -57,7 +57,7 @@ async def gban(event):
         return
     if gban_sql.is_gbanned(user.id):
         await gbun.edit(
-            f"**Si** [Jamet](tg://user?id={user.id}) **ini sudah ada di daftar gbanned**"
+            f"**Si** [YATIM](tg://user?id={user.id}) **ini sudah ada di daftar gbanned**"
         )
     else:
         gban_sql.freakgban(user.id, reason)
@@ -69,7 +69,7 @@ async def gban(event):
         await gbun.edit("**Anda Tidak mempunyai GC yang anda admin 🥺**")
         return
     await gbun.edit(
-        f"**initiating gban of the** [Jamet](tg://user?id={user.id}) **in** `{len(san)}` **groups**"
+        f"**SEDANG MEMBANNED SI** [GOBLOK](tg://user?id={user.id}) **in** `{len(san)}` **groups**"
     )
     for i in range(fiz):
         try:
@@ -85,11 +85,11 @@ async def gban(event):
     timetaken = (end - start).seconds
     if reason:
         await gbun.edit(
-            f"**GBanned** [{user.first_name}](tg://user?id={user.id}) **in** `{count}` **groups in** `{timetaken}` **seconds**!!\n**Reason :** `{reason}`"
+            f"**GBanned** [Bocah Kampung](tg://user?id={user.id}) **in** `{count}` **groups in** `{timetaken}` **seconds**!!\n**Reason :** `{reason}`"
         )
     else:
         await gbun.edit(
-            f"**GBanned** [{user.first_name}](tg://user?id={user.id}) **in** `{count}` **groups in** `{timetaken}` **seconds**!!\n**Added to gbanlist.**"
+            f"**GBanned** [Bocah Kampung](tg://user?id={user.id}) **in** `{count}` **groups in** `{timetaken}` **seconds**!!\n**Mampus Lu Jelek!!**"
         )
 
 
@@ -98,7 +98,7 @@ async def gban(event):
 async def ungban(event):
     if event.fwd_from:
         return
-    ungbun = await edit_or_reply(event, "`UnGbanning...`")
+    ungbun = await edit_or_reply(event, "`UnGbanning Anak Yatim`")
     start = datetime.now()
     user, reason = await get_user_from_event(event, ungbun)
     if not user:
@@ -118,7 +118,7 @@ async def ungban(event):
         await ungbun.edit("**Anda Tidak mempunyai GC yang anda admin 🥺**")
         return
     await ungbun.edit(
-        f"**initiating ungban of the** [Jamet](tg://user?id={user.id}) **in** `{len(san)}` **groups**"
+        f"**SEDANG MEMBUKA GLOBAL BANNED SI** [Jamet](tg://user?id={user.id}) **in** `{len(san)}` **groups**"
     )
     for i in range(fiz):
         try:
@@ -134,11 +134,11 @@ async def ungban(event):
     timetaken = (end - start).seconds
     if reason:
         await ungbun.edit(
-            f"**Ungbanned** [{user.first_name}](tg://user?id={user.id}`) **in** `{count}` **groups in** `{timetaken}` **seconds**!!\n**Reason :** `{reason}`"
+            f"**Ungbanned** [Anak Monyet](tg://user?id={user.id}`) **in** `{count}` **groups in** `{timetaken}` **seconds**!!\n**Reason :** `{reason}`"
         )
     else:
         await ungbun.edit(
-            f"**Ungbanned** [{user.first_name}](tg://user?id={user.id}) **in** `{count}` **groups in** `{timetaken}` **seconds**!!\n**Removed from gbanlist**"
+            f"**Ungbanned** [Anak Monyet](tg://user?id={user.id}) **in** `{count}` **groups in** `{timetaken}` **seconds**!!\n**Jangan Tengil Ya Tolol!**"
         )
 
 
