@@ -9,7 +9,6 @@
 #
 """ Userbot initialization. """
 
-import heroku3
 import logging
 import os
 import re
@@ -21,6 +20,7 @@ from math import ceil
 from pathlib import Path
 from sys import version_info
 
+import heroku3
 from dotenv import load_dotenv
 from pylast import LastFMNetwork, md5
 from pySmartDL import SmartDL
@@ -153,9 +153,7 @@ HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
 HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
 try:
     if HEROKU_API_KEY is not None or HEROKU_APP_NAME is not None:
-        HEROKU_APP = heroku3.from_key(HEROKU_API_KEY).apps()[
-            HEROKU_APP_NAME
-        ]
+        HEROKU_APP = heroku3.from_key(HEROKU_API_KEY).apps()[HEROKU_APP_NAME]
     else:
         HEROKU_APP = None
 except Exception:
