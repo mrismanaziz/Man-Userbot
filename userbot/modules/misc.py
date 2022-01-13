@@ -10,7 +10,6 @@
 # t.me/SharingUserbot & t.me/Lunatic0de
 #
 
-import heroku3
 import io
 import os
 import re
@@ -19,6 +18,7 @@ import urllib
 from os import environ, execle
 from time import sleep
 
+import heroku3
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image
