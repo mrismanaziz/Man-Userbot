@@ -5,9 +5,9 @@ from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"joo(?: |$)(.*)"))
+@bot.on(man_cmd(outgoing=True, pattern=r"kenalin(?: |$)(.*)"))
 async def _(event):
-    await event.edit("`Woy Kenalin Gw Joo Orang Paling Ganteng`")
+    await event.edit("`Woy Kenalin Gw {owner}, Orang Paling Ganteng`")
     sleep(2)
     await event.edit("`Apa Lu? Sirik Sama Gw? Haha Goblok Babu`")
     sleep(2)
@@ -77,11 +77,11 @@ async def _(event):
     (sleep)(2)
     await event.edit("`BADAN KURUS KERING`")
     (sleep)(2)
-    await event.edit("`RAMBUR KERITING`")
+    await event.edit("`RAMBUT KERITING`")
     (sleep)(2)
-    await event.edit("`BOCAB KAMPUNG ANJING`")
+    await event.edit("`BOCAH KAMPUNG ANJING`")
     (sleep)(2)
-    await event.edit("`KAMPUNG KAMPUNG`")
+    await event.edit("`KAMPUNG KAMPUNG🔥`")
     (sleep)(2)
 
 
@@ -124,7 +124,7 @@ CMD_HELP.update(
         "punten": f"**Plugin : **`Animasi Punten`\
         \n\n  •  **Syntax :** `{cmd}punten` ; `{cmd}pantau`\
         \n  •  **Function : **Arts Beruang kek lagi mantau.\
-        \n\n  •  **Syntax :** `{cmd}kalem` ; `{cmd}dor`\
+        \n\n  •  **Syntax :** `{cmd}kalem` ; `{cmd}dor`\ `{cmd}kenalin`
         \n  •  **Function : **coba aja tolol🔥.\
     "
     }
