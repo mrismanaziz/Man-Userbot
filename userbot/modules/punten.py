@@ -10,7 +10,7 @@ async def _(event):
     await event.edit("`Woy Kenalin Gw Joo Orang Paling Ganteng`")
     sleep(2)
     await event.edit("`Apa Lu? Sirik Sama Gw? Haha Goblok Babu`")
-    sleep(1)
+    sleep(2)
     await event.edit("`Makanya Ganteng Tolol Haha,Anak Stell Kalem Nih Boss🔥🔥`")
 
 
@@ -27,7 +27,7 @@ async def _(event):
         "`\n┻┳|￣  )`"
         "`\n┳ﾐ(￣ ／`"
         "`\n┻┳T￣|`"
-        "\n**Punten**"
+        "\n**Punten Mamank**"
     )
 
 
@@ -41,7 +41,7 @@ async def _(event):
         "`\n┻┳|￣  )`"
         "`\n┳ﾐ(￣ ／`"
         "`\n┻┳T￣|`"
-        "\n**Masih Gua Pantau**"
+        "\n**Masih Gua Pantau Ajg**"
     )
 
 
