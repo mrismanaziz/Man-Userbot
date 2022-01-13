@@ -16,13 +16,13 @@ import sys
 import time
 from distutils.util import strtobool as sb
 from logging import DEBUG, INFO, basicConfig, getLogger
-from git import Repo
 from math import ceil
 from pathlib import Path
 from sys import version_info
 
 import heroku3
 from dotenv import load_dotenv
+from git import Repo
 from pylast import LastFMNetwork, md5
 from pySmartDL import SmartDL
 from pytgcalls import PyTgCalls
