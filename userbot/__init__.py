@@ -9,6 +9,7 @@
 #
 """ Userbot initialization. """
 
+import heroku3
 import logging
 import os
 import re
@@ -150,6 +151,15 @@ CHANNEL = os.environ.get("CHANNEL", "Lunatic0de")
 # Heroku Credentials for updater.
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
 HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
+try:
+    if HEROKU_API_KEY is not None or HEROKU_APP_NAME is not None:
+        HEROKU_APP = heroku3.from_key(HEROKU_API_KEY).apps()[
+            HEROKU_APP_NAME
+        ]
+    else:
+        HEROKU_APP = None
+except Exception:
+    HEROKU_APP = None
 
 # JustWatch Country
 WATCH_COUNTRY = os.environ.get("WATCH_COUNTRY", "ID")
