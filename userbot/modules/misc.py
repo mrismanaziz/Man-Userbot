@@ -10,6 +10,7 @@
 # t.me/SharingUserbot & t.me/Lunatic0de
 #
 
+import heroku3
 import io
 import os
 import re
@@ -24,12 +25,19 @@ from PIL import Image
 
 from userbot import BOT_VER, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, HEROKU_APP, SUDO_USERS, branch
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, SUDO_USERS, branch
 from userbot.utils import edit_or_reply, man_cmd, time_formatter
 
 opener = urllib.request.build_opener()
 useragent = "Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.70 Mobile Safari/537.36"
 opener.addheaders = [("User-agent", useragent)]
+try:
+    if HEROKU_API_KEY is not None or HEROKU_APP_NAME is not None:
+        HEROKU_APP = heroku3.from_key(HEROKU_API_KEY).apps()[HEROKU_APP_NAME]
+    else:
+        HEROKU_APP = None
+except Exception:
+    HEROKU_APP = None
 
 
 @man_cmd(pattern="sleep ([0-9]+)$")
