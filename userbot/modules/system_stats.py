@@ -172,13 +172,13 @@ async def amireallyalive(alive):
     output = (
         f"**[⚡JOO-USERBOT⚡](https://github.com/jookalem/Joo-Ubot) is Up and Running.**\n\n"
         f"**{alive_text}**\n\n"
-        f"{❇} **Owner :** [{user.first_name}](tg://user?id={user.id}) \n"
-        f"{❇} **Modules :** `{len(modules)} Modules` \n"
-        f"{❇} **Bot Version :** `{BOT_VER}` \n"
-        f"{❇} **Python Version :** `{python_version()}` \n"
-        f"{❇} **Pytgcalls Version :** `{pytgcalls.__version__}` \n"
-        f"{❇} **Telethon Version :** `{version.__version__}` \n"
-        f"{❇} **Bot Uptime :** `{uptime}` \n\n"
+        f"❇ **Owner :** [{user.first_name}](tg://user?id={user.id}) \n"
+        f"❇ **Modules :** `{len(modules)} Modules` \n"
+        f"❇ **Bot Version :** `{BOT_VER}` \n"
+        f"❇ **Python Version :** `{python_version()}` \n"
+        f"❇ **Pytgcalls Version :** `{pytgcalls.__version__}` \n"
+        f"❇ **Telethon Version :** `{version.__version__}` \n"
+        f"❇ **Bot Uptime :** `{uptime}` \n\n"
         f"    **[𝗦𝘂𝗽𝗽𝗼𝗿𝘁](https://t.me/sannsupport)** | **[𝗖𝗵𝗮𝗻𝗻𝗲𝗹](https://t.me/gbtnyajo)** | **[𝗢𝘄𝗻𝗲𝗿](tg://user?id={user.id})**"
     )
     if ALIVE_LOGO:
