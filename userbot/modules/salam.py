@@ -7,7 +7,7 @@ from userbot.utils import edit_or_reply, man_cmd
 
 @man_cmd(pattern="p(?: |$)(.*)")
 async def _(event):
-    await edit_or_reply(event, "**Assalamualaikum Dulu Biar Sopan**")
+    await edit_or_reply(event, "**Assalamualaikum Dulu goblok Ateis lu **")
 
 
 @man_cmd(pattern="pe(?: |$)(.*)")
