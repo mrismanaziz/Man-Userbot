@@ -22,7 +22,7 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image
 
-from userbot import BOT_VER, BOTLOG_CHATID
+from userbot import BOT_VER, BOTLOG_CHATID, branch
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, HEROKU_APP, SUDO_USERS
 from userbot.utils import edit_or_reply, man_cmd, time_formatter
