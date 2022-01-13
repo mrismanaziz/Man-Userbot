@@ -48,7 +48,7 @@ async def gben(userbot):
     sender = await dc.get_sender()
     me = await dc.client.get_me()
     if sender.id != me.id:
-        dark = await dc.reply("`Gbanning...`")
+        dark = await dc.reply("`Gbanning Si Jamet!!...`")
     else:
         dark = await dc.edit("`Memproses Global Banned Anak Yatim..`")
     me = await userbot.client.get_me()
@@ -85,10 +85,10 @@ async def gben(userbot):
                 await userbot.client.edit_permissions(i, user, view_messages=False)
                 a += 1
                 await dark.edit(
-                    r"\\**#GBanned_User**//"
+                    r"**𝘎𝘓𝘖𝘉𝘈𝘓 𝘉𝘈𝘕𝘕𝘌𝘋**"
                     f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
                     f"**User ID:** `{user.id}`\n"
-                    f"**Action:** `Global Banned"
+                    f"**Action:** `Global Banned By **{owner}**"
                 )
             except BaseException:
                 b += 1
@@ -117,11 +117,11 @@ async def gunben(userbot):
     sender = await dc.get_sender()
     me = await dc.client.get_me()
     if sender.id != me.id:
-        dark = await dc.reply("`Ungbanning...`")
+        dark = await dc.reply("`Ungbanning Si Jamet...`")
     else:
-        dark = await dc.edit("`Ungbanning....`")
+        dark = await dc.edit("`Ungbanning Si Jamet Goblok....`")
     me = await userbot.client.get_me()
-    await dark.edit("`Membatalkan Perintah Global Banned`")
+    await dark.edit("`Membatalkan Perintah Global Banned Si Jamett`")
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     await userbot.get_chat()
     a = b = 0
