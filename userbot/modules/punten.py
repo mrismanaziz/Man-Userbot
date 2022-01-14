@@ -126,8 +126,6 @@ CMD_HELP.update(
         \n  •  **Function : **Arts Beruang kek lagi mantau.\
         \n\n  •  **Syntax :** `{cmd}kalem` ; `{cmd}dor`\
         \n  •  **Function : **coba aja tolol🔥.\
-        \n\n  •  **Syntax :** `{cmd}kenalin`\
-        \n  •  **Function : **perkenalkan.\
     "
     }
 )
