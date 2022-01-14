@@ -20,11 +20,11 @@ from userbot.utils import edit_delete, edit_or_reply
 
 DEF_UNAPPROVED_MSG = (
     "╔════════════════════╗\n"
-    "     ⚔ 𝗔𝗧𝗧𝗘𝗡𝗧𝗜𝗢𝗡 𝗣𝗟𝗘𝗔𝗦𝗘 ⚔\n"
+    "     ⚠ 𝗔𝗧𝗧𝗘𝗡𝗧𝗜𝗢𝗡 𝗣𝗟𝗘𝗔𝗦𝗘 ⚠\n"
     "╚════════════════════╝\n"
-    "  MAJIKAN GUA BELUM MENERIMA PESAN DARI LU NGENTOT, JADI LU GAUSA SPAM GOBLOK, LU MAU GUA BLOKIR?!.\n"
+    "MAJIKAN GUA BELUM MENERIMA PESAN DARI LU NGENTOT, JADI LU GAUSA SPAM GOBLOK, LU MAU GUA BLOKIR?!.\n"
     "╔════════════════════╗\n"
-    "    𝗣𝗲𝘀𝗮𝗻 𝗢𝘁𝗼𝗺𝗮𝘁𝗶𝘀 𝗕𝘆 𝐉𝐎𝐎-𝐔𝐒𝐄𝐑𝐁𝐎𝐓\n"
+    "    𝗣𝗲𝘀𝗮𝗻 𝗢𝘁𝗼𝗺𝗮𝘁𝗶𝘀 𝗕𝘆 𝗝𝗢𝗢-𝗨𝗦𝗘𝗥𝗕𝗢𝗧\n"
     "╚════════════════════╝\n"
 )
 
