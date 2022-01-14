@@ -124,8 +124,10 @@ CMD_HELP.update(
         "punten": f"**Plugin : **`Animasi Punten`\
         \n\n  •  **Syntax :** `{cmd}punten` ; `{cmd}pantau`\
         \n  •  **Function : **Arts Beruang kek lagi mantau.\
-        \n\n  •  **Syntax :** `{cmd}kalem` ; `{cmd}dor`\ `{cmd}kenalin`
+        \n\n  •  **Syntax :** `{cmd}kalem` ; `{cmd}dor`\
         \n  •  **Function : **coba aja tolol🔥.\
+        \n\n  •  **Syntax :** `{cmd}kenalin`\
+        \n  •  **Function : **perkenalkan.\
     "
     }
 )
