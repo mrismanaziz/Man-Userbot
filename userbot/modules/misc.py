@@ -20,17 +20,19 @@ from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
-from git import Repo
 from heroku3 import from_key
 from PIL import Image
 
 from userbot import BOT_VER, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, SUDO_USERS
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, SUDO_USERS, branch
 from userbot.utils import edit_or_reply, man_cmd, time_formatter
 
 # ================= CONSTANT =================
-HEROKU_APP = from_key(HEROKU_API_KEY).apps()[HEROKU_APP_NAME]
+if HEROKU_APP_NAME is not None and HEROKU_API_KEY is not None:
+    HEROKU_APP = from_key(HEROKU_API_KEY).apps()[HEROKU_APP_NAME]
+else:
+    HEROKU_APP = None
 # ============================================
 
 opener = urllib.request.build_opener()
