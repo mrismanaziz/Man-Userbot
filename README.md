@@ -86,7 +86,7 @@ Follow Channel [@Lunatic0de](https://t.me/Lunatic0de) untuk info Update bot dan 
 ## © Credits
  - [Telethon](https://github.com/LonamiWebs/Telethon)
  - [Py-Tgcalls](https://github.com/pytgcalls/pytgcalls)
- - [Owner Man-Userbot](https://github.com/mrismanaziz)
+ - [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)
 
 ## License
 Licensed under [Raphielscape Public License](https://github.com/mrismanaziz/Man-Userbot/blob/Man-Userbot/LICENSE) - Version 1.d, February 2020
