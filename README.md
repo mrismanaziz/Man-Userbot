@@ -23,9 +23,9 @@ Gunakan bot ini dengan risiko Anda sendiri, dan gunakan userbot ini dengan bijak
 
 ## Tutorial
 
-- [Panduan Cara Memasang Man-Userbot](https://mrismanaziz.medium.com/cara-memasang-userbot-telegram-repo-man-userbot-deploy-di-heroku-c56d1f8b5537)
-- [Cara Setting Last.FM modules](https://telegra.ph/How-to-set-up-LastFM-module-for-Paperplane-userbot-11-02)
-- [List Variabel Man-Userbot](https://telegra.ph/List-Variabel-Heroku-untuk-Man-Userbot-09-22)
+-  [Panduan Cara Memasang Man-Userbot](https://mrismanaziz.medium.com/cara-memasang-userbot-telegram-repo-man-userbot-deploy-di-heroku-c56d1f8b5537)
+-  [Cara Setting Last.FM modules](https://telegra.ph/How-to-set-up-LastFM-module-for-Paperplane-userbot-11-02)
+-  [List Variabel Man-Userbot](https://telegra.ph/List-Variabel-Heroku-untuk-Man-Userbot-09-22)
 
 <details>
 <summary><b>🔗 String Session</b></summary>
@@ -45,23 +45,23 @@ Gunakan bot ini dengan risiko Anda sendiri, dan gunakan userbot ini dengan bijak
 <br>
     
 ### REQUIREMENTS PACKAGE !
-  - Update & upgrade VPS anda `sudo apt update && upgrade -y`
-  - Install Git `sudo apt install git -y`
-  - Install Python3 `sudo apt install python3`
-  - Install PIP / PIP3 `sudo apt install python3-pip`
-  - Install NodeJs 16.X `curl -fsSL https://deb.nodesource.com/setup_16.x | sudo bash -` then do `sudo apt install -y nodejs vim`
-  - Install FFMPEG `sudo apt install tree wget2 p7zip-full jq ffmpeg wget git -y`
-  - Install Chrome `wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb` lalu ketik `sudo apt install ./google-chrome-stable_current_amd64.deb`
+-  Update & upgrade VPS anda `sudo apt update && upgrade -y`
+-  Install Git `sudo apt install git -y`
+-  Install Python3 `sudo apt install python3`
+-  Install PIP / PIP3 `sudo apt install python3-pip`
+-  Install NodeJs 16.X `curl -fsSL https://deb.nodesource.com/setup_16.x | sudo bash -` then do `sudo apt install -y nodejs vim`
+-  Install FFMPEG `sudo apt install tree wget2 p7zip-full jq ffmpeg wget git -y`
+-  Install Chrome `wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb` lalu ketik `sudo apt install ./google-chrome-stable_current_amd64.deb`
 
 ### Tutorial Deploy di VPS
 
-  - `git clone https://github.com/mrismanaziz/Man-Userbot`
-  - `cd Man-Userbot`
-  - `pip3 install -r requirements.txt`
-  - `mv sample_config.env config.env`
-  - edit config.env Anda dan isi VARS menggunakan `nano config.env` `CTRL + S ` untuk menyimpan VARS Anda, gunakan `CTRL + X` untuk keluar dan kembali ke direktori Man-Userbot
-  - Buka SCRREN di VPS Anda `screen -S Man-Userbot`
-  - Kemudian gunakan perintah ini untuk menyebarkan Man-Userbot `python3 -m userbot`
+-  `git clone https://github.com/mrismanaziz/Man-Userbot`
+-  `cd Man-Userbot`
+-  `pip3 install -r requirements.txt`
+-  `mv sample_config.env config.env`
+-  edit config.env Anda dan isi VARS menggunakan `nano config.env` `CTRL + S ` untuk menyimpan VARS Anda, gunakan `CTRL + X` untuk keluar dan kembali ke direktori Man-Userbot
+-  Buka SCRREN di VPS Anda `screen -S Man-Userbot`
+-  Kemudian gunakan perintah ini untuk menyebarkan Man-Userbot `python3 -m userbot`
 
 </details>
 
@@ -73,20 +73,20 @@ Gunakan bot ini dengan risiko Anda sendiri, dan gunakan userbot ini dengan bijak
 Follow Channel [@Lunatic0de](https://t.me/Lunatic0de) untuk info Update bot dan Gabung Group [@SharingUserbot](https://t.me/SharingUserbot) untuk untuk diskusi, pelaporan bug, dan bantuan tentang Man-Userbot.
 
 #### Special Thanks To [Everyone](https://github.com/mrismanaziz/Man-Userbot/graphs/contributors) Who Has Helped Make This Userbot Awesome!
-  -   [AdekMaulana](https://github.com/adekmaulana) : ProjectBish
-  -   [RaphielGang](https://github.com/RaphielGang) : Paperplane
-  -   [TeamUltroid](https://github.com/TeamUltroid/Ultroid) :  UltroidUserbot
-  -   [BianSepang](https://github.com/BianSepang/WeebProject) : WeebProject
-  -   [Sandy1709](https://github.com/sandy1709/catuserbot) : CatUserbot
-  -   [X_ImFine](https://github.com/ximfine) :  XBot-REMIX
-  -   [Risman](https://github.com/mrismanaziz/Man-Userbot) :  Man-Userbot
-  -   [Koala](https://github.com/ManusiaRakitan/Kampang-Bot) : Kampang-Bot
-  -   [Alvin](https://github.com/Zora24/Lord-Userbot) : Lord-Userbot
+-  [AdekMaulana](https://github.com/adekmaulana) : ProjectBish
+-  [RaphielGang](https://github.com/RaphielGang) : Paperplane
+-  [TeamUltroid](https://github.com/TeamUltroid/Ultroid) :  UltroidUserbot
+-  [BianSepang](https://github.com/BianSepang/WeebProject) : WeebProject
+-  [Sandy1709](https://github.com/sandy1709/catuserbot) : CatUserbot
+-  [X_ImFine](https://github.com/ximfine) :  XBot-REMIX
+-  [Risman](https://github.com/mrismanaziz/Man-Userbot) :  Man-Userbot
+-  [Koala](https://github.com/ManusiaRakitan/Kampang-Bot) : Kampang-Bot
+-  [Alvin](https://github.com/Zora24/Lord-Userbot) : Lord-Userbot
 
 ## © Credits
-  - [Telethon](https://github.com/LonamiWebs/Telethon)
-  - [Py-Tgcalls](https://github.com/pytgcalls/pytgcalls)
-  - [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)
+-  [Laky-64](https://github.com/Laky-64) for [Py-Tgcalls](https://github.com/pytgcalls/pytgcalls)
+-  [Lonami](https://github.com/LonamiWebs/) for [Telethon](https://github.com/LonamiWebs/Telethon)
+-  [Risman](https://github.com/mrismanaziz) for [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot)
 
 ## License
 Licensed under [Raphielscape Public License](https://github.com/mrismanaziz/Man-Userbot/blob/Man-Userbot/LICENSE) - Version 1.d, February 2020
