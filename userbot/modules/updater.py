@@ -2,7 +2,6 @@
 This module updates the userbot based on upstream revision
 """
 
-import asyncio
 import sys
 from os import environ, execle, remove
 
@@ -10,7 +9,7 @@ from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, UPSTREAM_REPO_URL, bot
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, UPSTREAM_REPO_URL
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
@@ -45,9 +44,10 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         heroku_app = None
         heroku_applications = heroku.apps()
         if HEROKU_APP_NAME is None:
-            await edit_or_reply(event,
+            await edit_or_reply(
+                event,
                 "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_APP_NAME` "
-                " **untuk deploy perubahan terbaru dari Userbot.**"
+                " **untuk deploy perubahan terbaru dari Userbot.**",
             )
             repo.__del__()
             return
@@ -56,9 +56,10 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
                 heroku_app = app
                 break
         if heroku_app is None:
-            await edit_or_reply(event,
+            await edit_or_reply(
+                event,
                 f"{txt}\n"
-                "**Kredensial Heroku tidak valid untuk deploy Man-Userbot dyno.**"
+                "**Kredensial Heroku tidak valid untuk deploy Man-Userbot dyno.**",
             )
             return repo.__del__()
         try:
@@ -71,7 +72,9 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
         repo.config_writer().set_value("user", "name", "mrismanaziz").release()
-        repo.config_writer().set_value("user", "email", "mrismanaziz@gmail.com").release()
+        repo.config_writer().set_value(
+            "user", "email", "mrismanaziz@gmail.com"
+        ).release()
         repo.git.commit("--amend", "--no-edit")
         heroku_git_url = heroku_app.git_url.replace(
             "https://", "https://api:" + HEROKU_API_KEY + "@"
@@ -84,17 +87,23 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         try:
             remote.push(refspec="HEAD:refs/heads/master", force=True)
         except Exception as error:
-            await edit_or_reply(event, f"{txt}\n**Terjadi Kesalahan Di Log:**\n`{error}`")
+            await edit_or_reply(
+                event, f"{txt}\n**Terjadi Kesalahan Di Log:**\n`{error}`"
+            )
             return repo.__del__()
         build = heroku_app.builds(order_by="created_at", sort="desc")[0]
         if build.status == "failed":
-            await edit_delete(event, "**Build Gagal!** Dibatalkan karena ada beberapa error.`")
-        await edit_or_reply(event,
-            "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
+            await edit_delete(
+                event, "**Build Gagal!** Dibatalkan karena ada beberapa error.`"
+            )
+        await edit_or_reply(
+            event, "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
         )
 
     else:
-        return await edit_delete(event, "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_API_KEY`")
+        return await edit_delete(
+            event, "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_API_KEY`"
+        )
 
 
 async def update(event, repo, ups_rem, ac_br):
@@ -102,7 +111,9 @@ async def update(event, repo, ups_rem, ac_br):
         ups_rem.pull(ac_br)
     except GitCommandError:
         repo.git.reset("--hard", "FETCH_HEAD")
-    await edit_or_reply(event, "`Man-Userbot Berhasil Diupdate! Userbot bisa di Gunakan Lagi.`")
+    await edit_or_reply(
+        event, "`Man-Userbot Berhasil Diupdate! Userbot bisa di Gunakan Lagi.`"
+    )
 
     try:
         from userbot.modules.sql_helper.globals import addgvar, delgvar
@@ -175,9 +186,7 @@ async def upstream(event):
         )
 
     if force_update:
-        await xx.edit(
-            "**Sinkronisasi Paksa Ke Kode Userbot Terbaru, Harap Tunggu...**"
-        )
+        await xx.edit("**Sinkronisasi Paksa Ke Kode Userbot Terbaru, Harap Tunggu...**")
 
     if conf == "now":
         for commit in changelog.splitlines():
