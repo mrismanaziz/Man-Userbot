@@ -87,9 +87,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         try:
             remote.push(refspec="HEAD:refs/heads/master", force=True)
         except Exception as error:
-            await edit_or_reply(
-                xx, f"{txt}\n**Terjadi Kesalahan Di Log:**\n`{error}`"
-            )
+            await edit_or_reply(xx, f"{txt}\n**Terjadi Kesalahan Di Log:**\n`{error}`")
             return repo.__del__()
         build = heroku_app.builds(order_by="created_at", sort="desc")[0]
         if build.status == "failed":
@@ -102,7 +100,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
 
     else:
         return await edit_delete(
-           xx, "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_API_KEY`"
+            xx, "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_API_KEY`"
         )
 
 
