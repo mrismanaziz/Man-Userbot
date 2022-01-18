@@ -21,18 +21,18 @@ async def gen_chlog(repo, diff):
     )
 
 
-async def print_changelogs(event, ac_br, changelog):
+async def print_changelogs(xx, ac_br, changelog):
     changelog_str = (
         f"**✥ Tersedia Pembaruan Untuk [{ac_br}] :\n\n✥ Pembaruan:**\n`{changelog}`"
     )
     if len(changelog_str) > 4096:
-        await edit_or_reply(event, "**Changelog terlalu besar, dikirim sebagai file.**")
+        await edit_or_reply(xx, "**Changelog terlalu besar, dikirim sebagai file.**")
         with open("output.txt", "w+") as file:
             file.write(changelog_str)
-        await event.client.send_file(event.chat_id, "output.txt")
+        await xx.client.send_file(event.chat_id, "output.txt")
         remove("output.txt")
     else:
-        await event.client.send_message(event.chat_id, changelog_str)
+        await xx.client.send_message(event.chat_id, changelog_str)
     return True
 
 
@@ -45,7 +45,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         heroku_applications = heroku.apps()
         if HEROKU_APP_NAME is None:
             await edit_or_reply(
-                event,
+                xx,
                 "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_APP_NAME` "
                 " **untuk deploy perubahan terbaru dari Userbot.**",
             )
@@ -57,7 +57,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
                 break
         if heroku_app is None:
             await edit_or_reply(
-                event,
+                xx,
                 f"{txt}\n"
                 "**Kredensial Heroku tidak valid untuk deploy Man-Userbot dyno.**",
             )
@@ -88,31 +88,31 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             remote.push(refspec="HEAD:refs/heads/master", force=True)
         except Exception as error:
             await edit_or_reply(
-                event, f"{txt}\n**Terjadi Kesalahan Di Log:**\n`{error}`"
+                xx, f"{txt}\n**Terjadi Kesalahan Di Log:**\n`{error}`"
             )
             return repo.__del__()
         build = heroku_app.builds(order_by="created_at", sort="desc")[0]
         if build.status == "failed":
             await edit_delete(
-                event, "**Build Gagal!** Dibatalkan karena ada beberapa error.`"
+                xx, "**Build Gagal!** Dibatalkan karena ada beberapa error.`"
             )
         await edit_or_reply(
-            event, "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
+            xx, "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
         )
 
     else:
         return await edit_delete(
-            event, "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_API_KEY`"
+           xx, "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_API_KEY`"
         )
 
 
-async def update(event, repo, ups_rem, ac_br):
+async def update(xx, repo, ups_rem, ac_br):
     try:
         ups_rem.pull(ac_br)
     except GitCommandError:
         repo.git.reset("--hard", "FETCH_HEAD")
     await edit_or_reply(
-        event, "`Man-Userbot Berhasil Diupdate! Userbot bisa di Gunakan Lagi.`"
+        xx, "`Man-Userbot Berhasil Diupdate! Userbot bisa di Gunakan Lagi.`"
     )
 
     try:
@@ -171,7 +171,7 @@ async def upstream(event):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     if conf == "deploy":
         await xx.edit("`[HEROKU]: Update Deploy Man-Userbot Sedang Dalam Proses...`")
-        await deploy(event, repo, ups_rem, ac_br, txt)
+        await deploy(xx, repo, ups_rem, ac_br, txt)
         return
 
     if changelog == "" and not force_update:
@@ -179,7 +179,7 @@ async def upstream(event):
         return repo.__del__()
 
     if conf == "" and not force_update:
-        await print_changelogs(event, ac_br, changelog)
+        await print_changelogs(xx, ac_br, changelog)
         await event.delete()
         return await event.respond(
             "**Ketik** `.update deploy` **untuk Mengupdate Userbot.**"
@@ -200,7 +200,7 @@ async def upstream(event):
                     "Gunakan** `.update deploy` **sebagai gantinya.**"
                 )
         await xx.edit("**Perfoming a quick update, please wait...**")
-        await update(event, repo, ups_rem, ac_br)
+        await update(xx, repo, ups_rem, ac_br)
 
     return
 
