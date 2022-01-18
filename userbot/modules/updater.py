@@ -29,14 +29,14 @@ async def print_changelogs(xx, ac_br, changelog):
         await edit_or_reply(xx, "**Changelog terlalu besar, dikirim sebagai file.**")
         with open("output.txt", "w+") as file:
             file.write(changelog_str)
-        await xx.client.send_file(event.chat_id, "output.txt")
+        await xx.client.send_file(xx.chat_id, "output.txt")
         remove("output.txt")
     else:
-        await xx.client.send_message(event.chat_id, changelog_str)
+        await xx.client.send_message(xx.chat_id, changelog_str)
     return True
 
 
-async def deploy(event, repo, ups_rem, ac_br, txt):
+async def deploy(xx, repo, ups_rem, ac_br, txt):
     if HEROKU_API_KEY is not None:
         import heroku3
 
@@ -66,7 +66,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             from userbot.modules.sql_helper.globals import addgvar, delgvar
 
             delgvar("restartstatus")
-            addgvar("restartstatus", f"{event.chat_id}\n{event.id}")
+            addgvar("restartstatus", f"{xx.chat_id}\n{xx.id}")
         except AttributeError:
             pass
         ups_rem.fetch(ac_br)
@@ -117,7 +117,7 @@ async def update(xx, repo, ups_rem, ac_br):
         from userbot.modules.sql_helper.globals import addgvar, delgvar
 
         delgvar("restartstatus")
-        addgvar("restartstatus", f"{event.chat_id}\n{event.id}")
+        addgvar("restartstatus", f"{xx.chat_id}\n{xx.id}")
     except AttributeError:
         pass
 
@@ -178,7 +178,7 @@ async def upstream(event):
 
     if conf == "" and not force_update:
         await print_changelogs(xx, ac_br, changelog)
-        await event.delete()
+        await xx.delete()
         return await event.respond(
             "**Ketik** `.update deploy` **untuk Mengupdate Userbot.**"
         )
