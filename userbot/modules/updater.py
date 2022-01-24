@@ -71,11 +71,6 @@ async def deploy(xx, repo, ups_rem, ac_br, txt):
             pass
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
-        repo.config_writer().set_value("user", "name", "mrismanaziz").release()
-        repo.config_writer().set_value(
-            "user", "email", "mrismanaziz@gmail.com"
-        ).release()
-        repo.git.commit("--amend", "--no-edit")
         heroku_git_url = heroku_app.git_url.replace(
             "https://", "https://api:" + HEROKU_API_KEY + "@"
         )
@@ -85,7 +80,7 @@ async def deploy(xx, repo, ups_rem, ac_br, txt):
         else:
             remote = repo.create_remote("heroku", heroku_git_url)
         try:
-            remote.push(refspec="HEAD:refs/heads/master", force=True)
+            remote.push(refspec=f"HEAD:refs/heads/{ac_br}", force=True)
         except Exception as error:
             await edit_or_reply(xx, f"{txt}\n**Terjadi Kesalahan Di Log:**\n`{error}`")
             return repo.__del__()
