@@ -4,4 +4,4 @@
 # This file is a part of < https://github.com/mrismanaziz/Man-Userbot >
 # PLease read the GNU Affero General Public License in <https://github.com/mrismanaziz/Man-Userbot/blob/main/LICENSE/>.
 
-bash resources/session/session.sh
+bash userbot/resources/session/session.sh
