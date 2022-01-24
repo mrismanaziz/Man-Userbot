@@ -4,4 +4,4 @@
 # This file is a part of < https://github.com/mrismanaziz/Man-Userbot >
 # PLease read the GNU Affero General Public License in <https://github.com/mrismanaziz/Man-Userbot/blob/main/LICENSE/>.
 
-bash start
+python3 -m userbot
