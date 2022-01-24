@@ -15,11 +15,11 @@ from importlib import import_module
 
 import requests
 from pytgcalls import idle
-from telethon.tl.functions.channels import InviteToChannelRequest, JoinChannelRequest
+from telethon.tl.functions.channels import InviteToChannelRequest
 
 from userbot import BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import LOGS, bot, branch, call_py
+from userbot import DEVS, LOGS, bot, branch, call_py
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
 
@@ -33,6 +33,11 @@ try:
     if user.id in blacklistman:
         LOGS.warning(
             "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOTnya GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
+        )
+        sys.exit(1)
+    if 844432220 not in DEVS:
+        LOGS.warning(
+            f"EOL\nMan-UserBot v{BOT_VER}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
         )
         sys.exit(1)
 except Exception as e:
@@ -58,10 +63,6 @@ async def man_userbot_on():
             )
     except Exception as e:
         LOGS.info(str(e))
-    try:
-        await bot(JoinChannelRequest("@Lunatic0de"))
-    except BaseException:
-        pass
     try:
         await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
     except BaseException:
