@@ -85,7 +85,7 @@ async def deploy(xx, repo, ups_rem, ac_br, txt):
         else:
             remote = repo.create_remote("heroku", heroku_git_url)
         try:
-            remote.push(refspec="HEAD:refs/heads/master", force=True)
+            remote.push(refspec=f"HEAD:refs/heads/{ac_br}", force=True)
         except Exception as error:
             await edit_or_reply(xx, f"{txt}\n**Terjadi Kesalahan Di Log:**\n`{error}`")
             return repo.__del__()
