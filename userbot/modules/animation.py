@@ -420,6 +420,19 @@ async def _(typew):
     sleep(1)
     await typew.edit("`Bercanda`")
 
+@bot.on(man_cmd(outgoing=True, pattern=r"sakit(?: |$)(.*)"))
+async def _(typew):
+    await typew.edit("`Kamu tau gak`")
+    sleep(1)
+    await typew.edit("`Aku sakit pren`")
+    sleep(1)
+    await typew.edit("`Terlalu menyukainya`")
+    sleep(1)
+    await typew.edit("`Terjadilah.....`")
+    sleep(1)
+    await typew.edir("`Sakit Hati💔`")
+    sleep(1)
+    await typew.edit("`SADBOY🗿`")
 
 # Create by myself @localheart
 
@@ -1218,6 +1231,7 @@ CMD_HELP.update(
     \n\n`{cmd}sayang`\
     \nUsage: untuk jadi buaya.\
     \n\n`{cmd}terkadang`\
+    \n\n`{cmd}sakit`\
     \nUsage: Auk dah iseng doang.\
     \n\n`{cmd}helikopter` ; `{cmd}tank` ; `{cmd}tembak`\n`{cmd}bundir`\
     \nUsage: liat sendiri\
