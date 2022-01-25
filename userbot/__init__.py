@@ -81,13 +81,9 @@ if version_info[0] < 3 or version_info[1] < 9:
     )
     sys.exit(1)
 
-# Check if the config was edited by using the already used variable.
-# Basically, its the 'virginity check' for the config file ;)
-CONFIG_CHECK = os.environ.get(
+if CONFIG_CHECK := os.environ.get(
     "___________PLOX_______REMOVE_____THIS_____LINE__________", None
-)
-
-if CONFIG_CHECK:
+):
     LOGS.info(
         "Harap hapus baris yang disebutkan dalam tagar pertama dari file config.env"
     )
@@ -101,9 +97,8 @@ while 0 < 6:
     if _DEVS.status_code != 200:
         if 0 != 5:
             continue
-        else:
-            DEVS = [844432220, 1906014306, 1382636419, 1738637033]
-            break
+        DEVS = [844432220, 1906014306, 1382636419, 1738637033]
+        break
     DEVS = _DEVS.json()
     break
 
@@ -597,9 +592,8 @@ with bot:
                 buttons = [
                     Button.inline(text="Show Options.", data="show_pmpermit_options"),
                 ]
-                PM_PIC = gvarstatus("pmpermit_pic")
-                if PM_PIC:
-                    PMAN = [x for x in PM_PIC.split()]
+                if PM_PIC := gvarstatus("pmpermit_pic"):
+                    PMAN = list(PM_PIC.split())
                     PIC = list(PMAN)
                     MAN_IMG = random.choice(PIC)
                 else:

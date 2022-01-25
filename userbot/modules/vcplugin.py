@@ -218,7 +218,7 @@ async def vc_vplay(event):
         or not replied
     ):
         return await edit_or_reply(event, "**Silahkan Masukan Judul Video**")
-    if replied and not replied.video and not replied.document:
+    if not replied.video and not replied.document:
         xnxx = await edit_or_reply(event, "`Searching...`")
         query = event.text.split(maxsplit=1)[1]
         search = ytsearch(query)
