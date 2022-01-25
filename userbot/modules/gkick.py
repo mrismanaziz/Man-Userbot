@@ -4,11 +4,13 @@
 from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, owner
+from userbot import CMD_HELP, DEVS, owner
+from userbot.events import register
 from userbot.utils import get_user_from_event, man_cmd
 
 
 @man_cmd(pattern="gkick(?: |$)(.*)")
+@register(pattern=r"^\.cgkick(?: |$)(.*)", sudo=True)
 async def gspide(rk):
     lazy = rk
     sender = await lazy.get_sender()
@@ -35,7 +37,7 @@ async def gspide(rk):
     except BaseException:
         return await rkp.edit("`Gagal Global Kick! Pengguna tidak dikenal.`")
     if user:
-        if user.id == 844432220:
+        if user.id == DEVS:
             return await rkp.edit(f"`{owner} Jangan Ngadi Ngadi itu CODER aing`")
         try:
             await rk.client(BlockRequest(user))

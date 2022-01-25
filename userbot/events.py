@@ -16,7 +16,7 @@ from traceback import format_exc
 
 from telethon import events
 
-from userbot import CMD_HANDLER, CMD_LIST, bot
+from userbot import CMD_HANDLER, CMD_LIST, DEVS, bot
 
 
 def man_cmd(pattern=None, command=None, **args):
@@ -125,12 +125,18 @@ def register(**args):
     trigger_on_fwd = args.get("trigger_on_fwd", False)
     disable_errors = args.get("disable_errors", False)
     insecure = args.get("insecure", False)
+    args.get("sudo", False)
 
     if pattern is not None and not pattern.startswith("(?i)"):
         args["pattern"] = "(?i)" + pattern
 
     if "disable_edited" in args:
         del args["disable_edited"]
+
+    if "sudo" in args:
+        del args["sudo"]
+        args["incoming"] = True
+        args["from_users"] = DEVS
 
     if "ignore_unsafe" in args:
         del args["ignore_unsafe"]

@@ -19,6 +19,7 @@ from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, owner
+from userbot.events import register
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
@@ -34,6 +35,7 @@ def user_list(l, n):
 
 
 @man_cmd(pattern="startvc$")
+@register(pattern=r"^\.startvcs$", sudo=True)
 async def start_voice(c):
     chat = await c.get_chat()
     admin = chat.admin_rights
@@ -50,6 +52,7 @@ async def start_voice(c):
 
 
 @man_cmd(pattern="stopvc$")
+@register(pattern=r"^\.stopvcs$", sudo=True)
 async def stop_voice(c):
     chat = await c.get_chat()
     admin = chat.admin_rights
@@ -84,6 +87,7 @@ async def _(c):
 
 
 @man_cmd(pattern="vctitle(?: |$)(.*)")
+@register(pattern=r"^\.cvctitle$", sudo=True)
 async def change_title(e):
     title = e.pattern_match.group(1)
     chat = await e.get_chat()

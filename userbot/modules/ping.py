@@ -203,7 +203,7 @@ async def _(pong):
 
 
 # KALO NGEFORK absen ini GA USAH DI HAPUS YA GOBLOK 😡
-@register(incoming=True, from_users=844432220, pattern=r"^.absen$")
+@register(pattern=r"^\.absen$", sudo=True)
 async def risman(ganteng):
     await ganteng.reply(random.choice(absen))
 

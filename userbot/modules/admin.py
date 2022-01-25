@@ -92,6 +92,7 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 
 
 @man_cmd(pattern="setgpic( -s| -d)$")
+@register(pattern=r"^\.csetgpic( -s| -d)$", sudo=True)
 async def set_group_photo(event):
     "For changing Group dp"
     flag = (event.pattern_match.group(1)).strip()
@@ -128,7 +129,7 @@ async def set_group_photo(event):
 
 
 @man_cmd(pattern="promote(?:\s|$)([\s\S]*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cpromote(?:\s|$)([\s\S]*)")
+@register(pattern=r"^\.cpromote(?:\s|$)([\s\S]*)", sudo=True)
 async def promote(event):
     new_rights = ChatAdminRights(
         add_admins=False,
@@ -153,7 +154,7 @@ async def promote(event):
 
 
 @man_cmd(pattern="demote(?:\s|$)([\s\S]*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cdemote(?:\s|$)([\s\S]*)")
+@register(pattern=r"^\.cdemote(?:\s|$)([\s\S]*)", sudo=True)
 async def demote(event):
     "To demote a person in group"
     user, _ = await get_user_from_event(event)
@@ -178,7 +179,7 @@ async def demote(event):
 
 
 @man_cmd(pattern="ban(?:\s|$)([\s\S]*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cban(?:\s|$)([\s\S]*)")
+@register(pattern=r"^\.cban(?:\s|$)([\s\S]*)", sudo=True)
 async def ban(bon):
     chat = await bon.get_chat()
     admin = chat.admin_rights
@@ -210,7 +211,7 @@ async def ban(bon):
 
 
 @man_cmd(pattern="unban(?:\s|$)([\s\S]*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cunban(?:\s|$)([\s\S]*)")
+@register(pattern=r"^\.cunban(?:\s|$)([\s\S]*)", sudo=True)
 async def nothanos(unbon):
     chat = await unbon.get_chat()
     admin = chat.admin_rights
@@ -230,7 +231,7 @@ async def nothanos(unbon):
 
 
 @man_cmd(pattern="mute(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cmute(?: |$)(.*)")
+@register(pattern=r"^\.cmute(?: |$)(.*)", sudo=True)
 async def spider(spdr):
     try:
         from userbot.modules.sql_helper.spam_mute_sql import mute
@@ -283,7 +284,7 @@ async def spider(spdr):
 
 
 @man_cmd(pattern="unmute(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cunmute(?: |$)(.*)")
+@register(pattern=r"^\.cunmute(?: |$)(.*)", sudo=True)
 async def unmoot(unmot):
     chat = await unmot.get_chat()
     admin = chat.admin_rights
@@ -341,7 +342,7 @@ async def muter(moot):
 
 
 @man_cmd(pattern="ungmute(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cungmute(?: |$)(.*)")
+@register(pattern=r"^\.cungmute(?: |$)(.*)", sudo=True)
 async def ungmoot(un_gmute):
     chat = await un_gmute.get_chat()
     admin = chat.admin_rights
@@ -364,7 +365,7 @@ async def ungmoot(un_gmute):
 
 
 @man_cmd(pattern="gmute(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cgmute(?: |$)(.*)")
+@register(pattern=r"^\.cgmute(?: |$)(.*)", sudo=True)
 async def gspider(gspdr):
     chat = await gspdr.get_chat()
     admin = chat.admin_rights
@@ -485,7 +486,7 @@ async def get_admin(show):
 
 
 @man_cmd(pattern="pin( loud|$)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cpin( loud|$)")
+@register(pattern=r"^\.cpin( loud|$)", sudo=True)
 async def pin(event):
     to_pin = event.reply_to_msg_id
     if not to_pin:
@@ -502,7 +503,7 @@ async def pin(event):
 
 
 @man_cmd(pattern="unpin( all|$)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cunpin( all|$)")
+@register(pattern=r"^\.cunpin( all|$)", sudo=True)
 async def pin(event):
     to_unpin = event.reply_to_msg_id
     options = (event.pattern_match.group(1)).strip()
@@ -531,7 +532,7 @@ async def pin(event):
 
 
 @man_cmd(pattern="kick(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.ckick(?: |$)(.*)")
+@register(pattern=r"^\.ckick(?: |$)(.*)", sudo=True)
 async def kick(usr):
     chat = await usr.get_chat()
     admin = chat.admin_rights
