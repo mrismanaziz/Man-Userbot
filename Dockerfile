@@ -1,4 +1,4 @@
-FROM MasParrel/Farrel-Userbot:buster
+FROM MasterParrel/Farrel-Userbot:buster
 
 RUN git clone -b dev https://github.com/mrismanaziz/Man-Userbot /home/manuserbot/ \
     && chmod 777 /home/manuserbot \
