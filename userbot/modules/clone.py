@@ -23,12 +23,12 @@ async def impostor(event):
     restricted = ["@mrismanaziz"]
     inputArgs = event.pattern_match.group(1)
     if inputArgs in DEVS and restricted:
-        return await edit_delete(event, "**Hayooo Mau Ngapain**", 30)
+        return await edit_delete(event, "**Hayooo lo Mau Ngapain**", 30)
 
     if "restore" in inputArgs:
         xx = await edit_or_reply(event, "**Kembali ke identitas asli...**")
         if not STORAGE.userObj:
-            return await xx.edit("**Anda harus mengclone orang dulu sebelum kembali!**")
+            return await xx.edit("**Kamu harus mengclone orang dulu sebelum kembali!**")
         await updateProfile(STORAGE.userObj, restore=True)
         return await xx.edit("**Berhasil Mengembalikan Akun Anda dari clone**")
     if inputArgs:
@@ -40,10 +40,10 @@ async def impostor(event):
     elif event.reply_to_msg_id:
         replyMessage = await event.get_reply_message()
         if replyMessage.sender_id in DEVS:
-            return await edit_or_reply(event, "**Hayooo Mau Ngapain**")
+            return await edit_or_reply(event, "**Hayooo lo Mau Ngapain**")
         if replyMessage.sender_id is None:
             return await edit_or_reply(
-                event, "**Tidak dapat menyamar sebagai admin anonim 🥺**"
+                event, "**Saya tidak dapat menyamar sebagai admin anonim 🥺**"
             )
         userObj = await event.client(GetFullUserRequest(replyMessage.sender_id))
     else:
@@ -58,7 +58,7 @@ async def impostor(event):
 
     xx = await edit_or_reply(event, "**Mencuri identitas orang ini...**")
     await updateProfile(userObj)
-    await xx.edit("**Aku adalah kamu dan kamu adalah aku. asekk 🥴**")
+    await xx.edit("**Aku adalah kamu dan kamu adalah aku. 🗿**")
 
 
 async def updateProfile(userObj, restore=False):
