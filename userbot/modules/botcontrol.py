@@ -71,7 +71,7 @@ async def check_bot_started_users(user, event):
         start_date = str(datetime.now().strftime("%B %d, %Y"))
         notification = f"🔮 **#BOT_START**\n**First Name:** {_format.mentionuser(user.first_name , user.id)} \
                 \n**User ID: **`{user.id}`\
-                \n**Action: **Telah Memulai saya."
+                \n**Action: **Telah Menggunakan saya."
     else:
         start_date = check.date
         notification = f"🔮 **#BOT_RESTART**\n**First Name:** {_format.mentionuser(user.first_name , user.id)}\
