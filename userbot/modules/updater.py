@@ -75,9 +75,7 @@ async def deploy(xx, repo, ups_rem, ac_br, txt):
     ups_rem.fetch(ac_br)
     repo.git.reset("--hard", "FETCH_HEAD")
     repo.config_writer().set_value("user", "name", "mrismanaziz").release()
-    repo.config_writer().set_value(
-        "user", "email", "mrismanaziz@gmail.com"
-    ).release()
+    repo.config_writer().set_value("user", "email", "mrismanaziz@gmail.com").release()
     repo.git.commit("--amend", "--no-edit")
     heroku_git_url = heroku_app.git_url.replace(
         "https://", "https://api:" + HEROKU_API_KEY + "@"
@@ -94,9 +92,7 @@ async def deploy(xx, repo, ups_rem, ac_br, txt):
         return repo.__del__()
     build = heroku_app.builds(order_by="created_at", sort="desc")[0]
     if build.status == "failed":
-        await edit_delete(
-            xx, "**Build Gagal!** Dibatalkan karena ada beberapa error.`"
-        )
+        await edit_delete(xx, "**Build Gagal!** Dibatalkan karena ada beberapa error.`")
     await edit_or_reply(
         xx, "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
     )

@@ -420,6 +420,7 @@ async def _(typew):
     sleep(1)
     await typew.edit("`Bercanda`")
 
+
 @bot.on(man_cmd(outgoing=True, pattern=r"sakit(?: |$)(.*)"))
 async def _(typew):
     await typew.edit("`Kamu tau gak`")
@@ -433,6 +434,7 @@ async def _(typew):
     await typew.edir("`Sakit Hati💔`")
     sleep(1)
     await typew.edit("`SADBOY🗿`")
+
 
 # Create by myself @localheart
 
