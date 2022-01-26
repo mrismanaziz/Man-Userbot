@@ -7,13 +7,21 @@ from userbot.utils import edit_or_reply, man_cmd
 
 @man_cmd(pattern="p(?: |$)(.*)")
 async def _(event):
-    await event.client.send_message(event.chat_id, "**Assalamualaikum Dulu Biar Sopan**", reply_to=event.reply_to_msg_id)
+    await event.client.send_message(
+        event.chat_id,
+        "**Assalamualaikum Dulu Biar Sopan**",
+        reply_to=event.reply_to_msg_id,
+    )
     await event.delete()
 
 
 @man_cmd(pattern="pe(?: |$)(.*)")
 async def _(event):
-    await event.client.send_message(event.chat_id, "**Assalamualaikum Warahmatullahi Wabarakatuh**", reply_to=event.reply_to_msg_id)
+    await event.client.send_message(
+        event.chat_id,
+        "**Assalamualaikum Warahmatullahi Wabarakatuh**",
+        reply_to=event.reply_to_msg_id,
+    )
     await event.delete()
 
 
@@ -26,7 +34,9 @@ async def _(event):
 
 @man_cmd(pattern="l(?: |$)(.*)")
 async def _(event):
-    await event.client.send_message(event.chat_id, "**Wa'alaikumsalam**", reply_to=event.reply_to_msg_id)
+    await event.client.send_message(
+        event.chat_id, "**Wa'alaikumsalam**", reply_to=event.reply_to_msg_id
+    )
     await event.delete()
 
 
