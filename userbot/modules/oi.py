@@ -3,214 +3,215 @@ from time import sleep
 from userbot import BLACKLIST_CHAT
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.utils import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"sayang(?: |$)(.*)"))
+@man_cmd(pattern="sayang(?: |$)(.*)")
 async def _(event):
-    await event.edit("**Cuma Mau Bilang**")
+    xx = await edit_or_reply(event, "**Cuma Mau Bilang**")
     sleep(3)
-    await event.edit("**Aku Sayang Kamu**")
+    await xx.edit("**Aku Sayang Kamu**")
     sleep(1)
-    await event.edit("**I LOVE YOU 💞**")
+    await xx.edit("**I LOVE YOU 💞**")
 
 
 # Create by myself @localheart
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"semangat(?: |$)(.*)"))
+@man_cmd(pattern="semangat(?: |$)(.*)")
 async def _(event):
-    await event.edit("**Apapun Yang Terjadi**")
+    xx = await edit_or_reply(event, "**Apapun Yang Terjadi**")
     sleep(3)
-    await event.edit("**Tetaplah Bernapas**")
+    await xx.edit("**Tetaplah Bernapas**")
     sleep(1)
-    await event.edit("**Dan Selalu Bersyukur**")
+    await xx.edit("**Dan Selalu Bersyukur**")
 
 
 # Create by myself @localheart
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"ywc(?: |$)(.*)"))
+@man_cmd(pattern=r"ywc(?: |$)(.*)")
 async def _(event):
-    await event.client.send_message(event.chat_id, "**Ok Sama Sama**")
+    await event.client.send_message(event.chat_id, "**Ok Sama Sama**", reply_to=event.reply_to_msg_id)
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"jamet(?: |$)(.*)"))
+@man_cmd(pattern="jamet(?: |$)(.*)")
 async def _(event):
-    await event.edit("**WOII**")
+    xx = await edit_or_reply(event, "**WOII**")
     sleep(1.5)
-    await event.edit("**JAMET**")
+    await xx.edit("**JAMET**")
     sleep(1.5)
-    await event.edit("**CUMA MAU BILANG**")
+    await xx.edit("**CUMA MAU BILANG**")
     sleep(1.5)
-    await event.edit("**GAUSAH SO ASIK**")
+    await xx.edit("**GAUSAH SO ASIK**")
     sleep(1.5)
-    await event.edit("**EMANG KENAL?**")
+    await xx.edit("**EMANG KENAL?**")
     sleep(1.5)
-    await event.edit("**GAUSAH REPLY**")
+    await xx.edit("**GAUSAH REPLY**")
     sleep(1.5)
-    await event.edit("**KITA BUKAN KAWAN**")
+    await xx.edit("**KITA BUKAN KAWAN**")
     sleep(1.5)
-    await event.edit("**GASUKA PC ANJING**")
+    await xx.edit("**GASUKA PC ANJING**")
     sleep(1.5)
-    await event.edit("**BOCAH KAMPUNG**")
+    await xx.edit("**BOCAH KAMPUNG**")
     sleep(1.5)
-    await event.edit("**MENTAL TEMPE**")
+    await xx.edit("**MENTAL TEMPE**")
     sleep(1.5)
-    await event.edit("**LEMBEK NGENTOT🔥**")
+    await xx.edit("**LEMBEK NGENTOT🔥**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"pp(?: |$)(.*)"))
+@man_cmd(pattern="pp(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**PASANG PP DULU GOBLOK,BIAR ORANG-ORANG PADA TAU BETAPA HINA NYA MUKA LU 😆**",
+        "**PASANG PP DULU GOBLOK,BIAR ORANG-ORANG PADA TAU BETAPA HINA NYA MUKA LU 😆**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"dp(?: |$)(.*)"))
+@man_cmd(pattern="dp(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
-        event.chat_id, "**MUKA LU HINA, GAUSAH SOK KERAS YA ANJENGG!!**"
+        event.chat_id, "**MUKA LU HINA, GAUSAH SOK KERAS YA ANJENGG!!**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"so(?: |$)(.*)"))
+@man_cmd(pattern="so(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
-        event.chat_id, "**GAUSAH SOKAB SAMA GUA GOBLOK, LU BABU GA LEVEL!!**"
+        event.chat_id, "**GAUSAH SOKAB SAMA GUA GOBLOK, LU BABU GA LEVEL!!**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"nb(?: |$)(.*)"))
+@man_cmd(pattern="nb(?: |$)(.*)")
 async def _(event):
     if event.chat_id in BLACKLIST_CHAT:
-        return await event.edit("**Perintah ini Dilarang digunakan di Group ini**")
+        return await edit_or_reply(event, "**Perintah ini Dilarang digunakan di Group ini**")
     await event.client.send_message(
-        event.chat_id, "**MAEN BOT MULU ALAY NGENTOTT, KESANNYA NORAK GOBLOK!!!**"
+        event.chat_id, "**MAEN BOT MULU ALAY NGENTOTT, KESANNYA NORAK GOBLOK!!!**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"met(?: |$)(.*)"))
+@man_cmd(pattern="met(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
-        event.chat_id, "**NAMANYA JUGA JAMET CAPER SANA SINI BUAT CARI NAMA**"
-    )
-
-
-@bot.on(man_cmd(outgoing=True, pattern=r"war(?: |$)(.*)"))
-async def _(event):
-    await event.client.send_message(
-        event.chat_id,
-        "**WAR WAR PALAK BAPAK KAU WAR, SOK KERAS BANGET GOBLOK, DI TONGKRONGAN JADI BABU, DI TELE SOK JAGOAN...**",
+        event.chat_id, "**NAMANYA JUGA JAMET CAPER SANA SINI BUAT CARI NAMA**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"wartai(?: |$)(.*)"))
+@man_cmd(pattern="war(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**WAR WAR TAI ANJING, KETRIGGER MINTA SHARELOK LU KIRA MAU COD-AN GOBLOK, BACOTAN LU AJA KGA ADA KERAS KERASNYA GOBLOK**",
+        "**WAR WAR PALAK BAPAK KAU WAR, SOK KERAS BANGET GOBLOK, DI TONGKRONGAN JADI BABU, DI TELE SOK JAGOAN...**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"kismin(?: |$)(.*)"))
+@man_cmd(pattern="wartai(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**CUIHHHH, MAKAN AJA MASIH NGEMIS LO GOBLOK, JANGAN SO NINGGI YA KONTOL GA KEREN LU KEK GITU GOBLOK!!**",
+        "**WAR WAR TAI ANJING, KETRIGGER MINTA SHARELOK LU KIRA MAU COD-AN GOBLOK, BACOTAN LU AJA KGA ADA KERAS KERASNYA GOBLOK**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"ded(?: |$)(.*)"))
-async def _(event):
-    await event.client.send_message(
-        event.chat_id, "**MATI AJA LU GOBLOK, GAGUNA LU HIDUP DI BUMI**"
-    )
-    await event.delete()
-
-
-@bot.on(man_cmd(outgoing=True, pattern=r"sokab(?: |$)(.*)"))
+@man_cmd(pattern="kismin(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**SOKAB BET LU GOBLOK, KAGA ADA ISTILAH NYA BAWAHAN TEMENAN AMA BOS!!**",
+        "**CUIHHHH, MAKAN AJA MASIH NGEMIS LO GOBLOK, JANGAN SO NINGGI YA KONTOL GA KEREN LU KEK GITU GOBLOK!!**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"gembel(?: |$)(.*)"))
+@man_cmd(pattern="ded(?: |$)(.*)")
+async def _(event):
+    await event.client.send_message(
+        event.chat_id, "**MATI AJA LU GOBLOK, GAGUNA LU HIDUP DI BUMI**", reply_to=event.reply_to_msg_id
+    )
+    await event.delete()
+
+
+@man_cmd(pattern="sokab(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**MUKA BAPAK LU KEK KELAPA SAWIT ANJING, GA USAH NGATAIN ORANG, MUKA LU AJA KEK GEMBEL TEXAS GOBLOK!!**",
+        "**SOKAB BET LU GOBLOK, KAGA ADA ISTILAH NYA BAWAHAN TEMENAN AMA BOS!!**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"cuih(?: |$)(.*)"))
+@man_cmd(pattern="gembel(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**GAK KEREN LO KEK BEGITU GOBLOK, KELUARGA LU BAWA SINI GUA LUDAHIN SATU-SATU. CUIHH!!!**",
+        "**MUKA BAPAK LU KEK KELAPA SAWIT ANJING, GA USAH NGATAIN ORANG, MUKA LU AJA KEK GEMBEL TEXAS GOBLOK!!**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"dih(?: |$)(.*)"))
+@man_cmd(pattern="cuih(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**DIHHH NAJISS ANAK HARAM LO GOBLOK, JANGAN BELAGU DIMARI KAGA KEREN LU KEK BGITU TOLOL!**",
+        "**GAK KEREN LO KEK BEGITU GOBLOK, KELUARGA LU BAWA SINI GUA LUDAHIN SATU-SATU. CUIHH!!!**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"gcs(?: |$)(.*)"))
+@man_cmd(pattern="dih(?: |$)(.*)")
+async def _(event):
+    await event.client.send_message(
+        event.chat_id,
+        "**DIHHH NAJISS ANAK HARAM LO GOBLOK, JANGAN BELAGU DIMARI KAGA KEREN LU KEK BGITU TOLOL!**", reply_to=event.reply_to_msg_id
+    )
+    await event.delete()
+
+
+@man_cmd(pattern=r"gcs(?: |$)(.*)")
 async def _(event):
     if event.chat_id in BLACKLIST_CHAT:
-        return await event.edit("**Perintah ini Dilarang digunakan di Group ini**")
+        return await edit_or_reply(event, "**Perintah ini Dilarang digunakan di Group ini**")
     await event.client.send_message(
-        event.chat_id, "**GC SAMPAH KAYA GINI, BUBARIN AJA GOBLOK!!**"
+        event.chat_id, "**GC SAMPAH KAYA GINI, BUBARIN AJA GOBLOK!!**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"skb(?: |$)(.*)"))
+@man_cmd(pattern="skb(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
-        event.chat_id, "**EMANG KITA KENAL? KAGA GOBLOK SOKAB BANGET LU GOBLOK**"
+        event.chat_id, "**EMANG KITA KENAL? KAGA GOBLOK SOKAB BANGET LU GOBLOK**", reply_to=event.reply_to_msg_id
     )
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"virtual(?: |$)(.*)"))
+@man_cmd(pattern="virtual(?: |$)(.*)")
 async def _(event):
-    await event.edit("**OOOO**")
+    xx = await edit_or_reply(event, "**OOOO**")
     sleep(1.5)
-    await event.edit("**INI YANG VIRTUAL**")
+    await xx.edit("**INI YANG VIRTUAL**")
     sleep(1.5)
-    await event.edit("**YANG KATANYA SAYANG BANGET**")
+    await xx.edit("**YANG KATANYA SAYANG BANGET**")
     sleep(1.5)
-    await event.edit("**TAPI TETEP AJA DI TINGGAL**")
+    await xx.edit("**TAPI TETEP AJA DI TINGGAL**")
     sleep(1.5)
-    await event.edit("**NI INGET**")
+    await xx.edit("**NI INGET**")
     sleep(1.5)
-    await event.edit("**TANGANNYA AJA GA BISA DI PEGANG**")
+    await xx.edit("**TANGANNYA AJA GA BISA DI PEGANG**")
     sleep(1.5)
-    await event.edit("**APALAGI OMONGANNYA**")
+    await xx.edit("**APALAGI OMONGANNYA**")
     sleep(1.5)
-    await event.edit("**BHAHAHAHA**")
+    await xx.edit("**BHAHAHAHA**")
     sleep(1.5)
-    await event.edit("**KASIAN MANA MASIH MUDA**")
+    await xx.edit("**KASIAN MANA MASIH MUDA**")
 
 
 CMD_HELP.update(
