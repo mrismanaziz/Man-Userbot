@@ -2,7 +2,7 @@ from time import sleep
 
 from userbot import BLACKLIST_CHAT
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import man_cmd
 
 
@@ -32,7 +32,9 @@ async def _(event):
 
 @man_cmd(pattern=r"ywc(?: |$)(.*)")
 async def _(event):
-    await event.client.send_message(event.chat_id, "**Ok Sama Sama**", reply_to=event.reply_to_msg_id)
+    await event.client.send_message(
+        event.chat_id, "**Ok Sama Sama**", reply_to=event.reply_to_msg_id
+    )
     await event.delete()
 
 
@@ -65,7 +67,8 @@ async def _(event):
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**PASANG PP DULU GOBLOK,BIAR ORANG-ORANG PADA TAU BETAPA HINA NYA MUKA LU 😆**", reply_to=event.reply_to_msg_id
+        "**PASANG PP DULU GOBLOK,BIAR ORANG-ORANG PADA TAU BETAPA HINA NYA MUKA LU 😆**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -73,7 +76,9 @@ async def _(event):
 @man_cmd(pattern="dp(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
-        event.chat_id, "**MUKA LU HINA, GAUSAH SOK KERAS YA ANJENGG!!**", reply_to=event.reply_to_msg_id
+        event.chat_id,
+        "**MUKA LU HINA, GAUSAH SOK KERAS YA ANJENGG!!**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -81,7 +86,9 @@ async def _(event):
 @man_cmd(pattern="so(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
-        event.chat_id, "**GAUSAH SOKAB SAMA GUA GOBLOK, LU BABU GA LEVEL!!**", reply_to=event.reply_to_msg_id
+        event.chat_id,
+        "**GAUSAH SOKAB SAMA GUA GOBLOK, LU BABU GA LEVEL!!**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -89,9 +96,13 @@ async def _(event):
 @man_cmd(pattern="nb(?: |$)(.*)")
 async def _(event):
     if event.chat_id in BLACKLIST_CHAT:
-        return await edit_or_reply(event, "**Perintah ini Dilarang digunakan di Group ini**")
+        return await edit_or_reply(
+            event, "**Perintah ini Dilarang digunakan di Group ini**"
+        )
     await event.client.send_message(
-        event.chat_id, "**MAEN BOT MULU ALAY NGENTOTT, KESANNYA NORAK GOBLOK!!!**", reply_to=event.reply_to_msg_id
+        event.chat_id,
+        "**MAEN BOT MULU ALAY NGENTOTT, KESANNYA NORAK GOBLOK!!!**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -99,7 +110,9 @@ async def _(event):
 @man_cmd(pattern="met(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
-        event.chat_id, "**NAMANYA JUGA JAMET CAPER SANA SINI BUAT CARI NAMA**", reply_to=event.reply_to_msg_id
+        event.chat_id,
+        "**NAMANYA JUGA JAMET CAPER SANA SINI BUAT CARI NAMA**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -108,7 +121,8 @@ async def _(event):
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**WAR WAR PALAK BAPAK KAU WAR, SOK KERAS BANGET GOBLOK, DI TONGKRONGAN JADI BABU, DI TELE SOK JAGOAN...**", reply_to=event.reply_to_msg_id
+        "**WAR WAR PALAK BAPAK KAU WAR, SOK KERAS BANGET GOBLOK, DI TONGKRONGAN JADI BABU, DI TELE SOK JAGOAN...**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -117,7 +131,8 @@ async def _(event):
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**WAR WAR TAI ANJING, KETRIGGER MINTA SHARELOK LU KIRA MAU COD-AN GOBLOK, BACOTAN LU AJA KGA ADA KERAS KERASNYA GOBLOK**", reply_to=event.reply_to_msg_id
+        "**WAR WAR TAI ANJING, KETRIGGER MINTA SHARELOK LU KIRA MAU COD-AN GOBLOK, BACOTAN LU AJA KGA ADA KERAS KERASNYA GOBLOK**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -126,7 +141,8 @@ async def _(event):
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**CUIHHHH, MAKAN AJA MASIH NGEMIS LO GOBLOK, JANGAN SO NINGGI YA KONTOL GA KEREN LU KEK GITU GOBLOK!!**", reply_to=event.reply_to_msg_id
+        "**CUIHHHH, MAKAN AJA MASIH NGEMIS LO GOBLOK, JANGAN SO NINGGI YA KONTOL GA KEREN LU KEK GITU GOBLOK!!**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -134,7 +150,9 @@ async def _(event):
 @man_cmd(pattern="ded(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
-        event.chat_id, "**MATI AJA LU GOBLOK, GAGUNA LU HIDUP DI BUMI**", reply_to=event.reply_to_msg_id
+        event.chat_id,
+        "**MATI AJA LU GOBLOK, GAGUNA LU HIDUP DI BUMI**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -143,7 +161,8 @@ async def _(event):
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**SOKAB BET LU GOBLOK, KAGA ADA ISTILAH NYA BAWAHAN TEMENAN AMA BOS!!**", reply_to=event.reply_to_msg_id
+        "**SOKAB BET LU GOBLOK, KAGA ADA ISTILAH NYA BAWAHAN TEMENAN AMA BOS!!**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -152,7 +171,8 @@ async def _(event):
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**MUKA BAPAK LU KEK KELAPA SAWIT ANJING, GA USAH NGATAIN ORANG, MUKA LU AJA KEK GEMBEL TEXAS GOBLOK!!**", reply_to=event.reply_to_msg_id
+        "**MUKA BAPAK LU KEK KELAPA SAWIT ANJING, GA USAH NGATAIN ORANG, MUKA LU AJA KEK GEMBEL TEXAS GOBLOK!!**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -161,7 +181,8 @@ async def _(event):
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**GAK KEREN LO KEK BEGITU GOBLOK, KELUARGA LU BAWA SINI GUA LUDAHIN SATU-SATU. CUIHH!!!**", reply_to=event.reply_to_msg_id
+        "**GAK KEREN LO KEK BEGITU GOBLOK, KELUARGA LU BAWA SINI GUA LUDAHIN SATU-SATU. CUIHH!!!**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -170,7 +191,8 @@ async def _(event):
 async def _(event):
     await event.client.send_message(
         event.chat_id,
-        "**DIHHH NAJISS ANAK HARAM LO GOBLOK, JANGAN BELAGU DIMARI KAGA KEREN LU KEK BGITU TOLOL!**", reply_to=event.reply_to_msg_id
+        "**DIHHH NAJISS ANAK HARAM LO GOBLOK, JANGAN BELAGU DIMARI KAGA KEREN LU KEK BGITU TOLOL!**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -178,9 +200,13 @@ async def _(event):
 @man_cmd(pattern=r"gcs(?: |$)(.*)")
 async def _(event):
     if event.chat_id in BLACKLIST_CHAT:
-        return await edit_or_reply(event, "**Perintah ini Dilarang digunakan di Group ini**")
+        return await edit_or_reply(
+            event, "**Perintah ini Dilarang digunakan di Group ini**"
+        )
     await event.client.send_message(
-        event.chat_id, "**GC SAMPAH KAYA GINI, BUBARIN AJA GOBLOK!!**", reply_to=event.reply_to_msg_id
+        event.chat_id,
+        "**GC SAMPAH KAYA GINI, BUBARIN AJA GOBLOK!!**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
@@ -188,7 +214,9 @@ async def _(event):
 @man_cmd(pattern="skb(?: |$)(.*)")
 async def _(event):
     await event.client.send_message(
-        event.chat_id, "**EMANG KITA KENAL? KAGA GOBLOK SOKAB BANGET LU GOBLOK**", reply_to=event.reply_to_msg_id
+        event.chat_id,
+        "**EMANG KITA KENAL? KAGA GOBLOK SOKAB BANGET LU GOBLOK**",
+        reply_to=event.reply_to_msg_id,
     )
     await event.delete()
 
