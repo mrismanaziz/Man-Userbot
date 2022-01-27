@@ -15,7 +15,7 @@ from userbot.events import man_cmd
 from userbot.utils import edit_delete, edit_or_reply, runcmd, take_screen_shot
 
 
-@man_cmd(pattern=r"mmf (.*)")
+@man_cmd(pattern="mmf (.*)")
 async def memify(event):
     reply_msg = await event.get_reply_message()
     input_str = event.pattern_match.group(1)
