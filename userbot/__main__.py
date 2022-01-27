@@ -22,11 +22,6 @@ from userbot.utils import autobot, checking
 
 try:
     client = multiman()
-    if 844432220 not in DEVS:
-        LOGS.warning(
-            f"EOL\nMan-UserBot v{BOT_VER}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
-        )
-        sys.exit(1)
 except Exception as e:
     LOGS.info(str(e), exc_info=True)
     sys.exit(1)
