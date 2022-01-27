@@ -14,7 +14,7 @@ from pytz import timezone as tz
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, COUNTRY, TZ_NUMBER, bot
-from userbot.events import man_cmd
+from userbot.utils import man_cmd
 
 
 async def get_tz(con):
@@ -42,7 +42,7 @@ async def get_tz(con):
         return
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"time(?: |$)(.*)(?<![0-9])(?: |$)([0-9]+)?"))
+@man_cmd(pattern="time(?: |$)(.*)(?<![0-9])(?: |$)([0-9]+)?")
 async def time_func(tdata):
     """For .time command, return the time of
     1. The country passed as an argument,
@@ -96,18 +96,18 @@ async def time_func(tdata):
 
     if c_name != COUNTRY:
         await tdata.edit(
-            f"**Sekarang Jam**  `{dtnow}`  **di {c_name}({time_zone} timezone).**"
+            f"**Sekarang Jam** `{dtnow}` **di {c_name}({time_zone} timezone).**"
         )
         return
 
     if COUNTRY:
         await tdata.edit(
-            f"**Sekarang Jam**  `{dtnow}`  **di {COUNTRY}" f"({time_zone} timezone).**"
+            f"**Sekarang Jam** `{dtnow}` **di {COUNTRY}" f"({time_zone} timezone).**"
         )
         return
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"date(?: |$)(.*)(?<![0-9])(?: |$)([0-9]+)?"))
+@man_cmd(pattern="date(?: |$)(.*)(?<![0-9])(?: |$)([0-9]+)?")
 async def date_func(dat):
     """For .date command, return the date of
     1. The country passed as an argument,
@@ -132,7 +132,7 @@ async def date_func(dat):
         timezones = await get_tz(COUNTRY)
     else:
         await dat.edit(
-            f"**Sekarang Tanggal**  `{dt.now().strftime(d_form)}`  **disini.**"
+            f"**Sekarang Tanggal** `{dt.now().strftime(d_form)}` **disini.**"
         )
         return
 
@@ -163,13 +163,13 @@ async def date_func(dat):
 
     if c_name != COUNTRY:
         await dat.edit(
-            f"**Sekarang Tanggal**  `{dtnow}`  **di {c_name}({time_zone} timezone).**"
+            f"**Sekarang Tanggal** `{dtnow}` **di {c_name}({time_zone} timezone.**"
         )
         return
 
     if COUNTRY:
         await dat.edit(
-            f"**Sekarang Tanggal**  `{dtnow}`  **di {COUNTRY}"
+            f"**Sekarang Tanggal** `{dtnow}` **di {COUNTRY}"
             f"({time_zone} timezone).**"
         )
         return
