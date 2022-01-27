@@ -37,8 +37,8 @@ from random import randint, uniform
 from PIL import Image, ImageEnhance, ImageOps
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.utils import edit_delete, edit_or_reply, check_media, man_cmd
+from userbot import CMD_HELP
+from userbot.utils import check_media, edit_delete, edit_or_reply, man_cmd
 
 
 @man_cmd(pattern="deepfry(?: |$)(.*)")
@@ -55,7 +55,9 @@ async def deepfryer(event):
         if isinstance(data, bool):
             return await edit_delete(event, "`I can't deep fry that!`")
     else:
-        return await edit_delete(event, "`Reply to an image or sticker to deep fry it!`")
+        return await edit_delete(
+            event, "`Reply to an image or sticker to deep fry it!`"
+        )
     # download last photo (highres) as byte array
     xx = await edit_or_reply(event, "`Downloading media…`")
     image = io.BytesIO()

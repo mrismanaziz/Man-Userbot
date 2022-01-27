@@ -26,7 +26,7 @@ from telethon.tl.types import (
 from telethon.utils import is_image, is_video
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 jikan = Jikan()

@@ -3,7 +3,7 @@ from geopy.geocoders import Nominatim
 from telethon.tl import types
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import edit_or_reply, man_cmd
 
 
@@ -17,7 +17,7 @@ async def gps(event):
     input_str = event.pattern_match.group(1)
     if not input_str:
         return await event.edit("**Berikan Tempat Yang ingin Dicari**")
-    xx= await edit_or_reply(event, "`Processing...`")
+    xx = await edit_or_reply(event, "`Processing...`")
     geolocator = Nominatim(user_agent="Man")
     geoloc = geolocator.geocode(input_str)
     if geoloc:

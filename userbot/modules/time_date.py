@@ -13,7 +13,7 @@ from pytz import country_timezones as c_tz
 from pytz import timezone as tz
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, COUNTRY, TZ_NUMBER, bot
+from userbot import CMD_HELP, COUNTRY, TZ_NUMBER
 from userbot.utils import man_cmd
 
 

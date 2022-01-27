@@ -23,7 +23,7 @@ from pySmartDL import SmartDL
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot import CMD_HELP, LOGS, TEMP_DOWNLOAD_DIRECTORY
 from userbot.utils import edit_or_reply, humanbytes, man_cmd, progress, run_cmd
 from userbot.utils.FastTelethon import download_file, upload_file
 

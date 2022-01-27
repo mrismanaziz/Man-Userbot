@@ -6,7 +6,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import ChannelParticipantsAdmins
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEVS, bot, owner
+from userbot import CMD_HELP, DEVS, owner
 from userbot.utils import edit_or_reply, man_cmd
 
 
@@ -20,7 +20,9 @@ async def gbun(event):
     await edit_or_reply(event, "**Summoning out the mighty gban hammer ☠️**")
     asyncio.sleep(3.5)
     chat = await event.get_input_chat()
-    async for _ in event.client.iter_participants(chat, filter=ChannelParticipantsAdmins):
+    async for _ in event.client.iter_participants(
+        chat, filter=ChannelParticipantsAdmins
+    ):
         mentions += f""
     reply_message = None
     if event.reply_to_msg_id:

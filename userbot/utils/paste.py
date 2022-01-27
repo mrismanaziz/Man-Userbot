@@ -2,7 +2,6 @@ import json
 
 import requests
 
-from userbot import BOTLOG_CHATID
 from userbot.utils.logger import logging
 
 LOGS = logging.getLogger("ManUserBot")

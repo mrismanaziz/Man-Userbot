@@ -7,7 +7,7 @@ import os
 
 import requests
 
-from userbot import CMD_HELP, DEEP_AI, bot
+from userbot import CMD_HELP, DEEP_AI
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 

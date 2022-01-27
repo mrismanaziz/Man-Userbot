@@ -13,7 +13,7 @@ from PIL import Image, ImageDraw, ImageFont
 from requests import get
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import man_cmd
 
 

@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 from humanize import naturalsize
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, bot
+from userbot import CMD_HELP, LOGS
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
