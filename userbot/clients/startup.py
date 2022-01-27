@@ -60,7 +60,9 @@ def multiman():
             bot.loop.run_until_complete(man_client(bot))
             user = bot.get_me()
             name = user.first_name
-            LOGS.info(f"STRING_SESSION detected! Starting as {name}")
+            uid = user.id
+            LOGS.info(f"STRING_SESSION detected!")
+            print(f"┌ First Name: {name}\n└ User ID: {uid}")
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
@@ -75,7 +77,9 @@ def multiman():
             MAN2.loop.run_until_complete(man_client(MAN2))
             user = MAN2.get_me()
             name = user.first_name
-            LOGS.info(f"STRING_2 detected! Starting as {name}")
+            uid = user.id
+            LOGS.info(f"STRING_2 detected!")
+            print(f"┌ First Name: {name}\n└ User ID: {uid}")
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
@@ -90,7 +94,9 @@ def multiman():
             MAN3.loop.run_until_complete(man_client(MAN3))
             user = MAN3.get_me()
             name = user.first_name
-            LOGS.info(f"STRING_3 detected! Starting as {name}")
+            uid = user.id
+            LOGS.info(f"STRING_3 detected!")
+            print(f"┌ First Name: {name}\n└ User ID: {uid}")
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
@@ -105,7 +111,9 @@ def multiman():
             MAN4.loop.run_until_complete(man_client(MAN4))
             user = MAN4.get_me()
             name = user.first_name
-            LOGS.info(f"STRING_4 detected! Starting as {name}")
+            uid = user.id
+            LOGS.info(f"STRING_4 detected!")
+            print(f"┌ First Name: {name}\n└ User ID: {uid}")
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
@@ -120,7 +128,9 @@ def multiman():
             MAN5.loop.run_until_complete(man_client(MAN5))
             user = MAN5.get_me()
             name = user.first_name
-            LOGS.info(f"STRING_5 detected! Starting as {name}")
+            uid = user.id
+            LOGS.info(f"STRING_5 detected!")
+            print(f"┌ First Name: {name}\n└ User ID: {uid}")
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
