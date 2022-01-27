@@ -7,7 +7,7 @@ import userbot.modules.sql_helper.antiflood_sql as sql
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot.events import register
-from userbot.utils import man_cmd
+from userbot.utils import edit_or_reply, man_cmd
 from userbot.utils.tools import is_admin
 
 CHAT_FLOOD = sql.__load_flood_settings()
