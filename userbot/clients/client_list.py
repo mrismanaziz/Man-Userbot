@@ -41,13 +41,13 @@ async def clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5):
 async def client_id(event, botid=None):
     if botid is not None:
         uid = await event.client(GetFullUserRequest(botid))
-        OWNER = uid.user.first_name
         OWNER_ID = uid.user.id
-        mention = f"[{OWNER}](tg://user?id={OWNER_ID})"
+        MAN_USER = uid.user.first_name
+        man_mention = f"[{MAN_USER}](tg://user?id={OWNER_ID})"
     else:
         client = await event.client.get_me()
         uid = telethon.utils.get_peer_id(client)
-        OWNER = client.first_name
         OWNER_ID = uid
-        mention = f"[{OWNER}](tg://user?id={OWNER_ID})"
-    return OWNER, OWNER_ID, mention
+        MAN_USER = client.first_name
+        man_mention = f"[{MAN_USER}](tg://user?id={OWNER_ID})"
+    return OWNER_ID, MAN_USER, man_mention
