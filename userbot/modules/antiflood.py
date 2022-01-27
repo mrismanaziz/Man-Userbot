@@ -6,7 +6,8 @@ from telethon.tl.types import ChatBannedRights
 import userbot.modules.sql_helper.antiflood_sql as sql
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd, register
+from userbot.events import register
+from userbot.utils import man_cmd
 from userbot.utils.tools import is_admin
 
 CHAT_FLOOD = sql.__load_flood_settings()
@@ -60,7 +61,7 @@ async def _(event):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"setflood(?: |$)(.*)"))
+@man_cmd(pattern="setflood(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -68,13 +69,11 @@ async def _(event):
     try:
         sql.set_flood(event.chat_id, input_str)
         sql.__load_flood_settings()
-        await event.edit(
-            "**Antiflood diperbarui menjadi** `{}` **dalam obrolan saat ini**".format(
-                input_str
-            )
+        await edit_or_reply(
+            event, f"**Antiflood diperbarui menjadi** `{input_str}` **dalam obrolan saat ini**"
         )
-    except Exception as e:  # pylint:disable=C0103,W0703
-        await event.edit(str(e))
+    except Exception as e:
+        await edit_or_reply(event, f"{e}")
 
 
 CMD_HELP.update(
