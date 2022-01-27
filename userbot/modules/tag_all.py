@@ -11,7 +11,7 @@ import random
 import re
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import man_cmd
 
 usernexp = re.compile(r"@(\w{3,32})\[(.+?)\]")
@@ -33,9 +33,9 @@ async def _(event):
     query = event.pattern_match.group(1)
     mentions = f"@all {query}"
     chat = await event.get_input_chat()
-    async for x in bot.iter_participants(chat, 100500):
+    async for x in event.client.iter_participants(chat, 100500):
         mentions += f"[\u2063](tg://user?id={x.id} {query})"
-    await bot.send_message(chat, mentions, reply_to=event.message.reply_to_msg_id)
+    await event.client.send_message(chat, mentions, reply_to=event.message.reply_to_msg_id)
 
 
 @man_cmd(pattern="emojitag(?: |$)(.*)")
