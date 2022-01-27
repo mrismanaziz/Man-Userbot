@@ -1,8 +1,7 @@
 import random
-from asyncio import sleep
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import deEmojify, man_cmd
 
 
@@ -93,7 +92,8 @@ async def rastick(animu):
 
     except Exception:
         return await edit_delete(
-            xx, "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`"
+            xx,
+            "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`",
         )
     await xx.delete()
 
