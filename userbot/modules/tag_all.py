@@ -35,7 +35,9 @@ async def _(event):
     chat = await event.get_input_chat()
     async for x in event.client.iter_participants(chat, 100500):
         mentions += f"[\u2063](tg://user?id={x.id} {query})"
-    await event.client.send_message(chat, mentions, reply_to=event.message.reply_to_msg_id)
+    await event.client.send_message(
+        chat, mentions, reply_to=event.message.reply_to_msg_id
+    )
 
 
 @man_cmd(pattern="emojitag(?: |$)(.*)")
