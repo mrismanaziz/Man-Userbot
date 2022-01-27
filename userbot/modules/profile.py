@@ -27,8 +27,8 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_input_location
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, SUDO_USERS, bot
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 # ====================== CONSTANT ===============================
 INVALID_MEDIA = "```Maaf Media Tidak Valid.```"
@@ -44,21 +44,20 @@ USERNAME_TAKEN = "```Mohon Maaf, Username Itu Sudah Ada Yang Menggunakannya.```"
 # ===============================================================
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"reserved$"))
+@man_cmd(pattern="reserved$")
 async def mine(event):
-    """For .reserved command, get a list of your reserved usernames."""
-    result = await bot(GetAdminedPublicChannelsRequest())
+    result = await event.client(GetAdminedPublicChannelsRequest())
     output_str = "".join(
         f"{channel_obj.title}\n@{channel_obj.username}\n\n"
         for channel_obj in result.chats
     )
+    await edit_or_reply(event, output_str)
 
-    await event.edit(output_str)
 
-
-@bot.on(man_cmd(outgoing=True, pattern=r"name"))
+@man_cmd(pattern=r"name")
 async def update_name(name):
-    """For .name command, change your name in Telegram."""
+    if name.sender_id in SUDO_USERS:
+        return
     newname = name.text[6:]
     if " " not in newname:
         firstname = newname
@@ -69,12 +68,13 @@ async def update_name(name):
         lastname = namesplit[1]
 
     await name.client(UpdateProfileRequest(first_name=firstname, last_name=lastname))
-    await name.edit(NAME_OK)
+    await edit_or_reply(name, NAME_OK)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"setpfp$"))
+@man_cmd(pattern="setpfp$")
 async def set_profilepic(propic):
-    """For .profilepic command, change your profile picture in Telegram."""
+    if propic.sender_id in SUDO_USERS:
+        return
     replymsg = await propic.get_reply_message()
     photo = None
     if replymsg.media:
@@ -83,7 +83,7 @@ async def set_profilepic(propic):
         elif "image" in replymsg.media.document.mime_type.split("/"):
             photo = await propic.client.download_file(replymsg.media.document)
         else:
-            await propic.edit(INVALID_MEDIA)
+            await edit_delete(propic, INVALID_MEDIA)
 
     if photo:
         try:
@@ -100,35 +100,36 @@ async def set_profilepic(propic):
             await propic.edit(INVALID_MEDIA)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"setbio (.*)"))
+@man_cmd(pattern="setbio (.*)")
 async def set_biograph(setbio):
-    """For .setbio command, set a new bio for your profile in Telegram."""
+    if setbio.sender_id in SUDO_USERS:
+        return
     newbio = setbio.pattern_match.group(1)
     await setbio.client(UpdateProfileRequest(about=newbio))
-    await setbio.edit(BIO_SUCCESS)
+    await edit_or_reply(setbio, BIO_SUCCESS)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"username (.*)"))
+@man_cmd(pattern="username (.*)")
 async def update_username(username):
-    """For .username command, set a new username in Telegram."""
+    if username.sender_id in SUDO_USERS:
+        return
     newusername = username.pattern_match.group(1)
     try:
         await username.client(UpdateUsernameRequest(newusername))
-        await username.edit(USERNAME_SUCCESS)
+        await edit_or_reply(username, USERNAME_SUCCESS)
     except UsernameOccupiedError:
-        await username.edit(USERNAME_TAKEN)
+        await edit_delete(username, USERNAME_TAKEN)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"count$"))
+@man_cmd(pattern="count$")
 async def count(event):
-    """For .count command, get profile stats."""
     u = 0
     g = 0
     c = 0
     bc = 0
     b = 0
     result = ""
-    await event.edit("`Sedang Dalam Proses....`")
+    xx = await edit_or_reply(event, "`Sedang Dalam Proses....`")
     dialogs = await bot.get_dialogs(limit=None, ignore_migrated=True)
     for d in dialogs:
         currrent_entity = d.entity
@@ -146,19 +147,18 @@ async def count(event):
                 c += 1
         else:
             print(d)
-
-    result += f"`Pengguna:`\t**{u}**\n"
-    result += f"`Grup:`\t**{g}**\n"
-    result += f"`Super Grup:`\t**{c}**\n"
-    result += f"`Channel:`\t**{bc}**\n"
-    result += f"`Bot:`\t**{b}**"
-
-    await event.edit(result)
+    result += f"**Pengguna:**\t`{u}`\n"
+    result += f"**Grup:**\t`{g}`\n"
+    result += f"**Super Grup:**\t`{c}`\n"
+    result += f"**Channel:**\t`{bc}`\n"
+    result += f"**Bot:**\t`{b}`"
+    await xx.edit(result)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"delpfp"))
+@man_cmd(pattern="delpfp")
 async def remove_profilepic(delpfp):
-    """For .delpfp command, delete your current profile picture in Telegram."""
+    if delpfp.sender_id in SUDO_USERS:
+        return
     group = delpfp.text[8:]
     if group == "all":
         lim = 0
@@ -166,7 +166,6 @@ async def remove_profilepic(delpfp):
         lim = int(group)
     else:
         lim = 1
-
     pfplist = await delpfp.client(
         GetUserPhotosRequest(user_id=delpfp.from_id, offset=0, max_id=0, limit=lim)
     )
@@ -182,27 +181,19 @@ async def remove_profilepic(delpfp):
     await delpfp.edit(f"`Berhasil Menghapus {len(input_photos)} Foto Profil.`")
 
 
-@bot.on(man_cmd(pattern=r"info(?: |$)(.*)", outgoing=True))
+@man_cmd(pattern="info(?: |$)(.*)")
 async def who(event):
-
-    await event.edit("`Mengambil Informasi Data User ini...`")
-
+    xx = await edit_or_reply(event, "`Mengambil Informasi Data User ini...`")
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
-
     replied_user = await get_user(event)
-
     try:
         photo, caption = await fetch_info(replied_user, event)
     except AttributeError:
-        event.edit("`Saya Tidak Mendapatkan Informasi Pengguna.`")
-        return
-
+        return xx.edit("`Saya Tidak Mendapatkan Informasi Pengguna.`")
     message_id_to_reply = event.message.reply_to_msg_id
-
     if not message_id_to_reply:
         message_id_to_reply = None
-
     try:
         await event.client.send_file(
             event.chat_id,
@@ -213,17 +204,14 @@ async def who(event):
             reply_to=message_id_to_reply,
             parse_mode="html",
         )
-
         if not photo.startswith("http"):
             os.remove(photo)
         await event.delete()
-
     except TypeError:
-        await event.edit(caption, parse_mode="html")
+        await xx.edit(caption, parse_mode="html")
 
 
 async def get_user(event):
-    """Get the user from argument or replied message."""
     if event.reply_to_msg_id and not event.pattern_match.group(1):
         previous_message = await event.get_reply_message()
         replied_user = await event.client(GetFullUserRequest(previous_message.from_id))
@@ -255,7 +243,6 @@ async def get_user(event):
 
 
 async def fetch_info(replied_user, event):
-    """Get details from the User object."""
     replied_user_profile_photos = await event.client(
         GetUserPhotosRequest(
             user_id=replied_user.user.id, offset=42, max_id=0, limit=80
