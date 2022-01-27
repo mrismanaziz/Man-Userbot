@@ -13,7 +13,7 @@ from userbot import CMD_HELP, LOGS, bot
 from userbot.modules.sql_helper import no_log_pms_sql
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.modules.vcplugin import vcmention
-from userbot.utils import _format, edit_delete, man_cmd
+from userbot.utils import _format, edit_delete, edit_or_reply, man_cmd
 from userbot.utils.tools import media_type
 
 
@@ -133,13 +133,11 @@ async def log(log_text):
             textx = user + log_text.pattern_match.group(1)
             await log_text.client.send_message(BOTLOG_CHATID, textx)
         else:
-            await log_text.edit("**Apa yang harus saya simpan?**")
+            await edit_delete(log_text, "**Apa yang harus saya simpan?**")
             return
-        await log_text.edit("**Berhasil disimpan di Grup Log**")
+        await edit_delete(log_text, "**Berhasil disimpan di Grup Log**")
     else:
-        await log_text.edit("**Module ini membutuhkan LOGGER untuk diaktifkan!**")
-    await asyncio.sleep(2)
-    await log_text.delete()
+        await edit_delete(log_text, "**Untuk Menggunakan Module ini, Anda Harus Mengatur** `BOTLOG_CHATID` **di Config Vars**", 30)
 
 
 @man_cmd(pattern="log$")
@@ -183,15 +181,15 @@ async def set_pmlog(event):
         PMLOG = True
     if PMLOG:
         if h_type:
-            await event.edit("**PM LOG Sudah Diaktifkan**")
+            await edit_or_reply(event, "**PM LOG Sudah Diaktifkan**")
         else:
             addgvar("PMLOG", h_type)
-            await event.edit("**PM LOG Berhasil Dimatikan**")
+            await edit_or_reply(event, "**PM LOG Berhasil Dimatikan**")
     elif h_type:
         addgvar("PMLOG", h_type)
-        await event.edit("**PM LOG Berhasil Diaktifkan**")
+        await edit_or_reply(event, "**PM LOG Berhasil Diaktifkan**")
     else:
-        await event.edit("**PM LOG Sudah Dimatikan**")
+        await edit_or_reply(event, "**PM LOG Sudah Dimatikan**")
 
 
 @man_cmd(pattern="gruplog (on|off)$")
@@ -213,15 +211,15 @@ async def set_gruplog(event):
         GRUPLOG = True
     if GRUPLOG:
         if h_type:
-            await event.edit("**Group Log Sudah Diaktifkan**")
+            await edit_or_reply(event, "**Group Log Sudah Diaktifkan**")
         else:
             addgvar("GRUPLOG", h_type)
-            await event.edit("**Group Log Berhasil Dimatikan**")
+            await edit_or_reply(event, "**Group Log Berhasil Dimatikan**")
     elif h_type:
         addgvar("GRUPLOG", h_type)
-        await event.edit("**Group Log Berhasil Diaktifkan**")
+        await edit_or_reply(event, "**Group Log Berhasil Diaktifkan**")
     else:
-        await event.edit("**Group Log Sudah Dimatikan**")
+        await edit_or_reply(event, "**Group Log Sudah Dimatikan**")
 
 
 CMD_HELP.update(
