@@ -4,10 +4,10 @@ from telethon.tl import types
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.utils import edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"gps(?: |$)(.*)"))
+@man_cmd(pattern="gps(?: |$)(.*)"))
 async def gps(event):
     if event.fwd_from:
         return
@@ -15,24 +15,20 @@ async def gps(event):
     if event.reply_to_msg_id:
         reply_to_id = await event.get_reply_message()
     input_str = event.pattern_match.group(1)
-
     if not input_str:
-        return await event.edit("`Berikan Tempat Yang Dicari...`")
-
-    await event.edit("`Menemukan Lokasi Ini Di Server Map....`")
-
+        return await event.edit("**Berikan Tempat Yang ingin Dicari**")
+    xx= await edit_or_reply(event, "`Processing...`")
     geolocator = Nominatim(user_agent="Man")
     geoloc = geolocator.geocode(input_str)
-
     if geoloc:
         lon = geoloc.longitude
         lat = geoloc.latitude
-        await reply_to_id.reply(
+        await reply_to_id.edit(
             input_str, file=types.InputMediaGeoPoint(types.InputGeoPoint(lat, lon))
         )
-        await event.delete()
+        await xx.delete()
     else:
-        await event.edit("`Maaf Saya Tidak Dapat Menemukannya`")
+        await xx.edit("`Maaf Saya Tidak Dapat Menemukannya`")
 
 
 CMD_HELP.update(
