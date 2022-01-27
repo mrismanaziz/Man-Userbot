@@ -22,10 +22,19 @@ from userbot import (
     call_py,
 )
 
-blacklistman = requests.get(
-    "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json"
-).json()
-del blacklistman
+while 0 < 6:
+    _BLACKLIST = requests.get(
+        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json"
+    )
+    if _BLACKLIST.status_code != 200:
+        if 0 != 5:
+            continue
+        blacklistman = []
+        break
+    blacklistman = _DEVS.json()
+    break
+
+del _BLACKLIST
 
 
 async def man_client(client):
