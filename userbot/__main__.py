@@ -12,8 +12,8 @@
 
 import sys
 from importlib import import_module
-
 from platform import python_version
+
 from pytgcalls import idle
 from telethon import version
 
@@ -32,7 +32,7 @@ try:
     LOGS.info(f"Telethon Version - {version.__version__}")
     LOGS.info(f"Man-Userbot ⚙️ V{manversion} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 except (ConnectionError, NotImplementedError, KeyboardInterrupt, SystemExit):
-        pass
+    pass
 except (BaseException, Exception) as e:
     LOGS.info(str(e), exc_info=True)
     sys.exit(1)
