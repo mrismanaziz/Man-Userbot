@@ -119,6 +119,22 @@ async def _(event):
         )
 
 
+@man_cmd(pattern="listsudo")
+async def sudolists(event):
+    xx = await edit_or_reply(event, "`Processing...`")
+    app = Heroku.app(HEROKU_APP_NAME)
+    app.config()
+    if not sudousers:
+        return await edit_delete(event, "**Daftar Sudo Kosong**")
+    sudos = sudousers.split(" ")
+    sudoz = "**» List Sudo «**"
+    for sudo in sudos:
+        k = await event.client.get_entity(int(sudo))
+        pro = f"\n[**Name:** {k.first_name} \n**Username:~** @{k.username or None}]\n"
+        sudoz += pro
+    await xx.edit(sudoz)
+
+
 async def get_user(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
