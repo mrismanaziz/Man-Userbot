@@ -25,7 +25,7 @@ from userbot import (
 blacklistman = requests.get(
     "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json"
 ).json()
-
+del blacklistman
 
 async def man_client(client):
     client.me = await client.get_me()
