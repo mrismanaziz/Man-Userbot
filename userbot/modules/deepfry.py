@@ -70,7 +70,7 @@ async def deepfryer(event):
     image.save(fried_io, "JPEG")
     fried_io.seek(0)
     await xx.delete()
-    await event.send_file(file=fried_io, reply_to=event.reply_to_msg_id)
+    await event.send_file(event.chat_id, file=fried_io, reply_to=event.reply_to_msg_id)
 
 
 async def deepfry(img: Image) -> Image:
