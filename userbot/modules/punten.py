@@ -1,7 +1,7 @@
 from time import sleep
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import man_cmd
 
 
@@ -19,7 +19,8 @@ async def _(event):
 
 @man_cmd(pattern="punten(?: |$)(.*)")
 async def _(event):
-    await edit_or_reply(event,
+    await edit_or_reply(
+        event,
         "`\n┻┳|―-∩`"
         "`\n┳┻|     ヽ`"
         "`\n┻┳|    ● |`"
@@ -27,13 +28,14 @@ async def _(event):
         "`\n┻┳|￣  )`"
         "`\n┳ﾐ(￣ ／`"
         "`\n┻┳T￣|`"
-        "\n**Punten**"
+        "\n**Punten**",
     )
 
 
 @man_cmd(pattern="pantau(?: |$)(.*)")
 async def _(event):
-    await edit_or_reply(event,
+    await edit_or_reply(
+        event,
         "`\n┻┳|―-∩`"
         "`\n┳┻|     ヽ`"
         "`\n┻┳|    ● |`"
@@ -41,7 +43,7 @@ async def _(event):
         "`\n┻┳|￣  )`"
         "`\n┳ﾐ(￣ ／`"
         "`\n┻┳T￣|`"
-        "\n**Masih Gua Pantau**"
+        "\n**Masih Gua Pantau**",
     )
 
 
