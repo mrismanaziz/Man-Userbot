@@ -19,7 +19,7 @@ from pytgcalls import idle
 from userbot import BOT_TOKEN, BOT_VER, DEVS, LOGS, bot
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
-from userbot.utils.client import man_userbot_on, multiman
+from userbot.client import man_userbot_on, multiman
 
 try:
     client = multiman()
