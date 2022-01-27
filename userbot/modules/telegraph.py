@@ -34,7 +34,7 @@ async def telegraphs(graph):
             r_message = await graph.get_reply_message()
             input_str = graph.pattern_match.group(1)
             if input_str == "m":
-                downloaded_file_name = await bot.download_media(
+                downloaded_file_name = await graph.client.download_media(
                     r_message, TEMP_DOWNLOAD_DIRECTORY
                 )
                 end = datetime.now()
@@ -56,14 +56,14 @@ async def telegraphs(graph):
                         link_preview=True,
                     )
             elif input_str == "t":
-                user_object = await bot.get_entity(r_message.sender_id)
+                user_object = await graph.client.get_entity(r_message.sender_id)
                 title_of_page = user_object.first_name  # + " " + user_object.last_name
                 # apparently, all Users do not have last_name field
                 page_content = r_message.message
                 if r_message.media:
                     if page_content != "":
                         title_of_page = page_content
-                    downloaded_file_name = await bot.download_media(
+                    downloaded_file_name = await graph.client.download_media(
                         r_message, TEMP_DOWNLOAD_DIRECTORY
                     )
                     m_list = None
