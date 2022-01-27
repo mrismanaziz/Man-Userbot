@@ -2,13 +2,14 @@
 # t.me/sharinguserbot
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import edit_or_reply, man_cmd
 
 
 @man_cmd(pattern="frog(?: |$)(.*)")
 async def _(event):
-    await edit_or_reply(event,
+    await edit_or_reply(
+        event,
         "⠄⠄⠄⠄⠄⣀⣀⣤⣶⣿⣿⣶⣶⣶⣤⣄⣠⣴⣶⣿⣶⣦⣄⠄\n"
         "⠄⣠⣴⣾⣿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦\n"
         "⢠⠾⣋⣭⣄⡀⠄⠙⠻⣿⣿⡿⠛⠋⠉⠉⠉⠙⠛⠿⣿⣿⣿⣿\n"
@@ -23,13 +24,14 @@ async def _(event):
         "⠄⣿⡇⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠄⢀⣼⣿⣿⣿⣿⣿\n"
         "⠄⣿⡇⠄⠠⣿⣿⣿⣿⣿⣿⣿⡿⠋⠄⠄⣠⣾⣿⣿⣿⣿⣿⣿\n"
         "⠄⣿⠁⠄⠐⠛⠛⠛⠉⠉⠉⠉⠄⠄⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿\n"
-        "⠄⠻⣦⣀⣀⣀⣀⣀⣤⣤⣤⣤⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋\n"
+        "⠄⠻⣦⣀⣀⣀⣀⣀⣤⣤⣤⣤⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋\n",
     )
 
 
 @man_cmd(pattern="dfrog(?: |$)(.*)")
 async def _(event):
-    await edit_or_reply(event,
+    await edit_or_reply(
+        event,
         "⣿⣿⣿⡇⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
         "⣿⣿⣿⡇⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
         "⣿⣿⣿⡇⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
@@ -44,13 +46,14 @@ async def _(event):
         "⠑⠽⡻⢿⣮⣽⣷⣶⣯⣽⣳⠮⣽⣟⣲⠯⢭⣿⣛⡇⣿⣿⣿⣿\n"
         "⠄⠄⠈⠑⠊⠉⠟⣻⠿⣿⣿⣿⣷⣾⣭⣿⠷⠶⠂⣴⣿⣿⣿⣿\n"
         "⠄⠄⠄⠄⠄⠄⠄⠁⠙⠒⠙⠯⠍⠙⢉⣡⣶⣿⣿⣿⣿⣿⣿⣿\n"
-        "⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
+        "⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿\n",
     )
 
 
 @man_cmd(pattern="strump(?: |$)(.*)")
 async def _(event):
-    await edit_or_reply(event,
+    await edit_or_reply(
+        event,
         "⣿⣿⣿⣿⣿⣿⡿⠿⠛⠋⠉⡉⣉⡛⣛⠿⣿⣿⣿⣿⣿⣿⣿⣿\n"
         "⣿⣿⣿⡿⠋⠁⠄⠄⠄⠄⠄⢀⣸⣿⣿⡿⠿⡯⢙⠿⣿⣿⣿⣿\n"
         "⣿⣿⡿⠄⠄⠄⠄⠄⡀⡀⠄⢀⣀⣉⣉⣉⠁⠐⣶⣶⣿⣿⣿⣿\n"
@@ -65,13 +68,14 @@ async def _(event):
         "⠄⠄⠄⠄⠄⠄⠈⢿⣿⠟⡋⠄⠄⠄⢣⠄⠄⠄⠄⠄⠈⠹⣿⣀\n"
         "⠄⠄⠄⠄⠄⠄⠄⠘⣷⣿⣿⣷⠄⠄⢺⣇⠄⠄⠄⠄⠄⠄⠸⣿\n"
         "⠄⠄⠄⠄⠄⠄⠄⠄⠹⣿⣿⡇⠄⠄⠸⣿⡄⠄⠈⠁⠄⠄⠄⣿\n"
-        "⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣿⡇⠄⠄⠄⢹⣧⠄⠄⠄⠄⠄⠄⠘\n"
+        "⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣿⡇⠄⠄⠄⢹⣧⠄⠄⠄⠄⠄⠄⠘\n",
     )
 
 
 @man_cmd(pattern="scina(?: |$)(.*)")
 async def _(event):
-    await edit_or_reply(event,
+    await edit_or_reply(
+        event,
         "⣿⣿⣿⣿⠟⠋⢁⢁⢁⢁⢁⢁⢁⢁⠈⢻⢿⣿⣿⣿⣿⣿⣿⣿\n"
         "⣿⣿⣿⣿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⡀⠭⢿⣿⣿⣿⣿\n"
         "⣿⣿⣿⡟⠄⢀⣾⣿⣿⣿⣷⣶⣿⣷⣶⣶⡆⠄⠄⠄⣿⣿⣿⣿\n"
@@ -87,13 +91,14 @@ async def _(event):
         "⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄\n"
         "⠄⠄⠄⠄⠄⣸⣿⡷⡇⠄⣴⣾⣿⣿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄\n"
         "⠄⠄⠄⠄⠄⣿⣿⠃⣦⣄⣿⣿⣿⠇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄\n"
-        "⠄⠄⠄⠄⢸⣿⠗⢈⡶⣷⣿⣿⡏⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄\n"
+        "⠄⠄⠄⠄⢸⣿⠗⢈⡶⣷⣿⣿⡏⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄\n",
     )
 
 
 @man_cmd(pattern="wlcm(?: |$)(.*)")
 async def _(event):
-    await edit_or_reply(event,
+    await edit_or_reply(
+        event,
         "───▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄───\n"
         "───█▒▒░░░░░░░░░▒▒█───\n"
         "────█░░█░░░░░█░░█────\n"
@@ -103,13 +108,14 @@ async def _(event):
         "█░░╦─╦╔╗╦─╔╗╔╗╔╦╗╔╗░░█\n"
         "█░░║║║╠─║─║─║║║║║╠─░░█\n"
         "█░░╚╩╝╚╝╚╝╚╝╚╝╩─╩╚╝░░█\n"
-        "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n"
+        "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n",
     )
 
 
 @man_cmd(pattern="gta(?: |$)(.*)")
 async def _(event):
-    await edit_or_reply(event,
+    await edit_or_reply(
+        event,
         "⠀⠀⠀⠀⠀⠀⠀⢀⣤⣤⡀⠀⠀⠀⠀⠀⠀\n"
         "⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀\n"
         "⠀⠀⠀⠀⠀⠀⠀⢿⣿⣿⠟⠀⠀⠀⠀⠀⠀\n"
@@ -120,13 +126,14 @@ async def _(event):
         "⠀⠀⠀⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣷\n"
         "⠀⠀⠘⠛⠃⠀⠀⠀⠀⠀⠀⠀⠀⢰⣾⣿⠏\n"
         "⠀⢠⣧⡔⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠟⠁⠀\n"
-        "⠀⢸⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ Ah\nShit, here we go again.\n"
+        "⠀⢸⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ Ah\nShit, here we go again.\n",
     )
 
 
 @man_cmd(pattern="sthink(?: |$)(.*)")
 async def _(event):
-    await edit_or_reply(event,
+    await edit_or_reply(
+        event,
         "⠀⠀⠀⠀⢀⣀⣀⣀\n"
         "⠀⠀⠀⠰⡿⠿⠛⠛⠻⠿⣷\n"
         "⠀⠀⠀⠀⠀⠀⣀⣄⡀⠀⠀⠀⠀⢀⣀⣀⣤⣄⣀⡀\n"
@@ -141,7 +148,7 @@ async def _(event):
         "⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄\n"
         "⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡁\n"
         "⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁\n"
-        "⠀⠀⠛⢿⣿⣿⣿⣿⣿⣿⡿⠟\n"
+        "⠀⠀⠛⢿⣿⣿⣿⣿⣿⣿⡿⠟\n",
     )
 
 
