@@ -9,9 +9,9 @@ from asyncio import sleep
 
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.events import register
-from userbot.utils import edit_or_reply, man_cmd
+from userbot.utils import man_cmd
 
 
 @man_cmd(pattern="notes$")
