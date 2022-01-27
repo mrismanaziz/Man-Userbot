@@ -18,7 +18,7 @@ from pytgcalls import idle
 from telethon import version
 
 from userbot import BOT_TOKEN
-from userbot import BOT_VER as manversion
+from userbot import BOT_VER as ubotversion
 from userbot import LOGS, bot
 from userbot.clients import man_userbot_on, multiman
 from userbot.modules import ALL_MODULES
@@ -33,7 +33,7 @@ try:
     LOGS.info(f"Total Clients = {total} User")
     LOGS.info(f"Python Version - {python_version()}")
     LOGS.info(f"Telethon Version - {version.__version__}")
-    LOGS.info(f"Man-Userbot Version - {manversion} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
+    LOGS.info(f"Man-Userbot Version - {ubotversion} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 except (ConnectionError, KeyboardInterrupt, NotImplementedError, SystemExit):
     pass
 except (BaseException, Exception) as e:
