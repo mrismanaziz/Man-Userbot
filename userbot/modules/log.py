@@ -44,16 +44,18 @@ async def logaddjoin(event):
         text = f"📨 **#JOIN_LOG\n •** [{user.first_name}](tg://user?id={user.id}) **Bergabung\n • Ke Group** {chat}"
     else:
         return
-    await tgbot.send_message(BOTLOG_CHATID, text)
+    await event.client.send_message(BOTLOG_CHATID, text)
 
 
 @bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
+@bot.on(events.MessageEdited(incoming=True, func=lambda e: e.is_private))
 async def monito_p_m_s(event):
     if BOTLOG_CHATID == -100:
         return
     if gvarstatus("PMLOG") and gvarstatus("PMLOG") == "false":
         return
     sender = await event.get_sender()
+    await asyncio.sleep(0.5)
     if not sender.bot:
         chat = await event.get_chat()
         if not no_log_pms_sql.is_approved(chat.id) and chat.id != 777000:
@@ -82,6 +84,7 @@ async def monito_p_m_s(event):
 
 
 @bot.on(events.NewMessage(incoming=True, func=lambda e: e.mentioned))
+@bot.on(events.MessageEdited(incoming=True, func=lambda e: e.mentioned))
 async def log_tagged_messages(event):
     if BOTLOG_CHATID == -100:
         return
@@ -109,6 +112,7 @@ async def log_tagged_messages(event):
     else:
         resalt += f"\n<b> • 👀 </b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'>Lihat Pesan</a>"
     resalt += f"\n<b> • Message : </b>{event.message.message}"
+    await asyncio.sleep(0.5)
     if not event.is_private:
         await event.client.send_message(
             BOTLOG_CHATID,
