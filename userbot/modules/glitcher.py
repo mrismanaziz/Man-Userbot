@@ -19,7 +19,7 @@ from userbot.utils import check_media, edit_delete, edit_or_reply, man_cmd, prog
 Glitched = TEMP_DOWNLOAD_DIRECTORY + "glitch.gif"
 
 
-@man_cmd(pattern=r"glitch(?: |$)(.*)")
+@man_cmd(pattern="glitch(?: |$)(.*)")
 async def glitch(event):
     if not event.reply_to_msg_id:
         return await edit_or_reply(event, "`Aku Mau Glitch Sebuah Hantu!`")
