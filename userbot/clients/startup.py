@@ -2,6 +2,8 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
+import requests
+import sys
 import telethon.utils
 
 from userbot import (
@@ -19,6 +21,7 @@ from userbot import (
     call_py,
 )
 
+blacklistman = requests.get("https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json").json()
 
 async def man_client(client):
     client.me = await client.get_me()
@@ -32,7 +35,13 @@ def multiman():
             call_py.start()
             bot.loop.run_until_complete(man_client(bot))
             user = bot.get_me()
-            LOGS.info(f"STRING_SESSION detected! Starting as {user.first_name}")
+            name = user.first_name
+            LOGS.info(f"STRING_SESSION detected! Starting as {name}")
+            if user.id in blacklistman:
+                LOGS.warning(
+                    f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
+                )
+                sys.exit(1)
         except Exception as e:
             print(e)
     else:
@@ -43,7 +52,13 @@ def multiman():
             MAN2.start()
             MAN2.loop.run_until_complete(man_client(MAN2))
             user = MAN2.get_me()
-            LOGS.info(f"STRING_2 detected! Starting as {user.first_name}")
+            name = user.first_name
+            LOGS.info(f"STRING_2 detected! Starting as {name}")
+            if user.id in blacklistman:
+                LOGS.warning(
+                    f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
+                )
+                sys.exit(1)
         except Exception as e:
             print(e)
     else:
@@ -54,7 +69,13 @@ def multiman():
             MAN3.start()
             MAN3.loop.run_until_complete(man_client(MAN3))
             user = MAN3.get_me()
-            LOGS.info(f"STRING_3 detected! Starting as {user.first_name}")
+            name = user.first_name
+            LOGS.info(f"STRING_2 detected! Starting as {name}")
+            if user.id in blacklistman:
+                LOGS.warning(
+                    f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
+                )
+                sys.exit(1)
         except Exception as e:
             print(e)
     else:
@@ -65,7 +86,13 @@ def multiman():
             MAN4.start()
             MAN4.loop.run_until_complete(man_client(MAN4))
             user = MAN4.get_me()
-            LOGS.info(f"STRING_4 detected! Starting as {user.first_name}")
+            name = user.first_name
+            LOGS.info(f"STRING_2 detected! Starting as {name}")
+            if user.id in blacklistman:
+                LOGS.warning(
+                    f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
+                )
+                sys.exit(1)
         except Exception as e:
             print(e)
     else:
@@ -76,7 +103,13 @@ def multiman():
             MAN5.start()
             MAN5.loop.run_until_complete(man_client(MAN5))
             user = MAN5.get_me()
-            LOGS.info(f"STRING_5 detected! Starting as {user.first_name}")
+            name = user.first_name
+            LOGS.info(f"STRING_2 detected! Starting as {name}")
+            if user.id in blacklistman:
+                LOGS.warning(
+                    f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
+                )
+                sys.exit(1)
         except Exception as e:
             print(e)
     else:
