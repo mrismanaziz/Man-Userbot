@@ -465,6 +465,7 @@ def ibuild_keyboard(buttons):
 
 with bot:
     try:
+        from userbot.clients import client_id, clients_list
         from userbot.modules.sql_helper.bot_blacklists import check_is_black_list
         from userbot.modules.sql_helper.bot_pms_sql import add_user_to_db, get_user_id
         from userbot.utils import reply_id
@@ -552,12 +553,15 @@ with bot:
             builder = event.builder
             result = None
             query = event.text
-            if event.query.user_id == uid and query.startswith("@SharingUserbot"):
+            auth = await clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5)
+            ids = await client_id(event, event.query.user_id)
+            OWNER, OWNER_ID, mention = ids[0], ids[1], ids[2]
+            if event.query.user_id == auth and query.startswith("@SharingUserbot"):
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.photo(
                     file=logoman,
                     link_preview=False,
-                    text=f"**✗ Man-Userbot Inline Menu ✗**\n\n✣ **Owner** [{user.first_name}](tg://user?id={user.id})\n✣ **Jumlah** `{len(dugmeler)}` Modules",
+                    text=f"**✗ Man-Userbot Inline Menu ✗**\n\n✣ **Owner** {mention}\n✣ **Jumlah** `{len(dugmeler)}` Modules",
                     buttons=buttons,
                 )
             elif query.startswith("repo"):
@@ -615,7 +619,7 @@ with bot:
                     description="Man - UserBot | Telethon",
                     url="https://t.me/SharingUserbot",
                     thumb=InputWebDocument(INLINE_PIC, 0, "image/jpeg", []),
-                    text=f"**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **UserMode:** [{user.first_name}](tg://user?id={user.id})\n✣ **Assistant:** {tgbotusername}\n➖➖➖➖➖➖➖➖➖➖\n**Support:** @Lunatic0de\n➖➖➖➖➖➖➖➖➖➖",
+                    text=f"**Man - UserBot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **UserMode:** {mention}\n✣ **Assistant:** {tgbotusername}\n➖➖➖➖➖➖➖➖➖➖\n**Support:** @Lunatic0de\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url("ɢʀᴏᴜᴘ", "https://t.me/SharingUserbot"),
@@ -632,10 +636,13 @@ with bot:
 
         @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(rb"reopen")))
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+            auth = await clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5)
+            ids = await client_id(event, event.query.user_id)
+            OWNER, OWNER_ID, mention = ids[0], ids[1], ids[2]
+            if event.query.user_id == auth:
                 current_page_number = int(looters)
                 buttons = paginate_help(current_page_number, dugmeler, "helpme")
-                text = f"**✗ Man-Userbot Inline Menu ✗**\n\n✣ **Owner** [{user.first_name}](tg://user?id={user.id})\n✣ **Jumlah** `{len(dugmeler)}` Modules"
+                text = f"**✗ Man-Userbot Inline Menu ✗**\n\n✣ **Owner** {mention}\n✣ **Jumlah** `{len(dugmeler)}` Modules"
                 await event.edit(
                     text,
                     file=logoman,
@@ -643,7 +650,7 @@ with bot:
                     link_preview=False,
                 )
             else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
+                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {OWNER}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(
@@ -652,25 +659,31 @@ with bot:
             )
         )
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+            auth = await clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5)
+            ids = await client_id(event, event.query.user_id)
+            OWNER, OWNER_ID, mention = ids[0], ids[1], ids[2]
+            if event.query.user_id == auth:
                 current_page_number = int(event.data_match.group(1).decode("UTF-8"))
                 buttons = paginate_help(current_page_number + 1, dugmeler, "helpme")
                 await event.edit(buttons=buttons)
             else:
                 reply_pop_up_alert = (
-                    f"Kamu Tidak diizinkan, ini Userbot Milik {ALIVE_NAME}"
+                    f"Kamu Tidak diizinkan, ini Userbot Milik {OWNER}"
                 )
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"close")))
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in DEVS and SUDO_USERS:
+            auth = await clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5)
+            ids = await client_id(event, event.query.user_id)
+            OWNER, OWNER_ID, mention = ids[0], ids[1], ids[2]
+            if event.query.user_id == auth or event.query.user_id in DEVS:
                 openlagi = custom.Button.inline("• Re-Open Menu •", data="reopen")
                 await event.edit(
                     "⚜️ **Help Mode Button Ditutup!** ⚜️", buttons=openlagi
                 )
             else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
+                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {OWNER}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(
@@ -679,17 +692,23 @@ with bot:
             )
         )
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+            auth = await clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5)
+            ids = await client_id(event, event.query.user_id)
+            OWNER, OWNER_ID, mention = ids[0], ids[1], ids[2]
+            if event.query.user_id == auth:
                 current_page_number = int(event.data_match.group(1).decode("UTF-8"))
                 buttons = paginate_help(current_page_number - 1, dugmeler, "helpme")
                 await event.edit(buttons=buttons)
             else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
+                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {OWNER}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"ub_modul_(.*)")))
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+            auth = await clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5)
+            ids = await client_id(event, event.query.user_id)
+            OWNER, OWNER_ID, mention = ids[0], ids[1], ids[2]
+            if event.query.user_id == auth:
                 modul_name = event.data_match.group(1).decode("UTF-8")
 
                 cmdhel = str(CMD_HELP[modul_name])
@@ -716,7 +735,7 @@ with bot:
                     )
                 )
             else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
+                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {OWNER}"
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
     except BaseException:
