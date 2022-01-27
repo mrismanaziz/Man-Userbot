@@ -61,7 +61,9 @@ def multiman():
             user = bot.get_me()
             name = user.first_name
             uid = user.id
-            LOGS.info(f"STRING_SESSION detected!\n┌ First Name: {name}\n└ User ID: {uid}")
+            LOGS.info(
+                f"STRING_SESSION detected!\n┌ First Name: {name}\n└ User ID: {uid}"
+            )
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
