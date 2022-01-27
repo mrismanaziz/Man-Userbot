@@ -12,7 +12,7 @@ import re
 import time
 
 from aiohttp import ClientSession
-from bs4 import BeautifulSoup'
+from bs4 import BeautifulSoup
 from requests import get
 
 from userbot import CMD_HANDLER as cmd
