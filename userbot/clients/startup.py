@@ -52,6 +52,7 @@ def multiman():
             f"EOL\nMan-UserBot v{version}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
         )
         sys.exit(1)
+    failed = 0
     if STRING_SESSION:
         try:
             bot.start()
@@ -127,3 +128,15 @@ def multiman():
             print(e)
     else:
         LOGS.info("STRING_5 Not Found")
+
+    if not STRING_SESSION:
+        failed += 1
+    if not STRING_2:
+        failed += 1
+    if not STRING_3:
+        failed += 1
+    if not STRING_4:
+        failed += 1
+    if not STRING_5:
+        failed += 1
+    return failed
