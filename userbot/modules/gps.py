@@ -7,7 +7,7 @@ from userbot import CMD_HELP, bot
 from userbot.utils import edit_or_reply, man_cmd
 
 
-@man_cmd(pattern="gps(?: |$)(.*)"))
+@man_cmd(pattern="gps(?: |$)(.*)")
 async def gps(event):
     if event.fwd_from:
         return
