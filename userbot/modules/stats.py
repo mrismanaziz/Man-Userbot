@@ -16,11 +16,7 @@ from telethon.tl.types import Channel, Chat, User
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
-from userbot.events import man_cmd
-from userbot.utils import edit_delete, edit_or_reply
-
-# STRINGS
-STAT_INDICATION = "`Collecting stats, Please wait....`"
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
 # Functions
