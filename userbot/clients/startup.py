@@ -7,6 +7,7 @@ import sys
 import requests
 import telethon.utils
 
+from userbot import BOT_VER as version
 from userbot import (
     LOGS,
     MAN2,
@@ -36,6 +37,7 @@ while 0 < 6:
 
 del _BLACKLIST
 
+MSG_BLACKLIST = "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
 
 async def man_client(client):
     client.me = await client.get_me()
@@ -52,9 +54,7 @@ def multiman():
             name = user.first_name
             LOGS.info(f"STRING_SESSION detected! Starting as {name}")
             if user.id in blacklistman:
-                LOGS.warning(
-                    f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
-                )
+                LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
             print(e)
@@ -69,9 +69,7 @@ def multiman():
             name = user.first_name
             LOGS.info(f"STRING_2 detected! Starting as {name}")
             if user.id in blacklistman:
-                LOGS.warning(
-                    f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
-                )
+                LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
             print(e)
@@ -86,9 +84,7 @@ def multiman():
             name = user.first_name
             LOGS.info(f"STRING_3 detected! Starting as {name}")
             if user.id in blacklistman:
-                LOGS.warning(
-                    f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
-                )
+                LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
             print(e)
@@ -103,9 +99,7 @@ def multiman():
             name = user.first_name
             LOGS.info(f"STRING_4 detected! Starting as {name}")
             if user.id in blacklistman:
-                LOGS.warning(
-                    f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
-                )
+                LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
             print(e)
@@ -120,9 +114,7 @@ def multiman():
             name = user.first_name
             LOGS.info(f"STRING_5 detected! Starting as {name}")
             if user.id in blacklistman:
-                LOGS.warning(
-                    f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
-                )
+                LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
             print(e)
