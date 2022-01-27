@@ -93,20 +93,21 @@ def man_cmd(
             bot.add_event_handler(
                 func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
             )
-        if allow_sudo:
-            if not disable_edited:
+        if bot:
+            if allow_sudo:
+                if not disable_edited:
+                    bot.add_event_handler(
+                        func,
+                        events.MessageEdited(
+                            **args, from_users=list(SUDO_USERS), pattern=sudo_reg
+                        ),
+                    )
                 bot.add_event_handler(
                     func,
-                    events.MessageEdited(
+                    events.NewMessage(
                         **args, from_users=list(SUDO_USERS), pattern=sudo_reg
                     ),
                 )
-            bot.add_event_handler(
-                func,
-                events.NewMessage(
-                    **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                ),
-            )
         if MAN2:
             if allow_sudo:
                 if not disable_edited:
@@ -167,81 +168,6 @@ def man_cmd(
                         **args, from_users=list(SUDO_USERS), pattern=sudo_reg
                     ),
                 )
-        if MAN6:
-            if allow_sudo:
-                if not disable_edited:
-                    MAN2.add_event_handler(
-                        func,
-                        events.MessageEdited(
-                            **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                        ),
-                    )
-                MAN6.add_event_handler(
-                    func,
-                    events.NewMessage(
-                        **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                    ),
-                )
-        if MAN7:
-            if allow_sudo:
-                if not disable_edited:
-                    MAN7.add_event_handler(
-                        func,
-                        events.MessageEdited(
-                            **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                        ),
-                    )
-                MAN7.add_event_handler(
-                    func,
-                    events.NewMessage(
-                        **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                    ),
-                )
-        if MAN8:
-            if allow_sudo:
-                if not disable_edited:
-                    MAN8.add_event_handler(
-                        func,
-                        events.MessageEdited(
-                            **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                        ),
-                    )
-                MAN8.add_event_handler(
-                    func,
-                    events.NewMessage(
-                        **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                    ),
-                )
-        if MAN9:
-            if allow_sudo:
-                if not disable_edited:
-                    MAN9.add_event_handler(
-                        func,
-                        events.MessageEdited(
-                            **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                        ),
-                    )
-                MAN9.add_event_handler(
-                    func,
-                    events.NewMessage(
-                        **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                    ),
-                )
-        if MAN10:
-            if allow_sudo:
-                if not disable_edited:
-                    MAN10.add_event_handler(
-                        func,
-                        events.MessageEdited(
-                            **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                        ),
-                    )
-                MAN10.add_event_handler(
-                    func,
-                    events.NewMessage(
-                        **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                    ),
-                )
         if MAN2:
             if not disable_edited:
                 MAN2.add_event_handler(
@@ -274,46 +200,6 @@ def man_cmd(
             MAN5.add_event_handler(
                 func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
             )
-        if MAN6:
-            if not disable_edited:
-                MAN6.add_event_handler(
-                    func, events.MessageEdited(**args, outgoing=True, pattern=man_reg)
-                )
-            MAN6.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
-            )
-        if MAN7:
-            if not disable_edited:
-                MAN7.add_event_handler(
-                    func, events.MessageEdited(**args, outgoing=True, pattern=man_reg)
-                )
-            MAN7.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
-            )
-        if MAN8:
-            if not disable_edited:
-                MAN8.add_event_handler(
-                    func, events.MessageEdited(**args, outgoing=True, pattern=man_reg)
-                )
-            MAN8.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
-            )
-        if MAN9:
-            if not disable_edited:
-                MAN9.add_event_handler(
-                    func, events.MessageEdited(**args, outgoing=True, pattern=man_reg)
-                )
-            MAN9.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
-            )
-        if MAN10:
-            if not disable_edited:
-                MAN10.add_event_handler(
-                    func, events.MessageEdited(**args, outgoing=True, pattern=man_reg)
-                )
-            MAN10.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
-            )
         try:
             LOAD_PLUG[file_test].append(func)
         except Exception:
@@ -337,16 +223,6 @@ def man_handler(
             MAN4.add_event_handler(func, events.NewMessage(**args, incoming=True))
         if MAN5:
             MAN5.add_event_handler(func, events.NewMessage(**args, incoming=True))
-        if MAN6:
-            MAN6.add_event_handler(func, events.NewMessage(**args, incoming=True))
-        if MAN7:
-            MAN7.add_event_handler(func, events.NewMessage(**args, incoming=True))
-        if MAN8:
-            MAN8.add_event_handler(func, events.NewMessage(**args, incoming=True))
-        if MAN9:
-            MAN9.add_event_handler(func, events.NewMessage(**args, incoming=True))
-        if MAN10:
-            MAN10.add_event_handler(func, events.NewMessage(**args, incoming=True))
         return func
 
     return decorator
@@ -368,8 +244,6 @@ def asst_cmd(**args):
 
 
 def callback(**args):
-    """Assistant's callback decorator"""
-
     def decorator(func):
         if tgbot:
             tgbot.add_event_handler(func, events.CallbackQuery(**args))
