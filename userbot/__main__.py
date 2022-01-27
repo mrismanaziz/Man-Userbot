@@ -22,6 +22,8 @@ from userbot.utils import autobot, checking
 
 try:
     client = multiman()
+    total = 5 - client
+    LOGS.info(f"Total Clients = {total} User")
 except Exception as e:
     LOGS.info(str(e), exc_info=True)
     sys.exit(1)
