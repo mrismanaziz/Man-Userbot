@@ -39,6 +39,7 @@ del _BLACKLIST
 
 MSG_BLACKLIST = "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
 
+
 async def man_client(client):
     client.me = await client.get_me()
     client.uid = telethon.utils.get_peer_id(client.me)
