@@ -35,7 +35,7 @@ def inline_mention(user):
     return f"[{full_name}](tg://user?id={user.id})"
 
 
-@man_cmd(pattern=r"stats$")
+@man_cmd(pattern="stats$")
 async def stats(
     event: NewMessage.Event,
 ) -> None:
