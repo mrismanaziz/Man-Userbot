@@ -137,7 +137,11 @@ async def log(log_text):
             return
         await edit_delete(log_text, "**Berhasil disimpan di Grup Log**")
     else:
-        await edit_delete(log_text, "**Untuk Menggunakan Module ini, Anda Harus Mengatur** `BOTLOG_CHATID` **di Config Vars**", 30)
+        await edit_delete(
+            log_text,
+            "**Untuk Menggunakan Module ini, Anda Harus Mengatur** `BOTLOG_CHATID` **di Config Vars**",
+            30,
+        )
 
 
 @man_cmd(pattern="log$")
