@@ -33,6 +33,7 @@ while 0 < 6:
 
 del _GCAST_BLACKLIST
 
+
 @man_cmd(pattern="gcast(?: |$)(.*)")
 async def gcast(event):
     xx = event.pattern_match.group(1)
