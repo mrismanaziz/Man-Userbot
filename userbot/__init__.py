@@ -125,11 +125,6 @@ STRING_2 = os.environ.get("STRING_2", None)
 STRING_3 = os.environ.get("STRING_3", None)
 STRING_4 = os.environ.get("STRING_4", None)
 STRING_5 = os.environ.get("STRING_5", None)
-STRING_6 = os.environ.get("STRING_6", None)
-STRING_7 = os.environ.get("STRING_7", None)
-STRING_8 = os.environ.get("STRING_8", None)
-STRING_9 = os.environ.get("STRING_9", None)
-STRING_10 = os.environ.get("STRING_10", None)
 
 # Logging channel/group ID configuration.
 BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID") or 0)
@@ -368,76 +363,6 @@ if STRING_5:
     )
 else:
     MAN5 = None
-
-
-if STRING_6:
-    session6 = StringSession(str(STRING_6))
-    MAN6 = TelegramClient(
-        session=session6,
-        api_id=API_KEY,
-        api_hash=API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    )
-else:
-    MAN6 = None
-
-
-if STRING_7:
-    session7 = StringSession(str(STRING_7))
-    MAN7 = TelegramClient(
-        session=session7,
-        api_id=API_KEY,
-        api_hash=API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    )
-else:
-    MAN7 = None
-
-
-if STRING_8:
-    session8 = StringSession(str(STRING_8))
-    MAN8 = TelegramClient(
-        session=session8,
-        api_id=API_KEY,
-        api_hash=API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    )
-else:
-    MAN8 = None
-
-
-if STRING_9:
-    session9 = StringSession(str(STRING_9))
-    MAN9 = TelegramClient(
-        session=session9,
-        api_id=API_KEY,
-        api_hash=API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    )
-else:
-    MAN9 = None
-
-
-if STRING_10:
-    session10 = StringSession(str(STRING_10))
-    MAN10 = TelegramClient(
-        session=session10,
-        api_id=API_KEY,
-        api_hash=API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    )
-else:
-    MAN10 = None
 
 
 async def check_botlog_chatid() -> None:
