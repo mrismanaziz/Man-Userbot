@@ -62,7 +62,7 @@ def multiman():
             name = user.first_name
             uid = user.id
             LOGS.info(
-                f"STRING_SESSION detected!\n┌ First Name: {name}\n└ User ID: {uid}"
+                f"STRING_SESSION detected!\n┌ First Name: {name}\n└ User ID: {uid}\n——"
             )
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
@@ -79,7 +79,7 @@ def multiman():
             user = MAN2.get_me()
             name = user.first_name
             uid = user.id
-            LOGS.info(f"STRING_2 detected!\n┌ First Name: {name}\n└ User ID: {uid}")
+            LOGS.info(f"STRING_2 detected!\n┌ First Name: {name}\n└ User ID: {uid}\n——")
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
@@ -95,7 +95,7 @@ def multiman():
             user = MAN3.get_me()
             name = user.first_name
             uid = user.id
-            LOGS.info(f"STRING_3 detected!\n┌ First Name: {name}\n└ User ID: {uid}")
+            LOGS.info(f"STRING_3 detected!\n┌ First Name: {name}\n└ User ID: {uid}\n——")
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
@@ -111,7 +111,7 @@ def multiman():
             user = MAN4.get_me()
             name = user.first_name
             uid = user.id
-            LOGS.info(f"STRING_4 detected!\n┌ First Name: {name}\n└ User ID: {uid}")
+            LOGS.info(f"STRING_4 detected!\n┌ First Name: {name}\n└ User ID: {uid}\n——")
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
@@ -127,7 +127,7 @@ def multiman():
             user = MAN5.get_me()
             name = user.first_name
             uid = user.id
-            LOGS.info(f"STRING_5 detected!\n┌ First Name: {name}\n└ User ID: {uid}")
+            LOGS.info(f"STRING_5 detected!\n┌ First Name: {name}\n└ User ID: {uid}\n——")
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
