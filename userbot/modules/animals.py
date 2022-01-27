@@ -21,29 +21,29 @@ import requests
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.utils import edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern="shibe$"))
+@man_cmd(pattern="shibe$")
 async def shibe(event):
-    await event.edit("`Processing...`")
+    xx = await edit_or_reply(event, "`Processing...`")
     response = requests.get("https://shibe.online/api/shibes").json()
     if not response:
         await event.edit("**Tidak bisa menemukan Anjing.**")
         return
     await event.client.send_message(entity=event.chat_id, file=response[0])
-    await event.delete()
+    await xx.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern="cat$"))
+@man_cmd(pattern="cat$")
 async def cats(event):
-    await event.edit("`Processing...`")
+    xx = await edit_or_reply(event, "`Processing...`")
     response = requests.get("https://shibe.online/api/cats").json()
     if not response:
         await event.edit("**Tidak bisa menemukan kucing.**")
         return
     await event.client.send_message(entity=event.chat_id, file=response[0])
-    await event.delete()
+    await xx.delete()
 
 
 CMD_HELP.update(
