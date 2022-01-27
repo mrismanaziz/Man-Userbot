@@ -9,7 +9,7 @@ from telethon import events
 
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, bot
+from userbot import CMD_HELP, LOGS, bot, tgbot
 from userbot.modules.sql_helper import no_log_pms_sql
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.modules.vcplugin import vcmention
@@ -44,11 +44,10 @@ async def logaddjoin(event):
         text = f"📨 **#JOIN_LOG\n •** [{user.first_name}](tg://user?id={user.id}) **Bergabung\n • Ke Group** {chat}"
     else:
         return
-    await event.client.send_message(BOTLOG_CHATID, text)
+    await tgbot.send_message(BOTLOG_CHATID, text)
 
 
 @bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
-@bot.on(events.MessageEdited(incoming=True, func=lambda e: e.is_private))
 async def monito_p_m_s(event):
     if BOTLOG_CHATID == -100:
         return
@@ -83,7 +82,6 @@ async def monito_p_m_s(event):
 
 
 @bot.on(events.NewMessage(incoming=True, func=lambda e: e.mentioned))
-@bot.on(events.MessageEdited(incoming=True, func=lambda e: e.mentioned))
 async def log_tagged_messages(event):
     if BOTLOG_CHATID == -100:
         return
