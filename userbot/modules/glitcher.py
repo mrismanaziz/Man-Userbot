@@ -13,7 +13,7 @@ from glitch_this import ImageGlitcher
 from PIL import Image
 from telethon import functions, types
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.utils import check_media, edit_delete, edit_or_reply, man_cmd, progress
 
 Glitched = TEMP_DOWNLOAD_DIRECTORY + "glitch.gif"
@@ -26,7 +26,7 @@ async def glitch(event):
     reply_message = await event.get_reply_message()
     xx = await edit_or_reply(event, "`Processing...`")
     if not reply_message.media:
-        return await edit_delete(event,"`Bales Ke Gambar/Sticker`")
+        return await edit_delete(event, "`Bales Ke Gambar/Sticker`")
     await event.client.download_file(reply_message.media)
     await xx.edit("`Sedang Mendownload Media....`")
     if event.is_reply:
