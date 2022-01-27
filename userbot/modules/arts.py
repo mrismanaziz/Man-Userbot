@@ -1,9 +1,50 @@
 # @mrismanaziz
 # t.me/sharinguserbot
 
+from time import sleep
+
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot.utils import edit_or_reply, man_cmd
+
+
+@man_cmd(pattern="sadboy(?: |$)(.*)")
+async def _(event):
+    xx = await edit_or_reply(event, "`Pertama-tama kamu cantik`")
+    sleep(2)
+    await xx.edit("`Kedua kamu manis`")
+    sleep(1)
+    await xx.edit("`Dan yang terakhir adalah kamu bukan jodohku`")
+
+    
+@man_cmd(pattern="punten(?: |$)(.*)")
+async def _(event):
+    await edit_or_reply(
+        event,
+        "`\n┻┳|―-∩`"
+        "`\n┳┻|     ヽ`"
+        "`\n┻┳|    ● |`"
+        "`\n┳┻|▼) _ノ`"
+        "`\n┻┳|￣  )`"
+        "`\n┳ﾐ(￣ ／`"
+        "`\n┻┳T￣|`"
+        "\n**Punten**",
+    )
+
+
+@man_cmd(pattern="pantau(?: |$)(.*)")
+async def _(event):
+    await edit_or_reply(
+        event,
+        "`\n┻┳|―-∩`"
+        "`\n┳┻|     ヽ`"
+        "`\n┻┳|    ● |`"
+        "`\n┳┻|▼) _ノ`"
+        "`\n┻┳|￣  )`"
+        "`\n┳ﾐ(￣ ／`"
+        "`\n┻┳T￣|`"
+        "\n**Masih Gua Pantau**",
+    )
 
 
 @man_cmd(pattern="frog(?: |$)(.*)")
@@ -169,6 +210,10 @@ CMD_HELP.update(
         \n  •  **Function : **arts si jhonson.\
         \n\n  •  **Syntax :** `{cmd}sthink`\
         \n  •  **Function : **arts berfikir\
+        \n\n  •  **Syntax :** `{cmd}punten` ; `{cmd}pantau`\
+        \n  •  **Function : **Arts Beruang kek lagi mantau.\
+        \n\n  •  **Syntax :** `{cmd}sadboy`\
+        \n  •  **Function : **ya sadboy coba aja.\
     "
     }
 )
