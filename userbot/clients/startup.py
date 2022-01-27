@@ -39,7 +39,6 @@ def multiman():
         LOGS.info("STRING_1 Not Found")
 
     if STRING_2:
-        LOGS.info("STRING_2 detected! Starting 2nd Client.")
         try:
             MAN2.start()
             MAN2.loop.run_until_complete(man_client(MAN2))
@@ -51,7 +50,6 @@ def multiman():
         LOGS.info("STRING_2 Not Found")
 
     if STRING_3:
-        LOGS.info("STRING_3 detected! Starting 3rd Client.")
         try:
             MAN3.start()
             MAN3.loop.run_until_complete(man_client(MAN3))
@@ -63,7 +61,6 @@ def multiman():
         LOGS.info("STRING_3 Not Found")
 
     if STRING_4:
-        LOGS.info("STRING_4 detected! Starting 4th Client.")
         try:
             MAN4.start()
             MAN4.loop.run_until_complete(man_client(MAN4))
@@ -75,7 +72,6 @@ def multiman():
         LOGS.info("STRING_4 Not Found")
 
     if STRING_5:
-        LOGS.info("STRING_5 detected! Starting 5th Client.")
         try:
             MAN5.start()
             MAN5.loop.run_until_complete(man_client(MAN5))
