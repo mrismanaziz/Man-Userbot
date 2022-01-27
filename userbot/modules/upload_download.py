@@ -24,15 +24,14 @@ from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, LOGS, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import man_cmd
-from userbot.utils import humanbytes, progress, run_cmd
+from userbot.utils import edit_or_reply, humanbytes, man_cmd, progress, run_cmd
 from userbot.utils.FastTelethon import download_file, upload_file
 
 
-@bot.on(man_cmd(pattern=r"download(?: |$)(.*)", outgoing=True))
+@man_cmd(pattern="download(?: |$)(.*)")
 async def download(target_file):
     """For .download command, download files to the userbot's server."""
-    await target_file.edit("`Processing...`")
+    xx = await edit_or_reply(target_file, "`Processing...`")
     input_str = target_file.pattern_match.group(1)
     replied = await target_file.get_reply_message()
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
@@ -85,14 +84,14 @@ async def download(target_file):
             except Exception as e:
                 LOGS.info(str(e))
         if downloader.isSuccessful():
-            await target_file.edit(
+            await xx.edit(
                 "Downloaded to `{}` successfully !!".format(downloaded_file_name)
             )
         else:
-            await target_file.edit("Incorrect URL\n{}".format(url))
+            await xx.edit("Incorrect URL\n{}".format(url))
     elif replied:
         if not replied.media:
-            return await target_file.edit("`Reply to file or media `")
+            return await xx.edit("`Reply to file or media `")
         try:
             media = replied.media
             if hasattr(media, "document"):
@@ -126,7 +125,7 @@ async def download(target_file):
                     media, TEMP_DOWNLOAD_DIRECTORY
                 )
             dl_time = (datetime.now() - start_time).seconds
-        except Exception as e:  # pylint:disable=C0103,W0703
+        except Exception as e:
             await target_file.edit(str(e))
         else:
             try:
@@ -138,7 +137,7 @@ async def download(target_file):
                     "Downloaded to `{}` in `{}` seconds.".format(result, dl_time)
                 )
     else:
-        await target_file.edit("See `.help download` for more info.")
+        await xx.edit("Ketik `.help download` untuk bantuan menggunakan module.")
 
 
 async def get_video_thumb(file, output):
@@ -152,11 +151,11 @@ async def get_video_thumb(file, output):
     return None
 
 
-@bot.on(man_cmd(pattern=r"upload (.*)", outgoing=True))
+@man_cmd(pattern="upload (.*)")
 async def upload(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing...`")
+    xx = await edit_or_reply(event, "`Processing...`")
     input_str = event.pattern_match.group(1)
     if os.path.exists(input_str):
         if os.path.isfile(input_str):
@@ -218,7 +217,7 @@ async def upload(event):
             )
             if thumb is not None:
                 os.remove(thumb)
-            await event.edit(f"Uploaded successfully in `{up_time}` seconds.")
+            await xx.edit(f"Uploaded successfully in `{up_time}` seconds.")
         elif os.path.isdir(input_str):
             start_time = datetime.now()
             lst_files = []
@@ -227,12 +226,12 @@ async def upload(event):
                     lst_files.append(os.path.join(root, file))
             if not lst_files:
                 return await event.edit(f"`{input_str}` is empty.")
-            await event.edit(f"Found `{len(lst_files)}` files. Now uploading...")
+            await xx.edit(f"Found `{len(lst_files)}` files. Now uploading...")
             for files in os_sorted(lst_files):
                 file_name = os.path.basename(files)
                 thumb = None
                 attributes = []
-                msg = await event.reply(f"Uploading `{files}`")
+                msg = await xx.edit(f"Uploading `{files}`")
                 with open(files, "rb") as f:
                     result = await upload_file(
                         client=event.client,
@@ -287,14 +286,14 @@ async def upload(event):
                 if thumb is not None:
                     os.remove(thumb)
 
-            await event.delete()
+            await xx.delete()
             up_time = (datetime.now() - start_time).seconds
-            await event.respond(
+            await xx.respond(
                 f"Uploaded `{len(lst_files)}` files in `{input_str}` folder "
                 f"in `{up_time}` seconds."
             )
     else:
-        await event.edit("`404: File/Folder Not Found`")
+        await xx.edit("`404: File/Folder Not Found`")
 
 
 CMD_HELP.update(
