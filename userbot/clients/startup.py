@@ -1,3 +1,8 @@
+# Credits: @mrismanaziz || https://github.com/mrismanaziz
+# FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
+# t.me/SharingUserbot & t.me/Lunatic0de
+
+import telethon.utils
 from userbot import (
     LOGS,
     MAN2,
