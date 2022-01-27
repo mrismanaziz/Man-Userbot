@@ -15,7 +15,6 @@ modules = CMD_HELP
 
 @man_cmd(pattern="help(?: |$)(.*)")
 async def help(event):
-    """For help command"""
     args = event.pattern_match.group(1).lower()
     if args:
         if args in CMD_HELP:
@@ -23,7 +22,7 @@ async def help(event):
         else:
             await edit_delete(event, f"`{args}` **Bukan Nama Modul yang Valid.**")
     else:
-        user = await bot.get_me()
+        user = await event.client.get_me()
         string = ""
         for i in CMD_HELP:
             string += "`" + str(i)
