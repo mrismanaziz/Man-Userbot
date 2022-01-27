@@ -55,7 +55,6 @@ async def get_readable_time(seconds: int) -> str:
 
 @man_cmd(pattern="ping$")
 async def _(ping):
-    """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     xx = await edit_or_reply(ping, "**✣**")
@@ -73,9 +72,8 @@ async def _(ping):
     )
 
 
-@man_cmd(pattern=r"xping$")
+@man_cmd(pattern="xping$")
 async def _(ping):
-    """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     xping = await edit_or_reply(ping, "`Pinging....`")
@@ -86,9 +84,8 @@ async def _(ping):
     )
 
 
-@man_cmd(pattern=r"lping$")
+@man_cmd(pattern="lping$")
 async def _(ping):
-    """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     lping = await edit_or_reply(ping, "**★ PING ★**")
@@ -108,7 +105,7 @@ async def _(ping):
     )
 
 
-@man_cmd(pattern=r"keping$")
+@man_cmd(pattern="keping$")
 async def _(pong):
     await get_readable_time((time.time() - StartTime))
     start = datetime.now()
@@ -162,7 +159,6 @@ async def _(pong):
 
 @man_cmd(pattern="speedtest$")
 async def _(speed):
-    """For .speedtest command, use SpeedTest to check server speeds."""
     xxnx = await edit_or_reply(speed, "`Running speed test...`")
     test = Speedtest()
     test.get_best_server()
@@ -194,7 +190,6 @@ async def _(speed):
 
 @man_cmd(pattern="pong$")
 async def _(pong):
-    """For .ping command, ping the userbot from any chat."""
     start = datetime.now()
     xx = await edit_or_reply(pong, "`Sepong.....🏓`")
     end = datetime.now()
