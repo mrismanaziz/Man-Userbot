@@ -1,5 +1,7 @@
 import telethon.utils
 
+from telethon.tl.functions.users import GetFullUserRequest
+
 
 async def clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5):
     user_ids = list(SUDO_USERS) or []
