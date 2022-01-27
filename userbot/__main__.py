@@ -23,15 +23,6 @@ from userbot.utils import autobot, checking
 
 try:
     client = multiman()
-    user = bot.get_me()
-    blacklistman = requests.get(
-        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json"
-    ).json()
-    if user.id in blacklistman:
-        LOGS.warning(
-            "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOTnya GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
-        )
-        sys.exit(1)
     if 844432220 not in DEVS:
         LOGS.warning(
             f"EOL\nMan-UserBot v{BOT_VER}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
@@ -43,10 +34,6 @@ except Exception as e:
 
 for module_name in ALL_MODULES:
     imported_module = import_module("userbot.modules." + module_name)
-
-LOGS.info(
-    f"Jika {user.first_name} Membutuhkan Bantuan, Silahkan Tanyakan di Grup https://t.me/SharingUserbot"
-)
 
 LOGS.info(f"Man-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 
