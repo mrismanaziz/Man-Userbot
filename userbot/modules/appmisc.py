@@ -27,7 +27,7 @@ from telethon.tl.types import (
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import man_cmd
+from userbot.utils import man_cmd
 
 normiefont = [
     "a",
