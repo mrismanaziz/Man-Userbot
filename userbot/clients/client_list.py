@@ -1,5 +1,4 @@
 import telethon.utils
-
 from telethon.tl.functions.users import GetFullUserRequest
 
 
