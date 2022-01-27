@@ -5,7 +5,7 @@
 import os
 from pathlib import Path
 
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import edit_or_reply, load_module, man_cmd, remove_plugin, reply_id
 
 
@@ -16,11 +16,9 @@ async def _(event):
     if event.reply_to_msg_id:
         try:
             xx = await edit_or_reply(event, "`Installing Modules...`")
-            downloaded_file_name = (
-                await event.client.download_media(
-                    await event.get_reply_message(),
-                    "userbot/modules/",
-                )
+            downloaded_file_name = await event.client.download_media(
+                await event.get_reply_message(),
+                "userbot/modules/",
             )
             if "(" not in downloaded_file_name:
                 path1 = Path(downloaded_file_name)
