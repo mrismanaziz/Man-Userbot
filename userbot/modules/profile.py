@@ -27,7 +27,7 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_input_location
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, SUDO_USERS, bot
+from userbot import CMD_HELP, SUDO_USERS, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 # ====================== CONSTANT ===============================
