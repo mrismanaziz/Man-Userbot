@@ -9,7 +9,7 @@ from telethon import events
 
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, bot
+from userbot import CMD_HELP, LOGS, SUDO_USERS, bot
 from userbot.modules.sql_helper import no_log_pms_sql
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.modules.vcplugin import vcmention
@@ -124,6 +124,8 @@ async def log_tagged_messages(event):
 
 @man_cmd(pattern="save(?: |$)(.*)")
 async def log(log_text):
+    if log_text.sender_id in SUDO_USERS:
+        return
     if BOTLOG_CHATID:
         if log_text.reply_to_msg_id:
             reply_msg = await log_text.get_reply_message()
@@ -146,6 +148,8 @@ async def log(log_text):
 
 @man_cmd(pattern="log$")
 async def set_no_log_p_m(event):
+    if event.sender_id in SUDO_USERS:
+        return
     if BOTLOG_CHATID != -100:
         chat = await event.get_chat()
         if no_log_pms_sql.is_approved(chat.id):
@@ -157,6 +161,8 @@ async def set_no_log_p_m(event):
 
 @man_cmd(pattern="nolog$")
 async def set_no_log_p_m(event):
+    if event.sender_id in SUDO_USERS:
+        return
     if BOTLOG_CHATID != -100:
         chat = await event.get_chat()
         if not no_log_pms_sql.is_approved(chat.id):
@@ -168,6 +174,8 @@ async def set_no_log_p_m(event):
 
 @man_cmd(pattern="pmlog (on|off)$")
 async def set_pmlog(event):
+    if event.sender_id in SUDO_USERS:
+        return
     if BOTLOG_CHATID == -100:
         return await edit_delete(
             event,
@@ -198,6 +206,8 @@ async def set_pmlog(event):
 
 @man_cmd(pattern="gruplog (on|off)$")
 async def set_gruplog(event):
+    if event.sender_id in SUDO_USERS:
+        return
     if BOTLOG_CHATID == -100:
         return await edit_delete(
             event,
