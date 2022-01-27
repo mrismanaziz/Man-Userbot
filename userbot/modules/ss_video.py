@@ -10,7 +10,7 @@ import time
 from telethon.tl.types import DocumentAttributeFilename
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import bash, edit_or_reply, man_cmd, progress
 
 
@@ -43,7 +43,7 @@ async def ssvideo(event):
         return await edit_or_reply(event, "`Unsupported files..`")
     c_time = time.time()
     await edit_or_reply(event, "`Downloading media..`")
-    ss = await bot.download_media(
+    ss = await event.client.download_media(
         reply_message,
         "anu.mp4",
         progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
