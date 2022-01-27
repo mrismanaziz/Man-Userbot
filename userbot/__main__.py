@@ -31,7 +31,7 @@ try:
     LOGS.info(f"Python Version - {python_version()}")
     LOGS.info(f"Telethon Version - {version.__version__}")
     LOGS.info(f"Man-Userbot ⚙️ V{manversion} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
-except (ConnectionError, NotImplementedError, KeyboardInterrupt, SystemExit):
+except (ConnectionError, KeyboardInterrupt, NotImplementedError, SystemExit):
     pass
 except (BaseException, Exception) as e:
     LOGS.info(str(e), exc_info=True)
