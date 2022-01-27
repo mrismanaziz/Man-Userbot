@@ -9,7 +9,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import InputPhoto
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, STORAGE, SUDO_USERS, bot
+from userbot import CMD_HELP, LOGS, STORAGE, SUDO_USERS
 from userbot.utils import edit_or_reply, man_cmd
 
 if not hasattr(STORAGE, "userObj"):
@@ -25,9 +25,7 @@ async def impostor(event):
     if "restore" in inputArgs:
         await event.edit("**Kembali ke identitas asli...**")
         if not STORAGE.userObj:
-            return await xx.edit(
-                "**Anda harus mengclone orang dulu sebelum kembali!**"
-            )
+            return await xx.edit("**Anda harus mengclone orang dulu sebelum kembali!**")
         await updateProfile(STORAGE.userObj, restore=True)
         return await xx.edit("**Berhasil Mengembalikan Akun Anda dari clone**")
     if inputArgs:
@@ -80,7 +78,9 @@ async def updateProfile(userObj, restore=False):
         try:
             userPfp = userObj.profile_photo
             pfpImage = await userObj.client.download_media(userPfp)
-            await userObj.client(UploadProfilePhotoRequest(await userObj.client.upload_file(pfpImage)))
+            await userObj.client(
+                UploadProfilePhotoRequest(await userObj.client.upload_file(pfpImage))
+            )
         except BaseException:
             pass
     await userObj.client(
