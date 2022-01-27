@@ -9,6 +9,7 @@ import telethon.utils
 
 from userbot import BOT_VER as version
 from userbot import (
+    DEVS,
     LOGS,
     MAN2,
     MAN3,
@@ -46,6 +47,11 @@ async def man_client(client):
 
 
 def multiman():
+    if 844432220 not in DEVS:
+        LOGS.warning(
+            f"EOL\nMan-UserBot v{version}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
+        )
+        sys.exit(1)
     if STRING_SESSION:
         try:
             bot.start()
