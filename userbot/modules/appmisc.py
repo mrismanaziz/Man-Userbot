@@ -90,10 +90,9 @@ weebyfont = [
 logger = logging.getLogger(__name__)
 thumb_image_path = TEMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 name = "Profile Photos"
-client = bot
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"app(?: |$)(.*)"))
+@man_cmd(pattern="app(?: |$)(.*)")
 async def apk(e):
     try:
         app_name = e.pattern_match.group(1)
@@ -157,7 +156,7 @@ async def apk(e):
         await e.edit("Exception Occured:- " + str(err))
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"calc(?: |$)(.*)"))
+@man_cmd(pattern="calc(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -193,7 +192,7 @@ async def _(event):
         await event.edit("use .calc help")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"xcd(?: |$)(.*)"))
+@man_cmd(pattern="xcd(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -238,7 +237,7 @@ Year: {}""".format(
         await event.edit("xkcd n.{} not found!".format(xkcd_id))
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"remove(?: |$)(.*)"))
+@man_cmd(pattern="remove(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -396,7 +395,7 @@ async def ban_user(chat_id, i, rights):
         return False, str(exc)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"rnupload(?: |$)(.*)"))
+@man_cmd(pattern="rnupload(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -442,9 +441,8 @@ async def _(event):
         await event.edit("Syntax // .rnupload filename.extension <reply ke media>")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"grab(?: |$)(.*)"))
+@man_cmd(pattern="grab(?: |$)(.*)")
 async def potocmd(event):
-    """Gets the profile photos of replied users, channels or chats"""
     id = "".join(event.raw_text.split(maxsplit=2)[1:])
     user = await event.get_reply_message()
     chat = event.input_chat
@@ -475,7 +473,7 @@ async def potocmd(event):
             return
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"res(?: |$)(.*)"))
+@man_cmd(pattern="res(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -574,7 +572,7 @@ def get_provider(url):
     return url
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"watch(?: |$)(.*)"))
+@man_cmd(pattern="watch(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -629,7 +627,7 @@ async def _(event):
 # Modified by :- @kirito6969,@deleteduser420
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"weeb(?: |$)(.*)"))
+@man_cmd(pattern="weeb(?: |$)(.*)")
 async def weebify(event):
 
     args = event.pattern_match.group(1)
@@ -677,7 +675,7 @@ boldfont = [
 ]
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"bold(?: |$)(.*)"))
+@man_cmd(pattern="bold(?: |$)(.*)")
 async def thicc(bolded):
 
     args = bolded.pattern_match.group(1)
@@ -725,7 +723,7 @@ medievalbold = [
 ]
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"medibold(?: |$)(.*)"))
+@man_cmd(pattern="medibold(?: |$)(.*)")
 async def mediv(medievalx):
 
     args = medievalx.pattern_match.group(1)
@@ -773,9 +771,8 @@ doublestruckt = [
 ]
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"doublestruck(?: |$)(.*)"))
+@man_cmd(pattern="doublestruck(?: |$)(.*)")
 async def doublex(doublestrucktx):
-
     args = doublestrucktx.pattern_match.group(1)
     if not args:
         get = await doublestrucktx.get_reply_message()
@@ -821,7 +818,7 @@ cursiveboldx = [
 ]
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"curbold(?: |$)(.*)"))
+@man_cmd(pattern="curbold(?: |$)(.*)")
 async def cursive2(cursivebolded):
 
     args = cursivebolded.pattern_match.group(1)
@@ -869,7 +866,7 @@ medival2 = [
 ]
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"medi(?: |$)(.*)"))
+@man_cmd(pattern="medi(?: |$)(.*)")
 async def medival22(medivallite):
 
     args = medivallite.pattern_match.group(1)
@@ -917,7 +914,7 @@ cursive = [
 ]
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"cur(?: |$)(.*)"))
+@man_cmd(pattern="cur(?: |$)(.*)")
 async def xcursive(cursivelite):
 
     args = cursivelite.pattern_match.group(1)
