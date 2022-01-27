@@ -136,7 +136,7 @@ async def run(event):
     await event.edit(f"**Query:**\n`{codepre}`\n\n**Result:**\n`{stdout}`")
 
 
-@man_cmd(pattern="(term|bash)(?: |$|\n)([\s\S]*)")
+@man_cmd(pattern="term(?: |$|\n)([\s\S]*)")
 async def terminal_runner(event):
     command = event.pattern_match.group(1)
     if not command:
