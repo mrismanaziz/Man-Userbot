@@ -69,8 +69,6 @@ def multiman():
                 sys.exit(1)
         except Exception as e:
             print(e)
-    else:
-        LOGS.info("STRING_1 Not Found")
 
     if STRING_2:
         try:
@@ -85,8 +83,6 @@ def multiman():
                 sys.exit(1)
         except Exception as e:
             print(e)
-    else:
-        LOGS.info("STRING_2 Not Found")
 
     if STRING_3:
         try:
@@ -101,8 +97,6 @@ def multiman():
                 sys.exit(1)
         except Exception as e:
             print(e)
-    else:
-        LOGS.info("STRING_3 Not Found")
 
     if STRING_4:
         try:
@@ -117,8 +111,6 @@ def multiman():
                 sys.exit(1)
         except Exception as e:
             print(e)
-    else:
-        LOGS.info("STRING_4 Not Found")
 
     if STRING_5:
         try:
@@ -133,8 +125,6 @@ def multiman():
                 sys.exit(1)
         except Exception as e:
             print(e)
-    else:
-        LOGS.info("STRING_5 Not Found")
 
     if not STRING_SESSION:
         failed += 1
