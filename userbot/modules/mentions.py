@@ -25,7 +25,7 @@ async def mention(event):
         for match in usernexp.finditer(newstr):
             user = match.group(1)
             text = match.group(2)
-            name, entities = await bot._parse_message_text(text, "md")
+            name, entities = await event.client._parse_message_text(text, "md")
             rep = f'<a href="tg://resolve?domain={user}">{name}</a>'
             if entities:
                 for e in entities:
