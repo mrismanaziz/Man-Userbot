@@ -11,8 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import man_cmd
-from userbot.utils import edit_delete, edit_or_reply, runcmd, take_screen_shot
+from userbot.utils import edit_delete, edit_or_reply, man_cmd, runcmd, take_screen_shot
 
 
 @man_cmd(pattern="mmf (.*)")
