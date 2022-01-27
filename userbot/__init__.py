@@ -667,9 +667,7 @@ with bot:
                 buttons = paginate_help(current_page_number + 1, dugmeler, "helpme")
                 await event.edit(buttons=buttons)
             else:
-                reply_pop_up_alert = (
-                    f"Kamu Tidak diizinkan, ini Userbot Milik {OWNER}"
-                )
+                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {OWNER}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"close")))
