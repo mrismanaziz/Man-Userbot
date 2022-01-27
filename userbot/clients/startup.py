@@ -74,7 +74,7 @@ def multiman():
             MAN3.loop.run_until_complete(man_client(MAN3))
             user = MAN3.get_me()
             name = user.first_name
-            LOGS.info(f"STRING_2 detected! Starting as {name}")
+            LOGS.info(f"STRING_3 detected! Starting as {name}")
             if user.id in blacklistman:
                 LOGS.warning(
                     f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
@@ -91,7 +91,7 @@ def multiman():
             MAN4.loop.run_until_complete(man_client(MAN4))
             user = MAN4.get_me()
             name = user.first_name
-            LOGS.info(f"STRING_2 detected! Starting as {name}")
+            LOGS.info(f"STRING_4 detected! Starting as {name}")
             if user.id in blacklistman:
                 LOGS.warning(
                     f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
@@ -108,7 +108,7 @@ def multiman():
             MAN5.loop.run_until_complete(man_client(MAN5))
             user = MAN5.get_me()
             name = user.first_name
-            LOGS.info(f"STRING_2 detected! Starting as {name}")
+            LOGS.info(f"STRING_5 detected! Starting as {name}")
             if user.id in blacklistman:
                 LOGS.warning(
                     f"MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {name} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nCredits: @mrismanaziz"
