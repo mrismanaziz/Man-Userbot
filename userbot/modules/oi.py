@@ -281,7 +281,7 @@ CMD_HELP.update(
         \n  •  **Function : **Ngeledek gc sampah\
         \n\n  •  **Syntax :** `{cmd}virtual`\
         \n  •  **Function : **Ngeledek orang pacaran virtual\
-        \n\n**Klo mau Req, kosa kata dari lu Bisa pake Module costum. Ketik** `{cmd}help costum`\
+        \n\n**Klo mau Req, kosa kata dari lu Bisa pake Module costum. Ketik** `{cmd}help custom`\
     "
     }
 )
