@@ -13,9 +13,13 @@
 import sys
 from importlib import import_module
 
+from platform import python_version
 from pytgcalls import idle
+from telethon import version
 
-from userbot import BOT_TOKEN, BOT_VER, LOGS, bot
+from userbot import BOT_TOKEN
+from userbot import BOT_VER as manversion
+from userbot import LOGS, bot
 from userbot.clients import man_userbot_on, multiman
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
@@ -24,14 +28,17 @@ try:
     client = multiman()
     total = 5 - client
     LOGS.info(f"Total Clients = {total} User")
-except Exception as e:
+    LOGS.info(f"Python Version - {python_version()}")
+    LOGS.info(f"Telethon Version - {version.__version__}")
+    LOGS.info(f"Man-Userbot ⚙️ V{manversion} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
+except (ConnectionError, NotImplementedError, KeyboardInterrupt, SystemExit):
+        pass
+except (BaseException, Exception) as e:
     LOGS.info(str(e), exc_info=True)
     sys.exit(1)
 
 for module_name in ALL_MODULES:
     imported_module = import_module("userbot.modules." + module_name)
-
-LOGS.info(f"Man-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 
 
 bot.loop.run_until_complete(checking())
