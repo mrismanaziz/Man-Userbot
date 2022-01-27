@@ -439,6 +439,7 @@ if STRING_10:
 else:
     MAN10 = None
 
+
 async def check_botlog_chatid() -> None:
     if not BOTLOG_CHATID:
         LOGS.warning(
