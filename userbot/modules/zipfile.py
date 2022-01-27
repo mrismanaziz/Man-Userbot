@@ -13,15 +13,14 @@ from datetime import date
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, ZIP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import man_cmd
-from userbot.utils import progress
+from userbot.utils import man_cmd, progress
 
 # ====================
 today = date.today()
 # ====================
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"compress(?: |$)(.*)"))
+@man_cmd(pattern="compress(?: |$)(.*)")
 async def _(event):
     # Prevent Channel Bug to use update
     if event.is_channel and not event.is_group:
@@ -39,7 +38,7 @@ async def _(event):
         reply_message = await event.get_reply_message()
         try:
             c_time = time.time()
-            downloaded_file_name = await bot.download_media(
+            downloaded_file_name = await event.client.download_media(
                 reply_message,
                 TEMP_DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -56,7 +55,7 @@ async def _(event):
         directory_name
     )
     c_time = time.time()
-    await bot.send_file(
+    await event.client.send_file(
         event.chat_id,
         directory_name + ".zip",
         force_document=True,
@@ -71,7 +70,7 @@ async def _(event):
     await event.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"addzip(?: |$)(.*)"))
+@man_cmd(pattern="addzip(?: |$)(.*)")
 async def addzip(add):
     """Copyright (c) 2020 azrim @github"""
     # Prevent Channel Bug to use update
@@ -90,7 +89,7 @@ async def addzip(add):
         reply_message = await add.get_reply_message()
         try:
             c_time = time.time()
-            downloaded_file_name = await bot.download_media(
+            downloaded_file_name = await event.client.download_media(
                 reply_message,
                 ZIP_DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -104,7 +103,7 @@ async def addzip(add):
             return
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"upzip(?: |$)(.*)"))
+@man_cmd(pattern=r"upzip(?: |$)(.*)")
 async def upload_zip(up):
     if not os.path.isdir(ZIP_DOWNLOAD_DIRECTORY):
         await up.edit("`Files not found`")
@@ -117,7 +116,7 @@ async def upload_zip(up):
     zipdir(ZIP_DOWNLOAD_DIRECTORY, zipf)
     zipf.close()
     c_time = time.time()
-    await bot.send_file(
+    await event.client.send_file(
         up.chat_id,
         title + ".zip",
         force_document=True,
@@ -131,7 +130,7 @@ async def upload_zip(up):
     await up.delete()
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"rmzip(?: |$)(.*)"))
+@man_cmd(pattern=r"rmzip(?: |$)(.*)")
 async def remove_dir(rm):
     if not os.path.isdir(ZIP_DOWNLOAD_DIRECTORY):
         await rm.edit("`Directory not found`")
