@@ -1,8 +1,17 @@
 from telethon.tl.functions.channels import InviteToChannelRequest
 
 from userbot import BOT_USERNAME, BOT_VER, BOTLOG_CHATID
+from userbot import BOT_VER as version
 from userbot import CMD_HANDLER as cmd
 from userbot import MAN2, MAN3, MAN4, MAN5, bot, branch
+
+MSG_ON = """
+🔥 **Man-Userbot Berhasil Di Aktifkan**
+━━
+➠ **Userbot Version -** `{}@{}`
+➠ **Ketik** `{}alive` **untuk Mengecheck Bot**
+━━
+"""
 
 
 async def man_userbot_on():
@@ -11,7 +20,7 @@ async def man_userbot_on():
             if BOTLOG_CHATID != 0:
                 await bot.send_message(
                     BOTLOG_CHATID,
-                    f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{BOT_VER}@{branch}`\n➠ **Ketik** `{cmd}alive` **untuk Mengecheck Bot**\n━━",
+                    MSG_ON.format(version, branch, cmd),
                 )
     except Exception:
         pass
@@ -20,7 +29,7 @@ async def man_userbot_on():
             if BOTLOG_CHATID != 0:
                 await MAN2.send_message(
                     BOTLOG_CHATID,
-                    f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{BOT_VER}@{branch}`\n➠ **Ketik** `{cmd}alive` **untuk Mengecheck Bot**\n━━",
+                    MSG_ON.format(version, branch, cmd),
                 )
     except Exception:
         pass
@@ -29,7 +38,7 @@ async def man_userbot_on():
             if BOTLOG_CHATID != 0:
                 await MAN3.send_message(
                     BOTLOG_CHATID,
-                    f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{BOT_VER}@{branch}`\n➠ **Ketik** `{cmd}alive` **untuk Mengecheck Bot**\n━━",
+                    MSG_ON.format(version, branch, cmd),
                 )
     except Exception:
         pass
@@ -38,7 +47,7 @@ async def man_userbot_on():
             if BOTLOG_CHATID != 0:
                 await MAN4.send_message(
                     BOTLOG_CHATID,
-                    f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{BOT_VER}@{branch}`\n➠ **Ketik** `{cmd}alive` **untuk Mengecheck Bot**\n━━",
+                    MSG_ON.format(version, branch, cmd),
                 )
     except Exception:
         pass
@@ -47,7 +56,7 @@ async def man_userbot_on():
             if BOTLOG_CHATID != 0:
                 await MAN5.send_message(
                     BOTLOG_CHATID,
-                    f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{BOT_VER}@{branch}`\n➠ **Ketik** `{cmd}alive` **untuk Mengecheck Bot**\n━━",
+                    MSG_ON.format(version, branch, cmd),
                 )
     except Exception:
         pass
