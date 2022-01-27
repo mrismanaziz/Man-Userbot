@@ -25,6 +25,9 @@ from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
 
 try:
+    for module_name in ALL_MODULES:
+        imported_module = import_module("userbot.modules." + module_name)
+
     client = multiman()
     total = 5 - client
     LOGS.info(f"Total Clients = {total} User")
@@ -36,9 +39,6 @@ except (ConnectionError, KeyboardInterrupt, NotImplementedError, SystemExit):
 except (BaseException, Exception) as e:
     LOGS.info(str(e), exc_info=True)
     sys.exit(1)
-
-for module_name in ALL_MODULES:
-    imported_module = import_module("userbot.modules." + module_name)
 
 
 bot.loop.run_until_complete(checking())
