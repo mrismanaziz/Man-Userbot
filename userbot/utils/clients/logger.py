@@ -1,30 +1,8 @@
-import sys
-from importlib import import_module
-
-import requests
-from pytgcalls import idle
 from telethon.tl.functions.channels import InviteToChannelRequest
 
-from userbot import BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
+from userbot import BOT_USERNAME, BOT_VER, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import (
-    DEVS,
-    LOGS,
-    MAN2,
-    MAN3,
-    MAN4,
-    MAN5,
-    STRING_2,
-    STRING_3,
-    STRING_4,
-    STRING_5,
-    STRING_SESSION,
-    bot,
-    branch,
-    call_py,
-)
-from userbot.modules import ALL_MODULES
-from userbot.utils import autobot, checking
+from userbot import MAN2, MAN3, MAN4, MAN5, bot, branch
 
 
 async def man_userbot_on():
