@@ -167,7 +167,7 @@ async def bot_ver(event):
 
 @man_cmd(pattern="(?:alive|on)\s?(.)?")
 async def amireallyalive(alive):
-    user = await bot.get_me()
+    user = await alive.client.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
     output = (
         f"**[Man-Userbot](https://github.com/mrismanaziz/Man-Userbot) is Up and Running.**\n\n"
@@ -185,7 +185,7 @@ async def amireallyalive(alive):
         try:
             logo = ALIVE_LOGO
             await alive.delete()
-            msg = await bot.send_file(alive.chat_id, logo, caption=output)
+            msg = await alive.client.send_file(alive.chat_id, logo, caption=output)
             await asyncio.sleep(800)
             await msg.delete()
         except BaseException:
