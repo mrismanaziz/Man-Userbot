@@ -15,7 +15,7 @@ from importlib import import_module
 
 from pytgcalls import idle
 
-from userbot import BOT_TOKEN, BOT_VER, DEVS, LOGS, bot
+from userbot import BOT_TOKEN, BOT_VER, LOGS, bot
 from userbot.clients import man_userbot_on, multiman
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
