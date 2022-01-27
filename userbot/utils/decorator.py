@@ -107,34 +107,36 @@ def man_cmd(
                     **args, from_users=list(SUDO_USERS), pattern=sudo_reg
                 ),
             )
-        if allow_sudo:
-            if not disable_edited:
+        if MAN2:
+            if allow_sudo:
+                if not disable_edited:
+                    MAN2.add_event_handler(
+                        func,
+                        events.MessageEdited(
+                            **args, from_users=list(SUDO_USERS), pattern=sudo_reg
+                        ),
+                    )
                 MAN2.add_event_handler(
                     func,
-                    events.MessageEdited(
+                    events.NewMessage(
                         **args, from_users=list(SUDO_USERS), pattern=sudo_reg
                     ),
                 )
-            MAN2.add_event_handler(
-                func,
-                events.NewMessage(
-                    **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                ),
-            )
-        if allow_sudo:
-            if not disable_edited:
-                MAN3.add_event_handler(
+        if MAN3:
+            if allow_sudo:
+                if not disable_edited:
+                    MAN2.add_event_handler(
+                        func,
+                        events.MessageEdited(
+                            **args, from_users=list(SUDO_USERS), pattern=sudo_reg
+                        ),
+                    )
+                MAN2.add_event_handler(
                     func,
-                    events.MessageEdited(
+                    events.NewMessage(
                         **args, from_users=list(SUDO_USERS), pattern=sudo_reg
                     ),
                 )
-            MAN3.add_event_handler(
-                func,
-                events.NewMessage(
-                    **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                ),
-            )
         if MAN2:
             if not disable_edited:
                 MAN2.add_event_handler(
