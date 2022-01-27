@@ -16,7 +16,7 @@ async def _(event):
     sleep(1)
     await xx.edit("`Dan yang terakhir adalah kamu bukan jodohku`")
 
-    
+
 @man_cmd(pattern="punten(?: |$)(.*)")
 async def _(event):
     await edit_or_reply(
