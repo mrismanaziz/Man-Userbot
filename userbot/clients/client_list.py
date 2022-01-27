@@ -1,7 +1,5 @@
 import telethon.utils
 
-from userbot import MAN2, MAN3, MAN4, MAN5, SUDO_USERS, bot
-
 
 async def clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5):
     user_ids = list(SUDO_USERS) or []
