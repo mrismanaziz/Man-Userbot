@@ -106,56 +106,6 @@ def multiman():
     else:
         LOGS.info("STRING_5 Not Found")
 
-    if STRING_6:
-        LOGS.info("STRING_6 detected! Starting 6th Client.")
-        try:
-            MAN6.start()
-            MAN6.loop.run_until_complete(man_client(MAN6))
-        except Exception as e:
-            print(e)
-    else:
-        LOGS.info("STRING_6 Not Found")
-
-    if STRING_7:
-        LOGS.info("STRING_7 detected! Starting 7th Client.")
-        try:
-            MAN7.start()
-            MAN7.loop.run_until_complete(man_client(MAN7))
-        except Exception as e:
-            print(e)
-    else:
-        LOGS.info("STRING_7 Not Found")
-
-    if STRING_8:
-        LOGS.info("STRING_8 detected! Starting 8th Client.")
-        try:
-            MAN8.start()
-            MAN8.loop.run_until_complete(man_client(MAN8))
-        except Exception as e:
-            print(e)
-    else:
-        LOGS.info("STRING_8 Not Found")
-
-    if STRING_9:
-        LOGS.info("STRING_9 detected! Starting 9th Client.")
-        try:
-            MAN9.start()
-            MAN9.loop.run_until_complete(man_client(MAN9))
-        except Exception as e:
-            print(e)
-    else:
-        LOGS.info("STRING_9 Not Found")
-
-    if STRING_10:
-        LOGS.info("STRING_10 detected! Starting 10th Client.")
-        try:
-            MAN10.start()
-            MAN10.loop.run_until_complete(man_client(MAN10))
-        except Exception as e:
-            print(e)
-    else:
-        LOGS.info("STRING_10 Not Found")
-
 
 try:
     client = multiman()
