@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import DocumentAttributeFilename
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.utils import bash, edit_delete, edit_or_reply, man_cmd
 
 bground = "black"
@@ -20,15 +20,13 @@ bground = "black"
 @man_cmd(pattern="(ascii|asciis)$")
 async def _(event):
     if not event.reply_to_msg_id:
-        await edit_delete(event, "**Mohon Balas Ke Media..**")
-        return
+        return await edit_delete(event, "**Mohon Balas Ke Media..**")
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        await edit_delete(event, "`Balas Ke Gambar/Sticker/Video`")
-        return
+        return await edit_delete(event, "`Balas Ke Gambar/Sticker/Video`")
     xx = await edit_or_reply(event, "`Sedang Mendownload Media..`")
     if reply_message.photo:
-        IMG = await bot.download_media(
+        IMG = await event.client.download_media(
             reply_message,
             "ascii.png",
         )
@@ -36,14 +34,14 @@ async def _(event):
         DocumentAttributeFilename(file_name="AnimatedSticker.tgs")
         in reply_message.media.document.attributes
     ):
-        await bot.download_media(
+        await event.client.download_media(
             reply_message,
             "ASCII.tgs",
         )
         await bash("lottie_convert.py ASCII.tgs ascii.png")
         IMG = "ascii.png"
     elif reply_message.video:
-        video = await bot.download_media(
+        video = await event.client.download_media(
             reply_message,
             "ascii.mp4",
         )
@@ -51,7 +49,7 @@ async def _(event):
         await bash("ffmpeg -i ascii.mp4 -vframes 1 -an -s 480x360 -ss 1 ascii.png")
         IMG = "ascii.png"
     else:
-        IMG = await bot.download_media(
+        IMG = await event.client.download_media(
             reply_message,
             "ascii.png",
         )

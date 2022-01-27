@@ -16,14 +16,12 @@ from requests import get
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot import OPEN_WEATHER_MAP_APPID as OWM_API
-from userbot import WEATHER_DEFCITY, bot
-from userbot.events import man_cmd
+from userbot import WEATHER_DEFCITY
+from userbot.utils import edit_or_reply, man_cmd
 
-# ===== CONSTANT =====
 DEFCITY = WEATHER_DEFCITY or None
 
 
-# ====================
 async def get_tz(con):
     """Get time zone of the given country."""
     """ Credits: @aragon12 and @zakaryan2004. """
@@ -37,19 +35,15 @@ async def get_tz(con):
         return
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"weather(?: |$)(.*)"))
+@man_cmd(pattern="weather(?: |$)(.*)")
 async def get_weather(weather):
-    """For .weather command, gets the current weather of a city."""
-
     if not OWM_API:
         return await weather.edit(
             "**Get an API key from** https://openweathermap.org **first.**"
         )
-
+    xx = await edit_or_reply(weather, "Processing...")
     APPID = OWM_API
-
     anonymous = False
-
     if not weather.pattern_match.group(1):
         CITY = DEFCITY
     elif weather.pattern_match.group(1).lower() == "anon":
@@ -57,18 +51,15 @@ async def get_weather(weather):
         anonymous = True
     else:
         CITY = weather.pattern_match.group(1)
-
     if not CITY:
-        return await weather.edit(
+        return await xx.edit(
             "**Please specify a city or set one as default using the WEATHER_DEFCITY config variable.**"
         )
-
     timezone_countries = {
         timezone: country
         for country, timezones in c_tz.items()
         for timezone in timezones
     }
-
     if "," in CITY:
         newcity = CITY.split(",")
         if len(newcity[1]) == 2:
@@ -80,14 +71,11 @@ async def get_weather(weather):
             except KeyError:
                 return await weather.edit("`Invalid country.`")
             CITY = newcity[0].strip() + "," + countrycode.strip()
-
     url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={APPID}"
     request = get(url)
     result = json.loads(request.text)
-
     if request.status_code != 200:
         return await weather.edit("`Invalid country.`")
-
     cityname = result["name"]
     curtemp = result["main"]["temp"]
     humidity = result["main"]["humidity"]
@@ -100,13 +88,10 @@ async def get_weather(weather):
     sunset = result["sys"]["sunset"]
     wind = result["wind"]["speed"]
     winddir = result["wind"]["deg"]
-
     ctimezone = tz(c_tz[country][0])
     time = datetime.now(ctimezone).strftime("%A, %I:%M %p")
     fullc_n = c_n[f"{country}"]
-
     dirs = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
-
     div = 360 / len(dirs)
     funmath = int((winddir + (div / 2)) / div)
     findir = dirs[funmath % len(dirs)]
@@ -138,7 +123,7 @@ async def get_weather(weather):
     if not anonymous:
         results += f"`{cityname}, {fullc_n}`"
 
-    await weather.edit(results)
+    await edit_or_reply(weather, results)
 
 
 CMD_HELP.update(

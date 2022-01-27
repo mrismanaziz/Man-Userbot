@@ -10,16 +10,14 @@ import requests
 from pySmartDL import SmartDL
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
-from userbot.utils import edit_delete, edit_or_reply, reply_id
+from userbot import CMD_HELP
+from userbot.utils import edit_delete, edit_or_reply, man_cmd, reply_id
 
 ppath = os.path.join(os.getcwd(), "temp", "githubuser.jpg")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"github( -l(\d+))? ([\s\S]*)"))
+@man_cmd(pattern="github( -l(\d+))? ([\s\S]*)")
 async def _(event):
-    "Get info about an GitHub User"
     reply_to = await reply_id(event)
     username = event.pattern_match.group(3)
     URL = f"https://api.github.com/users/{username}"

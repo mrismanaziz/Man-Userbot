@@ -15,12 +15,8 @@ from telethon.tl.functions.messages import GetAllStickersRequest
 from telethon.tl.types import Channel, Chat, User
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
-from userbot.utils import edit_delete, edit_or_reply
-
-# STRINGS
-STAT_INDICATION = "`Collecting stats, Please wait....`"
+from userbot import CMD_HELP
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
 # Functions
@@ -35,7 +31,7 @@ def inline_mention(user):
     return f"[{full_name}](tg://user?id={user.id})"
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"stats$"))
+@man_cmd(pattern="stats$")
 async def stats(
     event: NewMessage.Event,
 ) -> None:
@@ -84,7 +80,7 @@ async def stats(
     except AttributeError:
         ct = 0
     try:
-        sp = await bot(GetAllStickersRequest(0))
+        sp = await event.client(GetAllStickersRequest(0))
         sp_count = len(sp.sets)
     except BaseException:
         sp_count = 0
@@ -109,7 +105,7 @@ async def stats(
     await stat.edit(response)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"(ustat|deteksi|ustats)(?: |$)(.*)"))
+@man_cmd(pattern=r"(ustat|deteksi|ustats)(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return

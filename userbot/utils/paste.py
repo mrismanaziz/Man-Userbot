@@ -2,7 +2,6 @@ import json
 
 import requests
 
-from userbot import BOTLOG_CHATID
 from userbot.utils.logger import logging
 
 LOGS = logging.getLogger("ManUserBot")
@@ -27,15 +26,6 @@ async def p_paste(message, extension=None):
             if extension
             else f"https://pasty.lus.pm/{response['id']}.txt"
         )
-        try:
-            from userbot import bot
-
-            await bot.send_message(
-                BOTLOG_CHATID,
-                f"**You have created a new paste in pasty bin.** Link to pasty is [here]({purl}). You can delete that paste by using this token `{response['deletionToken']}`",
-            )
-        except Exception as e:
-            LOGS.info(str(e))
         return {
             "url": purl,
             "raw": f"https://pasty.lus.pm/{response['id']}/raw",

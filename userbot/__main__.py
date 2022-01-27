@@ -15,17 +15,14 @@ from importlib import import_module
 
 import requests
 from pytgcalls import idle
-from telethon.tl.functions.channels import InviteToChannelRequest
 
-from userbot import BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID
-from userbot import CMD_HANDLER as cmd
-from userbot import DEVS, LOGS, bot, branch, call_py
+from userbot import BOT_TOKEN, BOT_VER, DEVS, LOGS, bot
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
+from userbot.utils.client import man_userbot_on, multiman
 
 try:
-    bot.start()
-    call_py.start()
+    client = multiman()
     user = bot.get_me()
     blacklistman = requests.get(
         "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json"
@@ -52,21 +49,6 @@ LOGS.info(
 )
 
 LOGS.info(f"Man-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
-
-
-async def man_userbot_on():
-    try:
-        if BOTLOG_CHATID != 0:
-            await bot.send_message(
-                BOTLOG_CHATID,
-                f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{BOT_VER}@{branch}`\n➠ **Ketik** `{cmd}alive` **untuk Mengecheck Bot**\n━━",
-            )
-    except Exception as e:
-        LOGS.info(str(e))
-    try:
-        await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
-    except BaseException:
-        pass
 
 
 bot.loop.run_until_complete(checking())

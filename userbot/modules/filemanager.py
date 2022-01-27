@@ -16,14 +16,13 @@ from natsort import os_sorted
 from rarfile import BadRarFile, RarFile, is_rarfile
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import man_cmd
-from userbot.utils import humanbytes
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
+from userbot.utils import humanbytes, man_cmd
 
 MAX_MESSAGE_SIZE_LIMIT = 4095
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"ls(?: |$)(.*)"))
+@man_cmd(pattern="ls(?: |$)(.*)")
 async def lst(event):
     if event.fwd_from:
         return
@@ -123,7 +122,7 @@ async def lst(event):
         await event.edit(msg)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"rm(?: |$)(.*)"))
+@man_cmd(pattern="rm(?: |$)(.*)")
 async def rmove(event):
     """Removing Directory/File"""
     cat = event.pattern_match.group(1)
@@ -140,7 +139,7 @@ async def rmove(event):
     await event.edit(f"Dihapus `{cat}`")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"rn ([^|]+)\|([^|]+)"))
+@man_cmd(pattern=r"rn ([^|]+)\|([^|]+)")
 async def rname(event):
     """Renaming Directory/File"""
     cat = str(event.pattern_match.group(1)).strip()
@@ -153,7 +152,7 @@ async def rname(event):
     await event.edit(f"Diganti nama dari `{cat}` ke `{new_path}`")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"zip (.*)"))
+@man_cmd(pattern="zip (.*)")
 async def zip_file(event):
     if event.fwd_from:
         return
@@ -202,7 +201,7 @@ async def zip_file(event):
         await event.edit("`404: Not Found`")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"unzip (.*)"))
+@man_cmd(pattern="unzip (.*)")
 async def unzip_file(event):
     if event.fwd_from:
         return

@@ -14,20 +14,18 @@ from pprint import pprint
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.utils import man_cmd
 
 p, pp = print, pprint
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"eval(?:\s|$)([\s\S]*)"))
+@man_cmd(pattern="eval(?:\s|$)([\s\S]*)")
 async def _(event):
     expression = event.pattern_match.group(1)
     if not expression:
         return await event.edit("**Berikan Code untuk di eksekusi.**")
-
     if expression in ("userbot.session", "config.env"):
         return await event.edit("**Itu operasi yang berbahaya! Tidak diperbolehkan!**")
-
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
         return event.edit("**Apa yang harus saya jalankan?**")
@@ -94,16 +92,13 @@ async def _(event):
         await xx.edit(final_output)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"exec(?: |$|\n)([\s\S]*)"))
+@man_cmd(pattern="exec(?: |$|\n)([\s\S]*)")
 async def run(event):
-    """For .exec command, which executes the dynamically created program"""
     code = event.pattern_match.group(1)
     if not code:
         return await event.edit("**Read** `.help exec` **for an example.**")
-
     if code in ("userbot.session", "config.env"):
         return await event.edit("`Itu operasi yang berbahaya! Tidak diperbolehkan!`")
-
     await event.edit("`Processing...`")
     if len(code.splitlines()) <= 5:
         codepre = code
@@ -112,7 +107,6 @@ async def run(event):
         codepre = (
             clines[0] + "\n" + clines[1] + "\n" + clines[2] + "\n" + clines[3] + "..."
         )
-
     command = "".join(f"\n {l}" for l in code.split("\n.strip()"))
     process = await asyncio.create_subprocess_exec(
         sys.executable,
@@ -122,14 +116,12 @@ async def run(event):
         stderr=asyncio.subprocess.STDOUT,
     )
     codepre.encode("unicode-escape").decode().replace("\\\\", "\\")
-
     stdout, _ = await process.communicate()
     if stdout and stdout != "":
         stdout = str(stdout.decode().strip())
         stdout.encode("unicode-escape").decode().replace("\\\\", "\\")
     else:
         stdout = "Success"
-
     if len(stdout) > 4096:
         with open("output.txt", "w+") as file:
             file.write(stdout)
@@ -144,30 +136,24 @@ async def run(event):
     await event.edit(f"**Query:**\n`{codepre}`\n\n**Result:**\n`{stdout}`")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"term(?: |$|\n)([\s\S]*)"))
+@man_cmd(pattern="(term|bash)(?: |$|\n)([\s\S]*)")
 async def terminal_runner(event):
-    """For .term command, runs bash commands and scripts on your server."""
     command = event.pattern_match.group(1)
-
     if not command:
         return await event.edit("`Give a command or use .help term for an example.`")
-
     if command in ("userbot.session", "config.env"):
         return await event.edit("`Itu operasi yang berbahaya! Tidak diperbolehkan!`")
-
     await event.edit("`Processing...`")
     process = await asyncio.create_subprocess_shell(
         command, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.STDOUT
     )
     command.encode("unicode-escape").decode().replace("\\\\", "\\")
-
     stdout, _ = await process.communicate()
     if stdout and stdout != "":
         result = str(stdout.decode().strip())
         result.encode("unicode-escape").decode().replace("\\\\", "\\")
     else:
         result = "Success"
-
     if len(result) > 4096:
         with open("output.txt", "w+") as output:
             output.write(result)
@@ -183,7 +169,7 @@ async def terminal_runner(event):
     await event.edit(f"**Command:**\n`{command}`\n\n**Result:**\n`{result}`")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"json$"))
+@man_cmd(pattern="json$")
 async def _(event):
     if event.fwd_from:
         return

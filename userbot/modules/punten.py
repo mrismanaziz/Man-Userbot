@@ -1,25 +1,26 @@
 from time import sleep
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"sadboy(?: |$)(.*)"))
+@man_cmd(pattern="sadboy(?: |$)(.*)")
 async def _(event):
-    await event.edit("`Pertama-tama kamu cantik`")
+    xx = await edit_or_reply(event, "`Pertama-tama kamu cantik`")
     sleep(2)
-    await event.edit("`Kedua kamu manis`")
+    await xx.edit("`Kedua kamu manis`")
     sleep(1)
-    await event.edit("`Dan yang terakhir adalah kamu bukan jodohku`")
+    await xx.edit("`Dan yang terakhir adalah kamu bukan jodohku`")
 
 
 # Create by myself @localheart
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"punten(?: |$)(.*)"))
+@man_cmd(pattern="punten(?: |$)(.*)")
 async def _(event):
-    await event.edit(
+    await edit_or_reply(
+        event,
         "`\n┻┳|―-∩`"
         "`\n┳┻|     ヽ`"
         "`\n┻┳|    ● |`"
@@ -27,13 +28,14 @@ async def _(event):
         "`\n┻┳|￣  )`"
         "`\n┳ﾐ(￣ ／`"
         "`\n┻┳T￣|`"
-        "\n**Punten**"
+        "\n**Punten**",
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"pantau(?: |$)(.*)"))
+@man_cmd(pattern="pantau(?: |$)(.*)")
 async def _(event):
-    await event.edit(
+    await edit_or_reply(
+        event,
         "`\n┻┳|―-∩`"
         "`\n┳┻|     ヽ`"
         "`\n┻┳|    ● |`"
@@ -41,7 +43,7 @@ async def _(event):
         "`\n┻┳|￣  )`"
         "`\n┳ﾐ(￣ ／`"
         "`\n┻┳T￣|`"
-        "\n**Masih Gua Pantau**"
+        "\n**Masih Gua Pantau**",
     )
 
 
