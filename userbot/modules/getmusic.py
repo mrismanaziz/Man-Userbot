@@ -21,7 +21,6 @@ from userbot import (
     DEEZER_ARL_TOKEN,
     LASTFM_USERNAME,
     TEMP_DOWNLOAD_DIRECTORY,
-    bot,
     lastfm,
 )
 from userbot.utils import bash, chrome, edit_or_reply, man_cmd, progress
