@@ -2,8 +2,9 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
-import requests
 import sys
+
+import requests
 import telethon.utils
 
 from userbot import (
@@ -21,7 +22,10 @@ from userbot import (
     call_py,
 )
 
-blacklistman = requests.get("https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json").json()
+blacklistman = requests.get(
+    "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json"
+).json()
+
 
 async def man_client(client):
     client.me = await client.get_me()

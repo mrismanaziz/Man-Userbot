@@ -13,7 +13,6 @@
 import sys
 from importlib import import_module
 
-import requests
 from pytgcalls import idle
 
 from userbot import BOT_TOKEN, BOT_VER, DEVS, LOGS, bot
