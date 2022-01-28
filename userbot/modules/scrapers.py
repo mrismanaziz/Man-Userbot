@@ -208,7 +208,7 @@ async def gsearch(q_event):
     )
 
 
-@man_cmd(pattern=r"wiki (.*)")
+@man_cmd(pattern="wiki (.*)")
 async def wiki(wiki_q):
     match = wiki_q.pattern_match.group(1)
     xx = await edit_or_reply(wiki_q, "`Processing...`")
@@ -462,7 +462,7 @@ async def download_video(v_url):
         with YoutubeDL(opts) as rip:
             rip_data = rip.extract_info(url)
     except DownloadError as DE:
-        return awaitedit_delete(xx, f"`{DE}`")
+        return await edit_delete(xx, f"`{DE}`")
     except ContentTooShortError:
         return await edit_delete(xx, "`The download content was too short.`")
     except GeoRestrictedError:
