@@ -4,21 +4,14 @@ from time import sleep
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
+from userbot.utils import edit_or_reply
 
 
 @bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
-
-    if event.fwd_from:
-
-        return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "bulan":
-
         await event.edit(input_str)
-
         animation_chars = [
             "🌗",
             "🌘",
@@ -53,21 +46,16 @@ async def _(event):
             "🌕",
             "🌖",
         ]
-
         animation_interval = 0.1
-
         animation_ttl = range(117)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 32])
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"sayang$"))
-async def _(e):
-    await e.edit("I LOVEE YOUUU 💕")
+async def _(event):
+    e = await edit_or_reply(event, "I LOVEE YOUUU 💕")
     await e.edit("💝💘💓💗")
     await e.edit("💞💕💗💘")
     await e.edit("💝💘💓💗")
@@ -94,8 +82,8 @@ async def _(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"dino(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit("`DIN DINNN.....`")
+async def _(event):
+    typew = await edit_or_reply(event, "`DIN DINNN.....`")
     sleep(1)
     await typew.edit("`DINOOOOSAURUSSSSS!!`")
     sleep(1)
@@ -151,8 +139,8 @@ async def _(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"gabut$"))
-async def _(e):
-    await e.edit("`PERNAAHHHHH KAHHH KAUUU MENGIRA`")
+async def _(event):
+    e = await edit_or_reply(event, "`PERNAAHHHHH KAHHH KAUUU MENGIRA`")
     await e.edit("`SEPEEERTIIIII APAAAA BENTUKKKKKKK CINTAAAA`")
     await e.edit("`RAMBUUUT WARNAAA WARNII`")
     await e.edit("`BAGAI GULALI`")
@@ -407,8 +395,8 @@ async def _(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"terkadang(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit("`Terkadang`")
+async def _(event):
+    typew = await edit_or_reply(event, "`Terkadang`")
     sleep(1)
     await typew.edit("`Mencintai Seseorang`")
     sleep(1)
@@ -425,23 +413,17 @@ async def _(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"mf$"))
-async def _(e):
-    await e.edit("`mf g dl` **ミ(ノ;_ _)ノ=3** ")
+async def _(event):
+    await edit_or_reply(event,"`mf g dl` **ミ(ノ;_ _)ノ=3** ")
 
 
 @bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "cinta":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Connecting Ke Server Cinta`",
             "`Mencari Target Cinta`",
@@ -455,22 +437,16 @@ async def _(event):
             "`Mengirim Cintaku.. 100%\n█████████CINTAKU███████████ `",
             "`Cintaku Sekarang Sepenuhnya Terkirim Padamu, Dan Sekarang Aku Sangat Mencintai Mu, I Love You 💞`",
         ]
-
         animation_interval = 2
-
         animation_ttl = range(11)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 11])
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"gombal(?: |$)(.*)"))
-async def _(typew):
-    sleep(1)
-    await typew.edit("`Hai, I LOVE YOU 💞`")
+async def _(event):
+    typew = await edit_or_reply(event, "`Hai, I LOVE YOU 💞`")
     sleep(1)
     await typew.edit("`I LOVE YOU SO MUCH!`")
     sleep(1)
@@ -495,8 +471,8 @@ async def _(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"helikopter(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit(
+async def _(event):
+    await edit_or_reply(event, 
         "▬▬▬.◙.▬▬▬ \n"
         "═▂▄▄▓▄▄▂ \n"
         "◢◤ █▀▀████▄▄▄▄◢◤ \n"
@@ -517,15 +493,15 @@ async def _(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"tembak(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit(
+async def _(event):
+    await edit_or_reply(event,
         "_/﹋\\_\n" "(҂`_´)\n" "<,︻╦╤─ ҉\n" r"_/﹋\_" "\n**Mau Jadi Pacarku Gak?!**"
     )
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"bundir(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit(
+async def _(event):
+    await edit_or_reply(event,
         "`Dadah Semuanya...`          \n　　　　　|"
         "\n　　　　　| \n"
         "　　　　　| \n"
@@ -544,8 +520,8 @@ async def _(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"awk(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit(
+async def _(event):
+    await edit_or_reply(event,
         "────██──────▀▀▀██\n"
         "──▄▀█▄▄▄─────▄▀█▄▄▄\n"
         "▄▀──█▄▄──────█─█▄▄\n"
@@ -555,8 +531,8 @@ async def _(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"ular(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit(
+async def _(event):
+    await edit_or_reply(event,
         "░░░░▓\n"
         "░░░▓▓\n"
         "░░█▓▓█\n"
@@ -646,8 +622,8 @@ async def _(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"y(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit(
+async def _(event):
+    await edit_or_reply(event,
         "‡‡‡‡‡‡‡‡‡‡‡‡▄▄▄▄\n"
         "‡‡‡‡‡‡‡‡‡‡‡█‡‡‡‡█\n"
         "‡‡‡‡‡‡‡‡‡‡‡█‡‡‡‡█\n"
@@ -665,8 +641,8 @@ async def _(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"tank(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit(
+async def _(event):
+    await edit_or_reply(event,
         "█۞███████]▄▄▄▄▄▄▄▄▄▄▃ \n"
         "▂▄▅█████████▅▄▃▂…\n"
         "[███████████████████]\n"
@@ -675,8 +651,8 @@ async def _(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"babi(?: |$)(.*)"))
-async def typewriter(typew):
-    await typew.edit(
+async def _(event):
+    await edit_or_reply(event,
         "┈┈┏━╮╭━┓┈╭━━━━╮\n"
         "┈┈┃┏┗┛┓┃╭┫Ngok ┃\n"
         "┈┈╰┓▋▋┏╯╯╰━━━━╯\n"
@@ -689,8 +665,8 @@ async def typewriter(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"ajg(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit(
+async def _(event):
+    await edit_or_reply(event,
         "╥━━━━━━━━╭━━╮━━┳\n"
         "╢╭╮╭━━━━━┫┃▋▋━▅┣\n"
         "╢┃╰┫┈┈┈┈┈┃┃┈┈╰┫┣\n"
@@ -701,8 +677,8 @@ async def _(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"bernyanyi(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit("**Ganteng Doang Gak Bernyanyi (ง˙o˙)ว**")
+async def _(event):
+    typew = await edit_or_reply(event, "**Ganteng Doang Gak Bernyanyi (ง˙o˙)ว**")
     sleep(2)
     await typew.edit("**♪┗ ( ･o･) ┓♪┏ (・o･) ┛♪**")
     sleep(1)
@@ -736,8 +712,8 @@ async def _(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"hua$"))
-async def _(e):
-    await e.edit("أ‿أ")
+async def _(event):
+    e = await edit_or_reply(event, "أ‿أ")
     await e.edit("╥﹏╥")
     await e.edit("(;﹏;)")
     await e.edit("(ToT)")
@@ -770,27 +746,19 @@ async def _(e):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"huh(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n />❤️ *Ini Buat Kamu`")
+async def _(event):
+    e = await edit_or_reply(event, "`\n(\\_/)`" "`\n(●_●)`" "`\n />❤️ *Ini Buat Kamu`")
     sleep(3)
-    await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n/>💔  *Aku Ambil Lagi`")
+    await e.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n/>💔  *Aku Ambil Lagi`")
     sleep(2)
-    await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n💔<\\  *Terimakasih`")
+    await e.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n💔<\\  *Terimakasih`")
 
 
 @bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
-
-    if event.fwd_from:
-
-        return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "ceritacinta":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Cerita ❤️ Cinta` ",
             "  😐             😕 \n/👕\\         <👗\\ \n 👖               /|",
@@ -807,31 +775,18 @@ async def _(event):
             "  😭      ☺️ \n  /|\\   /(👶)\\ \n  /!\\   / \\ ",
             "`TAMAT 😅`",
         ]
-
         animation_interval = 3
-
         animation_ttl = range(103)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 103])
 
 
 @bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
-
-    if event.fwd_from:
-
-        return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "canda":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀\n ⠀⣴⠿⠏⠀⠀⠀⠀⠀   ⢳⡀⠀⡏⠀⠀⠀   ⠀⢷\n⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀⠀  ⠀   ⡇\n⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿  ⣸ Kamu    ⡇\n ⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀  ⣿  ⢹⠀        ⡇\n  ⠙⢿⣯⠄⠀⠀⠀__⠀⠀⡿ ⠀⡇⠀⠀⠀⠀    ⡼\n⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀   ⠘⠤⣄⣠⠞⠀\n⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀\n⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀\n⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀ ⠀⣄⢸⠀⠀⠀⠀⠀⠀`",
             "`⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀\n ⠀⣴⠿⠏⠀⠀⠀⠀⠀  ⠀⢳⡀⠀⡏⠀⠀⠀   ⠀⢷\n⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀⠀      ⡇\n⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿  ⣸ Pasti   ⡇\n ⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀  ⣿  ⢹⠀        ⡇\n  ⠙⢿⣯⠄⠀⠀|__|⠀⠀⡿ ⠀⡇⠀⠀⠀⠀    ⡼\n⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀   ⠘⠤⣄⣠⠞⠀\n⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀\n⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀\n⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀ ⠀⣄⢸⠀⠀⠀⠀⠀⠀`",
@@ -840,21 +795,16 @@ async def _(event):
             "`⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀\n ⠀⣴⠿⠏⠀⠀⠀⠀⠀   ⢳⡀⠀⡏⠀⠀    ⠀⢷\n⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀ ⠀     ⡇\n⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿  ⣸ Bwhaha  ⡇\n ⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀  ⣿  ⢹⠀        ⡇\n  ⠙⢿⣯⠄⠀⠀|__| ⠀⡿ ⠀⡇⠀⠀⠀⠀    ⡼\n⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀   ⠘⠤⣄⣠⠞⠀\n⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀\n⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀\n⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀ ⠀⣄⢸⠀⠀⠀⠀⠀⠀`",
             "`⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀\n ⠀⣴⠿⠏⠀⠀⠀⠀⠀  ⠀⢳⡀⠀⡏⠀⠀    ⠀⢷\n⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀  ⠀     ⡇\n⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿  ⣸ Canda   ⡇\n ⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀   ⣿  ⢹⠀        ⡇\n  ⠙⢿⣯⠄⠀⠀****⠀⠀⡿ ⠀⡇⠀⠀⠀⠀    ⡼\n⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀   ⠘⠤⣄⣠⠞⠀\n⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀\n⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀\n⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀ ⠀⣄⢸⠀⠀⠀⠀⠀⠀`",
         ]
-
         animation_interval = 1
-
         animation_ttl = range(11)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 11])
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"santet(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit("`Mengaktifkan Perintah Santet Online....`")
+async def _(event):
+    typew = await edit_or_reply(event, "`Mengaktifkan Perintah Santet Online....`")
     sleep(2)
     await typew.edit("`Mencari Nama Orang Ini...`")
     sleep(1)
@@ -935,21 +885,6 @@ async def _(typew):
     number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████▎")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ████▍")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ████▌")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ████▊")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ████▉")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   █████")
     number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   █████▎")
@@ -1066,24 +1001,6 @@ async def _(typew):
     await typew.edit(str(number) + "%   ███████████▍")
     number += 1
     sleep(0.03)
-    await typew.edit(str(number) + "%   ███████████▌")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ███████████▊")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ███████████▉")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ████████████")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ████████████▎")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ████████████▍")
-    number += 1
-    sleep(0.03)
     await typew.edit(str(number) + "%   ████████████▌")
     number += 1
     sleep(0.03)
@@ -1096,64 +1013,16 @@ async def _(typew):
     await typew.edit(str(number) + "%   █████████████")
     number += 1
     sleep(0.03)
-    await typew.edit(str(number) + "%   █████████████▎")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   █████████████▍")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   █████████████▌")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   █████████████▊")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   █████████████▉")
-    number += 1
-    sleep(0.03)
     await typew.edit(str(number) + "%   ██████████████")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ██████████████▎")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ██████████████▍")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ██████████████▌")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ██████████████▊")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ██████████████▉")
     number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ███████████████")
     number += 1
     sleep(0.03)
-    await typew.edit(str(number) + "%   ███████████████▎")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ███████████████▍")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ███████████████▌")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ███████████████▊")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ███████████████▉")
+    await typew.edit(str(number) + "%   ███████████████")
     number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████████████")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ████████████████▎")
-    number += 1
-    sleep(0.03)
-    await typew.edit(str(number) + "%   ████████████████▍")
     number += 1
     sleep(0.03)
     await typew.edit(str(number) + "%   ████████████████▌")
@@ -1165,8 +1034,8 @@ async def _(typew):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=".nah(?: |$)(.*)"))
-async def _(typew):
-    await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n />💖 *Ini Buat Kamu`")
+async def _(event):
+    typew = await edit_or_reply(event, "`\n(\\_/)`" "`\n(●_●)`" "`\n />💖 *Ini Buat Kamu`")
     sleep(2)
     await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n💖<\\  *Tapi Bo'ong`")
 
@@ -1176,17 +1045,9 @@ async def _(typew):
 
 @bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
 async def _(event):
-
-    if event.fwd_from:
-
-        return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "owner":
-
         await event.edit(input_str)
-
         animation_chars = [
             "⬛⬛⬛⬛⬛⬛\n⬛⬜⬜⬜⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬜⬜⬜⬜⬛\n⬛⬜⬛⬜⬛⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬛⬛⬛⬛⬛",
             "⬛⬛⬛⬛⬛⬛\n⬛⬜⬜⬜⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬜⬜⬜⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬛⬛⬛⬛⬛",
@@ -1195,15 +1056,10 @@ async def _(event):
             "⬛⬛⬛⬛⬛⬛\n⬛⬜⬜⬜⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬛⬛⬛⬛⬛",
             "⬛⬛⬛⬛⬛⬛\n⬛⬜⬜⬜⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬜⬜⬜⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬜⬛⬛⬜⬛\n⬛⬛⬛⬛⬛⬛",
         ]
-
         animation_interval = 0.5
-
         animation_ttl = range(6)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 6])
 
 
