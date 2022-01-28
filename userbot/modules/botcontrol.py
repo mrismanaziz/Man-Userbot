@@ -10,7 +10,10 @@ import time
 from datetime import datetime
 
 import heroku3
+from telegraph import Telegraph
+from telegraph import upload_file as upl
 from telethon import Button, custom, events
+from telethon.tl.types import MessageMediaWebPage
 from telethon.utils import get_display_name, pack_bot_file_id
 
 from userbot import (
@@ -40,6 +43,9 @@ from .ping import get_readable_time
 botusername = BOT_USERNAME
 OWNER = user.first_name
 OWNER_ID = user.id
+telegraph = Telegraph()
+r = telegraph.create_account(short_name="telegraph")
+auth_url = r["auth_url"]
 
 
 heroku_api = "https://api.heroku.com"
@@ -56,6 +62,14 @@ async def setit(event, name, value):
         heroku_var[name] = value
     except BaseException:
         return await event.edit("**Maaf Gagal Menyimpan Karena ERROR**")
+
+
+def text_to_url(event):
+    if isinstance(event.media, MessageMediaWebPage):
+        webpage = event.media.webpage
+        if not isinstance(webpage, types.WebPageEmpty) and webpage.type in ["photo"]:
+            return webpage.display_url
+    return event.text
 
 
 def get_back_button(name):
@@ -195,7 +209,9 @@ async def alivemenu(event):
     await event.edit(
         "**Silahkan Pilih VAR yang ingin anda Setting**",
         buttons=[
-            [Button.inline("ᴀʟɪᴠᴇ ʟᴏɢᴏ", data="alvlogo"),
+            [
+                Button.inline("ᴀʟɪᴠᴇ ʟᴏɢᴏ", data="alvlogo"),
+            ],
             [
                 Button.inline("ᴀʟɪᴠᴇ ᴇᴍᴏᴊɪ", data="alvmoji"),
                 Button.inline("ᴀʟɪᴠᴇ ᴛᴇᴋs", data="alvteks"),
@@ -244,19 +260,40 @@ async def alvlogo(event):
     var = "ALIVE_LOGO"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**Silahkan Kirimkan Link Telegraph Untuk var ALIVE_LOGO anda**\n\nGunakan /cancel untuk membatalkan."
+            f"**Silahkan Kirimkan Foto Untuk var {var} anda**\n\nGunakan /cancel untuk membatalkan.",
         )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
-                buttons=get_back_button("alivemenu"),
-            )
-        await setit(event, var, themssg)
+        response = await conv.get_response()
+        try:
+            themssg = response.message.message
+            if themssg == "/cancel":
+                return await conv.send_message(
+                    "Membatalkan Proses Settings VAR!",
+                    buttons=get_back_button("alivemenu"),
+                )
+        except BaseException:
+            pass
+        if (
+            not (response.text).startswith("/")
+            and response.text != ""
+            and (not response.media or isinstance(response.media, MessageMediaWebPage))
+        ):
+            url = text_to_url(response)
+        elif response.sticker:
+            url = response.file.id
+        else:
+            media = await event.client.download_media(response, "alvpc")
+            try:
+                x = upl(media)
+                url = f"https://telegra.ph/{x[0]}"
+                remove(media)
+            except BaseException:
+                return await conv.send_message(
+                    f"**Maaf Gagal Mengganti Foto Untuk {var}**",
+                    buttons=get_back_button("alivemenu"),
+                )
+        await setit(event, var, url)
         await conv.send_message(
-            f"**ALIVE_LOGO Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            f"**{var} Berhasil di Ganti**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
             buttons=get_back_button("alivemenu"),
         )
 
