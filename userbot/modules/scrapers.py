@@ -751,7 +751,7 @@ async def bq(event):
         await event.client.send_file(event.chat_id, filename, reply_to=reply_msg_id)
         os.remove(filename)
     except Exception as e:
-        return await await edit_delete(xx, f"{e}")
+        return await edit_delete(xx, f"{e}")
     await xx.delete()
 
 
