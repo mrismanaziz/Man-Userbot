@@ -12,7 +12,8 @@ from datetime import datetime
 import heroku3
 from telegraph import Telegraph
 from telegraph import upload_file as upl
-from telethon import Button, custom, events
+from telethon import Button, custom, events, 
+from telethon.tl import types
 from telethon.tl.types import MessageMediaWebPage
 from telethon.utils import get_display_name, pack_bot_file_id
 
