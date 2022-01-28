@@ -57,7 +57,6 @@ from yt_dlp.utils import (
     XAttrMetadataError,
 )
 
-from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import (
     CMD_HELP,
@@ -67,13 +66,13 @@ from userbot import (
     TEMP_DOWNLOAD_DIRECTORY,
     bot,
 )
-from userbot.utils import edit_delete, edit_or_reply, man_cmd
 from userbot.modules.upload_download import get_video_thumb
 from userbot.utils import (
     chrome,
     edit_delete,
     edit_or_reply,
     googleimagesdownload,
+    man_cmd,
     options,
     progress,
 )
@@ -145,7 +144,8 @@ async def moni(event):
         return await edit_delete(xx, "**Error: API is down.**")
     if "error" in response:
         await edit_delete(
-            xx, "**sepertinya ini  mata uang asing, yang tidak dapat saya konversi sekarang.**"
+            xx,
+            "**sepertinya ini  mata uang asing, yang tidak dapat saya konversi sekarang.**",
         )
         return
     c_to_val = round(c_from_val * response["rates"][c_to], 2)
@@ -266,15 +266,15 @@ async def text_to_speech(query):
         message = textx.text
     else:
         return await edit_delete(
-           xx, "**Berikan teks atau balas pesan untuk Text-to-Speech!**"
+            xx, "**Berikan teks atau balas pesan untuk Text-to-Speech!**"
         )
     try:
         gTTS(message, lang=TTS_LANG)
     except AssertionError:
         return await edit_delete(
-            xx, 
+            xx,
             "**Teksnya kosong.**\n"
-            "Tidak ada yang tersisa untuk dibicarakan setelah pra-pemrosesan, pembuatan token, dan pembersihan."
+            "Tidak ada yang tersisa untuk dibicarakan setelah pra-pemrosesan, pembuatan token, dan pembersihan.",
         )
     except ValueError:
         return await edit_delete(xx, "**Bahasa tidak didukung.**")
@@ -337,8 +337,9 @@ async def lang(value):
             TRT_LANG = arg
             LANG = LANGUAGES[arg]
         else:
-            await edit_delete(xx, 
-                f"**Kode Bahasa tidak valid !!**\n**Kode bahasa yang tersedia**:\n\n`{LANGUAGES}`"
+            await edit_delete(
+                xx,
+                f"**Kode Bahasa tidak valid !!**\n**Kode bahasa yang tersedia**:\n\n`{LANGUAGES}`",
             )
             return
     elif util == "tts":
@@ -349,13 +350,12 @@ async def lang(value):
             TTS_LANG = arg
             LANG = tts_langs()[arg]
         else:
-            await edit_delete(xx, 
-                f"**Kode Bahasa tidak valid!!**\n**Kode bahasa yang tersedia**:\n\n`{tts_langs()}`"
+            await edit_delete(
+                xx,
+                f"**Kode Bahasa tidak valid!!**\n**Kode bahasa yang tersedia**:\n\n`{tts_langs()}`",
             )
             return
-    await xx.edit(
-        f"**Bahasa untuk** `{scraper}` **diganti menjadi** `{LANG.title()}`"
-    )
+    await xx.edit(f"**Bahasa untuk** `{scraper}` **diganti menjadi** `{LANG.title()}`")
 
 
 @man_cmd(pattern="yt (\d*) *(.*)")
@@ -375,8 +375,8 @@ async def yt_search(video_q):
     try:
         results = json.loads(YoutubeSearch(query, max_results=counter).to_json())
     except KeyError:
-        return await edit_delete(xx, 
-            "`Pencarian Youtube menjadi lambat.\nTidak dapat mencari keyword ini!`"
+        return await edit_delete(
+            xx, "`Pencarian Youtube menjadi lambat.\nTidak dapat mencari keyword ini!`"
         )
     output = f"**Pencarian Keyword:**\n`{query}`\n\n**Hasil:**\n\n"
     for i in results["videos"]:
@@ -466,16 +466,19 @@ async def download_video(v_url):
     except ContentTooShortError:
         return await edit_delete(xx, "`The download content was too short.`")
     except GeoRestrictedError:
-        return await edit_delete(xx, 
+        return await edit_delete(
+            xx,
             "`Video is not available from your geographic location "
-            "due to geographic restrictions imposed by a website.`"
+            "due to geographic restrictions imposed by a website.`",
         )
     except MaxDownloadsReached:
         return await edit_delete(xx, "`Max-downloads limit has been reached.`")
     except PostProcessingError:
         return await edit_delete(xx, "`There was an error during post processing.`")
     except UnavailableVideoError:
-        return await edit_delete(xx, "`Media is not available in the requested format.`")
+        return await edit_delete(
+            xx, "`Media is not available in the requested format.`"
+        )
     except XAttrMetadataError as XAME:
         return await edit_delete(xx, f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
     except ExtractorError:
@@ -578,8 +581,9 @@ async def download_video(v_url):
 @man_cmd(pattern="rbg(?: |$)(.*)")
 async def kbg(remob):
     if REM_BG_API_KEY is None:
-        await edit_delete(remob, 
-            "`Error: Remove.BG API key missing! Add it to environment vars or config.env.`"
+        await edit_delete(
+            remob,
+            "`Error: Remove.BG API key missing! Add it to environment vars or config.env.`",
         )
         return
     input_str = remob.pattern_match.group(1)
@@ -604,8 +608,8 @@ async def kbg(remob):
             await edit_delete(xx, str(e))
             return
     elif input_str:
-        await edit_delete(xx, 
-            f"`Removing background from online image hosted at`\n{input_str}"
+        await edit_delete(
+            xx, f"`Removing background from online image hosted at`\n{input_str}"
         )
         output_file_name = await ReTrieveURL(input_str)
     else:
@@ -623,10 +627,11 @@ async def kbg(remob):
             )
             await xx.delete()
     else:
-        await edit_delete(xx, 
+        await edit_delete(
+            xx,
             "**Error (Invalid API key, I guess ?)**\n`{}`".format(
                 output_file_name.content.decode("UTF-8")
-            )
+            ),
         )
 
 
@@ -665,8 +670,9 @@ async def ReTrieveURL(input_url):
 @man_cmd(pattern=r"ocr (.*)")
 async def ocr(event):
     if not OCR_SPACE_API_KEY:
-        return await edit_delete(event, 
-            "`Error: OCR.Space API key is missing! Add it to environment variables or config.env.`"
+        return await edit_delete(
+            event,
+            "`Error: OCR.Space API key is missing! Add it to environment variables or config.env.`",
         )
     xx = await edit_or_reply(event, "`Processing...`")
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
@@ -679,8 +685,8 @@ async def ocr(event):
     try:
         ParsedText = test_file["ParsedResults"][0]["ParsedText"]
     except BaseException:
-        await edit_delete(xx, 
-            "`Tidak bisa membacanya.`\n`Saya rasa saya perlu kacamata baru.`"
+        await edit_delete(
+            xx, "`Tidak bisa membacanya.`\n`Saya rasa saya perlu kacamata baru.`"
         )
     else:
         await xx.edit(f"**Inilah yang bisa saya baca:**\n\n{ParsedText}")
