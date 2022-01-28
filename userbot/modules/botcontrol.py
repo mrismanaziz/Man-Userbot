@@ -197,11 +197,10 @@ async def alivemenu(event):
         buttons=[
             [
                 Button.inline("ᴀʟɪᴠᴇ ᴇᴍᴏᴊɪ", data="alvmoji"),
-                Button.inline("ᴀʟɪᴠᴇ ʟᴏɢᴏ", data="alvlogo"),
+                Button.inline("ᴀʟɪᴠᴇ ᴛᴇᴋs", data="alvteks"),
             ],
             [
-                Button.inline("ᴀʟɪᴠᴇ ɴᴀᴍᴇ", data="alvname"),
-                Button.inline("ᴀʟɪᴠᴇ ᴛᴇᴋs", data="alvteks"),
+                Button.inline("ᴀʟɪᴠᴇ ʟᴏɢᴏ", data="alvlogo"),
             ],
             [
                 Button.inline("ᴄʜᴀɴɴᴇʟ", data="alvch"),
@@ -238,30 +237,6 @@ async def hndlrmenu(event):
             [Button.inline("ʙᴀᴄᴋ", data="apiset")],
         ],
     )
-
-
-@callback(data=re.compile(b"alvname"))
-async def alvname(event):
-    await event.delete()
-    pru = event.sender_id
-    var = "ALIVE_NAME"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            "**Silahkan Kirimkan Nama Untuk var ALIVE_NAME anda**\n\nGunakan /cancel untuk membatalkan."
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
-                buttons=get_back_button("alivemenu"),
-            )
-        await setit(event, var, themssg)
-        await conv.send_message(
-            f"**ALIVE_NAME Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-            buttons=get_back_button("alivemenu"),
-        )
 
 
 @callback(data=re.compile(b"alvlogo"))
