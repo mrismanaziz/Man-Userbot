@@ -127,7 +127,7 @@ async def pmbot(event):
             buttons=[
                 [
                     custom.Button.inline(
-                        "ʙᴀᴄᴋ",
+                        "« ʙᴀᴄᴋ",
                         data="settings",
                     )
                 ],
@@ -154,7 +154,7 @@ async def users(event):
                 allow_cache=False,
                 buttons=[
                     (
-                        Button.inline("ʙᴀᴄᴋ", data="settings"),
+                        Button.inline("« ʙᴀᴄᴋ", data="settings"),
                         Button.inline("ᴄʟᴏsᴇ", data="pmclose"),
                     )
                 ],
@@ -196,7 +196,7 @@ async def apiset(event):
                 Button.inline("ʜᴀɴᴅʟᴇʀ", data="hndlrmenu"),
                 Button.inline("ɪɴʟɪɴᴇ", data="inlinemenu"),
             ],
-            [Button.inline("ʙᴀᴄᴋ", data="settings")],
+            [Button.inline("« ʙᴀᴄᴋ", data="settings")],
         ],
     )
 
@@ -217,7 +217,7 @@ async def alivemenu(event):
                 Button.inline("ᴄʜᴀɴɴᴇʟ", data="alvch"),
                 Button.inline("ɢʀᴏᴜᴘ", data="alvgc"),
             ],
-            [Button.inline("ʙᴀᴄᴋ", data="apiset")],
+            [Button.inline("« ʙᴀᴄᴋ", data="apiset")],
         ],
     )
 
@@ -231,7 +231,7 @@ async def inlinemenu(event):
                 Button.inline("ɪɴʟɪɴᴇ ᴇᴍᴏᴊɪ", data="inmoji"),
                 Button.inline("ɪɴʟɪɴᴇ ᴘɪᴄ", data="inpics"),
             ],
-            [Button.inline("ʙᴀᴄᴋ", data="apiset")],
+            [Button.inline("« ʙᴀᴄᴋ", data="apiset")],
         ],
     )
 
@@ -253,7 +253,7 @@ async def alivemenu(event):
                 Button.inline("ᴏᴘᴇɴ ᴡᴇᴀᴛʜᴇʀ", data="opnwth"),
                 Button.inline("ʀᴇᴍᴏᴠᴇ.ʙɢ ᴀᴘɪ", data="rmbgapi"),
             ],
-            [Button.inline("ʙᴀᴄᴋ", data="apiset")],
+            [Button.inline("« ʙᴀᴄᴋ", data="apiset")],
         ],
     )
 
@@ -267,7 +267,7 @@ async def hndlrmenu(event):
                 Button.inline("ᴄᴍᴅ ʜᴀɴᴅʟᴇʀ", data="cmdhndlr"),
                 Button.inline("sᴜᴅᴏ ʜᴀɴᴅʟᴇʀ", data="sdhndlr"),
             ],
-            [Button.inline("ʙᴀᴄᴋ", data="apiset")],
+            [Button.inline("« ʙᴀᴄᴋ", data="apiset")],
         ],
     )
 
