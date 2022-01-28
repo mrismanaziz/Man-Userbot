@@ -190,11 +190,11 @@ async def apiset(event):
         buttons=[
             [
                 Button.inline("ᴀʟɪᴠᴇ", data="alivemenu"),
-                Button.inline("ɪɴʟɪɴᴇ", data="inlinemenu"),
+                Button.inline("ᴀᴘɪ ᴋᴇʏs", data="apikeys"),
             ],
             [
                 Button.inline("ʜᴀɴᴅʟᴇʀ", data="hndlrmenu"),
-                Button.inline("ᴀᴘɪ ᴋᴇʏs", data="apikeys"),
+                Button.inline("ɪɴʟɪɴᴇ", data="inlinemenu"),
             ],
             [Button.inline("ʙᴀᴄᴋ", data="settings")],
         ],
