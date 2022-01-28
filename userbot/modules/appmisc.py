@@ -267,7 +267,7 @@ async def _(event):
     q = 0
     r = 0
     xx = await edit_or_reply(event, "`Mencari Daftar Peserta....`")
-    async for i in bot.iter_participants(event.chat_id):
+    async for i in event.client.iter_participants(event.chat_id):
         p += 1
         #
         # Note that it's "reversed". You must set to ``True`` the permissions
