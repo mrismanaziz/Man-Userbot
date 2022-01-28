@@ -74,7 +74,7 @@ def text_to_url(event):
 
 
 def get_back_button(name):
-    return [Button.inline("ʙᴀᴄᴋ", data=f"{name}")]
+    return [Button.inline("« ʙᴀᴄᴋ", data=f"{name}")]
 
 
 async def check_bot_started_users(user, event):
