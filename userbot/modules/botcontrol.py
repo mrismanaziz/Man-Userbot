@@ -8,10 +8,11 @@ import io
 import re
 import time
 from datetime import datetime
+from os import remove
 
 import heroku3
 from telegraph import Telegraph
-from telegraph import upload_file as upl
+from telegraph import upload_file
 from telethon import Button, custom, events
 from telethon.tl import types
 from telethon.tl.types import MessageMediaWebPage
@@ -284,7 +285,7 @@ async def alvlogo(event):
         else:
             media = await event.client.download_media(response, "alvpc")
             try:
-                x = upl(media)
+                x = upload_file(media)
                 url = f"https://telegra.ph/{x[0]}"
                 remove(media)
             except BaseException:
