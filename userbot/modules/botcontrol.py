@@ -195,12 +195,10 @@ async def alivemenu(event):
     await event.edit(
         "**Silahkan Pilih VAR yang ingin anda Setting**",
         buttons=[
+            [Button.inline("ᴀʟɪᴠᴇ ʟᴏɢᴏ", data="alvlogo"),
             [
                 Button.inline("ᴀʟɪᴠᴇ ᴇᴍᴏᴊɪ", data="alvmoji"),
                 Button.inline("ᴀʟɪᴠᴇ ᴛᴇᴋs", data="alvteks"),
-            ],
-            [
-                Button.inline("ᴀʟɪᴠᴇ ʟᴏɢᴏ", data="alvlogo"),
             ],
             [
                 Button.inline("ᴄʜᴀɴɴᴇʟ", data="alvch"),
