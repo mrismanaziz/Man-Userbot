@@ -257,6 +257,7 @@ async def alivemenu(event):
         ],
     )
 
+
 @callback(data=re.compile(b"hndlrmenu"))
 async def hndlrmenu(event):
     await event.edit(
