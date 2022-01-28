@@ -255,7 +255,7 @@ async def _(event):
         await xx.edit("Tidak ada hasil untuk **" + word + "**")
 
 
-@man_cmd(pattern="tts(?: |$)([\s\S]*)"))
+@man_cmd(pattern="tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
     textx = await query.get_reply_message()
     message = query.pattern_match.group(1)
