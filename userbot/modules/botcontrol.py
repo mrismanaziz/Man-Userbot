@@ -194,11 +194,7 @@ async def apiset(event):
             ],
             [
                 Button.inline("ʜᴀɴᴅʟᴇʀ", data="hndlrmenu"),
-                Button.inline("ᴅᴇᴇᴘ ᴀᴘɪ", data="dapi"),
-            ],
-            [
-                Button.inline("ᴏᴄʀ ᴀᴘɪ", data="ocrapi"),
-                Button.inline("ʀᴇᴍᴏᴠᴇ.ʙɢ ᴀᴘɪ", data="rmbgapi"),
+                Button.inline("ᴀᴘɪ ᴋᴇʏs", data="apikeys"),
             ],
             [Button.inline("ʙᴀᴄᴋ", data="settings")],
         ],
@@ -239,6 +235,27 @@ async def inlinemenu(event):
         ],
     )
 
+
+@callback(data=re.compile(b"apikeys"))
+async def alivemenu(event):
+    await event.edit(
+        "**Silahkan Pilih VAR yang ingin anda Setting**",
+        buttons=[
+            [
+                Button.inline("ʙɪᴛʟʏ ᴛᴏᴋᴇɴ", data="btly"),
+                Button.inline("ᴅᴇᴇᴢᴇʀ ᴀʀʟ ᴛᴏᴋᴇɴ", data="dzrl"),
+            ],
+            [
+                Button.inline("ᴅᴇᴇᴘ ᴀᴘɪ", data="dapi"),
+                Button.inline("ᴏᴄʀ ᴀᴘɪ", data="ocrapi"),
+            ],
+            [
+                Button.inline("ᴏᴘᴇɴ ᴡᴇᴀᴛʜᴇʀ", data="opnwth"),
+                Button.inline("ʀᴇᴍᴏᴠᴇ.ʙɢ ᴀᴘɪ", data="rmbgapi"),
+            ],
+            [Button.inline("ʙᴀᴄᴋ", data="apiset")],
+        ],
+    )
 
 @callback(data=re.compile(b"hndlrmenu"))
 async def hndlrmenu(event):
@@ -552,12 +569,12 @@ async def rmbgapi(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Membatalkan Proses Settings VAR!",
-                buttons=get_back_button("apiset"),
+                buttons=get_back_button("apikeys"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
             f"{name} **Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-            buttons=get_back_button("apiset"),
+            buttons=get_back_button("apikeys"),
         )
 
 
@@ -568,7 +585,7 @@ async def deepai(event):
     var = "DEEP_AI"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**Silahkan Kirimkan API Deep AI Anda dari deepai.org**\n\nGunakan /cancel untuk membatalkan."
+            f"**Silahkan Kirimkan API {var} Anda dari deepai.org**\n\nGunakan /cancel untuk membatalkan."
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
@@ -576,12 +593,12 @@ async def deepai(event):
         if themssg == "/cancel":
             return await conv.send_message(
                 "Membatalkan Proses Settings VAR!",
-                buttons=get_back_button("apiset"),
+                buttons=get_back_button("apikeys"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
-            f"**API DEEP AI Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-            buttons=get_back_button("apiset"),
+            f"**{var} Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apikeys"),
         )
 
 
@@ -592,7 +609,103 @@ async def ocrapi(event):
     var = "OCR_SPACE_API_KEY"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**Silahkan Kirimkan OCR API Key anda dari ocr.space**\n\nGunakan /cancel untuk membatalkan."
+            f"**Silahkan Kirimkan {var} anda dari ocr.space**\n\nGunakan /cancel untuk membatalkan."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Membatalkan Proses Settings VAR!",
+                buttons=get_back_button("apikeys"),
+            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**{var} Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apikeys"),
+        )
+
+
+@callback(data=re.compile(b"ocrapi"))
+async def ocrapi(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "OCR_SPACE_API_KEY"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            f"**Silahkan Kirimkan {var} anda dari ocr.space**\n\nGunakan /cancel untuk membatalkan."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Membatalkan Proses Settings VAR!",
+                buttons=get_back_button("apikeys"),
+            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**{var} Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apikeys"),
+        )
+
+
+@callback(data=re.compile(b"dzrl"))
+async def ocrapi(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "DEEZER_ARL_TOKEN"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            f"**Silahkan Kirimkan {var} anda dari developers.deezer.com**\n\nGunakan /cancel untuk membatalkan."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Membatalkan Proses Settings VAR!",
+                buttons=get_back_button("apikeys"),
+            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**{var} Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apikeys"),
+        )
+
+
+@callback(data=re.compile(b"opnwth"))
+async def ocrapi(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "OPEN_WEATHER_MAP_APPID"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            f"**Silahkan Kirimkan {var} anda dari api.openweathermap.org/data/2.5/weather**\n\nGunakan /cancel untuk membatalkan."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Membatalkan Proses Settings VAR!",
+                buttons=get_back_button("apikeys"),
+            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**{var} Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apikeys"),
+        )
+
+
+@callback(data=re.compile(b"btly"))
+async def ocrapi(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "BITLY_TOKEN"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            f"**Silahkan Kirimkan {var} anda dari bitly.com**\n\nGunakan /cancel untuk membatalkan."
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
@@ -604,7 +717,7 @@ async def ocrapi(event):
             )
         await setit(event, var, themssg)
         await conv.send_message(
-            f"**OCR API Key Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            f"**{var} Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
             buttons=get_back_button("apiset"),
         )
 
