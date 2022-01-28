@@ -426,19 +426,40 @@ async def inpics(event):
     var = "INLINE_PIC"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            "**Silahkan Kirimkan Link Telegraph Untuk var INLINE_PIC anda**\n\nGunakan /cancel untuk membatalkan."
+            f"**Silahkan Kirimkan Foto Untuk var {var} anda**\n\nGunakan /cancel untuk membatalkan.",
         )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
-                buttons=get_back_button("inlinemenu"),
-            )
-        await setit(event, var, themssg)
+        response = await conv.get_response()
+        try:
+            themssg = response.message.message
+            if themssg == "/cancel":
+                return await conv.send_message(
+                    "Membatalkan Proses Settings VAR!",
+                    buttons=get_back_button("alivemenu"),
+                )
+        except BaseException:
+            pass
+        if (
+            not (response.text).startswith("/")
+            and response.text != ""
+            and (not response.media or isinstance(response.media, MessageMediaWebPage))
+        ):
+            url = text_to_url(response)
+        elif response.sticker:
+            url = response.file.id
+        else:
+            media = await event.client.download_media(response, "inlpc")
+            try:
+                x = upload_file(media)
+                url = f"https://telegra.ph/{x[0]}"
+                remove(media)
+            except BaseException:
+                return await conv.send_message(
+                    f"**Maaf Gagal Mengganti Foto Untuk {var}**",
+                    buttons=get_back_button("inlinemenu"),
+                )
+        await setit(event, var, url)
         await conv.send_message(
-            f"**INLINE_PIC Berhasil di Ganti Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            f"**{var} Berhasil di Ganti**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
             buttons=get_back_button("inlinemenu"),
         )
 
