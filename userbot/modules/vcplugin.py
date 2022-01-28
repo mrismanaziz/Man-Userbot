@@ -151,7 +151,7 @@ async def vc_play(event):
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
                 caption = f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n🎧 **Atas permintaan:** {from_user}"
                 await botman.delete()
-                await event.client.send_file(chat_id, thumb, caption=caption)
+                await event.client.send_file(chat_id, thumb, caption=caption, reply_to=event.reply_to_msg_id)
             else:
                 try:
                     await call_py.join_group_call(
@@ -164,7 +164,7 @@ async def vc_play(event):
                     add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
                     caption = f"🏷 **Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n💡 **Status:** `Sedang Memutar`\n🎧 **Atas permintaan:** {from_user}"
                     await botman.delete()
-                    await event.client.send_file(chat_id, thumb, caption=caption)
+                    await event.client.send_file(chat_id, thumb, caption=caption, reply_to=event.reply_to_msg_id)
                 except Exception as ep:
                     clear_queue(chat_id)
                     await botman.edit(f"`{ep}`")
@@ -180,7 +180,7 @@ async def vc_play(event):
         if chat_id in QUEUE:
             pos = add_to_queue(chat_id, songname, dl, link, "Audio", 0)
             caption = f"💡 **Lagu Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
-            await event.client.send_file(chat_id, ngantri, caption=caption)
+            await event.client.send_file(chat_id, ngantri, caption=caption, reply_to=event.reply_to_msg_id)
             await botman.delete()
         else:
             try:
@@ -193,7 +193,7 @@ async def vc_play(event):
                 )
                 add_to_queue(chat_id, songname, dl, link, "Audio", 0)
                 caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Lagu`\n🎧 **Atas permintaan:** {from_user}"
-                await event.client.send_file(chat_id, fotoplay, caption=caption)
+                await event.client.send_file(chat_id, fotoplay, caption=caption, reply_to=event.reply_to_msg_id)
                 await botman.delete()
             except Exception as ep:
                 clear_queue(chat_id)
@@ -245,7 +245,7 @@ async def vc_vplay(event):
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Video", RESOLUSI)
                 caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n🎧 **Atas permintaan:** {from_user}"
                 await xnxx.delete()
-                await event.client.send_file(chat_id, thumb, caption=caption)
+                await event.client.send_file(chat_id, thumb, caption=caption, reply_to=event.reply_to_msg_id)
             else:
                 try:
                     await call_py.join_group_call(
@@ -276,7 +276,7 @@ async def vc_vplay(event):
         if chat_id in QUEUE:
             pos = add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
             caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n**🏷 Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n🎧 **Atas permintaan:** {from_user}"
-            await event.client.send_file(chat_id, ngantri, caption=caption)
+            await event.client.send_file(chat_id, ngantri, caption=caption, reply_to=event.reply_to_msg_id)
             await xnxx.delete()
         else:
             if RESOLUSI == 360:
@@ -294,7 +294,7 @@ async def vc_vplay(event):
                 add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
                 caption = f"🏷 **Judul:** [{songname}]({link})\n**👥 Chat ID:** `{chat_id}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}"
                 await xnxx.delete()
-                await event.client.send_file(chat_id, fotoplay, caption=caption)
+                await event.client.send_file(chat_id, fotoplay, caption=caption, reply_to=event.reply_to_msg_id)
             except Exception as ep:
                 clear_queue(chat_id)
                 await xnxx.edit(f"`{ep}`")
@@ -322,7 +322,7 @@ async def vc_vplay(event):
                 pos = add_to_queue(chat_id, songname, ytlink, url, "Video", RESOLUSI)
                 caption = f"💡 **Video Ditambahkan Ke antrian »** `#{pos}`\n\n🏷 **Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n🎧 **Atas permintaan:** {from_user}"
                 await xnxx.delete()
-                await event.client.send_file(chat_id, thumb, caption=caption)
+                await event.client.send_file(chat_id, thumb, caption=caption, reply_to=event.reply_to_msg_id)
             else:
                 try:
                     await call_py.join_group_call(
@@ -333,7 +333,7 @@ async def vc_vplay(event):
                     add_to_queue(chat_id, songname, ytlink, url, "Video", RESOLUSI)
                     caption = f"🏷 **Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}"
                     await xnxx.delete()
-                    await event.client.send_file(chat_id, thumb, caption=caption)
+                    await event.client.send_file(chat_id, thumb, caption=caption, reply_to=event.reply_to_msg_id)
                 except Exception as ep:
                     clear_queue(chat_id)
                     await xnxx.edit(f"`{ep}`")
