@@ -11,8 +11,7 @@ from datetime import datetime
 from os import remove
 
 import heroku3
-from telegraph import Telegraph
-from telegraph import upload_file
+from telegraph import Telegraph, upload_file
 from telethon import Button, custom, events
 from telethon.tl import types
 from telethon.tl.types import MessageMediaWebPage
