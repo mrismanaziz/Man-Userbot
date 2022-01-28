@@ -26,7 +26,7 @@ from telethon.tl.types import (
 )
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, SUDO_USERS, bot
+from userbot import CMD_HELP, SUDO_USERS, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 normiefont = [
@@ -150,8 +150,8 @@ async def apk(e):
         app_details += "\n\n===> Support @Lunatic0de <==="
         await xx.edit(app_details, link_preview=True, parse_mode="HTML")
     except IndexError:
-        await edit_delete(xx, 
-            "**Pencarian tidak ditemukan. Mohon masukkan** `Nama app yang valid`"
+        await edit_delete(
+            xx, "**Pencarian tidak ditemukan. Mohon masukkan** `Nama app yang valid`"
         )
     except Exception as err:
         await edit_delete(xx, "Exception Occured:- " + str(err))
@@ -278,8 +278,9 @@ async def _(event):
             if "y" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await edit_delete(xx, 
-                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    await edit_delete(
+                        xx,
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**",
                     )
                     e.append(str(e))
                     break
@@ -289,8 +290,9 @@ async def _(event):
             if "m" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await edit_delete(xx, 
-                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    await edit_delete(
+                        xx,
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**",
                     )
                     e.append(str(e))
                     break
@@ -300,8 +302,9 @@ async def _(event):
             if "w" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await edit_delete(xx, 
-                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    await edit_delete(
+                        xx,
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**",
                     )
                     e.append(str(e))
                     break
@@ -311,8 +314,9 @@ async def _(event):
             if "o" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await edit_delete(xx, 
-                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    await edit_delete(
+                        xx,
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**",
                     )
                     e.append(str(e))
                     break
@@ -333,8 +337,9 @@ async def _(event):
             if "r" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await edit_delete(xx, 
-                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    await edit_delete(
+                        xx,
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**",
                     )
                     e.append(str(e))
                     break
@@ -344,8 +349,9 @@ async def _(event):
             if "b" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await edit_delete(xx, 
-                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    await edit_delete(
+                        xx,
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**",
                     )
                     e.append(str(e))
                     break
@@ -355,8 +361,9 @@ async def _(event):
             if "d" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await edit_delete(xx, 
-                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**"
+                    await edit_delete(
+                        xx,
+                        "**Saya memerlukan hak admin untuk melakukan tindakan ini!**",
                     )
                     e.append(str(e))
                 else:
@@ -466,7 +473,9 @@ async def potocmd(event):
         try:
             id = int(id)
             if id <= 0:
-                return await edit_delete(xx, "**Nomer ID Yang Anda Masukkan Tidak Valid**")
+                return await edit_delete(
+                    xx, "**Nomer ID Yang Anda Masukkan Tidak Valid**"
+                )
         except BaseException:
             return await edit_delete(xx, "**Lmao**")
         if int(id) <= (len(photos)):
@@ -725,7 +734,9 @@ async def mediv(medievalx):
         get = await medievalx.get_reply_message()
         args = get.text
     if not args:
-        return await edit_delete(medievalx, "**Teks Apa Yang Harus Saya Medibold Kan?**")
+        return await edit_delete(
+            medievalx, "**Teks Apa Yang Harus Saya Medibold Kan?**"
+        )
     xx = await edit_or_reply(medievalx, "`Processing...`")
     string = "".join(args).lower()
     for normiecharacter in string:
@@ -772,7 +783,9 @@ async def doublex(doublestrucktx):
         get = await doublestrucktx.get_reply_message()
         args = get.text
     if not args:
-        return await edit_delete(doublestrucktx, "**Teks Apa Yang Harus Saya Double Struck Kan?**")
+        return await edit_delete(
+            doublestrucktx, "**Teks Apa Yang Harus Saya Double Struck Kan?**"
+        )
     xx = await edit_or_reply(doublestrucktx, "`Processing...`")
     string = "".join(args).lower()
     for normiecharacter in string:
@@ -819,7 +832,9 @@ async def cursive2(cursivebolded):
         get = await cursivebolded.get_reply_message()
         args = get.text
     if not args:
-        await edit_delete.edit(cursivebolded, "**Teks Apa Yang Harus Saya Cursive Bold Kan?**")
+        await edit_delete.edit(
+            cursivebolded, "**Teks Apa Yang Harus Saya Cursive Bold Kan?**"
+        )
         return
     xx = await edit_or_reply(cursivebolded, "`Processing...`")
     string = "".join(args).lower()
