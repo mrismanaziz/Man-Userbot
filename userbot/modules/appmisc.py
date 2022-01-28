@@ -26,7 +26,7 @@ from telethon.tl.types import (
 )
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, SUDO_USERS, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot import CMD_HELP, SUDO_USERS, TEMP_DOWNLOAD_DIRECTORY
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 normiefont = [
