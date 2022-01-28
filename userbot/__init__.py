@@ -181,9 +181,6 @@ GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN") or "/usr/bin/google-chro
 OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
 WEATHER_DEFCITY = os.environ.get("WEATHER_DEFCITY", "Jakarta")
 
-# For MONGO based DataBase
-MONGO_URI = os.environ.get("MONGO_URI", None)
-
 # Anti Spambot Config
 ANTI_SPAMBOT = sb(os.environ.get("ANTI_SPAMBOT", "False"))
 ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
@@ -260,9 +257,6 @@ if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
         pass
 
 TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads/")
-
-# Quotes API Token
-QUOTES_API_TOKEN = os.environ.get("QUOTES_API_TOKEN", None)
 
 # Deezloader
 DEEZER_ARL_TOKEN = os.environ.get("DEEZER_ARL_TOKEN", None)
