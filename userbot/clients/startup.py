@@ -53,7 +53,7 @@ def multiman():
             LOGS.info(
                 f"STRING_SESSION detected!\n┌ First Name: {name}\n└ User ID: {uid}\n——"
             )
-            if user.id in blacklistman:
+            if uid in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
@@ -69,7 +69,7 @@ def multiman():
             LOGS.info(
                 f"STRING_2 detected!\n┌ First Name: {name2}\n└ User ID: {uid2}\n——"
             )
-            if user.id in blacklistman:
+            if uid2 in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name2, version))
                 sys.exit(1)
         except Exception as e:
@@ -85,7 +85,7 @@ def multiman():
             LOGS.info(
                 f"STRING_3 detected!\n┌ First Name: {name3}\n└ User ID: {uid3}\n——"
             )
-            if user.id in blacklistman:
+            if uid3 in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name3, version))
                 sys.exit(1)
         except Exception as e:
@@ -101,7 +101,7 @@ def multiman():
             LOGS.info(
                 f"STRING_4 detected!\n┌ First Name: {name4}\n└ User ID: {uid4}\n——"
             )
-            if user.id in blacklistman:
+            if uid4 in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name4, version))
                 sys.exit(1)
         except Exception as e:
@@ -117,7 +117,7 @@ def multiman():
             LOGS.info(
                 f"STRING_5 detected!\n┌ First Name: {name5}\n└ User ID: {uid5}\n——"
             )
-            if user.id in blacklistman:
+            if uid5 in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name5, version))
                 sys.exit(1)
         except Exception as e:
