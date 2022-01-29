@@ -749,20 +749,47 @@ async def strone(event):
 async def strtwo(event):
     await event.delete()
     pru = event.sender_id
-    var = "STRING_2"
+    name = "MULTI CLIENT ke 2"
+    var1 = "API_KEY2"
+    var2 = "API_HASH2"
+    var3 = "STRING_2"
     async with event.client.conversation(pru) as conv:
         await conv.send_message(
-            f"**Silahkan Kirimkan {var} Telethon anda dari @StringManRobot**\n\nGunakan /cancel untuk membatalkan."
+            f"**Silahkan Kirimkan {var1} anda Harap isi dengan Benar, apabila salah bisa terjadi ERROR**\n\nGunakan /cancel untuk membatalkan."
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                f"Membatalkan Proses Settings VAR {var}",
+                f"Membatalkan Proses Settings VAR {var1}",
+                buttons=get_back_button("multiclient"),
+            )
+        await conv.send_message(
+            f"**Silahkan Kirimkan {var2} anda Harap isi dengan Benar, apabila salah bisa terjadi ERROR**\n\nGunakan /cancel untuk membatalkan."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg2 = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                f"Membatalkan Proses Settings VAR {name}",
+                buttons=get_back_button("multiclient"),
+            )
+        await conv.send_message(
+            f"**Silahkan Kirimkan {var3} Telethon anda dari @StringManRobot**\n\nGunakan /cancel untuk membatalkan."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg3 = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                f"Membatalkan Proses Settings VAR {name}",
                 buttons=get_back_button("multiclient"),
             )
         await setit(event, var, themssg)
+        await setit(event, var, themssg2)
+        await setit(event, var, themssg3)
         await conv.send_message(
             f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
             buttons=get_back_button("multiclient"),
