@@ -201,41 +201,6 @@ async def apiset(event):
     )
 
 
-@callback(data=re.compile(b"alivemenu"))
-async def alivemenu(event):
-    await event.edit(
-        "**Silahkan Pilih VAR yang ingin anda Setting**",
-        buttons=[
-            [
-                Button.inline("ᴀʟɪᴠᴇ ʟᴏɢᴏ", data="alvlogo"),
-            ],
-            [
-                Button.inline("ᴀʟɪᴠᴇ ᴇᴍᴏᴊɪ", data="alvmoji"),
-                Button.inline("ᴀʟɪᴠᴇ ᴛᴇᴋs", data="alvteks"),
-            ],
-            [
-                Button.inline("ᴄʜᴀɴɴᴇʟ", data="alvch"),
-                Button.inline("ɢʀᴏᴜᴘ", data="alvgc"),
-            ],
-            [Button.inline("« ʙᴀᴄᴋ", data="apiset")],
-        ],
-    )
-
-
-@callback(data=re.compile(b"inlinemenu"))
-async def inlinemenu(event):
-    await event.edit(
-        "**Silahkan Pilih VAR yang ingin anda Setting**",
-        buttons=[
-            [
-                Button.inline("ɪɴʟɪɴᴇ ᴇᴍᴏᴊɪ", data="inmoji"),
-                Button.inline("ɪɴʟɪɴᴇ ᴘɪᴄ", data="inpics"),
-            ],
-            [Button.inline("« ʙᴀᴄᴋ", data="apiset")],
-        ],
-    )
-
-
 @callback(data=re.compile(b"apikeys"))
 async def alivemenu(event):
     await event.edit(
@@ -258,6 +223,27 @@ async def alivemenu(event):
     )
 
 
+@callback(data=re.compile(b"alivemenu"))
+async def alivemenu(event):
+    await event.edit(
+        "**Silahkan Pilih VAR yang ingin anda Setting**",
+        buttons=[
+            [
+                Button.inline("ᴀʟɪᴠᴇ ʟᴏɢᴏ", data="alvlogo"),
+            ],
+            [
+                Button.inline("ᴀʟɪᴠᴇ ᴇᴍᴏᴊɪ", data="alvmoji"),
+                Button.inline("ᴀʟɪᴠᴇ ᴛᴇᴋs", data="alvteks"),
+            ],
+            [
+                Button.inline("ᴄʜᴀɴɴᴇʟ", data="alvch"),
+                Button.inline("ɢʀᴏᴜᴘ", data="alvgc"),
+            ],
+            [Button.inline("« ʙᴀᴄᴋ", data="apiset")],
+        ],
+    )
+
+
 @callback(data=re.compile(b"hndlrmenu"))
 async def hndlrmenu(event):
     await event.edit(
@@ -266,6 +252,41 @@ async def hndlrmenu(event):
             [
                 Button.inline("ᴄᴍᴅ ʜᴀɴᴅʟᴇʀ", data="cmdhndlr"),
                 Button.inline("sᴜᴅᴏ ʜᴀɴᴅʟᴇʀ", data="sdhndlr"),
+            ],
+            [Button.inline("« ʙᴀᴄᴋ", data="apiset")],
+        ],
+    )
+
+
+@callback(data=re.compile(b"multiclient"))
+async def alivemenu(event):
+    await event.edit(
+        "**Silahkan Pilih VAR yang ingin anda Setting**",
+        buttons=[
+            [
+                Button.inline("sᴛʀɪɴɢ_sᴇssɪᴏɴ", data="strone"),
+            ],
+            [
+                Button.inline("sᴛʀɪɴɢ 2", data="strtwo"),
+                Button.inline("sᴛʀɪɴɢ 3", data="strtri"),
+            ],
+            [
+                Button.inline("sᴛʀɪɴɢ 4", data="strfor"),
+                Button.inline("sᴛʀɪɴɢ 5", data="strfiv"),
+            ],
+            [Button.inline("« ʙᴀᴄᴋ", data="apiset")],
+        ],
+    )
+
+
+@callback(data=re.compile(b"inlinemenu"))
+async def inlinemenu(event):
+    await event.edit(
+        "**Silahkan Pilih VAR yang ingin anda Setting**",
+        buttons=[
+            [
+                Button.inline("ɪɴʟɪɴᴇ ᴇᴍᴏᴊɪ", data="inmoji"),
+                Button.inline("ɪɴʟɪɴᴇ ᴘɪᴄ", data="inpics"),
             ],
             [Button.inline("« ʙᴀᴄᴋ", data="apiset")],
         ],
@@ -627,32 +648,8 @@ async def ocrapi(event):
         )
 
 
-@callback(data=re.compile(b"ocrapi"))
-async def ocrapi(event):
-    await event.delete()
-    pru = event.sender_id
-    var = "OCR_SPACE_API_KEY"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            f"**Silahkan Kirimkan {var} anda dari ocr.space**\n\nGunakan /cancel untuk membatalkan."
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
-                buttons=get_back_button("apikeys"),
-            )
-        await setit(event, var, themssg)
-        await conv.send_message(
-            f"**{var} Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-            buttons=get_back_button("apikeys"),
-        )
-
-
 @callback(data=re.compile(b"dzrl"))
-async def ocrapi(event):
+async def dzrl(event):
     await event.delete()
     pru = event.sender_id
     var = "DEEZER_ARL_TOKEN"
@@ -676,7 +673,7 @@ async def ocrapi(event):
 
 
 @callback(data=re.compile(b"opnwth"))
-async def ocrapi(event):
+async def opnwth(event):
     await event.delete()
     pru = event.sender_id
     var = "OPEN_WEATHER_MAP_APPID"
@@ -700,7 +697,7 @@ async def ocrapi(event):
 
 
 @callback(data=re.compile(b"btly"))
-async def ocrapi(event):
+async def btly(event):
     await event.delete()
     pru = event.sender_id
     var = "BITLY_TOKEN"
@@ -720,6 +717,127 @@ async def ocrapi(event):
         await conv.send_message(
             f"**{var} Berhasil di Setting Menjadi** `{themssg}`\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
             buttons=get_back_button("apiset"),
+        )
+
+
+@callback(data=re.compile(b"strone"))
+async def strone(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "STRING_SESSION"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            f"**Silahkan Kirimkan {var} Telethon anda dari @StringManRobot**\n\nGunakan /cancel untuk membatalkan."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Membatalkan Proses Settings VAR!",
+                buttons=get_back_button("apikeys"),
+            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**{var} Berhasil diganti**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apikeys"),
+        )
+
+
+@callback(data=re.compile(b"strtwo"))
+async def strtwo(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "STRING_2"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            f"**Silahkan Kirimkan {var} Telethon anda dari @StringManRobot**\n\nGunakan /cancel untuk membatalkan."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Membatalkan Proses Settings VAR!",
+                buttons=get_back_button("apikeys"),
+            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apikeys"),
+        )
+
+
+@callback(data=re.compile(b"strtri"))
+async def strtri(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "STRING_3"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            f"**Silahkan Kirimkan {var} Telethon anda dari @StringManRobot**\n\nGunakan /cancel untuk membatalkan."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Membatalkan Proses Settings VAR!",
+                buttons=get_back_button("apikeys"),
+            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apikeys"),
+        )
+
+
+@callback(data=re.compile(b"strfor"))
+async def strfor(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "STRING_4"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            f"**Silahkan Kirimkan {var} Telethon anda dari @StringManRobot**\n\nGunakan /cancel untuk membatalkan."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Membatalkan Proses Settings VAR!",
+                buttons=get_back_button("apikeys"),
+            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apikeys"),
+        )
+
+
+
+@callback(data=re.compile(b"strfiv"))
+async def strfiv(event):
+    await event.delete()
+    pru = event.sender_id
+    var = "STRING_5"
+    async with event.client.conversation(pru) as conv:
+        await conv.send_message(
+            f"**Silahkan Kirimkan {var} Telethon anda dari @StringManRobot**\n\nGunakan /cancel untuk membatalkan."
+        )
+        response = conv.wait_event(events.NewMessage(chats=pru))
+        response = await response
+        themssg = response.message.message
+        if themssg == "/cancel":
+            return await conv.send_message(
+                "Membatalkan Proses Settings VAR!",
+                buttons=get_back_button("apikeys"),
+            )
+        await setit(event, var, themssg)
+        await conv.send_message(
+            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("apikeys"),
         )
 
 
