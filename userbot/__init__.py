@@ -534,7 +534,7 @@ with bot:
             result = None
             query = event.text
             user = await event.client.get_me()
-            idme = user.id
+            user.id
             ids = await client_id(event, event.query.user_id)
             OWNER_ID, MAN_USER, man_mention = ids[0], ids[1], ids[2]
             if event.query.user_id and query.startswith("@SharingUserbot"):
