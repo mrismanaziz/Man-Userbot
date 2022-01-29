@@ -188,6 +188,7 @@ async def apiset(event):
     await event.edit(
         "**Silahkan Pilih VAR yang ingin anda Setting**",
         buttons=[
+            [Button.inline("ᴍᴜʟᴛɪ ᴄʟɪᴇɴᴛ", data="multiclient")],
             [
                 Button.inline("ᴀʟɪᴠᴇ", data="alivemenu"),
                 Button.inline("ᴀᴘɪ ᴋᴇʏs", data="apikeys"),
@@ -307,7 +308,7 @@ async def alvlogo(event):
             themssg = response.message.message
             if themssg == "/cancel":
                 return await conv.send_message(
-                    "Membatalkan Proses Settings VAR!",
+                    f"Membatalkan Proses Settings VAR {var}",
                     buttons=get_back_button("alivemenu"),
                 )
         except BaseException:
@@ -352,7 +353,7 @@ async def alvmoji(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("alivemenu"),
             )
         await setit(event, var, themssg)
@@ -376,7 +377,7 @@ async def alvteks(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("alivemenu"),
             )
         await setit(event, var, themssg)
@@ -400,7 +401,7 @@ async def alvch(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("alivemenu"),
             )
         await setit(event, var, themssg)
@@ -424,7 +425,7 @@ async def alvgc(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("alivemenu"),
             )
         await setit(event, var, themssg)
@@ -448,7 +449,7 @@ async def inmoji(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("inlinemenu"),
             )
         await setit(event, var, themssg)
@@ -472,7 +473,7 @@ async def inpics(event):
             themssg = response.message.message
             if themssg == "/cancel":
                 return await conv.send_message(
-                    "Membatalkan Proses Settings VAR!",
+                    f"Membatalkan Proses Settings VAR {var}",
                     buttons=get_back_button("alivemenu"),
                 )
         except BaseException:
@@ -518,7 +519,7 @@ async def cmdhndlr(event):
         themssg = response.message.message
         if themssg == "/cancel":
             await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("hndlrmenu"),
             )
         elif len(themssg) > 1:
@@ -554,7 +555,7 @@ async def sdhndlr(event):
         themssg = response.message.message
         if themssg == "/cancel":
             await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("hndlrmenu"),
             )
         elif len(themssg) > 1:
@@ -590,7 +591,7 @@ async def rmbgapi(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("apikeys"),
             )
         await setit(event, var, themssg)
@@ -614,7 +615,7 @@ async def deepai(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("apikeys"),
             )
         await setit(event, var, themssg)
@@ -638,7 +639,7 @@ async def ocrapi(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("apikeys"),
             )
         await setit(event, var, themssg)
@@ -662,7 +663,7 @@ async def dzrl(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("apikeys"),
             )
         await setit(event, var, themssg)
@@ -686,7 +687,7 @@ async def opnwth(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("apikeys"),
             )
         await setit(event, var, themssg)
@@ -710,7 +711,7 @@ async def btly(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
+                f"Membatalkan Proses Settings VAR {var}",
                 buttons=get_back_button("apiset"),
             )
         await setit(event, var, themssg)
@@ -734,13 +735,13 @@ async def strone(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
-                buttons=get_back_button("apikeys"),
+                f"Membatalkan Proses Settings VAR {var}",
+                buttons=get_back_button("multiclient"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
             f"**{var} Berhasil diganti**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-            buttons=get_back_button("apikeys"),
+            buttons=get_back_button("multiclient"),
         )
 
 
@@ -758,13 +759,13 @@ async def strtwo(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
-                buttons=get_back_button("apikeys"),
+                f"Membatalkan Proses Settings VAR {var}",
+                buttons=get_back_button("multiclient"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
-            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-            buttons=get_back_button("apikeys"),
+            f"**{var} Berhasil diganti**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("multiclient"),
         )
 
 
@@ -782,13 +783,13 @@ async def strtri(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
-                buttons=get_back_button("apikeys"),
+                f"Membatalkan Proses Settings VAR {var}",
+                buttons=get_back_button("multiclient"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
-            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-            buttons=get_back_button("apikeys"),
+            f"**{var} Berhasil diganti**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("multiclient"),
         )
 
 
@@ -806,13 +807,13 @@ async def strfor(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
-                buttons=get_back_button("apikeys"),
+                f"Membatalkan Proses Settings VAR {var}",
+                buttons=get_back_button("multiclient"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
-            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-            buttons=get_back_button("apikeys"),
+            f"**{var} Berhasil diganti**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("multiclient"),
         )
 
 
@@ -830,13 +831,13 @@ async def strfiv(event):
         themssg = response.message.message
         if themssg == "/cancel":
             return await conv.send_message(
-                "Membatalkan Proses Settings VAR!",
-                buttons=get_back_button("apikeys"),
+                f"Membatalkan Proses Settings VAR {var}",
+                buttons=get_back_button("multiclient"),
             )
         await setit(event, var, themssg)
         await conv.send_message(
-            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
-            buttons=get_back_button("apikeys"),
+            f"**{var} Berhasil diganti**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            buttons=get_back_button("multiclient"),
         )
 
 
