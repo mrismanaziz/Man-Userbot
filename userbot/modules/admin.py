@@ -181,6 +181,7 @@ async def demote(event):
 @man_cmd(pattern="ban(?:\s|$)([\s\S]*)")
 @register(pattern=r"^\.cban(?:\s|$)([\s\S]*)", sudo=True)
 async def ban(bon):
+    me = event.client.get_me()
     chat = await bon.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
@@ -206,7 +207,7 @@ async def ban(bon):
     else:
         await edit_or_reply(
             bon,
-            f"\\\\**#Banned_User**//\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n**User ID:** `{user.id}`\n**Action:** `Banned User by {owner}`",
+            f"\\\\**#Banned_User**//\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n**User ID:** `{user.id}`\n**Action:** `Banned User by {me.first_name}`",
         )
 
 
@@ -237,6 +238,7 @@ async def spider(spdr):
         from userbot.modules.sql_helper.spam_mute_sql import mute
     except AttributeError:
         return await edit_or_reply(spdr, NO_SQL)
+    me = event.client.get_me()
     chat = await spdr.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
@@ -257,7 +259,7 @@ async def spider(spdr):
         r"\\**#Muted_User**//"
         f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
         f"**User ID:** `{user.id}`\n"
-        f"**Action:** `Mute by {owner}`",
+        f"**Action:** `Mute by {me.first_name}`",
     )
     if mute(spdr.chat_id, user.id) is False:
         return await edit_delete(spdr, "**ERROR:** `Pengguna Sudah Dibisukan.`")
@@ -266,7 +268,7 @@ async def spider(spdr):
         if reason:
             await edit_or_reply(
                 spdr,
-                r"\\**#DMute_User**//"
+                r"\\**#Muted_User**//"
                 f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**User ID:** `{user.id}`\n"
                 f"**Reason:** `{reason}`",
@@ -274,10 +276,10 @@ async def spider(spdr):
         else:
             await edit_or_reply(
                 spdr,
-                r"\\**#DMute_User**//"
+                r"\\**#Muted_User**//"
                 f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**User ID:** `{user.id}`\n"
-                f"**Action:** `DMute by {owner}`",
+                f"**Action:** `Mute by {me.first_name}`",
             )
     except UserIdInvalidError:
         return await edit_delete(spdr, "**Terjadi ERROR!**")
@@ -405,7 +407,7 @@ async def gspider(gspdr):
             r"\\**#GMuted_User**//"
             f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
             f"**User ID:** `{user.id}`\n"
-            f"**Action:** `Global Muted by {owner}`",
+            f"**Action:** `Global Muted by {self_user.first_name}`",
         )
 
 
