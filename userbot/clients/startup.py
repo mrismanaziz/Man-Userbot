@@ -114,7 +114,9 @@ def multiman():
             user5 = MAN5.get_me()
             name5 = user5.first_name
             uid5 = user5.id
-            LOGS.info(f"STRING_5 detected!\n┌ First Name: {name5}\n└ User ID: {uid5}\n——")
+            LOGS.info(
+                f"STRING_5 detected!\n┌ First Name: {name5}\n└ User ID: {uid5}\n——"
+            )
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name5, version))
                 sys.exit(1)
