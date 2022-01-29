@@ -533,7 +533,7 @@ with bot:
             builder = event.builder
             result = None
             query = event.text
-            auth = await clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5)
+            await clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5)
             ids = await client_id(event, event.query.user_id)
             OWNER_ID, MAN_USER, man_mention = ids[0], ids[1], ids[2]
             if event.query.user_id and query.startswith("@SharingUserbot"):
