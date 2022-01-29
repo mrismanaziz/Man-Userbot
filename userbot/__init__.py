@@ -533,9 +533,11 @@ with bot:
             builder = event.builder
             result = None
             query = event.text
+            user = await event.client.get_me()
+            idme = user.id
             ids = await client_id(event, event.query.user_id)
             OWNER_ID, MAN_USER, man_mention = ids[0], ids[1], ids[2]
-            if event.query.user_id and query.startswith("@SharingUserbot"):
+            if event.query.user_id == idme and query.startswith("@SharingUserbot"):
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.photo(
                     file=logoman,
@@ -615,7 +617,9 @@ with bot:
 
         @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(rb"reopen")))
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id:
+            user = await event.client.get_me()
+            meid = user.id
+            if event.query.user_id == meid:
                 current_page_number = int(looters)
                 buttons = paginate_help(current_page_number, dugmeler, "helpme")
                 text = f"**✗ Man-Userbot Inline Menu ✗**\n\n✣ **Owner** {man_mention}\n✣ **Jumlah** `{len(dugmeler)}` Modules"
@@ -632,14 +636,18 @@ with bot:
             )
         )
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id:
+            user = await event.client.get_me()
+            meid = user.id
+            if event.query.user_id == meid:
                 current_page_number = int(event.data_match.group(1).decode("UTF-8"))
                 buttons = paginate_help(current_page_number + 1, dugmeler, "helpme")
                 await event.edit(buttons=buttons)
 
         @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"close")))
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id:
+            user = await event.client.get_me()
+            meid = user.id
+            if event.query.user_id == meid:
                 openlagi = custom.Button.inline("• Re-Open Menu •", data="reopen")
                 await event.edit(
                     "⚜️ **Help Mode Button Ditutup!** ⚜️", buttons=openlagi
@@ -651,14 +659,18 @@ with bot:
             )
         )
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == auth:
+            user = await event.client.get_me()
+            meid = user.id
+            if event.query.user_id == meid:
                 current_page_number = int(event.data_match.group(1).decode("UTF-8"))
                 buttons = paginate_help(current_page_number - 1, dugmeler, "helpme")
                 await event.edit(buttons=buttons)
 
         @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"ub_modul_(.*)")))
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id:
+            user = await event.client.get_me()
+            meid = user.id
+            if event.query.user_id == meid:
                 modul_name = event.data_match.group(1).decode("UTF-8")
                 cmdhel = str(CMD_HELP[modul_name])
                 if len(cmdhel) > 150:
