@@ -10,10 +10,6 @@ from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot, owner
 from userbot.events import man_cmd
 
-# ================= CONSTANT =================
-DEFAULTUSER = owner
-# ============================================
-
 
 @man_cmd(pattern="(.*)")
 async def _(event):
@@ -41,7 +37,7 @@ async def _(event):
             await event.edit(animation_chars[i % 103])
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"earth(?: |$)(.*)"))
+@man_cmd(pattern="earth(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -340,7 +336,7 @@ async def _(event):
             await event.edit(animation_chars[i % 24])
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"gangstar(?: |$)(.*)"))
+@man_cmd(pattern="gangstar(?: |$)(.*)")
 async def _(event):
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
         await event.edit("EVERyBOdy")
@@ -364,6 +360,7 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
+    me = await event.client.get_me()
     input_str = event.pattern_match.group(1)
     if input_str == "hack":
         await event.edit(input_str)
@@ -378,7 +375,7 @@ async def _(event):
             "`Hacking... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
             "`Hacking... 84%\n█████████████████████▒▒▒▒ `",
             "`Hacking... 100%\n█████████HACKED███████████ `",
-            f"`Targeted Account Hacked...\n\nPay 9999$ To @{DEFAULTUSER} or gib a pizza party 🍕 To Remove This Hack`",
+            f"`Targeted Account Hacked...\n\nPay 9999$ To {me.first_name} or gib a pizza party 🍕 To Remove This Hack`",
         ]
         animation_interval = 2
         animation_ttl = range(11)
@@ -690,7 +687,7 @@ async def _(event):
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"plane(?: |$)(.*)"))
+@man_cmd(pattern="plane(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -747,7 +744,7 @@ async def _(event):
             await event.edit(animation_chars[i % 19])
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"dump(?: |$)(.*)"))
+@man_cmd(pattern="dump(?: |$)(.*)")
 async def _(message):
     try:
         obj = message.pattern_match.group(1)
@@ -999,6 +996,7 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
+    me = await event.client.get_me()
     input_str = event.pattern_match.group(1)
     if input_str == "call":
         await event.edit(input_str)
@@ -1006,13 +1004,13 @@ async def _(event):
             "`Connecting To Telegram Headquarters...`",
             "`Call Connected.`",
             "`Telegram: Hello This is Telegram HQ. Who is this?`",
-            f"`Me: Yo this is`@{DEFAULTUSER},`Please Connect me to my lil bro,Pavel Durov`",
+            f"`Me: Yo this is `{me.first_name},`Please Connect me to my lil bro,Pavel Durov`",
             "`User Authorised.`",
             "`Calling Pavel Durov`  `At +916969696969`",
             "`Private  Call Connected...`",
             "`Me: Hello Sir, Please Ban This Telegram Account.`",
             "`Pavel: May I Know Who Is This?`",
-            f"`Me: Yo Brah, I Am` @{DEFAULTUSER} ",
+            f"`Me: Yo Brah, I Am` {me.first_name} ",
             "`Pavel: OMG!!! Long time no see, Wassup Brother...\nI'll Make Sure That Guy Account Will Get Blocked Within 24Hrs.`",
             "`Me: Thanks, See You Later Brah.`",
             "`Pavel: Please Don't Thank Brah, Telegram Is Our's. Just Gimme A Call When You Become Free.`",
@@ -1320,7 +1318,7 @@ async def _(event):
             await event.edit(animation_chars[i % 103])
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"kiss(?: |$)(.*)"))
+@man_cmd(pattern="kiss(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
