@@ -10,7 +10,7 @@ from userbot import CMD_HELP, owner
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
-@man_cmd(pattern=r"logo(?: |$)(.*)")
+@man_cmd(pattern="logo(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -37,7 +37,7 @@ async def _(event):
         await event.client.send_file(
             event.chat_id,
             logo,
-            caption=f"Logo by [{owner}](tg://user?id={aing.id})",
+            caption=f"Logo by [{aing.first_name}](tg://user?id={aing.id})",
         )
         await event.client.delete_messages(conv.chat_id, [msg.id, response.id, logo.id])
         await event.delete()
