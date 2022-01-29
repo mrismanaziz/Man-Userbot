@@ -445,7 +445,7 @@ def ibuild_keyboard(buttons):
 
 with bot:
     try:
-        from userbot import SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5
+        from userbot import MAN2, MAN3, MAN4, MAN5, SUDO_USERS, bot
         from userbot.clients import client_id, clients_list
         from userbot.modules.sql_helper.bot_blacklists import check_is_black_list
         from userbot.modules.sql_helper.bot_pms_sql import add_user_to_db, get_user_id
