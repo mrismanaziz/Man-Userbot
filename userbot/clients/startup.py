@@ -10,8 +10,8 @@ import sys
 import telethon.utils
 
 from userbot import BOT_VER as version
-from userbot import DEVS
 from userbot import (
+    DEVS,
     LOGS,
     MAN2,
     MAN3,
