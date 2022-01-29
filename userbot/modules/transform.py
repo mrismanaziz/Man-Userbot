@@ -39,7 +39,7 @@ async def transform(event):
             reply_message,
             "transform.tgs",
         )
-        await bash("lottie_convert.py transform.tgs transform.png")
+        os.system("lottie_convert.py transform.tgs transform.png")
         transform = "transform.png"
     elif reply_message.video:
         video = await event.client.download_media(
@@ -47,7 +47,7 @@ async def transform(event):
             "transform.mp4",
         )
         extractMetadata(createParser(video))
-        await bash(
+        os.system(
             "ffmpeg -i transform.mp4 -vframes 1 -an -s 480x360 -ss 1 transform.png"
         )
         transform = "transform.png"
@@ -75,8 +75,8 @@ async def transform(event):
             event.chat_id, Converted, reply_to=event.reply_to_msg_id
         )
         await xx.delete()
-        await bash("rm -rf *.mp4")
-        await bash("rm -rf *.tgs")
+        os.system("rm -rf *.mp4")
+        os.system("rm -rf *.tgs")
         os.remove(transform)
         os.remove(Converted)
     except BaseException:
@@ -112,7 +112,7 @@ async def rotate(event):
             reply_message,
             "transform.tgs",
         )
-        await bash("lottie_convert.py transform.tgs transform.png")
+        os.system("lottie_convert.py transform.tgs transform.png")
         rotate = "transform.png"
     elif reply_message.video:
         video = await event.client.download_media(
@@ -120,7 +120,7 @@ async def rotate(event):
             "transform.mp4",
         )
         extractMetadata(createParser(video))
-        await bash(
+        os.system(
             "ffmpeg -i transform.mp4 -vframes 1 -an -s 480x360 -ss 1 transform.png"
         )
         rotate = "transform.png"
@@ -143,8 +143,8 @@ async def rotate(event):
         event.chat_id, Converted, reply_to=event.reply_to_msg_id
     )
     await xx.delete()
-    await bash("rm -rf *.mp4")
-    await bash("rm -rf *.tgs")
+    os.system("rm -rf *.mp4")
+    os.system("rm -rf *.tgs")
     os.remove(rotate)
     os.remove(Converted)
 
