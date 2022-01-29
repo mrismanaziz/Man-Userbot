@@ -21,23 +21,11 @@ from userbot import (
     STRING_5,
     STRING_SESSION,
     bot,
+    blacklistman,
     call_py,
 )
-from userbot.modules.gcast import GCAST_BLACKLIST as GBL
+from userbot import GCAST_BLACKLIST as GBL
 
-while 0 < 6:
-    _BLACKLIST = requests.get(
-        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json"
-    )
-    if _BLACKLIST.status_code != 200:
-        if 0 != 5:
-            continue
-        blacklistman = []
-        break
-    blacklistman = _BLACKLIST.json()
-    break
-
-del _BLACKLIST
 
 EOL = "EOL\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
 MSG_BLACKLIST = "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
