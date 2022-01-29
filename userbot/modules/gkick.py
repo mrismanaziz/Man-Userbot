@@ -20,7 +20,7 @@ async def gspide(rk):
     else:
         rkp = await lazy.edit("`Processing...`")
     me = await rk.client.get_me()
-    await rkp.edit(f"`{owner} Memproses Global Kick Jamet Goblok!`")
+    await rkp.edit(f"`Memproses Global Kick Jamet Goblok!`")
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     await rk.get_chat()
     a = b = 0
@@ -35,10 +35,10 @@ async def gspide(rk):
         if not reason:
             reason = "Private"
     except BaseException:
-        return await rkp.edit("`Gagal Global Kick! Pengguna tidak dikenal.`")
+        return await rkp.edit("**Gagal Global Kick! Pengguna tidak dikenal.**")
     if user:
         if user.id == DEVS:
-            return await rkp.edit(f"`{owner} Jangan Ngadi Ngadi itu CODER aing`")
+            return await rkp.edit("**Jangan Ngadi Ngadi itu CODER aing`")
         try:
             await rk.client(BlockRequest(user))
             await rk.client(UnblockRequest(user))
@@ -55,16 +55,16 @@ async def gspide(rk):
                 await rk.client.edit_permissions(i, user, send_messages=True)
                 a += 1
                 await rkp.edit(
-                    f"`{owner} Memproses Global Kick Jamet Goblok! Gkicked di {a} Group Chats..`"
+                    f"`Memproses Global Kick Jamet Goblok! Gkicked di {a} Group Chats..`"
                 )
 
             except BaseException:
                 b += 1
     else:
-        await rkp.edit(f"`{owner} Reply ke Chat Penggunanya Goblok!!`")
+        await rkp.edit("`Reply ke Chat Penggunanya Goblok!!`")
 
     return await rkp.edit(
-        f"`Berhasil GKicked` [{user.first_name}](tg://user?id={user.id}) `di {a} Group Chats..`"
+        f"**Berhasil GKicked** [{user.first_name}](tg://user?id={user.id}) **di {a} Group Chats**"
     )
 
 
