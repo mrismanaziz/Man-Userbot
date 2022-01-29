@@ -12,7 +12,7 @@ MSG_ON = """
 ━━
 ➠ **Userbot Version -** `{}@{}`
 ➠ **Ketik** `{}alive` **untuk Mengecheck Bot**
-**Managed By {}**
+➠ **Managed By** {}
 ━━
 """
 
