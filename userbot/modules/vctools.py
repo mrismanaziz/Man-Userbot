@@ -37,7 +37,7 @@ def user_list(l, n):
 @man_cmd(pattern="startvc$")
 @register(pattern=r"^\.startvcs$", sudo=True)
 async def start_voice(c):
-    me = event.client.get_me()
+    me = await c.client.get_me()
     chat = await c.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
@@ -55,7 +55,7 @@ async def start_voice(c):
 @man_cmd(pattern="stopvc$")
 @register(pattern=r"^\.stopvcs$", sudo=True)
 async def stop_voice(c):
-    me = event.client.get_me()
+    me = await c.client.get_me()
     chat = await c.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
@@ -92,7 +92,7 @@ async def _(c):
 @register(pattern=r"^\.cvctitle$", sudo=True)
 async def change_title(e):
     title = e.pattern_match.group(1)
-    me = event.client.get_me()
+    me = await e.client.get_me()
     chat = await e.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
