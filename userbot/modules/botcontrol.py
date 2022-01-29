@@ -816,7 +816,6 @@ async def strfor(event):
         )
 
 
-
 @callback(data=re.compile(b"strfiv"))
 async def strfiv(event):
     await event.delete()
