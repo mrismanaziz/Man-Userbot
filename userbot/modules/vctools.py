@@ -37,12 +37,13 @@ def user_list(l, n):
 @man_cmd(pattern="startvc$")
 @register(pattern=r"^\.startvcs$", sudo=True)
 async def start_voice(c):
+    me = event.client.get_me()
     chat = await c.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
 
     if not admin and not creator:
-        await edit_delete(c, f"**Maaf {owner} Bukan Admin 👮**")
+        await edit_delete(c, f"**Maaf {me.first_name} Bukan Admin 👮**")
         return
     try:
         await c.client(startvc(c.chat_id))
@@ -54,12 +55,13 @@ async def start_voice(c):
 @man_cmd(pattern="stopvc$")
 @register(pattern=r"^\.stopvcs$", sudo=True)
 async def stop_voice(c):
+    me = event.client.get_me()
     chat = await c.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
 
     if not admin and not creator:
-        await edit_delete(c, f"**Maaf {owner} Bukan Admin 👮**")
+        await edit_delete(c, f"**Maaf {me.first_name} Bukan Admin 👮**")
         return
     try:
         await c.client(stopvc(await get_call(c)))
@@ -90,6 +92,7 @@ async def _(c):
 @register(pattern=r"^\.cvctitle$", sudo=True)
 async def change_title(e):
     title = e.pattern_match.group(1)
+    me = event.client.get_me()
     chat = await e.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
@@ -98,7 +101,7 @@ async def change_title(e):
         return await edit_delete(e, "**Silahkan Masukan Title Obrolan Suara Grup**")
 
     if not admin and not creator:
-        await edit_delete(e, f"**Maaf {owner} Bukan Admin 👮**")
+        await edit_delete(e, f"**Maaf {me.first_name} Bukan Admin 👮**")
         return
     try:
         await e.client(settitle(call=await get_call(e), title=title.strip()))
