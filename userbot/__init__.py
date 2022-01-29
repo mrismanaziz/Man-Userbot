@@ -92,6 +92,20 @@ if CONFIG_CHECK:
     )
     sys.exit(1)
 
+while 0 < 6:
+    _DEVS = get(
+        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/DEVS.json"
+    )
+    if _DEVS.status_code != 200:
+        if 0 != 5:
+            continue
+        DEVS = [844432220, 1906014306, 1382636419, 2133486058]
+        break
+    DEVS = _DEVS.json()
+    break
+
+del _DEVS
+
 SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
 BL_CHAT = {int(x) for x in os.environ.get("BL_CHAT", "").split()}
 
@@ -106,12 +120,7 @@ API_HASH = str(os.environ.get("API_HASH") or None)
 
 # Userbot Session String
 STRING_SESSION = os.environ.get("STRING_SESSION", None)
-try:
-    STRING_2 = os.environ.get("STRING_2", None)
-except ValueError:
-    raise Exception(
-        "STRING_2 Yang anda Masukan Sudah Kadaluarsa atau Tidak Valid. Silahkan Buat STRING Telethon yang Baru."
-    )
+STRING_2 = os.environ.get("STRING_2", None)
 STRING_3 = os.environ.get("STRING_3", None)
 STRING_4 = os.environ.get("STRING_4", None)
 STRING_5 = os.environ.get("STRING_5", None)
@@ -259,34 +268,6 @@ BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
 BOT_USERNAME = os.environ.get("BOT_USERNAME", None)
 
 # Jangan di hapus Nanti ERROR
-while 0 < 6:
-    _DEVS = get(
-        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/DEVS.json"
-    )
-    if _DEVS.status_code != 200:
-        if 0 != 5:
-            continue
-        DEVS = [844432220, 1906014306, 1382636419, 2133486058]
-        break
-    DEVS = _DEVS.json()
-    break
-
-del _DEVS
-
-while 0 < 6:
-    _GCAST_BLACKLIST = get(
-        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/blacklistgcast.json"
-    )
-    if _GCAST_BLACKLIST.status_code != 200:
-        if 0 != 5:
-            continue
-        GCAST_BLACKLIST = [-1001473548283, -1001390552926]
-        break
-    GCAST_BLACKLIST = _GCAST_BLACKLIST.json()
-    break
-
-del _GCAST_BLACKLIST
-
 while 0 < 6:
     _BLACKLIST = get(
         "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json"
