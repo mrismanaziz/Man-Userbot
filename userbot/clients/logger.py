@@ -4,13 +4,15 @@ from userbot import BOT_USERNAME
 from userbot import BOT_VER as version
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import MAN2, MAN3, MAN4, MAN5, bot, branch
+from userbot import MAN2, MAN3, MAN4, MAN5, bot, branch, uid, owner
 
+mention = f"[{owner}](tg://user?id={uid})"
 MSG_ON = """
 🔥 **Man-Userbot Berhasil Di Aktifkan**
 ━━
 ➠ **Userbot Version -** `{}@{}`
 ➠ **Ketik** `{}alive` **untuk Mengecheck Bot**
+**Managed By {}**
 ━━
 """
 
@@ -20,9 +22,9 @@ async def man_userbot_on():
         if bot:
             if BOTLOG_CHATID != 0:
                 await bot.send_message(
-                    BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
-                )
+                BOTLOG_CHATID,
+                f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{version}@{branch}`\n➠ **Ketik** `{cmd}alive` **untuk Mengecheck Bot**\n━━",
+            )
     except Exception:
         pass
     try:
@@ -30,7 +32,7 @@ async def man_userbot_on():
             if BOTLOG_CHATID != 0:
                 await MAN2.send_message(
                     BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
+                    MSG_ON.format(version, branch, cmd, mention),
                 )
     except Exception:
         pass
@@ -39,7 +41,7 @@ async def man_userbot_on():
             if BOTLOG_CHATID != 0:
                 await MAN3.send_message(
                     BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
+                    MSG_ON.format(version, branch, cmd, mention),
                 )
     except Exception:
         pass
@@ -48,7 +50,7 @@ async def man_userbot_on():
             if BOTLOG_CHATID != 0:
                 await MAN4.send_message(
                     BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
+                    MSG_ON.format(version, branch, cmd, mention),
                 )
     except Exception:
         pass
@@ -57,7 +59,7 @@ async def man_userbot_on():
             if BOTLOG_CHATID != 0:
                 await MAN5.send_message(
                     BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
+                    MSG_ON.format(version, branch, cmd, mention),
                 )
     except Exception:
         pass
