@@ -759,8 +759,8 @@ async def strtwo(event):
         )
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
+        themssg1 = response.message.message
+        if themssg1 == "/cancel":
             return await conv.send_message(
                 f"Membatalkan Proses Settings VAR {var1}",
                 buttons=get_back_button("multiclient"),
@@ -771,7 +771,7 @@ async def strtwo(event):
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg2 = response.message.message
-        if themssg == "/cancel":
+        if themssg2 == "/cancel":
             return await conv.send_message(
                 f"Membatalkan Proses Settings VAR {name}",
                 buttons=get_back_button("multiclient"),
@@ -782,16 +782,16 @@ async def strtwo(event):
         response = conv.wait_event(events.NewMessage(chats=pru))
         response = await response
         themssg3 = response.message.message
-        if themssg == "/cancel":
+        if themssg3 == "/cancel":
             return await conv.send_message(
                 f"Membatalkan Proses Settings VAR {name}",
                 buttons=get_back_button("multiclient"),
             )
-        await setit(event, var, themssg)
-        await setit(event, var, themssg2)
-        await setit(event, var, themssg3)
+        await setit(event, var1, themssg1)
+        await setit(event, var2, themssg2)
+        await setit(event, var3, themssg3)
         await conv.send_message(
-            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            f"**{name} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
             buttons=get_back_button("multiclient"),
         )
 
