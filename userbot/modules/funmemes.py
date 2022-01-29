@@ -8,7 +8,7 @@ from telethon.errors.rpcerrorlist import MessageIdInvalidError
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
-from userbot.events import man_cmd
+from userbot.utils import man_cmd
 
 
 @man_cmd(pattern="(.*)")
