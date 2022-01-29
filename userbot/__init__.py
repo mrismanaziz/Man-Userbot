@@ -325,6 +325,7 @@ if STRING_2:
         auto_reconnect=True,
         connection_retries=None,
     )
+    call_py2 = PyTgCalls(MAN2)
 else:
     MAN2 = None
 
@@ -339,6 +340,7 @@ if STRING_3:
         auto_reconnect=True,
         connection_retries=None,
     )
+    call_py3 = PyTgCalls(MAN3)
 else:
     MAN3 = None
 
@@ -353,6 +355,7 @@ if STRING_4:
         auto_reconnect=True,
         connection_retries=None,
     )
+    call_py4 = PyTgCalls(MAN4)
 else:
     MAN4 = None
 
@@ -367,6 +370,7 @@ if STRING_5:
         auto_reconnect=True,
         connection_retries=None,
     )
+    call_py5 = PyTgCalls(MAN5)
 else:
     MAN5 = None
 
