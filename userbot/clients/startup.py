@@ -53,7 +53,7 @@ def multiman():
             LOGS.info(
                 f"STRING_SESSION detected!\n┌ First Name: {name}\n└ User ID: {uid}\n——"
             )
-            if uid in blacklistman:
+            if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
@@ -63,14 +63,12 @@ def multiman():
         try:
             MAN2.start()
             MAN2.loop.run_until_complete(man_client(MAN2))
-            user2 = MAN2.get_me()
-            name2 = user2.first_name
-            uid2 = user2.id
-            LOGS.info(
-                f"STRING_2 detected!\n┌ First Name: {name2}\n└ User ID: {uid2}\n——"
-            )
-            if uid2 in blacklistman:
-                LOGS.warning(MSG_BLACKLIST.format(name2, version))
+            user = MAN2.get_me()
+            name = user.first_name
+            uid = user.id
+            LOGS.info(f"STRING_2 detected!\n┌ First Name: {name}\n└ User ID: {uid}\n——")
+            if user.id in blacklistman:
+                LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
             print(e)
@@ -79,14 +77,12 @@ def multiman():
         try:
             MAN3.start()
             MAN3.loop.run_until_complete(man_client(MAN3))
-            user3 = MAN3.get_me()
-            name3 = user3.first_name
-            uid3 = user3.id
-            LOGS.info(
-                f"STRING_3 detected!\n┌ First Name: {name3}\n└ User ID: {uid3}\n——"
-            )
-            if uid3 in blacklistman:
-                LOGS.warning(MSG_BLACKLIST.format(name3, version))
+            user = MAN3.get_me()
+            name = user.first_name
+            uid = user.id
+            LOGS.info(f"STRING_3 detected!\n┌ First Name: {name}\n└ User ID: {uid}\n——")
+            if user.id in blacklistman:
+                LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
             print(e)
@@ -96,13 +92,11 @@ def multiman():
             MAN4.start()
             MAN4.loop.run_until_complete(man_client(MAN4))
             user = MAN4.get_me()
-            name4 = user4.first_name
-            uid4 = user4.id
-            LOGS.info(
-                f"STRING_4 detected!\n┌ First Name: {name4}\n└ User ID: {uid4}\n——"
-            )
-            if uid4 in blacklistman:
-                LOGS.warning(MSG_BLACKLIST.format(name4, version))
+            name = user.first_name
+            uid = user.id
+            LOGS.info(f"STRING_4 detected!\n┌ First Name: {name}\n└ User ID: {uid}\n——")
+            if user.id in blacklistman:
+                LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
             print(e)
@@ -111,14 +105,12 @@ def multiman():
         try:
             MAN5.start()
             MAN5.loop.run_until_complete(man_client(MAN5))
-            user5 = MAN5.get_me()
-            name5 = user5.first_name
-            uid5 = user5.id
-            LOGS.info(
-                f"STRING_5 detected!\n┌ First Name: {name5}\n└ User ID: {uid5}\n——"
-            )
-            if uid5 in blacklistman:
-                LOGS.warning(MSG_BLACKLIST.format(name5, version))
+            user = MAN5.get_me()
+            name = user.first_name
+            uid = user.id
+            LOGS.info(f"STRING_5 detected!\n┌ First Name: {name}\n└ User ID: {uid}\n——")
+            if user.id in blacklistman:
+                LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
             print(e)
