@@ -27,7 +27,7 @@ async def _(event):
 
 @man_cmd(pattern="P(?: |$)(.*)")
 async def _(event):
-    me = event.client.get_me()
+    me = await event.client.get_me()
     xx = await edit_or_reply(event, f"**Haii Salken Saya {me.first_name}**")
     sleep(2)
     await xx.edit("**Assalamualaikum...**")
@@ -43,7 +43,7 @@ async def _(event):
 
 @man_cmd(pattern="a(?: |$)(.*)")
 async def _(event):
-    me = event.client.get_me()
+    me = await event.client.get_me()
     xx = await edit_or_reply(event, f"**Haii Salken Saya {me.first_name}**")
     sleep(2)
     await xx.edit("**Assalamualaikum**")
@@ -58,7 +58,7 @@ async def _(event):
 
 @man_cmd(pattern="k(?: |$)(.*)")
 async def _(event):
-    me = event.client.get_me()
+    me = await event.client.get_me()
     xx = await edit_or_reply(event, f"**Hallo KIMAAKK SAYA {me.first_name}**")
     sleep(2)
     await xx.edit("**LU SEMUA NGENTOT 🔥**")
