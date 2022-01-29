@@ -764,7 +764,7 @@ async def strtwo(event):
             )
         await setit(event, var, themssg)
         await conv.send_message(
-            f"**{var} Berhasil diganti**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
             buttons=get_back_button("multiclient"),
         )
 
@@ -788,7 +788,7 @@ async def strtri(event):
             )
         await setit(event, var, themssg)
         await conv.send_message(
-            f"**{var} Berhasil diganti**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
             buttons=get_back_button("multiclient"),
         )
 
@@ -812,7 +812,7 @@ async def strfor(event):
             )
         await setit(event, var, themssg)
         await conv.send_message(
-            f"**{var} Berhasil diganti**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
             buttons=get_back_button("multiclient"),
         )
 
@@ -836,7 +836,7 @@ async def strfiv(event):
             )
         await setit(event, var, themssg)
         await conv.send_message(
-            f"**{var} Berhasil diganti**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
+            f"**{var} Berhasil disettings**\n\nSedang MeRestart Heroku untuk Menerapkan Perubahan.",
             buttons=get_back_button("multiclient"),
         )
 
