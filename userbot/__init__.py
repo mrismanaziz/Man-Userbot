@@ -109,7 +109,9 @@ STRING_SESSION = os.environ.get("STRING_SESSION", None)
 try:
     STRING_2 = os.environ.get("STRING_2", None)
 except ValueError:
-    raise Exception("STRING_2 Yang anda Masukan Tidak Valid. Silahkan Buat STRING Telethon Baru.")
+    raise Exception(
+        "STRING_2 Yang anda Masukan Tidak Valid. Silahkan Buat STRING Telethon Baru."
+    )
 STRING_2 = os.environ.get("STRING_2", None)
 STRING_3 = os.environ.get("STRING_3", None)
 STRING_4 = os.environ.get("STRING_4", None)
