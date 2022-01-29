@@ -112,7 +112,6 @@ except ValueError:
     raise Exception(
         "STRING_2 Yang anda Masukan Sudah Kadaluarsa atau Tidak Valid. Silahkan Buat STRING Telethon yang Baru."
     )
-STRING_2 = os.environ.get("STRING_2", None)
 STRING_3 = os.environ.get("STRING_3", None)
 STRING_4 = os.environ.get("STRING_4", None)
 STRING_5 = os.environ.get("STRING_5", None)
