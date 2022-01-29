@@ -91,7 +91,7 @@ async def locks(event):
         pin_messages=cpin,
         change_info=changeinfo,
     )
-    me = event.client.get_me()
+    me = await event.client.get_me()
     try:
         await event.client(
             EditChatDefaultBannedRightsRequest(peer=peer_id, banned_rights=lock_rights)
@@ -183,7 +183,7 @@ async def rem_locks(event):
         pin_messages=cpin,
         change_info=changeinfo,
     )
-    me = event.client.get_me()
+    me = await event.client.get_me()
     try:
         await event.client(
             EditChatDefaultBannedRightsRequest(
