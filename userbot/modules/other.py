@@ -129,7 +129,7 @@ async def _(event):
             ExportChatInviteRequest(event.chat_id),
         )
     except ChatAdminRequiredError:
-        return await event.client.send_message(f"**Maaf {owner} Bukan Admin 👮**")
+        return await event.client.send_message(f"**Maaf anda Bukan Admin 👮**")
     await xx.edit(f"**Link Invite: {e.link}**")
 
 
