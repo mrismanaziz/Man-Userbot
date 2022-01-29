@@ -429,13 +429,14 @@ async def vc_resume(event):
 @man_cmd(pattern=r"volume(?: |$)(.*)")
 async def vc_volume(event):
     query = event.pattern_match.group(1)
+    me = await event.client.get_me()
     chat = await event.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
     chat_id = event.chat_id
 
     if not admin and not creator:
-        return await edit_delete(event, f"**Maaf {owner} Bukan Admin 👮**", 30)
+        return await edit_delete(event, f"**Maaf {me.first_name} Bukan Admin 👮**", 30)
 
     if chat_id in QUEUE:
         try:
