@@ -23,6 +23,7 @@ from userbot import (
     bot,
     call_py,
 )
+from userbot.modules.gcast import GCAST_BLACKLIST as GBL
 
 while 0 < 6:
     _BLACKLIST = requests.get(
@@ -38,6 +39,7 @@ while 0 < 6:
 
 del _BLACKLIST
 
+EOL = "EOL\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
 MSG_BLACKLIST = "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
 
 
@@ -48,9 +50,10 @@ async def man_client(client):
 
 def multiman():
     if 844432220 not in DEVS:
-        LOGS.warning(
-            f"EOL\nMan-UserBot v{version}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
-        )
+        LOGS.warning(EOL.format(version))
+        sys.exit(1)
+    if -1001473548283 not in GBL:
+        LOGS.warning(EOL.format(version))
         sys.exit(1)
     failed = 0
     if STRING_SESSION:
