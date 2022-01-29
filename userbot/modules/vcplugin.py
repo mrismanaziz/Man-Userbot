@@ -20,7 +20,7 @@ from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot import PLAY_PIC as fotoplay
 from userbot import QUEUE_PIC as ngantri
-from userbot import call_py, owner
+from userbot import call_py
 from userbot.utils import bash, edit_delete, edit_or_reply, man_cmd
 from userbot.utils.chattitle import CHAT_TITLE
 from userbot.utils.queues.queues import (
