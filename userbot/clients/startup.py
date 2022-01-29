@@ -4,12 +4,12 @@
 
 import sys
 
-import requests
 import telethon.utils
 
 from userbot import BOT_VER as version
+from userbot import DEVS
+from userbot import GCAST_BLACKLIST as GBL
 from userbot import (
-    DEVS,
     LOGS,
     MAN2,
     MAN3,
@@ -20,12 +20,10 @@ from userbot import (
     STRING_4,
     STRING_5,
     STRING_SESSION,
-    bot,
     blacklistman,
+    bot,
     call_py,
 )
-from userbot import GCAST_BLACKLIST as GBL
-
 
 EOL = "EOL\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
 MSG_BLACKLIST = "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
