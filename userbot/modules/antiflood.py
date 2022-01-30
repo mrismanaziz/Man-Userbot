@@ -1,11 +1,12 @@
 import asyncio
 
+from telethon import events
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
 
 import userbot.modules.sql_helper.antiflood_sql as sql
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP
+from userbot import CMD_HELP, bot
 from userbot.events import register
 from userbot.utils import edit_or_reply, man_cmd
 from userbot.utils.tools import is_admin
@@ -17,7 +18,7 @@ ANTI_FLOOD_WARN_MODE = ChatBannedRights(
 )
 
 
-@register(incoming=True, disable_edited=True, disable_errors=True)
+@bot.on(events.NewMessage(incoming=True))
 async def _(event):
     # logger.info(CHAT_FLOOD)
     if not CHAT_FLOOD:
@@ -36,7 +37,7 @@ async def _(event):
                 event.chat_id, event.message.from_id, ANTI_FLOOD_WARN_MODE
             )
         )
-    except Exception as e:  # pylint:disable=C0103,W0703
+    except Exception as e:
         no_admin_privilege_message = await event.client.send_message(
             entity=event.chat_id,
             message="""**Automatic AntiFlooder**
@@ -61,7 +62,7 @@ async def _(event):
         )
 
 
-@man_cmd(pattern="setflood(?: |$)(.*)")
+@bot.on(man_cmd(outgoing=True, pattern="setflood(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
