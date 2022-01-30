@@ -91,7 +91,10 @@ async def rastick(animu):
         )
 
     except Exception:
-        return await edit_delete(xx,"**You cannot send inline results in this chat**",)
+        return await edit_delete(
+            xx,
+            "**You cannot send inline results in this chat**",
+        )
     await xx.delete()
 
 
