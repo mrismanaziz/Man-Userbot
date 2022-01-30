@@ -5,148 +5,130 @@
 #
 """ Userbot module for filter commands """
 
-from asyncio import sleep
-from re import IGNORECASE, escape, search
+import asyncio
+import re
 
-from userbot import BLACKLIST_CHAT, BOTLOG_CHATID
+from telethon import events, utils as ut
+from telethon.tl import types
+
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd, register
+from userbot import CMD_HELP
+from userbot.modules.sql_helper.filter_sql import get_filter, add_filter, remove_filter, get_all_filters, remove_all_filters
+from userbot.utils import eod, oer, man_cmd
 
 
-@register(incoming=True, disable_edited=True, disable_errors=True)
-async def filter_incoming_handler(handler):
-    """Checks if the incoming message contains handler of a filter"""
-    try:
-        if not (await handler.get_sender()).bot:
-            try:
-                from userbot.modules.sql_helper.filter_sql import get_filters
-            except AttributeError:
-                await handler.edit("**Berjalan Pada Mode Non-SQL!**")
-                return
-            name = handler.raw_text
-            filters = get_filters(handler.chat_id)
-            if not filters:
-                return
-            for trigger in filters:
-                pattern = r"( |^|[^\w])" + escape(trigger.keyword) + r"( |$|[^\w])"
-                pro = search(pattern, name, flags=IGNORECASE)
-                if pro:
-                    if trigger.f_mesg_id:
-                        msg_o = await handler.client.get_messages(
-                            entity=BOTLOG_CHATID, ids=int(trigger.f_mesg_id)
-                        )
-                        await handler.reply(msg_o.message, file=msg_o.media)
-                    elif trigger.reply:
-                        await handler.reply(trigger.reply)
-    except AttributeError:
-        pass
+DELETE_TIMEOUT = 0
+TYPE_TEXT = 0
+TYPE_PHOTO = 1
+TYPE_DOCUMENT = 2
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"filter (.*)"))
-async def add_new_filter(new_handler):
-    """For .filter command, allows adding new filters in a chat"""
-    if new_handler.chat_id in BLACKLIST_CHAT:
-        return await new_handler.edit(
-            "**Perintah ini Dilarang digunakan di Group ini**"
-        )
-    try:
-        from userbot.modules.sql_helper.filter_sql import add_filter
-    except AttributeError:
-        await new_handler.edit("**Berjalan Pada Mode Non-SQL!**")
-        return
-    value = new_handler.pattern_match.group(1).split(None, 1)
-    """ - The first words after .filter(space) is the keyword - """
-    keyword = value[0]
-    try:
-        string = value[1]
-    except IndexError:
-        string = None
-    msg = await new_handler.get_reply_message()
-    msg_id = None
-    if msg and msg.media and not string:
-        if BOTLOG_CHATID:
-            await new_handler.client.send_message(
-                BOTLOG_CHATID,
-                f"**#FILTER\nID OBROLAN:** {new_handler.chat_id}\n**TRIGGER:** `{keyword}`"
-                "\n\n**Pesan Berikut Disimpan Sebagai Data Balasan Filter Untuk Obrolan, Mohon Jangan Menghapusnya**",
-            )
-            msg_o = await new_handler.client.forward_messages(
-                entity=BOTLOG_CHATID,
-                messages=msg,
-                from_peer=new_handler.chat_id,
-                silent=True,
-            )
-            msg_id = msg_o.id
-        else:
-            return await new_handler.edit(
-                "**Untuk menyimpan media sebagai balasan ke filter** `BOTLOG_CHATID` **harus disetel.**"
-            )
-    elif new_handler.reply_to_msg_id and not string:
-        rep_msg = await new_handler.get_reply_message()
-        string = rep_msg.text
-    success = "**Berhasil Menambahkan Filter** `{}` **{}**"
-    if add_filter(str(new_handler.chat_id), keyword, string, msg_id) is True:
-        await new_handler.edit(success.format(keyword, "Disini"))
+global last_triggered_filters
+last_triggered_filters = {}
+
+@man_cmd(incoming=True)
+async def on_snip(event):
+    global last_triggered_filters
+    name = event.raw_text
+    if event.chat_id in last_triggered_filters:
+        if name in last_triggered_filters[event.chat_id]:
+            return False
+    snips = get_all_filters(event.chat_id)
+    if snips:
+        for snip in snips:
+            pattern = r"( |^|[^\w])" + re.escape(snip.keyword) + r"( |$|[^\w])"
+            if re.search(pattern, name, flags=re.IGNORECASE):
+                if snip.snip_type == TYPE_PHOTO:
+                    media = types.InputPhoto(
+                        int(snip.media_id),
+                        int(snip.media_access_hash),
+                        snip.media_file_reference
+                    )
+                elif snip.snip_type == TYPE_DOCUMENT:
+                    media = types.InputDocument(
+                        int(snip.media_id),
+                        int(snip.media_access_hash),
+                        snip.media_file_reference
+                    )
+                else:
+                    media = None
+                message_id = event.message.id
+                if event.reply_to_msg_id:
+                    message_id = event.reply_to_msg_id
+                await event.reply(
+                    snip.reply,
+                    file=media
+                )
+                if event.chat_id not in last_triggered_filters:
+                    last_triggered_filters[event.chat_id] = []
+                last_triggered_filters[event.chat_id].append(name)
+                await asyncio.sleep(DELETE_TIMEOUT)
+                last_triggered_filters[event.chat_id].remove(name)
+
+
+@man_cmd(pattern="filter(?:\s|$)([\s\S]*)")
+async def on_snip_save(event):
+    name = event.pattern_match.group(1)
+    msg = await event.get_reply_message()
+    if msg:
+        snip = {'type': TYPE_TEXT, 'text': msg.message or ''}
+        if msg.media:
+            media = None
+            if isinstance(msg.media, types.MessageMediaPhoto):
+                media = ut.get_input_photo(msg.media.photo)
+                snip['type'] = TYPE_PHOTO
+            elif isinstance(msg.media, types.MessageMediaDocument):
+                media = ut.get_input_document(msg.media.document)
+                snip['type'] = TYPE_DOCUMENT
+            if media:
+                snip['id'] = media.id
+                snip['hash'] = media.access_hash
+                snip['fr'] = media.file_reference
+        add_filter(event.chat_id, name, snip['text'], snip['type'], snip.get('id'), snip.get('hash'), snip.get('fr'))
+        await eod(event, f"**Berhasil Menambahkan Filter** `{name}")
     else:
-        await new_handler.edit(success.format(keyword, "Disini"))
+        await eod(event, f"Balas pesan dengan `{cmd}filter keyword` untuk menyimpan filter")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"stop (.*)"))
-async def remove_a_filter(r_handler):
-    """For .stop command, allows you to remove a filter from a chat."""
-    try:
-        from userbot.modules.sql_helper.filter_sql import remove_filter
-    except AttributeError:
-        return await r_handler.edit("**Berjalan Pada Mode Non-SQL!**")
-    filt = r_handler.pattern_match.group(1)
-    if not remove_filter(r_handler.chat_id, filt):
-        await r_handler.edit("**Filter** `{}` **Tidak Ada Disini**.".format(filt))
+@man_cmd(pattern="filters$")
+async def on_snip_list(event):
+    all_snips = get_all_filters(event.chat_id)
+    OUT_STR = "**✥ Daftar Filter Yang Aktif Disini:** \n"
+    if len(all_snips) > 0:
+        for a_snip in all_snips:
+            OUT_STR += f"👉 {a_snip.keyword} \n"
     else:
-        await r_handler.edit(
-            "**Berhasil Menghapus Filter** `{}` **Disini**".format(filt)
-        )
+        OUT_STR = "**Tidak Ada Filter Apapun Disini.**"
+    if len(OUT_STR) > 4096:
+        with io.BytesIO(str.encode(OUT_STR)) as out_file:
+            out_file.name = "filters.text"
+            await event.client.send_file(
+                event.chat_id,
+                out_file,
+                force_document=True,
+                allow_cache=False,
+                caption="Daftar Filter Yang Aktif Disini",
+                reply_to=event
+            )
+            await event.delete()
+    else:
+        await eod(event, OUT_STR)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"delfilterbot (.*)"))
-async def kick_marie_filter(event):
-    """ For .bersihkanbotfilter command, allows you to kick all \
-        Marie(or her clones) filters from a chat. """
-    bot_type = event.pattern_match.group(1).lower()
-    if bot_type not in ["marie", "rose"]:
-        return await event.edit("**Bot Itu Belum Didukung!**")
-    await event.edit("```Saya Akan Menghapus Semua Filter!```")
-    await sleep(3)
-    resp = await event.get_reply_message()
-    filters = resp.text.split("-")[1:]
-    for i in filters:
-        if bot_type.lower() == "marie":
-            await event.reply("/stop %s" % (i.strip()))
-        if bot_type.lower() == "rose":
-            i = i.replace("`", "")
-            await event.reply("/stop %s" % (i.strip()))
-        await sleep(0.3)
-    await event.respond("**Berhasil Menghapus Semua Filter Bot!**")
-    if BOTLOG_CHATID:
-        await event.client.send_message(
-            BOTLOG_CHATID, "Saya Membersihkan Semua Filter Bot Di " + str(event.chat_id)
-        )
-
-
-@bot.on(man_cmd(outgoing=True, pattern=r"filters$"))
-async def filters_active(event):
-    """For .filters command, lists all of the active filters in a chat."""
+@man_cmd(pattern="stop(?:\s|$)([\s\S]*)")
+async def on_snip_delete(event):
+    name = event.pattern_match.group(1)
     try:
-        from userbot.modules.sql_helper.filter_sql import get_filters
-    except AttributeError:
-        return await event.edit("**Running on Non-SQL mode!**")
-    transact = "**Tidak Ada Filter Apapun Disini.**"
-    filters = get_filters(event.chat_id)
-    for filt in filters:
-        if transact == "**Tidak Ada Filter Apapun Disini.**":
-            transact = "**✥ Daftar Filter Yang Aktif Disini:**\n"
-        transact += " ✣ `{}`\n".format(filt.keyword)
-    await event.edit(transact)
+        remove_filter(event.chat_id, name)
+        await eod(event, f"**Berhasil Menghapus Filter** `{name}`")
+    except Exception as e:
+        await eod(event, f"**ERROR:** `{e}`")
+
+
+@man_cmd(pattern="rmallfilters$")
+async def on_all_snip_delete(event):
+    remove_all_filters(event.chat_id)
+    await eor(event, f"**Berhasil Menghapus Semua Filter dalam obrolan ini**")
 
 
 CMD_HELP.update(
@@ -158,8 +140,8 @@ CMD_HELP.update(
         \n  •  **Function : **Membuat filter di obrolan, Bot Akan Membalas Jika Ada Yang Menyebut 'keyword' yang dibuat. Bisa dipakai ke media/sticker/vn/file.\
         \n\n  •  **Syntax :** `{cmd}stop` <keyword>\
         \n  •  **Function : **Untuk Nonaktifkan Filter.\
-        \n\n  •  **Syntax :** `{cmd}delfilterbot` <marie/rose>\
-        \n  •  **Function : **Menghapus semua filter yang ada di bot grup (Saat ini bot yang didukung: Marie, Rose.) dalam obrolan.\
+        \n\n  •  **Syntax :** `{cmd}rmallfilters`\
+        \n  •  **Function : **Menghapus semua filter yang ada di grup.\
     "
     }
 )
