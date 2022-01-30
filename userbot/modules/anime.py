@@ -66,10 +66,9 @@ def getBannerLink(mal, kitsu_search=True):
     }
     """
     data = {"query": query, "variables": {"idMal": int(mal)}}
-    image = requests.post("https://graphql.anilist.co", json=data).json()["data"][
-        "Media"
-    ]["bannerImage"]
-    if image:
+    if image := requests.post("https://graphql.anilist.co", json=data).json()[
+        "data"
+    ]["Media"]["bannerImage"]:
         return image
     return getPosterLink(mal)
 
@@ -78,8 +77,7 @@ def get_anime_manga(mal_id, search_type, _user_id):
     jikan = jikanpy.jikan.Jikan()
     if search_type == "anime_anime":
         result = jikan.anime(mal_id)
-        trailer = result["trailer_url"]
-        if trailer:
+        if trailer := result["trailer_url"]:
             LOL = f"<a href='{trailer}'>YouTube</a>"
         else:
             LOL = "<code>No Trailer Available</code>"
@@ -296,9 +294,7 @@ async def site_search(event):
         search_url = f"https://animekaizoku.com/?s={search_query}"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
-        search_result = soup.find_all("h2", {"class": "post-title"})
-
-        if search_result:
+        if search_result := soup.find_all("h2", {"class": "post-title"}):
             result = f"<a href='{search_url}'>Click Here For More Results</a> <b>of</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKaizoku</code>: \n\n"
             for entry in search_result:
                 post_link = entry.a["href"]

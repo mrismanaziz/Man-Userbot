@@ -29,12 +29,11 @@ async def glitch(event):
         return await edit_delete(event, "`Bales Ke Gambar/Sticker`")
     await event.client.download_file(reply_message.media)
     await xx.edit("`Sedang Mendownload Media....`")
-    if event.is_reply:
-        data = await check_media(reply_message)
-        if isinstance(data, bool):
-            return await edit_delete(event, "`File Tidak Di Dukung...`")
-    else:
+    if not event.is_reply:
         return await xx.edit("`Balas Ke Media....`")
+    data = await check_media(reply_message)
+    if isinstance(data, bool):
+        return await edit_delete(event, "`File Tidak Di Dukung...`")
     try:
         value = int(event.pattern_match.group(1))
         if value > 8:

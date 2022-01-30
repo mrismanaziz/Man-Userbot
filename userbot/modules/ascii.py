@@ -113,8 +113,8 @@ async def asciiart(IMG, color1, color2, bgcolor):
 # this is from userge
 async def random_color():
     return [
-        "#" + "".join(random.choice("0123456789ABCDEF") for k in range(6))
-        for i in range(2)
+        "#" + "".join(random.choice("0123456789ABCDEF") for _ in range(6))
+        for _ in range(2)
     ]
 
 

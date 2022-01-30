@@ -152,8 +152,7 @@ async def remove_a_filter(event):
 
 @bot.on(man_cmd(outgoing=True, pattern="rmallfilters$"))
 async def on_all_snip_delete(event):
-    filters = get_filters(event.chat_id)
-    if filters:
+    if filters := get_filters(event.chat_id):
         remove_all_filters(event.chat_id)
         await edit_delete(
             event, "**Berhasil Menghapus semua filter yang ada dalam obrolan ini**"

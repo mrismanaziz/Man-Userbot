@@ -20,7 +20,7 @@ async def gspide(rk):
     else:
         rkp = await lazy.edit("`Processing...`")
     me = await rk.client.get_me()
-    await rkp.edit(f"`Memproses Global Kick Jamet Goblok!`")
+    await rkp.edit('`Memproses Global Kick Jamet Goblok!`')
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     await rk.get_chat()
     a = b = 0

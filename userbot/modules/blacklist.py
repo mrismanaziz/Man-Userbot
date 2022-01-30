@@ -79,14 +79,13 @@ async def on_delete_blacklist(rmbl):
     to_unblacklist = list(
         {trigger.strip() for trigger in text.split("\n") if trigger.strip()}
     )
-    successful = sum(
+    if successful := sum(
         bool(sql.rm_from_blacklist(rmbl.chat_id, trigger.lower()))
         for trigger in to_unblacklist
-    )
-    if not successful:
-        await rmbl.edit("**{}** `Tidak Ada Di Blacklist`".format(text))
-    else:
+    ):
         await rmbl.edit("`Berhasil Menghapus` **{}** `Di Blacklist`".format(text))
+    else:
+        await rmbl.edit("**{}** `Tidak Ada Di Blacklist`".format(text))
 
 
 CMD_HELP.update(

@@ -88,21 +88,20 @@ def man_cmd(
             bot.add_event_handler(
                 func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
             )
-        if bot:
-            if allow_sudo:
-                if not disable_edited:
-                    bot.add_event_handler(
-                        func,
-                        events.MessageEdited(
-                            **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                        ),
-                    )
+        if bot and allow_sudo:
+            if not disable_edited:
                 bot.add_event_handler(
                     func,
-                    events.NewMessage(
+                    events.MessageEdited(
                         **args, from_users=list(SUDO_USERS), pattern=sudo_reg
                     ),
                 )
+            bot.add_event_handler(
+                func,
+                events.NewMessage(
+                    **args, from_users=list(SUDO_USERS), pattern=sudo_reg
+                ),
+            )
         if MAN2:
             if not disable_edited:
                 MAN2.add_event_handler(

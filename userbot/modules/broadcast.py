@@ -114,8 +114,7 @@ async def catbroadcast_add(event):
             "Di kategori mana saya harus menambahkan obrolan ini?", parse_mode=parse_pre
         )
     keyword = catinput_str.lower()
-    check = sql.is_in_broadcastlist(keyword, event.chat_id)
-    if check:
+    if check := sql.is_in_broadcastlist(keyword, event.chat_id):
         return await event.edit(
             f"Obrolan ini sudah ada dalam kategori ini {keyword}",
             parse_mode=parse_pre,

@@ -808,8 +808,7 @@ async def capture(url):
     chrome_options.arguments.remove("--window-size=1920x1080")
     driver = await chrome(chrome_options=chrome_options)
     input_str = url.pattern_match.group(1)
-    link_match = match(r"\bhttps?://.*\.\S+", input_str)
-    if link_match:
+    if link_match := match(r"\bhttps?://.*\.\S+", input_str):
         link = link_match.group()
     else:
         return await edit_delete(xx, "`I need a valid link to take screenshots from.`")
@@ -836,9 +835,7 @@ async def capture(url):
     im_png = driver.get_screenshot_as_png()
     # saves screenshot of entire page
     driver.quit()
-    message_id = url.message.id
-    if url.reply_to_msg_id:
-        message_id = url.reply_to_msg_id
+    message_id = url.reply_to_msg_id or url.message.id
     with io.BytesIO(im_png) as out_file:
         out_file.name = "screencapture.png"
         await xx.edit("`Uploading screenshot as file..`")
