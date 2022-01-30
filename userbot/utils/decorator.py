@@ -160,7 +160,7 @@ def man_handler(
         if MAN2:
             if not disable_edited:
                 MAN2.add_event_handler(
-                    func, events.MessageEdited(**arg, incoming=Trues)
+                    func, events.MessageEdited(**args, incoming=Trues)
                 )
             MAN2.add_event_handler(func, events.NewMessage(**args, incoming=True))
         if MAN3:
