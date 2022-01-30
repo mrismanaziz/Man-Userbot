@@ -233,7 +233,7 @@ QUEUE_PIC = (
     os.environ.get("QUEUE_PIC") or "https://telegra.ph/file/d6f92c979ad96b2031cba.png"
 )
 
-DEFAULT = 844432221
+DEFAULT = 123456789
 
 # Last.fm Module
 BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
