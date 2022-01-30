@@ -79,8 +79,12 @@ async def filter_incoming_handler(event):
 @man_cmd(pattern="filter (.*)")
 async def add_new_filter(event):
     "To save the filter"
-    keyword = event.pattern_match.group(1)
-    string = event.text.partition(keyword)[2]
+    value = event.pattern_match.group(1).split(None, 1)
+    keyword = value[0]
+    try:
+        string = value[1]
+    except IndexError:
+        string = None
     msg = await event.get_reply_message()
     msg_id = None
     if msg and msg.media and not string:
