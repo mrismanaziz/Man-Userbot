@@ -1,9 +1,11 @@
 import asyncio
+
+from random import choice
 from time import sleep
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
-from userbot.events import register
+from userbot.events import register as own_cmd
 from userbot.modules.ping import absen
 from userbot.utils import edit_or_reply, man_cmd
 
@@ -672,9 +674,9 @@ async def _(event):
     )
 
 
-@register(pattern=r"^\.man$", own=True)
+@own_cmd(pattern=r"^\.absendulu$", own=True)
 async def _(event):
-    await event.reply(random.choice(absen))
+    await event.reply(choice(absen))
 
 
 @man_cmd(pattern="ajg(?: |$)(.*)")
