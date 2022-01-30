@@ -8,7 +8,7 @@ from userbot.utils import deEmojify, man_cmd
 @man_cmd(pattern="rst(?: |$)(.*)")
 async def rastick(animu):
     text = animu.pattern_match.group(1)
-    xx = await edit_or_reply("`Processing...`")
+    xx = await edit_or_reply(animu, "`Processing...`")
     if not text:
         if animu.is_reply:
             text = (await animu.get_reply_message()).message
@@ -91,10 +91,7 @@ async def rastick(animu):
         )
 
     except Exception:
-        return await edit_delete(
-            xx,
-            "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`",
-        )
+        return await edit_delete(xx,"**You cannot send inline results in this chat**",)
     await xx.delete()
 
 
