@@ -8,7 +8,8 @@ import time
 from datetime import datetime
 from random import choice, randint
 
-from telethon.events import NewMessage, StopPropagation
+from telethon import events
+from telethon.events import StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
 
 from userbot import AFKREASON, BOTLOG_CHATID, PM_AUTO_BAN, bot, owner
@@ -30,7 +31,6 @@ afk_start = {}
 
 @bot.on(man_cmd(outgoing=True, pattern=r"off(?: |$)(.*)"))
 async def set_afk(afk_e):
-    """For .afk command, allows you to inform people that you are afk when they message you"""
     string = afk_e.pattern_match.group(1)
     global ISAFK
     global AFKREASON
@@ -71,7 +71,6 @@ async def set_afk(afk_e):
 
 @bot.on(NewMessage(outgoing=True))
 async def type_afk_is_not_true(notafk):
-    """This sets your status as not afk automatically when you write something while being afk"""
     global ISAFK
     global COUNT_MSG
     global USERS
@@ -140,7 +139,7 @@ async def mention_afk(mention):
     afk_since = "**Terakhir Online**"
     if (
         mention.message.mentioned
-        and not (await mention.get_sender()).mention.client
+        and not (await mention.get_sender()).bot
         and ISAFK
     ):
         now = datetime.now()
@@ -194,7 +193,6 @@ async def mention_afk(mention):
 
 @register(incoming=True, disable_errors=True)
 async def afk_on_pm(sender):
-    """Function which informs people that you are AFK in PM"""
     global ISAFK
     global USERS
     global COUNT_MSG
@@ -211,7 +209,7 @@ async def afk_on_pm(sender):
     if (
         sender.is_private
         and sender.sender_id != 777000
-        and not (await sender.get_sender()).sender.client
+        and not (await sender.get_sender()).bot
     ):
         if PM_AUTO_BAN:
             try:
