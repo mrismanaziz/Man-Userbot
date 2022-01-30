@@ -18,7 +18,7 @@ from userbot.utils import edit_delete, edit_or_reply, man_cmd, runcmd, take_scre
 async def memify(event):
     reply_msg = await event.get_reply_message()
     input_str = event.pattern_match.group(1)
-    xx = await edit_or_reply("`Sedang Memperoses...`")
+    xx = await edit_or_reply(event, "`Sedang Memperoses...`")
     if not reply_msg:
         return await edit_delete(xx, "**Balas ke pesan yang berisi media!**")
     if not reply_msg.media:

@@ -401,7 +401,7 @@ Unidentified= {}""".format(
 
 async def ban_user(chat_id, i, rights):
     try:
-        await event.client(functions.channels.EditBannedRequest(chat_id, i, rights))
+        await client(functions.channels.EditBannedRequest(chat_id, i, rights))
         return True, None
     except Exception as exc:
         return False, str(exc)
@@ -884,7 +884,7 @@ async def medival22(medivallite):
     if not args:
         await edit_delete(medivallite, "****Teks Apa Yang Harus Saya Medival Kan?****")
         return
-    xx = await edit_or_reply(event, "`Processing...`")
+    xx = await edit_or_reply(medivallite, "`Processing...`")
     string = "".join(args).lower()
     for normiecharacter in string:
         if normiecharacter in normiefont:

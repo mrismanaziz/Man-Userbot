@@ -21,7 +21,7 @@ async def impostor(event):
     if event.sender_id in SUDO_USERS:
         return
     inputArgs = event.pattern_match.group(1)
-    xx = await edit_or_reply("`Processing...`")
+    xx = await edit_or_reply(event, "`Processing...`")
     if "restore" in inputArgs:
         await event.edit("**Kembali ke identitas asli...**")
         if not STORAGE.userObj:

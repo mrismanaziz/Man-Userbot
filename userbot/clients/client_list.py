@@ -18,28 +18,28 @@ async def clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5):
         if MAN2 is not None:
             id2 = await MAN2.get_me()
             user_ids.append(id2.id)
-    except:
+    except Exception:
         pass
 
     try:
         if MAN3 is not None:
             id3 = await MAN3.get_me()
             user_ids.append(id3.id)
-    except:
+    except Exception:
         pass
 
     try:
         if MAN4 is not None:
             id4 = await MAN4.get_me()
             user_ids.append(id4.id)
-    except:
+    except Exception:
         pass
 
     try:
         if MAN5 is not None:
             id5 = await MAN5.get_me()
             user_ids.append(id5.id)
-    except:
+    except Exception:
         pass
 
     return user_ids
