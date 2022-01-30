@@ -7,13 +7,14 @@ from telethon.utils import get_display_name
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
+from userbot.events import man_cmd
 from userbot.modules.sql_helper.filter_sql import (
     add_filter,
     get_filters,
     remove_all_filters,
     remove_filter,
 )
-from userbot.utils import edit_or_reply, man_cmd
+from userbot.utils import edit_delete, edit_or_reply
 
 
 @bot.on(events.NewMessage(incoming=True))
@@ -77,9 +78,8 @@ async def filter_incoming_handler(event):
             )
 
 
-@man_cmd(pattern="filter (.*)")
+@bot.on(man_cmd(outgoing=True, pattern="filter (.*)"))
 async def add_new_filter(event):
-    "To save the filter"
     value = event.pattern_match.group(1).split(None, 1)
     keyword = value[0]
     try:
@@ -92,10 +92,8 @@ async def add_new_filter(event):
         if BOTLOG_CHATID:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"#FILTER\
-            \nCHAT ID: {event.chat_id}\
-            \nTRIGGER: {keyword}\
-            \n\nThe following message is saved as the filter's reply data for the chat, please do NOT delete it !!",
+                f"**#FILTER\nID OBROLAN:** {event.chat_id}\n**TRIGGER:** `{keyword}`"
+                "\n\n**Pesan Berikut Disimpan Sebagai Data Balasan Filter Untuk Obrolan, Mohon Jangan Menghapusnya**",
             )
             msg_o = await event.client.forward_messages(
                 entity=BOTLOG_CHATID,
@@ -107,55 +105,55 @@ async def add_new_filter(event):
         else:
             await edit_or_reply(
                 event,
-                "__Saving media as reply to the filter requires the__ `PRIVATE_GROUP_BOT_API_ID` __to be set.__",
+                "**Untuk menyimpan media ke filter membutuhkan** `BOTLOG_CHATID` **untuk disetel.**",
             )
             return
     elif msg and msg.text and not string:
         string = msg.text
     elif not string:
-        return await edit_or_reply(event, "__What should i do ?__")
-    success = "`Filter` **{}** `{} successfully`"
+        return await edit_or_reply(event, "Apa yang harus saya lakukan ?")
+    success = "**Berhasil {} Filter** `{}` **Disini**"
     if add_filter(str(event.chat_id), keyword, string, msg_id) is True:
-        return await edit_or_reply(event, success.format(keyword, "added"))
+        return await edit_or_reply(event, success.format("Menyimpan", keyword))
     remove_filter(str(event.chat_id), keyword)
     if add_filter(str(event.chat_id), keyword, string, msg_id) is True:
-        return await edit_or_reply(event, success.format(keyword, "Updated"))
-    await edit_or_reply(event, f"Error while setting filter for {keyword}")
+        return await edit_or_reply(event, success.format("Mengupdate", keyword))
+    await edit_or_reply(event, f"**ERROR saat menyetel filter untuk** `{keyword}`")
 
 
-@man_cmd(pattern="filters$")
+@bot.on(man_cmd(outgoing=True, pattern="filters$"))
 async def on_snip_list(event):
-    OUT_STR = "There are no filters in this chat."
+    OUT_STR = "**Tidak Ada Filter Apapun Disini.**"
     filters = get_filters(event.chat_id)
     for filt in filters:
-        if OUT_STR == "There are no filters in this chat.":
-            OUT_STR = "Active filters in this chat:\n"
-        OUT_STR += "👉 `{}`\n".format(filt.keyword)
+        if OUT_STR == "**Tidak Ada Filter Apapun Disini.**":
+            OUT_STR = "**✥ Daftar Filter Yang Aktif Disini:**\n"
+        OUT_STR += "• `{}`\n".format(filt.keyword)
     await edit_or_reply(
         event,
         OUT_STR,
-        caption="Available Filters in the Current Chat",
+        caption="Daftar Filter Yang Aktif Disini",
         file_name="filters.text",
     )
 
 
-@man_cmd(pattern="stop ([\s\S]*)")
+@bot.on(man_cmd(outgoing=True, pattern="stop ([\s\S]*)"))
 async def remove_a_filter(event):
     filt = event.pattern_match.group(1)
     if not remove_filter(event.chat_id, filt):
-        await event.edit("Filter` {} `doesn't exist.".format(filt))
+        await event.edit("**Filter** `{}` **Tidak Ada Disini**.".format(filt))
     else:
-        await event.edit("Filter `{} `was deleted successfully".format(filt))
+        await event.edit("**Berhasil Menghapus Filter** `{}` **Disini**".format(filt))
 
 
-@man_cmd(pattern="rmallfilters$")
+@bot.on(man_cmd(outgoing=True, pattern="rmallfilters$"))
 async def on_all_snip_delete(event):
     filters = get_filters(event.chat_id)
     if filters:
         remove_all_filters(event.chat_id)
-        await edit_or_reply(event, "filters in current chat deleted successfully")
+        await edit_delete(event, "**Berhasil Menghapus semua filter yang ada dalam obrolan ini**")
     else:
-        await edit_or_reply(event, "There are no filters in this group")
+        await edit_delete(event, "**Tidak Ada Filter Apapun Disini.**")
 
 
 CMD_HELP.update(
@@ -166,7 +164,7 @@ CMD_HELP.update(
         \n\n  •  **Syntax :** `{cmd}filter` <keyword> <balasan> atau balas ke pesan ketik `.filter` <keyword>\
         \n  •  **Function : **Membuat filter di obrolan, Bot Akan Membalas Jika Ada Yang Menyebut 'keyword' yang dibuat. Bisa dipakai ke media/sticker/vn/file.\
         \n\n  •  **Syntax :** `{cmd}stop` <keyword>\
-        \n  •  **Function : **Untuk Nonaktifkan Filter.\
+        \n  •  **Function : **Untuk Nonaktifkan Filter yang terpasang di grup.\
         \n\n  •  **Syntax :** `{cmd}rmallfilters`\
         \n  •  **Function : **Menghapus semua filter yang ada di grup.\
     "
