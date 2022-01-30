@@ -1,11 +1,12 @@
 # ported from paperplaneExtended by avinashreddy3108 for media support
 import re
 
+from telethon import events
 from telethon.utils import get_display_name
 
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP
+from userbot import CMD_HELP, bot
 from userbot.modules.sql_helper.filter_sql import (
     add_filter,
     get_filters,
@@ -15,7 +16,7 @@ from userbot.modules.sql_helper.filter_sql import (
 from userbot.utils import edit_or_reply, man_cmd, man_handler
 
 
-@man_handler()
+@bot.on(events.NewMessage(incoming=True))
 async def filter_incoming_handler(event):
     name = event.raw_text
     filters = get_filters(event.chat_id)
