@@ -16,7 +16,7 @@ from traceback import format_exc
 
 from telethon import events
 
-from userbot import CMD_HANDLER, CMD_LIST, DEFAULT, DEVS, bot
+from userbot import CMD_HANDLER, CMD_LIST, DEFAULT, DEVS, MAN2, MAN3, MAN4, MAN5, bot
 
 
 def man_cmd(pattern=None, command=None, **args):
@@ -232,10 +232,26 @@ def register(**args):
 
                     with open("error.log", "w+") as file:
                         file.write(ftext)
-
-        if not disable_edited:
-            bot.add_event_handler(wrapper, events.MessageEdited(**args))
-        bot.add_event_handler(wrapper, events.NewMessage(**args))
+        if bot:
+            if not disable_edited:
+                bot.add_event_handler(wrapper, events.MessageEdited(**args))
+            bot.add_event_handler(wrapper, events.NewMessage(**args))
+        if MAN2:
+            if not disable_edited:
+                MAN2.add_event_handler(wrapper, events.MessageEdited(**args))
+            MAN2.add_event_handler(wrapper, events.NewMessage(**args))
+        if MAN3:
+            if not disable_edited:
+                MAN3.add_event_handler(wrapper, events.MessageEdited(**args))
+            MAN3.add_event_handler(wrapper, events.NewMessage(**args))
+        if MAN4:
+            if not disable_edited:
+                MAN4.add_event_handler(wrapper, events.MessageEdited(**args))
+            MAN4.add_event_handler(wrapper, events.NewMessage(**args))
+        if MAN5:
+            if not disable_edited:
+                MAN5.add_event_handler(wrapper, events.MessageEdited(**args))
+            MAN5.add_event_handler(wrapper, events.NewMessage(**args))
         return wrapper
 
     return decorator
