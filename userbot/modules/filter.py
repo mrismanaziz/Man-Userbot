@@ -4,7 +4,7 @@ import re
 from telethon import events
 from telethon.utils import get_display_name
 
-from userbot import BOTLOG_CHATID
+from userbot import BLACKLIST_CHAT, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot
 from userbot.events import man_cmd
@@ -80,6 +80,8 @@ async def filter_incoming_handler(event):
 
 @bot.on(man_cmd(outgoing=True, pattern="filter (.*)"))
 async def add_new_filter(event):
+    if event.chat_id in BLACKLIST_CHAT:
+        return await edit_or_reply(event, "**Perintah ini Dilarang digunakan di Group ini**")
     value = event.pattern_match.group(1).split(None, 1)
     keyword = value[0]
     try:
