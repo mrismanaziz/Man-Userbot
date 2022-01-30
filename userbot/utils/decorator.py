@@ -178,6 +178,23 @@ def asst_cmd(**args):
     return decorator
 
 
+def chataction(**args):
+    def decorator(func):
+        if bot:
+            bot.add_event_handler(func, events.ChatAction(**args))
+        if MAN2:
+            MAN2.add_event_handler(func, events.ChatAction(**args))
+        if MAN3:
+            MAN3.add_event_handler(func, events.ChatAction(**args))
+        if MAN4:
+            MAN4.add_event_handler(func, events.ChatAction(**args))
+        if MAN5:
+            MAN5.add_event_handler(func, events.ChatAction(**args))
+        return func
+
+    return decorator
+
+
 def callback(**args):
     def decorator(func):
         if tgbot:
