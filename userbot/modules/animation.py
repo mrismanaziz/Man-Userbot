@@ -1,5 +1,4 @@
 import asyncio
-
 from random import choice
 from time import sleep
 
