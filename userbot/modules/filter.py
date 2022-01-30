@@ -19,7 +19,8 @@ from userbot.modules.sql_helper.filter_sql import (
     remove_all_filters,
     remove_filter,
 )
-from userbot.utils import eod, man_cmd
+from userbot.utils import man_cmd
+from userbot.utils.tools import eod
 
 DELETE_TIMEOUT = 0
 TYPE_TEXT = 0
