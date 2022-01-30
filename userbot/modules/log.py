@@ -218,10 +218,7 @@ async def set_gruplog(event):
         h_type = False
     elif input_str == "on":
         h_type = True
-    if (
-        GRUPLOG := not gvarstatus("GRUPLOG")
-        or gvarstatus("GRUPLOG") != "false"
-    ):
+    if GRUPLOG := not gvarstatus("GRUPLOG") or gvarstatus("GRUPLOG") != "false":
         if h_type:
             await edit_or_reply(event, "**Group Log Sudah Diaktifkan**")
         else:

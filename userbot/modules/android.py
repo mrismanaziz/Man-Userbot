@@ -195,7 +195,6 @@ async def download_api(dl):
             round(percentage, 2),
         )
 
-
         current_message = (
             "`[DOWNLOAD]`\n\n"
             f"`{file_name}`\n"

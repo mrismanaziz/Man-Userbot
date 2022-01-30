@@ -66,9 +66,9 @@ def getBannerLink(mal, kitsu_search=True):
     }
     """
     data = {"query": query, "variables": {"idMal": int(mal)}}
-    if image := requests.post("https://graphql.anilist.co", json=data).json()[
-        "data"
-    ]["Media"]["bannerImage"]:
+    if image := requests.post("https://graphql.anilist.co", json=data).json()["data"][
+        "Media"
+    ]["bannerImage"]:
         return image
     return getPosterLink(mal)
 

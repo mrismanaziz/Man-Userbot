@@ -67,7 +67,6 @@ async def download(target_file):
                 round(percentage, 2),
             )
 
-
             estimated_total_time = downloader.get_eta(human=True)
             try:
                 current_message = (
