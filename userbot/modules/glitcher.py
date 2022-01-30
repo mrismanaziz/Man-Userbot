@@ -13,45 +13,40 @@ from glitch_this import ImageGlitcher
 from PIL import Image
 from telethon import functions, types
 
-from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
-from userbot.events import man_cmd
-from userbot.utils import check_media, progress
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
+from userbot.utils import check_media, edit_delete, edit_or_reply, man_cmd, progress
 
 Glitched = TEMP_DOWNLOAD_DIRECTORY + "glitch.gif"
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"glitch(?: |$)(.*)"))
+@man_cmd(pattern="glitch(?: |$)(.*)")
 async def glitch(event):
     if not event.reply_to_msg_id:
-        await event.edit("`Aku Mau Glitch Sebuah Hantu!`")
-        return
+        return await edit_or_reply(event, "`Aku Mau Glitch Sebuah Hantu!`")
     reply_message = await event.get_reply_message()
+    xx = await edit_or_reply(event, "`Processing...`")
     if not reply_message.media:
-        await event.edit("`Bales Ke Gambar/Sticker`")
-        return
-    await bot.download_file(reply_message.media)
-    await event.edit("`Sedang Mendownload Media....`")
+        return await edit_delete(event, "`Bales Ke Gambar/Sticker`")
+    await event.client.download_file(reply_message.media)
+    await xx.edit("`Sedang Mendownload Media....`")
     if event.is_reply:
         data = await check_media(reply_message)
         if isinstance(data, bool):
-            await event.edit("`File Tidak Di Dukung...`")
-            return
+            return await edit_delete(event, "`File Tidak Di Dukung...`")
     else:
-        await event.edit("`Balas Ke Media....`")
-        return
-
+        return await xx.edit("`Balas Ke Media....`")
     try:
         value = int(event.pattern_match.group(1))
         if value > 8:
             raise ValueError
     except ValueError:
         value = 2
-    await event.edit("```Melakukan Glitch Pada Media Ini```")
+    await xx.edit("`Melakukan Glitch Pada Media Ini`")
     await asyncio.sleep(2)
     file_name = "glitch.png"
     to_download_directory = TEMP_DOWNLOAD_DIRECTORY
     downloaded_file_name = os.path.join(to_download_directory, file_name)
-    downloaded_file_name = await bot.download_media(
+    downloaded_file_name = await event.client.download_media(
         reply_message,
         downloaded_file_name,
     )
@@ -69,7 +64,7 @@ async def glitch(event):
         duration=DURATION,
         loop=LOOP,
     )
-    await event.edit("`Sedang Mengunggah Media Yang Telah Di Glitch`")
+    await xx.edit("`Sedang Mengunggah Media Yang Telah Di Glitch`")
     c_time = time.time()
     nosave = await event.client.send_file(
         event.chat_id,
@@ -82,7 +77,7 @@ async def glitch(event):
     )
     await event.delete()
     os.remove(Glitched)
-    await bot(
+    await event.client(
         functions.messages.SaveGifRequest(
             id=types.InputDocument(
                 id=nosave.media.document.id,

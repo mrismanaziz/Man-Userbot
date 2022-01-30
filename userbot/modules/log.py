@@ -5,15 +5,20 @@
 
 import asyncio
 
-from telethon import events
-
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, SUDO_USERS, bot
+from userbot import CMD_HELP, LOGS, SUDO_USERS
 from userbot.modules.sql_helper import no_log_pms_sql
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.modules.vcplugin import vcmention
-from userbot.utils import _format, edit_delete, edit_or_reply, man_cmd
+from userbot.utils import (
+    _format,
+    chataction,
+    edit_delete,
+    edit_or_reply,
+    man_cmd,
+    man_handler,
+)
 from userbot.utils.tools import media_type
 
 
@@ -27,7 +32,7 @@ class LOG_CHATS:
 LOG_CHATS_ = LOG_CHATS()
 
 
-@bot.on(events.ChatAction)
+@chataction()
 async def logaddjoin(event):
     user = await event.get_user()
     chat = await event.get_chat()
@@ -47,8 +52,7 @@ async def logaddjoin(event):
     await event.client.send_message(BOTLOG_CHATID, text)
 
 
-@bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
-@bot.on(events.MessageEdited(incoming=True, func=lambda e: e.is_private))
+@man_handler(func=lambda e: e.is_private)
 async def monito_p_m_s(event):
     if BOTLOG_CHATID == -100:
         return
@@ -83,8 +87,7 @@ async def monito_p_m_s(event):
                 LOGS.warn(str(e))
 
 
-@bot.on(events.NewMessage(incoming=True, func=lambda e: e.mentioned))
-@bot.on(events.MessageEdited(incoming=True, func=lambda e: e.mentioned))
+@man_handler(func=lambda e: e.mentioned)
 async def log_tagged_messages(event):
     if BOTLOG_CHATID == -100:
         return

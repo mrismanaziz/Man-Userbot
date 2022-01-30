@@ -8,11 +8,11 @@ import time
 from datetime import datetime
 from random import choice, randint
 
-from telethon.events import StopPropagation
+from telethon.events import NewMessage, StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from userbot import AFKREASON, BOTLOG_CHATID, PM_AUTO_BAN, bot, owner
-from userbot.events import man_cmd, register
+from userbot import AFKREASON, BOTLOG_CHATID, ISAFK, PM_AUTO_BAN, bot, owner
+from userbot.events import man_cmd
 
 # ========================= CONSTANTS ============================
 AFKSTR = [
@@ -22,6 +22,7 @@ AFKSTR = [
     f"**Maaf {owner} Sedang OFF!**",
 ]
 USER_AFK = {}
+ISAFK
 afk_time = None
 afk_start = {}
 
@@ -30,7 +31,6 @@ afk_start = {}
 
 @bot.on(man_cmd(outgoing=True, pattern=r"off(?: |$)(.*)"))
 async def set_afk(afk_e):
-    """For .afk command, allows you to inform people that you are afk when they message you"""
     string = afk_e.pattern_match.group(1)
     global ISAFK
     global AFKREASON
@@ -38,7 +38,7 @@ async def set_afk(afk_e):
     global afk_time
     global afk_start
     global afk_end
-    user = await bot.get_me()
+    user = await afk_e.client.get_me()
     USER_AFK = {}
     afk_time = None
     afk_end = {}
@@ -69,9 +69,8 @@ async def set_afk(afk_e):
     raise StopPropagation
 
 
-@register(outgoing=True)
+@bot.on(NewMessage(outgoing=True))
 async def type_afk_is_not_true(notafk):
-    """This sets your status as not afk automatically when you write something while being afk"""
     global ISAFK
     global COUNT_MSG
     global USERS
@@ -80,7 +79,7 @@ async def type_afk_is_not_true(notafk):
     global afk_time
     global afk_start
     global afk_end
-    user = await bot.get_me()
+    user = await notafk.client.get_me()
     last = user.last_name
     if last and last.endswith("【 OFF 】"):
         last1 = last[:-12]
@@ -125,9 +124,8 @@ async def type_afk_is_not_true(notafk):
         AFKREASON = None
 
 
-@register(incoming=True, disable_edited=True)
+@bot.on(NewMessage(incoming=True))
 async def mention_afk(mention):
-    """This function takes care of notifying the people who mention you that you are AFK."""
     global COUNT_MSG
     global USERS
     global ISAFK
@@ -135,7 +133,7 @@ async def mention_afk(mention):
     global afk_time
     global afk_start
     global afk_end
-    user = await bot.get_me()  # pylint:disable=E0602
+    await mention.client.get_me()
     back_alivee = datetime.now()
     afk_end = back_alivee.replace(microsecond=0)
     afk_since = "**Terakhir Online**"
@@ -189,9 +187,8 @@ async def mention_afk(mention):
         COUNT_MSG = COUNT_MSG + 1
 
 
-@register(incoming=True, disable_errors=True)
+@bot.on(NewMessage(incoming=True, func=lambda e: e.is_private))
 async def afk_on_pm(sender):
-    """Function which informs people that you are AFK in PM"""
     global ISAFK
     global USERS
     global COUNT_MSG

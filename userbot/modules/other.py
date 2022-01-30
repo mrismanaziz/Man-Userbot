@@ -15,7 +15,7 @@ from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import ChannelParticipantsKicked
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, owner
+from userbot import CMD_HELP
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
@@ -45,7 +45,7 @@ async def _(event):
         return await edit_or_reply(event, "**Maaf BOT Tidak Merespond.**")
 
     botid = await event.client.get_entity(chat)
-    await edit_or_reply(event, "`Processing...`")
+    xx = await edit_or_reply(event, "`Processing...`")
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -60,8 +60,8 @@ async def _(event):
             response = await response
             await event.client.send_read_acknowledge(conv.chat_id)
         except BaseException:
-            await edit_delete(event, "**Tidak dapat menemukan bot itu 🥺**")
-        await edit_or_reply(event, f"**Pesan Terkirim:** `{link}`\n**Kepada: {chat}**")
+            await edit_delete(xx, "**Tidak dapat menemukan bot itu 🥺**")
+        await xx.edit(f"**Pesan Terkirim:** `{link}`\n**Kepada: {chat}**")
         await event.client.send_message(event.chat_id, response.message)
         await event.client.send_read_acknowledge(event.chat_id)
         await event.client.delete_messages(conv.chat_id, [msg.id, response.id])
@@ -69,7 +69,7 @@ async def _(event):
 
 @man_cmd(pattern="unbanall$")
 async def _(event):
-    await edit_or_reply(event, "`Searching Participant Lists...`")
+    xx = await edit_or_reply(event, "`Searching Participant Lists...`")
     p = 0
     title = (await event.get_chat()).title
     async for i in event.client.iter_participants(
@@ -82,7 +82,7 @@ async def _(event):
             p += 1
         except BaseException:
             pass
-    await edit_or_reply(event, f"**Berhasil unbanned** `{p}` **Orang di Grup {title}**")
+    await xx.edit(f"**Berhasil unbanned** `{p}` **Orang di Grup {title}**")
 
 
 @man_cmd(pattern="(?:dm)\s?(.*)?")
@@ -123,14 +123,14 @@ async def _(e):
 
 @man_cmd(pattern="getlink(?: |$)(.*)")
 async def _(event):
-    await edit_or_reply(event, "`Processing...`")
+    xx = await edit_or_reply(event, "`Processing...`")
     try:
         e = await event.client(
             ExportChatInviteRequest(event.chat_id),
         )
+        await xx.edit(f"**Link Invite: {e.link}**")
     except ChatAdminRequiredError:
-        return await event.client.send_message(f"**Maaf {owner} Bukan Admin 👮**")
-    await edit_or_reply(event, f"**Link Invite GC**: {e.link}")
+        return await xx.edit("**Maaf anda Bukan Admin 👮**")
 
 
 @man_cmd(pattern="tmsg (.*)")
@@ -152,7 +152,7 @@ async def _(event):
 
 @man_cmd(pattern="limit(?: |$)(.*)")
 async def _(event):
-    await edit_or_reply(event, "`Processing...`")
+    xx = await edit_or_reply(event, "`Processing...`")
     async with event.client.conversation("@SpamBot") as conv:
         try:
             response = conv.wait_event(
@@ -166,7 +166,7 @@ async def _(event):
             await conv.send_message("/start")
             response = await response
             await event.client.send_read_acknowledge(conv.chat_id)
-        await edit_or_reply(event, f"~ {response.message.message}")
+        await xx.edit(f"~ {response.message.message}")
 
 
 @man_cmd(pattern="view")

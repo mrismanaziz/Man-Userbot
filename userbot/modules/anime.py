@@ -26,8 +26,8 @@ from telethon.tl.types import (
 from telethon.utils import is_image, is_video
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 jikan = Jikan()
 
@@ -235,27 +235,27 @@ async def formatJSON(outData):
     return msg
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"anilist ?(.*)"))
+@man_cmd(pattern="anilist ?(.*)")
 async def anilist(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
     result = await callAPI(input_str)
     msg = await formatJSON(result)
-    await event.edit(msg, link_preview=True)
+    await edit_or_reply(event, msg, link_preview=True)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"anime ?(.*)"))
+@man_cmd(pattern="anime ?(.*)")
 async def search_anime(message):
     search_query = message.pattern_match.group(1)
     await message.get_reply_message()
-    await message.edit("`Searching Anime..`")
+    xx = await edit_or_reply(message, "`Searching Anime..`")
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("anime", search_query)
     first_mal_id = search_result["results"][0]["mal_id"]
     caption, image = get_anime_manga(first_mal_id, "anime_anime", message.chat_id)
     try:
-        await message.delete()
+        await xx.delete()
         await message.client.send_file(
             message.chat_id, file=image, caption=caption, parse_mode="HTML"
         )
@@ -266,22 +266,22 @@ async def search_anime(message):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"manga ?(.*)"))
+@man_cmd(pattern=r"manga ?(.*)")
 async def search_manga(message):
     search_query = message.pattern_match.group(1)
     await message.get_reply_message()
-    await message.edit("`Searching Manga..`")
+    xx = await edit_or_reply(message, "`Searching Manga..`")
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("manga", search_query)
     first_mal_id = search_result["results"][0]["mal_id"]
     caption, image = get_anime_manga(first_mal_id, "anime_manga", message.chat_id)
-    await message.delete()
+    await xx.delete()
     await message.client.send_file(
         message.chat_id, file=image, caption=caption, parse_mode="HTML"
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern="a(kaizoku|kayo) ?(.*)"))
+@man_cmd(pattern="a(kaizoku|kayo) ?(.*)")
 async def site_search(event):
     message = await event.get_reply_message()
     search_query = event.pattern_match.group(2)
@@ -291,9 +291,7 @@ async def site_search(event):
     elif message:
         search_query = message.text
     else:
-        await event.edit("`Uuf Bro.. Gib something to Search`")
-        return
-
+        return await edit_delete(event, "`Uuf Bro.. Gib something to Search`")
     if site == "kaizoku":
         search_url = f"https://animekaizoku.com/?s={search_query}"
         html_text = requests.get(search_url).text
@@ -327,10 +325,10 @@ async def site_search(event):
             post_link = entry.a["href"]
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
-            await event.edit(result, parse_mode="HTML")
+            await edit_or_reply(event, result, parse_mode="HTML")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"char ?(.*)"))
+@man_cmd(pattern="char ?(.*)")
 async def character(event):
     message = await event.get_reply_message()
     search_query = event.pattern_match.group(1)
@@ -339,15 +337,13 @@ async def character(event):
     elif message:
         search_query = message.text
     else:
-        await event.edit("Format: `.char <character name>`")
+        await edit_or_reply(event, "Format: `.char <character name>`")
         return
-    await event.edit("`Searching Character...`")
-
+    xx = await edit_delete(event, "`Searching Character...`")
     try:
         search_result = jikan.search("character", search_query)
     except APIException:
-        await event.edit("`Character not found.`")
-        return
+        return await xx.edit("`Character not found.`")
     first_mal_id = search_result["results"][0]["mal_id"]
     character = jikan.character(first_mal_id)
     caption = f"[{character['name']}]({character['url']})"
@@ -355,7 +351,6 @@ async def character(event):
         caption += f" ({character['name_kanji']})\n"
     else:
         caption += "\n"
-
     if character["nicknames"]:
         nicknames_string = ", ".join(character["nicknames"])
         caption += f"\n**Nicknames** : `{nicknames_string}`"
@@ -371,7 +366,7 @@ async def character(event):
             character[entity] = "Unknown"
     caption += f"\n🔰**Extracted Character Data**🔰\n\n{about_string}"
     caption += f" [Read More]({mal_url})..."
-    await event.delete()
+    await xx.delete()
     await event.client.send_file(
         event.chat_id,
         file=character["image_url"],
@@ -380,7 +375,7 @@ async def character(event):
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern="upcoming$"))
+@man_cmd(pattern="upcoming$")
 async def upcoming(message):
     rep = "<b>Upcoming anime</b>\n"
     later = jikan.season_later()
@@ -391,21 +386,21 @@ async def upcoming(message):
         rep += f"• <a href='{url}'>{name}</a>\n"
         if len(rep) > 1000:
             break
-        await message.edit(rep, parse_mode="html")
+        await edit_or_reply(message, rep, parse_mode="html")
 
 
-@bot.on(man_cmd(outgoing=True, pattern="whatanime$"))
+@man_cmd(pattern="whatanime$")
 async def whatanime(e):
     media = e.media
     if not media:
         r = await e.get_reply_message()
         media = getattr(r, "media", None)
     if not media:
-        await e.edit("`Media required`")
+        await edit_delete(e, "`Media required`")
         return
     ig = is_gif(media) or is_video(media)
     if not is_image(media) and not ig:
-        await e.edit("`Media must be an image or gif or video`")
+        await edit_delete(e, "`Media must be an image or gif or video`")
         return
     filename = "file.jpg"
     if not ig and isinstance(media, MessageMediaDocument):
@@ -414,9 +409,9 @@ async def whatanime(e):
             if isinstance(i, DocumentAttributeFilename):
                 filename = i.file_name
                 break
-    await e.edit("`Downloading image..`")
+    xx = await edit_or_reply(e, "`Downloading image..`")
     content = await e.client.download_media(media, bytes, thumb=-1 if ig else None)
-    await e.edit("`Searching for result..`")
+    await xx.edit("`Searching for result..`")
     file = memory_file(filename, content)
     async with aiohttp.ClientSession() as session:
         url = "https://api.trace.moe/search?anilistInfo"
@@ -424,7 +419,7 @@ async def whatanime(e):
             resp0 = await raw_resp0.json()
         js0 = resp0.get("result")
         if not js0:
-            await e.edit("`No results found.`")
+            await xx.edit("`No results found.`")
             return
         js0 = js0[0]
         text = f'<b>{html.escape(js0["anilist"]["title"]["romaji"])}'
@@ -447,9 +442,9 @@ async def whatanime(e):
         async with session.get(js0["video"]) as raw_resp1:
             file = memory_file("preview.mp4", await raw_resp1.read())
         try:
-            await e.reply(ctext, file=file, parse_mode="html")
+            await xx.edit(ctext, file=file, parse_mode="html")
         except FilePartsInvalidError:
-            await e.reply("`Cannot send preview.`")
+            await xx.edit("`Cannot send preview.`")
 
 
 def memory_file(name=None, contents=None, *, _bytes=True):

@@ -1,7 +1,7 @@
 from time import sleep
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, owner
+from userbot import CMD_HELP
 from userbot.utils import edit_or_reply, man_cmd
 
 
@@ -27,7 +27,8 @@ async def _(event):
 
 @man_cmd(pattern="P(?: |$)(.*)")
 async def _(event):
-    xx = await edit_or_reply(event, f"**Haii Salken Saya {owner}**")
+    me = await event.client.get_me()
+    xx = await edit_or_reply(event, f"**Haii Salken Saya {me.first_name}**")
     sleep(2)
     await xx.edit("**Assalamualaikum...**")
 
@@ -42,7 +43,8 @@ async def _(event):
 
 @man_cmd(pattern="a(?: |$)(.*)")
 async def _(event):
-    xx = await edit_or_reply(event, f"**Haii Salken Saya {owner}**")
+    me = await event.client.get_me()
+    xx = await edit_or_reply(event, f"**Haii Salken Saya {me.first_name}**")
     sleep(2)
     await xx.edit("**Assalamualaikum**")
 
@@ -56,7 +58,8 @@ async def _(event):
 
 @man_cmd(pattern="k(?: |$)(.*)")
 async def _(event):
-    xx = await edit_or_reply(event, f"**Hallo KIMAAKK SAYA {owner}**")
+    me = await event.client.get_me()
+    xx = await edit_or_reply(event, f"**Hallo KIMAAKK SAYA {me.first_name}**")
     sleep(2)
     await xx.edit("**LU SEMUA NGENTOT 🔥**")
 

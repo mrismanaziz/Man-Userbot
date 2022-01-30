@@ -1,15 +1,56 @@
 # @mrismanaziz
 # t.me/sharinguserbot
 
+from time import sleep
+
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"frog(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    await typew.edit(
+@man_cmd(pattern="sadboy(?: |$)(.*)")
+async def _(event):
+    xx = await edit_or_reply(event, "`Pertama-tama kamu cantik`")
+    sleep(2)
+    await xx.edit("`Kedua kamu manis`")
+    sleep(1)
+    await xx.edit("`Dan yang terakhir adalah kamu bukan jodohku`")
+
+
+@man_cmd(pattern="punten(?: |$)(.*)")
+async def _(event):
+    await edit_or_reply(
+        event,
+        "`\n┻┳|―-∩`"
+        "`\n┳┻|     ヽ`"
+        "`\n┻┳|    ● |`"
+        "`\n┳┻|▼) _ノ`"
+        "`\n┻┳|￣  )`"
+        "`\n┳ﾐ(￣ ／`"
+        "`\n┻┳T￣|`"
+        "\n**Punten**",
+    )
+
+
+@man_cmd(pattern="pantau(?: |$)(.*)")
+async def _(event):
+    await edit_or_reply(
+        event,
+        "`\n┻┳|―-∩`"
+        "`\n┳┻|     ヽ`"
+        "`\n┻┳|    ● |`"
+        "`\n┳┻|▼) _ノ`"
+        "`\n┻┳|￣  )`"
+        "`\n┳ﾐ(￣ ／`"
+        "`\n┻┳T￣|`"
+        "\n**Masih Gua Pantau**",
+    )
+
+
+@man_cmd(pattern="frog(?: |$)(.*)")
+async def _(event):
+    await edit_or_reply(
+        event,
         "⠄⠄⠄⠄⠄⣀⣀⣤⣶⣿⣿⣶⣶⣶⣤⣄⣠⣴⣶⣿⣶⣦⣄⠄\n"
         "⠄⣠⣴⣾⣿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦\n"
         "⢠⠾⣋⣭⣄⡀⠄⠙⠻⣿⣿⡿⠛⠋⠉⠉⠉⠙⠛⠿⣿⣿⣿⣿\n"
@@ -24,14 +65,14 @@ async def typewriter(typew):
         "⠄⣿⡇⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠄⢀⣼⣿⣿⣿⣿⣿\n"
         "⠄⣿⡇⠄⠠⣿⣿⣿⣿⣿⣿⣿⡿⠋⠄⠄⣠⣾⣿⣿⣿⣿⣿⣿\n"
         "⠄⣿⠁⠄⠐⠛⠛⠛⠉⠉⠉⠉⠄⠄⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿\n"
-        "⠄⠻⣦⣀⣀⣀⣀⣀⣤⣤⣤⣤⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋\n"
+        "⠄⠻⣦⣀⣀⣀⣀⣀⣤⣤⣤⣤⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋\n",
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"dfrog(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    await typew.edit(
+@man_cmd(pattern="dfrog(?: |$)(.*)")
+async def _(event):
+    await edit_or_reply(
+        event,
         "⣿⣿⣿⡇⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
         "⣿⣿⣿⡇⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
         "⣿⣿⣿⡇⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
@@ -46,14 +87,14 @@ async def typewriter(typew):
         "⠑⠽⡻⢿⣮⣽⣷⣶⣯⣽⣳⠮⣽⣟⣲⠯⢭⣿⣛⡇⣿⣿⣿⣿\n"
         "⠄⠄⠈⠑⠊⠉⠟⣻⠿⣿⣿⣿⣷⣾⣭⣿⠷⠶⠂⣴⣿⣿⣿⣿\n"
         "⠄⠄⠄⠄⠄⠄⠄⠁⠙⠒⠙⠯⠍⠙⢉⣡⣶⣿⣿⣿⣿⣿⣿⣿\n"
-        "⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
+        "⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿\n",
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"strump(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    await typew.edit(
+@man_cmd(pattern="strump(?: |$)(.*)")
+async def _(event):
+    await edit_or_reply(
+        event,
         "⣿⣿⣿⣿⣿⣿⡿⠿⠛⠋⠉⡉⣉⡛⣛⠿⣿⣿⣿⣿⣿⣿⣿⣿\n"
         "⣿⣿⣿⡿⠋⠁⠄⠄⠄⠄⠄⢀⣸⣿⣿⡿⠿⡯⢙⠿⣿⣿⣿⣿\n"
         "⣿⣿⡿⠄⠄⠄⠄⠄⡀⡀⠄⢀⣀⣉⣉⣉⠁⠐⣶⣶⣿⣿⣿⣿\n"
@@ -68,14 +109,14 @@ async def typewriter(typew):
         "⠄⠄⠄⠄⠄⠄⠈⢿⣿⠟⡋⠄⠄⠄⢣⠄⠄⠄⠄⠄⠈⠹⣿⣀\n"
         "⠄⠄⠄⠄⠄⠄⠄⠘⣷⣿⣿⣷⠄⠄⢺⣇⠄⠄⠄⠄⠄⠄⠸⣿\n"
         "⠄⠄⠄⠄⠄⠄⠄⠄⠹⣿⣿⡇⠄⠄⠸⣿⡄⠄⠈⠁⠄⠄⠄⣿\n"
-        "⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣿⡇⠄⠄⠄⢹⣧⠄⠄⠄⠄⠄⠄⠘\n"
+        "⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣿⡇⠄⠄⠄⢹⣧⠄⠄⠄⠄⠄⠄⠘\n",
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"scina(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    await typew.edit(
+@man_cmd(pattern="scina(?: |$)(.*)")
+async def _(event):
+    await edit_or_reply(
+        event,
         "⣿⣿⣿⣿⠟⠋⢁⢁⢁⢁⢁⢁⢁⢁⠈⢻⢿⣿⣿⣿⣿⣿⣿⣿\n"
         "⣿⣿⣿⣿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⡀⠭⢿⣿⣿⣿⣿\n"
         "⣿⣿⣿⡟⠄⢀⣾⣿⣿⣿⣷⣶⣿⣷⣶⣶⡆⠄⠄⠄⣿⣿⣿⣿\n"
@@ -91,14 +132,14 @@ async def typewriter(typew):
         "⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄\n"
         "⠄⠄⠄⠄⠄⣸⣿⡷⡇⠄⣴⣾⣿⣿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄\n"
         "⠄⠄⠄⠄⠄⣿⣿⠃⣦⣄⣿⣿⣿⠇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄\n"
-        "⠄⠄⠄⠄⢸⣿⠗⢈⡶⣷⣿⣿⡏⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄\n"
+        "⠄⠄⠄⠄⢸⣿⠗⢈⡶⣷⣿⣿⡏⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄\n",
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"wlcm(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    await typew.edit(
+@man_cmd(pattern="wlcm(?: |$)(.*)")
+async def _(event):
+    await edit_or_reply(
+        event,
         "───▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄───\n"
         "───█▒▒░░░░░░░░░▒▒█───\n"
         "────█░░█░░░░░█░░█────\n"
@@ -108,14 +149,14 @@ async def typewriter(typew):
         "█░░╦─╦╔╗╦─╔╗╔╗╔╦╗╔╗░░█\n"
         "█░░║║║╠─║─║─║║║║║╠─░░█\n"
         "█░░╚╩╝╚╝╚╝╚╝╚╝╩─╩╚╝░░█\n"
-        "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n"
+        "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n",
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"gta(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    await typew.edit(
+@man_cmd(pattern="gta(?: |$)(.*)")
+async def _(event):
+    await edit_or_reply(
+        event,
         "⠀⠀⠀⠀⠀⠀⠀⢀⣤⣤⡀⠀⠀⠀⠀⠀⠀\n"
         "⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀\n"
         "⠀⠀⠀⠀⠀⠀⠀⢿⣿⣿⠟⠀⠀⠀⠀⠀⠀\n"
@@ -126,14 +167,14 @@ async def typewriter(typew):
         "⠀⠀⠀⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣷\n"
         "⠀⠀⠘⠛⠃⠀⠀⠀⠀⠀⠀⠀⠀⢰⣾⣿⠏\n"
         "⠀⢠⣧⡔⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠟⠁⠀\n"
-        "⠀⢸⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ Ah\nShit, here we go again.\n"
+        "⠀⢸⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ Ah\nShit, here we go again.\n",
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"sthink(?: |$)(.*)"))
-async def typewriter(typew):
-    typew.pattern_match.group(1)
-    await typew.edit(
+@man_cmd(pattern="sthink(?: |$)(.*)")
+async def _(event):
+    await edit_or_reply(
+        event,
         "⠀⠀⠀⠀⢀⣀⣀⣀\n"
         "⠀⠀⠀⠰⡿⠿⠛⠛⠻⠿⣷\n"
         "⠀⠀⠀⠀⠀⠀⣀⣄⡀⠀⠀⠀⠀⢀⣀⣀⣤⣄⣀⡀\n"
@@ -148,7 +189,7 @@ async def typewriter(typew):
         "⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄\n"
         "⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡁\n"
         "⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁\n"
-        "⠀⠀⠛⢿⣿⣿⣿⣿⣿⣿⡿⠟\n"
+        "⠀⠀⠛⢿⣿⣿⣿⣿⣿⣿⡿⠟\n",
     )
 
 
@@ -169,6 +210,10 @@ CMD_HELP.update(
         \n  •  **Function : **arts si jhonson.\
         \n\n  •  **Syntax :** `{cmd}sthink`\
         \n  •  **Function : **arts berfikir\
+        \n\n  •  **Syntax :** `{cmd}punten` ; `{cmd}pantau`\
+        \n  •  **Function : **Arts Beruang kek lagi mantau.\
+        \n\n  •  **Syntax :** `{cmd}sadboy`\
+        \n  •  **Function : **ya sadboy coba aja.\
     "
     }
 )

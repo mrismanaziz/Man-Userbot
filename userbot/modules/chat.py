@@ -9,6 +9,7 @@ import csv
 import random
 from datetime import datetime
 from math import sqrt
+from random import choice
 
 from emoji import emojize
 from telethon import functions
@@ -132,9 +133,9 @@ async def kikme(leave):
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
-@register(incoming=True, from_users=844432220, pattern=r"^.absenall$")
-async def man(ganteng):
-    await ganteng.reply(random.choice(absen))
+@register(pattern=r"^\.absenall$", own=True)
+async def _(event):
+    await event.reply(choice(absen))
 
 
 @man_cmd(pattern="chatinfo(?: |$)(.*)")

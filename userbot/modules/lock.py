@@ -8,7 +8,7 @@ from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, owner
+from userbot import CMD_HELP
 from userbot.events import register
 from userbot.utils import edit_or_reply, man_cmd
 
@@ -91,12 +91,13 @@ async def locks(event):
         pin_messages=cpin,
         change_info=changeinfo,
     )
+    me = await event.client.get_me()
     try:
         await event.client(
             EditChatDefaultBannedRightsRequest(peer=peer_id, banned_rights=lock_rights)
         )
         await edit_or_reply(
-            event, f"**{owner} Telah Mengunci {what} Untuk Obrolan Ini!!**"
+            event, f"**{me.first_name} Telah Mengunci {what} Untuk Obrolan Ini!!**"
         )
     except BaseException as e:
         await edit_or_reply(event, f"**ERROR:** {e}")
@@ -182,6 +183,7 @@ async def rem_locks(event):
         pin_messages=cpin,
         change_info=changeinfo,
     )
+    me = await event.client.get_me()
     try:
         await event.client(
             EditChatDefaultBannedRightsRequest(
@@ -189,7 +191,7 @@ async def rem_locks(event):
             )
         )
         await edit_or_reply(
-            event, f"**{owner} Telah Membuka Kunci {what} Untuk Obrolan Ini!!**"
+            event, f"**{me.first_name} Telah Membuka Kunci {what} Untuk Obrolan Ini!!**"
         )
     except BaseException as e:
         await edit_or_reply(event, f"**ERROR:** {e}")

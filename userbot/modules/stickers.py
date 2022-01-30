@@ -35,7 +35,7 @@ from userbot import BOT_USERNAME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot import S_PACK_NAME as custompack
-from userbot import tgbot, user
+from userbot import tgbot
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
@@ -46,9 +46,6 @@ KANGING_STR = [
     "ehh, keren nih... gua colong ya stickernya...",
     "Boleh juga ni Sticker Colong ahh~",
 ]
-
-OWNER = user.first_name
-OWNER_ID = user.id
 
 
 @man_cmd(pattern="(?:tikel|kang)\s?(.)?")
@@ -282,6 +279,7 @@ async def _(event):
     bot_ = BOT_USERNAME
     bot_un = bot_.replace("@", "")
     user = await event.client.get_me()
+    OWNER_ID = user.id
     un = f"@{user.username}" if user.username else user.first_name
     un_ = user.username or OWNER_ID
     if not reply:
