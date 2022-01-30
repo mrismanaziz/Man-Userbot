@@ -232,6 +232,7 @@ def register(**args):
 
                     with open("error.log", "w+") as file:
                         file.write(ftext)
+
         if bot:
             if not disable_edited:
                 bot.add_event_handler(wrapper, events.MessageEdited(**args))
