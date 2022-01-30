@@ -11,6 +11,7 @@ import telethon.utils
 
 from userbot import BOT_VER as version
 from userbot import (
+    DEFAULT,
     DEVS,
     LOGS,
     MAN2,
@@ -38,7 +39,7 @@ async def man_client(client):
 
 
 def multiman():
-    if 844432220 not in DEVS:
+    if 844432220 not in DEVS and DEFAULT:
         LOGS.warning(EOL.format(version))
         sys.exit(1)
     if -1001473548283 not in GBL:
