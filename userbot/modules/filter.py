@@ -2,28 +2,17 @@
 import re
 
 from telethon.utils import get_display_name
-import asyncio
-import re
 
-from telethon import utils as ut
-from telethon.tl import types
-
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
-from userbot.modules.sql_helper.filter_sql import (
-    add_filter,
-    get_all_filters,
-    remove_all_filters,
-    remove_filter,
-)
-from userbot.utils import edit_or_reply, man_cmd, man_handler
 from userbot.modules.sql_helper.filter_sql import (
     add_filter,
     get_filters,
     remove_all_filters,
     remove_filter,
 )
-from userbot import BOTLOG, BOTLOG_CHATID
+from userbot.utils import edit_or_reply, man_cmd, man_handler
 
 
 @man_handler()
