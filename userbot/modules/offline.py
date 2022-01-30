@@ -12,7 +12,7 @@ from telethon.events import NewMessage, StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
 
 from userbot import AFKREASON, BOTLOG_CHATID, ISAFK, PM_AUTO_BAN, bot, owner
-from userbot.events import man_cmd, register
+from userbot.events import man_cmd
 
 # ========================= CONSTANTS ============================
 AFKSTR = [
