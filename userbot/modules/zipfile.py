@@ -89,7 +89,7 @@ async def addzip(add):
         reply_message = await add.get_reply_message()
         try:
             c_time = time.time()
-            downloaded_file_name = await event.client.download_media(
+            downloaded_file_name = await add.client.download_media(
                 reply_message,
                 ZIP_DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -116,7 +116,7 @@ async def upload_zip(up):
     zipdir(ZIP_DOWNLOAD_DIRECTORY, zipf)
     zipf.close()
     c_time = time.time()
-    await event.client.send_file(
+    await up.client.send_file(
         up.chat_id,
         title + ".zip",
         force_document=True,
