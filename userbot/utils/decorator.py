@@ -147,7 +147,6 @@ def man_cmd(
 def man_handler(
     **args,
 ):
-    
     def decorator(func):
         if bot:
             bot.add_event_handler(func, events.NewMessage(**args, incoming=True))
