@@ -17,8 +17,6 @@ from userbot.utils import edit_or_reply, man_cmd, man_handler
 
 @man_handler()
 async def filter_incoming_handler(event):
-    if event.sender_id == event.client.uid:
-        return
     name = event.raw_text
     filters = get_filters(event.chat_id)
     if not filters:
@@ -26,6 +24,8 @@ async def filter_incoming_handler(event):
     a_user = await event.get_sender()
     chat = await event.get_chat()
     me = await event.client.get_me()
+    if event.sender_id == me.id:
+        return
     title = get_display_name(await event.get_chat()) or "this chat"
     participants = await event.client.get_participants(chat)
     count = len(participants)
