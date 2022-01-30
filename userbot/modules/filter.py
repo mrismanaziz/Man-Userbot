@@ -13,7 +13,7 @@ from userbot.modules.sql_helper.filter_sql import (
     remove_all_filters,
     remove_filter,
 )
-from userbot.utils import edit_or_reply, man_cmd, man_handler
+from userbot.utils import edit_or_reply, man_cmd
 
 
 @bot.on(events.NewMessage(incoming=True))
