@@ -8,7 +8,7 @@ import time
 from datetime import datetime
 from random import choice, randint
 
-from telethon.events import StopPropagation
+from telethon.events import NewMessage, StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
 
 from userbot import AFKREASON, BOTLOG_CHATID, PM_AUTO_BAN, bot, owner
@@ -38,7 +38,7 @@ async def set_afk(afk_e):
     global afk_time
     global afk_start
     global afk_end
-    user = await bot.get_me()
+    user = await afk_e.client.get_me()
     USER_AFK = {}
     afk_time = None
     afk_end = {}
@@ -69,7 +69,7 @@ async def set_afk(afk_e):
     raise StopPropagation
 
 
-@register(outgoing=True)
+@bot.on(NewMessage(outgoing=True))
 async def type_afk_is_not_true(notafk):
     """This sets your status as not afk automatically when you write something while being afk"""
     global ISAFK
@@ -80,7 +80,7 @@ async def type_afk_is_not_true(notafk):
     global afk_time
     global afk_start
     global afk_end
-    user = await bot.get_me()
+    user = await notafk.client.get_me()
     last = user.last_name
     if last and last.endswith("【 OFF 】"):
         last1 = last[:-12]
@@ -125,9 +125,8 @@ async def type_afk_is_not_true(notafk):
         AFKREASON = None
 
 
-@register(incoming=True, disable_edited=True)
+@bot.on(NewMessage(incoming=True))
 async def mention_afk(mention):
-    """This function takes care of notifying the people who mention you that you are AFK."""
     global COUNT_MSG
     global USERS
     global ISAFK
@@ -135,11 +134,11 @@ async def mention_afk(mention):
     global afk_time
     global afk_start
     global afk_end
-    user = await bot.get_me()  # pylint:disable=E0602
+    user = await mention.client.get_me()
     back_alivee = datetime.now()
     afk_end = back_alivee.replace(microsecond=0)
     afk_since = "**Terakhir Online**"
-    if mention.message.mentioned and not (await mention.get_sender()).bot and ISAFK:
+    if mention.message.mentioned and not (await mention.get_sender()).mention.client and ISAFK:
         now = datetime.now()
         datime_since_afk = now - afk_time
         time = float(datime_since_afk.seconds)
@@ -208,7 +207,7 @@ async def afk_on_pm(sender):
     if (
         sender.is_private
         and sender.sender_id != 777000
-        and not (await sender.get_sender()).bot
+        and not (await sender.get_sender()).sender.client
     ):
         if PM_AUTO_BAN:
             try:
