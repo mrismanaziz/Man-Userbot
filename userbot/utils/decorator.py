@@ -156,31 +156,31 @@ def man_handler(
         if bot:
             if not disable_edited:
                 bot.add_event_handler(
-                    wrapper, events.MessageEdited(**args, incoming=True)
+                    func, events.MessageEdited(**args, incoming=True)
                 )
             bot.add_event_handler(func, events.NewMessage(**args, incoming=True))
         if MAN2:
             if not disable_edited:
                 MAN2.add_event_handler(
-                    wrapper, events.MessageEdited(**arg, incoming=Trues)
+                    func, events.MessageEdited(**arg, incoming=Trues)
                 )
             MAN2.add_event_handler(func, events.NewMessage(**args, incoming=True))
         if MAN3:
             if not disable_edited:
                 MAN2.add_event_handler(
-                    wrapper, events.MessageEdited(**args, incoming=True)
+                    func, events.MessageEdited(**args, incoming=True)
                 )
             MAN3.add_event_handler(func, events.NewMessage(**args, incoming=True))
         if MAN4:
             if not disable_edited:
                 MAN2.add_event_handler(
-                    wrapper, events.MessageEdited(**args, incoming=True)
+                    func, events.MessageEdited(**args, incoming=True)
                 )
             MAN4.add_event_handler(func, events.NewMessage(**args, incoming=True))
         if MAN5:
             if not disable_edited:
                 MAN2.add_event_handler(
-                    wrapper, events.MessageEdited(**args, incoming=True)
+                    func, events.MessageEdited(**args, incoming=True)
                 )
             MAN5.add_event_handler(func, events.NewMessage(**args, incoming=True))
         return func
