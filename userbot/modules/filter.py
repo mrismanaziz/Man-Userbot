@@ -1,10 +1,7 @@
-# Copyright (C) 2019 The Raphielscape Company LLC.
-#
-# Licensed under the Raphielscape Public License, Version 1.d (the "License");
-# you may not use this file except in compliance with the License.
-#
-""" Userbot module for filter commands """
+# ported from paperplaneExtended by avinashreddy3108 for media support
+import re
 
+from telethon.utils import get_display_name
 import asyncio
 import re
 
@@ -19,129 +16,152 @@ from userbot.modules.sql_helper.filter_sql import (
     remove_all_filters,
     remove_filter,
 )
-from userbot.utils import man_cmd
-from userbot.utils.tools import eod
-
-DELETE_TIMEOUT = 0
-TYPE_TEXT = 0
-TYPE_PHOTO = 1
-TYPE_DOCUMENT = 2
-
-
-global last_triggered_filters
-last_triggered_filters = {}
+from userbot.utils import edit_or_reply, man_cmd, man_handler
+from userbot.modules.sql_helper.filter_sql import (
+    add_filter,
+    get_filters,
+    remove_all_filters,
+    remove_filter,
+)
+from userbot import BOTLOG, BOTLOG_CHATID
 
 
-@man_cmd(incoming=True)
-async def on_snip(event):
-    global last_triggered_filters
+@man_handler()
+async def filter_incoming_handler(event):
+    if event.sender_id == event.client.uid:
+        return
     name = event.raw_text
-    if event.chat_id in last_triggered_filters:
-        if name in last_triggered_filters[event.chat_id]:
-            return False
-    snips = get_all_filters(event.chat_id)
-    if snips:
-        for snip in snips:
-            pattern = r"( |^|[^\w])" + re.escape(snip.keyword) + r"( |$|[^\w])"
-            if re.search(pattern, name, flags=re.IGNORECASE):
-                if snip.snip_type == TYPE_PHOTO:
-                    media = types.InputPhoto(
-                        int(snip.media_id),
-                        int(snip.media_access_hash),
-                        snip.media_file_reference,
-                    )
-                elif snip.snip_type == TYPE_DOCUMENT:
-                    media = types.InputDocument(
-                        int(snip.media_id),
-                        int(snip.media_access_hash),
-                        snip.media_file_reference,
-                    )
-                else:
-                    media = None
-                event.message.id
-                if event.reply_to_msg_id:
-                    event.reply_to_msg_id
-                await event.reply(snip.reply, file=media)
-                if event.chat_id not in last_triggered_filters:
-                    last_triggered_filters[event.chat_id] = []
-                last_triggered_filters[event.chat_id].append(name)
-                await asyncio.sleep(DELETE_TIMEOUT)
-                last_triggered_filters[event.chat_id].remove(name)
+    filters = get_filters(event.chat_id)
+    if not filters:
+        return
+    a_user = await event.get_sender()
+    chat = await event.get_chat()
+    me = await event.client.get_me()
+    title = get_display_name(await event.get_chat()) or "this chat"
+    participants = await event.client.get_participants(chat)
+    count = len(participants)
+    mention = f"[{a_user.first_name}](tg://user?id={a_user.id})"
+    my_mention = f"[{me.first_name}](tg://user?id={me.id})"
+    first = a_user.first_name
+    last = a_user.last_name
+    fullname = f"{first} {last}" if last else first
+    username = f"@{a_user.username}" if a_user.username else mention
+    userid = a_user.id
+    my_first = me.first_name
+    my_last = me.last_name
+    my_fullname = f"{my_first} {my_last}" if my_last else my_first
+    my_username = f"@{me.username}" if me.username else my_mention
+    for trigger in filters:
+        pattern = r"( |^|[^\w])" + re.escape(trigger.keyword) + r"( |$|[^\w])"
+        if re.search(pattern, name, flags=re.IGNORECASE):
+            file_media = None
+            filter_msg = None
+            if trigger.f_mesg_id:
+                msg_o = await event.client.get_messages(
+                    entity=BOTLOG_CHATID, ids=int(trigger.f_mesg_id)
+                )
+                file_media = msg_o.media
+                filter_msg = msg_o.message
+                link_preview = True
+            elif trigger.reply:
+                filter_msg = trigger.reply
+                link_preview = False
+            await event.reply(
+                filter_msg.format(
+                    mention=mention,
+                    title=title,
+                    count=count,
+                    first=first,
+                    last=last,
+                    fullname=fullname,
+                    username=username,
+                    userid=userid,
+                    my_first=my_first,
+                    my_last=my_last,
+                    my_fullname=my_fullname,
+                    my_username=my_username,
+                    my_mention=my_mention,
+                ),
+                file=file_media,
+                link_preview=link_preview,
+            )
 
 
-@man_cmd(pattern="filter(?:\s|$)([\s\S]*)")
-async def on_snip_save(event):
-    name = event.pattern_match.group(1)
+@man_cmd(pattern="filter (.*)")
+async def add_new_filter(event):
+    "To save the filter"
+    keyword = event.pattern_match.group(1)
+    string = event.text.partition(keyword)[2]
     msg = await event.get_reply_message()
-    if msg:
-        snip = {"type": TYPE_TEXT, "text": msg.message or ""}
-        if msg.media:
-            media = None
-            if isinstance(msg.media, types.MessageMediaPhoto):
-                media = ut.get_input_photo(msg.media.photo)
-                snip["type"] = TYPE_PHOTO
-            elif isinstance(msg.media, types.MessageMediaDocument):
-                media = ut.get_input_document(msg.media.document)
-                snip["type"] = TYPE_DOCUMENT
-            if media:
-                snip["id"] = media.id
-                snip["hash"] = media.access_hash
-                snip["fr"] = media.file_reference
-        add_filter(
-            event.chat_id,
-            name,
-            snip["text"],
-            snip["type"],
-            snip.get("id"),
-            snip.get("hash"),
-            snip.get("fr"),
-        )
-        await eod(event, f"**Berhasil Menambahkan Filter** `{name}")
-    else:
-        await eod(
-            event, f"Balas pesan dengan `{cmd}filter keyword` untuk menyimpan filter"
-        )
+    msg_id = None
+    if msg and msg.media and not string:
+        if BOTLOG_CHATID:
+            await event.client.send_message(
+                BOTLOG_CHATID,
+                f"#FILTER\
+            \nCHAT ID: {event.chat_id}\
+            \nTRIGGER: {keyword}\
+            \n\nThe following message is saved as the filter's reply data for the chat, please do NOT delete it !!",
+            )
+            msg_o = await event.client.forward_messages(
+                entity=BOTLOG_CHATID,
+                messages=msg,
+                from_peer=event.chat_id,
+                silent=True,
+            )
+            msg_id = msg_o.id
+        else:
+            await edit_or_reply(
+                event,
+                "__Saving media as reply to the filter requires the__ `PRIVATE_GROUP_BOT_API_ID` __to be set.__",
+            )
+            return
+    elif msg and msg.text and not string:
+        string = msg.text
+    elif not string:
+        return await edit_or_reply(event, "__What should i do ?__")
+    success = "`Filter` **{}** `{} successfully`"
+    if add_filter(str(event.chat_id), keyword, string, msg_id) is True:
+        return await edit_or_reply(event, success.format(keyword, "added"))
+    remove_filter(str(event.chat_id), keyword)
+    if add_filter(str(event.chat_id), keyword, string, msg_id) is True:
+        return await edit_or_reply(event, success.format(keyword, "Updated"))
+    await edit_or_reply(event, f"Error while setting filter for {keyword}")
 
 
 @man_cmd(pattern="filters$")
 async def on_snip_list(event):
-    all_snips = get_all_filters(event.chat_id)
-    OUT_STR = "**✥ Daftar Filter Yang Aktif Disini:** \n"
-    if len(all_snips) > 0:
-        for a_snip in all_snips:
-            OUT_STR += f"👉 {a_snip.keyword} \n"
-    else:
-        OUT_STR = "**Tidak Ada Filter Apapun Disini.**"
-    if len(OUT_STR) > 4096:
-        with io.BytesIO(str.encode(OUT_STR)) as out_file:
-            out_file.name = "filters.text"
-            await event.client.send_file(
-                event.chat_id,
-                out_file,
-                force_document=True,
-                allow_cache=False,
-                caption="Daftar Filter Yang Aktif Disini",
-                reply_to=event,
-            )
-            await event.delete()
-    else:
-        await eod(event, OUT_STR)
+    OUT_STR = "There are no filters in this chat."
+    filters = get_filters(event.chat_id)
+    for filt in filters:
+        if OUT_STR == "There are no filters in this chat.":
+            OUT_STR = "Active filters in this chat:\n"
+        OUT_STR += "👉 `{}`\n".format(filt.keyword)
+    await edit_or_reply(
+        event,
+        OUT_STR,
+        caption="Available Filters in the Current Chat",
+        file_name="filters.text",
+    )
 
 
-@man_cmd(pattern="stop(?:\s|$)([\s\S]*)")
-async def on_snip_delete(event):
-    name = event.pattern_match.group(1)
-    try:
-        remove_filter(event.chat_id, name)
-        await eod(event, f"**Berhasil Menghapus Filter** `{name}`")
-    except Exception as e:
-        await eod(event, f"**ERROR:** `{e}`")
+@man_cmd(pattern="stop ([\s\S]*)")
+async def remove_a_filter(event):
+    filt = event.pattern_match.group(1)
+    if not remove_filter(event.chat_id, filt):
+        await event.edit("Filter` {} `doesn't exist.".format(filt))
+    else:
+        await event.edit("Filter `{} `was deleted successfully".format(filt))
 
 
 @man_cmd(pattern="rmallfilters$")
 async def on_all_snip_delete(event):
-    remove_all_filters(event.chat_id)
-    await eor(event, f"**Berhasil Menghapus Semua Filter dalam obrolan ini**")
+    filters = get_filters(event.chat_id)
+    if filters:
+        remove_all_filters(event.chat_id)
+        await edit_or_reply(event, "filters in current chat deleted successfully")
+    else:
+        await edit_or_reply(event, "There are no filters in this group")
 
 
 CMD_HELP.update(
