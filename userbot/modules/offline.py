@@ -8,7 +8,6 @@ import time
 from datetime import datetime
 from random import choice, randint
 
-from telethon import events
 from telethon.events import StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
 
@@ -137,11 +136,7 @@ async def mention_afk(mention):
     back_alivee = datetime.now()
     afk_end = back_alivee.replace(microsecond=0)
     afk_since = "**Terakhir Online**"
-    if (
-        mention.message.mentioned
-        and not (await mention.get_sender()).bot
-        and ISAFK
-    ):
+    if mention.message.mentioned and not (await mention.get_sender()).bot and ISAFK:
         now = datetime.now()
         datime_since_afk = now - afk_time
         time = float(datime_since_afk.seconds)
