@@ -134,11 +134,15 @@ async def mention_afk(mention):
     global afk_time
     global afk_start
     global afk_end
-    user = await mention.client.get_me()
+    await mention.client.get_me()
     back_alivee = datetime.now()
     afk_end = back_alivee.replace(microsecond=0)
     afk_since = "**Terakhir Online**"
-    if mention.message.mentioned and not (await mention.get_sender()).mention.client and ISAFK:
+    if (
+        mention.message.mentioned
+        and not (await mention.get_sender()).mention.client
+        and ISAFK
+    ):
         now = datetime.now()
         datime_since_afk = now - afk_time
         time = float(datime_since_afk.seconds)
