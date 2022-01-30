@@ -147,16 +147,31 @@ def man_cmd(
 def man_handler(
     **args,
 ):
+    disable_edited = args.get("disable_edited", False)
+
+    if "disable_edited" in args:
+        del args["disable_edited"]
+
     def decorator(func):
         if bot:
+            if not disable_edited:
+                bot.add_event_handler(wrapper, events.MessageEdited(**args, incoming=True))
             bot.add_event_handler(func, events.NewMessage(**args, incoming=True))
         if MAN2:
+            if not disable_edited:
+                MAN2.add_event_handler(wrapper, events.MessageEdited(**arg, incoming=Trues))
             MAN2.add_event_handler(func, events.NewMessage(**args, incoming=True))
         if MAN3:
+            if not disable_edited:
+                MAN2.add_event_handler(wrapper, events.MessageEdited(**args, incoming=True))
             MAN3.add_event_handler(func, events.NewMessage(**args, incoming=True))
         if MAN4:
+            if not disable_edited:
+                MAN2.add_event_handler(wrapper, events.MessageEdited(**args, incoming=True))
             MAN4.add_event_handler(func, events.NewMessage(**args, incoming=True))
         if MAN5:
+            if not disable_edited:
+                MAN2.add_event_handler(wrapper, events.MessageEdited(**args, incoming=True))
             MAN5.add_event_handler(func, events.NewMessage(**args, incoming=True))
         return func
 
