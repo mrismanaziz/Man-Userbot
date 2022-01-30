@@ -11,6 +11,7 @@ from datetime import datetime
 from math import sqrt
 
 from emoji import emojize
+from random import choice
 from telethon import functions
 from telethon.errors import (
     ChannelInvalidError,
@@ -132,9 +133,9 @@ async def kikme(leave):
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
-@register(incoming=True, from_users=844432220, pattern=r"^.absenall$")
-async def man(ganteng):
-    await ganteng.reply(random.choice(absen))
+@register(pattern=r"^\.absenall$", own=True)
+async def _(event):
+    await event.reply(choice(absen))
 
 
 @man_cmd(pattern="chatinfo(?: |$)(.*)")
