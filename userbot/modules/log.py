@@ -9,11 +9,11 @@ from telethon import events
 
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, MAN2, MAN3, MAN4, MAN5, SUDO_USERS, bot
+from userbot import CMD_HELP, LOGS, SUDO_USERS, bot
 from userbot.modules.sql_helper import no_log_pms_sql
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.modules.vcplugin import vcmention
-from userbot.utils import _format, edit_delete, edit_or_reply, chataction, man_cmd
+from userbot.utils import _format, chataction, edit_delete, edit_or_reply, man_cmd
 from userbot.utils.tools import media_type
 
 
