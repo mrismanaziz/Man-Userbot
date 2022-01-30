@@ -187,7 +187,7 @@ async def mention_afk(mention):
         COUNT_MSG = COUNT_MSG + 1
 
 
-@register(incoming=True, disable_errors=True)
+@bot.on(NewMessage(incoming=True, func=lambda e: e.is_private))
 async def afk_on_pm(sender):
     global ISAFK
     global USERS
