@@ -13,7 +13,7 @@ from userbot import CMD_HELP, LOGS, MAN2, MAN3, MAN4, MAN5, SUDO_USERS, bot
 from userbot.modules.sql_helper import no_log_pms_sql
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.modules.vcplugin import vcmention
-from userbot.utils import _format, edit_delete, edit_or_reply, man_cmd
+from userbot.utils import _format, edit_delete, edit_or_reply, chataction, man_cmd
 from userbot.utils.tools import media_type
 
 
@@ -27,11 +27,7 @@ class LOG_CHATS:
 LOG_CHATS_ = LOG_CHATS()
 
 
-@bot.on(events.ChatAction)
-@MAN2.on(events.ChatAction)
-@MAN3.on(events.ChatAction)
-@MAN4.on(events.ChatAction)
-@MAN5.on(events.ChatAction)
+@chataction()
 async def logaddjoin(event):
     user = await event.get_user()
     chat = await event.get_chat()
