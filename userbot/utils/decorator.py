@@ -155,9 +155,7 @@ def man_handler(
     def decorator(func):
         if bot:
             if not disable_edited:
-                bot.add_event_handler(
-                    func, events.MessageEdited(**args, incoming=True)
-                )
+                bot.add_event_handler(func, events.MessageEdited(**args, incoming=True))
             bot.add_event_handler(func, events.NewMessage(**args, incoming=True))
         if MAN2:
             if not disable_edited:
