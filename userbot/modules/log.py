@@ -9,7 +9,7 @@ from telethon import events
 
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, SUDO_USERS, bot
+from userbot import CMD_HELP, LOGS, SUDO_USERS, MAN2, MAN3, MAN4, MAN5, bot
 from userbot.modules.sql_helper import no_log_pms_sql
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.modules.vcplugin import vcmention
@@ -28,6 +28,10 @@ LOG_CHATS_ = LOG_CHATS()
 
 
 @bot.on(events.ChatAction)
+@MAN2.on(events.ChatAction)
+@MAN3.on(events.ChatAction)
+@MAN4.on(events.ChatAction)
+@MAN5.on(events.ChatAction)
 async def logaddjoin(event):
     user = await event.get_user()
     chat = await event.get_chat()
