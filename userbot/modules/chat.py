@@ -9,9 +9,9 @@ import csv
 import random
 from datetime import datetime
 from math import sqrt
+from random import choice
 
 from emoji import emojize
-from random import choice
 from telethon import functions
 from telethon.errors import (
     ChannelInvalidError,
