@@ -131,7 +131,6 @@ async def _(event):
         await xx.edit(f"**Link Invite: {e.link}**")
     except ChatAdminRequiredError:
         return await xx.edit(f"**Maaf anda Bukan Admin 👮**")
-    
 
 
 @man_cmd(pattern="tmsg (.*)")
