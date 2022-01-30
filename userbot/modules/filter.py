@@ -151,7 +151,9 @@ async def on_all_snip_delete(event):
     filters = get_filters(event.chat_id)
     if filters:
         remove_all_filters(event.chat_id)
-        await edit_delete(event, "**Berhasil Menghapus semua filter yang ada dalam obrolan ini**")
+        await edit_delete(
+            event, "**Berhasil Menghapus semua filter yang ada dalam obrolan ini**"
+        )
     else:
         await edit_delete(event, "**Tidak Ada Filter Apapun Disini.**")
 
