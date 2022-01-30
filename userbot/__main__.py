@@ -10,6 +10,7 @@
 #
 """ Userbot start point """
 
+
 import sys
 from importlib import import_module
 from platform import python_version
@@ -37,7 +38,7 @@ try:
     LOGS.info(f"Man-Userbot Version - {ubotversion} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 except (ConnectionError, KeyboardInterrupt, NotImplementedError, SystemExit):
     pass
-except (BaseException, Exception) as e:
+except BaseException as e:
     LOGS.info(str(e), exc_info=True)
     sys.exit(1)
 
