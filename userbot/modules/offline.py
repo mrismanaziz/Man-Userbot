@@ -22,7 +22,6 @@ AFKSTR = [
     f"**Maaf {owner} Sedang OFF!**",
 ]
 USER_AFK = {}
-ISAFK = False
 afk_time = None
 afk_start = {}
 
