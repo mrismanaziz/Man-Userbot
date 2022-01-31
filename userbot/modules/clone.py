@@ -26,7 +26,7 @@ async def impostor(event):
         await event.edit("**Kembali ke identitas asli...**")
         if not STORAGE.userObj:
             return await xx.edit("**Anda harus mengclone orang dulu sebelum kembali!**")
-        await updateProfile(STORAGE.userObj, restore=True)
+        await updateProfile(event, STORAGE.userObj, restore=True)
         return await xx.edit("**Berhasil Mengembalikan Akun Anda dari clone**")
     if inputArgs:
         try:
@@ -47,11 +47,11 @@ async def impostor(event):
 
     LOGS.info(STORAGE.userObj)
     await xx.edit("**Mencuri identitas orang ini...**")
-    await updateProfile(userObj)
+    await updateProfile(event, userObj)
     await xx.edit("**Aku adalah kamu dan kamu adalah aku. asekk 🥴**")
 
 
-async def updateProfile(userObj, restore=False):
+async def updateProfile(event, userObj, restore=False):
     firstName = (
         "Deleted Account"
         if userObj.user.first_name is None
@@ -61,9 +61,9 @@ async def updateProfile(userObj, restore=False):
     userAbout = userObj.about if userObj.about is not None else ""
     userAbout = "" if len(userAbout) > 70 else userAbout
     if restore:
-        userPfps = await userObj.client.get_profile_photos("me")
+        userPfps = await event.client.get_profile_photos("me")
         userPfp = userPfps[0]
-        await userObj.client(
+        await event.client(
             DeletePhotosRequest(
                 id=[
                     InputPhoto(
@@ -77,13 +77,13 @@ async def updateProfile(userObj, restore=False):
     else:
         try:
             userPfp = userObj.profile_photo
-            pfpImage = await userObj.client.download_media(userPfp)
-            await userObj.client(
-                UploadProfilePhotoRequest(await userObj.client.upload_file(pfpImage))
+            pfpImage = await event.client.download_media(userPfp)
+            await event.client(
+                UploadProfilePhotoRequest(await event.client.upload_file(pfpImage))
             )
         except BaseException:
             pass
-    await userObj.client(
+    await event.client(
         UpdateProfileRequest(about=userAbout, first_name=firstName, last_name=lastName)
     )
 
