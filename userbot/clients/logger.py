@@ -11,9 +11,8 @@ from userbot import BOT_USERNAME
 from userbot import BOT_VER as version
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import MAN2, MAN3, MAN4, MAN5, bot, branch, owner, uid
+from userbot import MAN2, MAN3, MAN4, MAN5, bot, branch
 
-mention = f"[{owner}](tg://user?id={uid})"
 MSG_ON = """
 🔥 **Man-Userbot Berhasil Di Aktifkan**
 ━━
@@ -22,6 +21,11 @@ MSG_ON = """
 ➠ **Managed By** {}
 ━━
 """
+try:
+    user = bot.get_me()
+    mention = f"[{user.first_name}](tg://user?id={user.id})"
+except BaseException:
+    pass
 
 
 async def man_userbot_on():
@@ -32,7 +36,7 @@ async def man_userbot_on():
                     BOTLOG_CHATID,
                     f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{version}@{branch}`\n➠ **Ketik** `{cmd}alive` **untuk Mengecheck Bot**\n━━",
                 )
-    except Exception:
+    except BaseException:
         pass
     try:
         if MAN2:
@@ -41,7 +45,7 @@ async def man_userbot_on():
                     BOTLOG_CHATID,
                     MSG_ON.format(version, branch, cmd, mention),
                 )
-    except Exception:
+    except BaseException:
         pass
     try:
         if MAN3:
@@ -50,7 +54,7 @@ async def man_userbot_on():
                     BOTLOG_CHATID,
                     MSG_ON.format(version, branch, cmd, mention),
                 )
-    except Exception:
+    except BaseException:
         pass
     try:
         if MAN4:
@@ -59,7 +63,7 @@ async def man_userbot_on():
                     BOTLOG_CHATID,
                     MSG_ON.format(version, branch, cmd, mention),
                 )
-    except Exception:
+    except BaseException:
         pass
     try:
         if MAN5:
@@ -68,7 +72,7 @@ async def man_userbot_on():
                     BOTLOG_CHATID,
                     MSG_ON.format(version, branch, cmd, mention),
                 )
-    except Exception:
+    except BaseException:
         pass
     try:
         await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))

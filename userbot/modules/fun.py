@@ -17,7 +17,7 @@ from userbot.utils import bash, edit_or_reply, man_cmd, progress
 @man_cmd(pattern="honka(?: |$)(.*)")
 async def frg(animu):
     text = animu.pattern_match.group(1)
-    xx = await edit_or_reply(animum, "`Processing...`")
+    xx = await edit_or_reply(animu, "`Processing...`")
     if not text:
         await edit_delete(xx, "**Silahkan Masukan Kata!**")
     else:

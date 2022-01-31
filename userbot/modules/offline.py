@@ -11,7 +11,7 @@ from random import choice, randint
 from telethon.events import NewMessage, StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from userbot import AFKREASON, BOTLOG_CHATID, ISAFK, PM_AUTO_BAN, bot, owner
+from userbot import AFKREASON, BOTLOG_CHATID, PM_AUTO_BAN, bot, owner
 from userbot.events import man_cmd
 
 # ========================= CONSTANTS ============================
@@ -22,7 +22,6 @@ AFKSTR = [
     f"**Maaf {owner} Sedang OFF!**",
 ]
 USER_AFK = {}
-ISAFK
 afk_time = None
 afk_start = {}
 
