@@ -40,7 +40,7 @@ from telethon.utils import get_input_location
 
 from userbot import BLACKLIST_CHAT
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, owner
+from userbot import CMD_HELP
 from userbot.events import register
 from userbot.modules.ping import absen
 from userbot.utils import edit_delete, edit_or_reply, get_user_from_event, man_cmd
@@ -119,7 +119,8 @@ async def kickme(leave):
         return await edit_or_reply(
             leave, "**Perintah ini Dilarang digunakan di Group ini**"
         )
-    await edit_or_reply(leave, f"`{owner} has left this group, bye!!`")
+    user = await leave.client.get_me()
+    await edit_or_reply(leave, f"`{user.first_name} has left this group, bye!!`")
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
