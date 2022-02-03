@@ -56,9 +56,7 @@ ISAFK = False
 AFKREASON = None
 ENABLE_KILLME = True
 
-if CONSOLE_LOGGER_VERBOSE := sb(
-    os.environ.get("CONSOLE_LOGGER_VERBOSE", "False")
-):
+if CONSOLE_LOGGER_VERBOSE := sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False")):
     basicConfig(
         format="[%(name)s] - [%(levelname)s] - %(message)s",
         level=DEBUG,
@@ -471,9 +469,7 @@ with bot:
                         custom.Button.url(
                             text="GROUP", url="https://t.me/Icipiyeywongkono"
                         ),
-                        custom.Button.url(
-                            text="CHANNEL", url="https://t.me/Strywang"
-                        ),
+                        custom.Button.url(text="CHANNEL", url="https://t.me/Strywang"),
                     ],
                 ],
             )
@@ -567,9 +563,7 @@ with bot:
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid or event.query.user_id in DEVS:
                 openlagi = custom.Button.inline("• Re-Open Menu •", data="reopen")
-                await event.edit(
-                    "🔯 **Help Mode Button Ditutup!** 🔯", buttons=openlagi
-                )
+                await event.edit("🔯 **Help Mode Button Ditutup!** 🔯", buttons=openlagi)
             else:
                 reply_pop_up_alert = (
                     f"Kamu Tidak diizinkan, ini Userbot Milik {ALIVE_NAME}"

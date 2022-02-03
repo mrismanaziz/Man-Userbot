@@ -164,7 +164,9 @@ async def upstream(event):
 
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     if conf == "deploy":
-        await event.edit("`[HEROKU]: Update Deploy Sonic-Userbot Sedang Dalam Proses...`")
+        await event.edit(
+            "`[HEROKU]: Update Deploy Sonic-Userbot Sedang Dalam Proses...`"
+        )
         await deploy(event, repo, ups_rem, ac_br, txt)
         return
 

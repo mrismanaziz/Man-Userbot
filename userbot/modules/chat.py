@@ -30,7 +30,6 @@ from telethon.tl.functions.channels import (
 )
 from telethon.tl.functions.messages import GetFullChatRequest, GetHistoryRequest
 from telethon.tl.types import (
-    ChannelParticipantAdmin,
     ChannelParticipantsAdmins,
     ChannelParticipantsBots,
     InputPeerUser,
@@ -118,7 +117,9 @@ async def kickme(leave):
 async def kikme(leave):
     if leave.chat_id in BLACKLIST_CHAT:
         return await leave.edit("**Perintah ini Dilarang digunakan di Group ini**")
-    await leave.edit("**ɢᴄ ʟᴏ ᴀᴍᴘᴀs ʙᴀɴʏᴀᴋ ᴊᴀᴍᴇᴛ sᴀᴍᴀ ʟᴀᴄᴜʀ, ᴋᴜᴀʀ ᴅᴜʟᴜ ᴀʜ ʙʏᴇ ᴋᴏɴᴛᴏʟ ** 🥴")
+    await leave.edit(
+        "**ɢᴄ ʟᴏ ᴀᴍᴘᴀs ʙᴀɴʏᴀᴋ ᴊᴀᴍᴇᴛ sᴀᴍᴀ ʟᴀᴄᴜʀ, ᴋᴜᴀʀ ᴅᴜʟᴜ ᴀʜ ʙʏᴇ ᴋᴏɴᴛᴏʟ ** 🥴"
+    )
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
