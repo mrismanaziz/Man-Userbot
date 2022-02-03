@@ -47,7 +47,7 @@ def ytsearch(query: str):
         songname = data["title"]
         url = data["link"]
         duration = data["duration"]
-        thumbnail = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
+        thumbnail = f"https://i.ytimg.com/vi/{data['id']}/maxresdefault.jpg"
         return [songname, url, duration, thumbnail]
     except Exception as e:
         print(e)
@@ -92,6 +92,7 @@ async def skip_current_song(chat_id: int):
             chat_id,
             AudioPiped(
                 url,
+                HighQualityAudio(),
             ),
         )
     elif type == "Video":
@@ -102,7 +103,12 @@ async def skip_current_song(chat_id: int):
         elif RESOLUSI == 360:
             hm = LowQualityVideo()
         await call_py.change_stream(
-            chat_id, AudioVideoPiped(url, HighQualityAudio(), hm)
+            chat_id,
+            AudioVideoPiped(
+                url,
+                HighQualityAudio(),
+                hm
+            )
         )
     pop_an_item(chat_id)
     return [songname, link, type]
@@ -160,6 +166,7 @@ async def vc_play(event):
                         chat_id,
                         AudioPiped(
                             ytlink,
+                            HighQualityAudio(),
                         ),
                         stream_type=StreamType().pulse_stream,
                     )
@@ -194,6 +201,7 @@ async def vc_play(event):
                     chat_id,
                     AudioPiped(
                         dl,
+                        HighQualityAudio(),
                     ),
                     stream_type=StreamType().pulse_stream,
                 )
@@ -260,7 +268,11 @@ async def vc_vplay(event):
                 try:
                     await call_py.join_group_call(
                         chat_id,
-                        AudioVideoPiped(ytlink, HighQualityAudio(), hmmm),
+                        AudioVideoPiped(
+                            ytlink,
+                            HighQualityAudio(),
+                            hmmm,
+                        ),
                         stream_type=StreamType().pulse_stream,
                     )
                     add_to_queue(chat_id, songname, ytlink, url, "Video", RESOLUSI)
@@ -300,7 +312,11 @@ async def vc_vplay(event):
             try:
                 await call_py.join_group_call(
                     chat_id,
-                    AudioVideoPiped(dl, HighQualityAudio(), hmmm),
+                    AudioVideoPiped(
+                        dl,
+                        HighQualityAudio(),
+                        hmmm,
+                    ),
                     stream_type=StreamType().pulse_stream,
                 )
                 add_to_queue(chat_id, songname, dl, link, "Video", RESOLUSI)
@@ -343,7 +359,11 @@ async def vc_vplay(event):
                 try:
                     await call_py.join_group_call(
                         chat_id,
-                        AudioVideoPiped(ytlink, HighQualityAudio(), hmmm),
+                        AudioVideoPiped(
+                            ytlink,
+                            HighQualityAudio(),
+                            hmmm,
+                        ),
                         stream_type=StreamType().pulse_stream,
                     )
                     add_to_queue(chat_id, songname, ytlink, url, "Video", RESOLUSI)
@@ -434,7 +454,6 @@ async def vc_volume(event):
     admin = chat.admin_rights
     creator = chat.creator
     chat_id = event.chat_id
-
     if not admin and not creator:
         return await edit_delete(event, f"**Maaf {me.first_name} Bukan Admin 👮**", 30)
 
