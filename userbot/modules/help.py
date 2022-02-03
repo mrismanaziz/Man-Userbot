@@ -16,8 +16,7 @@ modules = CMD_HELP
 @man_cmd(pattern="help(?: |$)(.*)")
 async def help(event):
     """For help command"""
-    args = event.pattern_match.group(1).lower()
-    if args:
+    if args := event.pattern_match.group(1).lower():
         if args in CMD_HELP:
             await edit_or_reply(event, str(CMD_HELP[args]))
         else:
