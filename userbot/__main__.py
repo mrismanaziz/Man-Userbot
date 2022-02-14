@@ -22,7 +22,7 @@ from telethon import version
 from userbot import BOT_TOKEN
 from userbot import BOT_VER as ubotversion
 from userbot import LOGS, bot
-from userbot.clients import man_userbot_on, multiman
+from userbot.clients import multiman
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
 
