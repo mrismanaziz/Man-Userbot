@@ -12,9 +12,9 @@ from telethon.tl.functions.channels import InviteToChannelRequest
 
 from userbot import BOT_USERNAME
 from userbot import BOT_VER as version
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import (
-    BOTLOG_CHATID,
     DEFAULT,
     DEVS,
     LOGS,
