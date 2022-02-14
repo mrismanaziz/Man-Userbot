@@ -8,9 +8,13 @@
 import sys
 
 import telethon.utils
+from telethon.tl.functions.channels import InviteToChannelRequest
 
+from userbot import BOT_USERNAME
 from userbot import BOT_VER as version
+from userbot import CMD_HANDLER as cmd
 from userbot import (
+    BOTLOG_CHATID,
     DEFAULT,
     DEVS,
     LOGS,
@@ -25,12 +29,20 @@ from userbot import (
     STRING_SESSION,
     blacklistman,
     bot,
+    branch,
     call_py,
 )
 from userbot.modules.gcast import GCAST_BLACKLIST as GBL
 
 EOL = "EOL\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
 MSG_BLACKLIST = "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
+MSG_ON = """
+🔥 **Man-Userbot Berhasil Di Aktifkan**
+━━
+➠ **Userbot Version -** `{}@{}`
+➠ **Ketik** `{}alive` **untuk Mengecheck Bot**
+━━
+"""
 
 
 async def man_client(client):
@@ -63,8 +75,17 @@ def multiman():
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
+            if BOTLOG_CHATID != 0:
+                await bot.send_message(
+                    BOTLOG_CHATID,
+                    f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{version}@{branch}`\n➠ **Ketik** `{cmd}alive` **untuk Mengecheck Bot**\n━━",
+                )
         except Exception as e:
-            print(e)
+            LOGS.info(f"{e}")
+        try:
+            await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
+        except BaseException:
+            pass
 
     if STRING_2:
         try:
@@ -77,8 +98,13 @@ def multiman():
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
+            if BOTLOG_CHATID != 0:
+                await MAN2.send_message(
+                    BOTLOG_CHATID,
+                    MSG_ON.format(version, branch, cmd),
+                )
         except Exception as e:
-            print(e)
+            LOGS.info(f"{e}")
 
     if STRING_3:
         try:
@@ -91,8 +117,13 @@ def multiman():
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
+            if BOTLOG_CHATID != 0:
+                await MAN3.send_message(
+                    BOTLOG_CHATID,
+                    MSG_ON.format(version, branch, cmd),
+                )
         except Exception as e:
-            print(e)
+            LOGS.info(f"{e}")
 
     if STRING_4:
         try:
@@ -105,8 +136,13 @@ def multiman():
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
+            if BOTLOG_CHATID != 0:
+                await MAN4.send_message(
+                    BOTLOG_CHATID,
+                    MSG_ON.format(version, branch, cmd),
+                )
         except Exception as e:
-            print(e)
+            LOGS.info(f"{e}")
 
     if STRING_5:
         try:
@@ -119,8 +155,13 @@ def multiman():
             if user.id in blacklistman:
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
+            if BOTLOG_CHATID != 0:
+                await MAN5.send_message(
+                    BOTLOG_CHATID,
+                    MSG_ON.format(version, branch, cmd),
+                )
         except Exception as e:
-            print(e)
+            LOGS.info(f"{e}")
 
     if not STRING_SESSION:
         failed += 1
