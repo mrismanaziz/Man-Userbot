@@ -445,7 +445,7 @@ async def _(event):
 # Copyright © Team Geez - Project
 
 
-@man_cmd(pattern="inviteall ?(.*)", func=lambda x: not x.is_private)
+@man_cmd(pattern="inviteall ?(.*)")
 async def get_users(event):
     man_ = event.text[11:]
     chat_man = man_.lower()
