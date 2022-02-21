@@ -14,6 +14,7 @@ import os
 import os.path
 
 import aiohttp
+from io import BytesIO
 from PIL import Image
 from telethon.tl import types
 from telethon.utils import get_display_name, get_peer_id
@@ -186,3 +187,16 @@ async def create_quotly(
             file.write(image)
         return file_name
     raise Exception(str(request))
+
+
+async def Carbon(
+    code,
+    base_url="https://carbonara-42.herokuapp.com/api/cook",
+    file_name="Man-Userbot",
+    **kwargs,
+):
+    kwargs["code"] = code
+    con = await async_searcher(base_url, post=True, json=kwargs, re_content=True)
+    file = BytesIO(con)
+    file.name = file_name + ".jpg"
+    return file
