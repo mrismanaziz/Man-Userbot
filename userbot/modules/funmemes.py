@@ -14,6 +14,7 @@ from userbot.utils import man_cmd
 
 me = 844432220
 
+
 @man_cmd(pattern="(.*)")
 async def _(event):
     if event.fwd_from:
