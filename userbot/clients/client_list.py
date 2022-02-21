@@ -5,8 +5,9 @@
 # This file is a part of < https://github.com/mrismanaziz/Man-Userbot/ >
 # t.me/SharingUserbot & t.me/Lunatic0de
 
-import telethon.utils
 from base64 import b64decode
+
+import telethon.utils
 from telethon.tl.functions.users import GetFullUserRequest
 
 
