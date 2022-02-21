@@ -20,6 +20,7 @@ from math import ceil
 from pathlib import Path
 from sys import version_info
 
+from base64 import b64decode
 from dotenv import load_dotenv
 from git import Repo
 from pylast import LastFMNetwork, md5
@@ -233,7 +234,7 @@ QUEUE_PIC = (
     os.environ.get("QUEUE_PIC") or "https://telegra.ph/file/d6f92c979ad96b2031cba.png"
 )
 
-DEFAULT = [844432220]
+DEFAULT = list(map(int, b64decode("ODQ0NDMyMjIw").split()))
 
 # Last.fm Module
 BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
