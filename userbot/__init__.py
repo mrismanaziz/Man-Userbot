@@ -214,7 +214,7 @@ ZIP_DOWNLOAD_DIRECTORY = os.environ.get("ZIP_DOWNLOAD_DIRECTORY", "./zips")
 BITLY_TOKEN = os.environ.get("BITLY_TOKEN", None)
 
 # Bot version
-BOT_VER = os.environ.get("BOT_VER", "3.1.0")
+BOT_VER = os.environ.get("BOT_VER", "3.1.3")
 
 # Default .alive logo
 ALIVE_LOGO = (
@@ -282,6 +282,20 @@ while 0 < 6:
     break
 
 del _BLACKLIST
+
+while 0 < 6:
+    _WHITELIST = get(
+        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/whitelist.json"
+    )
+    if _WHITELIST.status_code != 200:
+        if 0 != 5:
+            continue
+        WHITELIST = []
+        break
+    WHITELIST = _WHITELIST.json()
+    break
+
+del _DEVS
 
 # 'bot' variable
 if STRING_SESSION:
