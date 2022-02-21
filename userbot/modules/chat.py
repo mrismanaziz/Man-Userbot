@@ -17,9 +17,8 @@ from telethon.errors import (
     ChannelInvalidError,
     ChannelPrivateError,
     ChannelPublicGroupNaError,
-)
-from telethon.errors.rpcerrorlist import (
     UserAlreadyParticipantError,
+    UserKickedError,
     UserNotMutualContactError,
     UserPrivacyRestrictedError,
 )
@@ -35,9 +34,10 @@ from telethon.tl.types import (
     ChannelParticipantsBots,
     InputPeerUser,
     MessageActionChannelMigrateFrom,
+    UserStatusEmpty,
+    UserStatusLastMonth,
 )
 from telethon.utils import get_input_location
-
 from userbot import BLACKLIST_CHAT
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
@@ -444,17 +444,13 @@ async def _(event):
 # Copyright © Team Geez - Project
 
 
-@man_cmd(pattern="inviteall ?(.*)")
+@man_cmd(pattern="inviteall ?(.*)", func=lambda x: not x.is_private)
 async def get_users(event):
     man_ = event.text[11:]
     chat_man = man_.lower()
     restricted = ["@SharingUserbot", "@sharinguserbot"]
     if chat_man in restricted:
         await edit_or_reply(event, "**Anda tidak dapat Mengundang Anggota dari sana.**")
-        await event.client.send_message(
-            -1001473548283, "**Maaf Telah Mencuri Member dari Sini.**"
-        )
-        return
     if not man_:
         return await edit_or_reply(
             event, "**Berikan Link Grup Chat untuk menculik membernya**"
@@ -471,18 +467,33 @@ async def get_users(event):
     error = "None"
     await man.edit("**Terminal Status**\n\n`Sedang Mengumpulkan Pengguna...`")
     async for user in event.client.iter_participants(manuserbot.full_chat.id):
-        try:
-            await event.client(InviteToChannelRequest(channel=chat, users=[user.id]))
-            s += 1
-            await man.edit(
-                f"**Terminal Running**\n\n• **Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**\n\n**× LastError:** `{error}`"
-            )
-        except Exception as e:
-            error = str(e)
-            f += 1
-    return await man.edit(
-        f"**Terminal Finished** \n\n• **Berhasil Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**"
-    )
+        if not (
+            user.deleted
+            or user.bot
+            or user.is_self
+            or isinstance(user.participant, ChannelParticipantsAdmins)
+        ) and not isinstance(user.status, (UserStatusLastMonth, UserStatusEmpty)):
+            try:
+                await event.client(
+                    InviteToChannelRequest(channel=chat, users=[user.id])
+                )
+                s += 1
+                await man.edit(
+                    f"**Terminal Running**\n\n• **Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**\n\n**× LastError:** `{error}`"
+                )
+            except (
+                UserAlreadyParticipantError,
+                UserNotMutualContactError,
+                UserPrivacyRestrictedError,
+                UserKickedError,
+            ):
+                pass
+            except Exception as e:
+                error = str(e)
+                f += 1
+        return await man.edit(
+            f"**Terminal Finished** \n\n• **Berhasil Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**"
+        )
 
 
 # Scraper & Add Member Telegram
