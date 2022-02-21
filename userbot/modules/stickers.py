@@ -61,47 +61,46 @@ async def kang(args):
     is_video = False
     emoji = None
 
-    if not message or not message.media:
-        return await edit_delete(
-            args, "**Silahkan Reply Ke Pesan Media Untuk Mencuri Sticker itu!**"
-        )
+    if message and message.media:
+        if isinstance(message.media, MessageMediaPhoto):
+            xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+            photo = io.BytesIO()
+            photo = await args.client.download_media(message.photo, photo)
+        elif "image" in message.media.document.mime_type.split("/"):
+            xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+            photo = io.BytesIO()
+            await args.client.download_file(message.media.document, photo)
+            if (
+                DocumentAttributeFilename(file_name="sticker.webp")
+                in message.media.document.attributes
+            ):
+                emoji = message.media.document.attributes[1].alt
+                if emoji != "":
+                    emojibypass = True
+        elif "tgsticker" in message.media.document.mime_type:
+            xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+            await args.client.download_file(message.media.document, "AnimatedSticker.tgs")
 
-    if isinstance(message.media, MessageMediaPhoto):
-        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
-        photo = io.BytesIO()
-        photo = await args.client.download_media(message.photo, photo)
-    elif "image" in message.media.document.mime_type.split("/"):
-        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
-        photo = io.BytesIO()
-        await args.client.download_file(message.media.document, photo)
-        if (
-            DocumentAttributeFilename(file_name="sticker.webp")
-            in message.media.document.attributes
-        ):
-            emoji = message.media.document.attributes[1].alt
-            if emoji != "✨":
-                emojibypass = True
-    elif "tgsticker" in message.media.document.mime_type:
-        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
-        await args.client.download_file(message.media.document, "AnimatedSticker.tgs")
+            attributes = message.media.document.attributes
+            for attribute in attributes:
+                if isinstance(attribute, DocumentAttributeSticker):
+                    emoji = attribute.alt
 
-        attributes = message.media.document.attributes
-        for attribute in attributes:
-            if isinstance(attribute, DocumentAttributeSticker):
-                emoji = attribute.alt
+            emojibypass = True
+            is_anim = True
+            photo = 1
+        elif "video" in message.media.document.mime_type:
+            xx = await edit_or_reply(args, f"`Converting...`")
+            vid_sticker = await convert_webm(message)
+            await xx.edit(f"`{random.choice(KANGING_STR)}`")
 
-        emojibypass = True
-        is_anim = True
-        photo = 1
-    elif "video" in message.media.document.mime_type:
-        await args.edit("`Converting...`")
-        vid_sticker = await convert_webm(message)
-        await args.edit(f"`{random.choice(KANGING_STR)}`")
-
-        is_video = True
-        photo = 1
+            is_video = True
+            photo = 1
+        else:
+            return await xx.edit("**File Tidak Didukung, Silahkan Reply ke Media Foto !**")
     else:
-        return await xx.edit("**File Tidak Didukung, Silahkan Reply ke Media Foto !**")
+        return await xx.edit("`I can't kang that...`")
+    
     if photo:
         splat = args.text.split()
         if not emojibypass:
