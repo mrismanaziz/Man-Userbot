@@ -137,7 +137,7 @@ async def kang(args):
                 try:
                     await conv.send_message("/addsticker")
                 except YouBlockedUserError:
-                    await args.client(UnblockRequest("stickers"))
+                    await args.client(UnblockRequest("@Stickers"))
                     await conv.send_message("/addsticker")
                 await conv.get_response()
                 await args.client.send_read_acknowledge(conv.chat_id)
@@ -213,7 +213,7 @@ async def kang(args):
                 try:
                     await conv.send_message(cmd)
                 except YouBlockedUserError:
-                    await args.client(UnblockRequest("stickers"))
+                    await args.client(UnblockRequest("@Stickers"))
                     await conv.send_message(cmd)
                 await conv.get_response()
                 await args.client.send_read_acknowledge(conv.chat_id)
