@@ -12,9 +12,9 @@
 import base64
 import os
 import os.path
+from io import BytesIO
 
 import aiohttp
-from io import BytesIO
 from PIL import Image
 from telethon.tl import types
 from telethon.utils import get_display_name, get_peer_id
