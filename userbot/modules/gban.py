@@ -72,7 +72,9 @@ async def gben(userbot):
         if user.id in DEVS:
             return await dark.edit("**Gagal Global Banned, dia adalah Pembuat Saya 🤪**")
         if user.id in WHITELIST:
-            return await dark.edit("**Gagal Global Banned, dia adalah admin @SharingUserbot 🤪**")
+            return await dark.edit(
+                "**Gagal Global Banned, dia adalah admin @SharingUserbot 🤪**"
+            )
         try:
             from userbot.modules.sql_helper.gmute_sql import gmute
         except BaseException:
