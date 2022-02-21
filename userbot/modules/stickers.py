@@ -79,7 +79,9 @@ async def kang(args):
                     emojibypass = True
         elif "tgsticker" in message.media.document.mime_type:
             xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
-            await args.client.download_file(message.media.document, "AnimatedSticker.tgs")
+            await args.client.download_file(
+                message.media.document, "AnimatedSticker.tgs"
+            )
 
             attributes = message.media.document.attributes
             for attribute in attributes:
@@ -97,10 +99,12 @@ async def kang(args):
             is_video = True
             photo = 1
         else:
-            return await xx.edit("**File Tidak Didukung, Silahkan Reply ke Media Foto !**")
+            return await xx.edit(
+                "**File Tidak Didukung, Silahkan Reply ke Media Foto !**"
+            )
     else:
         return await xx.edit("`I can't kang that...`")
-    
+
     if photo:
         splat = args.text.split()
         if not emojibypass:
