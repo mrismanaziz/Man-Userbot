@@ -3,7 +3,7 @@
 
 from telethon.events import ChatAction
 
-from userbot import DEVS, bot
+from userbot import DEVS, WHITELIST, blacklistman, bot
 from userbot.events import register
 from userbot.utils import get_user_from_event, man_cmd
 
@@ -70,7 +70,9 @@ async def gben(userbot):
         return await dark.edit("**Gagal Global Banned :(**")
     if user:
         if user.id in DEVS:
-            return await dark.edit("**Gagal Global Banned, Dia Adalah Pembuat Saya 🤪**")
+            return await dark.edit("**Gagal Global Banned, dia adalah Pembuat Saya 🤪**")
+        if user.id in WHITELIST:
+            return await dark.edit("**Gagal Global Banned, dia adalah admin @SharingUserbot 🤪**")
         try:
             from userbot.modules.sql_helper.gmute_sql import gmute
         except BaseException:
@@ -138,9 +140,9 @@ async def gunben(userbot):
     except BaseException:
         return await dark.edit("**Gagal Ungbanned :(**")
     if user:
-        if user.id in DEVS:
+        if user.id in blacklistman:
             return await dark.edit(
-                "**Man Tidak Bisa Terkena Perintah Ini, Karna Dia Pembuat saya**"
+                "**Gagal ungbanned, Karna dia ada di Blacklist Man**"
             )
         try:
             from userbot.modules.sql_helper.gmute_sql import ungmute
