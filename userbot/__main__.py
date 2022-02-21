@@ -22,7 +22,7 @@ from telethon import version
 from userbot import BOT_TOKEN
 from userbot import BOT_VER as ubotversion
 from userbot import LOGS, bot
-from userbot.clients import multiman
+from userbot.clients import man_userbot_on, multiman
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
 
@@ -44,6 +44,7 @@ except BaseException as e:
 
 
 bot.loop.run_until_complete(checking())
+bot.loop.run_until_complete(man_userbot_on())
 if not BOT_TOKEN:
     bot.loop.run_until_complete(autobot())
 idle()
