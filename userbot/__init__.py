@@ -14,13 +14,13 @@ import os
 import re
 import sys
 import time
+from base64 import b64decode
 from distutils.util import strtobool as sb
 from logging import DEBUG, INFO, basicConfig, getLogger
 from math import ceil
 from pathlib import Path
 from sys import version_info
 
-from base64 import b64decode
 from dotenv import load_dotenv
 from git import Repo
 from pylast import LastFMNetwork, md5
