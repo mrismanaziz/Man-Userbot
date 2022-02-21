@@ -36,7 +36,7 @@ from telethon.tl.types import (
 
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEVS
+from userbot import CMD_HELP, DEVS, WHITELIST
 from userbot.events import register
 from userbot.utils import (
     _format,
@@ -252,7 +252,9 @@ async def spider(spdr):
             spdr, "**Tidak Bisa Membisukan Diri Sendiri..（>﹏<）**"
         )
     if user.id in DEVS:
-        return await edit_or_reply(spdr, "**Gagal Mute, Dia Adalah Pembuat Saya 🤪**")
+        return await edit_or_reply(spdr, "**Gagal Mute, dia adalah Pembuat Saya 🤪**")
+    if user.id in WHITELIST:
+        return await edit_or_reply(spdr, "**Gagal Mute, dia adalah admin @SharingUserbot 🤪**")
     await edit_or_reply(
         spdr,
         r"\\**#Muted_User**//"
@@ -388,6 +390,10 @@ async def gspider(gspdr):
     if user.id in DEVS:
         return await edit_or_reply(
             gspdr, "**Gagal Global Mute, Dia Adalah Pembuat Saya 🤪**"
+        )
+    if user.id in WHITELIST:
+        return await edit_or_reply(
+            gspdr, "**Gagal Mute, dia adalah admin @SharingUserbot 🤪**"
         )
     await edit_or_reply(gspdr, "**Berhasil Membisukan Pengguna!**")
     if gmute(user.id) is False:
