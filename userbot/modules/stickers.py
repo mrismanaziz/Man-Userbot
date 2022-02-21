@@ -81,7 +81,7 @@ async def kang(args):
             xx = await edit_or_reply(args, f"`Converting...`")
             vid_sticker = await convert_webm(message)
             await xx.edit(f"`{random.choice(KANGING_STR)}`")
-            
+
             emojibypass = True
             is_video = True
             photo = 1
