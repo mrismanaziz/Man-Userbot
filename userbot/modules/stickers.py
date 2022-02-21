@@ -77,6 +77,12 @@ async def kang(args):
                 emoji = message.media.document.attributes[1].alt
                 if emoji != "":
                     emojibypass = True
+        elif "video" in message.media.document.mime_type.split("/"):
+            xx = await edit_or_reply(args, f"`Converting...`")
+            vid_sticker = await convert_webm(message)
+            await xx.edit(f"`{random.choice(KANGING_STR)}`")
+            is_video = True
+            photo = 1
         elif "tgsticker" in message.media.document.mime_type:
             xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
             await args.client.download_file(
@@ -90,13 +96,6 @@ async def kang(args):
 
             emojibypass = True
             is_anim = True
-            photo = 1
-        elif "video" in message.media.document.mime_type:
-            xx = await edit_or_reply(args, f"`Converting...`")
-            vid_sticker = await convert_webm(message)
-            await xx.edit(f"`{random.choice(KANGING_STR)}`")
-
-            is_video = True
             photo = 1
         else:
             return await xx.edit(
