@@ -16,6 +16,7 @@ from io import BytesIO
 
 import aiohttp
 from PIL import Image
+from os import remove
 from telethon.tl import types
 from telethon.utils import get_display_name, get_peer_id
 
