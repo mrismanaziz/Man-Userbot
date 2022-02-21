@@ -33,6 +33,7 @@ from userbot import (
     call_py,
 )
 from userbot.modules.gcast import GCAST_BLACKLIST as GBL
+
 from . import ITSME
 
 EOL = "EOL\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
