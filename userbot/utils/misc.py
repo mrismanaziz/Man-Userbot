@@ -19,7 +19,8 @@ from PIL import Image
 from telethon.tl import types
 from telethon.utils import get_display_name, get_peer_id
 
-from userbot import DEVS
+from userbot import DEVS, TEMP_DOWNLOAD_DIRECTORY
+from userbot.utils import run_cmd
 
 
 async def async_searcher(
@@ -200,3 +201,28 @@ async def Carbon(
     file = BytesIO(con)
     file.name = file_name + ".jpg"
     return file
+
+
+async def convert_webm(message, output="sticker.webm"):
+    w = message.file.width
+    h = message.file.height
+    w, h = (-1, 512) if h > w else (512, -1)
+    output = output if output.endswith(".webm") else f"{output}.webm"
+    vid_input = await message.client.download_media(message, TEMP_DOWNLOAD_DIRECTORY)
+    await run_cmd(
+        [
+            "ffmpeg",
+            "-i",
+            vid_input,
+            "-c:v",
+            "libvpx-vp9",
+            "-t",
+            "3",
+            "-vf",
+            f"scale={w}:{h}",
+            "-an",
+            output,
+        ]
+    )
+    remove(vid_input)
+    return output
