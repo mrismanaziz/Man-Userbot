@@ -151,6 +151,11 @@ async def kang(args):
             not in htmlstr
         ):
             async with args.client.conversation("@Stickers") as conv:
+                try:
+                    await conv.send_message("/addsticker")
+                except YouBlockedUserError:
+                    await args.client(UnblockRequest("stickers"))
+                    await conv.send_message("/addsticker")
                 await conv.send_message("/addsticker")
                 await conv.get_response()
                 await args.client.send_read_acknowledge(conv.chat_id)
@@ -229,7 +234,11 @@ async def kang(args):
         else:
             await xx.edit("`Membuat Sticker Pack Baru`")
             async with args.client.conversation("@Stickers") as conv:
-                await conv.send_message(cmd)
+                try:
+                    await conv.send_message(cmd)
+                except YouBlockedUserError:
+                    await args.client(UnblockRequest("stickers"))
+                    await conv.send_message(cmd)
                 await conv.get_response()
                 await args.client.send_read_acknowledge(conv.chat_id)
                 await conv.send_message(packnick)
