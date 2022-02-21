@@ -76,14 +76,14 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
             if BOTLOG_CHATID != 0:
-                await bot.send_message(
+                bot.send_message(
                     BOTLOG_CHATID,
                     f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{version}@{branch}`\n➠ **Ketik** `{cmd}alive` **untuk Mengecheck Bot**\n━━",
                 )
         except Exception as e:
             LOGS.info(f"{e}")
         try:
-            await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
+            bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
         except BaseException:
             pass
 
@@ -99,7 +99,7 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
             if BOTLOG_CHATID != 0:
-                await MAN2.send_message(
+                MAN2.send_message(
                     BOTLOG_CHATID,
                     MSG_ON.format(version, branch, cmd),
                 )
@@ -118,7 +118,7 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
             if BOTLOG_CHATID != 0:
-                await MAN3.send_message(
+                MAN3.send_message(
                     BOTLOG_CHATID,
                     MSG_ON.format(version, branch, cmd),
                 )
@@ -137,7 +137,7 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
             if BOTLOG_CHATID != 0:
-                await MAN4.send_message(
+                MAN4.send_message(
                     BOTLOG_CHATID,
                     MSG_ON.format(version, branch, cmd),
                 )
@@ -156,7 +156,7 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
             if BOTLOG_CHATID != 0:
-                await MAN5.send_message(
+                MAN5.send_message(
                     BOTLOG_CHATID,
                     MSG_ON.format(version, branch, cmd),
                 )
