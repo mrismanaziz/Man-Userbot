@@ -32,9 +32,8 @@ from userbot import (
     branch,
     call_py,
 )
+from userbot.clients import ITSME
 from userbot.modules.gcast import GCAST_BLACKLIST as GBL
-
-from . import ITSME
 
 EOL = "EOL\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
 MSG_BLACKLIST = "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU.\nMan-UserBot v{}, Copyright © 2021-2022 ʀɪsᴍᴀɴ• <https://github.com/mrismanaziz>"
