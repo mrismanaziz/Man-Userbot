@@ -254,7 +254,9 @@ async def spider(spdr):
     if user.id in DEVS:
         return await edit_or_reply(spdr, "**Gagal Mute, dia adalah Pembuat Saya 🤪**")
     if user.id in WHITELIST:
-        return await edit_or_reply(spdr, "**Gagal Mute, dia adalah admin @SharingUserbot 🤪**")
+        return await edit_or_reply(
+            spdr, "**Gagal Mute, dia adalah admin @SharingUserbot 🤪**"
+        )
     await edit_or_reply(
         spdr,
         r"\\**#Muted_User**//"
