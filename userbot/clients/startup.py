@@ -43,8 +43,14 @@ MSG_ON = """
 ━━
 ➠ **Userbot Version -** `{}@{}`
 ➠ **Ketik** `{}alive` **untuk Mengecheck Bot**
+➠ **Managed By** {}
 ━━
 """
+try:
+    user = bot.get_me()
+    mention = f"[{user.first_name}](tg://user?id={user.id})"
+except BaseException:
+    pass
 
 
 async def man_client(client):
@@ -103,7 +109,7 @@ def multiman():
             if BOTLOG_CHATID != 0:
                 MAN2.send_message(
                     BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
+                    MSG_ON.format(version, branch, cmd, mention),
                 )
         except Exception as e:
             LOGS.info(f"{e}")
@@ -122,7 +128,7 @@ def multiman():
             if BOTLOG_CHATID != 0:
                 MAN3.send_message(
                     BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
+                    MSG_ON.format(version, branch, cmd, mention),
                 )
         except Exception as e:
             LOGS.info(f"{e}")
@@ -141,7 +147,7 @@ def multiman():
             if BOTLOG_CHATID != 0:
                 MAN4.send_message(
                     BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
+                    MSG_ON.format(version, branch, cmd, mention),
                 )
         except Exception as e:
             LOGS.info(f"{e}")
@@ -160,7 +166,7 @@ def multiman():
             if BOTLOG_CHATID != 0:
                 MAN5.send_message(
                     BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
+                    MSG_ON.format(version, branch, cmd, mention),
                 )
         except Exception as e:
             LOGS.info(f"{e}")
