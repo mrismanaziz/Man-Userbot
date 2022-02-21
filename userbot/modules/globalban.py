@@ -15,7 +15,7 @@ from telethon.tl.types import Channel
 import userbot.modules.sql_helper.gban_sql as gban_sql
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEVS, bot
+from userbot import CMD_HELP, DEVS, WHITELIST, bot
 from userbot.events import register
 from userbot.utils import edit_or_reply, get_user_from_event, man_cmd
 
@@ -54,6 +54,9 @@ async def gban(event):
         return
     if user.id in DEVS:
         await gbun.edit("**Gagal GBAN karena dia adalah Pembuat saya 🗿**")
+        return
+    if user.id in WHITELIST:
+        await gbun.edit("**Gagal GBAN karena dia adalah admin @SharingUserbot 🗿**")
         return
     if gban_sql.is_gbanned(user.id):
         await gbun.edit(
