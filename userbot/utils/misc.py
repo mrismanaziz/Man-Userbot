@@ -13,10 +13,10 @@ import base64
 import os
 import os.path
 from io import BytesIO
+from os import remove
 
 import aiohttp
 from PIL import Image
-from os import remove
 from telethon.tl import types
 from telethon.utils import get_display_name, get_peer_id
 
