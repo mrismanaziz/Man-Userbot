@@ -295,7 +295,7 @@ while 0 < 6:
     WHITELIST = _WHITELIST.json()
     break
 
-del _DEVS
+del _WHITELIST
 
 # 'bot' variable
 if STRING_SESSION:
