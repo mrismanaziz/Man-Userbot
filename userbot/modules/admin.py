@@ -471,7 +471,7 @@ async def get_admin(show):
             else:
                 mentions += f"\n⚜ Akun Terhapus <code>{user.id}</code>"
     except ChatAdminRequiredError as err:
-        mentions += " " + str(err) + "\n"
+        mentions += f" {str(err)}" + "\n"
     await show.edit(mentions, parse_mode="html")
 
 
@@ -537,7 +537,7 @@ async def kick(usr):
         await usr.client.kick_participant(usr.chat_id, user.id)
         await sleep(0.5)
     except Exception as e:
-        return await edit_delete(usr, NO_PERM + f"\n{e}")
+        return await edit_delete(usr, f"{NO_PERM}\n{e}")
     if reason:
         await xxnx.edit(
             f"[{user.first_name}](tg://user?id={user.id}) **Telah Dikick Dari Grup**\n**Alasan:** `{reason}`"
