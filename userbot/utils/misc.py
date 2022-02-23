@@ -204,44 +204,17 @@ async def Carbon(
     return file
 
 
-async def get_video_reso(video):
-    output, _ = await run_cmd(
-        [
-            "ffprobe",
-            "-v",
-            "error",
-            "-select_streams",
-            "v:0",
-            "-show_entries",
-            "stream=width,height",
-            "-of",
-            "csv=p=0",
-            video,
-        ]
-    )
-    width, height = output.decode("utf-8").split(",")
-    return width, height
-
-
-async def convert_webm(message, output="sticker.webm"):
-    vid_input = await message.client.download_media(message, TEMP_DOWNLOAD_DIRECTORY)
-    w, h = await get_video_reso(vid_input)
+async def animator(media, mainevent, textevent):
+    h = media.file.height
+    w = media.file.width
     w, h = (-1, 512) if h > w else (512, -1)
-    output = output if output.endswith(".webm") else f"{output}.webm"
-    await run_cmd(
-        [
-            "ffmpeg",
-            "-i",
-            vid_input,
-            "-c:v",
-            "libvpx-vp9",
-            "-t",
-            "3",
-            "-vf",
-            f"scale={w}:{h}",
-            "-an",
-            output,
-        ]
+    if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
+        os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
+    temp = await mainevent.client.download_media(media, TEMP_DOWNLOAD_DIRECTORY)
+    await textevent.edit("`Converting...`")
+    await runcmd(
+        f"ffmpeg -ss 00:00:00 -to 00:00:02.900 -i {temp} -vf scale={w}:{h} -c:v libvpx-vp9 -crf 30 -b:v 560k -maxrate 560k -bufsize 256k -an Video.webm"
     )
-    remove(vid_input)
-    return output
+    os.remove(temp)
+    vid = "Video.webm"
+    return vid
