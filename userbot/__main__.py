@@ -51,41 +51,41 @@ idle()
 if len(sys.argv) in {1, 3, 4}:
     try:
         bot.run_until_disconnected()
-    except Exception:
+    except BaseException:
         pass
     try:
         MAN2.run_until_disconnected()
-    except Exception:
+    except BaseException:
         pass
     try:
         MAN3.run_until_disconnected()
-    except Exception:
+    except BaseException:
         pass
     try:
         MAN4.run_until_disconnected()
-    except Exception:
+    except BaseException:
         pass
     try:
         MAN5.run_until_disconnected()
-    except Exception:
+    except BaseException:
         pass
 
 else:
     try:
         bot.disconnect()
-    except Exception:
+    except BaseException:
         pass
     try:
         MAN2.disconnect()
-    except Exception:
+    except BaseException:
         pass
     try:
         MAN3.disconnect()
-    except Exception:
+    except BaseException:
         pass
     try:
         MAN4.disconnect()
-    except Exception:
+    except BaseException:
         pass
     try:
         MAN5.disconnect()
