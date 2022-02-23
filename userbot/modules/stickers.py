@@ -38,7 +38,7 @@ from userbot import S_PACK_NAME as custompack
 from userbot import tgbot
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
-from userbot.utils.misc import create_quotly
+from userbot.utils.misc import create_quotly, convert_webm
 
 KANGING_STR = [
     "Colong Sticker dulu yee kan",
@@ -57,6 +57,7 @@ async def kang(args):
     message = await args.get_reply_message()
     photo = None
     emojibypass = False
+    is_video = False
     is_anim = False
     emoji = None
 
@@ -80,6 +81,13 @@ async def kang(args):
             emoji = message.media.document.attributes[1].alt
             if emoji != "✨":
                 emojibypass = True
+    elif message.file and "video" in message.file.mime_type.split("/"):
+        xx = await edit_or_reply(args, "`Converting...`")
+        vid_sticker = await convert_webm(message)
+        await xx.edit(f"`{random.choice(KANGING_STR)}`")
+
+        is_video = True
+        photo = 1
     elif message.file and "tgsticker" in message.file.mime_type:
         xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         await args.client.download_file(message.media.document, "AnimatedSticker.tgs")
@@ -119,14 +127,18 @@ async def kang(args):
         cmd = "/newpack"
         file = io.BytesIO()
 
-        if not is_anim:
-            image = await resize_photo(photo)
-            file.name = "sticker.png"
-            image.save(file, "PNG")
-        else:
+        if is_video:
+            packname += "_vid"
+            packnick += " (Video)"
+            cmd = "/newvideo"
+        elif is_anim:
             packname += "_anim"
             packnick += " (Animated)"
             cmd = "/newanimated"
+        else:
+            image = await resize_photo(photo)
+            file.name = "sticker.png"
+            image.save(file, "PNG")
 
         response = urllib.request.urlopen(
             urllib.request.Request(f"http://t.me/addstickers/{packname}")
@@ -168,6 +180,9 @@ async def kang(args):
                         if is_anim:
                             await conv.send_file("AnimatedSticker.tgs")
                             remove("AnimatedSticker.tgs")
+                        elif is_video:
+                            await conv.send_file(vid_input)
+                            remove(vid_input)
                         else:
                             file.seek(0)
                             await conv.send_file(file, force_document=True)
@@ -197,6 +212,9 @@ async def kang(args):
                 if is_anim:
                     await conv.send_file("AnimatedSticker.tgs")
                     remove("AnimatedSticker.tgs")
+                elif is_video:
+                    await conv.send_file(vid_sticker)
+                    remove(vid_sticker)
                 else:
                     file.seek(0)
                     await conv.send_file(file, force_document=True)
@@ -227,6 +245,9 @@ async def kang(args):
                 if is_anim:
                     await conv.send_file("AnimatedSticker.tgs")
                     remove("AnimatedSticker.tgs")
+                elif is_video:
+                    await conv.send_file(vid_sticker)
+                    remove(vid_sticker)
                 else:
                     file.seek(0)
                     await conv.send_file(file, force_document=True)
