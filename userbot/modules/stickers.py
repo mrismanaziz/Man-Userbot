@@ -71,6 +71,10 @@ async def kang(args):
         xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = io.BytesIO()
         photo = await args.client.download_media(message.photo, photo)
+    elif isinstance(message.media, MessageMediaUnsupported):
+        await edit_delete(
+            args, "**File Tidak Didukung, Silahkan Reply ke Media Foto/GIF !**"
+        )
     elif message.message:
         xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = await create_quotly(message)
@@ -107,10 +111,6 @@ async def kang(args):
         emoji = "✨"
         emojibypass = True
         photo = 1
-    elif isinstance(message.media, MessageMediaUnsupported):
-        await edit_delete(
-            args, "**File Tidak Didukung, Silahkan Reply ke Media Foto/GIF !**"
-        )
     else:
         return await edit_delete(
             args, "**File Tidak Didukung, Silahkan Reply ke Media Foto/GIF !**"
