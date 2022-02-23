@@ -180,7 +180,9 @@ async def kang(args):
                         packnick = f"{custompack}"
                     else:
                         f_name = (
-                            f"@{user.username}" if user.username else f"{user.first_name}"
+                            f"@{user.username}"
+                            if user.username
+                            else f"{user.first_name}"
                         )
                         packname = f"Sticker_u{user.id}_Ke{pack}"
                         packnick = f"Sticker Pack {f_name}"
