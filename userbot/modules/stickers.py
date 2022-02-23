@@ -104,7 +104,7 @@ async def kang(args):
             vid = await args.client.download_media(message.media.document, "Video.webm")
         else:
             xx = await edit_or_reply(args, "⌛ Downloading..")
-            await animator(message, args, event)
+            await animator(message, args, xx)
             await xx.edit(f"`{random.choice(KANGING_STR)}`")
         is_video = True
         emoji = "✨"
