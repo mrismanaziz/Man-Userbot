@@ -54,7 +54,6 @@ async def kang(args):
     user = await args.client.get_me()
     if not user.username:
         user.username = user.first_name
-    xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
     message = await args.get_reply_message()
     photo = None
     emojibypass = False
@@ -72,8 +71,10 @@ async def kang(args):
         photo = io.BytesIO()
         photo = await args.client.download_media(message.photo, photo)
     elif message.message:
+        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = await create_quotly(message)
     elif message.file and "image" in message.file.mime_type.split("/"):
+        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = io.BytesIO()
         await args.client.download_file(message.media.document, photo)
         if (
@@ -83,17 +84,6 @@ async def kang(args):
             emoji = message.media.document.attributes[1].alt
             if emoji != "✨":
                 emojibypass = True
-    elif message.media.document.mime_type in ["video/mp4", "video/webm"]:
-        if message.media.document.mime_type == "video/webm":
-            await args.client.download_media(message.media.document, "Video.webm")
-        else:
-            xx = await edit_or_reply(args, "`Downloading...`")
-            await animator(message, args, xx)
-            await xx.edit(f"`{random.choice(KANGING_STR)}`")
-        is_video = True
-        emoji = "✨"
-        emojibypass = True
-        photo = 1
     elif message.file and "tgsticker" in message.file.mime_type:
         xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         await args.client.download_file(message.media.document, "AnimatedSticker.tgs")
@@ -103,6 +93,18 @@ async def kang(args):
                 emoji = attribute.alt
         emojibypass = True
         is_anim = True
+        photo = 1
+    elif message.media.document.mime_type in ["video/mp4", "video/webm"]:
+        if message.media.document.mime_type == "video/webm":
+            xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+            await args.client.download_media(message.media.document, "Video.webm")
+        else:
+            xx = await edit_or_reply(args, "`Downloading...`")
+            await animator(message, args, xx)
+            await xx.edit(f"`{random.choice(KANGING_STR)}`")
+        is_video = True
+        emoji = "✨"
+        emojibypass = True
         photo = 1
     else:
         return await edit_delete(
