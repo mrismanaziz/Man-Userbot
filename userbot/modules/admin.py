@@ -7,7 +7,6 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
-import logging
 from asyncio import sleep
 
 from telethon.errors import (
@@ -36,7 +35,7 @@ from telethon.tl.types import (
 
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEVS, WHITELIST
+from userbot import CMD_HELP, DEVS, LOGS, WHITELIST
 from userbot.events import register
 from userbot.utils import (
     _format,
@@ -47,6 +46,7 @@ from userbot.utils import (
     man_handler,
     media_type,
 )
+from userbot.utils.logger import logging
 
 # =================== CONSTANT ===================
 PP_TOO_SMOL = "**Gambar Terlalu Kecil**"
@@ -78,11 +78,6 @@ UNBAN_RIGHTS = ChatBannedRights(
     send_games=None,
     send_inline=None,
     embed_links=None,
-)
-logging.basicConfig(
-    format="[%(levelname)s- %(asctime)s]- %(name)s- %(message)s",
-    level=logging.INFO,
-    datefmt="%H:%M:%S",
 )
 
 LOGS = logging.getLogger(__name__)
