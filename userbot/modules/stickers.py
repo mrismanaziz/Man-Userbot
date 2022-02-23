@@ -101,7 +101,7 @@ async def kang(args):
     elif message.media.document.mime_type in ["video/mp4", "video/webm"]:
         if message.media.document.mime_type == "video/webm":
             xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
-            vid = await args.client.download_media(message.media.document, "Video.webm")
+            await args.client.download_media(message.media.document, "Video.webm")
         else:
             xx = await edit_or_reply(args, "⌛ Downloading..")
             await animator(message, args, xx)
