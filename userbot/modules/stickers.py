@@ -86,7 +86,7 @@ async def kang(args):
             xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
             await args.client.download_media(message.media.document, "Video.webm")
         else:
-            xx = await edit_or_reply(args, "⌛ Downloading..")
+            xx = await edit_or_reply(args, "`Downloading...`")
             await animator(message, args, xx)
             await xx.edit(f"`{random.choice(KANGING_STR)}`")
         is_video = True
@@ -110,7 +110,7 @@ async def kang(args):
         photo = await create_quotly(message)
     else:
         return await edit_delete(
-            args, "**File Tidak Didukung, Silahkan Reply ke Media Foto !**"
+            args, "**File Tidak Didukung, Silahkan Reply ke Media Foto/GIF !**"
         )
     if photo:
         splat = args.text.split()
