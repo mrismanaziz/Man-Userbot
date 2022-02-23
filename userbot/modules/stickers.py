@@ -129,12 +129,11 @@ async def kang(args):
             else:
                 emoji = splat[1]
 
+        packname = f"Sticker_u{user.id}_Ke{pack}"
         if custompack is not None:
-            packname = f"Sticker_u{user.id}_Ke{pack}"
             packnick = f"{custompack}"
         else:
             f_name = f"@{user.username}" if user.username else user.first_name
-            packname = f"Sticker_u{user.id}_Ke{pack}"
             packnick = f"Sticker Pack {f_name}"
 
         cmd = "/newpack"
@@ -570,7 +569,7 @@ async def cb_sticker(event):
     if not query:
         return await edit_delete(event, "**Masukan Nama Sticker Pack!**")
     xx = await edit_or_reply(event, "`Searching sticker packs...`")
-    text = requests.get("https://combot.org/telegram/stickers?q=" + query).text
+    text = requests.get(f"https://combot.org/telegram/stickers?q={query}").text
     soup = bs(text, "lxml")
     results = soup.find_all("div", {"class": "sticker-pack__header"})
     if not results:
