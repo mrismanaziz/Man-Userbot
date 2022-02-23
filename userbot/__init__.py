@@ -162,7 +162,7 @@ UPSTREAM_REPO_URL = os.environ.get(
 )
 
 # Custom Name Sticker Pack
-S_PACK_NAME = os.environ.get("S_PACK_NAME", "Sticker Pack by @Lunatic0de")
+S_PACK_NAME = os.environ.get("S_PACK_NAME", None)
 
 # SQL Database URI
 DB_URI = os.environ.get("DATABASE_URL", None)
