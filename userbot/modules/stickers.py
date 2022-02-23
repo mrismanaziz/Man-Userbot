@@ -93,6 +93,7 @@ async def kang(args):
         is_anim = True
         photo = 1
     elif message.message:
+        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = await create_quotly(message)
     else:
         return await xx.edit("**File Tidak Didukung, Silahkan Reply ke Media Foto !**")
