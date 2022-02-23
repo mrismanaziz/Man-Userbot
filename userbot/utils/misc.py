@@ -204,12 +204,30 @@ async def Carbon(
     return file
 
 
+async def get_video_reso(video):
+    output, _ = await run_cmd(
+        [
+            "ffprobe",
+            "-v",
+            "error",
+            "-select_streams",
+            "v:0",
+            "-show_entries",
+            "stream=width,height",
+            "-of",
+            "csv=p=0",
+            video,
+        ]
+    )
+    width, height = output.decode("utf-8").split(",")
+    return width, height
+
+
 async def convert_webm(message, output="sticker.webm"):
-    w = message.file.width
-    h = message.file.height
+    vid_input = await message.client.download_media(message, TEMP_DOWNLOAD_DIRECTORY)
+    w, h = await get_video_reso(vid_input)
     w, h = (-1, 512) if h > w else (512, -1)
     output = output if output.endswith(".webm") else f"{output}.webm"
-    vid_input = await message.client.download_media(message, TEMP_DOWNLOAD_DIRECTORY)
     await run_cmd(
         [
             "ffmpeg",
