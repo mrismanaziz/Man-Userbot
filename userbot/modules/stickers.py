@@ -82,10 +82,8 @@ async def kang(args):
             if emoji != "✨":
                 emojibypass = True
     elif message.file and "video" in message.file.mime_type.split("/"):
-        xx = await edit_or_reply(args, "`Converting...`")
+        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         vid_sticker = await convert_webm(message)
-        await xx.edit(f"`{random.choice(KANGING_STR)}`")
-
         is_video = True
         photo = 1
     elif message.file and "tgsticker" in message.file.mime_type:
