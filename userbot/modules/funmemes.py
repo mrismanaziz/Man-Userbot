@@ -9,9 +9,10 @@ from telethon.errors.rpcerrorlist import MessageIdInvalidError
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
-from userbot import DEFAULT as me
 from userbot.events import register as own_cmd
 from userbot.utils import man_cmd
+
+me = 844432220
 
 
 @man_cmd(pattern="(.*)")

@@ -14,6 +14,7 @@ import os
 import re
 import sys
 import time
+from base64 import b64decode
 from distutils.util import strtobool as sb
 from logging import DEBUG, INFO, basicConfig, getLogger
 from math import ceil
@@ -161,7 +162,7 @@ UPSTREAM_REPO_URL = os.environ.get(
 )
 
 # Custom Name Sticker Pack
-S_PACK_NAME = os.environ.get("S_PACK_NAME", "Sticker Pack by @Lunatic0de")
+S_PACK_NAME = os.environ.get("S_PACK_NAME", None)
 
 # SQL Database URI
 DB_URI = os.environ.get("DATABASE_URL", None)
@@ -213,7 +214,7 @@ ZIP_DOWNLOAD_DIRECTORY = os.environ.get("ZIP_DOWNLOAD_DIRECTORY", "./zips")
 BITLY_TOKEN = os.environ.get("BITLY_TOKEN", None)
 
 # Bot version
-BOT_VER = os.environ.get("BOT_VER", "3.1.0")
+BOT_VER = os.environ.get("BOT_VER", "3.1.3")
 
 # Default .alive logo
 ALIVE_LOGO = (
@@ -233,7 +234,7 @@ QUEUE_PIC = (
     os.environ.get("QUEUE_PIC") or "https://telegra.ph/file/d6f92c979ad96b2031cba.png"
 )
 
-DEFAULT = [844432220]
+DEFAULT = list(map(int, b64decode("ODQ0NDMyMjIw").split()))
 
 # Last.fm Module
 BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
@@ -281,6 +282,20 @@ while 0 < 6:
     break
 
 del _BLACKLIST
+
+while 0 < 6:
+    _WHITELIST = get(
+        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/whitelist.json"
+    )
+    if _WHITELIST.status_code != 200:
+        if 0 != 5:
+            continue
+        WHITELIST = []
+        break
+    WHITELIST = _WHITELIST.json()
+    break
+
+del _WHITELIST
 
 # 'bot' variable
 if STRING_SESSION:

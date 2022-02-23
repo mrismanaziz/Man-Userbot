@@ -21,6 +21,7 @@ AFKSTR = [
     f"**{owner} Sedang OFF Tunggulah Sampai Online**",
     f"**Maaf {owner} Sedang OFF!**",
 ]
+ISAFK = False
 USER_AFK = {}
 afk_time = None
 afk_start = {}
