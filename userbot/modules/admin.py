@@ -247,14 +247,11 @@ async def spider(spdr):
         return
     self_user = await spdr.client.get_me()
     if user.id == self_user.id:
-        return await edit_or_reply(
-            man, "**Tidak Bisa Membisukan Diri Sendiri..（>﹏<）**"
-        )
+        return await edit_or_reply(man, "**Tidak Bisa Membisukan Diri Sendiri..（>﹏<）**")
     if user.id in DEVS:
         return await man.edit("**Gagal Mute, dia adalah Pembuat Saya 🤪**")
     if user.id in WHITELIST:
-        return await man.edit("**Gagal Mute, dia adalah admin @SharingUserbot 🤪**"
-        )
+        return await man.edit("**Gagal Mute, dia adalah admin @SharingUserbot 🤪**")
     await man.edit(
         r"\\**#Muted_User**//"
         f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
@@ -383,14 +380,11 @@ async def gspider(gspdr):
         return
     self_user = await gspdr.client.get_me()
     if user.id == self_user.id:
-        return await man.edit("**Tidak Bisa Membisukan Diri Sendiri..（>﹏<）**"
-        )
+        return await man.edit("**Tidak Bisa Membisukan Diri Sendiri..（>﹏<）**")
     if user.id in DEVS:
-        return await man.edit("**Gagal Global Mute, Dia Adalah Pembuat Saya 🤪**"
-        )
+        return await man.edit("**Gagal Global Mute, Dia Adalah Pembuat Saya 🤪**")
     if user.id in WHITELIST:
-        return await man.edit("**Gagal Mute, dia adalah admin @SharingUserbot 🤪**"
-        )
+        return await man.edit("**Gagal Mute, dia adalah admin @SharingUserbot 🤪**")
     await man.edit("**Berhasil Membisukan Pengguna!**")
     if gmute(user.id) is False:
         await edit_delete(gspdr, "**ERROR! Pengguna Sudah Dibisukan.**")
