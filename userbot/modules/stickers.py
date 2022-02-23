@@ -130,9 +130,9 @@ async def kang(args):
                 emoji = splat[1]
 
         u_id = user.id
-        f_name = user.first_name
+        f_name = f"@{user.username}" if user.username else user.first_name
         packname = f"Sticker_u{u_id}_Ke{pack}"
-        custom_packnick = f"{custompack}" or f"{f_name} Sticker Pack"
+        custom_packnick = f"{custompack}" or f"Sticker Pack {f_name}"
         packnick = f"{custom_packnick}"
         cmd = "/newpack"
         file = io.BytesIO()
