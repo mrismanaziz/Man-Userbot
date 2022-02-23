@@ -38,6 +38,7 @@ from userbot import S_PACK_NAME as custompack
 from userbot import tgbot
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
+from userbot.utils.misc import create_quotly
 
 KANGING_STR = [
     "Colong Sticker dulu yee kan",
@@ -59,7 +60,7 @@ async def kang(args):
     is_anim = False
     emoji = None
 
-    if not message or not message.media:
+    if not message:
         return await edit_delete(
             args, "**Silahkan Reply Ke Pesan Media Untuk Mencuri Sticker itu!**"
         )
@@ -91,6 +92,8 @@ async def kang(args):
         emojibypass = True
         is_anim = True
         photo = 1
+    elif message.message:
+        photo = await create_quotly(message)
     else:
         return await xx.edit("**File Tidak Didukung, Silahkan Reply ke Media Foto !**")
     if photo:
