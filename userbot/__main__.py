@@ -49,44 +49,6 @@ if not BOT_TOKEN:
     bot.loop.run_until_complete(autobot())
 idle()
 if len(sys.argv) not in (1, 3, 4):
-    try:
-        bot.disconnect()
-    except Exception:
-        pass
-    try:
-        MAN2.disconnect()
-    except Exception:
-        pass
-    try:
-        MAN3.disconnect()
-    except Exception:
-        pass
-    try:
-        MAN4.disconnect()
-    except Exception:
-        pass
-    try:
-        MAN5.disconnect()
-    except Exception:
-        pass
+    bot.disconnect()
 else:
-    try:
-        bot.run_until_disconnected()
-    except Exception:
-        pass
-    try:
-        MAN2.run_until_disconnected()
-    except Exception:
-        pass
-    try:
-        MAN3.run_until_disconnected()
-    except Exception:
-        pass
-    try:
-        MAN4.run_until_disconnected()
-    except Exception:
-        pass
-    try:
-        MAN5.run_until_disconnected()
-    except Exception:
-        pass
+    bot.run_until_disconnected()
