@@ -31,6 +31,7 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 from telethon.utils import get_input_document
+
 from userbot import BOT_USERNAME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
@@ -38,7 +39,7 @@ from userbot import S_PACK_NAME as custompack
 from userbot import tgbot
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.utils import edit_delete, edit_or_reply, man_cmd, runcmd
-from userbot.utils.misc import convert_webm, create_quotly
+from userbot.utils.misc import create_quotly
 
 KANGING_STR = [
     "Colong Sticker dulu yee kan",
@@ -100,9 +101,7 @@ async def kang(args):
     elif message.media.document.mime_type in ["video/mp4", "video/webm"]:
         if message.media.document.mime_type == "video/webm":
             xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
-            vid = await args.client.download_media(
-                message.media.document, "Video.webm"
-            )
+            vid = await args.client.download_media(message.media.document, "Video.webm")
         else:
             xx = await edit_or_reply(args, "⌛ Downloading..")
             await animator(message, args, event)
