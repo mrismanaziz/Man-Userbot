@@ -129,11 +129,14 @@ async def kang(args):
             else:
                 emoji = splat[1]
 
-        u_id = user.id
-        f_name = f"@{user.username}" if user.username else user.first_name
-        packname = f"Sticker_u{u_id}_Ke{pack}"
-        custom_packnick = f"{custompack}" or f"Sticker Pack {f_name}"
-        packnick = f"{custom_packnick}"
+        if custompack is not None:
+            packname = f"Sticker_u{user.id}_Ke{pack}"
+            packnick = f"{custompack}"
+        else:
+            f_name = f"@{user.username}" if user.username else user.first_name
+            packname = f"Sticker_u{user.id}_Ke{pack}"
+            packnick = f"Sticker Pack {f_name}"
+
         cmd = "/newpack"
         file = io.BytesIO()
 
@@ -169,10 +172,16 @@ async def kang(args):
                 await args.client.send_read_acknowledge(conv.chat_id)
                 await conv.send_message(packname)
                 x = await conv.get_response()
-                while "120" in x.text:
+                limit = "50" if (is_anim or is_video) else "120"
+                while limit in x.text:
                     pack += 1
-                    packname = f"Sticker_u{u_id}_Ke{pack}"
-                    packnick = f"{custom_packnick}"
+                    if custompack is not None:
+                        packname = f"Sticker_u{user.id}_Ke{pack}"
+                        packnick = f"{custompack}"
+                    else:
+                        f_name = f"@{user.username}" if user.username else user.first_name
+                        packname = f"Sticker_u{user.id}_Ke{pack}"
+                        packnick = f"Sticker Pack {f_name}"
                     await xx.edit(
                         "`Membuat Sticker Pack Baru "
                         + str(pack)
