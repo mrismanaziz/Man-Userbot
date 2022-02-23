@@ -217,5 +217,4 @@ async def animator(media, mainevent, textevent):
         f"ffmpeg -ss 00:00:00 -to 00:00:02.900 -i {Risman} -vf scale={w}:{h} -c:v libvpx-vp9 -crf 30 -b:v 560k -maxrate 560k -bufsize 256k -an Video.webm"
     )
     os.remove(Risman)
-    vid = "Video.webm"
-    return vid
+    return "Video.webm"

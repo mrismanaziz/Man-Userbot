@@ -11,6 +11,7 @@
 """ Userbot start point """
 
 
+
 import sys
 from importlib import import_module
 from platform import python_version
@@ -48,29 +49,7 @@ bot.loop.run_until_complete(man_userbot_on())
 if not BOT_TOKEN:
     bot.loop.run_until_complete(autobot())
 idle()
-if len(sys.argv) not in (1, 3, 4):
-    try:
-        bot.run_until_disconnected()
-    except BaseException:
-        pass
-    try:
-        MAN2.run_until_disconnected()
-    except BaseException:
-        pass
-    try:
-        MAN3.run_until_disconnected()
-    except BaseException:
-        pass
-    try:
-        MAN4.run_until_disconnected()
-    except BaseException:
-        pass
-    try:
-        MAN5.run_until_disconnected()
-    except BaseException:
-        pass
-
-else:
+if len(sys.argv) in {1, 3, 4}:
     try:
         bot.disconnect()
     except BaseException:
@@ -90,4 +69,26 @@ else:
     try:
         MAN5.disconnect()
     except Exception:
+        pass
+
+else:
+    try:
+        bot.run_until_disconnected()
+    except BaseException:
+        pass
+    try:
+        MAN2.run_until_disconnected()
+    except BaseException:
+        pass
+    try:
+        MAN3.run_until_disconnected()
+    except BaseException:
+        pass
+    try:
+        MAN4.run_until_disconnected()
+    except BaseException:
+        pass
+    try:
+        MAN5.run_until_disconnected()
+    except BaseException:
         pass
