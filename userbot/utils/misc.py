@@ -204,6 +204,7 @@ async def Carbon(
 
 
 async def animator(media, mainevent, textevent):
+    # Coded by @Jisan7509
     h = media.file.height
     w = media.file.width
     w, h = (-1, 512) if h > w else (512, -1)
