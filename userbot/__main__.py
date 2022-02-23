@@ -21,7 +21,7 @@ from telethon import version
 
 from userbot import BOT_TOKEN
 from userbot import BOT_VER as ubotversion
-from userbot import LOGS, bot
+from userbot import LOGS, MAN2, MAN3, MAN4, MAN5, bot
 from userbot.clients import man_userbot_on, multiman
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
@@ -49,9 +49,44 @@ if not BOT_TOKEN:
     bot.loop.run_until_complete(autobot())
 idle()
 if len(sys.argv) not in (1, 3, 4):
-    bot.disconnect()
+    try:
+        bot.disconnect()
+    except Exception as e:
+        pass
+    try:
+        MAN2.disconnect()
+    except Exception as e:
+        pass
+    try:
+        MAN3.disconnect()
+    except Exception as e:
+        pass
+    try:
+        MAN4.disconnect()
+    except Exception as e:
+        pass
+    try:
+        MAN5.disconnect()
+    except Exception as e:
+        pass
 else:
     try:
         bot.run_until_disconnected()
-    except ConnectionError:
+    except Exception as e:
+        pass
+    try:
+        MAN2.run_until_disconnected()
+    except Exception as e:
+        pass
+    try:
+        MAN3.run_until_disconnected()
+    except Exception as e:
+        pass
+    try:
+        MAN4.run_until_disconnected()
+    except Exception as e:
+        pass
+    try:
+        MAN5.run_until_disconnected()
+    except Exception as e:
         pass
