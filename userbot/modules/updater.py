@@ -131,8 +131,10 @@ async def upstream(event):
     off_repo = UPSTREAM_REPO_URL
     force_update = False
     try:
-        txt = "**Pembaruan Tidak Dapat Di Lanjutkan Karna "
-        txt += "Terjadi Beberapa ERROR**\n\n**LOGTRACE:**\n"
+        txt = (
+            "**Pembaruan Tidak Dapat Di Lanjutkan Karna "
+            + "Terjadi Beberapa ERROR**\n\n**LOGTRACE:**\n"
+        )
         repo = Repo()
     except NoSuchPathError as error:
         await xx.edit(f"{txt}\n**Directory** `{error}` **Tidak Dapat Di Temukan.**")
