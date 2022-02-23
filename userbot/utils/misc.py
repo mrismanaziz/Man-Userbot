@@ -13,7 +13,6 @@ import base64
 import os
 import os.path
 from io import BytesIO
-from os import remove
 
 import aiohttp
 from PIL import Image
@@ -21,7 +20,6 @@ from telethon.tl import types
 from telethon.utils import get_display_name, get_peer_id
 
 from userbot import DEVS, TEMP_DOWNLOAD_DIRECTORY
-from userbot.utils import run_cmd
 
 
 async def async_searcher(
