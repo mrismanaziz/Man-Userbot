@@ -10,7 +10,6 @@
 import asyncio
 import io
 import math
-import os
 import random
 import urllib.request
 from os import remove
@@ -29,6 +28,7 @@ from telethon.tl.types import (
     DocumentAttributeSticker,
     InputStickerSetID,
     MessageMediaPhoto,
+    MessageMediaUnsupported,
 )
 from telethon.utils import get_input_document
 
@@ -36,10 +36,10 @@ from userbot import BOT_USERNAME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot import S_PACK_NAME as custompack
-from userbot import TEMP_DOWNLOAD_DIRECTORY, tgbot
+from userbot import tgbot
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
-from userbot.utils import edit_delete, edit_or_reply, man_cmd, runcmd
-from userbot.utils.misc import create_quotly
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
+from userbot.utils.misc import animator, create_quotly
 
 KANGING_STR = [
     "Colong Sticker dulu yee kan",
@@ -48,22 +48,6 @@ KANGING_STR = [
     "ehh, keren nih... gua colong ya stickernya...",
     "Boleh juga ni Sticker Colong ahh~",
 ]
-
-
-async def animator(media, mainevent, textevent):
-    h = media.file.height
-    w = media.file.width
-    w, h = (-1, 512) if h > w else (512, -1)
-    if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
-    temp = await mainevent.client.download_media(media, TEMP_DOWNLOAD_DIRECTORY)
-    await textevent.edit("`Converting...`")
-    await runcmd(
-        f"ffmpeg -ss 00:00:00 -to 00:00:02.900 -i {temp} -vf scale={w}:{h} -c:v libvpx-vp9 -crf 30 -b:v 560k -maxrate 560k -bufsize 256k -an Video.webm"
-    )
-    os.remove(temp)
-    vid = "Video.webm"
-    return vid
 
 
 @man_cmd(pattern="(?:tikel|kang)\s?(.)?")
@@ -87,6 +71,9 @@ async def kang(args):
         xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = io.BytesIO()
         photo = await args.client.download_media(message.photo, photo)
+    elif message.message:
+        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+        photo = await create_quotly(message)
     elif message.file and "image" in message.file.mime_type.split("/"):
         xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = io.BytesIO()
@@ -98,6 +85,16 @@ async def kang(args):
             emoji = message.media.document.attributes[1].alt
             if emoji != "✨":
                 emojibypass = True
+    elif message.file and "tgsticker" in message.file.mime_type:
+        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+        await args.client.download_file(message.media.document, "AnimatedSticker.tgs")
+        attributes = message.media.document.attributes
+        for attribute in attributes:
+            if isinstance(attribute, DocumentAttributeSticker):
+                emoji = attribute.alt
+        emojibypass = True
+        is_anim = True
+        photo = 1
     elif message.media.document.mime_type in ["video/mp4", "video/webm"]:
         if message.media.document.mime_type == "video/webm":
             xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
@@ -110,21 +107,10 @@ async def kang(args):
         emoji = "✨"
         emojibypass = True
         photo = 1
-    elif message.file and "tgsticker" in message.file.mime_type:
-        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
-        await args.client.download_file(message.media.document, "AnimatedSticker.tgs")
-
-        attributes = message.media.document.attributes
-        for attribute in attributes:
-            if isinstance(attribute, DocumentAttributeSticker):
-                emoji = attribute.alt
-
-        emojibypass = True
-        is_anim = True
-        photo = 1
-    elif message.message:
-        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
-        photo = await create_quotly(message)
+    elif isinstance(message.media, MessageMediaUnsupported):
+        await edit_delete(
+            args, "**File Tidak Didukung, Silahkan Reply ke Media Foto/GIF !**"
+        )
     else:
         return await edit_delete(
             args, "**File Tidak Didukung, Silahkan Reply ke Media Foto/GIF !**"
