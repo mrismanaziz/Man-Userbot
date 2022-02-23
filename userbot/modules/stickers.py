@@ -102,7 +102,9 @@ async def kang(args):
         xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = await create_quotly(message)
     else:
-        return await edit_delete(args, "**File Tidak Didukung, Silahkan Reply ke Media Foto !**")
+        return await edit_delete(
+            args, "**File Tidak Didukung, Silahkan Reply ke Media Foto !**"
+        )
     if photo:
         splat = args.text.split()
         if not emojibypass:
