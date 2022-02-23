@@ -54,6 +54,7 @@ async def kang(args):
     user = await args.client.get_me()
     if not user.username:
         user.username = user.first_name
+    xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
     message = await args.get_reply_message()
     photo = None
     emojibypass = False
@@ -70,8 +71,9 @@ async def kang(args):
         xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = io.BytesIO()
         photo = await args.client.download_media(message.photo, photo)
+    elif message.message:
+        photo = await create_quotly(message)
     elif message.file and "image" in message.file.mime_type.split("/"):
-        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = io.BytesIO()
         await args.client.download_file(message.media.document, photo)
         if (
@@ -83,7 +85,6 @@ async def kang(args):
                 emojibypass = True
     elif message.media.document.mime_type in ["video/mp4", "video/webm"]:
         if message.media.document.mime_type == "video/webm":
-            xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
             await args.client.download_media(message.media.document, "Video.webm")
         else:
             xx = await edit_or_reply(args, "`Downloading...`")
@@ -96,18 +97,13 @@ async def kang(args):
     elif message.file and "tgsticker" in message.file.mime_type:
         xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         await args.client.download_file(message.media.document, "AnimatedSticker.tgs")
-
         attributes = message.media.document.attributes
         for attribute in attributes:
             if isinstance(attribute, DocumentAttributeSticker):
                 emoji = attribute.alt
-
         emojibypass = True
         is_anim = True
         photo = 1
-    elif message.message:
-        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
-        photo = await create_quotly(message)
     else:
         return await edit_delete(
             args, "**File Tidak Didukung, Silahkan Reply ke Media Foto/GIF !**"
