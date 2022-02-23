@@ -39,7 +39,7 @@ from userbot import S_PACK_NAME as custompack
 from userbot import TEMP_DOWNLOAD_DIRECTORY, tgbot
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.utils import edit_delete, edit_or_reply, man_cmd, runcmd
-from userbot.utils.misc import create_quotly
+from userbot.utils.misc import animator, create_quotly
 
 KANGING_STR = [
     "Colong Sticker dulu yee kan",
@@ -48,22 +48,6 @@ KANGING_STR = [
     "ehh, keren nih... gua colong ya stickernya...",
     "Boleh juga ni Sticker Colong ahh~",
 ]
-
-
-async def animator(media, mainevent, textevent):
-    h = media.file.height
-    w = media.file.width
-    w, h = (-1, 512) if h > w else (512, -1)
-    if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
-    temp = await mainevent.client.download_media(media, TEMP_DOWNLOAD_DIRECTORY)
-    await textevent.edit("🎞 Converting into Animated sticker..")
-    await runcmd(
-        f"ffmpeg -ss 00:00:00 -to 00:00:02.900 -i {temp} -vf scale={w}:{h} -c:v libvpx-vp9 -crf 30 -b:v 560k -maxrate 560k -bufsize 256k -an Video.webm"
-    )
-    os.remove(temp)
-    vid = "Video.webm"
-    return vid
 
 
 @man_cmd(pattern="(?:tikel|kang)\s?(.)?")
