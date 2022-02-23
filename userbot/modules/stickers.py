@@ -75,8 +75,8 @@ async def kang(args):
             photo = io.BytesIO()
             await args.client.download_file(message.media.document, photo)
             if (
-            DocumentAttributeFilename(file_name="sticker.webp")
-            in message.media.document.attributes
+                DocumentAttributeFilename(file_name="sticker.webp")
+                in message.media.document.attributes
             ):
                 emoji = message.media.document.attributes[1].alt
                 if emoji != "✨":
@@ -88,7 +88,9 @@ async def kang(args):
             photo = 1
         elif message.file and "tgsticker" in message.file.mime_type:
             xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
-            await args.client.download_file(message.media.document, "AnimatedSticker.tgs")
+            await args.client.download_file(
+                message.media.document, "AnimatedSticker.tgs"
+            )
 
             attributes = message.media.document.attributes
             for attribute in attributes:
