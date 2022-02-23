@@ -24,48 +24,43 @@ MSG_ON = """
 
 async def man_userbot_on():
     try:
-        if bot:
-            if BOTLOG_CHATID != 0:
-                await bot.send_message(
-                    BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
-                )
+        if bot and BOTLOG_CHATID != 0:
+            await bot.send_message(
+                BOTLOG_CHATID,
+                MSG_ON.format(version, branch, cmd),
+            )
     except BaseException:
         pass
     try:
-        if MAN2:
-            if BOTLOG_CHATID != 0:
-                await MAN2.send_message(
-                    BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
-                )
+        if MAN2 and BOTLOG_CHATID != 0:
+            await MAN2.send_message(
+                BOTLOG_CHATID,
+                MSG_ON.format(version, branch, cmd),
+            )
     except BaseException:
         pass
     try:
-        if MAN3:
-            if BOTLOG_CHATID != 0:
-                await MAN3.send_message(
-                    BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
-                )
+        if MAN3 and BOTLOG_CHATID != 0:
+            await MAN3.send_message(
+                BOTLOG_CHATID,
+                MSG_ON.format(version, branch, cmd),
+            )
     except BaseException:
         pass
     try:
-        if MAN4:
-            if BOTLOG_CHATID != 0:
-                await MAN4.send_message(
-                    BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
-                )
+        if MAN4 and BOTLOG_CHATID != 0:
+            await MAN4.send_message(
+                BOTLOG_CHATID,
+                MSG_ON.format(version, branch, cmd),
+            )
     except BaseException:
         pass
     try:
-        if MAN5:
-            if BOTLOG_CHATID != 0:
-                await MAN5.send_message(
-                    BOTLOG_CHATID,
-                    MSG_ON.format(version, branch, cmd),
-                )
+        if MAN5 and BOTLOG_CHATID != 0:
+            await MAN5.send_message(
+                BOTLOG_CHATID,
+                MSG_ON.format(version, branch, cmd),
+            )
     except BaseException:
         pass
     try:
