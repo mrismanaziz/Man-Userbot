@@ -28,7 +28,7 @@ from userbot.utils import autobot, checking
 
 try:
     for module_name in ALL_MODULES:
-        imported_module = import_module("userbot.modules." + module_name)
+        imported_module = import_module(f"userbot.modules.{module_name}")
     client = multiman()
     total = 5 - client
     LOGS.info(f"Total Clients = {total} User")
@@ -48,28 +48,7 @@ bot.loop.run_until_complete(man_userbot_on())
 if not BOT_TOKEN:
     bot.loop.run_until_complete(autobot())
 idle()
-if len(sys.argv) not in (1, 3, 4):
-    try:
-        bot.disconnect()
-    except Exception:
-        pass
-    try:
-        MAN2.disconnect()
-    except Exception:
-        pass
-    try:
-        MAN3.disconnect()
-    except Exception:
-        pass
-    try:
-        MAN4.disconnect()
-    except Exception:
-        pass
-    try:
-        MAN5.disconnect()
-    except Exception:
-        pass
-else:
+if len(sys.argv) in {1, 3, 4}:
     try:
         bot.run_until_disconnected()
     except Exception:
@@ -88,5 +67,27 @@ else:
         pass
     try:
         MAN5.run_until_disconnected()
+    except Exception:
+        pass
+
+else:
+    try:
+        bot.disconnect()
+    except Exception:
+        pass
+    try:
+        MAN2.disconnect()
+    except Exception:
+        pass
+    try:
+        MAN3.disconnect()
+    except Exception:
+        pass
+    try:
+        MAN4.disconnect()
+    except Exception:
+        pass
+    try:
+        MAN5.disconnect()
     except Exception:
         pass
