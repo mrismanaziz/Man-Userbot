@@ -69,7 +69,7 @@ _entities = {
 
 async def _format_quote(event, reply=None, sender=None, type_="private"):
     async def telegraph(file_):
-        file = f'{file_}.png'
+        file = f"{file_}.png"
         Image.open(file_).save(file, "PNG")
         files = {"file": open(file, "rb").read()}
         uri = (
@@ -199,7 +199,7 @@ async def Carbon(
     kwargs["code"] = code
     con = await async_searcher(base_url, post=True, json=kwargs, re_content=True)
     file = BytesIO(con)
-    file.name = f'{file_name}.jpg'
+    file.name = f"{file_name}.jpg"
     return file
 
 
