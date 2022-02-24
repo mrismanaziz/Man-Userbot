@@ -376,6 +376,7 @@ if STRING_5:
 else:
     MAN5 = None
 
+
 def shutdown_bot(*_):
     LOGS.info("Received SIGTERM.")
     if bot:
@@ -394,7 +395,9 @@ def shutdown_bot(*_):
         MAN5.disconnect()
         sys.exit(143)
 
+
 signal.signal(signal.SIGTERM, shutdown_bot)
+
 
 async def check_botlog_chatid() -> None:
     if not BOTLOG_CHATID:
