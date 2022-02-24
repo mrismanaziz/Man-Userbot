@@ -15,9 +15,9 @@ from telethon.tl.types import Channel
 import userbot.modules.sql_helper.gban_sql as gban_sql
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEVS, WHITELIST, bot
+from userbot import CMD_HELP, DEVS, WHITELIST, blacklistman, bot
 from userbot.events import register
-from userbot.utils import edit_or_reply, get_user_from_event, man_cmd
+from userbot.utils import edit_or_reply, chataction, get_user_from_event, man_cmd
 
 from .admin import BANNED_RIGHTS, UNBAN_RIGHTS
 
@@ -175,12 +175,12 @@ async def gablist(event):
     await edit_or_reply(event, GBANNED_LIST)
 
 
-@bot.on(events.ChatAction)
+@chataction()
 async def _(event):
     if event.user_joined or event.added_by:
         user = await event.get_user()
         chat = await event.get_chat()
-        if gban_sql.is_gbanned(user.id) and chat.admin_rights:
+        if gban_sql.is_gbanned(user.id) and blacklistman and chat.admin_rights:
             try:
                 await event.client.edit_permissions(
                     chat.id,
