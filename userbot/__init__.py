@@ -12,6 +12,7 @@
 import logging
 import os
 import re
+import signal
 import sys
 import time
 from base64 import b64decode
@@ -375,6 +376,25 @@ if STRING_5:
 else:
     MAN5 = None
 
+def shutdown_bot(*_):
+    LOGS.info("Received SIGTERM.")
+    if bot:
+        bot.disconnect()
+        sys.exit(143)
+    if MAN2:
+        MAN2.disconnect()
+        sys.exit(143)
+    if MAN3:
+        MAN3.disconnect()
+        sys.exit(143)
+    if MAN4:
+        MAN4.disconnect()
+        sys.exit(143)
+    if MAN5:
+        MAN5.disconnect()
+        sys.exit(143)
+
+signal.signal(signal.SIGTERM, shutdown_bot)
 
 async def check_botlog_chatid() -> None:
     if not BOTLOG_CHATID:
