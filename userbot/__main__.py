@@ -28,6 +28,14 @@ from userbot.modules.sql_helper.globals import gvarstatus
 from userbot.utils import autobot, checking
 from userbot.utils.helper import updater
 
+if (
+    gvarstatus("UPDATE_ON_RESTART")
+    and os.path.exists(".git")
+    and bot.loop.run_until_complete(updater())
+):
+    os.system("git pull -f -q && pip3 install --no-cache-dir -U -q -r requirements.txt")
+    os.execl(sys.executable, "python3", "-m", "userbot")
+
 try:
     for module_name in ALL_MODULES:
         imported_module = import_module(f"userbot.modules.{module_name}")
@@ -43,16 +51,6 @@ except (ConnectionError, KeyboardInterrupt, NotImplementedError, SystemExit):
 except BaseException as e:
     LOGS.info(str(e), exc_info=True)
     sys.exit(1)
-
-
-if (
-    gvarstatus("UPDATE_ON_RESTART")
-    and os.path.exists(".git")
-    and bot.loop.run_until_complete(updater())
-):
-    os.system("git pull -f -q && pip3 install --no-cache-dir -U -q -r requirements.txt")
-    os.execl(sys.executable, "python3", "-m", "userbot")
-
 
 bot.loop.run_until_complete(checking())
 bot.loop.run_until_complete(man_userbot_on())
