@@ -80,10 +80,12 @@ async def restart_bot(event):
     if event.sender_id in SUDO_USERS:
         return
     await edit_or_reply(event, "**Man-Userbot Berhasil di Restart**")
-    if BOTLOG_CHATID:
-        await event.client.send_message(
-            BOTLOG_CHATID, "#RESTART \n" "**Man-Userbot Berhasil Di Restart**"
-        )
+    try:
+        from userbot.modules.sql_helper.globals import addgvar, delgvar
+        delgvar("restartstatus")
+        addgvar("restartstatus", f"{event.chat_id}\n{event.id}")
+    except AttributeError:
+        pass
     args = [sys.executable, "-m", "userbot"]
     execle(sys.executable, *args, environ)
 
