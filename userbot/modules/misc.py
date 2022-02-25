@@ -82,6 +82,7 @@ async def restart_bot(event):
     await edit_or_reply(event, "**Man-Userbot Berhasil di Restart**")
     try:
         from userbot.modules.sql_helper.globals import addgvar, delgvar
+
         delgvar("restartstatus")
         addgvar("restartstatus", f"{event.chat_id}\n{event.id}")
     except AttributeError:
