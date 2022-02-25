@@ -145,8 +145,7 @@ async def upstream(event):
     except InvalidGitRepositoryError as error:
         if conf is None:
             return await xx.edit(
-                f"**Sayangnya, Directory {error} Tampaknya Bukan Dari Repo."
-                "\nTapi Kita Bisa Memperbarui Paksa Userbot Menggunakan** `.update deploy`"
+                f"**Sayangnya, Directory {error} Tampaknya Bukan Dari Repo. Tapi Kita Bisa Memperbarui Paksa Userbot Menggunakan** `{cmd}update deploy`"
             )
         repo = Repo.init()
         origin = repo.create_remote("upstream", off_repo)
@@ -179,7 +178,7 @@ async def upstream(event):
         await print_changelogs(xx, ac_br, changelog)
         await xx.delete()
         return await event.respond(
-            "**Ketik** `.update deploy` **untuk Mengupdate Userbot.**"
+            f"**Ketik** `{cmd}update deploy` **untuk Mengupdate Userbot.**"
         )
 
     if force_update:
@@ -193,8 +192,7 @@ async def upstream(event):
                 and HEROKU_API_KEY is not None
             ):
                 return await xx.edit(
-                    "**Quick update telah dinonaktifkan untuk pembaruan ini; "
-                    "Gunakan** `.update deploy` **sebagai gantinya.**"
+                    f"**Quick update telah dinonaktifkan untuk pembaruan ini Gunakan** `{cmd}update deploy` **sebagai gantinya.**"
                 )
         await xx.edit("**Perfoming a quick update, please wait...**")
         await update(xx, repo, ups_rem, ac_br)
