@@ -165,7 +165,7 @@ async def tweets(text1, text2):
 async def get_user_from_event(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        user_obj = await event.client.get_entity(previous_message.from_id)
+        user_obj = await event.client.get_entity(previous_message.sender_id)
     return user_obj
 
 
