@@ -190,10 +190,7 @@ async def set_pmlog(event):
         h_type = False
     elif input_str == "on":
         h_type = True
-    if gvarstatus("PMLOG") and gvarstatus("PMLOG") == "false":
-        PMLOG = False
-    else:
-        PMLOG = True
+    PMLOG = not gvarstatus("PMLOG") or gvarstatus("PMLOG") != "false"
     if PMLOG:
         if h_type:
             await edit_or_reply(event, "**PM LOG Sudah Diaktifkan**")
@@ -222,10 +219,7 @@ async def set_gruplog(event):
         h_type = False
     elif input_str == "on":
         h_type = True
-    if gvarstatus("GRUPLOG") and gvarstatus("GRUPLOG") == "false":
-        GRUPLOG = False
-    else:
-        GRUPLOG = True
+    GRUPLOG = not gvarstatus("GRUPLOG") or gvarstatus("GRUPLOG") != "false"
     if GRUPLOG:
         if h_type:
             await edit_or_reply(event, "**Group Log Sudah Diaktifkan**")
