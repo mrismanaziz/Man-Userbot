@@ -64,7 +64,7 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
-            LOGS.info(f"{e}")
+            LOGS.info(str(e), exc_info=True)
 
     if STRING_2:
         try:
@@ -78,7 +78,7 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
-            LOGS.info(f"{e}")
+            LOGS.info(str(e), exc_info=True)
 
     if STRING_3:
         try:
@@ -92,7 +92,7 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
-            LOGS.info(f"{e}")
+            LOGS.info(str(e), exc_info=True)
 
     if STRING_4:
         try:
@@ -106,7 +106,7 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
-            LOGS.info(f"{e}")
+            LOGS.info(str(e), exc_info=True)
 
     if STRING_5:
         try:
@@ -120,7 +120,7 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
-            LOGS.info(f"{e}")
+            LOGS.info(str(e), exc_info=True)
 
     if not STRING_SESSION:
         failed += 1

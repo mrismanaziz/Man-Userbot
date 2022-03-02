@@ -165,7 +165,7 @@ async def tweets(text1, text2):
 async def get_user_from_event(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        user_obj = await event.client.get_entity(previous_message.from_id)
+        user_obj = await event.client.get_entity(previous_message.sender_id)
     return user_obj
 
 
@@ -321,7 +321,7 @@ async def nekobot(event):
         response = upload_file(download_location)
         os.remove(download_location)
     except exceptions.TelegraphException as exc:
-        await event.edit("ERROR: " + str(exc))
+        await event.edit(f"ERROR: {str(exc)}")
         os.remove(download_location)
         return
     file = f"https://telegra.ph{response[0]}"
@@ -363,7 +363,7 @@ async def nekobot(event):
         response = upload_file(download_location)
         os.remove(download_location)
     except exceptions.TelegraphException as exc:
-        await event.edit("ERROR: " + str(exc))
+        await event.edit(f"ERROR: {str(exc)}")
         os.remove(download_location)
         return
     file = f"https://telegra.ph{response[0]}"
@@ -412,7 +412,7 @@ async def nekobot(e):
         response = upload_file(download_location)
         os.remove(download_location)
     except exceptions.TelegraphException as exc:
-        await e.edit("ERROR: " + str(exc))
+        await e.edit(f"ERROR: {str(exc)}")
         os.remove(download_location)
         return
     file = f"https://telegra.ph{response[0]}"
@@ -468,24 +468,23 @@ async def phcomment(event):
         if reply:
             user = await get_user_from_event(event)
             if user.last_name:
-                name = user.first_name + " " + user.last_name
+                name = f"{user.first_name} {user.last_name}"
             else:
                 name = user.first_name
             text = text or str(reply.message)
         elif text:
             user = await bot.get_me()
             if user.last_name:
-                name = user.first_name + " " + user.last_name
+                name = f"{user.first_name} {user.last_name}"
             else:
                 name = user.first_name
         else:
             return await event.edit("`Give text..`")
         try:
             photo = await event.client.download_profile_photo(
-                user.id,
-                str(user.id) + ".png",
-                download_big=False,
+                user.id, f"{str(user.id)}.png", download_big=False
             )
+
             uplded = upload_image(photo)
         except BaseException:
             uplded = "https://telegra.ph/file/7d110cd944d54f72bcc84.jpg"
