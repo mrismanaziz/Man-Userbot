@@ -49,7 +49,7 @@ async def gbun(event):
                 jnl += "**Username** : @{}\n".format(usname)
             if len(gbunVar) > 0:
                 gbunm = "`{}`".format(gbunVar)
-                gbunr = "**Reason: **" + gbunm
+                gbunr = f"**Reason: **{gbunm}"
                 jnl += gbunr
             else:
                 no_reason = "**Reason: **`Jamet`"
