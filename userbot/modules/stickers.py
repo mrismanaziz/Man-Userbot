@@ -75,9 +75,6 @@ async def kang(args):
         await edit_delete(
             args, "**File Tidak Didukung, Silahkan Reply ke Media Foto/GIF !**"
         )
-    elif message.message:
-        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
-        photo = await create_quotly(message)
     elif message.file and "image" in message.file.mime_type.split("/"):
         xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
         photo = io.BytesIO()
