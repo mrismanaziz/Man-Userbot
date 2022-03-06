@@ -317,7 +317,7 @@ async def _(event):
         translated = translator.translate(text, dest=lan)
         after_tr_text = translated.text
         output_str = """**DITERJEMAHKAN** dari `{}` ke `{}`
-{}""".format(
+`{}`""".format(
             translated.src, lan, after_tr_text
         )
         await xx.edit(output_str)

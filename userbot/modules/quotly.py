@@ -10,6 +10,7 @@
 # t.me/SharingUserbot & t.me/Lunatic0de
 
 from os import remove
+from random import choice
 
 from telethon.tl.functions.users import GetFullUserRequest
 
@@ -22,7 +23,7 @@ from .carbon import all_col
 
 
 @man_cmd(pattern="q( (.*)|$)")
-async def quott_(event):
+async def quotly(event):
     match = event.pattern_match.group(1).strip()
     if not event.is_reply:
         return await edit_delete(event, "**Mohon Balas ke Pesan**")

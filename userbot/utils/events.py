@@ -50,7 +50,7 @@ async def get_user_from_event(
             return user_obj, extra
         if event.reply_to_msg_id:
             previous_message = await event.get_reply_message()
-            if previous_message.from_id is None:
+            if previous_message.sender_id is None:
                 if not noedits:
                     await edit_delete(
                         manevent, "**ERROR: Dia adalah anonymous admin!**", 60

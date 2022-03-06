@@ -103,7 +103,7 @@ async def log_tagged_messages(event):
         return
     full = None
     try:
-        full = await event.client.get_entity(event.message.from_id)
+        full = await event.client.get_entity(event.message.sender_id)
     except Exception as e:
         LOGS.info(str(e))
     messaget = media_type(event)
