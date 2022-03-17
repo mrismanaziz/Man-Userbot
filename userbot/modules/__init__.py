@@ -9,7 +9,7 @@
 
 import sys
 
-from userbot import CMD_HELP, LOAD, LOGS, NO_LOAD
+from userbot import LOAD, LOGS, NO_LOAD
 
 
 def __list_all_modules():
@@ -42,6 +42,6 @@ def __list_all_modules():
 
 ALL_MODULES = sorted(__list_all_modules())
 LOGS.info(
-    f"• Succesfully Load {len(CMD_HELP)} Modules •",
+    f"• Succesfully Load {len(ALL_MODULES)} Modules •",
 )
 __all__ = ALL_MODULES + ["ALL_MODULES"]
