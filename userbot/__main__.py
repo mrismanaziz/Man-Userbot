@@ -51,8 +51,6 @@ async def activated():
     await man_userbot_on()
     if not BOT_TOKEN:
         await autobot()
-    tgbot_me = await tgbot.get_me()
-    f"@{tgbot_me.username}"
 
 
 bot.loop.run_until_complete(startup())
