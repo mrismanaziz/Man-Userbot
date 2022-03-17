@@ -10,6 +10,7 @@ from pathlib import Path
 from random import randint
 
 import heroku3
+from telethon.tl.functions.channels import CreateChannelRequest
 from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import (
@@ -29,6 +30,18 @@ if HEROKU_APP_NAME is not None and HEROKU_API_KEY is not None:
     heroku_var = app.config()
 else:
     app = None
+
+
+async def autopilot():
+    desc = "Group Log untuk Man-UserBot. HARAP JANGAN KELUAR DARI GROUP INI!!"
+    try:
+        grup = await bot(CreateChannelRequest(title="Log Man-UserBot", about=desc, megagroup=True))
+        grup_id = grup.chats[0].id
+    except Exception as e:
+        LOGS.error(f"{str(e)}")
+    if not str(grup_id).startswith("-100"):
+        grup_id = int("-100" + str(grup_id))
+    heroku_var["BOTLOG_CHATID"] = grup_id
 
 
 async def autobot():
