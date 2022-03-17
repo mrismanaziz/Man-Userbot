@@ -14,6 +14,7 @@ import os
 import re
 import sys
 import time
+from asyncio import get_event_loop
 from base64 import b64decode
 from distutils.util import strtobool as sb
 from logging import DEBUG, INFO, basicConfig, getLogger
@@ -44,6 +45,7 @@ def STORAGE(n):
 
 load_dotenv("config.env")
 
+LOOP = get_event_loop()
 StartTime = time.time()
 repo = Repo()
 branch = repo.active_branch.name
