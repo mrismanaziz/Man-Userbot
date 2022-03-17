@@ -7,7 +7,7 @@
 
 import asyncio
 
-from telethon.tl.functions.channels import InviteToChannelRequest
+from telethon.tl.functions.channels import EditAdminRequest, InviteToChannelRequest
 
 from userbot import BOT_USERNAME
 from userbot import BOT_VER as version
@@ -26,10 +26,21 @@ MSG_ON = """
 
 
 async def man_userbot_on():
+    new_rights = ChatAdminRights(
+        add_admins=True,
+        invite_users=True,
+        change_info=True,
+        ban_users=True,
+        delete_messages=True,
+        pin_messages=True,
+        manage_call=True,
+    )
     try:
         if bot:
             try:
                 await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
+                await asyncio.sleep(3)
+                await bot(EditAdminRequest(BOTLOG_CHATID, BOT_USERNAME, new_rights, "Helper"))
                 await asyncio.sleep(3)
             except BaseException:
                 pass
