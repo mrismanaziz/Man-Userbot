@@ -2,8 +2,6 @@ import pybase64
 from telethon.tl.functions.channels import JoinChannelRequest as Get
 from telethon.tl.types import MessageEntityMentionName
 
-from userbot import MAN2, MAN3, MAN4, MAN5, bot
-
 from .logger import logging
 from .tools import edit_delete
 
