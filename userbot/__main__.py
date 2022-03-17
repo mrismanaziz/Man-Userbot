@@ -25,8 +25,7 @@ from userbot import BOTLOG_CHATID, LOGS, bot, loop
 from userbot.clients import man_userbot_on, multiman
 from userbot.core.git import git
 from userbot.modules import ALL_MODULES
-from userbot.utils import autobot
-from userbot.utils.utils import autopilot
+from userbot.utils import autobot, autopilot
 
 try:
     for module_name in ALL_MODULES:
