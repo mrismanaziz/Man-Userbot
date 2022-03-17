@@ -41,5 +41,5 @@ def __list_all_modules():
 
 
 ALL_MODULES = sorted(__list_all_modules())
-LOGS.info("• Succesfully Load %s Modules •", str(ALL_MODULES))
+LOGS.info(f"• Succesfully Load {len(ALL_MODULES)} Modules •", )
 __all__ = ALL_MODULES + ["ALL_MODULES"]
