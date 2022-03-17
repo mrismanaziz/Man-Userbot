@@ -32,7 +32,6 @@ try:
         imported_module = import_module(f"userbot.modules.{module_name}")
     client = multiman()
     total = 5 - client
-    git()
     LOGS.info(f"Total Clients = {total} User")
     LOGS.info(f"Python Version - {python_version()}")
     LOGS.info(f"Telethon Version - {version.__version__}")
@@ -48,6 +47,7 @@ except BaseException as e:
 loop.run_until_complete(man_userbot_on())
 if not BOT_TOKEN:
     loop.run_until_complete(autobot())
+git()
 idle()
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
