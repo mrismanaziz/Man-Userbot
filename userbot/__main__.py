@@ -26,27 +26,23 @@ from userbot.clients import man_userbot_on, multiman
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot
 
-
-def startup():
-    try:
-        for module_name in ALL_MODULES:
-            import_module(f"userbot.modules.{module_name}")
-        client = multiman()
-        total = 5 - client
-        LOGS.info(f"Total Clients = {total} User")
-        LOGS.info(f"Python Version - {python_version()}")
-        LOGS.info(f"Telethon Version - {version.__version__}")
-        LOGS.info(f"PyTgCalls Version - {pytgcalls.__version__}")
-        LOGS.info(f"Man-Userbot Version - {ubotversion} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
-        idle()
-    except (ConnectionError, KeyboardInterrupt, NotImplementedError, SystemExit):
-        pass
-    except BaseException as e:
-        LOGS.info(str(e), exc_info=True)
-        sys.exit(1)
+try:
+    for module_name in ALL_MODULES:
+        imported_module = import_module(f"userbot.modules.{module_name}")
+    client = multiman()
+    total = 5 - client
+    LOGS.info(f"Total Clients = {total} User")
+    LOGS.info(f"Python Version - {python_version()}")
+    LOGS.info(f"Telethon Version - {version.__version__}")
+    LOGS.info(f"PyTgCalls Version - {pytgcalls.__version__}")
+    LOGS.info(f"Man-Userbot Version - {ubotversion} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
+except (ConnectionError, KeyboardInterrupt, NotImplementedError, SystemExit):
+    pass
+except BaseException as e:
+    LOGS.info(str(e), exc_info=True)
+    sys.exit(1)
 
 
-bot.loop.run_until_complete(startup())
 bot.loop.run_until_complete(man_userbot_on())
 if not BOT_TOKEN:
     bot.loop.run_until_complete(autobot())
