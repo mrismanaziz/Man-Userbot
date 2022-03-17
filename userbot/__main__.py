@@ -30,7 +30,7 @@ from userbot.utils import autobot, checking
 async def startup():
     try:
         for module_name in ALL_MODULES:
-            imported_module = import_module(f"userbot.modules.{module_name}")
+            import_module(f"userbot.modules.{module_name}")
         client = multiman()
         total = 5 - client
         LOGS.info(f"Total Clients = {total} User")
@@ -43,7 +43,7 @@ async def startup():
         if not BOT_TOKEN:
             await autobot()
         tgbot_me = await tgbot.get_me()
-        BOT_USERNAME = f"@{tgbot_me.username}"
+        f"@{tgbot_me.username}"
         await idle()
     except (ConnectionError, KeyboardInterrupt, NotImplementedError, SystemExit):
         pass
