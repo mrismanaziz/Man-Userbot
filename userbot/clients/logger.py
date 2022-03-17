@@ -28,10 +28,13 @@ MSG_ON = """
 async def man_userbot_on():
     try:
         if bot:
-            await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
-            await asyncio.sleep(2)
+            try:
+                await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
+                await asyncio.sleep(3)
+            except BaseException:
+                pass
             await checking(bot)
-            await asyncio.sleep(2)
+            await asyncio.sleep(3)
             if BOTLOG_CHATID != 0:
                 await bot.send_message(
                     BOTLOG_CHATID,
@@ -42,7 +45,7 @@ async def man_userbot_on():
     try:
         if MAN2:
             await checking(MAN2)
-            await asyncio.sleep(2)
+            await asyncio.sleep(3)
             if BOTLOG_CHATID != 0:
                 await MAN2.send_message(
                     BOTLOG_CHATID,
@@ -53,7 +56,7 @@ async def man_userbot_on():
     try:
         if MAN3:
             await checking(MAN3)
-            await asyncio.sleep(2)
+            await asyncio.sleep(3)
             if BOTLOG_CHATID != 0:
                 await MAN3.send_message(
                     BOTLOG_CHATID,
@@ -64,7 +67,7 @@ async def man_userbot_on():
     try:
         if MAN4:
             await checking(MAN4)
-            await asyncio.sleep(2)
+            await asyncio.sleep(3)
             if BOTLOG_CHATID != 0:
                 await MAN4.send_message(
                     BOTLOG_CHATID,
@@ -75,7 +78,7 @@ async def man_userbot_on():
     try:
         if MAN5:
             await checking(MAN5)
-            await asyncio.sleep(2)
+            await asyncio.sleep(3)
             if BOTLOG_CHATID != 0:
                 await MAN5.send_message(
                     BOTLOG_CHATID,
