@@ -8,6 +8,7 @@
 import asyncio
 
 from telethon.tl.functions.channels import EditAdminRequest, InviteToChannelRequest
+from telethon.tl.types import ChatAdminRights
 
 from userbot import BOT_USERNAME
 from userbot import BOT_VER as version
