@@ -1,14 +1,12 @@
 import asyncio
 import shlex
+from base64 import b64decode
 from typing import Tuple
 
-from base64 import b64decode
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError
 
-import config
-
-from userbot import LOGS, branch
+from userbot import branch
 
 
 def install_req(cmd: str) -> Tuple[str, str, int, int]:
@@ -27,9 +25,7 @@ def install_req(cmd: str) -> Tuple[str, str, int, int]:
             process.pid,
         )
 
-    return asyncio.get_event_loop().run_until_complete(
-        install_requirements()
-    )
+    return asyncio.get_event_loop().run_until_complete(install_requirements())
 
 
 def git():
@@ -52,9 +48,7 @@ def git():
             branch,
             origin.refs[branch],
         )
-        repo.heads[branch].set_tracking_branch(
-            origin.refs[branch]
-        )
+        repo.heads[branch].set_tracking_branch(origin.refs[branch])
         repo.heads[branch].checkout(True)
         try:
             repo.create_remote("origin", UPSTREAM_REPO)
