@@ -27,6 +27,7 @@ from userbot import (
     blacklistman,
     bot,
     call_py,
+    loop,
     tgbot,
 )
 from userbot.modules.gcast import GCAST_BLACKLIST as GBL
@@ -55,7 +56,7 @@ def multiman():
         try:
             bot.start()
             call_py.start()
-            bot.loop.run_until_complete(man_client(bot))
+            loop.run_until_complete(man_client(bot))
             user = bot.get_me()
             name = user.first_name
             uid = user.id
@@ -71,7 +72,7 @@ def multiman():
     if STRING_2:
         try:
             MAN2.start()
-            MAN2.loop.run_until_complete(man_client(MAN2))
+            loop.run_until_complete(man_client(MAN2))
             user = MAN2.get_me()
             name = user.first_name
             uid = user.id
@@ -85,7 +86,7 @@ def multiman():
     if STRING_3:
         try:
             MAN3.start()
-            MAN3.loop.run_until_complete(man_client(MAN3))
+            loop.run_until_complete(man_client(MAN3))
             user = MAN3.get_me()
             name = user.first_name
             uid = user.id
@@ -99,7 +100,7 @@ def multiman():
     if STRING_4:
         try:
             MAN4.start()
-            MAN4.loop.run_until_complete(man_client(MAN4))
+            loop.run_until_complete(man_client(MAN4))
             user = MAN4.get_me()
             name = user.first_name
             uid = user.id
@@ -113,7 +114,7 @@ def multiman():
     if STRING_5:
         try:
             MAN5.start()
-            MAN5.loop.run_until_complete(man_client(MAN5))
+            loop.run_until_complete(man_client(MAN5))
             user = MAN5.get_me()
             name = user.first_name
             uid = user.id
