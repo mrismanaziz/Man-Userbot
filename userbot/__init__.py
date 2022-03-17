@@ -76,9 +76,9 @@ logging.getLogger("telethon.network.mtprotosender").setLevel(logging.ERROR)
 logging.getLogger("telethon.network.connection.connection").setLevel(logging.ERROR)
 LOGS = getLogger(__name__)
 
-if version_info[0] < 3 or version_info[1] < 9:
+if version_info[0] < 3 or version_info[1] < 8:
     LOGS.info(
-        "Anda HARUS memiliki python setidaknya versi 3.9."
+        "Anda HARUS memiliki python setidaknya versi 3.8."
         "Beberapa fitur tergantung versi python ini. Bot berhenti."
     )
     sys.exit(1)
