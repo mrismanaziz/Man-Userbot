@@ -27,24 +27,18 @@ from userbot.modules import ALL_MODULES
 from userbot.utils import autobot, checking
 
 
-async def startup():
+def startup():
     try:
         for module_name in ALL_MODULES:
             import_module(f"userbot.modules.{module_name}")
-        client = await multiman()
+        client = multiman()
         total = 5 - client
         LOGS.info(f"Total Clients = {total} User")
         LOGS.info(f"Python Version - {python_version()}")
         LOGS.info(f"Telethon Version - {version.__version__}")
         LOGS.info(f"PyTgCalls Version - {pytgcalls.__version__}")
         LOGS.info(f"Man-Userbot Version - {ubotversion} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
-        await checking()
-        await man_userbot_on()
-        if not BOT_TOKEN:
-            await autobot()
-        tgbot_me = await tgbot.get_me()
-        f"@{tgbot_me.username}"
-        await idle()
+        idle()
     except (ConnectionError, KeyboardInterrupt, NotImplementedError, SystemExit):
         pass
     except BaseException as e:
@@ -52,8 +46,17 @@ async def startup():
         sys.exit(1)
 
 
-bot.loop.run_until_complete(startup())
+async def activated():
+    await checking()
+    await man_userbot_on()
+    if not BOT_TOKEN:
+        await autobot()
+    tgbot_me = await tgbot.get_me()
+    BOT_USERNAME f"@{tgbot_me.username}"
 
+
+bot.loop.run_until_complete(startup())
+bot.loop.run_until_complete(activated())
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
 else:
