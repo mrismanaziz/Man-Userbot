@@ -47,7 +47,6 @@ def startup():
 
 
 bot.loop.run_until_complete(startup())
-bot.loop.run_until_complete(checking())
 bot.loop.run_until_complete(man_userbot_on())
 if not BOT_TOKEN:
     bot.loop.run_until_complete(autobot())
