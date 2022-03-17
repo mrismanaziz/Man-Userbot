@@ -34,9 +34,9 @@ def git():
     ).decode("utf-8")
     try:
         repo = Repo()
-        LOGS.info(f"Git Client Found")
+        LOGS.info("Git Client Found")
     except GitCommandError:
-        LOGS.info(f"Invalid Git Command")
+        LOGS.info("Invalid Git Command")
     except InvalidGitRepositoryError:
         repo = Repo.init()
         if "origin" in repo.remotes:
