@@ -34,7 +34,7 @@ def git():
     ).decode("utf-8")
     try:
         repo = Repo()
-        LOGS.info(f"Git Client Found [VPS DEPLOYER]")
+        LOGS.info(f"Git Client Found")
     except GitCommandError:
         LOGS.info(f"Invalid Git Command")
     except InvalidGitRepositoryError:
