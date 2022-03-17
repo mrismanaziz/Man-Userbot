@@ -18,7 +18,6 @@ from platform import python_version
 from pytgcalls import __version__ as pytgcalls
 from telethon import version
 
-from userbot import BOT_TOKEN
 from userbot import BOT_VER as ubotversion
 from userbot import LOGS, bot
 from userbot.clients import man_userbot_on, multiman
