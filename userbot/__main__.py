@@ -22,6 +22,7 @@ from telethon import version
 from userbot import BOT_TOKEN
 from userbot import BOT_VER as ubotversion
 from userbot import LOGS, bot, loop
+from userbot.core.git import git
 from userbot.clients import man_userbot_on, multiman
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot
@@ -31,6 +32,7 @@ try:
         imported_module = import_module(f"userbot.modules.{module_name}")
     client = multiman()
     total = 5 - client
+    git()
     LOGS.info(f"Total Clients = {total} User")
     LOGS.info(f"Python Version - {python_version()}")
     LOGS.info(f"Telethon Version - {version.__version__}")
