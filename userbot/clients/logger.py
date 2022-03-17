@@ -28,6 +28,8 @@ MSG_ON = """
 async def man_userbot_on():
     try:
         if bot:
+            await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
+            await asyncio.sleep(2)
             await checking(bot)
             await asyncio.sleep(2)
             if BOTLOG_CHATID != 0:
@@ -79,9 +81,5 @@ async def man_userbot_on():
                     BOTLOG_CHATID,
                     MSG_ON.format(version, branch, cmd),
                 )
-    except BaseException:
-        pass
-    try:
-        await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
     except BaseException:
         pass
