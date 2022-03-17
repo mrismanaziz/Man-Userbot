@@ -14,7 +14,7 @@ from userbot import BOT_VER as version
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import MAN2, MAN3, MAN4, MAN5, bot, branch
-from userbot.utils import autobot, checking
+from userbot.utils import checking
 
 MSG_ON = """
 🔥 **Man-Userbot Berhasil Di Aktifkan**
@@ -37,9 +37,6 @@ async def man_userbot_on():
                     BOTLOG_CHATID,
                     MSG_ON.format(version, branch, cmd),
                 )
-            await asyncio.sleep(3)
-            if not BOT_TOKEN:
-                await autobot()
     except BaseException:
         pass
     try:
