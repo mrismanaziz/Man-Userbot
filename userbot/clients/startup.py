@@ -9,9 +9,9 @@ import sys
 
 import telethon.utils
 
+from userbot import BOT_TOKEN
 from userbot import BOT_VER as version
 from userbot import (
-    BOT_TOKEN,
     DEFAULT,
     DEVS,
     LOGS,
