@@ -22,8 +22,8 @@ from telethon import version
 from userbot import BOT_TOKEN
 from userbot import BOT_VER as ubotversion
 from userbot import LOGS, bot, loop
-from userbot.core.git import git
 from userbot.clients import man_userbot_on, multiman
+from userbot.core.git import git
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot
 
