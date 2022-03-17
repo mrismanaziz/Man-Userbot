@@ -19,9 +19,9 @@ from pytgcalls import __version__ as pytgcalls
 from pytgcalls import idle
 from telethon import version
 
-from userbot import BOT_TOKEN, BOTLOG_CHATID
+from userbot import BOT_TOKEN
 from userbot import BOT_VER as ubotversion
-from userbot import LOGS, bot, loop
+from userbot import BOTLOG_CHATID, LOGS, bot, loop
 from userbot.clients import man_userbot_on, multiman
 from userbot.core.git import git
 from userbot.modules import ALL_MODULES
