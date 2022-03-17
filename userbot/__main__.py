@@ -24,7 +24,7 @@ from userbot import BOT_VER as ubotversion
 from userbot import LOGS, bot
 from userbot.clients import man_userbot_on, multiman
 from userbot.modules import ALL_MODULES
-from userbot.utils import autobot, checking
+from userbot.utils import autobot
 
 
 def startup():
