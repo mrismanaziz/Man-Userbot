@@ -21,7 +21,7 @@ from telethon import version
 
 from userbot import BOT_TOKEN
 from userbot import BOT_VER as ubotversion
-from userbot import LOGS, bot
+from userbot import LOGS, LOOP, bot
 from userbot.clients import man_userbot_on, multiman
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot
@@ -43,9 +43,9 @@ except BaseException as e:
     sys.exit(1)
 
 
-bot.loop.run_until_complete(man_userbot_on())
+LOOP.run_until_complete(man_userbot_on())
 if not BOT_TOKEN:
-    bot.loop.run_until_complete(autobot())
+    LOOP.run_until_complete(autobot())
 idle()
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
