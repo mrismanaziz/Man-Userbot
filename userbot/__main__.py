@@ -46,15 +46,11 @@ def startup():
         sys.exit(1)
 
 
-async def activated():
-    await checking()
-    await man_userbot_on()
-    if not BOT_TOKEN:
-        await autobot()
-
-
 bot.loop.run_until_complete(startup())
-bot.loop.run_until_complete(activated())
+bot.loop.run_until_complete(checking())
+bot.loop.run_until_complete(man_userbot_on())
+if not BOT_TOKEN:
+    bot.loop.run_until_complete(autobot())
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
 else:
