@@ -11,6 +11,7 @@ import telethon.utils
 
 from userbot import BOT_VER as version
 from userbot import (
+    BOT_TOKEN,
     DEFAULT,
     DEVS,
     LOGS,
@@ -26,6 +27,7 @@ from userbot import (
     blacklistman,
     bot,
     call_py,
+    tgbot,
 )
 from userbot.modules.gcast import GCAST_BLACKLIST as GBL
 
@@ -49,6 +51,16 @@ def multiman():
         LOGS.warning(EOL.format(version))
         sys.exit(1)
     failed = 0
+    if BOT_TOKEN:
+        try:
+            user = tgbot.get_me()
+            name = user.first_name
+            uname = user.username
+            LOGS.info(
+                f"BOT_TOKEN detected!\n┌ First Name: {name}\n└ Username: {uname}\n——"
+            )
+        except Exception as e:
+            LOGS.info(f"{e}")
     if STRING_SESSION:
         try:
             bot.start()
