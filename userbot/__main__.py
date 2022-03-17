@@ -16,6 +16,7 @@ from importlib import import_module
 from platform import python_version
 
 from pytgcalls import __version__ as pytgcalls
+from pytgcalls import idle
 from telethon import version
 
 from userbot import BOT_VER as ubotversion
@@ -41,7 +42,7 @@ except BaseException as e:
 
 
 bot.loop.run_until_complete(man_userbot_on())
-
+idle()
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
 else:
