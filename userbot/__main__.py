@@ -16,7 +16,6 @@ from importlib import import_module
 from platform import python_version
 
 from pytgcalls import __version__ as pytgcalls
-from pytgcalls import idle
 from telethon import version
 
 from userbot import BOT_TOKEN
