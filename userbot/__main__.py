@@ -19,13 +19,14 @@ from pytgcalls import __version__ as pytgcalls
 from pytgcalls import idle
 from telethon import version
 
-from userbot import BOT_TOKEN
+from userbot import BOT_TOKEN, BOTLOG_CHATID
 from userbot import BOT_VER as ubotversion
 from userbot import LOGS, bot, loop
 from userbot.clients import man_userbot_on, multiman
 from userbot.core.git import git
 from userbot.modules import ALL_MODULES
 from userbot.utils import autobot
+from userbot.utils.utils import autopilot
 
 try:
     for module_name in ALL_MODULES:
@@ -46,6 +47,8 @@ except BaseException as e:
 
 
 loop.run_until_complete(man_userbot_on())
+if not BOTLOG_CHATID:
+    loop.run_until_complete(autopilot())
 if not BOT_TOKEN:
     loop.run_until_complete(autobot())
 idle()
