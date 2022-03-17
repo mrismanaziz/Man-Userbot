@@ -35,7 +35,9 @@ else:
 async def autopilot():
     desc = "Group Log untuk Man-UserBot. HARAP JANGAN KELUAR DARI GROUP INI!!"
     try:
-        grup = await bot(CreateChannelRequest(title="Log Man-UserBot", about=desc, megagroup=True))
+        grup = await bot(
+            CreateChannelRequest(title="Log Man-UserBot", about=desc, megagroup=True)
+        )
         grup_id = grup.chats[0].id
     except Exception as e:
         LOGS.error(f"{str(e)}")
