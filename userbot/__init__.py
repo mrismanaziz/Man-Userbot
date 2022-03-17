@@ -35,6 +35,7 @@ from telethon.sessions import StringSession
 from telethon.sync import TelegramClient, custom, events
 from telethon.tl.types import InputWebDocument
 from telethon.utils import get_display_name
+from userbot.core.git import git
 
 from .storage import Storage
 
@@ -45,6 +46,7 @@ def STORAGE(n):
 
 load_dotenv("config.env")
 
+git()
 loop = get_event_loop()
 StartTime = time.time()
 repo = Repo()
