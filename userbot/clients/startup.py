@@ -7,7 +7,7 @@
 
 import sys
 
-import telethon.utils
+from telethon.utils import get_peer_id
 
 from userbot import BOT_TOKEN
 from userbot import BOT_VER as version
@@ -38,7 +38,7 @@ MSG_BLACKLIST = "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {} GUA MATIIN NAJIS 
 
 async def man_client(client):
     client.me = await client.get_me()
-    client.uid = telethon.utils.get_peer_id(client.me)
+    client.uid = get_peer_id(client.me)
 
 
 def multiman():
