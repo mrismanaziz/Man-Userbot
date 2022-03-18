@@ -3,7 +3,7 @@
 from sqlalchemy.exc import IntegrityError
 
 from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot.utils import man_cmd
 
 fban_replies = [
     "New FedBan",
@@ -17,7 +17,7 @@ fban_replies = [
 unfban_replies = ["New un-FedBan", "I'll give", "Un-FedBan"]
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"(d)?fban(?: |$)(.*)"))
+@man_cmd(pattern="(d)?fban(?: |$)(.*)")
 async def fban(event):
     """Bans a user from connected federations."""
     try:
@@ -42,7 +42,7 @@ async def fban(event):
 
     try:
         fban_id = await event.client.get_peer_id(fban_id)
-    except Exception:
+    except BaseException:
         pass
 
     if event.sender_id == fban_id:
@@ -73,7 +73,7 @@ async def fban(event):
 
                 if all(i not in reply.text for i in fban_replies):
                     failed.append(i.fed_name)
-        except Exception:
+        except BaseException:
             failed.append(i.fed_name)
 
     reason = reason or "Not specified."
@@ -90,7 +90,7 @@ async def fban(event):
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"unfban(?: |$)(.*)"))
+@man_cmd(pattern="unfban(?: |$)(.*)")
 async def unfban(event):
     """Unbans a user from connected federations."""
     try:
@@ -138,7 +138,7 @@ async def unfban(event):
 
                 if all(i not in reply.text for i in unfban_replies):
                     failed.append(i.fed_name)
-        except Exception:
+        except BaseException:
             failed.append(i.fed_name)
 
     reason = reason or "Not specified."
@@ -156,7 +156,7 @@ async def unfban(event):
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"addf(?: |$)(.*)"))
+@man_cmd(pattern="addf(?: |$)(.*)")
 async def addf(event):
     """Adds current chat to connected federations."""
     try:
@@ -176,7 +176,7 @@ async def addf(event):
     await event.edit("**Menambahkan grup ini ke daftar federasi!**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"delf$"))
+@man_cmd(pattern="delf$")
 async def delf(event):
     """Removes current chat from connected federations."""
     try:
@@ -188,7 +188,7 @@ async def delf(event):
     await event.edit("**Menghapus grup ini dari daftar federasi!**")
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"listf$"))
+@man_cmd(pattern="listf$")
 async def listf(event):
     """List all connected federations."""
     try:
@@ -208,7 +208,7 @@ async def listf(event):
     await event.edit(msg)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"clearf$"))
+@man_cmd(pattern="clearf$")
 async def clearf(event):
     """Removes all chats from connected federations."""
     try:
