@@ -1,12 +1,13 @@
 # based on https://gist.github.com/wshanshan/c825efca4501a491447056849dd207d6
 # Ported for ProjectAlf by Alfiananda P.A
 
+from secrets import choice
+
 import numpy as np
 from colour import Color
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from PIL import Image, ImageDraw, ImageFont
-from secrets import choice
 from telethon.tl.types import DocumentAttributeFilename
 
 from userbot import CMD_HANDLER as cmd
@@ -112,8 +113,7 @@ async def asciiart(IMG, color1, color2, bgcolor):
 # this is from userge
 async def random_color():
     return [
-        "#" + "".join(choice("0123456789ABCDEF") for k in range(6))
-        for i in range(2)
+        "#" + "".join(choice("0123456789ABCDEF") for k in range(6)) for i in range(2)
     ]
 
 
