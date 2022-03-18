@@ -1,8 +1,7 @@
 import json
-import random
+from secrets import choice
 
 import requests
-from secrets import choice
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
