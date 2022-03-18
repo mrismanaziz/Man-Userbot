@@ -45,7 +45,7 @@ def STORAGE(n):
 
 load_dotenv("config.env")
 
-loop = get_event_loop()
+LOOP = get_event_loop()
 StartTime = time.time()
 repo = Repo()
 branch = repo.active_branch.name
@@ -330,6 +330,7 @@ if STRING_2:
     )
     call_py2 = PyTgCalls(MAN2)
 else:
+    call_py2 = None
     MAN2 = None
 
 
@@ -345,6 +346,7 @@ if STRING_3:
     )
     call_py3 = PyTgCalls(MAN3)
 else:
+    call_py3 = None
     MAN3 = None
 
 
@@ -360,6 +362,7 @@ if STRING_4:
     )
     call_py4 = PyTgCalls(MAN4)
 else:
+    call_py4 = None
     MAN4 = None
 
 
@@ -375,6 +378,7 @@ if STRING_5:
     )
     call_py5 = PyTgCalls(MAN5)
 else:
+    call_py5 = None
     MAN5 = None
 
 
