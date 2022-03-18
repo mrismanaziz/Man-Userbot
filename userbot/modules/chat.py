@@ -9,7 +9,7 @@ import csv
 import random
 from datetime import datetime
 from math import sqrt
-from random import choice
+from secrets import choice
 
 from emoji import emojize
 from telethon import functions
