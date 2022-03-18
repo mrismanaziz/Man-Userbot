@@ -1,7 +1,7 @@
 from secrets import choice
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
-from userbot.utils import deEmojify, edit_or_reply, man_cmd
+from userbot.utils import deEmojify, edit_delete, edit_or_reply, man_cmd
 
 
 @man_cmd(pattern="rst(?: |$)(.*)")
