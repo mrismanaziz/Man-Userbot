@@ -255,7 +255,7 @@ if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
             username=LASTFM_USERNAME,
             password_hash=LASTFM_PASS,
         )
-    except Exception:
+    except BaseException:
         pass
 
 TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads/")
