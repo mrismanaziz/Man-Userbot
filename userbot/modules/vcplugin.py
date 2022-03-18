@@ -114,7 +114,7 @@ async def skip_current_song(chat_id: int):
 async def vc_play(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
-    sender = await event.get_sender()
+    await event.get_sender()
     chat = await event.get_chat()
     titlegc = chat.title
     chat_id = event.chat_id
@@ -217,7 +217,7 @@ async def vc_play(event):
 async def vc_vplay(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
-    sender = await event.get_sender()
+    await event.get_sender()
     chat = await event.get_chat()
     titlegc = chat.title
     chat_id = event.chat_id
