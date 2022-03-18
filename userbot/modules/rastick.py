@@ -1,5 +1,4 @@
-import random
-
+from secrets import choice
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot.utils import deEmojify, edit_or_reply, man_cmd
@@ -80,7 +79,7 @@ async def rastick(animu):
         63,
     ]
     sticcers = await animu.client.inline_query(
-        "stickerizerbot", f"#{random.choice(animus)}{(deEmojify(text))}"
+        "stickerizerbot", f"#{choice(animus)}{(deEmojify(text))}"
     )
     try:
         await sticcers[0].click(
