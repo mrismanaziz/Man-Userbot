@@ -27,6 +27,7 @@ import barcode
 import emoji
 import qrcode
 import requests
+from aiohttp import ClientSession
 from barcode.writer import ImageWriter
 from bs4 import BeautifulSoup
 from googletrans import LANGUAGES, Translator
@@ -42,7 +43,6 @@ from telethon.tl.types import (
     DocumentAttributeVideo,
     MessageMediaPhoto,
 )
-from aiohttp import ClientSession
 from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError, PageError
 from youtube_search import YoutubeSearch
