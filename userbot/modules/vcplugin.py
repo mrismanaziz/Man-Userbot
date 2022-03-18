@@ -48,7 +48,8 @@ def ytsearch(query: str):
         url = data["link"]
         duration = data["duration"]
         thumbnail = data["thumbnails"][0]["url"]
-        return [songname, url, duration, thumbnail]
+        videoid = data["id"]
+        return [songname, url, duration, thumbnail, videoid]
     except Exception as e:
         print(e)
         return 0
@@ -115,6 +116,7 @@ async def vc_play(event):
     replied = await event.get_reply_message()
     sender = await event.get_sender()
     chat = await event.get_chat()
+    titlegc = chat.title
     chat_id = event.chat_id
     from_user = vcmention(event.sender)
     if (
@@ -140,10 +142,10 @@ async def vc_play(event):
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
-            userid = sender.id
+            videoid = search[4]
             titlegc = chat.title
             ctitle = await CHAT_TITLE(titlegc)
-            thumb = await gen_thumb(thumbnail, title, userid, ctitle)
+            thumb = await gen_thumb(thumbnail, title, videoid, ctitle)
             format = "best[height<=?720][width<=?1280]"
             hm, ytlink = await ytdl(format, url)
             if hm == 0:
@@ -216,7 +218,6 @@ async def vc_vplay(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
     sender = await event.get_sender()
-    userid = sender.id
     chat = await event.get_chat()
     titlegc = chat.title
     chat_id = event.chat_id
@@ -246,8 +247,9 @@ async def vc_vplay(event):
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
+            videoid = search[4]
             ctitle = await CHAT_TITLE(titlegc)
-            thumb = await gen_thumb(thumbnail, title, userid, ctitle)
+            thumb = await gen_thumb(thumbnail, title, videoid, ctitle)
             format = "best[height<=?720][width<=?1280]"
             hm, ytlink = await ytdl(format, url)
             if hm == 0:
@@ -337,8 +339,9 @@ async def vc_vplay(event):
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
+            videoid = search[4]
             ctitle = await CHAT_TITLE(titlegc)
-            thumb = await gen_thumb(thumbnail, title, userid, ctitle)
+            thumb = await gen_thumb(thumbnail, title, videoid, ctitle)
             format = "best[height<=?720][width<=?1280]"
             hm, ytlink = await ytdl(format, url)
             if hm == 0:
