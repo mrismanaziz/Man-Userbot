@@ -1,9 +1,9 @@
 import os
-import random
 
 import aiofiles
 import aiohttp
 from PIL import Image, ImageDraw, ImageFont
+from secrets import choice
 
 themes = ["rrc", "hejo", "black"]
 
@@ -26,7 +26,7 @@ async def gen_thumb(thumbnail, title, videoid, ctitle):
                 )
                 await f.write(await resp.read())
                 await f.close()
-    theme = random.choice(themes)
+    theme = choice(themes)
     image1 = Image.open(f"userbot/resources/thumb{videoid}.png")
     image2 = Image.open(f"userbot/resources/{theme}.png")
     image3 = changeImageSize(1280, 720, image1)
