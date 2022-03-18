@@ -150,7 +150,7 @@ async def log(log_text):
 
 
 @man_cmd(pattern="log$")
-async def set_no_log_p_m(event):
+async def set_log_p_m(event):
     if event.sender_id in SUDO_USERS:
         return
     if BOTLOG_CHATID != -100:
