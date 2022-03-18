@@ -202,7 +202,7 @@ async def crbn(event):
 
 
 @man_cmd(pattern="ccarbon ?(.*)")
-async def crbn(event):
+async def ccrbn(event):
     from_user = vcmention(event.sender)
     match = event.pattern_match.group(1).strip()
     if not match:
