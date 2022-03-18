@@ -1,9 +1,9 @@
 import os
+from secrets import choice
 
 import aiofiles
 import aiohttp
 from PIL import Image, ImageDraw, ImageFont
-from secrets import choice
 
 themes = ["rrc", "hejo", "black"]
 
