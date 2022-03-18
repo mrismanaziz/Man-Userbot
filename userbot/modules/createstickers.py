@@ -7,9 +7,9 @@ import io
 import os
 import random
 import textwrap
+from secrets import choice
 
 from PIL import Image, ImageDraw, ImageFont
-from secrets import choice
 from telethon.tl.types import InputMessagesFilterDocument
 
 from userbot.utils import man_cmd
