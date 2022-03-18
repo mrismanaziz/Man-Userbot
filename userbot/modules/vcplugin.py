@@ -55,8 +55,8 @@ def ytsearch(query: str):
         return 0
 
 
-async def ytdl(format: str, link: str):
-    stdout, stderr = await bash(f'yt-dlp -g -f "{format}" {link}')
+async def ytdl(link: str):
+    stdout, stderr = await bash(f'yt-dlp -g -f "best[height<=?720][width<=?1280]" {link}')
     if stdout:
         return 1, stdout.split("\n")[0]
     return 0, stderr
@@ -146,8 +146,7 @@ async def vc_play(event):
             titlegc = chat.title
             ctitle = await CHAT_TITLE(titlegc)
             thumb = await gen_thumb(thumbnail, title, videoid, ctitle)
-            format = "best[height<=?720][width<=?1280]"
-            hm, ytlink = await ytdl(format, url)
+            hm, ytlink = await ytdl(url)
             if hm == 0:
                 await botman.edit(f"`{ytlink}`")
             elif chat_id in QUEUE:
@@ -250,8 +249,7 @@ async def vc_vplay(event):
             videoid = search[4]
             ctitle = await CHAT_TITLE(titlegc)
             thumb = await gen_thumb(thumbnail, title, videoid, ctitle)
-            format = "best[height<=?720][width<=?1280]"
-            hm, ytlink = await ytdl(format, url)
+            hm, ytlink = await ytdl(url)
             if hm == 0:
                 await xnxx.edit(f"`{ytlink}`")
             elif chat_id in QUEUE:
@@ -342,8 +340,7 @@ async def vc_vplay(event):
             videoid = search[4]
             ctitle = await CHAT_TITLE(titlegc)
             thumb = await gen_thumb(thumbnail, title, videoid, ctitle)
-            format = "best[height<=?720][width<=?1280]"
-            hm, ytlink = await ytdl(format, url)
+            hm, ytlink = await ytdl(url)
             if hm == 0:
                 await xnxx.edit(f"`{ytlink}`")
             elif chat_id in QUEUE:
