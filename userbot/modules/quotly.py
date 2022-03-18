@@ -10,7 +10,7 @@
 # t.me/SharingUserbot & t.me/Lunatic0de
 
 from os import remove
-from random import choice
+from secrets import choice
 
 from telethon.tl.functions.users import GetFullUserRequest
 
