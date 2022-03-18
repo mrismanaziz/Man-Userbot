@@ -42,6 +42,7 @@ from telethon.tl.types import (
     DocumentAttributeVideo,
     MessageMediaPhoto,
 )
+from aiohttp import ClientSession
 from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError, PageError
 from youtube_search import YoutubeSearch
@@ -404,6 +405,12 @@ async def download_video(v_url):
     video = False
     audio = False
 
+    if "tiktok.com" in url:
+        async with ClientSession() as ses, ses.head(
+            url, allow_redirects=True, timeout=5
+        ) as head:
+            url = str(head.url)
+
     if "audio" in dl_type:
         opts = {
             "format": "bestaudio",
@@ -484,7 +491,7 @@ async def download_video(v_url):
     except ExtractorError:
         return await edit_delete(xx, "`There was an error during info extraction.`")
     except Exception as e:
-        return await edit_delete(xx, f"{str(type(e)): {e}}")
+        return await edit_delete(xx, f"{str(type(e))}: {str(e)}")
     c_time = time.time()
     if audio:
         await xx.edit(
