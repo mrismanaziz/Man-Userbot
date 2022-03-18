@@ -6,7 +6,8 @@
 
 import time
 from datetime import datetime
-from random import choice, randint
+from random import randint
+from secrets import choice
 
 from telethon.events import NewMessage, StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
