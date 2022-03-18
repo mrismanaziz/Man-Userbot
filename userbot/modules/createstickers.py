@@ -9,6 +9,7 @@ import random
 import textwrap
 
 from PIL import Image, ImageDraw, ImageFont
+from secrets import choice
 from telethon.tl.types import InputMessagesFilterDocument
 
 from userbot.utils import man_cmd
@@ -68,7 +69,6 @@ async def get_font_file(client, channel_id):
         limit=None,
     )
     # get a random font from the list of fonts
-    # https://docs.python.org/3/library/random.html#random.choice
-    font_file_message = random.choice(font_file_message_s)
+    font_file_message = choice(font_file_message_s)
     # download and return the file path
     return await client.download_media(font_file_message)
