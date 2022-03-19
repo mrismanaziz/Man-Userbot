@@ -26,7 +26,7 @@ from telethon.tl.types import (
 )
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, SUDO_USERS, TEMP_DOWNLOAD_DIRECTORY
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 normiefont = [
@@ -240,14 +240,12 @@ Year: {}""".format(
         await edit_delete(xx, "xkcd n.{} not found!".format(xkcd_id))
 
 
-@man_cmd(pattern="remove(?: |$)(.*)")
+@man_cmd(pattern="remove(?: |$)(.*)", allow_sudo=False)
 async def _(event):
     if event.fwd_from:
         return
     if event.is_private:
         return False
-    if event.sender_id in SUDO_USERS:
-        return
     input_str = event.pattern_match.group(1)
     if input_str:
         chat = await event.get_chat()
