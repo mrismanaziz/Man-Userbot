@@ -70,7 +70,12 @@ async def gcast(event):
                     done += 1
                 except BaseException:
                     er += 1
-    text = "**Berhasil Mengirim Pesan Ke** `{}` **{}, Gagal Mengirim Pesan Ke** `{}` **{}**".format(done, "Grup admin" if is_admin else "Grup", er, "Grup admin" if is_admin else "Grup")
+    text = "**Berhasil Mengirim Pesan Ke** `{}` **{}, Gagal Mengirim Pesan Ke** `{}` **{}**".format(
+        done,
+        "Grup admin" if is_admin else "Grup",
+        er,
+        "Grup admin" if is_admin else "Grup",
+    )
     await kk.edit(text)
 
 
