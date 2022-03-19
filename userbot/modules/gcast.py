@@ -108,7 +108,7 @@ async def gucast(event):
 async def sudo(event):
     blacklistgc = "True" if BLACKLIST_GCAST else "False"
     blc = blchat
-    list = blc.replace(" ", "\n• ")
+    list = blc.replace(" ", "\n• ").replace("`", "")
     if blacklistgc == "True":
         await edit_or_reply(
             event,
