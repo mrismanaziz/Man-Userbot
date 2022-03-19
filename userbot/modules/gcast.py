@@ -42,7 +42,7 @@ heroku_api = "https://api.heroku.com"
 blchat = os.environ.get("BLACKLIST_GCAST") or ""
 
 
-@man_cmd(pattern="g(admin|)cast( (.*)|$)")
+@man_cmd(pattern="gcast(?: |$)(.*)")
 async def gcast(event):
     xx = event.pattern_match.group(1)
     if xx:
@@ -56,10 +56,8 @@ async def gcast(event):
     done = 0
     async for x in event.client.iter_dialogs():
         if x.is_group:
-            chat = x.entity.id
-            if int("-100" + str(chat)) not in GCAST_BLACKLIST and (
-                not is_admin or (x.entity.admin_rights or x.entity.creator)
-            ):
+            chat = x.id
+            if chat not in GCAST_BLACKLIST and chat not in BLACKLIST_GCAST:
                 try:
                     await event.client.send_message(chat, msg)
                     await asyncio.sleep(0.1)
@@ -70,13 +68,9 @@ async def gcast(event):
                     done += 1
                 except BaseException:
                     er += 1
-    text = "**Berhasil Mengirim Pesan Ke** `{}` **{}, Gagal Mengirim Pesan Ke** `{}` **{}**".format(
-        done,
-        "Grup admin" if is_admin else "Grup",
-        er,
-        "Grup admin" if is_admin else "Grup",
+    await kk.edit(
+        f"**Berhasil Mengirim Pesan Ke** `{done}` **Grup, Gagal Mengirim Pesan Ke** `{er}` **Grup**"
     )
-    await kk.edit(text)
 
 
 @man_cmd(pattern="gucast(?: |$)(.*)")
