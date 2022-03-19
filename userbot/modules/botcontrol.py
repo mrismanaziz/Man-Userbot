@@ -203,7 +203,7 @@ async def apiset(event):
 
 
 @callback(data=re.compile(b"apikeys"))
-async def alivemenu(event):
+async def apikeys(event):
     await event.edit(
         "**Silahkan Pilih VAR yang ingin anda Setting**",
         buttons=[
