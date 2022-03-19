@@ -6,6 +6,7 @@
 # t.me/SharingUserbot & t.me/Lunatic0de
 
 from telethon.tl.functions.channels import LeaveChannelRequest
+
 from userbot import BLACKLIST_CHAT
 from userbot.utils import edit_or_reply, man_cmd
 
