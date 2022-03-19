@@ -45,7 +45,7 @@ async def kickmeall(event):
             if chat not in BOTLOG_CHATID:
                 try:
                     done += 1
-                    await event.client(LeaveChannelRequest(chat))
+                    await event.client(LeaveChannelRequest(int(chat))
                 except BaseException:
                     er += 1
     await Man.edit(
