@@ -7,7 +7,7 @@
 
 from telethon.tl.functions.channels import LeaveChannelRequest
 
-from userbot import BLACKLIST_CHAT
+from userbot import BLACKLIST_CHAT, BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot.utils import edit_or_reply, man_cmd
@@ -42,11 +42,12 @@ async def kickmeall(event):
     async for x in event.client.iter_dialogs():
         if x.is_group:
             chat = x.id
-            try:
-                done += 1
-                await event.client(LeaveChannelRequest(chat))
-            except BaseException:
-                er += 1
+            if chat not in BOTLOG_CHATID:
+                try:
+                    done += 1
+                    await event.client(LeaveChannelRequest(chat))
+                except BaseException:
+                    er += 1
     await Man.edit(
         f"**Berhasil Keluar dari {done} Group, Gagal Keluar dari {er} Group**"
     )
