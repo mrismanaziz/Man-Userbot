@@ -112,10 +112,10 @@ async def sudo(event):
     if blacklistgc == "True":
         await edit_or_reply(
             event,
-            f"🚫 **Blacklist GCAST:** `Enabled`\n\n📜 **Blacklist Group:**\n• `{list}`\n\nKetik `.addblacklist` di grup untuk menambahkan ke daftar blacklist gcast.",
+            f"🔮 **Blacklist GCAST:** `Enabled`\n\n📚 **Blacklist Group:**\n• `{list}`\n\nKetik `.addblacklist` di grup yang ingin di tambahkan ke daftar blacklist gcast.",
         )
     else:
-        await edit_delete(event, "🚫 **Blacklist GCAST:** `Disabled`")
+        await edit_delete(event, "🔮 **Blacklist GCAST:** `Disabled`")
 
 
 @man_cmd(pattern="addblacklist(?:\\s|$)([\\s\\S]*)")
