@@ -56,8 +56,8 @@ async def gcast(event):
     done = 0
     async for x in event.client.iter_dialogs():
         if x.is_group:
-            chat = x.id
-            if not int("-100" + str(chat)) in GCAST_BLACKLIST and BLACKLIST_GCAST:
+            chat = x.entity.id
+            if not int("-100" + str(chat)) in list(set(GCAST_BLACKLIST + BLACKLIST_GCAST)):
                 try:
                     await event.client.send_message(chat, msg)
                     await asyncio.sleep(0.1)
