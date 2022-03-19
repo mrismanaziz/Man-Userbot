@@ -24,7 +24,7 @@ async def sudo(event):
     if sudo == "True":
         await edit_or_reply(
             event,
-            f"🔮 **Sudo:** `Enabled`\n\n📚 ** List Sudo Users:**\n» `{listsudo}`\n\n**SUDO_HANDLER:** `{SUDO_HANDLER}`",
+            f"🔮 **Sudo:** `Enabled`\n\n📚 ** List Sudo Users:**\n» {listsudo}\n\n**SUDO_HANDLER:** `{SUDO_HANDLER}`",
         )
     else:
         await edit_delete(event, "🔮 **Sudo:** `Disabled`")
