@@ -8,7 +8,7 @@ import heroku3
 from telethon.tl.functions.users import GetFullUserRequest
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, SUDO_HANDLER
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, SUDO_HANDLER, SUDO_USERS
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 Heroku = heroku3.from_key(HEROKU_API_KEY)
@@ -20,10 +20,11 @@ sudousers = os.environ.get("SUDO_USERS") or ""
 async def sudo(event):
     sudo = "True" if SUDO_USERS else "False"
     users = sudousers
+    listsudo = users.replace(" ", "\n» ")
     if sudo == "True":
         await edit_or_reply(
             event,
-            f"🔮 **Sudo:** `Enabled`\n\n📚 ** List Sudo Users:**\n» `{users}`\n\n**SUDO_HANDLER:** `{SUDO_HANDLER}`",
+            f"🔮 **Sudo:** `Enabled`\n\n📚 ** List Sudo Users:**\n» `{listsudo}`\n\n**SUDO_HANDLER:** `{SUDO_HANDLER}`",
         )
     else:
         await edit_delete(event, "🔮 **Sudo:** `Disabled`")
