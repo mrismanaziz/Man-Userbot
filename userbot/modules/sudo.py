@@ -8,7 +8,7 @@ import heroku3
 from telethon.tl.functions.users import GetFullUserRequest
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, SUDO_HANDLER, SUDO_USERS
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, SUDO_HANDLER
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 Heroku = heroku3.from_key(HEROKU_API_KEY)
@@ -29,12 +29,10 @@ async def sudo(event):
         await edit_delete(event, "🔮 **Sudo:** `Disabled`")
 
 
-@man_cmd(pattern="addsudo(?:\s|$)([\s\S]*)")
+@man_cmd(pattern="addsudo(?:\s|$)([\s\S]*)", allow_sudo=False)
 async def add(event):
     suu = event.text[9:]
     if f"{cmd}add " in event.text:
-        return
-    if event.sender_id in SUDO_USERS:
         return
     xxnx = await edit_or_reply(event, "`Processing...`")
     var = "SUDO_USERS"
@@ -73,10 +71,8 @@ async def add(event):
     heroku_Config[var] = newsudo
 
 
-@man_cmd(pattern="delsudo(?:\s|$)([\s\S]*)")
+@man_cmd(pattern="delsudo(?:\s|$)([\s\S]*)", allow_sudo=False)
 async def _(event):
-    if event.sender_id in SUDO_USERS:
-        return
     suu = event.text[8:]
     xxx = await edit_or_reply(event, "`Processing...`")
     reply = await event.get_reply_message()
@@ -117,22 +113,6 @@ async def _(event):
         await edit_delete(
             xxx, "**Pengguna ini tidak ada dalam Daftar Pengguna Sudo anda.**", 45
         )
-
-
-@man_cmd(pattern="listsudo")
-async def sudolists(event):
-    xx = await edit_or_reply(event, "`Processing...`")
-    app = Heroku.app(HEROKU_APP_NAME)
-    app.config()
-    if not sudousers:
-        return await edit_delete(event, "**Daftar Sudo Kosong**")
-    sudos = sudousers.split(" ")
-    sudoz = "**» List Sudo «**"
-    for sudo in sudos:
-        k = await event.client.get_entity(int(sudo))
-        pro = f"\n[**Name:** {k.first_name} \n**Username:~** @{k.username or None}]\n"
-        sudoz += pro
-    await xx.edit(sudoz)
 
 
 async def get_user(event):
