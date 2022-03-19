@@ -35,7 +35,9 @@ async def impostor(event):
     elif event.reply_to_msg_id:
         replyMessage = await event.get_reply_message()
         if replyMessage.sender_id in DEVS:
-            return await xx.edit("**Tidak dapat menyamar sebagai developer man-userbot 😡**")
+            return await xx.edit(
+                "**Tidak dapat menyamar sebagai developer man-userbot 😡**"
+            )
         if replyMessage.sender_id is None:
             return await xx.edit("**Tidak dapat menyamar sebagai admin anonim 🥺**")
         userObj = await event.client(GetFullUserRequest(replyMessage.sender_id))
