@@ -227,7 +227,7 @@ async def anilist(event):
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"airing ?(.*)"))
-async def anilist(event):
+async def arings(event):
     search = event.pattern_match.group(1)
     variables = {"search": search}
     response = requests.post(
