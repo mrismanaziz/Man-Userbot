@@ -32,10 +32,10 @@ else:
     app = None
 
 
-async def autopilot(client):
+async def autopilot():
     desc = "Group Log untuk Man-UserBot.\n\nHARAP JANGAN KELUAR DARI GROUP INI.\n\n✨ Powered By ~ @Lunatic0de ✨"
     try:
-        grup = await client(
+        grup = await bot(
             CreateChannelRequest(title="Log UserBot", about=desc, megagroup=True)
         )
         grup_id = grup.chats[0].id
