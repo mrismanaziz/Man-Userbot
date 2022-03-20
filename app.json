@@ -35,8 +35,7 @@
     },
     "BOTLOG_CHATID": {
       "description": "Buatlah grup telegram publik lalu masukan @MissRose_bot ketik /id, masukan id grup nya disini. contoh: -1001473548xxx",
-      "value": "Isi id grup mu wajib dengan awalan -100",
-      "required": true
+      "required": false
     }
   },
   "addons": [
