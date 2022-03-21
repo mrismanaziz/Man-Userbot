@@ -44,9 +44,7 @@ async def man_userbot_on():
         pass
     try:
         if bot:
-            await bot(
-                EditAdminRequest(BOTLOG_CHATID, BOT_USERNAME, new_rights, "BOT")
-            )
+            await bot(EditAdminRequest(BOTLOG_CHATID, BOT_USERNAME, new_rights, "BOT"))
             await asyncio.sleep(3)
     except BaseException:
         pass
