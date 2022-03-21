@@ -38,18 +38,20 @@ async def man_userbot_on():
     )
     try:
         if bot:
-            try:
-                await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
-                await asyncio.sleep(3)
-            except BaseException:
-                pass
-            try:
-                await bot(
-                    EditAdminRequest(BOTLOG_CHATID, BOT_USERNAME, new_rights, "BOT")
-                )
-                await asyncio.sleep(3)
-            except BaseException:
-                pass
+            await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
+            await asyncio.sleep(3)
+    except BaseException:
+        pass
+    try:
+        if bot:
+            await bot(
+                EditAdminRequest(BOTLOG_CHATID, BOT_USERNAME, new_rights, "BOT")
+            )
+            await asyncio.sleep(3)
+    except BaseException:
+        pass
+    try:
+        if bot:
             await checking(bot)
             await asyncio.sleep(3)
             if BOTLOG_CHATID != 0:
