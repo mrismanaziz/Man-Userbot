@@ -19,8 +19,7 @@ last_afk_msg = {}
 afk_start = {}
 
 
-@bot.on(events.NewMessage(outgoing=True))
-@bot.on(events.MessageEdited(outgoing=True))
+@man_cmd()
 async def set_not_afk(event):
     global USER_AFK
     global afk_time
@@ -90,7 +89,7 @@ async def on_afk(event):
         if reason:
             message_to_reply = f"❏ **{owner} Sedang AFK**\n├ **Dari** `{total_afk_time}` **Yang Lalu**\n└ **Karena:** `{reason}`"
         else:
-            message_to_reply = f"❏ **{owner} Sedang AFK**\n└ **Dari** `{total_afk_time}` **Yang Lalu****"
+            message_to_reply = f"❏ **{owner} Sedang AFK**\n└ **Dari** `{total_afk_time}` **Yang Lalu**"
         try:
             if pic.endswith((".tgs", ".webp")):
                 msg = await event.reply(file=pic)
