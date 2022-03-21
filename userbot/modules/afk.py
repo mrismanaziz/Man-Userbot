@@ -10,8 +10,7 @@ from telethon.tl import functions, types
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot, owner
-from userbot.events import man_cmd
-from userbot.utils import bash
+from userbot.utils import bash, man_cmd, man_handler
 
 USER_AFK = {}
 afk_time = None
@@ -50,7 +49,7 @@ async def set_not_afk(event):
         except BaseException:
             shite = await event.client.send_message(
                 event.chat_id,
-                f"❏ **{owner} Kembali Online**\n└ **Dari AFK :** `{total_afk_time}` **Yang Lalu**",
+                f"❏ **{owner} Kembali Online**\n└ **Dari AFK** `{total_afk_time}` **Yang Lalu**",
             )
 
         await asyncio.sleep(6)
@@ -66,9 +65,7 @@ async def set_not_afk(event):
         await bash("rm -rf *.tgs")
 
 
-@bot.on(
-    events.NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private))
-)
+@man_handler(func=lambda e: bool(e.mentioned or e.is_private))
 async def on_afk(event):
     if event.fwd_from:
         return
@@ -114,7 +111,7 @@ async def on_afk(event):
             pass
 
 
-@bot.on(man_cmd(outgoing=True, pattern="afk(?: |$)(.*)"))
+@man_cmd(pattern="afk(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
