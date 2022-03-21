@@ -8,7 +8,6 @@ from datetime import datetime
 from telethon import events
 from telethon.tl import functions, types
 
-from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot, owner
 from userbot.events import man_cmd
@@ -88,13 +87,9 @@ async def on_afk(event):
     if USER_AFK and not (await event.get_sender()).bot:
         msg = None
         if reason:
-            message_to_reply = (
-                f"❏ **{owner} Sedang AFK**\n├ **Dari** `{total_afk_time}` **Yang Lalu**\n└ **Karena:** `{reason}`"
-            )
+            message_to_reply = f"❏ **{owner} Sedang AFK**\n├ **Dari** `{total_afk_time}` **Yang Lalu**\n└ **Karena:** `{reason}`"
         else:
-            message_to_reply = (
-                f"❏ **{owner} Sedang AFK**\n└ **Dari** `{total_afk_time}` **Yang Lalu****"
-            )
+            message_to_reply = f"❏ **{owner} Sedang AFK**\n└ **Dari** `{total_afk_time}` **Yang Lalu****"
         try:
             if pic.endswith((".tgs", ".webp")):
                 msg = await event.reply(file=pic)
