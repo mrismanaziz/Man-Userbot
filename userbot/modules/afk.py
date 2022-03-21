@@ -18,7 +18,7 @@ last_afk_msg = {}
 afk_start = {}
 
 
-@man_cmd(outgoing=True)
+@man_handler(outgoing=True)
 async def set_not_afk(event):
     global USER_AFK
     global afk_time
