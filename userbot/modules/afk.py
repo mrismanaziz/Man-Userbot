@@ -9,7 +9,7 @@ from telethon import events
 from telethon.tl import functions, types
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot, owner
+from userbot import CMD_HELP, bot
 from userbot.utils import bash, man_cmd, man_handler
 
 USER_AFK = {}
@@ -27,6 +27,8 @@ async def set_not_afk(event):
     global last_afk_message
     global afk_start
     global afk_end
+    user = await event.client.get_me()
+    owner = user.first_name
     back_alive = datetime.now()
     afk_end = back_alive.replace(microsecond=0)
     if afk_start != {}:
@@ -74,6 +76,8 @@ async def on_afk(event):
     global last_afk_message
     global afk_start
     global afk_end
+    user = await event.client.get_me()
+    owner = user.first_name
     back_alivee = datetime.now()
     afk_end = back_alivee.replace(microsecond=0)
     if afk_start != {}:
@@ -132,9 +136,11 @@ async def _(event):
     start_1 = datetime.now()
     afk_start = start_1.replace(microsecond=0)
     reason = event.pattern_match.group(1)
+    user = await event.client.get_me()
+    owner = user.first_name
     pic = await event.client.download_media(reply) if reply else None
     if not USER_AFK:
-        last_seen_status = await bot(
+        last_seen_status = await event.client(
             functions.account.GetPrivacyRequest(types.InputPrivacyKeyStatusTimestamp())
         )
         if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
