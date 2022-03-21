@@ -33,7 +33,6 @@ try:
     client = multiman()
     total = 5 - client
     git()
-    idle()
     LOGS.info(f"Total Clients = {total} User")
     LOGS.info(f"Python Version - {python_version()}")
     LOGS.info(f"Telethon Version - {version.__version__}")
@@ -51,6 +50,7 @@ if not BOTLOG_CHATID:
     LOOP.run_until_complete(autopilot())
 if not BOT_TOKEN:
     LOOP.run_until_complete(autobot())
+idle()
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
 else:
