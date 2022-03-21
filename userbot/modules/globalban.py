@@ -155,9 +155,7 @@ async def gablist(event):
             if a_user.reason:
                 GBANNED_LIST += f"» [{a_user.chat_id}](tg://user?id={a_user.chat_id})\nReason: {a_user.reason}\n\n"
             else:
-                GBANNED_LIST += (
-                    f"» [{a_user.chat_id}](tg://user?id={a_user.chat_id})\nNo Reason\n\n"
-                )
+                GBANNED_LIST += f"» [{a_user.chat_id}](tg://user?id={a_user.chat_id})\nNo Reason\n\n"
     else:
         GBANNED_LIST = "Belum ada Pengguna yang Di-Gban"
     if len(GBANNED_LIST) > 4096:
