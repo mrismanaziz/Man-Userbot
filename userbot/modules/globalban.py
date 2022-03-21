@@ -5,7 +5,6 @@
 
 import asyncio
 from datetime import datetime
-from io import BytesIO
 
 from telethon.errors import BadRequestError
 from telethon.tl.functions.channels import EditBannedRequest
