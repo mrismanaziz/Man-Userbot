@@ -149,7 +149,7 @@ async def gablist(event):
     if event.fwd_from:
         return
     gbanned_users = gban_sql.get_all_gbanned()
-    GBANNED_LIST = "**List Global Banned Saat Ini**\n"
+    GBANNED_LIST = "**List Global Banned Saat Ini**\n\n"
     if len(gbanned_users) > 0:
         for a_user in gbanned_users:
             if a_user.reason:
