@@ -9,10 +9,10 @@ from datetime import datetime
 from random import randint
 from secrets import choice
 
-from telethon.events import NewMessage, StopPropagation
+from telethon.events import StopPropagation
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from userbot import AFKREASON, BOTLOG_CHATID, PM_AUTO_BAN, bot
+from userbot import AFKREASON, BOTLOG_CHATID, PM_AUTO_BAN
 from userbot.utils import man_cmd, man_handler
 
 # ========================= CONSTANTS ============================
@@ -48,9 +48,7 @@ async def set_afk(afk_e):
     afk_start = start_1.replace(microsecond=0)
     if string:
         AFKREASON = string
-        await afk_e.edit(
-            f"❏ **{owner} Telah OFF**\n└ **Karena:** `{string}`"
-        )
+        await afk_e.edit(f"❏ **{owner} Telah OFF**\n└ **Karena:** `{string}`")
     else:
         await afk_e.edit(f"**✘ {owner} Telah OFF ✘**")
     if user.last_name:
