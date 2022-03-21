@@ -169,7 +169,7 @@ async def gablist(event):
                 force_document=True,
                 thumb="userbot/resources/logo.jpg",
                 caption="**List Global Banned**",
-                reply_to=event.reply_to_msg_id
+                reply_to=event.reply_to_msg_id,
                 allow_cache=False,
             )
             await event.delete()
