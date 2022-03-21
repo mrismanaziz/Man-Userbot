@@ -52,7 +52,7 @@ async def logaddjoin(event):
     await event.client.send_message(BOTLOG_CHATID, text)
 
 
-@man_handler(func=lambda e: e.is_private)
+@man_handler(incoming=True, func=lambda e: e.is_private)
 async def monito_p_m_s(event):
     if BOTLOG_CHATID == -100:
         return
@@ -87,7 +87,7 @@ async def monito_p_m_s(event):
                 LOGS.warn(str(e))
 
 
-@man_handler(func=lambda e: e.mentioned)
+@man_handler(incoming=True, func=lambda e: e.mentioned)
 async def log_tagged_messages(event):
     if BOTLOG_CHATID == -100:
         return
