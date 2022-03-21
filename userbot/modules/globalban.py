@@ -158,17 +158,6 @@ async def gablist(event):
                 GBANNED_LIST += (
                     f"👉 [{a_user.chat_id}](tg://user?id={a_user.chat_id}) `No Reason`\n"
                 )
-    if len(gbanned_users) >= 4096:
-        with BytesIO(str.encode(GBANNED_LIST)) as fileuser:
-            fileuser.name = "list-gban.txt"
-            await event.client.send_file(
-                event.chat_id,
-                fileuser,
-                force_document=True,
-                thumb="userbot/resources/logo.jpg",
-                caption="**List Global Banned**",
-                allow_cache=False,
-            )
     else:
         GBANNED_LIST = "Belum ada Pengguna yang Di-Gban"
     await edit_or_reply(event, GBANNED_LIST)
