@@ -9,13 +9,13 @@ from telethon.tl.types import User
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, LOGS, bot
 from userbot.modules.sql_helper.tede_chatbot_sql import is_tede, rem_tede, set_tede
-from userbot.utils import edit_or_reply, man_cmd
+from userbot.utils import edit_or_reply, man_cmd, man_handler
 
 translator = Translator()
 LANGUAGE = "id"
 
 URL_CHATBOT = requests.get(
-    "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/blacklistgcast.json"
+    "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/chatbot.json"
 )
 url = URL_CHATBOT
 del URL_CHATBOT
@@ -54,12 +54,7 @@ async def on_apa_off(event):
     await chat_bot_toggle(event)
 
 
-@bot.on(
-    events.NewMessage(
-        incoming=True,
-        func=lambda e: (e.mentioned),
-    ),
-)
+@man_handler(incoming=True, func=lambda e: (e.mentioned))
 async def tede_chatbot(event):
     sender = await event.get_sender()
     if not is_tede(event.chat_id):
