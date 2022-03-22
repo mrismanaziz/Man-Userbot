@@ -17,10 +17,10 @@ from userbot.utils import man_cmd, man_handler
 
 # ========================= CONSTANTS ============================
 AFKSTR = [
-    f"**Maaf {owner} Sedang OFF!**",
-    f"**Maaf {owner} Sedang OFF Tunggu Sampai Online!**",
-    f"**{owner} Sedang OFF Tunggulah Sampai Online**",
-    f"**Maaf {owner} Sedang OFF!**",
+    "**Maaf {} Sedang OFF!**",
+    "**Maaf {} Sedang OFF Tunggu Sampai Online!**",
+    "**{} Sedang OFF Tunggulah Sampai Online**",
+    "**Maaf {} Sedang OFF!**",
 ]
 ISAFK = False
 USER_AFK = {}
@@ -172,7 +172,7 @@ async def mention_afk(mention):
                     f"❏ **{owner} Sedang OFFLINE**\n├ {afk_since} **Yang Lalu**\n└ **Karena:** `{AFKREASON}`"
                 )
             else:
-                await mention.reply(str(choice(AFKSTR)))
+                await mention.reply(str(choice(AFKSTR.format(owner))))
             USERS.update({mention.sender_id: 1})
         else:
             if USERS[mention.sender_id] % randint(2, 4) == 0:
@@ -181,7 +181,7 @@ async def mention_afk(mention):
                         f"❏ **{owner} Sedang OFFLINE**\n├ {afk_since} **Yang Lalu**\n└ **Karena:** `{AFKREASON}`"
                     )
                 else:
-                    await mention.reply(str(choice(AFKSTR)))
+                    await mention.reply(str(choice(AFKSTR.format(owner))))
             USERS[mention.sender_id] = USERS[mention.sender_id] + 1
         COUNT_MSG = COUNT_MSG + 1
 
