@@ -5,7 +5,7 @@
 #
 """ Userbot help command """
 
-from userbot import CHANNEL
+from userbot import CHANNEL, ch
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, ICON_HELP
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
@@ -16,7 +16,7 @@ async def help(event):
     args = event.pattern_match.group(1).lower()
     if args:
         if args in CMD_HELP:
-            await edit_or_reply(event, f"{CMD_HELP[args]}\n\n© @Lunatic0de")
+            await edit_or_reply(event, f"{CMD_HELP[args]}\n\n© {ch}")
         else:
             await edit_delete(event, f"`{args}` **Bukan Nama Modul yang Valid.**")
     else:
