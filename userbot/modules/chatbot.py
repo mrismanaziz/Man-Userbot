@@ -14,8 +14,9 @@ from userbot.utils import edit_or_reply, man_cmd
 translator = Translator()
 LANGUAGE = "id"
 
-url = "https://api-tede.herokuapp.com/api/chatbot?message={message}"
-
+URL_CHATBOT = requests.get("https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/blacklistgcast.json")
+url = URL_CHATBOT
+del URL_CHATBOT
 
 async def ngapain_rep(message):
     hayulo_link_apa = url.format(message=message)
