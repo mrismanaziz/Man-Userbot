@@ -16,7 +16,7 @@ LANGUAGE = "id"
 URL_CHATBOT = requests.get(
     "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/chatbot.json"
 )
-url = URL_CHATBOT
+url = URL_CHATBOT.json()
 del URL_CHATBOT
 
 
