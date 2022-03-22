@@ -286,6 +286,9 @@ while 0 < 6:
 
 del _BLACKLIST
 
+ch = str(b64decode("QEx1bmF0aWMwZGU="))[2:13]
+gc = str(b64decode("QFNoYXJpbmdVc2VyYm90"))[2:17]
+
 while 0 < 6:
     _WHITELIST = get(
         "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/whitelist.json"
