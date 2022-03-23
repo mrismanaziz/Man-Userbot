@@ -132,6 +132,7 @@ async def autobot():
                 BOTLOG_CHATID,
                 f"**BERHASIL MEMBUAT BOT TELEGRAM DENGAN USERNAME @{username}**",
             )
+            LOGS.info(f"BERHASIL MEMBUAT BOT TELEGRAM DENGAN USERNAME @{username}")
             await bot.send_message(
                 BOTLOG_CHATID,
                 "**Tunggu Sebentar, Sedang MeRestart Heroku untuk Menerapkan Perubahan.**",
@@ -173,6 +174,7 @@ async def autobot():
             BOTLOG_CHATID,
             f"**BERHASIL MEMBUAT BOT TELEGRAM DENGAN USERNAME @{username}**",
         )
+        LOGS.info(f"BERHASIL MEMBUAT BOT TELEGRAM DENGAN USERNAME @{username}")
         await bot.send_message(
             BOTLOG_CHATID,
             "**Tunggu Sebentar, Sedang MeRestart Heroku untuk Menerapkan Perubahan.**",
