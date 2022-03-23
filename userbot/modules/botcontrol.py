@@ -108,11 +108,13 @@ async def pmclose(event):
 @callback(data=re.compile(b"pmbot"))
 async def pmbot(event):
     await event.delete()
+    ManUbot = await tgbot.get_me()
+    botusername = ManUbot.username
     if event.query.user_id == OWNER_ID:
         await tgbot.send_message(
             event.chat_id,
             message=f"""**Perintah di Bot ini adalah:**\n
-**NOTE: Perintah ini hanya berfungsi di {botusername}**\n
+**NOTE: Perintah ini hanya berfungsi di @{botusername}**\n
  • **Command : **/uinfo <reply ke pesan>
  • **Function : **Untuk Mencari Info Pengirim Pesan.\n
  • **Command : **/ban <alasan> atau /ban <username/userid> <alasan>
@@ -861,7 +863,7 @@ async def _(event):
     await event.answer(pin, cache_time=0, alert=True)
 
 
-@asst_cmd(pattern=f"^/start({botusername})?([\\s]+)?$", func=lambda e: e.is_private)
+@asst_cmd(pattern=f"^/start?([\\s]+)?$", func=lambda e: e.is_private)
 async def bot_start(event):
     chat = await event.get_chat()
     user = await event.client.get_me()
