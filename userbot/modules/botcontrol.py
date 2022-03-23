@@ -18,7 +18,6 @@ from telethon.tl.types import MessageMediaWebPage
 from telethon.utils import get_display_name, pack_bot_file_id
 
 from userbot import (
-    BOT_USERNAME,
     BOTLOG_CHATID,
     CHANNEL,
     CMD_HANDLER,
@@ -41,7 +40,6 @@ from userbot.utils import _format, asst_cmd, callback, reply_id
 
 from .ping import get_readable_time
 
-botusername = BOT_USERNAME
 OWNER = user.first_name
 OWNER_ID = user.id
 telegraph = Telegraph()
