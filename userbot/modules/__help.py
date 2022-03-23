@@ -29,8 +29,8 @@ from userbot.utils import edit_or_reply, man_cmd
 async def _(event):
     if event.fwd_from:
         return
-    ManUbot = await tgbot.get_me()
-    BOT_USERNAME = ManUbot.username
+    ManUBOT = await tgbot.get_me()
+    BOT_USERNAME = ManUBOT.username
     if BOT_USERNAME is not None:
         chat = "@Botfather"
         try:
