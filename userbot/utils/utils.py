@@ -136,7 +136,6 @@ async def autobot():
                 "**Tunggu Sebentar, Sedang MeRestart Heroku untuk Menerapkan Perubahan.**",
             )
             heroku_var["BOT_TOKEN"] = token
-            heroku_var["BOT_USERNAME"] = f"@{username}"
         else:
             LOGS.info(
                 "Silakan Hapus Beberapa Bot Telegram Anda di @Botfather atau Set Var BOT_TOKEN dengan token bot"
@@ -178,7 +177,6 @@ async def autobot():
             "**Tunggu Sebentar, Sedang MeRestart Heroku untuk Menerapkan Perubahan.**",
         )
         heroku_var["BOT_TOKEN"] = token
-        heroku_var["BOT_USERNAME"] = f"@{username}"
     else:
         LOGS.info(
             "Silakan Hapus Beberapa Bot Telegram Anda di @Botfather atau Set Var BOT_TOKEN dengan token bot"
