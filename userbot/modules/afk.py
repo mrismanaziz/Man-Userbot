@@ -65,7 +65,7 @@ async def set_not_afk(event):
         await bash("rm -rf *.tgs")
 
 
-@man_handler(func=lambda e: bool(e.mentioned or e.is_private))
+@man_handler(incoming=True, func=lambda e: bool(e.mentioned or e.is_private))
 async def on_afk(event):
     if event.fwd_from:
         return
