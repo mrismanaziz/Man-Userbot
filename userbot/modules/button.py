@@ -7,7 +7,6 @@ import re
 
 from telethon import Button
 
-from userbot import BOT_USERNAME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, tgbot
 from userbot.utils import edit_delete, man_cmd, reply_id
