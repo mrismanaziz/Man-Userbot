@@ -10,11 +10,10 @@ import asyncio
 from telethon.tl.functions.channels import EditAdminRequest, InviteToChannelRequest
 from telethon.tl.types import ChatAdminRights
 
-from userbot import BOT_USERNAME
 from userbot import BOT_VER as version
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import MAN2, MAN3, MAN4, MAN5, bot, branch
+from userbot import MAN2, MAN3, MAN4, MAN5, bot, branch, tgbot
 from userbot.utils import checking
 
 MSG_ON = """
@@ -37,13 +36,17 @@ async def man_userbot_on():
         manage_call=True,
     )
     try:
-        if bot:
+        if bot and tgbot:
+            ManUBOT = await tgbot.get_me()
+            BOT_USERNAME = ManUBOT.username
             await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
             await asyncio.sleep(3)
     except BaseException:
         pass
     try:
-        if bot:
+        if bot and tgbot:
+            ManUBOT = await tgbot.get_me()
+            BOT_USERNAME = ManUBOT.username
             await bot(EditAdminRequest(BOTLOG_CHATID, BOT_USERNAME, new_rights, "BOT"))
             await asyncio.sleep(3)
     except BaseException:
