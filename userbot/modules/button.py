@@ -80,8 +80,8 @@ async def _(event):
             event, "**Teks apa yang harus saya gunakan di pesan button?**"
         )
     catinput = "Inline buttons " + markdown_note
-    ManUbot = await tgbot.get_me()
-    BOT_USERNAME = ManUbot.username
+    ManUBOT = await tgbot.get_me()
+    BOT_USERNAME = ManUBOT.username
     results = await event.client.inline_query(BOT_USERNAME, catinput)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()
