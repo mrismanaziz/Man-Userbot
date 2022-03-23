@@ -326,6 +326,8 @@ async def _(event):
     xnxx = await edit_or_reply(event, f"`{choice(KANGING_STR)}`")
     reply = await event.get_reply_message()
     query = event.text[7:]
+    ManUbot = await tgbot.get_me()
+    BOT_USERNAME = ManUbot.username
     bot_ = BOT_USERNAME
     bot_un = bot_.replace("@", "")
     user = await event.client.get_me()
