@@ -58,6 +58,7 @@ async def autobot():
     await bot.send_message(
         BOTLOG_CHATID, "**SEDANG MEMBUAT BOT TELEGRAM UNTUK ANDA DI @BotFather**"
     )
+    LOGS.info("TUNGGU SEBENTAR. SEDANG MEMBUAT ASSISTANT BOT UNTUK ANDA")
     who = await bot.get_me()
     name = who.first_name + " Assistant Bot"
     if who.username:
