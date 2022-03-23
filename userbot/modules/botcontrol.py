@@ -106,8 +106,8 @@ async def pmclose(event):
 @callback(data=re.compile(b"pmbot"))
 async def pmbot(event):
     await event.delete()
-    ManUbot = await tgbot.get_me()
-    botusername = ManUbot.username
+    ManUBOT = await tgbot.get_me()
+    botusername = ManUBOT.username
     if event.query.user_id == OWNER_ID:
         await tgbot.send_message(
             event.chat_id,
