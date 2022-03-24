@@ -464,20 +464,11 @@ def paginate_help(page_number, loaded_modules, prefix):
     return pairs
 
 
-def ibuild_keyboard(buttons):
-    keyb = []
-    for btn in buttons:
-        if btn[2] and keyb:
-            keyb[-1].append(Button.url(btn[0], btn[1]))
-        else:
-            keyb.append([Button.url(btn[0], btn[1])])
-    return keyb
-
-
 with bot:
     try:
         from userbot.modules.sql_helper.bot_blacklists import check_is_black_list
         from userbot.modules.sql_helper.bot_pms_sql import add_user_to_db, get_user_id
+        from userbot.modules.button import BTN_URL_REGEX, build_keyboard
         from userbot.utils import reply_id
 
         dugmeler = CMD_HELP
@@ -487,9 +478,6 @@ with bot:
         logo = ALIVE_LOGO
         logoman = INLINE_PIC
         tgbotusername = BOT_USERNAME
-        BTN_URL_REGEX = re.compile(
-            r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)"
-        )
 
         @tgbot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
         async def bot_pms(event):
@@ -612,7 +600,7 @@ with bot:
                 else:
                     note_data += markdown_note[prev:]
                 message_text = note_data.strip()
-                tl_ib_buttons = ibuild_keyboard(buttons)
+                tl_ib_buttons = build_keyboard(buttons)
                 result = builder.article(
                     title="Inline creator",
                     text=message_text,
