@@ -32,10 +32,6 @@ def htmlmentionuser(name, userid):
     return f"<a href='tg://user?id={userid}'>{name}</a>"
 
 
-def reformattext(text):
-    return text.replace("~", "").replace("_", "").replace("*", "").replace("`", "")
-
-
 # kanged from uniborg @spechide
 # https://github.com/SpEcHiDe/UniBorg/blob/d8b852ee9c29315a53fb27055e54df90d0197f0b/uniborg/utils.py#L250
 
