@@ -963,7 +963,7 @@ async def _(event):
             )
     else:
         await tgbot.send_message(
-            event.chat_id, "**👥 Chat ID:** `{}`".format(str(event.chat_id))
+            event.chat_id, f"**👥 Chat ID:** `{str(event.chat_id)}`"
         )
 
 
