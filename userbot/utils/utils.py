@@ -246,7 +246,7 @@ def remove_plugin(shortname):
             name = f"userbot.modules.{shortname}"
 
             for i in reversed(range(len(bot._event_builders))):
-                ev, cb = bot._event_builders[i]
+                cb = bot._event_builders[i]
                 if cb.__module__ == name:
                     del bot._event_builders[i]
     except BaseException:
