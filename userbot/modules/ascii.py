@@ -1,7 +1,7 @@
 # based on https://gist.github.com/wshanshan/c825efca4501a491447056849dd207d6
 # Ported for ProjectAlf by Alfiananda P.A
 
-import random
+from secrets import choice
 
 import numpy as np
 from colour import Color
@@ -113,8 +113,7 @@ async def asciiart(IMG, color1, color2, bgcolor):
 # this is from userge
 async def random_color():
     return [
-        "#" + "".join(random.choice("0123456789ABCDEF") for k in range(6))
-        for i in range(2)
+        "#" + "".join(choice("0123456789ABCDEF") for k in range(6)) for i in range(2)
     ]
 
 

@@ -10,9 +10,9 @@
 import asyncio
 import io
 import math
-import random
 import urllib.request
 from os import remove
+from secrets import choice
 
 import requests
 from bs4 import BeautifulSoup as bs
@@ -32,7 +32,6 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_input_document
 
-from userbot import BOT_USERNAME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot import S_PACK_NAME as custompack
@@ -68,7 +67,7 @@ async def kang(args):
         )
 
     if isinstance(message.media, MessageMediaPhoto):
-        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+        xx = await edit_or_reply(args, f"`{choice(KANGING_STR)}`")
         photo = io.BytesIO()
         photo = await args.client.download_media(message.photo, photo)
     elif isinstance(message.media, MessageMediaUnsupported):
@@ -76,7 +75,7 @@ async def kang(args):
             args, "**File Tidak Didukung, Silahkan Reply ke Media Foto/GIF !**"
         )
     elif message.file and "image" in message.file.mime_type.split("/"):
-        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+        xx = await edit_or_reply(args, f"`{choice(KANGING_STR)}`")
         photo = io.BytesIO()
         await args.client.download_file(message.media.document, photo)
         if (
@@ -87,7 +86,7 @@ async def kang(args):
             if emoji != "✨":
                 emojibypass = True
     elif message.file and "tgsticker" in message.file.mime_type:
-        xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+        xx = await edit_or_reply(args, f"`{choice(KANGING_STR)}`")
         await args.client.download_file(message.media.document, "AnimatedSticker.tgs")
         attributes = message.media.document.attributes
         for attribute in attributes:
@@ -98,12 +97,12 @@ async def kang(args):
         photo = 1
     elif message.media.document.mime_type in ["video/mp4", "video/webm"]:
         if message.media.document.mime_type == "video/webm":
-            xx = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+            xx = await edit_or_reply(args, f"`{choice(KANGING_STR)}`")
             await args.client.download_media(message.media.document, "Video.webm")
         else:
             xx = await edit_or_reply(args, "`Downloading...`")
             await animator(message, args, xx)
-            await xx.edit(f"`{random.choice(KANGING_STR)}`")
+            await xx.edit(f"`{choice(KANGING_STR)}`")
         is_video = True
         emoji = "✨"
         emojibypass = True
@@ -323,9 +322,11 @@ async def resize_photo(photo):
 
 @man_cmd(pattern="pkang(?:\\s|$)([\\s\\S]*)")
 async def _(event):
-    xnxx = await edit_or_reply(event, f"`{random.choice(KANGING_STR)}`")
+    xnxx = await edit_or_reply(event, f"`{choice(KANGING_STR)}`")
     reply = await event.get_reply_message()
     query = event.text[7:]
+    ManUbot = await tgbot.get_me()
+    BOT_USERNAME = ManUbot.username
     bot_ = BOT_USERNAME
     bot_un = bot_.replace("@", "")
     user = await event.client.get_me()
@@ -342,8 +343,7 @@ async def _(event):
         tikel_hash = reply.media.document.attributes[1].stickerset.access_hash
         got_stcr = await event.client(
             functions.messages.GetStickerSetRequest(
-                stickerset=types.InputStickerSetID(id=tikel_id, access_hash=tikel_hash),
-                hash=0,
+                stickerset=types.InputStickerSetID(id=tikel_id, access_hash=tikel_hash)
             )
         )
         stcrs = []
@@ -364,7 +364,7 @@ async def _(event):
             pack = int(x) + 1
         except BaseException:
             pack = 1
-        await xnxx.edit(f"`{random.choice(KANGING_STR)}`")
+        await xnxx.edit(f"`{choice(KANGING_STR)}`")
         try:
             create_st = await tgbot(
                 functions.stickers.CreateStickerSetRequest(
@@ -420,8 +420,7 @@ async def get_pack_info(event):
             InputStickerSetID(
                 id=stickerset_attr.stickerset.id,
                 access_hash=stickerset_attr.stickerset.access_hash,
-            ),
-            hash=0,
+            )
         )
     )
     pack_emojis = []

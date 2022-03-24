@@ -149,15 +149,15 @@ def man_handler(
 ):
     def decorator(func):
         if bot:
-            bot.add_event_handler(func, events.NewMessage(**args, incoming=True))
+            bot.add_event_handler(func, events.NewMessage(**args))
         if MAN2:
-            MAN2.add_event_handler(func, events.NewMessage(**args, incoming=True))
+            MAN2.add_event_handler(func, events.NewMessage(**args))
         if MAN3:
-            MAN3.add_event_handler(func, events.NewMessage(**args, incoming=True))
+            MAN3.add_event_handler(func, events.NewMessage(**args))
         if MAN4:
-            MAN4.add_event_handler(func, events.NewMessage(**args, incoming=True))
+            MAN4.add_event_handler(func, events.NewMessage(**args))
         if MAN5:
-            MAN5.add_event_handler(func, events.NewMessage(**args, incoming=True))
+            MAN5.add_event_handler(func, events.NewMessage(**args))
         return func
 
     return decorator

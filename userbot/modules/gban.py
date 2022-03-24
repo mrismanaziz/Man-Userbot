@@ -1,16 +1,15 @@
 # by:koala @mixiologist
 # Lord Userbot
 
-from telethon.events import ChatAction
 
-from userbot import DEVS, WHITELIST, blacklistman, bot
+from userbot import DEVS, WHITELIST, blacklistman
 from userbot.events import register
-from userbot.utils import get_user_from_event, man_cmd
+from userbot.utils import chataction, get_user_from_event, man_cmd
 
 # Ported For Lord-Userbot by liualvinas/Alvin
 
 
-@bot.on(ChatAction)
+@chataction()
 async def handler(tele):
     if not tele.user_joined and not tele.user_added:
         return
@@ -51,10 +50,7 @@ async def gben(userbot):
         dark = await dc.reply("`Gbanning...`")
     else:
         dark = await dc.edit("`Memproses Global Banned Jamet..`")
-    me = await userbot.client.get_me()
     await dark.edit("`Global Banned Akan Segera Aktif..`")
-    my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
-    await userbot.get_chat()
     a = b = 0
     if userbot.is_private:
         user = userbot.chat
@@ -124,10 +120,7 @@ async def gunben(userbot):
         dark = await dc.reply("`Ungbanning...`")
     else:
         dark = await dc.edit("`Ungbanning....`")
-    me = await userbot.client.get_me()
     await dark.edit("`Membatalkan Perintah Global Banned`")
-    my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
-    await userbot.get_chat()
     a = b = 0
     if userbot.is_private:
         user = userbot.chat

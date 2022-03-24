@@ -27,6 +27,7 @@ import barcode
 import emoji
 import qrcode
 import requests
+from aiohttp import ClientSession
 from barcode.writer import ImageWriter
 from bs4 import BeautifulSoup
 from googletrans import LANGUAGES, Translator
@@ -404,6 +405,12 @@ async def download_video(v_url):
     video = False
     audio = False
 
+    if "tiktok.com" in url:
+        async with ClientSession() as ses, ses.head(
+            url, allow_redirects=True, timeout=5
+        ) as head:
+            url = str(head.url)
+
     if "audio" in dl_type:
         opts = {
             "format": "bestaudio",
@@ -484,7 +491,7 @@ async def download_video(v_url):
     except ExtractorError:
         return await edit_delete(xx, "`There was an error during info extraction.`")
     except Exception as e:
-        return await edit_delete(xx, f"{str(type(e)): {e}}")
+        return await edit_delete(xx, f"{str(type(e))}: {str(e)}")
     c_time = time.time()
     if audio:
         await xx.edit(

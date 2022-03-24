@@ -10,7 +10,7 @@
 # t.me/Lunatic0de & t.me/SharingUserbot
 
 import os
-import random
+from secrets import choice
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
@@ -176,7 +176,7 @@ async def crbn(event):
     from_user = vcmention(event.sender)
     xxxx = await edit_or_reply(event, "`Processing...`")
     te = event.text
-    col = random.choice(all_col) if te[1] == "r" else "Grey"
+    col = choice(all_col) if te[1] == "r" else "Grey"
     if event.reply_to_msg_id:
         temp = await event.get_reply_message()
         if temp.media:
@@ -202,7 +202,7 @@ async def crbn(event):
 
 
 @man_cmd(pattern="ccarbon ?(.*)")
-async def crbn(event):
+async def ccrbn(event):
     from_user = vcmention(event.sender)
     match = event.pattern_match.group(1).strip()
     if not match:

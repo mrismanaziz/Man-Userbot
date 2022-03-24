@@ -6,7 +6,8 @@
 #
 
 from io import BytesIO
-from random import choice, randint
+from random import randint
+from secrets import choice
 from textwrap import wrap
 
 from PIL import Image, ImageDraw, ImageFont

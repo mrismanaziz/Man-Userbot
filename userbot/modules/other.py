@@ -15,7 +15,7 @@ from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import ChannelParticipantsKicked
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP
+from userbot import CMD_HELP, LOGS
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
@@ -80,8 +80,10 @@ async def _(event):
         try:
             await event.client.edit_permissions(event.chat_id, i, view_messages=True)
             p += 1
-        except BaseException:
+        except ChatAdminRequiredError:
             pass
+        except BaseException as er:
+            LOGS.exception(er)
     await xx.edit(f"**Berhasil unbanned** `{p}` **Orang di Grup {title}**")
 
 
@@ -98,8 +100,8 @@ async def _(event):
     if event.reply_to_msg_id:
         await event.client.send_message(chat_id, mssg)
         await edit_or_reply(event, "**Berhasil Mengirim Pesan Anda.**")
-    msg = "".join(i + " " for i in m[1:])
-    if msg == "":
+    msg = "".join(f"{i} " for i in m[1:])
+    if not msg:
         return
     try:
         await event.client.send_message(chat_id, msg)
@@ -136,12 +138,12 @@ async def _(event):
 @man_cmd(pattern="tmsg (.*)")
 async def _(event):
     k = await event.get_reply_message()
+    u = event.pattern_match.group(1)
     if k:
         a = await event.client.get_messages(event.chat_id, 0, from_user=k.sender_id)
         return await event.edit(
             f"**Total ada** `{a.total}` **Chat Yang dikirim Oleh** {u} **di Grup Chat ini**"
         )
-    u = event.pattern_match.group(1)
     if not u:
         u = "me"
     a = await event.client.get_messages(event.chat_id, 0, from_user=u)

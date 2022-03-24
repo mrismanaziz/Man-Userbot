@@ -27,7 +27,7 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_input_location
 
-from userbot import CMD_HELP, SUDO_USERS, TEMP_DOWNLOAD_DIRECTORY, bot
+from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 # ====================== CONSTANT ===============================
@@ -54,10 +54,8 @@ async def mine(event):
     await edit_or_reply(event, output_str)
 
 
-@man_cmd(pattern=r"name")
+@man_cmd(pattern="name", allow_sudo=False)
 async def update_name(name):
-    if name.sender_id in SUDO_USERS:
-        return
     newname = name.text[6:]
     if " " not in newname:
         firstname = newname
@@ -71,10 +69,8 @@ async def update_name(name):
     await edit_or_reply(name, NAME_OK)
 
 
-@man_cmd(pattern="setpfp$")
+@man_cmd(pattern="setpfp$", allow_sudo=False)
 async def set_profilepic(propic):
-    if propic.sender_id in SUDO_USERS:
-        return
     replymsg = await propic.get_reply_message()
     photo = None
     if replymsg.media:
@@ -100,19 +96,15 @@ async def set_profilepic(propic):
             await propic.edit(INVALID_MEDIA)
 
 
-@man_cmd(pattern="setbio (.*)")
+@man_cmd(pattern="setbio (.*)", allow_sudo=False)
 async def set_biograph(setbio):
-    if setbio.sender_id in SUDO_USERS:
-        return
     newbio = setbio.pattern_match.group(1)
     await setbio.client(UpdateProfileRequest(about=newbio))
     await edit_or_reply(setbio, BIO_SUCCESS)
 
 
-@man_cmd(pattern="username (.*)")
+@man_cmd(pattern="username (.*)", allow_sudo=False)
 async def update_username(username):
-    if username.sender_id in SUDO_USERS:
-        return
     newusername = username.pattern_match.group(1)
     try:
         await username.client(UpdateUsernameRequest(newusername))
@@ -155,10 +147,8 @@ async def count(event):
     await xx.edit(result)
 
 
-@man_cmd(pattern="delpfp")
+@man_cmd(pattern="delpfp", allow_sudo=False)
 async def remove_profilepic(delpfp):
-    if delpfp.sender_id in SUDO_USERS:
-        return
     group = delpfp.text[8:]
     if group == "all":
         lim = 0

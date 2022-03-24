@@ -302,7 +302,7 @@ async def unmoot(unmot):
         return await edit_delete(man, "**Terjadi ERROR!**")
 
 
-@man_handler()
+@man_handler(incoming=True)
 async def muter(moot):
     try:
         from userbot.modules.sql_helper.gmute_sql import is_gmuted
@@ -494,7 +494,7 @@ async def pin(event):
 
 @man_cmd(pattern="unpin( all|$)")
 @register(pattern=r"^\.cunpin( all|$)", sudo=True)
-async def pin(event):
+async def unpin(event):
     to_unpin = event.reply_to_msg_id
     options = (event.pattern_match.group(1)).strip()
     if not to_unpin and options != "all":

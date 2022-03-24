@@ -2,8 +2,6 @@ import pybase64
 from telethon.tl.functions.channels import JoinChannelRequest as Get
 from telethon.tl.types import MessageEntityMentionName
 
-from userbot import MAN2, MAN3, MAN4, MAN5, bot
-
 from .logger import logging
 from .tools import edit_delete
 
@@ -77,36 +75,12 @@ async def get_user_from_event(
     return None, None
 
 
-async def checking():
+async def checking(client):
     gocheck = str(pybase64.b64decode("QEx1bmF0aWMwZGU="))[2:13]
     checker = str(pybase64.b64decode("QFNoYXJpbmdVc2VyYm90"))[2:17]
-    try:
-        if bot:
-            await bot(Get(gocheck))
-            await bot(Get(checker))
-    except BaseException:
-        pass
-    try:
-        if MAN2:
-            await MAN2(Get(gocheck))
-            await MAN2(Get(checker))
-    except BaseException:
-        pass
-    try:
-        if MAN3:
-            await MAN3(Get(gocheck))
-            await MAN3(Get(checker))
-    except BaseException:
-        pass
-    try:
-        if MAN4:
-            await MAN4(Get(gocheck))
-            await MAN4(Get(checker))
-    except BaseException:
-        pass
-    try:
-        if MAN5:
-            await MAN5(Get(gocheck))
-            await MAN5(Get(checker))
-    except BaseException:
-        pass
+    if client:
+        try:
+            await client(Get(gocheck))
+            await client(Get(checker))
+        except BaseException:
+            pass

@@ -9,7 +9,7 @@ import csv
 import random
 from datetime import datetime
 from math import sqrt
-from random import choice
+from secrets import choice
 
 from emoji import emojize
 from telethon import functions
@@ -38,7 +38,6 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_input_location
 
-from userbot import BLACKLIST_CHAT
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
 from userbot.events import register
@@ -111,27 +110,6 @@ async def _(event):
     except Exception as e:
         mentions += " " + str(e) + "\n"
     await edit_or_reply(event, mentions)
-
-
-@man_cmd(pattern="kickme$")
-async def kickme(leave):
-    if leave.chat_id in BLACKLIST_CHAT:
-        return await edit_or_reply(
-            leave, "**Perintah ini Dilarang digunakan di Group ini**"
-        )
-    user = await leave.client.get_me()
-    await edit_or_reply(leave, f"`{user.first_name} has left this group, bye!!`")
-    await leave.client.kick_participant(leave.chat_id, "me")
-
-
-@man_cmd(pattern="kikme$")
-async def kikme(leave):
-    if leave.chat_id in BLACKLIST_CHAT:
-        return await edit_or_reply(
-            leave, "**Perintah ini Dilarang digunakan di Group ini**"
-        )
-    await edit_or_reply(leave, "**GC NYA JELEK GOBLOK KELUAR DULU AH CROTT** 🥴")
-    await leave.client.kick_participant(leave.chat_id, "me")
 
 
 @register(pattern=r"^\.absenall$", own=True)
@@ -568,20 +546,6 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk Menambahkan/invite pengguna ke group chat.\
         \n\n  •  **Syntax :** `{cmd}inviteall` <username grup yang mau di culik membernya>\
         \n  •  **Function : **Untuk Menambahkan/invite pengguna dari grup yang ditargetkan ke grup Anda. (ketik perintah `.inviteall` di gc lu)\
-    "
-    }
-)
-
-
-CMD_HELP.update(
-    {
-        "kickme": f"**Plugin : **`kickme`\
-        \n\n  •  **Syntax :** `{cmd}kickme`\
-        \n  •  **Function : **Keluar grup dengan menampilkan pesan Master has left this group, bye!!\
-        \n\n  •  **Syntax :** `{cmd}leave`\
-        \n  •  **Function : **Keluar grup dengan menampilkan pesan Master Telah Meninggalkan Grup, bye !!\
-        \n\n  •  **Syntax :** `{cmd}kikme`\
-        \n  •  **Function : **Keluar grup dengan menampilkan pesan GC NYA JELEK GOBLOK KELUAR DULU AH CROTT 🥴\
     "
     }
 )

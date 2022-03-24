@@ -1,5 +1,5 @@
 import json
-import random
+from secrets import choice
 
 import requests
 
@@ -23,7 +23,7 @@ async def get_task(mode, choice):
     }
     response = requests.post(url, headers=headers, data=json.dumps(data))
     result = response.json()["results"]
-    return random.choice(result)
+    return choice(result)
 
 
 @man_cmd(pattern="(task|truth|dare)(?: |$)([1-5]+)?$")
@@ -31,11 +31,11 @@ async def tod(event):
     tod = event.pattern_match.group(1)
     if tod == "task":
         xxnx = await edit_or_reply(event, "`Processing...`")
-        tod = random.choice(["truth", "dare"])
+        tod = choice(["truth", "dare"])
     else:
         xxnx = await edit_or_reply(event, f"`Tugas {tod} acak untuk Anda...`")
     category = event.pattern_match.group(2)
-    category = int(random.choice(category)) if category else random.choice([1, 2])
+    category = int(choice(category)) if category else choice([1, 2])
     try:
         task = await get_task(tod, category)
         if tod == "truth":

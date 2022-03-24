@@ -7,13 +7,15 @@
 
 import sys
 
-import telethon.utils
+from telethon.utils import get_peer_id
 
+from userbot import BOT_TOKEN
 from userbot import BOT_VER as version
 from userbot import (
     DEFAULT,
     DEVS,
     LOGS,
+    LOOP,
     MAN2,
     MAN3,
     MAN4,
@@ -26,6 +28,7 @@ from userbot import (
     blacklistman,
     bot,
     call_py,
+    tgbot,
 )
 from userbot.modules.gcast import GCAST_BLACKLIST as GBL
 
@@ -35,7 +38,7 @@ MSG_BLACKLIST = "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {} GUA MATIIN NAJIS 
 
 async def man_client(client):
     client.me = await client.get_me()
-    client.uid = telethon.utils.get_peer_id(client.me)
+    client.uid = get_peer_id(client.me)
 
 
 def multiman():
@@ -53,7 +56,7 @@ def multiman():
         try:
             bot.start()
             call_py.start()
-            bot.loop.run_until_complete(man_client(bot))
+            LOOP.run_until_complete(man_client(bot))
             user = bot.get_me()
             name = user.first_name
             uid = user.id
@@ -64,12 +67,12 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
-            LOGS.info(f"{e}")
+            LOGS.info(str(e))
 
     if STRING_2:
         try:
             MAN2.start()
-            MAN2.loop.run_until_complete(man_client(MAN2))
+            LOOP.run_until_complete(man_client(MAN2))
             user = MAN2.get_me()
             name = user.first_name
             uid = user.id
@@ -78,12 +81,12 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
-            LOGS.info(f"{e}")
+            LOGS.info(str(e))
 
     if STRING_3:
         try:
             MAN3.start()
-            MAN3.loop.run_until_complete(man_client(MAN3))
+            LOOP.run_until_complete(man_client(MAN3))
             user = MAN3.get_me()
             name = user.first_name
             uid = user.id
@@ -92,12 +95,12 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
-            LOGS.info(f"{e}")
+            LOGS.info(str(e))
 
     if STRING_4:
         try:
             MAN4.start()
-            MAN4.loop.run_until_complete(man_client(MAN4))
+            LOOP.run_until_complete(man_client(MAN4))
             user = MAN4.get_me()
             name = user.first_name
             uid = user.id
@@ -106,12 +109,12 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
-            LOGS.info(f"{e}")
+            LOGS.info(str(e))
 
     if STRING_5:
         try:
             MAN5.start()
-            MAN5.loop.run_until_complete(man_client(MAN5))
+            LOOP.run_until_complete(man_client(MAN5))
             user = MAN5.get_me()
             name = user.first_name
             uid = user.id
@@ -120,7 +123,18 @@ def multiman():
                 LOGS.warning(MSG_BLACKLIST.format(name, version))
                 sys.exit(1)
         except Exception as e:
-            LOGS.info(f"{e}")
+            LOGS.info(str(e))
+
+    if BOT_TOKEN:
+        try:
+            user = tgbot.get_me()
+            name = user.first_name
+            uname = user.username
+            LOGS.info(
+                f"BOT_TOKEN detected!\n┌ First Name: {name}\n└ Username: @{uname}\n——"
+            )
+        except Exception as e:
+            LOGS.info(str(e))
 
     if not STRING_SESSION:
         failed += 1

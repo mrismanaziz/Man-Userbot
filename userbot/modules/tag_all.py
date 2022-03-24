@@ -7,8 +7,8 @@
 # t.me/SharingUserbot & t.me/Lunatic0de
 
 import asyncio
-import random
 import re
+from secrets import choice
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
@@ -52,7 +52,7 @@ async def _(event):
         await event.delete()
         tags = list(
             map(
-                lambda m: f"[{random.choice(emoji)}](tg://user?id={m.id})",
+                lambda m: f"[{choice(emoji)}](tg://user?id={m.id})",
                 await event.client.get_participants(chat),
             ),
         )
@@ -64,7 +64,7 @@ async def _(event):
             if len(current_pack) == 5:
                 tags = list(
                     map(
-                        lambda m: f"[{random.choice(emoji)}](tg://user?id={m.id})",
+                        lambda m: f"[{choice(emoji)}](tg://user?id={m.id})",
                         current_pack,
                     ),
                 )
