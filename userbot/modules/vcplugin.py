@@ -48,14 +48,17 @@ def ytsearch(query: str):
         url = data["link"]
         duration = data["duration"]
         thumbnail = data["thumbnails"][0]["url"]
-        return [songname, url, duration, thumbnail]
+        videoid = data["id"]
+        return [songname, url, duration, thumbnail, videoid]
     except Exception as e:
         print(e)
         return 0
 
 
-async def ytdl(format: str, link: str):
-    stdout, stderr = await bash(f'yt-dlp -g -f "{format}" {link}')
+async def ytdl(link: str):
+    stdout, stderr = await bash(
+        f'yt-dlp -g -f "best[height<=?720][width<=?1280]" {link}'
+    )
     if stdout:
         return 1, stdout.split("\n")[0]
     return 0, stderr
@@ -113,8 +116,8 @@ async def skip_current_song(chat_id: int):
 async def vc_play(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
-    sender = await event.get_sender()
     chat = await event.get_chat()
+    titlegc = chat.title
     chat_id = event.chat_id
     from_user = vcmention(event.sender)
     if (
@@ -140,12 +143,11 @@ async def vc_play(event):
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
-            userid = sender.id
+            videoid = search[4]
             titlegc = chat.title
             ctitle = await CHAT_TITLE(titlegc)
-            thumb = await gen_thumb(thumbnail, title, userid, ctitle)
-            format = "best[height<=?720][width<=?1280]"
-            hm, ytlink = await ytdl(format, url)
+            thumb = await gen_thumb(thumbnail, title, videoid, ctitle)
+            hm, ytlink = await ytdl(url)
             if hm == 0:
                 await botman.edit(f"`{ytlink}`")
             elif chat_id in QUEUE:
@@ -215,8 +217,6 @@ async def vc_play(event):
 async def vc_vplay(event):
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
-    sender = await event.get_sender()
-    userid = sender.id
     chat = await event.get_chat()
     titlegc = chat.title
     chat_id = event.chat_id
@@ -246,10 +246,10 @@ async def vc_vplay(event):
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
+            videoid = search[4]
             ctitle = await CHAT_TITLE(titlegc)
-            thumb = await gen_thumb(thumbnail, title, userid, ctitle)
-            format = "best[height<=?720][width<=?1280]"
-            hm, ytlink = await ytdl(format, url)
+            thumb = await gen_thumb(thumbnail, title, videoid, ctitle)
+            hm, ytlink = await ytdl(url)
             if hm == 0:
                 await xnxx.edit(f"`{ytlink}`")
             elif chat_id in QUEUE:
@@ -337,10 +337,10 @@ async def vc_vplay(event):
             url = search[1]
             duration = search[2]
             thumbnail = search[3]
+            videoid = search[4]
             ctitle = await CHAT_TITLE(titlegc)
-            thumb = await gen_thumb(thumbnail, title, userid, ctitle)
-            format = "best[height<=?720][width<=?1280]"
-            hm, ytlink = await ytdl(format, url)
+            thumb = await gen_thumb(thumbnail, title, videoid, ctitle)
+            hm, ytlink = await ytdl(url)
             if hm == 0:
                 await xnxx.edit(f"`{ytlink}`")
             elif chat_id in QUEUE:

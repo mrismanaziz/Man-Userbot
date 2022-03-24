@@ -14,6 +14,7 @@ import os
 import re
 import sys
 import time
+from asyncio import get_event_loop
 from base64 import b64decode
 from distutils.util import strtobool as sb
 from logging import DEBUG, INFO, basicConfig, getLogger
@@ -44,6 +45,7 @@ def STORAGE(n):
 
 load_dotenv("config.env")
 
+LOOP = get_event_loop()
 StartTime = time.time()
 repo = Repo()
 branch = repo.active_branch.name
@@ -74,9 +76,9 @@ logging.getLogger("telethon.network.mtprotosender").setLevel(logging.ERROR)
 logging.getLogger("telethon.network.connection.connection").setLevel(logging.ERROR)
 LOGS = getLogger(__name__)
 
-if version_info[0] < 3 or version_info[1] < 9:
+if version_info[0] < 3 or version_info[1] < 8:
     LOGS.info(
-        "Anda HARUS memiliki python setidaknya versi 3.9."
+        "Anda HARUS memiliki python setidaknya versi 3.8."
         "Beberapa fitur tergantung versi python ini. Bot berhenti."
     )
     sys.exit(1)
@@ -109,6 +111,7 @@ del _DEVS
 
 SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
 BL_CHAT = {int(x) for x in os.environ.get("BL_CHAT", "").split()}
+BLACKLIST_GCAST = {int(x) for x in os.environ.get("BLACKLIST_GCAST", "").split()}
 
 # For Blacklist Group Support
 BLACKLIST_CHAT = os.environ.get("BLACKLIST_CHAT", None)
@@ -214,7 +217,7 @@ ZIP_DOWNLOAD_DIRECTORY = os.environ.get("ZIP_DOWNLOAD_DIRECTORY", "./zips")
 BITLY_TOKEN = os.environ.get("BITLY_TOKEN", None)
 
 # Bot version
-BOT_VER = os.environ.get("BOT_VER", "3.1.7")
+BOT_VER = os.environ.get("BOT_VER", "3.2.1")
 
 # Default .alive logo
 ALIVE_LOGO = (
@@ -253,7 +256,7 @@ if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
             username=LASTFM_USERNAME,
             password_hash=LASTFM_PASS,
         )
-    except Exception:
+    except BaseException:
         pass
 
 TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads/")
@@ -282,6 +285,9 @@ while 0 < 6:
     break
 
 del _BLACKLIST
+
+ch = str(b64decode("QEx1bmF0aWMwZGU="))[2:13]
+gc = str(b64decode("QFNoYXJpbmdVc2VyYm90"))[2:17]
 
 while 0 < 6:
     _WHITELIST = get(
@@ -328,6 +334,7 @@ if STRING_2:
     )
     call_py2 = PyTgCalls(MAN2)
 else:
+    call_py2 = None
     MAN2 = None
 
 
@@ -343,6 +350,7 @@ if STRING_3:
     )
     call_py3 = PyTgCalls(MAN3)
 else:
+    call_py3 = None
     MAN3 = None
 
 
@@ -358,6 +366,7 @@ if STRING_4:
     )
     call_py4 = PyTgCalls(MAN4)
 else:
+    call_py4 = None
     MAN4 = None
 
 
@@ -373,24 +382,15 @@ if STRING_5:
     )
     call_py5 = PyTgCalls(MAN5)
 else:
+    call_py5 = None
     MAN5 = None
 
 
-async def check_botlog_chatid() -> None:
-    if not BOTLOG_CHATID:
-        LOGS.warning(
-            "var BOTLOG_CHATID kamu belum di isi. Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id Masukan id grup nya di var BOTLOG_CHATID"
-        )
-        sys.exit(1)
-
-
 async def update_restart_msg(chat_id, msg_id):
-    DEFAULTUSER = ALIVE_NAME or "Set `ALIVE_NAME` ConfigVar!"
     message = (
         f"**Man-UserBot v{BOT_VER} is back up and running!**\n\n"
         f"**Telethon:** {version.__version__}\n"
         f"**Python:** {python_version()}\n"
-        f"**User:** {DEFAULTUSER}"
     )
     await bot.edit_message(chat_id, msg_id, message)
     return True
@@ -402,7 +402,7 @@ try:
     chat_id, msg_id = gvarstatus("restartstatus").split("\n")
     with bot:
         try:
-            bot.loop.run_until_complete(update_restart_msg(int(chat_id), int(msg_id)))
+            LOOP.run_until_complete(update_restart_msg(int(chat_id), int(msg_id)))
         except BaseException:
             pass
     delgvar("restartstatus")
@@ -735,8 +735,3 @@ with bot:
             "Untuk Mengaktifkannya Buat bot di @BotFather Lalu Tambahkan var BOT_TOKEN dan BOT_USERNAME. "
             "Pergi Ke @BotFather lalu settings bot » Pilih mode inline » Turn On. "
         )
-    try:
-        bot.loop.run_until_complete(check_botlog_chatid())
-    except BaseException as e:
-        LOGS.exception(f"[BOTLOG] - {e}")
-        sys.exit(1)

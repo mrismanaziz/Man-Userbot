@@ -8,7 +8,7 @@ import json
 import re
 import urllib.parse
 from os import popen
-from random import choice
+from secrets import choice
 
 import requests
 from bs4 import BeautifulSoup

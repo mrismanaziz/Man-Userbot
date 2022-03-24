@@ -53,7 +53,7 @@ async def memify(event):
     await event.client.send_file(
         entity=event.chat_id, file=final_image, reply_to=reply_msg
     )
-    await event.delete()
+    await xx.delete()
     os.remove(final_image)
     os.remove(input_file)
 

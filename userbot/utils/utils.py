@@ -10,6 +10,7 @@ from pathlib import Path
 from random import randint
 
 import heroku3
+from telethon.tl.functions.channels import CreateChannelRequest
 from telethon.tl.functions.contacts import UnblockRequest
 
 from userbot import (
@@ -31,13 +32,33 @@ else:
     app = None
 
 
+async def autopilot():
+    LOGS.info("TUNGGU SEBENTAR. SEDANG MEMBUAT GROUP LOG USERBOT UNTUK ANDA")
+    desc = "Group Log untuk Man-UserBot.\n\nHARAP JANGAN KELUAR DARI GROUP INI.\n\n✨ Powered By ~ @Lunatic0de ✨"
+    try:
+        grup = await bot(
+            CreateChannelRequest(title="Log UserBot", about=desc, megagroup=True)
+        )
+        grup_id = grup.chats[0].id
+    except Exception as e:
+        LOGS.error(str(e))
+        LOGS.warning(
+            "var BOTLOG_CHATID kamu belum di isi. Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id Masukan id grup nya di var BOTLOG_CHATID"
+        )
+    if not str(grup_id).startswith("-100"):
+        grup_id = int("-100" + str(grup_id))
+    heroku_var["BOTLOG_CHATID"] = grup_id
+
+
 async def autobot():
     if BOT_TOKEN:
         return
     await bot.start()
+    await asyncio.sleep(15)
     await bot.send_message(
         BOTLOG_CHATID, "**SEDANG MEMBUAT BOT TELEGRAM UNTUK ANDA DI @BotFather**"
     )
+    LOGS.info("TUNGGU SEBENTAR. SEDANG MEMBUAT ASSISTANT BOT UNTUK ANDA")
     who = await bot.get_me()
     name = who.first_name + " Assistant Bot"
     if who.username:
@@ -111,12 +132,12 @@ async def autobot():
                 BOTLOG_CHATID,
                 f"**BERHASIL MEMBUAT BOT TELEGRAM DENGAN USERNAME @{username}**",
             )
+            LOGS.info(f"BERHASIL MEMBUAT BOT TELEGRAM DENGAN USERNAME @{username}")
             await bot.send_message(
                 BOTLOG_CHATID,
                 "**Tunggu Sebentar, Sedang MeRestart Heroku untuk Menerapkan Perubahan.**",
             )
             heroku_var["BOT_TOKEN"] = token
-            heroku_var["BOT_USERNAME"] = f"@{username}"
         else:
             LOGS.info(
                 "Silakan Hapus Beberapa Bot Telegram Anda di @Botfather atau Set Var BOT_TOKEN dengan token bot"
@@ -153,12 +174,12 @@ async def autobot():
             BOTLOG_CHATID,
             f"**BERHASIL MEMBUAT BOT TELEGRAM DENGAN USERNAME @{username}**",
         )
+        LOGS.info(f"BERHASIL MEMBUAT BOT TELEGRAM DENGAN USERNAME @{username}")
         await bot.send_message(
             BOTLOG_CHATID,
             "**Tunggu Sebentar, Sedang MeRestart Heroku untuk Menerapkan Perubahan.**",
         )
         heroku_var["BOT_TOKEN"] = token
-        heroku_var["BOT_USERNAME"] = f"@{username}"
     else:
         LOGS.info(
             "Silakan Hapus Beberapa Bot Telegram Anda di @Botfather atau Set Var BOT_TOKEN dengan token bot"

@@ -6,13 +6,13 @@
 from covid import Covid
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import edit_or_reply, man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"covid (.*)"))
+@man_cmd(pattern="covid (.*)")
 async def corona(event):
-    await event.edit("`Processing...`")
+    xx = await edit_or_reply(event, "`Processing...`")
     country = event.pattern_match.group(1)
     covid = Covid(source="worldometers")
     country_data = covid.get_status_by_country_name(country)
@@ -29,12 +29,12 @@ async def corona(event):
     else:
         output_text = "No information yet about this country!"
 
-    await event.edit(f"**Corona Virus Info in {country}:**\n\n{output_text}")
+    await xx.edit(f"**Corona Virus Info in {country}:**\n\n{output_text}")
 
 
-@bot.on(man_cmd(outgoing=True, pattern="covid$"))
-async def corona(event):
-    await event.edit("`Processing...`")
+@man_cmd(pattern="covid$")
+async def coronaworld(event):
+    xx = await edit_or_reply(event, "`Processing...`")
     country = "World"
     covid = Covid(source="worldometers")
     country_data = covid.get_status_by_country_name(country)
@@ -51,7 +51,7 @@ async def corona(event):
     else:
         output_text = "No information yet about this country!"
 
-    await event.edit(f"**Corona Virus Info in {country}:**\n\n{output_text}")
+    await xx.edit(f"**Corona Virus Info in {country}:**\n\n{output_text}")
 
 
 CMD_HELP.update(

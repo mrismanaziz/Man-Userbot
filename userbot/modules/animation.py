@@ -1,6 +1,6 @@
 import asyncio
 import os
-from random import choice
+from secrets import choice
 from time import sleep
 
 from userbot import CMD_HANDLER as cmd

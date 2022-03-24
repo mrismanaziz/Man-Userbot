@@ -15,7 +15,7 @@ from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import ChannelParticipantsKicked
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP
+from userbot import CMD_HELP, LOGS
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
@@ -80,8 +80,10 @@ async def _(event):
         try:
             await event.client.edit_permissions(event.chat_id, i, view_messages=True)
             p += 1
-        except BaseException:
+        except ChatAdminRequiredError:
             pass
+        except BaseException as er:
+            LOGS.exception(er)
     await xx.edit(f"**Berhasil unbanned** `{p}` **Orang di Grup {title}**")
 
 

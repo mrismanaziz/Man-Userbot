@@ -59,7 +59,7 @@ async def catbroadcast_send(event):
 
 
 @man_cmd(pattern=r"fwdto ?(.*)")
-async def catbroadcast_send(event):
+async def catbroadcast_fwd(event):
     if event.fwd_from:
         return
     catinput_str = event.pattern_match.group(1)
@@ -217,7 +217,7 @@ async def catbroadcast_list(event):
 
 
 @man_cmd(pattern=r"bclistall ?(.*)")
-async def catbroadcast_list(event):
+async def catbroadcast_listall(event):
     if event.fwd_from:
         return
     if sql.num_broadcastlist_chats() == 0:
@@ -233,7 +233,7 @@ async def catbroadcast_list(event):
 
 
 @man_cmd(pattern=r"frmfrom ?(.*)")
-async def catbroadcast_remove(event):
+async def catbroadcast_from(event):
     if event.fwd_from:
         return
     catinput_str = event.pattern_match.group(1)

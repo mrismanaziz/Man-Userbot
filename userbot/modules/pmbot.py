@@ -10,7 +10,7 @@ from math import floor
 from telethon.errors import BadRequestError, FloodWaitError, ForbiddenError
 from telethon.utils import get_display_name
 
-from userbot import BOT_USERNAME, BOTLOG_CHATID
+from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, bot, tgbot, user
 from userbot.modules.sql_helper.bot_blacklists import (
@@ -37,7 +37,6 @@ from userbot.utils.logger import logging
 
 LOGS = logging.getLogger(__name__)
 
-botusername = BOT_USERNAME
 OWNER_ID = user.id
 OWNER = user.first_name
 FINISHED_PROGRESS_STR = "●"

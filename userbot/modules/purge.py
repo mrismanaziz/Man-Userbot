@@ -137,12 +137,11 @@ async def purgto(purgke):
     try:
         prgstrtmsg = purgechat[purgke.chat_id]
     except KeyError:
-        manubot = await edit_delete(
+        return await edit_delete(
             purgke,
             "**Balas pesan dengan** `.purgefrom` **terlebih dahulu lalu gunakan** `.purgeto`",
             5,
         )
-        return
     try:
         chat = await purgke.get_input_chat()
         prgendmsg = purgke.reply_to_msg_id
@@ -159,11 +158,11 @@ async def purgto(purgke):
         if pmsgs:
             await purgke.client.delete_messages(chat, pmsgs)
             await purgke.delete()
-        man = await edit_delete(
-            purgke,
-            f"**Fast purge complete!**\n**Berhasil Menghapus** `{message}` **Pesan**",
-            5,
-        )
+            await edit_delete(
+                purgke,
+                f"**Fast purge complete!**\n**Berhasil Menghapus** `{message}` **Pesan**",
+                5,
+            )
     except Exception as er:
         await purgke.edit(f"**ERROR:** `{er}`")
 

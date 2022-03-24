@@ -7,9 +7,9 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
-import random
 import time
 from datetime import datetime
+from secrets import choice
 
 from speedtest import Speedtest
 
@@ -200,7 +200,7 @@ async def _(pong):
 # KALO NGEFORK absen ini GA USAH DI HAPUS YA GOBLOK 😡
 @register(pattern=r"^\.absen$", sudo=True)
 async def risman(ganteng):
-    await ganteng.reply(random.choice(absen))
+    await ganteng.reply(choice(absen))
 
 
 # JANGAN DI HAPUS GOBLOK 😡 LU COPY AJA TINGGAL TAMBAHIN

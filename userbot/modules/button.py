@@ -7,7 +7,6 @@ import re
 
 from telethon import Button
 
-from userbot import BOT_USERNAME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, tgbot
 from userbot.utils import edit_delete, man_cmd, reply_id
@@ -81,6 +80,8 @@ async def _(event):
             event, "**Teks apa yang harus saya gunakan di pesan button?**"
         )
     catinput = "Inline buttons " + markdown_note
+    ManUBOT = await tgbot.get_me()
+    BOT_USERNAME = ManUBOT.username
     results = await event.client.inline_query(BOT_USERNAME, catinput)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()
@@ -102,7 +103,7 @@ CMD_HELP.update(
         \n\n  •  **Syntax :** `{cmd}cbutton` <text> [Name on button]<buttonurl:link you want to open>\
         \n  •  **Function : **Untuk membuat pesan button\
         \n  •  **Examples : **`{cmd}cbutton test [google]<buttonurl:https://www.google.com> [Channel]<buttonurl:https://t.me/Lunatic0de:same> [Support]<buttonurl:https://t.me/SharingUserbot>`\
-        \n  •  **NOTE :** Untuk menggunakan ini, anda memerlukan bot anda ({BOT_USERNAME}) harus ada di grup/channel di mana anda menggunakan\
+        \n  •  **NOTE :** Untuk menggunakan ini, anda memerlukan bot anda harus ada di grup/channel di mana anda menggunakan\
         \n\n  •  **Syntax :** `{cmd}ibutton` <text> [Name on button]<buttonurl:link you want to open>\
         \n  •  **Function : **Untuk membuat pesan button melalui inline\
         \n  •  **Examples : **`{cmd}ibutton test [google]<buttonurl:https://www.google.com> [Channel]<buttonurl:https://t.me/Lunatic0de:same> [Support]<buttonurl:https://t.me/SharingUserbot>`\

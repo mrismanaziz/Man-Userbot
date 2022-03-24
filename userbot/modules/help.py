@@ -7,10 +7,8 @@
 
 from userbot import CHANNEL
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, ICON_HELP
+from userbot import CMD_HELP, ICON_HELP, ch
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
-
-modules = CMD_HELP
 
 
 @man_cmd(pattern="help(?: |$)(.*)")
@@ -18,7 +16,7 @@ async def help(event):
     args = event.pattern_match.group(1).lower()
     if args:
         if args in CMD_HELP:
-            await edit_or_reply(event, str(CMD_HELP[args]))
+            await edit_or_reply(event, f"{CMD_HELP[args]}\n\n© {ch}")
         else:
             await edit_delete(event, f"`{args}` **Bukan Nama Modul yang Valid.**")
     else:
@@ -30,7 +28,7 @@ async def help(event):
         await edit_or_reply(
             event,
             f"**✦ Daftar Perintah Untuk [Man-Userbot](https://github.com/mrismanaziz/Man-Userbot):**\n"
-            f"**✦ Jumlah** `{len(modules)}` **Modules**\n"
+            f"**✦ Jumlah** `{len(CMD_HELP)}` **Modules**\n"
             f"**✦ Owner:** [{user.first_name}](tg://user?id={user.id})\n\n"
             f"{ICON_HELP}   {string}"
             f"\n\nSupport @{CHANNEL}",

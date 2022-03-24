@@ -7,7 +7,7 @@ import asyncio
 
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, SUDO_USERS
+from userbot import CMD_HELP, LOGS
 from userbot.modules.sql_helper import no_log_pms_sql
 from userbot.modules.sql_helper.globals import addgvar, gvarstatus
 from userbot.modules.vcplugin import vcmention
@@ -52,7 +52,7 @@ async def logaddjoin(event):
     await event.client.send_message(BOTLOG_CHATID, text)
 
 
-@man_handler(func=lambda e: e.is_private)
+@man_handler(incoming=True, func=lambda e: e.is_private)
 async def monito_p_m_s(event):
     if BOTLOG_CHATID == -100:
         return
@@ -87,7 +87,7 @@ async def monito_p_m_s(event):
                 LOGS.warn(str(e))
 
 
-@man_handler(func=lambda e: e.mentioned)
+@man_handler(incoming=True, func=lambda e: e.mentioned)
 async def log_tagged_messages(event):
     if BOTLOG_CHATID == -100:
         return
@@ -125,10 +125,8 @@ async def log_tagged_messages(event):
         )
 
 
-@man_cmd(pattern="save(?: |$)(.*)")
+@man_cmd(pattern="save(?: |$)(.*)", allow_sudo=False)
 async def log(log_text):
-    if log_text.sender_id in SUDO_USERS:
-        return
     if BOTLOG_CHATID:
         if log_text.reply_to_msg_id:
             reply_msg = await log_text.get_reply_message()
@@ -149,10 +147,8 @@ async def log(log_text):
         )
 
 
-@man_cmd(pattern="log$")
-async def set_no_log_p_m(event):
-    if event.sender_id in SUDO_USERS:
-        return
+@man_cmd(pattern="log$", allow_sudo=False)
+async def set_log_p_m(event):
     if BOTLOG_CHATID != -100:
         chat = await event.get_chat()
         if no_log_pms_sql.is_approved(chat.id):
@@ -162,10 +158,8 @@ async def set_no_log_p_m(event):
             )
 
 
-@man_cmd(pattern="nolog$")
+@man_cmd(pattern="nolog$", allow_sudo=False)
 async def set_no_log_p_m(event):
-    if event.sender_id in SUDO_USERS:
-        return
     if BOTLOG_CHATID != -100:
         chat = await event.get_chat()
         if not no_log_pms_sql.is_approved(chat.id):
@@ -175,10 +169,8 @@ async def set_no_log_p_m(event):
             )
 
 
-@man_cmd(pattern="pmlog (on|off)$")
+@man_cmd(pattern="pmlog (on|off)$", allow_sudo=False)
 async def set_pmlog(event):
-    if event.sender_id in SUDO_USERS:
-        return
     if BOTLOG_CHATID == -100:
         return await edit_delete(
             event,
@@ -207,10 +199,8 @@ async def set_pmlog(event):
         await edit_or_reply(event, "**PM LOG Sudah Dimatikan**")
 
 
-@man_cmd(pattern="gruplog (on|off)$")
+@man_cmd(pattern="gruplog (on|off)$", allow_sudo=False)
 async def set_gruplog(event):
-    if event.sender_id in SUDO_USERS:
-        return
     if BOTLOG_CHATID == -100:
         return await edit_delete(
             event,

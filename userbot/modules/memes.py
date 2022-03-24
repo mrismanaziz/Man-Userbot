@@ -8,8 +8,9 @@ import os
 import urllib
 from asyncio import sleep
 from collections import deque
-from random import choice, getrandbits, randint
+from random import getrandbits, randint
 from re import sub
+from secrets import choice
 
 import requests
 from cowpy import cow

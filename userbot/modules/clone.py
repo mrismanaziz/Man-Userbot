@@ -9,17 +9,15 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import InputPhoto
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, STORAGE, SUDO_USERS
+from userbot import CMD_HELP, DEVS, LOGS, STORAGE
 from userbot.utils import edit_or_reply, man_cmd
 
 if not hasattr(STORAGE, "userObj"):
     STORAGE.userObj = False
 
 
-@man_cmd(pattern="clone ?(.*)")
+@man_cmd(pattern="clone ?(.*)", allow_sudo=False)
 async def impostor(event):
-    if event.sender_id in SUDO_USERS:
-        return
     inputArgs = event.pattern_match.group(1)
     xx = await edit_or_reply(event, "`Processing...`")
     if "restore" in inputArgs:
@@ -36,6 +34,10 @@ async def impostor(event):
         userObj = await event.client(GetFullUserRequest(user))
     elif event.reply_to_msg_id:
         replyMessage = await event.get_reply_message()
+        if replyMessage.sender_id in DEVS:
+            return await xx.edit(
+                "**Tidak dapat menyamar sebagai developer man-userbot 😡**"
+            )
         if replyMessage.sender_id is None:
             return await xx.edit("**Tidak dapat menyamar sebagai admin anonim 🥺**")
         userObj = await event.client(GetFullUserRequest(replyMessage.sender_id))
