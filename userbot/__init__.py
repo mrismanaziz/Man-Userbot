@@ -83,13 +83,9 @@ if version_info[0] < 3 or version_info[1] < 8:
     )
     sys.exit(1)
 
-# Check if the config was edited by using the already used variable.
-# Basically, its the 'virginity check' for the config file ;)
-CONFIG_CHECK = os.environ.get(
+if CONFIG_CHECK := os.environ.get(
     "___________PLOX_______REMOVE_____THIS_____LINE__________", None
-)
-
-if CONFIG_CHECK:
+):
     LOGS.info(
         "Harap hapus baris yang disebutkan dalam tagar pertama dari file config.env"
     )
@@ -432,11 +428,11 @@ def paginate_help(page_number, loaded_modules, prefix):
     helpable_modules = sorted(helpable_modules)
     modules = [
         custom.Button.inline(
-            "{} {} {}".format(f"{INLINE_EMOJI}", x, f"{INLINE_EMOJI}"),
-            data="ub_modul_{}".format(x),
+            f"{INLINE_EMOJI} {x} {INLINE_EMOJI}", data=f"ub_modul_{x}"
         )
         for x in helpable_modules
     ]
+
     pairs = list(
         zip(
             modules[::number_of_cols],
@@ -453,14 +449,15 @@ def paginate_help(page_number, loaded_modules, prefix):
         ] + [
             (
                 custom.Button.inline(
-                    "««", data="{}_prev({})".format(prefix, modulo_page)
+                    "««", data=f"{prefix}_prev({modulo_page})"
                 ),
                 custom.Button.inline("Tutup", b"close"),
                 custom.Button.inline(
-                    "»»", data="{}_next({})".format(prefix, modulo_page)
+                    "»»", data=f"{prefix}_next({modulo_page})"
                 ),
             )
         ]
+
     return pairs
 
 
@@ -709,10 +706,9 @@ with bot:
                 reply_pop_up_alert = (
                     help_string
                     if help_string is not None
-                    else "{} Tidak ada dokumen yang telah ditulis untuk modul.".format(
-                        modul_name
-                    )
+                    else f"{modul_name} Tidak ada dokumen yang telah ditulis untuk modul."
                 )
+
             else:
                 reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
