@@ -193,7 +193,7 @@ async def afk_on_pm(sender):
     global afk_start
     global afk_end
     back_alivee = datetime.now()
-    ManUBOT = await mention.client.get_me()
+    ManUBOT = await sender.client.get_me()
     owner = ManUBOT.first_name
     afk_end = back_alivee.replace(microsecond=0)
     afk_since = "**Belum Lama**"
