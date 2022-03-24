@@ -54,7 +54,7 @@ async def autobot():
     if BOT_TOKEN:
         return
     await bot.start()
-    await asyncio.sleep(20)
+    await asyncio.sleep(15)
     await bot.send_message(
         BOTLOG_CHATID, "**SEDANG MEMBUAT BOT TELEGRAM UNTUK ANDA DI @BotFather**"
     )
