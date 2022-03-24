@@ -81,10 +81,7 @@ async def type_afk_is_not_true(notafk):
     user = await notafk.client.get_me()
     owner = user.first_name
     last = user.last_name
-    if last and last.endswith("【 OFF 】"):
-        last1 = last[:-12]
-    else:
-        last1 = ""
+    last1 = last[:-12] if last and last.endswith("【 OFF 】") else ""
     back_alive = datetime.now()
     afk_end = back_alive.replace(microsecond=0)
     if ISAFK:
@@ -163,9 +160,9 @@ async def mention_afk(mention):
         elif hours > 1:
             afk_since = f"`{int(hours)} Jam {int(minutes)} Menit`"
         elif minutes > 0:
-            afk_since = f"`{int(minutes)} Menit {int(seconds)} Detik`"
+            afk_since = f"`{int(minutes)} Menit {seconds} Detik`"
         else:
-            afk_since = f"`{int(seconds)} Detik`"
+            afk_since = f"`{seconds} Detik`"
         if mention.sender_id not in USERS:
             if AFKREASON:
                 await mention.reply(
@@ -239,9 +236,9 @@ async def afk_on_pm(sender):
             elif hours > 1:
                 afk_since = f"`{int(hours)} Jam {int(minutes)} Menit`"
             elif minutes > 0:
-                afk_since = f"`{int(minutes)} Menit {int(seconds)} Detik`"
+                afk_since = f"`{int(minutes)} Menit {seconds} Detik`"
             else:
-                afk_since = f"`{int(seconds)} Detik`"
+                afk_since = f"`{seconds} Detik`"
             if sender.sender_id not in USERS:
                 if AFKREASON:
                     await sender.reply(
