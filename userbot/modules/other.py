@@ -138,12 +138,12 @@ async def _(event):
 @man_cmd(pattern="tmsg (.*)")
 async def _(event):
     k = await event.get_reply_message()
+    u = event.pattern_match.group(1)
     if k:
         a = await event.client.get_messages(event.chat_id, 0, from_user=k.sender_id)
         return await event.edit(
             f"**Total ada** `{a.total}` **Chat Yang dikirim Oleh** {u} **di Grup Chat ini**"
         )
-    u = event.pattern_match.group(1)
     if not u:
         u = "me"
     a = await event.client.get_messages(event.chat_id, 0, from_user=u)
