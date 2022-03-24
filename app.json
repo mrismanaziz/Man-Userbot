@@ -12,7 +12,7 @@
       "required": true
     },
     "BOT_TOKEN": {
-      "description": "Buat Bot di t.me/botfather Masukan BOT tokennya disini",
+      "description": "Buat Bot di t.me/botfather Masukan BOT tokennya disini【 Bila Tidak tau bisa di /skip 】",
       "required": false
     },
      "STRING_SESSION": {
@@ -26,10 +26,6 @@
     "HEROKU_API_KEY": {
       "description": "Ambil Heroku API KEY mu disini » https://dashboard.heroku.com/account",
       "required": true
-    },
-    "BOTLOG_CHATID": {
-      "description": "Buatlah grup telegram publik lalu masukan @MissRose_bot ketik /id, masukan id grup nya disini. contoh: -1001473548xxx",
-      "required": false
     }
   },
   "addons": [
