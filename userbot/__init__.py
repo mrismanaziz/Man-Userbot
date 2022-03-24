@@ -427,9 +427,7 @@ def paginate_help(page_number, loaded_modules, prefix):
     helpable_modules = [p for p in loaded_modules if not p.startswith("_")]
     helpable_modules = sorted(helpable_modules)
     modules = [
-        custom.Button.inline(
-            f"{INLINE_EMOJI} {x} {INLINE_EMOJI}", data=f"ub_modul_{x}"
-        )
+        custom.Button.inline(f"{INLINE_EMOJI} {x} {INLINE_EMOJI}", data=f"ub_modul_{x}")
         for x in helpable_modules
     ]
 
@@ -448,13 +446,9 @@ def paginate_help(page_number, loaded_modules, prefix):
             modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
         ] + [
             (
-                custom.Button.inline(
-                    "««", data=f"{prefix}_prev({modulo_page})"
-                ),
+                custom.Button.inline("««", data=f"{prefix}_prev({modulo_page})"),
                 custom.Button.inline("Tutup", b"close"),
-                custom.Button.inline(
-                    "»»", data=f"{prefix}_next({modulo_page})"
-                ),
+                custom.Button.inline("»»", data=f"{prefix}_next({modulo_page})"),
             )
         ]
 
@@ -463,9 +457,9 @@ def paginate_help(page_number, loaded_modules, prefix):
 
 with bot:
     try:
+        from userbot.modules.button import BTN_URL_REGEX, build_keyboard
         from userbot.modules.sql_helper.bot_blacklists import check_is_black_list
         from userbot.modules.sql_helper.bot_pms_sql import add_user_to_db, get_user_id
-        from userbot.modules.button import BTN_URL_REGEX, build_keyboard
         from userbot.utils import reply_id
 
         dugmeler = CMD_HELP

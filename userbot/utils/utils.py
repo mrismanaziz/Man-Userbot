@@ -60,9 +60,9 @@ async def autobot():
     )
     LOGS.info("TUNGGU SEBENTAR. SEDANG MEMBUAT ASSISTANT BOT UNTUK ANDA")
     who = await bot.get_me()
-    name = f'{who.first_name} Assistant Bot'
+    name = f"{who.first_name} Assistant Bot"
     if who.username:
-        username = f'{who.username}_ubot'
+        username = f"{who.username}_ubot"
     else:
         username = f"man{(str(who.id))[5:]}ubot"
     bf = "@BotFather"

@@ -180,7 +180,7 @@ async def formatJSON(outData):
     msg += f"\n\n**Type** : {jsonData['format']}"
     msg += "\n**Genres** : "
     for g in jsonData["genres"]:
-        msg += f'{g} '
+        msg += f"{g} "
     msg += f"\n**Status** : {jsonData['status']}"
     msg += f"\n**Episode** : {jsonData['episodes']}"
     msg += f"\n**Year** : {jsonData['startDate']['year']}"
@@ -201,9 +201,7 @@ async def anichar(event):
     reply_to_id = event.reply_to_msg_id or event.message.id
     variables = {"query": search}
     if json := (
-        requests.post(
-            url, json={"query": character_query, "variables": variables}
-        )
+        requests.post(url, json={"query": character_query, "variables": variables})
         .json()["data"]
         .get("Character", None)
     ):

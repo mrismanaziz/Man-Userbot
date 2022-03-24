@@ -50,7 +50,6 @@ async def progress(
             round(percentage, 2),
         )
 
-
         tmp = (
             f"{progress_str}\n"
             f"`{humanbytes(current)} of {humanbytes(total)}"

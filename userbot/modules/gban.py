@@ -1,9 +1,8 @@
 # by:koala @mixiologist
 # Lord Userbot
 
-from telethon.events import ChatAction
 
-from userbot import DEVS, WHITELIST, blacklistman, bot
+from userbot import DEVS, WHITELIST, blacklistman
 from userbot.events import register
 from userbot.utils import chataction, get_user_from_event, man_cmd
 

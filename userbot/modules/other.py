@@ -100,7 +100,7 @@ async def _(event):
     if event.reply_to_msg_id:
         await event.client.send_message(chat_id, mssg)
         await edit_or_reply(event, "**Berhasil Mengirim Pesan Anda.**")
-    msg = "".join(f'{i} ' for i in m[1:])
+    msg = "".join(f"{i} " for i in m[1:])
     if not msg:
         return
     try:
