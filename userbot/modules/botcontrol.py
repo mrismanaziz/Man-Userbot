@@ -861,7 +861,7 @@ async def _(event):
     await event.answer(pin, cache_time=0, alert=True)
 
 
-@asst_cmd(pattern=f"^/start?([\\s]+)?$", func=lambda e: e.is_private)
+@asst_cmd(pattern="^/start?([\\s]+)?$", func=lambda e: e.is_private)
 async def bot_start(event):
     chat = await event.get_chat()
     user = await event.client.get_me()
