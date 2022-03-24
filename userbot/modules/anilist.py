@@ -196,7 +196,7 @@ url = "https://graphql.anilist.co"
 
 
 @man_cmd(pattern=r"anichar ?(.*)")
-async def anilist(event):
+async def anichar(event):
     search = event.pattern_match.group(1)
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
@@ -243,7 +243,7 @@ async def arings(event):
 
 
 @man_cmd(pattern="animanga ?(.*)")
-async def anilist(event):
+async def animanga(event):
     search = event.pattern_match.group(1)
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
