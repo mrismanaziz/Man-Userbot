@@ -67,9 +67,3 @@ async def progress(
                 await gdrive.edit(f"**{prog_type}**\n\n" f"**Status**\n{tmp}")
         except MessageNotModifiedError:
             pass
-
-
-class CancelProcess(Exception):
-    """
-    Cancel Process
-    """
