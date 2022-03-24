@@ -25,10 +25,9 @@ async def _(event):
                 shortname = path1.stem
                 load_module(shortname.replace(".py", ""))
                 await xx.edit(
-                    "**Plugin** `{}` **Berhasil di install**".format(
-                        os.path.basename(downloaded_file_name)
-                    )
+                    f"**Plugin** `{os.path.basename(downloaded_file_name)}` **Berhasil di install**"
                 )
+
             else:
                 os.remove(downloaded_file_name)
                 await xx.edit("**Error!** Plugin ini sudah terinstall di userbot.")
@@ -69,7 +68,7 @@ async def uninstall(event):
         os.remove(dir_path)
         await xx.edit(f"**Berhasil Menghapus Modules** `{shortname}`")
     except OSError as e:
-        await xx.edit("**ERROR:** `%s` : %s" % (dir_path, e.strerror))
+        await xx.edit(f"**ERROR:** `{dir_path}` : {e.strerror}")
 
 
 CMD_HELP.update(
