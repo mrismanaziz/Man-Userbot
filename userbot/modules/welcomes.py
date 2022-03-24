@@ -13,10 +13,10 @@ from telethon.events import ChatAction
 from userbot import BLACKLIST_CHAT, BOTLOG_CHATID, CLEAN_WELCOME
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, LOGS, bot
-from userbot.events import man_cmd
+from userbot.utils import chataction, man_cmd
 
 
-@bot.on(ChatAction)
+@chataction()
 async def welcome_to_chat(event):
     try:
         from userbot.modules.sql_helper.welcome_sql import (
@@ -27,10 +27,6 @@ async def welcome_to_chat(event):
         return
     cws = get_current_welcome_settings(event.chat_id)
     if cws:
-        """user_added=True,
-        user_joined=True,
-        user_left=False,
-        user_kicked=False"""
         if (event.user_joined or event.user_added) and not (await event.get_user()).bot:
             if CLEAN_WELCOME:
                 try:
@@ -94,7 +90,7 @@ async def welcome_to_chat(event):
             update_previous_welcome(event.chat_id, current_message.id)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"setwelcome(?: |$)(.*)"))
+@man_cmd(pattern="setwelcome(?: |$)(.*)")
 async def save_welcome(event):
     if event.chat_id in BLACKLIST_CHAT:
         return await event.edit("**Perintah ini Dilarang digunakan di Group ini**")
@@ -131,7 +127,7 @@ async def save_welcome(event):
         await event.edit(success.format("Disini"))
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"checkwelcome$"))
+@man_cmd(pattern="checkwelcome$")
 async def show_welcome(event):
     try:
         from userbot.modules.sql_helper.welcome_sql import get_current_welcome_settings
@@ -151,7 +147,7 @@ async def show_welcome(event):
         await event.reply(cws.reply)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"rmwelcome$"))
+@man_cmd(pattern="rmwelcome$")
 async def del_welcome(event):
     try:
         from userbot.modules.sql_helper.welcome_sql import rm_welcome_setting
