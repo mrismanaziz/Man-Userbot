@@ -191,9 +191,6 @@ async def afk_on_pm(sender):
     global ISAFK
     global USERS
     global COUNT_MSG
-    global COUNT_MSG
-    global USERS
-    global ISAFK
     global USER_AFK
     global afk_time
     global afk_start
