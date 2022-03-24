@@ -160,7 +160,7 @@ async def gablist(event):
         GBANNED_LIST = "Belum ada Pengguna yang Di-Gban"
     if len(GBANNED_LIST) > 4096:
         with BytesIO(str.encode(GBANNED_LIST)) as fileuser:
-            out_file.name = "list-gban.text"
+            fileuser.name = "list-gban.text"
             await event.client.send_file(
                 event.chat_id,
                 fileuser,

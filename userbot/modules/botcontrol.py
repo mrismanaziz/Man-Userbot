@@ -260,7 +260,7 @@ async def hndlrmenu(event):
 
 
 @callback(data=re.compile(b"multiclient"))
-async def alivemenu(event):
+async def menuclient(event):
     await event.edit(
         "**Silahkan Pilih VAR yang ingin anda Setting**",
         buttons=[
@@ -861,7 +861,7 @@ async def _(event):
     await event.answer(pin, cache_time=0, alert=True)
 
 
-@asst_cmd(pattern=f"^/start?([\\s]+)?$", func=lambda e: e.is_private)
+@asst_cmd(pattern="^/start?([\\s]+)?$", func=lambda e: e.is_private)
 async def bot_start(event):
     chat = await event.get_chat()
     user = await event.client.get_me()
@@ -963,7 +963,7 @@ async def _(event):
             )
     else:
         await tgbot.send_message(
-            event.chat_id, "**👥 Chat ID:** `{}`".format(str(event.chat_id))
+            event.chat_id, f"**👥 Chat ID:** `{str(event.chat_id)}`"
         )
 
 
