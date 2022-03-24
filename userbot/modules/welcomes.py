@@ -25,8 +25,7 @@ async def welcome_to_chat(event):
         )
     except AttributeError:
         return
-    cws = get_current_welcome_settings(event.chat_id)
-    if cws:
+    if cws := get_current_welcome_settings(event.chat_id):
         if (event.user_joined or event.user_added) and not (await event.get_user()).bot:
             if CLEAN_WELCOME:
                 try:
@@ -47,8 +46,8 @@ async def welcome_to_chat(event):
             title = chat.title or "Grup Ini"
             participants = await event.client.get_participants(chat)
             count = len(participants)
-            mention = "[{}](tg://user?id={})".format(a_user.first_name, a_user.id)
-            my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
+            mention = f"[{a_user.first_name}](tg://user?id={a_user.id})"
+            my_mention = f"[{me.first_name}](tg://user?id={me.id})"
             first = a_user.first_name
             last = a_user.last_name
             fullname = f"{first} {last}" if last else first
