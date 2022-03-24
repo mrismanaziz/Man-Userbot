@@ -46,7 +46,7 @@ async def autopilot():
             "var BOTLOG_CHATID kamu belum di isi. Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id Masukan id grup nya di var BOTLOG_CHATID"
         )
     if not str(grup_id).startswith("-100"):
-        grup_id = int("-100" + str(grup_id))
+        grup_id = int(f"-100{str(grup_id)}")
     heroku_var["BOTLOG_CHATID"] = grup_id
 
 
@@ -60,11 +60,11 @@ async def autobot():
     )
     LOGS.info("TUNGGU SEBENTAR. SEDANG MEMBUAT ASSISTANT BOT UNTUK ANDA")
     who = await bot.get_me()
-    name = who.first_name + " Assistant Bot"
+    name = f'{who.first_name} Assistant Bot'
     if who.username:
-        username = who.username + "_ubot"
+        username = f'{who.username}_ubot'
     else:
-        username = "man" + (str(who.id))[5:] + "ubot"
+        username = f"man{(str(who.id))[5:]}ubot"
     bf = "@BotFather"
     await bot(UnblockRequest(bf))
     await bot.send_message(bf, "/cancel")
@@ -97,7 +97,7 @@ async def autobot():
     await bot.send_read_acknowledge("botfather")
     if isdone.startswith("Sorry,"):
         ran = randint(1, 100)
-        username = "man" + (str(who.id))[6:] + str(ran) + "ubot"
+        username = f"man{(str(who.id))[6:]}{str(ran)}ubot"
         await bot.send_message(bf, username)
         await asyncio.sleep(1)
         nowdone = (await bot.get_messages(bf, limit=1))[0].text
@@ -192,15 +192,15 @@ def load_module(shortname):
         pass
     elif shortname.endswith("_"):
         path = Path(f"userbot/modules/{shortname}.py")
-        name = "userbot.modules.{}".format(shortname)
+        name = f"userbot.modules.{shortname}"
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        LOGS.info("Successfully imported " + shortname)
+        LOGS.info(f"Successfully imported {shortname}")
     else:
 
         path = Path(f"userbot/modules/{shortname}.py")
-        name = "userbot.modules.{}".format(shortname)
+        name = f"userbot.modules.{shortname}"
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         mod.bot = bot
@@ -209,8 +209,8 @@ def load_module(shortname):
         mod.logger = logging.getLogger(shortname)
         spec.loader.exec_module(mod)
         # for imports
-        sys.modules["userbot.modules." + shortname] = mod
-        LOGS.info("Successfully imported " + shortname)
+        sys.modules[f"userbot.modules.{shortname}"] = mod
+        LOGS.info(f"Successfully imported {shortname}")
 
 
 def start_assistant(shortname):
@@ -218,21 +218,21 @@ def start_assistant(shortname):
         pass
     elif shortname.endswith("_"):
         path = Path(f"userbot/modules/assistant/{shortname}.py")
-        name = "userbot.modules.assistant.{}".format(shortname)
+        name = f"userbot.modules.assistant.{shortname}"
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
         LOGS.info("Starting Your Assistant Bot.")
-        LOGS.info("Assistant Sucessfully imported " + shortname)
+        LOGS.info(f"Assistant Sucessfully imported {shortname}")
     else:
         path = Path(f"userbot/modules/assistant/{shortname}.py")
-        name = "userbot.modules.assistant.{}".format(shortname)
+        name = f"userbot.modules.assistant.{shortname}"
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         mod.tgbot = bot.tgbot
         spec.loader.exec_module(mod)
-        sys.modules["userbot.modules.assistant" + shortname] = mod
-        LOGS.info("Assistant Successfully imported" + shortname)
+        sys.modules[f"userbot.modules.assistant{shortname}"] = mod
+        LOGS.info(f"Assistant Successfully imported{shortname}")
 
 
 def remove_plugin(shortname):
