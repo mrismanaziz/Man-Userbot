@@ -43,7 +43,7 @@ async def send(event):
     input_str = event.pattern_match.group(1)
     the_plugin_file = f"./userbot/modules/{input_str}.py"
     if os.path.exists(the_plugin_file):
-        caat = await event.client.send_file(
+        await event.client.send_file(
             event.chat_id,
             the_plugin_file,
             force_document=True,
