@@ -260,7 +260,7 @@ async def hndlrmenu(event):
 
 
 @callback(data=re.compile(b"multiclient"))
-async def alivemenu(event):
+async def menuclient(event):
     await event.edit(
         "**Silahkan Pilih VAR yang ingin anda Setting**",
         buttons=[
