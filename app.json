@@ -12,7 +12,7 @@
       "required": true
     },
     "BOT_TOKEN": {
-      "description": "Buat Bot di t.me/botfather Masukan BOT tokennya disini【 Bila Tidak tau bisa di /skip 】",
+      "description": "Buat Bot di t.me/botfather Masukan BOT tokennya disini〔 Bila Tidak tau bisa di /skip 〕",
       "required": false
     },
      "STRING_SESSION": {
