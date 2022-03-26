@@ -14,6 +14,8 @@ services:
 
       STRING_SESSION: $STRING_SESSION
       
+      STRING_SESSION2: $STRING_SESSION
+      
       API_KEY: $API_KEY
 
       API_HASH: $API_HASH
