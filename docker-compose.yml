@@ -1,0 +1,27 @@
+#Recode by @UnrealYesus
+
+# KALO FORK/CLONE USERNAME YG DI ATAS  G USH DI HAPUSS YAA KONTOLL
+
+version: "3.9"
+
+services:
+
+  worker:
+
+    build: .
+
+    environment:
+
+      STRING_SESSION: $STRING_SESSION
+      
+      API_ID: $API_ID
+
+      API_HASH: $API_HASH
+      
+      BOT_TOKEN: $BOT_TOKEN
+
+      BOTLOG_CHATID: $BOTLOG_CHATID
+ 
+      DATABASE_URL: $DATABASE_URL 
+
+      PM_AUTO_BAN: $PM_AUTO_BAN
