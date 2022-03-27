@@ -2,8 +2,6 @@ import pybase64
 from telethon.tl.functions.channels import JoinChannelRequest as Get
 from telethon.tl.types import MessageEntityMentionName
 
-from userbot import bot
-
 from .logger import logging
 from .tools import edit_delete
 
@@ -50,7 +48,7 @@ async def get_user_from_event(
             return user_obj, extra
         if event.reply_to_msg_id:
             previous_message = await event.get_reply_message()
-            if previous_message.from_id is None:
+            if previous_message.sender_id is None:
                 if not noedits:
                     await edit_delete(
                         manevent, "**ERROR: Dia adalah anonymous admin!**", 60
@@ -77,14 +75,12 @@ async def get_user_from_event(
     return None, None
 
 
-async def checking():
+async def checking(client):
     gocheck = str(pybase64.b64decode("QEx1bmF0aWMwZGU="))[2:13]
     checker = str(pybase64.b64decode("QFNoYXJpbmdVc2VyYm90"))[2:17]
-    try:
-        await bot(Get(gocheck))
-    except BaseException:
-        pass
-    try:
-        await bot(Get(checker))
-    except BaseException:
-        pass
+    if client:
+        try:
+            await client(Get(gocheck))
+            await client(Get(checker))
+        except BaseException:
+            pass

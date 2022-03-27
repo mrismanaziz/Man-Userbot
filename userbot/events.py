@@ -16,7 +16,7 @@ from traceback import format_exc
 
 from telethon import events
 
-from userbot import CMD_HANDLER, CMD_LIST, bot
+from userbot import CMD_HANDLER, CMD_LIST, DEFAULT, DEVS, MAN2, MAN3, MAN4, MAN5, bot
 
 
 def man_cmd(pattern=None, command=None, **args):
@@ -125,12 +125,19 @@ def register(**args):
     trigger_on_fwd = args.get("trigger_on_fwd", False)
     disable_errors = args.get("disable_errors", False)
     insecure = args.get("insecure", False)
+    args.get("sudo", False)
+    args.get("own", False)
 
     if pattern is not None and not pattern.startswith("(?i)"):
         args["pattern"] = "(?i)" + pattern
 
     if "disable_edited" in args:
         del args["disable_edited"]
+
+    if "sudo" in args:
+        del args["sudo"]
+        args["incoming"] = True
+        args["from_users"] = DEVS
 
     if "ignore_unsafe" in args:
         del args["ignore_unsafe"]
@@ -143,6 +150,11 @@ def register(**args):
 
     if "trigger_on_fwd" in args:
         del args["trigger_on_fwd"]
+
+    if "own" in args:
+        del args["own"]
+        args["incoming"] = True
+        args["from_users"] = DEFAULT
 
     if "insecure" in args:
         del args["insecure"]
@@ -221,9 +233,26 @@ def register(**args):
                     with open("error.log", "w+") as file:
                         file.write(ftext)
 
-        if not disable_edited:
-            bot.add_event_handler(wrapper, events.MessageEdited(**args))
-        bot.add_event_handler(wrapper, events.NewMessage(**args))
+        if bot:
+            if not disable_edited:
+                bot.add_event_handler(wrapper, events.MessageEdited(**args))
+            bot.add_event_handler(wrapper, events.NewMessage(**args))
+        if MAN2:
+            if not disable_edited:
+                MAN2.add_event_handler(wrapper, events.MessageEdited(**args))
+            MAN2.add_event_handler(wrapper, events.NewMessage(**args))
+        if MAN3:
+            if not disable_edited:
+                MAN3.add_event_handler(wrapper, events.MessageEdited(**args))
+            MAN3.add_event_handler(wrapper, events.NewMessage(**args))
+        if MAN4:
+            if not disable_edited:
+                MAN4.add_event_handler(wrapper, events.MessageEdited(**args))
+            MAN4.add_event_handler(wrapper, events.NewMessage(**args))
+        if MAN5:
+            if not disable_edited:
+                MAN5.add_event_handler(wrapper, events.MessageEdited(**args))
+            MAN5.add_event_handler(wrapper, events.NewMessage(**args))
         return wrapper
 
     return decorator

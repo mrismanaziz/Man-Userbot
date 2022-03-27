@@ -1,16 +1,15 @@
 # by:koala @mixiologist
 # Lord Userbot
 
-from telethon.events import ChatAction
 
-from userbot import DEVS, bot, owner
-from userbot.events import man_cmd, register
-from userbot.utils import get_user_from_event
+from userbot import DEVS, WHITELIST, blacklistman
+from userbot.events import register
+from userbot.utils import chataction, get_user_from_event, man_cmd
 
 # Ported For Lord-Userbot by liualvinas/Alvin
 
 
-@bot.on(ChatAction)
+@chataction()
 async def handler(tele):
     if not tele.user_joined and not tele.user_added:
         return
@@ -41,8 +40,8 @@ async def handler(tele):
                         return
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"gband(?: |$)(.*)"))
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cgband(?: |$)(.*)")
+@man_cmd(pattern="gband(?: |$)(.*)")
+@register(pattern=r"^\.cgband(?: |$)(.*)", sudo=True)
 async def gben(userbot):
     dc = userbot
     sender = await dc.get_sender()
@@ -51,10 +50,7 @@ async def gben(userbot):
         dark = await dc.reply("`Gbanning...`")
     else:
         dark = await dc.edit("`Memproses Global Banned Jamet..`")
-    me = await userbot.client.get_me()
     await dark.edit("`Global Banned Akan Segera Aktif..`")
-    my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
-    await userbot.get_chat()
     a = b = 0
     if userbot.is_private:
         user = userbot.chat
@@ -70,7 +66,11 @@ async def gben(userbot):
         return await dark.edit("**Gagal Global Banned :(**")
     if user:
         if user.id in DEVS:
-            return await dark.edit("**Gagal Global Banned, Dia Adalah Pembuat Saya 🤪**")
+            return await dark.edit("**Gagal Global Banned, dia adalah Pembuat Saya 🤪**")
+        if user.id in WHITELIST:
+            return await dark.edit(
+                "**Gagal Global Banned, dia adalah admin @SharingUserbot 🤪**"
+            )
         try:
             from userbot.modules.sql_helper.gmute_sql import gmute
         except BaseException:
@@ -106,12 +106,12 @@ async def gben(userbot):
         r"\\**#GBanned_User**//"
         f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
         f"**User ID:** `{user.id}`\n"
-        f"**Action:** `Global Banned by {owner}`"
+        f"**Action:** `Global Banned by {me.first_name}`"
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"ungband(?: |$)(.*)"))
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cungband(?: |$)(.*)")
+@man_cmd(pattern=r"ungband(?: |$)(.*)")
+@register(pattern=r"^\.cungband(?: |$)(.*)", sudo=True)
 async def gunben(userbot):
     dc = userbot
     sender = await dc.get_sender()
@@ -120,10 +120,7 @@ async def gunben(userbot):
         dark = await dc.reply("`Ungbanning...`")
     else:
         dark = await dc.edit("`Ungbanning....`")
-    me = await userbot.client.get_me()
     await dark.edit("`Membatalkan Perintah Global Banned`")
-    my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
-    await userbot.get_chat()
     a = b = 0
     if userbot.is_private:
         user = userbot.chat
@@ -138,9 +135,9 @@ async def gunben(userbot):
     except BaseException:
         return await dark.edit("**Gagal Ungbanned :(**")
     if user:
-        if user.id in DEVS:
+        if user.id in blacklistman:
             return await dark.edit(
-                "**Man Tidak Bisa Terkena Perintah Ini, Karna Dia Pembuat saya**"
+                "**Gagal ungbanned, Karna dia ada di Blacklist Man**"
             )
         try:
             from userbot.modules.sql_helper.gmute_sql import ungmute
@@ -169,5 +166,5 @@ async def gunben(userbot):
         r"\\**#UnGbanned_User**//"
         f"\n\n**First Name:** [{user.first_name}](tg://user?id={user.id})\n"
         f"**User ID:** `{user.id}`\n"
-        f"**Action:** `UnGBanned by {owner}`"
+        f"**Action:** `UnGBanned by {me.first_name}`"
     )

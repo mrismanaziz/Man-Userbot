@@ -2,12 +2,11 @@
 # Ported by @mrismanaziz
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot
-#
 
 import asyncio
 from datetime import datetime
+from io import BytesIO
 
-from telethon import events
 from telethon.errors import BadRequestError
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import Channel
@@ -15,9 +14,9 @@ from telethon.tl.types import Channel
 import userbot.modules.sql_helper.gban_sql as gban_sql
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEVS, bot
+from userbot import CMD_HELP, DEVS, WHITELIST, blacklistman
 from userbot.events import register
-from userbot.utils import edit_or_reply, get_user_from_event, man_cmd
+from userbot.utils import chataction, edit_or_reply, get_user_from_event, man_cmd
 
 from .admin import BANNED_RIGHTS, UNBAN_RIGHTS
 
@@ -40,7 +39,7 @@ def mentionuser(name, userid):
 
 
 @man_cmd(pattern="gban(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cgban(?: |$)(.*)")
+@register(pattern=r"^\.cgban(?: |$)(.*)", sudo=True)
 async def gban(event):
     if event.fwd_from:
         return
@@ -54,6 +53,9 @@ async def gban(event):
         return
     if user.id in DEVS:
         await gbun.edit("**Gagal GBAN karena dia adalah Pembuat saya 🗿**")
+        return
+    if user.id in WHITELIST:
+        await gbun.edit("**Gagal GBAN karena dia adalah admin @SharingUserbot 🗿**")
         return
     if gban_sql.is_gbanned(user.id):
         await gbun.edit(
@@ -94,7 +96,7 @@ async def gban(event):
 
 
 @man_cmd(pattern="ungban(?: |$)(.*)")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cungban(?: |$)(.*)")
+@register(pattern=r"^\.cungban(?: |$)(.*)", sudo=True)
 async def ungban(event):
     if event.fwd_from:
         return
@@ -147,26 +149,38 @@ async def gablist(event):
     if event.fwd_from:
         return
     gbanned_users = gban_sql.get_all_gbanned()
-    GBANNED_LIST = "**List Global Banned Saat Ini**\n"
+    GBANNED_LIST = "**List Global Banned Saat Ini**\n\n"
     if len(gbanned_users) > 0:
         for a_user in gbanned_users:
             if a_user.reason:
-                GBANNED_LIST += f"👉 [{a_user.chat_id}](tg://user?id={a_user.chat_id}) **Reason** `{a_user.reason}`\n"
+                GBANNED_LIST += f"❏ User ID: [{a_user.chat_id}](tg://user?id={a_user.chat_id})\n└ Reason: {a_user.reason}\n\n"
             else:
-                GBANNED_LIST += (
-                    f"👉 [{a_user.chat_id}](tg://user?id={a_user.chat_id}) `No Reason`\n"
-                )
+                GBANNED_LIST += f"❏ User ID: [{a_user.chat_id}](tg://user?id={a_user.chat_id})\n└ No Reason\n\n"
     else:
         GBANNED_LIST = "Belum ada Pengguna yang Di-Gban"
-    await edit_or_reply(event, GBANNED_LIST)
+    if len(GBANNED_LIST) > 4096:
+        with BytesIO(str.encode(GBANNED_LIST)) as fileuser:
+            fileuser.name = "list-gban.text"
+            await event.client.send_file(
+                event.chat_id,
+                fileuser,
+                force_document=True,
+                thumb="userbot/resources/logo.jpg",
+                caption="**List Global Banned**",
+                reply_to=event.reply_to_msg_id,
+                allow_cache=False,
+            )
+            await event.delete()
+    else:
+        await edit_or_reply(event, GBANNED_LIST)
 
 
-@bot.on(events.ChatAction)
+@chataction()
 async def _(event):
     if event.user_joined or event.added_by:
         user = await event.get_user()
         chat = await event.get_chat()
-        if gban_sql.is_gbanned(user.id) and chat.admin_rights:
+        if gban_sql.is_gbanned(user.id) and blacklistman and chat.admin_rights:
             try:
                 await event.client.edit_permissions(
                     chat.id,

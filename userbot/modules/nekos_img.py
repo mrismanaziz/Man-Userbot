@@ -7,8 +7,8 @@
 import nekos
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 arguments = [
     "feet",
@@ -77,20 +77,20 @@ arguments = [
 ]
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"nekos(?: |$)(.*)"))
+@man_cmd(pattern="nekos(?: |$)(.*)")
 async def nekos_img(event):
     args = event.pattern_match.group(1)
     if not args or args not in arguments:
-        return await event.edit(
-            "ketik `.help nekos` untuk melihat argumen yang tersedia."
+        return await edit_delete(
+            event, "ketik `.help nekos` untuk melihat argumen yang tersedia."
         )
-    await event.edit("`Fetching from nekos...`")
+    xx = await edit_or_reply(event, "`Fetching from nekos...`")
     pic = nekos.img(args)
     await event.client.send_file(
         event.chat_id,
         pic,
     )
-    await event.delete()
+    await xx.delete()
 
 
 CMD_HELP.update(

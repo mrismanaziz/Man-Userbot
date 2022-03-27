@@ -1,14 +1,15 @@
 """ Userbot module for other small commands. """
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, owner
+from userbot import CMD_HELP
 from userbot.utils import edit_or_reply, man_cmd
 
 
 @man_cmd(pattern="ihelp$")
 async def usit(event):
+    me = await event.client.get_me()
     await edit_or_reply(
         event,
-        f"**Hai {owner} Kalo Anda Tidak Tau Perintah Untuk Memerintah Ku Ketik** `.help` Atau Bisa Minta Bantuan Ke:\n"
+        f"**Hai {me.first_name} Kalo Anda Tidak Tau Perintah Untuk Memerintah Ku Ketik** `.help` Atau Bisa Minta Bantuan Ke:\n"
         f"✣ **Group Support :** [Sharing Userbot](t.me/sharinguserbot)\n"
         f"✣ **Channel Man :** [Lunatic0de](t.me/Lunatic0de)\n"
         f"✣ **Owner Repo :** [Risman](t.me/mrismanaziz)\n"

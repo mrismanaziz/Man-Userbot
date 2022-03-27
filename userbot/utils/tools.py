@@ -83,7 +83,7 @@ def humanbytes(size: Union[int, float]) -> str:
     if size is None or isinstance(size, str):
         return ""
 
-    power = 2 ** 10
+    power = 2**10
     raised_to_pow = 0
     dict_power_n = {0: "", 1: "Ki", 2: "Mi", 3: "Gi", 4: "Ti"}
     while size > power:
@@ -136,12 +136,12 @@ async def extract_time(man, time_val):
 
 def human_to_bytes(size: str) -> int:
     units = {
-        "M": 2 ** 20,
-        "MB": 2 ** 20,
-        "G": 2 ** 30,
-        "GB": 2 ** 30,
-        "T": 2 ** 40,
-        "TB": 2 ** 40,
+        "M": 2**20,
+        "MB": 2**20,
+        "G": 2**30,
+        "GB": 2**30,
+        "T": 2**40,
+        "TB": 2**40,
     }
 
     size = size.upper()
@@ -217,7 +217,7 @@ async def edit_or_reply(
     reply_to = await event.get_reply_message()
     if len(text) < 4096 and not deflink:
         parse_mode = parse_mode or "md"
-        if event.sender_id in SUDO_USERS:
+        if not event.out and event.sender_id in SUDO_USERS:
             if reply_to:
                 return await reply_to.reply(
                     text, parse_mode=parse_mode, link_preview=link_preview
@@ -233,7 +233,7 @@ async def edit_or_reply(
         linktext = linktext or "**Pesan Terlalu Panjang**"
         response = await paste_message(text, pastetype="s")
         text = linktext + f" [Lihat Disini]({response})"
-        if event.sender_id in SUDO_USERS:
+        if not event.out and event.sender_id in SUDO_USERS:
             if reply_to:
                 return await reply_to.reply(text, link_preview=link_preview)
             return await event.reply(text, link_preview=link_preview)
@@ -247,13 +247,16 @@ async def edit_or_reply(
         await reply_to.reply(caption, file=file_name)
         await event.delete()
         return os.remove(file_name)
-    if event.sender_id in SUDO_USERS:
+    if not event.out and event.sender_id in SUDO_USERS:
         await event.reply(caption, file=file_name)
         await event.delete()
         return os.remove(file_name)
     await event.client.send_file(event.chat_id, file_name, caption=caption)
     await event.delete()
     os.remove(file_name)
+
+
+eor = edit_or_reply
 
 
 async def check_media(reply_message):
@@ -328,7 +331,7 @@ async def edit_delete(event, text, time=None, parse_mode=None, link_preview=None
     parse_mode = parse_mode or "md"
     link_preview = link_preview or False
     time = time or 15
-    if event.sender_id in SUDO_USERS:
+    if not event.out and event.sender_id in SUDO_USERS:
         reply_to = await event.get_reply_message()
         newevent = (
             await reply_to.reply(text, link_preview=link_preview, parse_mode=parse_mode)
@@ -343,6 +346,9 @@ async def edit_delete(event, text, time=None, parse_mode=None, link_preview=None
         )
     await asyncio.sleep(time)
     return await newevent.delete()
+
+
+eod = edit_delete
 
 
 async def media_to_pic(event, reply):

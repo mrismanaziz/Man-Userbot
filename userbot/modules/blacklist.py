@@ -11,11 +11,11 @@ import re
 
 import userbot.modules.sql_helper.blacklist_sql as sql
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import edit_or_reply, man_cmd, man_handler
 
 
-@bot.on(man_cmd(incoming=True))
+@man_handler(incoming=True)
 async def on_new_message(event):
     # TODO: exempt admins from locks
     name = event.raw_text
@@ -35,21 +35,20 @@ async def on_new_message(event):
             break
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"addbl(?: |$)(.*)"))
+@man_cmd(pattern="addbl(?: |$)(.*)")
 async def on_add_black_list(addbl):
     text = addbl.pattern_match.group(1)
     to_blacklist = list(
         {trigger.strip() for trigger in text.split("\n") if trigger.strip()}
     )
-
     for trigger in to_blacklist:
         sql.add_to_blacklist(addbl.chat_id, trigger.lower())
-    await addbl.edit(
-        "`Menambahkan Kata` **{}** `Ke Blacklist Untuk Obrolan Ini`".format(text)
+    await edit_or_reply(
+        addbl, "`Menambahkan Kata` **{}** `Ke Blacklist Untuk Obrolan Ini`".format(text)
     )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"listbl(?: |$)(.*)"))
+@man_cmd(pattern="listbl(?: |$)(.*)")
 async def on_view_blacklist(listbl):
     all_blacklisted = sql.get_chat_blacklist(listbl.chat_id)
     OUT_STR = "Blacklists in the Current Chat:\n"
@@ -71,21 +70,19 @@ async def on_view_blacklist(listbl):
             )
             await listbl.delete()
     else:
-        await listbl.edit(OUT_STR)
+        await edit_or_reply(listbl, OUT_STR)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"rmbl(?: |$)(.*)"))
+@man_cmd(pattern="rmbl(?: |$)(.*)")
 async def on_delete_blacklist(rmbl):
     text = rmbl.pattern_match.group(1)
     to_unblacklist = list(
         {trigger.strip() for trigger in text.split("\n") if trigger.strip()}
     )
-
     successful = sum(
         bool(sql.rm_from_blacklist(rmbl.chat_id, trigger.lower()))
         for trigger in to_unblacklist
     )
-
     if not successful:
         await rmbl.edit("**{}** `Tidak Ada Di Blacklist`".format(text))
     else:

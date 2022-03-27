@@ -15,13 +15,13 @@ from asyncio import sleep
 from telethon.errors import rpcbaseerrors
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, DEVS
+from userbot import CMD_HELP
 from userbot.events import register
 from userbot.utils import edit_delete, man_cmd
 
 
 @man_cmd(pattern="purge$")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cpurge$")
+@register(pattern=r"^\.cpurge$", sudo=True)
 async def fastpurger(purg):
     chat = await purg.get_input_chat()
     msgs = []
@@ -49,7 +49,7 @@ async def fastpurger(purg):
 
 
 @man_cmd(pattern="purgeme")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cpurgeme")
+@register(pattern=r"^\.cpurgeme", sudo=True)
 async def purgeme(delme):
     message = delme.text
     count = int(message[9:])
@@ -69,7 +69,7 @@ async def purgeme(delme):
 
 
 @man_cmd(pattern="del$")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cdel$")
+@register(pattern=r"^\.cdel$", sudo=True)
 async def delete_it(delme):
     msg_src = await delme.get_reply_message()
     if delme.reply_to_msg_id:
@@ -81,7 +81,7 @@ async def delete_it(delme):
 
 
 @man_cmd(pattern="edit")
-@register(incoming=True, from_users=DEVS, pattern=r"^\.cedit")
+@register(pattern=r"^\.cedit", sudo=True)
 async def editer(edit):
     message = edit.text
     chat = await edit.get_input_chat()
@@ -137,12 +137,11 @@ async def purgto(purgke):
     try:
         prgstrtmsg = purgechat[purgke.chat_id]
     except KeyError:
-        manubot = await edit_delete(
+        return await edit_delete(
             purgke,
             "**Balas pesan dengan** `.purgefrom` **terlebih dahulu lalu gunakan** `.purgeto`",
             5,
         )
-        return
     try:
         chat = await purgke.get_input_chat()
         prgendmsg = purgke.reply_to_msg_id
@@ -159,11 +158,11 @@ async def purgto(purgke):
         if pmsgs:
             await purgke.client.delete_messages(chat, pmsgs)
             await purgke.delete()
-        man = await edit_delete(
-            purgke,
-            f"**Fast purge complete!**\n**Berhasil Menghapus** `{message}` **Pesan**",
-            5,
-        )
+            await edit_delete(
+                purgke,
+                f"**Fast purge complete!**\n**Berhasil Menghapus** `{message}` **Pesan**",
+                5,
+            )
     except Exception as er:
         await purgke.edit(f"**ERROR:** `{er}`")
 

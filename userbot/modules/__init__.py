@@ -41,5 +41,8 @@ def __list_all_modules():
 
 
 ALL_MODULES = sorted(__list_all_modules())
-LOGS.info("Modules To Load : %s", str(ALL_MODULES))
+LOGS.info("Starting To Load Plugins")
+LOGS.info(
+    f"Succesfully Load {len(ALL_MODULES)} Plugins",
+)
 __all__ = ALL_MODULES + ["ALL_MODULES"]

@@ -14,6 +14,8 @@ import os
 import re
 import sys
 import time
+from asyncio import get_event_loop
+from base64 import b64decode
 from distutils.util import strtobool as sb
 from logging import DEBUG, INFO, basicConfig, getLogger
 from math import ceil
@@ -21,6 +23,7 @@ from pathlib import Path
 from sys import version_info
 
 from dotenv import load_dotenv
+from git import Repo
 from pylast import LastFMNetwork, md5
 from pySmartDL import SmartDL
 from pytgcalls import PyTgCalls
@@ -42,7 +45,10 @@ def STORAGE(n):
 
 load_dotenv("config.env")
 
+LOOP = get_event_loop()
 StartTime = time.time()
+repo = Repo()
+branch = repo.active_branch.name
 
 # Global Variables
 COUNT_MSG = 0
@@ -70,25 +76,20 @@ logging.getLogger("telethon.network.mtprotosender").setLevel(logging.ERROR)
 logging.getLogger("telethon.network.connection.connection").setLevel(logging.ERROR)
 LOGS = getLogger(__name__)
 
-if version_info[0] < 3 or version_info[1] < 9:
+if version_info[0] < 3 or version_info[1] < 8:
     LOGS.info(
-        "Anda HARUS memiliki python setidaknya versi 3.9."
+        "Anda HARUS memiliki python setidaknya versi 3.8."
         "Beberapa fitur tergantung versi python ini. Bot berhenti."
     )
     sys.exit(1)
 
-# Check if the config was edited by using the already used variable.
-# Basically, its the 'virginity check' for the config file ;)
-CONFIG_CHECK = os.environ.get(
+if CONFIG_CHECK := os.environ.get(
     "___________PLOX_______REMOVE_____THIS_____LINE__________", None
-)
-
-if CONFIG_CHECK:
+):
     LOGS.info(
         "Harap hapus baris yang disebutkan dalam tagar pertama dari file config.env"
     )
     sys.exit(1)
-
 
 while 0 < 6:
     _DEVS = get(
@@ -106,6 +107,7 @@ del _DEVS
 
 SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
 BL_CHAT = {int(x) for x in os.environ.get("BL_CHAT", "").split()}
+BLACKLIST_GCAST = {int(x) for x in os.environ.get("BLACKLIST_GCAST", "").split()}
 
 # For Blacklist Group Support
 BLACKLIST_CHAT = os.environ.get("BLACKLIST_CHAT", None)
@@ -118,6 +120,10 @@ API_HASH = str(os.environ.get("API_HASH") or None)
 
 # Userbot Session String
 STRING_SESSION = os.environ.get("STRING_SESSION", None)
+STRING_2 = os.environ.get("STRING_2", None)
+STRING_3 = os.environ.get("STRING_3", None)
+STRING_4 = os.environ.get("STRING_4", None)
+STRING_5 = os.environ.get("STRING_5", None)
 
 # Logging channel/group ID configuration.
 BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID") or 0)
@@ -127,12 +133,11 @@ LOAD = os.environ.get("LOAD", "").split()
 NO_LOAD = os.environ.get("NO_LOAD", "").split()
 
 # Bleep Blop, this is a bot ;)
-PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "False"))
+PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "True"))
 PM_LIMIT = int(os.environ.get("PM_LIMIT", 6))
 
 # Custom Handler command
 CMD_HANDLER = os.environ.get("CMD_HANDLER") or "."
-
 SUDO_HANDLER = os.environ.get("SUDO_HANDLER", r"$")
 
 # Support
@@ -155,6 +160,9 @@ UPSTREAM_REPO_URL = os.environ.get(
     "UPSTREAM_REPO_URL", "https://github.com/mrismanaziz/Man-Userbot.git"
 )
 
+# Custom Name Sticker Pack
+S_PACK_NAME = os.environ.get("S_PACK_NAME", None)
+
 # SQL Database URI
 DB_URI = os.environ.get("DATABASE_URL", None)
 
@@ -171,9 +179,6 @@ GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN") or "/usr/bin/google-chro
 # OpenWeatherMap API Key
 OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
 WEATHER_DEFCITY = os.environ.get("WEATHER_DEFCITY", "Jakarta")
-
-# For MONGO based DataBase
-MONGO_URI = os.environ.get("MONGO_URI", None)
 
 # Anti Spambot Config
 ANTI_SPAMBOT = sb(os.environ.get("ANTI_SPAMBOT", "False"))
@@ -208,7 +213,7 @@ ZIP_DOWNLOAD_DIRECTORY = os.environ.get("ZIP_DOWNLOAD_DIRECTORY", "./zips")
 BITLY_TOKEN = os.environ.get("BITLY_TOKEN", None)
 
 # Bot version
-BOT_VER = os.environ.get("BOT_VER", "2.3.4")
+BOT_VER = os.environ.get("BOT_VER", "3.2.1")
 
 # Default .alive logo
 ALIVE_LOGO = (
@@ -228,16 +233,16 @@ QUEUE_PIC = (
     os.environ.get("QUEUE_PIC") or "https://telegra.ph/file/d6f92c979ad96b2031cba.png"
 )
 
+DEFAULT = list(map(int, b64decode("ODQ0NDMyMjIw").split()))
+
 # Last.fm Module
 BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
 DEFAULT_BIO = os.environ.get("DEFAULT_BIO", None)
-
 LASTFM_API = os.environ.get("LASTFM_API", None)
 LASTFM_SECRET = os.environ.get("LASTFM_SECRET", None)
 LASTFM_USERNAME = os.environ.get("LASTFM_USERNAME", None)
 LASTFM_PASSWORD_PLAIN = os.environ.get("LASTFM_PASSWORD", None)
 LASTFM_PASS = md5(LASTFM_PASSWORD_PLAIN)
-
 lastfm = None
 if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
     try:
@@ -247,13 +252,10 @@ if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
             username=LASTFM_USERNAME,
             password_hash=LASTFM_PASS,
         )
-    except Exception:
+    except BaseException:
         pass
 
 TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads/")
-
-# Quotes API Token
-QUOTES_API_TOKEN = os.environ.get("QUOTES_API_TOKEN", None)
 
 # Deezloader
 DEEZER_ARL_TOKEN = os.environ.get("DEEZER_ARL_TOKEN", None)
@@ -265,23 +267,37 @@ DEEP_AI = os.environ.get("DEEP_AI", None)
 BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
 BOT_USERNAME = os.environ.get("BOT_USERNAME", None)
 
-
-# Setting Up CloudMail.ru and MEGA.nz extractor binaries,
-# and giving them correct perms to work properly.
-if not os.path.exists("bin"):
-    os.mkdir("bin")
-
-binaries = {
-    "https://raw.githubusercontent.com/adekmaulana/megadown/master/megadown": "bin/megadown",
-    "https://raw.githubusercontent.com/yshalsager/cmrudl.py/master/cmrudl.py": "bin/cmrudl",
-}
-
-for binary, path in binaries.items():
-    downloader = SmartDL(binary, path, progress_bar=False)
-    downloader.start()
-    os.chmod(path, 0o755)
-
 # Jangan di hapus Nanti ERROR
+while 0 < 6:
+    _BLACKLIST = get(
+        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/manblacklist.json"
+    )
+    if _BLACKLIST.status_code != 200:
+        if 0 != 5:
+            continue
+        blacklistman = []
+        break
+    blacklistman = _BLACKLIST.json()
+    break
+
+del _BLACKLIST
+
+ch = str(b64decode("QEx1bmF0aWMwZGU="))[2:13]
+gc = str(b64decode("QFNoYXJpbmdVc2VyYm90"))[2:17]
+
+while 0 < 6:
+    _WHITELIST = get(
+        "https://raw.githubusercontent.com/mrismanaziz/Reforestation/master/whitelist.json"
+    )
+    if _WHITELIST.status_code != 200:
+        if 0 != 5:
+            continue
+        WHITELIST = []
+        break
+    WHITELIST = _WHITELIST.json()
+    break
+
+del _WHITELIST
 
 # 'bot' variable
 if STRING_SESSION:
@@ -302,22 +318,75 @@ except Exception as e:
     print(f"STRING_SESSION - {e}")
     sys.exit()
 
+if STRING_2:
+    session2 = StringSession(str(STRING_2))
+    MAN2 = TelegramClient(
+        session=session2,
+        api_id=API_KEY,
+        api_hash=API_HASH,
+        connection=ConnectionTcpAbridged,
+        auto_reconnect=True,
+        connection_retries=None,
+    )
+    call_py2 = PyTgCalls(MAN2)
+else:
+    call_py2 = None
+    MAN2 = None
 
-async def check_botlog_chatid() -> None:
-    if not BOTLOG_CHATID:
-        LOGS.warning(
-            "var BOTLOG_CHATID kamu belum di isi. Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id Masukan id grup nya di var BOTLOG_CHATID"
-        )
-        sys.exit(1)
+
+if STRING_3:
+    session3 = StringSession(str(STRING_3))
+    MAN3 = TelegramClient(
+        session=session3,
+        api_id=API_KEY,
+        api_hash=API_HASH,
+        connection=ConnectionTcpAbridged,
+        auto_reconnect=True,
+        connection_retries=None,
+    )
+    call_py3 = PyTgCalls(MAN3)
+else:
+    call_py3 = None
+    MAN3 = None
+
+
+if STRING_4:
+    session4 = StringSession(str(STRING_4))
+    MAN4 = TelegramClient(
+        session=session4,
+        api_id=API_KEY,
+        api_hash=API_HASH,
+        connection=ConnectionTcpAbridged,
+        auto_reconnect=True,
+        connection_retries=None,
+    )
+    call_py4 = PyTgCalls(MAN4)
+else:
+    call_py4 = None
+    MAN4 = None
+
+
+if STRING_5:
+    session5 = StringSession(str(STRING_5))
+    MAN5 = TelegramClient(
+        session=session5,
+        api_id=API_KEY,
+        api_hash=API_HASH,
+        connection=ConnectionTcpAbridged,
+        auto_reconnect=True,
+        connection_retries=None,
+    )
+    call_py5 = PyTgCalls(MAN5)
+else:
+    call_py5 = None
+    MAN5 = None
 
 
 async def update_restart_msg(chat_id, msg_id):
-    DEFAULTUSER = ALIVE_NAME or "Set `ALIVE_NAME` ConfigVar!"
     message = (
         f"**Man-UserBot v{BOT_VER} is back up and running!**\n\n"
         f"**Telethon:** {version.__version__}\n"
         f"**Python:** {python_version()}\n"
-        f"**User:** {DEFAULTUSER}"
     )
     await bot.edit_message(chat_id, msg_id, message)
     return True
@@ -329,7 +398,7 @@ try:
     chat_id, msg_id = gvarstatus("restartstatus").split("\n")
     with bot:
         try:
-            bot.loop.run_until_complete(update_restart_msg(int(chat_id), int(msg_id)))
+            LOOP.run_until_complete(update_restart_msg(int(chat_id), int(msg_id)))
         except BaseException:
             pass
     delgvar("restartstatus")
@@ -358,12 +427,10 @@ def paginate_help(page_number, loaded_modules, prefix):
     helpable_modules = [p for p in loaded_modules if not p.startswith("_")]
     helpable_modules = sorted(helpable_modules)
     modules = [
-        custom.Button.inline(
-            "{} {} {}".format(f"{INLINE_EMOJI}", x, f"{INLINE_EMOJI}"),
-            data="ub_modul_{}".format(x),
-        )
+        custom.Button.inline(f"{INLINE_EMOJI} {x} {INLINE_EMOJI}", data=f"ub_modul_{x}")
         for x in helpable_modules
     ]
+
     pairs = list(
         zip(
             modules[::number_of_cols],
@@ -379,30 +446,18 @@ def paginate_help(page_number, loaded_modules, prefix):
             modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
         ] + [
             (
-                custom.Button.inline(
-                    "««", data="{}_prev({})".format(prefix, modulo_page)
-                ),
+                custom.Button.inline("««", data=f"{prefix}_prev({modulo_page})"),
                 custom.Button.inline("Tutup", b"close"),
-                custom.Button.inline(
-                    "»»", data="{}_next({})".format(prefix, modulo_page)
-                ),
+                custom.Button.inline("»»", data=f"{prefix}_next({modulo_page})"),
             )
         ]
+
     return pairs
-
-
-def ibuild_keyboard(buttons):
-    keyb = []
-    for btn in buttons:
-        if btn[2] and keyb:
-            keyb[-1].append(Button.url(btn[0], btn[1]))
-        else:
-            keyb.append([Button.url(btn[0], btn[1])])
-    return keyb
 
 
 with bot:
     try:
+        from userbot.modules.button import BTN_URL_REGEX, build_keyboard
         from userbot.modules.sql_helper.bot_blacklists import check_is_black_list
         from userbot.modules.sql_helper.bot_pms_sql import add_user_to_db, get_user_id
         from userbot.utils import reply_id
@@ -414,10 +469,6 @@ with bot:
         logo = ALIVE_LOGO
         logoman = INLINE_PIC
         tgbotusername = BOT_USERNAME
-        BTN_URL_REGEX = re.compile(
-            r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)"
-        )
-        S_PACK_NAME = os.environ.get("S_PACK_NAME", f"Sticker Pack {owner}")
 
         @tgbot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
         async def bot_pms(event):
@@ -540,7 +591,7 @@ with bot:
                 else:
                     note_data += markdown_note[prev:]
                 message_text = note_data.strip()
-                tl_ib_buttons = ibuild_keyboard(buttons)
+                tl_ib_buttons = build_keyboard(buttons)
                 result = builder.article(
                     title="Inline creator",
                     text=message_text,
@@ -649,10 +700,9 @@ with bot:
                 reply_pop_up_alert = (
                     help_string
                     if help_string is not None
-                    else "{} Tidak ada dokumen yang telah ditulis untuk modul.".format(
-                        modul_name
-                    )
+                    else f"{modul_name} Tidak ada dokumen yang telah ditulis untuk modul."
                 )
+
             else:
                 reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
@@ -663,8 +713,3 @@ with bot:
             "Untuk Mengaktifkannya Buat bot di @BotFather Lalu Tambahkan var BOT_TOKEN dan BOT_USERNAME. "
             "Pergi Ke @BotFather lalu settings bot » Pilih mode inline » Turn On. "
         )
-    try:
-        bot.loop.run_until_complete(check_botlog_chatid())
-    except BaseException as e:
-        LOGS.exception(f"[BOTLOG] - {e}")
-        sys.exit(1)

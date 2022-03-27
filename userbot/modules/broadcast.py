@@ -7,13 +7,12 @@ from asyncio import sleep
 
 from userbot import BOTLOG_CHATID
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, LOGS, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP, LOGS
 from userbot.modules.sql_helper import broadcast_sql as sql
-from userbot.utils import parse_pre
+from userbot.utils import man_cmd, parse_pre
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"sendto ?(.*)"))
+@man_cmd(pattern=r"sendto ?(.*)")
 async def catbroadcast_send(event):
     if event.fwd_from:
         return
@@ -59,8 +58,8 @@ async def catbroadcast_send(event):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"fwdto ?(.*)"))
-async def catbroadcast_send(event):
+@man_cmd(pattern=r"fwdto ?(.*)")
+async def catbroadcast_fwd(event):
     if event.fwd_from:
         return
     catinput_str = event.pattern_match.group(1)
@@ -105,7 +104,7 @@ async def catbroadcast_send(event):
         )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"addto ?(.*)"))
+@man_cmd(pattern=r"addto ?(.*)")
 async def catbroadcast_add(event):
     if event.fwd_from:
         return
@@ -141,7 +140,7 @@ async def catbroadcast_add(event):
             )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"rmfrom ?(.*)"))
+@man_cmd(pattern=r"rmfrom ?(.*)")
 async def catbroadcast_remove(event):
     if event.fwd_from:
         return
@@ -177,7 +176,7 @@ async def catbroadcast_remove(event):
             )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"bclist ?(.*)"))
+@man_cmd(pattern=r"bclist ?(.*)")
 async def catbroadcast_list(event):
     if event.fwd_from:
         return
@@ -217,8 +216,8 @@ async def catbroadcast_list(event):
     await catevent.edit(finaloutput)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"bclistall ?(.*)"))
-async def catbroadcast_list(event):
+@man_cmd(pattern=r"bclistall ?(.*)")
+async def catbroadcast_listall(event):
     if event.fwd_from:
         return
     if sql.num_broadcastlist_chats() == 0:
@@ -233,8 +232,8 @@ async def catbroadcast_list(event):
     await event.efit(resultext)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"frmfrom ?(.*)"))
-async def catbroadcast_remove(event):
+@man_cmd(pattern=r"frmfrom ?(.*)")
+async def catbroadcast_from(event):
     if event.fwd_from:
         return
     catinput_str = event.pattern_match.group(1)
@@ -290,7 +289,7 @@ async def catbroadcast_remove(event):
             )
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"delc ?(.*)"))
+@man_cmd(pattern=r"delc ?(.*)")
 async def catbroadcast_delete(event):
     if event.fwd_from:
         return

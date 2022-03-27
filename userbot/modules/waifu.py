@@ -1,7 +1,8 @@
 # imported from ppe-remix by @heyworld & @DeletedUser420
 # Based Code by @adekmaulana
 # Improve by @aidilaryanto
-import random
+
+from secrets import choice
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP
@@ -19,7 +20,7 @@ async def waifu(animu):
             return
     animus = [15, 30, 32, 33, 40, 41, 42, 48, 55, 58]
     sticcers = await animu.client.inline_query(
-        "stickerizerbot", f"#{random.choice(animus)}{(deEmojify(text))}"
+        "stickerizerbot", f"#{choice(animus)}{(deEmojify(text))}"
     )
     try:
         await sticcers[0].click(

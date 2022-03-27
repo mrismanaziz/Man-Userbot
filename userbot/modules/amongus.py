@@ -6,18 +6,19 @@
 #
 
 from io import BytesIO
-from random import choice, randint
+from random import randint
+from secrets import choice
 from textwrap import wrap
 
 from PIL import Image, ImageDraw, ImageFont
 from requests import get
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.utils import man_cmd
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"imp (.*)"))
+@man_cmd(pattern="imp (.*)")
 async def f_load(message):
     clrs = {
         "red": 1,
@@ -47,18 +48,14 @@ async def f_load(message):
             await bruh(message, reply.sender)
             return
         text = reply.pattern_match.group(1)
-
     if text.split(" ")[0] in clrs:
         clr = clrs[text.split(" ")[0]]
         text = " ".join(text.split(" ")[1:])
-
     if text == "colors":
         await message.edit(
             ("Cores disponíveis:\n" + "\n".join(f"• `{i}`" for i in list(clrs.keys())))
         )
-
         return
-
     url = "https://raw.githubusercontent.com/KeyZenD/AmongUs/master/"
     font = ImageFont.truetype(BytesIO(get(url + "bold.ttf").content), 60)
     imposter = Image.open(BytesIO(get(f"{url}{clr}.png").content))

