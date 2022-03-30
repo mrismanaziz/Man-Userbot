@@ -23,14 +23,19 @@ from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, PLAY_PIC, QUEUE_PIC, call_py
 from userbot.core.vcbot import (
     CHAT_TITLE,
+    gen_thumb,
+    skip_current_song,
+    skip_item,
+    ytdl,
+    ytsearch,
+)
+from userbot.core.vcbot.queues import (
     QUEUE,
     add_to_queue,
     clear_queue,
-    gen_thumb,
     get_queue,
+    pop_an_item,
 )
-from userbot.core.vcbot.controls import skip_current_song, skip_item
-from userbot.core.vcbot.ytdl import ytdl, ytsearch
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
