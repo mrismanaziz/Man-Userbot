@@ -141,7 +141,9 @@ async def _(event):
         except AlreadyJoinedError:
             await call_py.leave_group_call(chat_id)
             await edit_delete(
-                Man, "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan coba `.joinvc` lagi", 45
+                Man,
+                "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan coba `.joinvc` lagi",
+                45,
             )
         except Exception as e:
             await Man.edit(f"`{e}`")
