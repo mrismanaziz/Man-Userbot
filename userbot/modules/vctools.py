@@ -10,6 +10,10 @@
 #
 # Kalo mau ngecopas, jangan hapus credit ya goblok
 
+from pytgcalls import StreamType
+from pytgcalls.exceptions import AlreadyJoinedError
+from pytgcalls.types.input_stream import InputAudioStream, InputStream
+
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
 from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
@@ -18,7 +22,7 @@ from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP
+from userbot import CMD_HELP, call_py
 from userbot.events import register
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
@@ -34,7 +38,7 @@ def user_list(l, n):
         yield l[i : i + n]
 
 
-@man_cmd(pattern="startvc$")
+@man_cmd(pattern="startvc$", func=lambda x: not x.is_private)
 @register(pattern=r"^\.startvcs$", sudo=True)
 async def start_voice(c):
     me = await c.client.get_me()
@@ -52,7 +56,7 @@ async def start_voice(c):
         await edit_delete(c, f"**ERROR:** `{ex}`")
 
 
-@man_cmd(pattern="stopvc$")
+@man_cmd(pattern="stopvc$", func=lambda x: not x.is_private)
 @register(pattern=r"^\.stopvcs$", sudo=True)
 async def stop_voice(c):
     me = await c.client.get_me()
@@ -70,7 +74,7 @@ async def stop_voice(c):
         await edit_delete(c, f"**ERROR:** `{ex}`")
 
 
-@man_cmd(pattern="vcinvite")
+@man_cmd(pattern="vcinvite", func=lambda x: not x.is_private)
 async def _(c):
     xxnx = await edit_or_reply(c, "`Inviting Members to Voice Chat...`")
     users = []
@@ -88,7 +92,7 @@ async def _(c):
     await xxnx.edit(f"`{z}` **Orang Berhasil diundang ke VCG**")
 
 
-@man_cmd(pattern="vctitle(?: |$)(.*)")
+@man_cmd(pattern="vctitle(?: |$)(.*)", func=lambda x: not x.is_private)
 @register(pattern=r"^\.cvctitle$", sudo=True)
 async def change_title(e):
     title = e.pattern_match.group(1)
@@ -108,6 +112,34 @@ async def change_title(e):
         await edit_or_reply(e, f"**Berhasil Mengubah Judul VCG Menjadi** `{title}`")
     except Exception as ex:
         await edit_delete(e, f"**ERROR:** `{ex}`")
+
+
+@man_cmd(pattern="joinvc(?: |$)(.*)", func=lambda x: not x.is_private)
+@register(pattern=r"^\.joinvcs$", sudo=True)
+async def _(event):
+    chat_id = event.chat_id
+    file = "./userbot/resources/audio-man.mp3"
+    Man = await edit_or_reply(event, "`Processing...`")
+    if chat_id:
+        try:
+            await call_py.join_group_call(
+                chat_id,
+                InputStream(
+                    InputAudioStream(
+                        file,
+                    ),
+                ),
+                stream_type=StreamType().pulse_stream,
+            )
+            await Man.edit("**Berhasil Join Ke Obrolan Suara**")
+        except AlreadyJoinedError:
+            await call_py.leave_group_call(chat_id)
+            await Man.edit(
+                "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan Coba `.joinvc` lagi"
+            )
+        except Exception as ep:
+            await Man.edit(f"`{ep}`")
+    
 
 
 CMD_HELP.update(
