@@ -104,7 +104,7 @@ async def vc_play(event):
                 except AlreadyJoinedError:
                     await call_py.leave_group_call(chat_id)
                     await botman.edit(
-                        f"**ERROR:** `Karena bergabung ke obrolan suara`\n\n• Silahkan Coba Play lagi"
+                        "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan Coba Play lagi"
                     )
                 except Exception as ep:
                     clear_queue(chat_id)
@@ -141,6 +141,11 @@ async def vc_play(event):
                     chat_id, PLAY_PIC, caption=caption, reply_to=event.reply_to_msg_id
                 )
                 await botman.delete()
+            except AlreadyJoinedError:
+                await call_py.leave_group_call(chat_id)
+                await botman.edit(
+                    "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan Coba Play lagi"
+                )
             except Exception as ep:
                 clear_queue(chat_id)
                 await botman.edit(f"`{ep}`")
@@ -208,6 +213,11 @@ async def vc_vplay(event):
                         f"**🏷 Judul:** [{songname}]({url})\n**⏱ Durasi:** `{duration}`\n💡 **Status:** `Sedang Memutar Video`\n🎧 **Atas permintaan:** {from_user}",
                         link_preview=False,
                     )
+                except AlreadyJoinedError:
+                    await call_py.leave_group_call(chat_id)
+                    await xnxx.edit(
+                        "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan Coba Play lagi"
+                    )
                 except Exception as ep:
                     clear_queue(chat_id)
                     await xnxx.edit(f"`{ep}`")
@@ -252,6 +262,11 @@ async def vc_vplay(event):
                 await xnxx.delete()
                 await event.client.send_file(
                     chat_id, PLAY_PIC, caption=caption, reply_to=event.reply_to_msg_id
+                )
+            except AlreadyJoinedError:
+                await call_py.leave_group_call(chat_id)
+                await botman.edit(
+                    "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan Coba Play lagi"
                 )
             except Exception as ep:
                 clear_queue(chat_id)
@@ -299,6 +314,11 @@ async def vc_vplay(event):
                     await xnxx.delete()
                     await event.client.send_file(
                         chat_id, thumb, caption=caption, reply_to=event.reply_to_msg_id
+                    )
+                except AlreadyJoinedError:
+                    await call_py.leave_group_call(chat_id)
+                    await botman.edit(
+                        "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan Coba Play lagi"
                     )
                 except Exception as ep:
                     clear_queue(chat_id)
