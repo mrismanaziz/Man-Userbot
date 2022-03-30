@@ -10,6 +10,9 @@
 #
 # Kalo mau ngecopas, jangan hapus credit ya goblok
 
+from pytgcalls import StreamType
+from pytgcalls.exceptions import AlreadyJoinedError
+from pytgcalls.types.input_stream import InputAudioStream, InputStream
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
 from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
@@ -18,7 +21,7 @@ from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 
 from userbot import CMD_HANDLER as cmd
-from userbot import CMD_HELP
+from userbot import CMD_HELP, call_py
 from userbot.events import register
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
@@ -110,17 +113,82 @@ async def change_title(e):
         await edit_delete(e, f"**ERROR:** `{ex}`")
 
 
+@man_cmd(pattern="joinvc(?: |$)(.*)")
+@register(pattern=r"^\.joinvcs(?: |$)(.*)", sudo=True)
+async def _(event):
+    Man = await edit_or_reply(event, "`Processing...`")
+    if len(event.text.split()) > 1:
+        chat_id = event.text.split()[1]
+        try:
+            chat_id = await event.client.get_peer_id(int(chat_id))
+        except Exception as e:
+            return await Man.edit(f"**ERROR:** `{e}`")
+    else:
+        chat_id = event.chat_id
+    file = "./userbot/resources/audio-man.mp3"
+    if chat_id:
+        try:
+            await call_py.join_group_call(
+                chat_id,
+                InputStream(
+                    InputAudioStream(
+                        file,
+                    ),
+                ),
+                stream_type=StreamType().local_stream,
+            )
+            await Man.edit(
+                f"❏ **Berhasil Join Ke Obrolan Suara**\n└ **Chat ID:** `{chat_id}`"
+            )
+        except AlreadyJoinedError:
+            await call_py.leave_group_call(chat_id)
+            await edit_delete(
+                Man,
+                "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan coba `.joinvc` lagi",
+                45,
+            )
+        except Exception as e:
+            await Man.edit(f"**INFO:** `{e}`")
+
+
+@man_cmd(pattern="leavevc(?: |$)(.*)")
+@register(pattern=r"^\.leavevcs(?: |$)(.*)", sudo=True)
+async def vc_end(event):
+    Man = await edit_or_reply(event, "`Processing...`")
+    if len(event.text.split()) > 1:
+        chat_id = event.text.split()[1]
+        try:
+            chat_id = await event.client.get_peer_id(int(chat_id))
+        except Exception as e:
+            return await Man.edit(f"**ERROR:** `{e}`")
+    else:
+        chat_id = event.chat_id
+    if chat_id:
+        try:
+            await call_py.leave_group_call(chat_id)
+            await edit_delete(
+                Man,
+                f"❏ **Berhasil Turun dari Obrolan Suara**\n└ **Chat ID:** `{chat_id}`",
+            )
+        except Exception as e:
+            await Man.edit(f"**INFO:** `{e}`")
+
+
 CMD_HELP.update(
     {
-        "vcg": f"**Plugin : **`vcg`\
+        "vctools": f"**Plugin : **`vctools`\
         \n\n  •  **Syntax :** `{cmd}startvc`\
         \n  •  **Function : **Untuk Memulai voice chat group\
         \n\n  •  **Syntax :** `{cmd}stopvc`\
         \n  •  **Function : **Untuk Memberhentikan voice chat group\
+        \n\n  •  **Syntax :** `{cmd}joinvc` atau `{cmd}joinvc` <chatid/username gc>\
+        \n  •  **Function : **Untuk Bergabung ke voice chat group\
+        \n\n  •  **Syntax :** `{cmd}leavevc` atau `{cmd}leavevc` <chatid/username gc>\
+        \n  •  **Function : **Untuk Turun dari voice chat group\
         \n\n  •  **Syntax :** `{cmd}vctitle` <title vcg>\
         \n  •  **Function : **Untuk Mengubah title/judul voice chat group\
         \n\n  •  **Syntax :** `{cmd}vcinvite`\
-        \n  •  **Function : **Mengundang Member group ke voice chat group\
+        \n  •  **Function : **Mengundang Member group ke voice chat group (anda harus sambil bergabung ke OS/VCG)\
     "
     }
 )
