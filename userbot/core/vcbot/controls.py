@@ -14,7 +14,7 @@ from pytgcalls.types.input_stream.quality import (
     MediumQualityVideo,
 )
 
-from userbot import call_py
+from userbot import LOGS, call_py
 from userbot.core.vcbot import QUEUE, clear_queue, get_queue, pop_an_item
 
 
@@ -27,7 +27,7 @@ async def skip_item(chat_id: int, x: int):
         chat_queue.pop(x)
         return songname
     except Exception as e:
-        print(e)
+        LOGS.info(str(e))
         return 0
 
 

@@ -7,6 +7,7 @@
 
 from youtubesearchpython import VideosSearch
 
+from userbot import LOGS
 from userbot.utils import bash
 
 
@@ -21,7 +22,7 @@ def ytsearch(query: str):
         videoid = data["id"]
         return [songname, url, duration, thumbnail, videoid]
     except Exception as e:
-        print(e)
+        LOGS.info(str(e))
         return 0
 
 
