@@ -13,7 +13,6 @@
 from pytgcalls import StreamType
 from pytgcalls.exceptions import AlreadyJoinedError
 from pytgcalls.types.input_stream import InputAudioStream, InputStream
-
 from telethon.tl.functions.channels import GetFullChannelRequest as getchat
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
 from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
@@ -139,7 +138,6 @@ async def _(event):
             )
         except Exception as ep:
             await Man.edit(f"`{ep}`")
-    
 
 
 CMD_HELP.update(
