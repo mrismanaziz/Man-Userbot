@@ -114,7 +114,7 @@ async def change_title(e):
 
 
 @man_cmd(pattern="joinvc(?: |$)(.*)", func=lambda x: not x.is_private)
-@register(pattern=r"^\.joinvcs$", sudo=True)
+@register(pattern=r"^\.joinvcs(?: |$)(.*)", sudo=True)
 async def _(event):
     chat_id = event.chat_id
     file = "./userbot/resources/audio-man.mp3"
@@ -140,13 +140,32 @@ async def _(event):
             await Man.edit(f"`{ep}`")
 
 
+@man_cmd(pattern="leavevc$", func=lambda x: not x.is_private)
+@register(pattern=r"^\.leavevcs$", sudo=True)
+async def vc_end(event):
+    chat_id = event.chat_id
+    Man = await edit_or_reply(event, "`Processing...`")
+    if chat_id:
+        try:
+            await call_py.leave_group_call(chat_id)
+            await Man.edit("**Berhasil Turun dari Obrolan Suara**")
+        except Exception as e:
+            await edit_delete(Man, f"**ERROR:** `{e}`")
+    else:
+        await edit_delete(Man, "**Tidak Sedang Bergabung di Obrolan Suara**")
+
+
 CMD_HELP.update(
     {
-        "vcg": f"**Plugin : **`vcg`\
+        "vctools": f"**Plugin : **`vctools`\
         \n\n  •  **Syntax :** `{cmd}startvc`\
         \n  •  **Function : **Untuk Memulai voice chat group\
         \n\n  •  **Syntax :** `{cmd}stopvc`\
         \n  •  **Function : **Untuk Memberhentikan voice chat group\
+        \n\n  •  **Syntax :** `{cmd}joinvc`\
+        \n  •  **Function : **Untuk Bergabung ke voice chat group\
+        \n\n  •  **Syntax :** `{cmd}leavevc`\
+        \n  •  **Function : **Untuk Turun dari voice chat group\
         \n\n  •  **Syntax :** `{cmd}vctitle` <title vcg>\
         \n  •  **Function : **Untuk Mengubah title/judul voice chat group\
         \n\n  •  **Syntax :** `{cmd}vcinvite`\
