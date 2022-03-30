@@ -19,6 +19,7 @@ from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
 from telethon.tl.functions.phone import EditGroupCallTitleRequest as settitle
 from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
+from telethon.utils import get_peer_id
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, call_py
@@ -116,12 +117,16 @@ async def change_title(e):
 @man_cmd(pattern="joinvc(?: |$)(.*)")
 @register(pattern=r"^\.joinvcs(?: |$)(.*)", sudo=True)
 async def _(event):
-    if xx := event.pattern_match.group(1):
-        chat_id = xx
+    Man = await edit_or_reply(event, "`Processing...`")
+    if len(event.text.split()) > 1:
+        chat_id = event.text.split()[1]
+        try:
+            chat_id = await event.client.get_peer_id(chat_id)
+        except Exception as e:
+            return await Man.edit(f"**ERROR:** `{e}`")
     else:
         chat_id = event.chat_id
     file = "./userbot/resources/audio-man.mp3"
-    Man = await edit_or_reply(event, "`Processing...`")
     if chat_id:
         try:
             await call_py.join_group_call(
