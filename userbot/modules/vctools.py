@@ -137,7 +137,9 @@ async def _(event):
                 ),
                 stream_type=StreamType().pulse_stream,
             )
-            await Man.edit(f"❏ **Berhasil Join Ke Obrolan Suara**\n└ **Chat ID:** `{chat_id}`")
+            await Man.edit(
+                f"❏ **Berhasil Join Ke Obrolan Suara**\n└ **Chat ID:** `{chat_id}`"
+            )
         except AlreadyJoinedError:
             await call_py.leave_group_call(chat_id)
             await edit_delete(
@@ -164,7 +166,10 @@ async def vc_end(event):
     if chat_id:
         try:
             await call_py.leave_group_call(chat_id)
-            await edit_delete(Man, f"❏ **Berhasil Turun dari Obrolan Suara**\n└ **Chat ID:** `{chat_id}`")
+            await edit_delete(
+                Man,
+                f"❏ **Berhasil Turun dari Obrolan Suara**\n└ **Chat ID:** `{chat_id}`",
+            )
         except Exception as e:
             await Man.edit(f"**INFO:** `{e}`")
 
