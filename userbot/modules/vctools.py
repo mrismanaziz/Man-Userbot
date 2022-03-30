@@ -181,9 +181,9 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk Memulai voice chat group\
         \n\n  •  **Syntax :** `{cmd}stopvc`\
         \n  •  **Function : **Untuk Memberhentikan voice chat group\
-        \n\n  •  **Syntax :** `{cmd}joinvc`\
+        \n\n  •  **Syntax :** `{cmd}joinvc` atau `{cmd}joinvc` <chatid/username gc>\
         \n  •  **Function : **Untuk Bergabung ke voice chat group\
-        \n\n  •  **Syntax :** `{cmd}leavevc`\
+        \n\n  •  **Syntax :** `{cmd}leavevc` atau `{cmd}leavevc` <chatid/username gc>\
         \n  •  **Function : **Untuk Turun dari voice chat group\
         \n\n  •  **Syntax :** `{cmd}vctitle` <title vcg>\
         \n  •  **Function : **Untuk Mengubah title/judul voice chat group\
