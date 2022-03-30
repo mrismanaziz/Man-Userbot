@@ -5,8 +5,9 @@
 # This file is a part of < https://github.com/mrismanaziz/Man-Userbot/ >
 # t.me/SharingUserbot & t.me/Lunatic0de
 
-from userbot.utils import bash
 from youtubesearchpython import VideosSearch
+
+from userbot.utils import bash
 
 
 def ytsearch(query: str):

@@ -5,6 +5,7 @@
 # This file is a part of < https://github.com/mrismanaziz/Man-Userbot/ >
 # t.me/SharingUserbot & t.me/Lunatic0de
 
+
 async def CHAT_TITLE(ctitle):
     string = ctitle
     font1 = list("𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ")

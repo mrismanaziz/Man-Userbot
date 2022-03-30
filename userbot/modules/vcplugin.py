@@ -18,6 +18,7 @@ from pytgcalls.types.input_stream.quality import (
 )
 from telethon.tl import types
 from telethon.utils import get_display_name
+
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, PLAY_PIC, QUEUE_PIC, call_py
 from userbot.core.vcbot import (
@@ -103,7 +104,9 @@ async def vc_play(event):
                     )
                 except AlreadyJoinedError:
                     await call_py.leave_group_call(chat_id)
-                    await botman.edit(f"**ERROR:** `Karena bergabung ke obrolan suara`\n\n• Silahkan Coba Play lagi")
+                    await botman.edit(
+                        f"**ERROR:** `Karena bergabung ke obrolan suara`\n\n• Silahkan Coba Play lagi"
+                    )
                 except Exception as ep:
                     clear_queue(chat_id)
                     await botman.edit(f"`{ep}`")
