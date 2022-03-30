@@ -137,28 +137,34 @@ async def _(event):
                 ),
                 stream_type=StreamType().pulse_stream,
             )
-            await Man.edit(f"**Berhasil Begabung Ke Obrolan Suara {chat_id}**")
+            await Man.edit(f"**Berhasil Begabung Ke Obrolan Suara** `{chat_id}`")
         except AlreadyJoinedError:
             await call_py.leave_group_call(chat_id)
             await Man.edit(
                 "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan coba `.joinvc` lagi"
             )
-        except Exception as ep:
-            await Man.edit(f"`{ep}`")
+        except Exception as e:
+            await Man.edit(f"`{e}`")
 
 
 @man_cmd(pattern="leavevc$")
 @register(pattern=r"^\.leavevcs$", sudo=True)
 async def vc_end(event):
-    chat_id = event.chat_id
-    chat = await event.get_chat()
     Man = await edit_or_reply(event, "`Processing...`")
+    if len(event.text.split()) > 1:
+        chat_id = event.text.split()[1]
+        try:
+            chat_id = await event.client.get_peer_id(int(chat_id))
+        except Exception as e:
+            return await Man.edit(f"**ERROR:** `{e}`")
+    else:
+        chat_id = event.chat_id
     if chat_id:
         try:
             await call_py.leave_group_call(chat_id)
-            await Man.edit(f"**Berhasil Turun dari Obrolan Suara {chat.title}**")
-        except Exception:
-            await edit_delete(Man, "**Tidak Sedang Bergabung di Obrolan Suara**")
+            await edit_delete(Man, f"**Berhasil Turun dari Obrolan Suara**")
+        except Exception as e:
+            await Man.edit(f"`{e}`")
 
 
 CMD_HELP.update(
