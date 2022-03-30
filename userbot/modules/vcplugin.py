@@ -103,6 +103,7 @@ async def vc_play(event):
                     )
                 except AlreadyJoinedError:
                     await call_py.leave_group_call(chat_id)
+                    clear_queue(chat_id)
                     await botman.edit(
                         "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan Coba Play lagi"
                     )
@@ -143,6 +144,7 @@ async def vc_play(event):
                 await botman.delete()
             except AlreadyJoinedError:
                 await call_py.leave_group_call(chat_id)
+                clear_queue(chat_id)
                 await botman.edit(
                     "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan Coba Play lagi"
                 )
@@ -215,6 +217,7 @@ async def vc_vplay(event):
                     )
                 except AlreadyJoinedError:
                     await call_py.leave_group_call(chat_id)
+                    clear_queue(chat_id)
                     await xnxx.edit(
                         "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan Coba Play lagi"
                     )
@@ -265,6 +268,7 @@ async def vc_vplay(event):
                 )
             except AlreadyJoinedError:
                 await call_py.leave_group_call(chat_id)
+                clear_queue(chat_id)
                 await botman.edit(
                     "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan Coba Play lagi"
                 )
@@ -317,6 +321,7 @@ async def vc_vplay(event):
                     )
                 except AlreadyJoinedError:
                     await call_py.leave_group_call(chat_id)
+                    clear_queue(chat_id)
                     await botman.edit(
                         "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan Coba Play lagi"
                     )
