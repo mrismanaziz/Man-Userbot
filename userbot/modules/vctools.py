@@ -188,7 +188,7 @@ CMD_HELP.update(
         \n\n  •  **Syntax :** `{cmd}vctitle` <title vcg>\
         \n  •  **Function : **Untuk Mengubah title/judul voice chat group\
         \n\n  •  **Syntax :** `{cmd}vcinvite`\
-        \n  •  **Function : **Mengundang Member group ke voice chat group\
+        \n  •  **Function : **Mengundang Member group ke voice chat group (anda harus sambil bergabung ke OS/VCG)\
     "
     }
 )
