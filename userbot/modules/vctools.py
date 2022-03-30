@@ -135,7 +135,7 @@ async def _(event):
                         file,
                     ),
                 ),
-                stream_type=StreamType().pulse_stream,
+                stream_type=StreamType().local_stream,
             )
             await Man.edit(
                 f"❏ **Berhasil Join Ke Obrolan Suara**\n└ **Chat ID:** `{chat_id}`"
