@@ -149,8 +149,8 @@ async def _(event):
             await Man.edit(f"`{e}`")
 
 
-@man_cmd(pattern="leavevc$")
-@register(pattern=r"^\.leavevcs$", sudo=True)
+@man_cmd(pattern="leavevc(?: |$)(.*)")
+@register(pattern=r"^\.leavevcs(?: |$)(.*)", sudo=True)
 async def vc_end(event):
     Man = await edit_or_reply(event, "`Processing...`")
     if len(event.text.split()) > 1:
