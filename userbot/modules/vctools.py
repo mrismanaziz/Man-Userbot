@@ -116,8 +116,10 @@ async def change_title(e):
 @man_cmd(pattern="joinvc(?: |$)(.*)")
 @register(pattern=r"^\.joinvcs(?: |$)(.*)", sudo=True)
 async def _(event):
-    chat_id = event.chat_id
-    chat = await event.get_chat()
+    if xx := event.pattern_match.group(1):
+        chat_id = xx
+    else:
+        chat_id = event.chat_id
     file = "./userbot/resources/audio-man.mp3"
     Man = await edit_or_reply(event, "`Processing...`")
     if chat_id:
@@ -131,7 +133,7 @@ async def _(event):
                 ),
                 stream_type=StreamType().pulse_stream,
             )
-            await Man.edit(f"**Berhasil Begabung Ke Obrolan Suara {chat.title}**")
+            await Man.edit(f"**Berhasil Begabung Ke Obrolan Suara {chat_id}**")
         except AlreadyJoinedError:
             await call_py.leave_group_call(chat_id)
             await Man.edit(
