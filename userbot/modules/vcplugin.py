@@ -29,13 +29,7 @@ from userbot.core.vcbot import (
     ytdl,
     ytsearch,
 )
-from userbot.core.vcbot.queues import (
-    QUEUE,
-    add_to_queue,
-    clear_queue,
-    get_queue,
-    pop_an_item,
-)
+from userbot.core.vcbot.queues import QUEUE, add_to_queue, clear_queue, get_queue
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
 
 
