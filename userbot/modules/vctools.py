@@ -19,7 +19,6 @@ from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
 from telethon.tl.functions.phone import EditGroupCallTitleRequest as settitle
 from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
-from telethon.utils import get_peer_id
 
 from userbot import CMD_HANDLER as cmd
 from userbot import CMD_HELP, call_py
