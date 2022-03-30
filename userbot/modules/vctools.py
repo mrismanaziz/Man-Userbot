@@ -37,7 +37,7 @@ def user_list(l, n):
         yield l[i : i + n]
 
 
-@man_cmd(pattern="startvc$", func=lambda x: not x.is_private)
+@man_cmd(pattern="startvc$")
 @register(pattern=r"^\.startvcs$", sudo=True)
 async def start_voice(c):
     me = await c.client.get_me()
@@ -55,7 +55,7 @@ async def start_voice(c):
         await edit_delete(c, f"**ERROR:** `{ex}`")
 
 
-@man_cmd(pattern="stopvc$", func=lambda x: not x.is_private)
+@man_cmd(pattern="stopvc$")
 @register(pattern=r"^\.stopvcs$", sudo=True)
 async def stop_voice(c):
     me = await c.client.get_me()
@@ -73,7 +73,7 @@ async def stop_voice(c):
         await edit_delete(c, f"**ERROR:** `{ex}`")
 
 
-@man_cmd(pattern="vcinvite", func=lambda x: not x.is_private)
+@man_cmd(pattern="vcinvite")
 async def _(c):
     xxnx = await edit_or_reply(c, "`Inviting Members to Voice Chat...`")
     users = []
@@ -91,7 +91,7 @@ async def _(c):
     await xxnx.edit(f"`{z}` **Orang Berhasil diundang ke VCG**")
 
 
-@man_cmd(pattern="vctitle(?: |$)(.*)", func=lambda x: not x.is_private)
+@man_cmd(pattern="vctitle(?: |$)(.*)")
 @register(pattern=r"^\.cvctitle$", sudo=True)
 async def change_title(e):
     title = e.pattern_match.group(1)
@@ -113,10 +113,11 @@ async def change_title(e):
         await edit_delete(e, f"**ERROR:** `{ex}`")
 
 
-@man_cmd(pattern="joinvc(?: |$)(.*)", func=lambda x: not x.is_private)
+@man_cmd(pattern="joinvc(?: |$)(.*)")
 @register(pattern=r"^\.joinvcs(?: |$)(.*)", sudo=True)
 async def _(event):
     chat_id = event.chat_id
+    chat = await event.get_chat()
     file = "./userbot/resources/audio-man.mp3"
     Man = await edit_or_reply(event, "`Processing...`")
     if chat_id:
@@ -130,29 +131,28 @@ async def _(event):
                 ),
                 stream_type=StreamType().pulse_stream,
             )
-            await Man.edit("**Berhasil Join Ke Obrolan Suara**")
+            await Man.edit(f"**Berhasil Begabung Ke Obrolan Suara {chat.title}**")
         except AlreadyJoinedError:
             await call_py.leave_group_call(chat_id)
             await Man.edit(
-                "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan Coba `.joinvc` lagi"
+                "**ERROR:** `Karena akun sedang berada di obrolan suara`\n\n• Silahkan coba `.joinvc` lagi"
             )
         except Exception as ep:
             await Man.edit(f"`{ep}`")
 
 
-@man_cmd(pattern="leavevc$", func=lambda x: not x.is_private)
+@man_cmd(pattern="leavevc$")
 @register(pattern=r"^\.leavevcs$", sudo=True)
 async def vc_end(event):
     chat_id = event.chat_id
+    chat = await event.get_chat()
     Man = await edit_or_reply(event, "`Processing...`")
     if chat_id:
         try:
             await call_py.leave_group_call(chat_id)
-            await Man.edit("**Berhasil Turun dari Obrolan Suara**")
-        except Exception as e:
-            await edit_delete(Man, f"**ERROR:** `{e}`")
-    else:
-        await edit_delete(Man, "**Tidak Sedang Bergabung di Obrolan Suara**")
+            await Man.edit(f"**Berhasil Turun dari Obrolan Suara {chat.title}**")
+        except Exception:
+            await edit_delete(Man, "**Tidak Sedang Bergabung di Obrolan Suara**")
 
 
 CMD_HELP.update(
