@@ -92,9 +92,7 @@ async def deploy(xx, repo, ups_rem, ac_br, txt):
         return repo.__del__()
     build = heroku_app.builds(order_by="created_at", sort="desc")[0]
     if build.status == "failed":
-        await edit_delete(
-            xx, "**Build Gagal!** Dibatalkan karena ada beberapa error.`"
-        )
+        await edit_delete(xx, "**Build Gagal!** Dibatalkan karena ada beberapa error.`")
     await edit_or_reply(
         xx, "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
     )
