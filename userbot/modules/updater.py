@@ -39,66 +39,65 @@ async def print_changelogs(xx, ac_br, changelog):
 
 
 async def deploy(xx, repo, ups_rem, ac_br, txt):
-    if HEROKU_API_KEY is not None:
-        import heroku3
-
-        heroku = heroku3.from_key(HEROKU_API_KEY)
-        heroku_app = None
-        heroku_applications = heroku.apps()
-        if HEROKU_APP_NAME is None:
-            await edit_or_reply(
-                xx,
-                "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_APP_NAME` "
-                " **untuk deploy perubahan terbaru dari Userbot.**",
-            )
-            repo.__del__()
-            return
-        for app in heroku_applications:
-            if app.name == HEROKU_APP_NAME:
-                heroku_app = app
-                break
-        if heroku_app is None:
-            await edit_or_reply(
-                xx,
-                f"{txt}\n"
-                "**Kredensial Heroku tidak valid untuk deploy Man-Userbot dyno.**",
-            )
-            return repo.__del__()
-        try:
-            from userbot.modules.sql_helper.globals import addgvar, delgvar
-
-            delgvar("restartstatus")
-            addgvar("restartstatus", f"{xx.chat_id}\n{xx.id}")
-        except AttributeError:
-            pass
-        ups_rem.fetch(ac_br)
-        repo.git.reset("--hard", "FETCH_HEAD")
-        heroku_git_url = heroku_app.git_url.replace(
-            "https://", "https://api:" + HEROKU_API_KEY + "@"
-        )
-        if "heroku" in repo.remotes:
-            remote = repo.remote("heroku")
-            remote.set_url(heroku_git_url)
-        else:
-            remote = repo.create_remote("heroku", heroku_git_url)
-        try:
-            remote.push(refspec="HEAD:refs/heads/master", force=True)
-        except Exception as error:
-            await edit_or_reply(xx, f"{txt}\n**Terjadi Kesalahan Di Log:**\n`{error}`")
-            return repo.__del__()
-        build = heroku_app.builds(order_by="created_at", sort="desc")[0]
-        if build.status == "failed":
-            await edit_delete(
-                xx, "**Build Gagal!** Dibatalkan karena ada beberapa error.`"
-            )
-        await edit_or_reply(
-            xx, "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
-        )
-
-    else:
+    if HEROKU_API_KEY is None:
         return await edit_delete(
             xx, "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_API_KEY`"
         )
+    import heroku3
+
+    heroku = heroku3.from_key(HEROKU_API_KEY)
+    heroku_applications = heroku.apps()
+    if HEROKU_APP_NAME is None:
+        await edit_or_reply(
+            xx,
+            "**[HEROKU]: Harap Tambahkan Variabel** `HEROKU_APP_NAME` "
+            " **untuk deploy perubahan terbaru dari Userbot.**",
+        )
+        repo.__del__()
+        return
+    heroku_app = next(
+        (app for app in heroku_applications if app.name == HEROKU_APP_NAME),
+        None,
+    )
+
+    if heroku_app is None:
+        await edit_or_reply(
+            xx,
+            f"{txt}\n"
+            "**Kredensial Heroku tidak valid untuk deploy Man-Userbot dyno.**",
+        )
+        return repo.__del__()
+    try:
+        from userbot.modules.sql_helper.globals import addgvar, delgvar
+
+        delgvar("restartstatus")
+        addgvar("restartstatus", f"{xx.chat_id}\n{xx.id}")
+    except AttributeError:
+        pass
+    ups_rem.fetch(ac_br)
+    repo.git.reset("--hard", "FETCH_HEAD")
+    heroku_git_url = heroku_app.git_url.replace(
+        "https://", f"https://api:{HEROKU_API_KEY}@"
+    )
+
+    if "heroku" in repo.remotes:
+        remote = repo.remote("heroku")
+        remote.set_url(heroku_git_url)
+    else:
+        remote = repo.create_remote("heroku", heroku_git_url)
+    try:
+        remote.push(refspec="HEAD:refs/heads/master", force=True)
+    except Exception as error:
+        await edit_or_reply(xx, f"{txt}\n**Terjadi Kesalahan Di Log:**\n`{error}`")
+        return repo.__del__()
+    build = heroku_app.builds(order_by="created_at", sort="desc")[0]
+    if build.status == "failed":
+        await edit_delete(
+            xx, "**Build Gagal!** Dibatalkan karena ada beberapa error.`"
+        )
+    await edit_or_reply(
+        xx, "`Man-Userbot Berhasil Di Deploy! Userbot bisa di gunakan kembali.`"
+    )
 
 
 async def update(xx, repo, ups_rem, ac_br):

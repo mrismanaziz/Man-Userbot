@@ -10,6 +10,7 @@
 #
 """ Userbot start point """
 
+
 import os
 import sys
 from importlib import import_module
@@ -57,7 +58,8 @@ bot.loop.run_until_complete(man_userbot_on())
 if not BOT_TOKEN:
     bot.loop.run_until_complete(autobot())
 idle()
-if len(sys.argv) not in (1, 3, 4):
-    bot.disconnect()
-else:
+if len(sys.argv) in {1, 3, 4}:
     bot.run_until_disconnected()
+
+else:
+    bot.disconnect()

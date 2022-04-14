@@ -171,11 +171,10 @@ async def okgoogle(img):
     if os.path.isfile("okgoogle.png"):
         os.remove("okgoogle.png")
     message = await img.get_reply_message()
-    if message and message.media:
-        photo = io.BytesIO()
-        await img.client.download_media(message, photo)
-    else:
+    if not message or not message.media:
         return await edit_or_reply(img, "**Harap Balas ke Gambar**")
+    photo = io.BytesIO()
+    await img.client.download_media(message, photo)
     if photo:
         xx = await edit_or_reply(img, "`Processing...`")
         try:
@@ -199,7 +198,7 @@ async def okgoogle(img):
         else:
             return await xx.edit("**Google told me to fuck off.**")
         os.remove(name)
-        match = await ParseSauce(fetchUrl + "&preferences?hl=en&fg=1#languages")
+        match = await ParseSauce(f"{fetchUrl}&preferences?hl=en&fg=1#languages")
         guess = match["best_guess"]
         imgspage = match["similar_images"]
         if guess and imgspage:

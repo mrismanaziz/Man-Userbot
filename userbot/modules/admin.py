@@ -554,12 +554,11 @@ async def _iundlt(event):
     flag = event.pattern_match.group(1)
     if event.pattern_match.group(2) != "":
         lim = int(event.pattern_match.group(2))
-        if lim > 15:
-            lim = int(15)
+        lim = min(lim, 15)
         if lim <= 0:
-            lim = int(1)
+            lim = 1
     else:
-        lim = int(5)
+        lim = 5
     adminlog = await event.client.get_admin_log(
         event.chat_id, limit=lim, edit=False, delete=True
     )
