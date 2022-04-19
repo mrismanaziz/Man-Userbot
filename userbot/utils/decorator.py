@@ -3,17 +3,30 @@
 # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
 # t.me/SharingUserbot & t.me/Lunatic0de
 
+import asyncio
 import inspect
 import re
 from pathlib import Path
 
 from telethon import events
+from telethon.errors import (
+    AlreadyInConversationError,
+    BotInlineDisabledError,
+    BotResponseTimeoutError,
+    ChatSendInlineForbiddenError,
+    ChatSendMediaForbiddenError,
+    ChatSendStickersForbiddenError,
+    FloodWaitError,
+    MessageIdInvalidError,
+    MessageNotModifiedError,
+)
 
 from userbot import (
     BL_CHAT,
     CMD_HANDLER,
     CMD_LIST,
     LOAD_PLUG,
+    LOGS,
     MAN2,
     MAN3,
     MAN4,
@@ -24,10 +37,15 @@ from userbot import (
     tgbot,
 )
 
+from .tools import edit_delete
+
 
 def man_cmd(
     pattern: str = None,
     allow_sudo: bool = True,
+    group_only: bool = False,
+    admins_only: bool = False,
+    private_only: bool = False,
     disable_edited: bool = False,
     forword=False,
     command: str = None,
@@ -80,25 +98,94 @@ def man_cmd(
                 CMD_LIST.update({file_test: [cmd1]})
 
     def decorator(func):
+        async def wrapper(event):
+            chat = event.chat
+            if admins_only:
+                if event.is_private:
+                    return await edit_delete(
+                        event, "**Perintah ini hanya bisa digunakan di grup.**", 10
+                    )
+                if not (chat.admin_rights or chat.creator):
+                    return await edit_delete(
+                        event, f"**Maaf anda bukan admin di {chat.title}**", 10
+                    )
+            if group_only and not event.is_group:
+                return await edit_delete(
+                    event, "**Perintah ini hanya bisa digunakan di grup.**", 10
+                )
+            if private_only and not event.is_private:
+                return await edit_delete(
+                    event, "**Perintah ini hanya bisa digunakan di private chat.**", 10
+                )
+            try:
+                await func(event)
+            # Credits: @mrismanaziz
+            # FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
+            # t.me/SharingUserbot & t.me/Lunatic0de
+            except MessageNotModifiedError as er:
+                LOGS.error(er)
+            except MessageIdInvalidError:
+                LOGS.error(er)
+            except BotInlineDisabledError:
+                await edit_delete(
+                    event, "**Silahkan aktifkan mode Inline untuk bot**", 10
+                )
+            except ChatSendStickersForbiddenError:
+                await edit_delete(
+                    event, "**Tidak dapat mengirim stiker di obrolan ini**", 10
+                )
+            except BotResponseTimeoutError:
+                await edit_delete(
+                    event, "**The bot didnt answer to your query in time**"
+                )
+            except ChatSendMediaForbiddenError:
+                await edit_delete(
+                    event, "**Tidak dapat mengirim media dalam obrolan ini**", 10
+                )
+            except AlreadyInConversationError:
+                await edit_delete(
+                    event,
+                    "**Percakapan sudah terjadi dengan obrolan yang diberikan. coba lagi setelah beberapa waktu.**",
+                )
+            except ChatSendInlineForbiddenError:
+                await edit_delete(
+                    event,
+                    "**Tidak dapat mengirim pesan inline dalam obrolan ini.**",
+                    10,
+                )
+            except FloodWaitError as e:
+                LOGS.error(
+                    f"Telah Terjadi flood wait error tunggu {e.seconds} detik dan coba lagi"
+                )
+                await event.delete()
+                await asyncio.sleep(e.seconds + 5)
+            except events.StopPropagation:
+                raise events.StopPropagation
+            except KeyboardInterrupt:
+                pass
+            except BaseException as e:
+                LOGS.exception(e)
+
         if bot:
             if not disable_edited:
                 bot.add_event_handler(
-                    func, events.MessageEdited(**args, outgoing=True, pattern=man_reg)
+                    wrapper,
+                    events.MessageEdited(**args, outgoing=True, pattern=man_reg),
                 )
             bot.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
+                wrapper, events.NewMessage(**args, outgoing=True, pattern=man_reg)
             )
         if bot:
             if allow_sudo:
                 if not disable_edited:
                     bot.add_event_handler(
-                        func,
+                        wrapper,
                         events.MessageEdited(
                             **args, from_users=list(SUDO_USERS), pattern=sudo_reg
                         ),
                     )
                 bot.add_event_handler(
-                    func,
+                    wrapper,
                     events.NewMessage(
                         **args, from_users=list(SUDO_USERS), pattern=sudo_reg
                     ),
@@ -106,40 +193,44 @@ def man_cmd(
         if MAN2:
             if not disable_edited:
                 MAN2.add_event_handler(
-                    func, events.MessageEdited(**args, outgoing=True, pattern=man_reg)
+                    wrapper,
+                    events.MessageEdited(**args, outgoing=True, pattern=man_reg),
                 )
             MAN2.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
+                wrapper, events.NewMessage(**args, outgoing=True, pattern=man_reg)
             )
         if MAN3:
             if not disable_edited:
                 MAN3.add_event_handler(
-                    func, events.MessageEdited(**args, outgoing=True, pattern=man_reg)
+                    wrapper,
+                    events.MessageEdited(**args, outgoing=True, pattern=man_reg),
                 )
             MAN3.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
+                wrapper, events.NewMessage(**args, outgoing=True, pattern=man_reg)
             )
         if MAN4:
             if not disable_edited:
                 MAN4.add_event_handler(
-                    func, events.MessageEdited(**args, outgoing=True, pattern=man_reg)
+                    wrapper,
+                    events.MessageEdited(**args, outgoing=True, pattern=man_reg),
                 )
             MAN4.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
+                wrapper, events.NewMessage(**args, outgoing=True, pattern=man_reg)
             )
         if MAN5:
             if not disable_edited:
                 MAN5.add_event_handler(
-                    func, events.MessageEdited(**args, outgoing=True, pattern=man_reg)
+                    wrapper,
+                    events.MessageEdited(**args, outgoing=True, pattern=man_reg),
                 )
             MAN5.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=man_reg)
+                wrapper, events.NewMessage(**args, outgoing=True, pattern=man_reg)
             )
         try:
-            LOAD_PLUG[file_test].append(func)
+            LOAD_PLUG[file_test].append(wrapper)
         except Exception:
-            LOAD_PLUG.update({file_test: [func]})
-        return func
+            LOAD_PLUG.update({file_test: [wrapper]})
+        return wrapper
 
     return decorator
 
@@ -201,4 +292,4 @@ def callback(**args):
             tgbot.add_event_handler(func, events.CallbackQuery(**args))
         return func
 
-    return decorator
+    return
