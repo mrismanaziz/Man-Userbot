@@ -86,7 +86,7 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 # ================================================
 
 
-@man_cmd(pattern="setgpic( -s| -d)$")
+@man_cmd(pattern="setgpic( -s| -d)$", group_only=True)
 @register(pattern=r"^\.csetgpic( -s| -d)$", sudo=True)
 async def set_group_photo(event):
     "For changing Group dp"
@@ -123,7 +123,7 @@ async def set_group_photo(event):
         await edit_delete(event, "**Foto Profil Grup Berhasil dihapus.**", 30)
 
 
-@man_cmd(pattern="promote(?:\s|$)([\s\S]*)")
+@man_cmd(pattern="promote(?:\s|$)([\s\S]*)", group_only=True)
 @register(pattern=r"^\.cpromote(?:\s|$)([\s\S]*)", sudo=True)
 async def promote(event):
     new_rights = ChatAdminRights(
@@ -148,7 +148,7 @@ async def promote(event):
     await edit_delete(eventman, "`Promoted Successfully!`", 30)
 
 
-@man_cmd(pattern="demote(?:\s|$)([\s\S]*)")
+@man_cmd(pattern="demote(?:\s|$)([\s\S]*)", group_only=True)
 @register(pattern=r"^\.cdemote(?:\s|$)([\s\S]*)", sudo=True)
 async def demote(event):
     "To demote a person in group"
@@ -173,7 +173,7 @@ async def demote(event):
     await edit_delete(eventman, "`Demoted Successfully!`", 30)
 
 
-@man_cmd(pattern="ban(?:\s|$)([\s\S]*)")
+@man_cmd(pattern="ban(?:\s|$)([\s\S]*)", group_only=True)
 @register(pattern=r"^\.cban(?:\s|$)([\s\S]*)", sudo=True)
 async def ban(bon):
     me = await bon.client.get_me()
@@ -204,7 +204,7 @@ async def ban(bon):
         )
 
 
-@man_cmd(pattern="unban(?:\s|$)([\s\S]*)")
+@man_cmd(pattern="unban(?:\s|$)([\s\S]*)", group_only=True)
 @register(pattern=r"^\.cunban(?:\s|$)([\s\S]*)", sudo=True)
 async def nothanos(unbon):
     chat = await unbon.get_chat()
@@ -224,7 +224,7 @@ async def nothanos(unbon):
         await edit_delete(man, "`Sepertinya Terjadi ERROR!`")
 
 
-@man_cmd(pattern="mute(?: |$)(.*)")
+@man_cmd(pattern="mute(?: |$)(.*)", group_only=True)
 @register(pattern=r"^\.cmute(?: |$)(.*)", sudo=True)
 async def spider(spdr):
     try:
@@ -275,7 +275,7 @@ async def spider(spdr):
         return await edit_delete(man, "**Terjadi ERROR!**")
 
 
-@man_cmd(pattern="unmute(?: |$)(.*)")
+@man_cmd(pattern="unmute(?: |$)(.*)", group_only=True)
 @register(pattern=r"^\.cunmute(?: |$)(.*)", sudo=True)
 async def unmoot(unmot):
     chat = await unmot.get_chat()
@@ -399,7 +399,7 @@ async def gspider(gspdr):
         )
 
 
-@man_cmd(pattern="zombies(?: |$)(.*)")
+@man_cmd(pattern="zombies(?: |$)(.*)", group_only=True)
 async def rm_deletedacc(show):
     con = show.pattern_match.group(1).lower()
     del_u = 0
@@ -456,7 +456,7 @@ async def rm_deletedacc(show):
         )
 
 
-@man_cmd(pattern="admins$")
+@man_cmd(pattern="admins$", group_only=True)
 async def get_admin(show):
     info = await show.client.get_entity(show.chat_id)
     title = info.title or "Grup Ini"
@@ -475,7 +475,7 @@ async def get_admin(show):
     await show.edit(mentions, parse_mode="html")
 
 
-@man_cmd(pattern="pin( loud|$)")
+@man_cmd(pattern="pin( loud|$)", group_only=True)
 @register(pattern=r"^\.cpin( loud|$)", sudo=True)
 async def pin(event):
     to_pin = event.reply_to_msg_id
@@ -492,7 +492,7 @@ async def pin(event):
     await edit_delete(event, "`Pinned Successfully!`")
 
 
-@man_cmd(pattern="unpin( all|$)")
+@man_cmd(pattern="unpin( all|$)", group_only=True)
 @register(pattern=r"^\.cunpin( all|$)", sudo=True)
 async def unpin(event):
     to_unpin = event.reply_to_msg_id
@@ -521,7 +521,7 @@ async def unpin(event):
     await edit_delete(event, "`Unpinned Successfully!`")
 
 
-@man_cmd(pattern="kick(?: |$)(.*)")
+@man_cmd(pattern="kick(?: |$)(.*)", group_only=True)
 @register(pattern=r"^\.ckick(?: |$)(.*)", sudo=True)
 async def kick(usr):
     chat = await usr.get_chat()
@@ -548,7 +548,7 @@ async def kick(usr):
         )
 
 
-@man_cmd(pattern=r"undlt( -u)?(?: |$)(\d*)?")
+@man_cmd(pattern=r"undlt( -u)?(?: |$)(\d*)?", group_only=True)
 async def _iundlt(event):
     catevent = await edit_or_reply(event, "`Searching recent actions...`")
     flag = event.pattern_match.group(1)
