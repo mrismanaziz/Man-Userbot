@@ -124,7 +124,7 @@ def man_cmd(
             # t.me/SharingUserbot & t.me/Lunatic0de
             except MessageNotModifiedError as er:
                 LOGS.error(er)
-            except MessageIdInvalidError:
+            except MessageIdInvalidError as er:
                 LOGS.error(er)
             except BotInlineDisabledError:
                 await edit_delete(
@@ -292,4 +292,4 @@ def callback(**args):
             tgbot.add_event_handler(func, events.CallbackQuery(**args))
         return func
 
-    return
+    return decorator
