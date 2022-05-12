@@ -60,22 +60,23 @@ async def md5(fname: str) -> str:
 
 
 def media_type(message):
-    if message and message.photo:
-        return "Photo"
-    if message and message.audio:
-        return "Audio"
-    if message and message.voice:
-        return "Voice"
-    if message and message.video_note:
-        return "Round Video"
-    if message and message.gif:
-        return "Gif"
-    if message and message.sticker:
-        return "Sticker"
-    if message and message.video:
-        return "Video"
-    if message and message.document:
-        return "Document"
+    if message:
+        if message.photo:
+            return "Photo"
+        if message.audio:
+            return "Audio"
+        if message.voice:
+            return "Voice"
+        if message.video_note:
+            return "Round Video"
+        if message.gif:
+            return "Gif"
+        if message.sticker:
+            return "Sticker"
+        if message.video:
+            return "Video"
+        if message.document:
+            return "Document"
     return None
 
 
@@ -89,7 +90,7 @@ def humanbytes(size: Union[int, float]) -> str:
     while size > power:
         size /= power
         raised_to_pow += 1
-    return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
+    return f"{str(round(size, 2))} {dict_power_n[raised_to_pow]}B"
 
 
 def time_formatter(seconds: int) -> str:
@@ -97,11 +98,12 @@ def time_formatter(seconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = (
-        ((str(days) + " hari, ") if days else "")
-        + ((str(hours) + " jam, ") if hours else "")
-        + ((str(minutes) + " menit, ") if minutes else "")
-        + ((str(seconds) + " detik, ") if seconds else "")
+        (f"{str(days)} hari, " if days else "")
+        + (f"{str(hours)} jam, " if hours else "")
+        + (f"{str(minutes)} menit, " if minutes else "")
+        + (f"{str(seconds)} detik, " if seconds else "")
     )
+
     return tmp[:-2]
 
 
@@ -232,7 +234,7 @@ async def edit_or_reply(
     if aslink or deflink:
         linktext = linktext or "**Pesan Terlalu Panjang**"
         response = await paste_message(text, pastetype="s")
-        text = linktext + f" [Lihat Disini]({response})"
+        text = f"{linktext} [Lihat Disini]({response})"
         if not event.out and event.sender_id in SUDO_USERS:
             if reply_to:
                 return await reply_to.reply(text, link_preview=link_preview)
@@ -362,15 +364,23 @@ async def media_to_pic(event, reply):
     media = await reply.download_media(file="./temp")
     event = await edit_or_reply(event, "`Transfiguration Time! Converting....`")
     file = os.path.join("./temp/", "meme.png")
-    if mediatype == "Sticker":
-        if media.endswith(".tgs"):
-            await runcmd(
-                f"lottie_convert.py --frame 0 -if lottie -of png '{media}' '{file}'"
-            )
-        elif media.endswith(".webp"):
-            im = Image.open(media)
-            im.save(file)
-    elif mediatype in ["Round Video", "Video", "Gif"]:
+    if mediatype == "Sticker" and media.endswith(".tgs"):
+        await runcmd(
+            f"lottie_convert.py --frame 0 -if lottie -of png '{media}' '{file}'"
+        )
+    elif (
+        mediatype == "Sticker"
+        and not media.endswith(".tgs")
+        and media.endswith(".webp")
+        or mediatype not in ["Sticker", "Round Video", "Video", "Gif"]
+    ):
+        im = Image.open(media)
+        im.save(file)
+    elif (
+        mediatype != "Sticker"
+        or media.endswith(".tgs")
+        or media.endswith(".webp")
+    ):
         extractMetadata(createParser(media))
         await runcmd(f"rm -rf '{file}'")
         await take_screen_shot(media, 0, file)
@@ -380,9 +390,6 @@ async def media_to_pic(event, reply):
                 f"**Maaf. Saya tidak dapat mengekstrak gambar dari ini {mediatype}**",
             )
             return None
-    else:
-        im = Image.open(media)
-        im.save(file)
     await runcmd(f"rm -rf '{media}'")
     return [event, file, mediatype]
 
