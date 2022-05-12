@@ -28,7 +28,7 @@ import re
 import shlex
 import time
 from os.path import basename
-from typing import Optional, Union, Tuple
+from typing import Optional, Tuple, Union
 
 from emoji import get_emoji_regexp
 from hachoir.metadata import extractMetadata
@@ -376,11 +376,7 @@ async def media_to_pic(event, reply):
     ):
         im = Image.open(media)
         im.save(file)
-    elif (
-        mediatype != "Sticker"
-        or media.endswith(".tgs")
-        or media.endswith(".webp")
-    ):
+    elif mediatype != "Sticker" or media.endswith(".tgs") or media.endswith(".webp"):
         extractMetadata(createParser(media))
         await runcmd(f"rm -rf '{file}'")
         await take_screen_shot(media, 0, file)
