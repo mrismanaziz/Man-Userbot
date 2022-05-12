@@ -28,7 +28,7 @@ import re
 import shlex
 import time
 from os.path import basename
-from typing import Optional, Union
+from typing import Optional, Union, Tuple
 
 from emoji import get_emoji_regexp
 from hachoir.metadata import extractMetadata
@@ -159,7 +159,7 @@ async def is_admin(chat_id, user_id):
     )
 
 
-async def runcmd(cmd: str) -> tuple[str, str, int, int]:
+async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
     """run command in terminal"""
     args = shlex.split(cmd)
     process = await asyncio.create_subprocess_exec(
@@ -286,7 +286,7 @@ async def check_media(reply_message):
     return data
 
 
-async def run_cmd(cmd: list) -> tuple[bytes, bytes]:
+async def run_cmd(cmd: list) -> Tuple[bytes, bytes]:
     process = await asyncio.create_subprocess_exec(
         *cmd,
         stdout=asyncio.subprocess.PIPE,
