@@ -7,6 +7,7 @@ bitlyshortener
 bs4
 colour
 cloudscraper
+cryptg
 covid
 cowpy
 deezloader
