@@ -6,6 +6,8 @@
 # This file is a part of < https://github.com/mrismanaziz/Man-Userbot/ >
 # t.me/SharingUserbot & t.me/Lunatic0de
 
+import socket
+
 from pytgcalls import StreamType
 from pytgcalls.exceptions import AlreadyJoinedError
 from pytgcalls.types import Update
@@ -31,6 +33,10 @@ from userbot.core.vcbot import (
 )
 from userbot.core.vcbot.queues import QUEUE, add_to_queue, clear_queue, get_queue
 from userbot.utils import edit_delete, edit_or_reply, man_cmd
+
+
+async def is_heroku():
+    return "heroku" in socket.getfqdn()
 
 
 def vcmention(user):
@@ -155,6 +161,8 @@ async def vc_play(event):
 
 @man_cmd(pattern="vplay(?:\s|$)([\s\S]*)", group_only=True)
 async def vc_vplay(event):
+    if await is_heroku():
+        return await event.edit("Saat ini Mode Heroku DIAKTIFKAN anda Tidak Dapat Menggunakan Modules Streaming Video karena Streaming Video Penyebab Banned Akun Heroku Anda")
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
     chat = await event.get_chat()
