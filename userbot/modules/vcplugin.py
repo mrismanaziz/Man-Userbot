@@ -162,7 +162,9 @@ async def vc_play(event):
 @man_cmd(pattern="vplay(?:\s|$)([\s\S]*)", group_only=True)
 async def vc_vplay(event):
     if await is_heroku():
-        return await event.edit("Saat ini Mode Heroku DIAKTIFKAN anda Tidak Dapat Menggunakan Modules Streaming Video karena Streaming Video Penyebab Banned Akun Heroku Anda")
+        return await event.edit(
+            "Saat ini Mode Heroku DIAKTIFKAN anda Tidak Dapat Menggunakan Modules Streaming Video karena Streaming Video Penyebab Banned Akun Heroku Anda"
+        )
     title = event.pattern_match.group(1)
     replied = await event.get_reply_message()
     chat = await event.get_chat()
