@@ -24,7 +24,6 @@ from sys import version_info
 
 from dotenv import load_dotenv
 from git import Repo
-from pylast import LastFMNetwork, md5
 from pySmartDL import SmartDL
 from pytgcalls import PyTgCalls
 from requests import get
