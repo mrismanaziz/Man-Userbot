@@ -54,7 +54,6 @@ pyaztro
 pybase64
 pyfiglet
 PyGithub
-pylast
 PyPDF2
 pySmartDL
 python-barcode
