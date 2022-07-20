@@ -24,7 +24,6 @@ from sys import version_info
 
 from dotenv import load_dotenv
 from git import Repo
-from pySmartDL import SmartDL
 from pytgcalls import PyTgCalls
 from requests import get
 from telethon import Button
