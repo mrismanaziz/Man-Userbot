@@ -17,7 +17,7 @@ faker
 ffmpeg-python
 fontTools
 geopy
-git+https://github.com/LonamiWebs/Telethon@v1.24
+git+https://github.com/LonamiWebs/Telethon@v1
 git+https://github.com/1danish-00/carbon-now-sh-api-wrapper.git
 git+https://github.com/buddhhu/img2html.git
 git+https://github.com/yt-dlp/yt-dlp@master
