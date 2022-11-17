@@ -196,6 +196,7 @@ async def _(pong):
     duration = (end - start).microseconds / 9000
     await xx.edit("🏓 **Ping!**\n`%sms`" % (duration))
 
+
 # KALO NGEFORK absen ini GA USAH DI HAPUS YA GOBLOK 😡
 @register(pattern=r"^\.absen$", sudo=True)
 async def risman(ganteng):
