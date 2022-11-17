@@ -202,7 +202,7 @@ async def _(pong):
     xx = await edit_or_reply(pong, "`Tunggu Sebentar.....🏓`")
     end = datetime.now()
     duration = (end - start).microseconds / 9000
-    await xx.edit"`DANA : `081217438920` A/N JEFANYA EFANDCHRIS` \nSertakan Bukti Transfer Ya (Wajib) Untuk melanjutkan transaksi \nBot By : [#JefanyaBot](t.me/jefanya14)"
+    await xx.edit("`DANA : `081217438920` A/N JEFANYA EFANDCHRIS` \nSertakan Bukti Transfer Ya (Wajib) Untuk melanjutkan transaksi \nBot By : [#JefanyaBot](t.me/jefanya14)")
 
 
 # KALO NGEFORK absen ini GA USAH DI HAPUS YA GOBLOK 😡
