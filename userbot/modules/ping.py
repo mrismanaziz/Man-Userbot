@@ -196,15 +196,6 @@ async def _(pong):
     duration = (end - start).microseconds / 9000
     await xx.edit("🏓 **Ping!**\n`%sms`" % (duration))
 
-@man_cmd(pattern="dana$")
-async def _(pong):
-    start = datetime.now()
-    xx = await edit_or_reply(pong, "`Tunggu Sebentar.....🏓`")
-    end = datetime.now()
-    duration = (end - start).microseconds / 9000
-    await xx.edit("`DANA : `081217438920` A/N JEFANYA EFANDCHRIS` \nSertakan Bukti Transfer Ya (Wajib) Untuk melanjutkan transaksi \nBot By : [#JefanyaBot](t.me/jefanya14)")
-
-
 # KALO NGEFORK absen ini GA USAH DI HAPUS YA GOBLOK 😡
 @register(pattern=r"^\.absen$", sudo=True)
 async def risman(ganteng):
